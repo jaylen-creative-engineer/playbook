@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>689703428258-cc2upmvti9fbl17j3d14k0gkd2o71je8.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.689703428258-cc2upmvti9fbl17j3d14k0gkd2o71je8</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCT9ddCZK2Z0dB477trNbb-SXc2ld0glzE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>689703428258</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.glory.pursue</string>
+	<key>PROJECT_ID</key>
+	<string>pursue-c5afe</string>
+	<key>STORAGE_BUCKET</key>
+	<string>pursue-c5afe.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:689703428258:ios:f7a061d48852b0e9</string>
+	<key>DATABASE_URL</key>
+	<string>https://pursue-c5afe.firebaseio.com</string>
+</dict>
+</plist>
