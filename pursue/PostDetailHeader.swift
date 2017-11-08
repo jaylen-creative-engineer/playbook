@@ -16,9 +16,14 @@ protocol PostDetailHeaderDelegate {
     func didChangeToAboutView()
 }
 
+protocol PostMessageDelegate {
+    func handleMessage(for cell : PostDetailHeader)
+}
+
 class PostDetailHeader : UICollectionViewCell {
     
     var postDetailDelegate : PostDetailHeaderDelegate?
+    var messageDelegate : PostMessageDelegate?
     
     lazy var backButton : UIButton = {
        let button = UIButton()
@@ -27,9 +32,10 @@ class PostDetailHeader : UICollectionViewCell {
         return button
     }()
     
-    let chatIcon : UIButton = {
+    lazy var chatIcon : UIButton = {
         let button = UIButton()
         button.setBackgroundImage(#imageLiteral(resourceName: "send2").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleChat), for: .touchUpInside)
         return button
     }()
     
@@ -46,6 +52,7 @@ class PostDetailHeader : UICollectionViewCell {
         label.text = "Wonder Woman"
         label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight(rawValue: 25))
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 2
         return label
     }()
     
@@ -108,6 +115,10 @@ class PostDetailHeader : UICollectionViewCell {
         postDetailDelegate?.goBack()
     }
     
+    @objc func handleChat(){
+        messageDelegate?.handleMessage(for: self)
+    }
+    
     func setupTopNavBar(){
         addSubview(backButton)
         addSubview(chatIcon)
@@ -132,7 +143,6 @@ class PostDetailHeader : UICollectionViewCell {
     }
     
     func setupViews() {
-        backgroundColor = .clear
         setupTopNavBar()
         
         addSubview(postImage)
@@ -141,7 +151,7 @@ class PostDetailHeader : UICollectionViewCell {
         addButton.addSubview(plusForButton)
 
         postImage.anchor(top: backButton.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (frame.height / 2) + 50)
-        postLabel.anchor(top: postImage.bottomAnchor, left: postImage.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 26)
+        postLabel.anchor(top: postImage.bottomAnchor, left: postImage.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 300, height: 52)
         addButton.anchor(top: postImage.bottomAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 26, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 40, height: 40)
         plusForButton.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
         plusForButton.centerYAnchor.constraint(equalTo: addButton.centerYAnchor).isActive = true

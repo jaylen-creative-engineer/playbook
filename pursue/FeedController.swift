@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FeedController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class FeedController : UICollectionViewController, UICollectionViewDelegateFlowLayout, FeedDelegate {
     
     let headerId = "headerId"
     let rowId = "rowId"
@@ -47,6 +47,16 @@ class FeedController : UICollectionViewController, UICollectionViewDelegateFlowL
         
     }
     
+    func goBack() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func handleMessage(for cell: FeedHeader) {
+        let messageController = MessagesController()
+        let navController = UINavigationController(rootViewController: messageController)
+        present(navController, animated: true, completion: nil)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 0:
@@ -66,6 +76,7 @@ class FeedController : UICollectionViewController, UICollectionViewDelegateFlowL
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! FeedHeader
+        header.feedDelegate = self
         return header
     }
 

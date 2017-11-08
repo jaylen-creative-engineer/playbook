@@ -97,7 +97,6 @@ class PursuitChallengeCells : UICollectionViewCell {
     }()
     
     
-    let bottomDividerView = UIView()
     var stackView = UIStackView()
     let pathView = PathView()
     
@@ -161,12 +160,9 @@ class PursuitChallengeCells : UICollectionViewCell {
     }
     
     func setupView(){
-        bottomDividerView.backgroundColor = UIColor.init(white: 0, alpha: 0.2)
-        
         addSubview(userPhoto)
         addSubview(fullnameLabel)
         addSubview(usernameLabel)
-        addSubview(bottomDividerView)
         addSubview(userPercentage)
         
         userPhoto.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 60, height: 60)
@@ -174,9 +170,7 @@ class PursuitChallengeCells : UICollectionViewCell {
         usernameLabel.anchor(top: fullnameLabel.bottomAnchor, left: fullnameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: 18)
         
         setupAddedUser()
-        setupScores()
-        bottomDividerView.anchor(top: bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
-        
+        setupScores()        
         
     }
     override init(frame: CGRect) {

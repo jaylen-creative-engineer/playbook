@@ -46,13 +46,6 @@ class ExploreHeaderRow: UICollectionViewCell {
         delegate?.handleMessage(for: self)
     }
     
-    
-    let exploreCameraIcon : UIButton = {
-        let button = UIButton()
-        button.setBackgroundImage(#imageLiteral(resourceName: "camera3").withRenderingMode(.alwaysOriginal), for: .normal)
-        return button
-    }()
-
     fileprivate func setupPageTitle(){
         addSubview(pageTitle)
         addSubview(exploreChatIcon)

@@ -18,6 +18,11 @@ protocol DetailCellChange {
     func changeChallenge()
 }
 
+protocol MessageDelegate {
+    func handleMessage(for cell : PursuitsDetailHeader)
+    func goBack()
+}
+
 class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PursuitDetailDelegate {
     
     var isAboutView = true
@@ -131,6 +136,7 @@ class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UIC
     var pursuitsDetailController : PursuitsDetailController?
     var delegate : PursuitDetailDelegate?
     var changeDelegate : DetailCellChange?
+    var messageDelegate : MessageDelegate?
     
     lazy var backButton : UIButton = {
         let button = UIButton()
@@ -139,9 +145,10 @@ class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UIC
         return button
     }()
     
-    let chatIcon : UIButton = {
+    lazy var chatIcon : UIButton = {
         let button = UIButton()
         button.setBackgroundImage(#imageLiteral(resourceName: "send2").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleChat), for: .touchUpInside)
         return button
     }()
     
@@ -179,7 +186,11 @@ class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UIC
     let bottomDividerView = UIView()
     
     @objc func dismissView(){
-        
+        messageDelegate?.goBack()
+    }
+    
+    @objc func handleChat() {
+        messageDelegate?.handleMessage(for: self)
     }
     
     func setupTopNavBar(){
@@ -208,7 +219,7 @@ class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UIC
         addSubview(postLabel)
         
         postImage.anchor(top: backButton.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (frame.height / 2) + 50)
-        postLabel.anchor(top: postImage.bottomAnchor, left: postImage.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 26)
+        postLabel.anchor(top: postImage.bottomAnchor, left: postImage.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 300, height: 52)
         pageOptions()
     }
     

@@ -62,24 +62,10 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         navigationController?.pushViewController(pursuits, animated: true)
     }
     
-    func handleCamera(for cell: HomeHeader) {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        alertController.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (_) in
-            let cameraController = CameraController()
-            self.present(cameraController, animated: true, completion: nil)
-        }))
-        
-        alertController.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (_) in
-            let layout = UICollectionViewFlowLayout()
-            let photoSelectorController = PhotoSelectorController(collectionViewLayout: layout)
-            let navController = UINavigationController(rootViewController: photoSelectorController)
-            self.present(navController, animated: true, completion: nil)
-            
-        }))
-        
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        present(alertController, animated: true, completion: nil)
+    func handleChat(for cell: HomeHeader) {
+        let messageController = MessagesController()
+        let navController = UINavigationController(rootViewController: messageController)
+        present(navController, animated: true, completion: nil)
     }
     
 

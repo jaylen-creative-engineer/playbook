@@ -12,6 +12,8 @@ class PostComments: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     
     let cellId = "cellId"
     
+    var accessDetailController : PostDetailController?
+    
     let postComments : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -36,6 +38,10 @@ class PostComments: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: frame.width, height: 100)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessDetailController?.showUserProfile()
     }
     
     override init(frame: CGRect) {

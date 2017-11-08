@@ -44,20 +44,15 @@ class PostLikesCell : UICollectionViewCell {
         userInfoStack.spacing = 10
         userInfoStack.translatesAutoresizingMaskIntoConstraints = false
         
-        let userstackUnderLine = UIView()
-        userstackUnderLine.backgroundColor = UIColor.init(white: 0, alpha: 0.2)
-        
         let userstackTopLine = UIView()
         userstackTopLine.backgroundColor = UIColor.init(white: 0, alpha: 0.2)
         
         addSubview(userInfoStack)
-        addSubview(userstackUnderLine)
         
         userPhoto.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 60, height: 60)
         
         userInfoStack.anchor(top: nil, left: userPhoto.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
         userInfoStack.centerYAnchor.constraint(equalTo: userPhoto.centerYAnchor).isActive = true
-        userstackUnderLine.anchor(top: userPhoto.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
     }
     
     override init(frame: CGRect) {

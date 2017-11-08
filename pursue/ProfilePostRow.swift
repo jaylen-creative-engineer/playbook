@@ -10,7 +10,7 @@ import UIKit
 
 class ProfilePostRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    var accessHomeController : HomeController?
+    var accessProfileController : ProfileController?
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -52,7 +52,7 @@ class ProfilePostRow : UICollectionViewCell, UICollectionViewDelegate, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessHomeController?.showPostDetailForPost()
+        accessProfileController?.showPostDetailForPost()
     }
     
     func setupView(){

@@ -18,41 +18,25 @@ class ExploreCategoryCells : UICollectionViewCell {
     
     lazy var selectInterests : UIButton = {
        let button = UIButton()
-        button.layer.borderColor = UIColor.black.cgColor
+        button.backgroundColor = UIColor.black
+        button.setTitle("ANIMALS", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.titleLabel?.textColor = .white
         button.layer.cornerRadius = 16
         button.layer.borderWidth = 1
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .black
-        button.addTarget(self, action: #selector(handleCategoryDetail), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleTouch), for: .touchUpInside)
         return button
     }()
     
-    lazy var buttonLabel : UILabel = {
-       let label = UILabel()
-        label.text = "ANIMALS"
-        label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .white
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleCategoryDetail))
-        label.addGestureRecognizer(tap)
-        label.isUserInteractionEnabled = true
-        return label
-    }()
-    
-    @objc func handleCategoryDetail(){
-        delegate?.changeToDetail(for : self)
+    @objc func handleTouch(){
+        delegate?.changeToDetail(for: self)
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         addSubview(selectInterests)
-        selectInterests.addSubview(buttonLabel)
-        
-        selectInterests.anchor(top: nil, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: buttonLabel.intrinsicContentSize.width + 30, height: 0)
-        selectInterests.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        buttonLabel.centerYAnchor.constraint(equalTo: selectInterests.centerYAnchor).isActive = true
-        buttonLabel.centerXAnchor.constraint(equalTo: selectInterests.centerXAnchor).isActive = true
+        selectInterests.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: selectInterests.intrinsicContentSize.width + 30, height: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {

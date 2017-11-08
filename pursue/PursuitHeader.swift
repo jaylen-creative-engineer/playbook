@@ -9,7 +9,6 @@
 import UIKit
 
 protocol PursuitHeaderDelegate {
-    func handleCamera(for cell : PursuitHeader)
     func handleMessage(for cell : PursuitHeader)
 }
 
@@ -17,6 +16,7 @@ protocol PursuitHeaderDelegate {
 class PursuitHeader: HomeHeader {
     
     var pursuitDelegate : PursuitHeaderDelegate?
+    
     let switchPursuits : UILabel = {
         let label = UILabel()
         label.text = "DESIGN"
@@ -29,6 +29,18 @@ class PursuitHeader: HomeHeader {
         button.setImage(#imageLiteral(resourceName: "down-arrow"), for: .normal)
         return button
     }()
+    
+    lazy var pursueChatIcon : UIButton = {
+        let button = UIButton()
+        button.setBackgroundImage(#imageLiteral(resourceName: "send2").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleChat), for: .touchUpInside)
+        return button
+    }()
+    
+    
+    @objc func handleChat(){
+        pursuitDelegate?.handleMessage(for: self)
+    }
     
     var stackView = UIStackView()
     
@@ -43,18 +55,18 @@ class PursuitHeader: HomeHeader {
         stackView.anchor(top: pageTitle.bottomAnchor, left: pageTitle.leftAnchor, bottom: nil, right: nil, paddingTop: 38, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: switchPursuits.intrinsicContentSize.width + 16, height: switchPursuits.intrinsicContentSize.height)
     }
     
-    override func handleMessage() {
-        pursuitDelegate?.handleMessage(for: self)
-    }
-    
     override func setupViews() {
         super.setupViews()
         
         pageTitle.text = "Pursuits"
         
+        homeChatIcon.isHidden = true
+        
         addSubview(pageTitle)
+        addSubview(pursueChatIcon)
         
         pageTitle.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 32)
+        pursueChatIcon.anchor(top: pageTitle.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 24, width: 0, height: 20)
         setupStackView()
     }
     

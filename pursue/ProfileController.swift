@@ -90,14 +90,17 @@ class ProfileController: UICollectionViewController, UICollectionViewDelegateFlo
             aboutCell.delegate = self
             return aboutCell
         case 1:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! ProfilePostRow
-            return cell
+            let postCell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! ProfilePostRow
+            postCell.accessProfileController = self
+            return postCell
         case 2:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: addedId, for: indexPath) as! ProfileAddedRow
-            return cell
+            let addedCell = collectionView.dequeueReusableCell(withReuseIdentifier: addedId, for: indexPath) as! ProfileAddedRow
+            addedCell.accessProfileController = self
+            return addedCell
         case 3:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuitsRow
-            return cell
+            let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuitsRow
+            pursuitCell.accessProfileController = self
+            return pursuitCell
         default:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuitsRow
             return cell
@@ -125,24 +128,25 @@ class ProfileController: UICollectionViewController, UICollectionViewDelegateFlo
         return 4
     }
     
-    func handleCamera(for cell: ProfileHeader) {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    
+    func showUserProfile(){
+        let userProfileController = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(userProfileController, animated: true)
+    }
+    
+    func showChallengesDetail(){
         
-        alertController.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (_) in
-            let cameraController = CameraController()
-            self.present(cameraController, animated: true, completion: nil)
-        }))
-        
-        alertController.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (_) in
-            let layout = UICollectionViewFlowLayout()
-            let photoSelectorController = PhotoSelectorController(collectionViewLayout: layout)
-            let navController = UINavigationController(rootViewController: photoSelectorController)
-            self.present(navController, animated: true, completion: nil)
-            
-        }))
-        
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        present(alertController, animated: true, completion: nil)
+    }
+    
+    func showPursuitsDetail(){
+        let pursuits = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(pursuits, animated: true)
+    }
+    
+    func showPostDetailForPost(){
+        let layout = UICollectionViewFlowLayout()
+        let postDetilController = PostDetailController(collectionViewLayout: layout)
+        navigationController?.pushViewController(postDetilController, animated: true)
     }
     
     func handleMessage(for cell: ProfileHeader) {

@@ -11,9 +11,16 @@ import UIKit
 class ProfileAddedRow : PeopleRow {
     
     let addedId = "addedId"
+    
+    var accessProfileController : ProfileController?
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: addedId, for: indexPath) as! PeopleAddedCells
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        accessProfileController?.showUserProfile()
     }
     
     override init(frame: CGRect) {

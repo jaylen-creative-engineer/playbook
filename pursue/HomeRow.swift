@@ -78,18 +78,14 @@ class HomeRow: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewD
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        let bottomDividerView = UIView()
-        bottomDividerView.backgroundColor = UIColor.init(white: 0, alpha: 0.2)
         
         addSubview(postCollection)
         addSubview(rowLabel)
-        addSubview(bottomDividerView)
         addSubview(moreButton)
         
         rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
         moreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: moreButton.intrinsicContentSize.width, height: moreButton.intrinsicContentSize.height)
         postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 330)
-        bottomDividerView.anchor(top: bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.6)
         postCollection.register(HomeRowCells.self, forCellWithReuseIdentifier: cellId)
         postCollection.dataSource = self
         postCollection.delegate = self

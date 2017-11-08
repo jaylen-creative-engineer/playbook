@@ -11,6 +11,7 @@ import UIKit
 class RelatedPost : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     let cellId = "cellId"
+    var accessDetailController : PostDetailController?
     
     let relatedPost : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -49,6 +50,10 @@ class RelatedPost : UICollectionViewCell, UICollectionViewDelegate, UICollection
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (frame.width - 2) / 3
         return CGSize(width: width - 12, height: width + 140)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessDetailController?.showPostDetail()
     }
     
     override init(frame: CGRect) {

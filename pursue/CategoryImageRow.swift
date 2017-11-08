@@ -10,7 +10,7 @@ import UIKit
 
 class CategoryImageRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    var accessHomeController : HomeController?
+    var accessCategoryController : CategoryDetailController?
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -52,7 +52,7 @@ class CategoryImageRow : UICollectionViewCell, UICollectionViewDelegate, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessHomeController?.showPostDetailForPost()
+        accessCategoryController?.showPostDetailForPost()
     }
     
     

@@ -36,35 +36,46 @@ class ExploreChallengeCells : UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .gray
-        label.textAlignment = .center
+        label.textAlignment = .left
         return label
     }()
     
     let exploreImage : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "equus")
+        iv.image = #imageLiteral(resourceName: "samuel-l")
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         return iv
     }()
  
+    let addedImage : UIImageView = {
+        let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "scarlett")
+        iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
+        return iv
+    }()
+    
     let containerView = UIView()
+    let leftContainerView = UIView()
     
     func setupCardDetails(){
         addSubview(containerView)
-        addSubview(exploreButton)
-        exploreButton.addSubview(exploreImage)
+        addSubview(leftContainerView)
+        addSubview(exploreImage)
         addSubview(exploreLabel)
         addSubview(exploreDetailLabel)
         addSubview(finishingDateLabel)
+        addSubview(addedImage)
         
-        containerView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 280)
-        exploreButton.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
+        containerView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 135, height: 190)
+        leftContainerView.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 135, height: 190)
         
-        exploreImage.anchor(top: exploreButton.topAnchor, left: exploreButton.leftAnchor, bottom: exploreButton.bottomAnchor, right: exploreButton.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        exploreLabel.anchor(top: exploreImage.bottomAnchor, left: exploreImage.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: exploreLabel.intrinsicContentSize.height)
+        exploreImage.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        addedImage.anchor(top: leftContainerView.topAnchor, left: leftContainerView.leftAnchor, bottom: leftContainerView.bottomAnchor, right: leftContainerView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        exploreLabel.anchor(top: containerView.bottomAnchor, left: containerView.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: exploreLabel.intrinsicContentSize.height)
         exploreDetailLabel.anchor(top: exploreLabel.bottomAnchor, left: exploreLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: exploreDetailLabel.intrinsicContentSize.height)
-        finishingDateLabel.anchor(top: nil, left: exploreDetailLabel.leftAnchor, bottom: containerView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 12, width: finishingDateLabel.intrinsicContentSize.width, height: finishingDateLabel.intrinsicContentSize.height)
+        finishingDateLabel.anchor(top: exploreDetailLabel.bottomAnchor, left: exploreLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: finishingDateLabel.intrinsicContentSize.height)
     }
     
     override init(frame: CGRect) {

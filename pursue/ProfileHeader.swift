@@ -40,7 +40,6 @@ class ProfileHeader: HomeHeader {
     lazy var chatIcon : UIButton = {
         let button = UIButton()
         button.setBackgroundImage(#imageLiteral(resourceName: "send2").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.backgroundColor = .clear
         button.addTarget(self, action: #selector(handleMessage), for: .touchUpInside)
         return button
     }()
@@ -48,6 +47,7 @@ class ProfileHeader: HomeHeader {
     override func setupViews() {
         addSubview(chatIcon)
         pageTitle.text = "Test27"
+        homeChatIcon.isHidden = true
     
         chatIcon.anchor(top: pageTitle.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 24, width: 0, height: 20)
     }

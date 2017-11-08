@@ -20,9 +20,9 @@ class HomeRowCells : UICollectionViewCell {
     
     let homeMainDescription : UILabel = {
        let label = UILabel()
-        label.text = "Wonder Woman"
+        label.text = "Wonder Woman Again"
         label.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight(rawValue: 25))
-        label.numberOfLines = 0
+        label.numberOfLines = 2
         label.textColor = .black
         return label
     }()
@@ -32,6 +32,7 @@ class HomeRowCells : UICollectionViewCell {
         label.text = "Return To IMAX"
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.thin)
+        label.numberOfLines = 2
         return label
     }()
     
@@ -48,7 +49,7 @@ class HomeRowCells : UICollectionViewCell {
         addSubview(homeSubDesctiption)
         
         homeImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 250)
-        homeMainDescription.anchor(top: homeImage.bottomAnchor, left: homeImage.leftAnchor, bottom: nil, right: homeImage.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 14)
+        homeMainDescription.anchor(top: homeImage.bottomAnchor, left: homeImage.leftAnchor, bottom: nil, right: homeImage.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: homeMainDescription.intrinsicContentSize.height)
         homeSubDesctiption.anchor(top: homeMainDescription.bottomAnchor, left: homeMainDescription.leftAnchor, bottom: nil, right: homeMainDescription.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
     }
     

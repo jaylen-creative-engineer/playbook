@@ -10,7 +10,7 @@ import UIKit
 
 class ExploreChallengeRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    var accessHomeController : HomeController?
+    var accessExploreController : ExploreController?
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -51,7 +51,7 @@ class ExploreChallengeRow : UICollectionViewCell, UICollectionViewDelegate, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessHomeController?.showPostDetailForPost()
+        accessExploreController?.showChallengesDetail()
     }
     
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CategoryDetailController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class CategoryDetailController : UICollectionViewController, UICollectionViewDelegateFlowLayout, CategoryHeaderDelegate {
     
     let headerId = "headerId"
     let cellId = "cellId"
@@ -38,6 +38,7 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! CategoryHeaderRow
+        header.categoryDelegate = self
         return header
     }
     
@@ -49,13 +50,42 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
         }
     }
     
+    func handleMessage(for cell: CategoryHeaderRow) {
+        let messageController = MessagesController()
+        let navController = UINavigationController(rootViewController: messageController)
+        present(navController, animated: true, completion: nil)
+    }
+    
+    func goBack() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func showUserProfile(){
+        
+    }
+    
+    func showChallengesDetail(){
+        
+    }
+    
+    func showPursuitsDetail(){
+        let pursuits = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(pursuits, animated: true)
+    }
+    
+    func showPostDetailForPost(){
+        let layout = UICollectionViewFlowLayout()
+        let postDetilController = PostDetailController(collectionViewLayout: layout)
+        navigationController?.pushViewController(postDetilController, animated: true)
+    }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell : UICollectionViewCell
         switch indexPath.item {
         case 0:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CategoryImageRow
-            return cell
+            let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CategoryImageRow
+            imageCell.accessCategoryController = self
+            return imageCell
         case 1:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! CategoryPeopleRow
             return cell
@@ -63,8 +93,9 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! CategoryChallengeRow
             return cell
         case 3:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! CategoryExerciseRow
-            return cell
+            let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! CategoryExerciseRow
+            pursuitCell.accessCategoryController = self
+            return pursuitCell
         default:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! CategoryExerciseRow
             return cell

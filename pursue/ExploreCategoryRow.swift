@@ -1,8 +1,6 @@
 import UIKit
 
 class ExploreCategoryRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    
     var accessExploreController : ExploreController?
     
     let rowLabel : UILabel = {
@@ -30,7 +28,7 @@ class ExploreCategoryRow : UICollectionViewCell, UICollectionViewDelegate, UICol
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: ((frame.width - 2) / 5) + 20, height: ((frame.width - 2) / 6))
+        return CGSize(width: ((frame.width - 2) / 5) + 20, height: ((frame.width - 2) / 6) - 25)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

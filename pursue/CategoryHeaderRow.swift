@@ -8,15 +8,14 @@
 
 import UIKit
 
+protocol CategoryHeaderDelegate {
+    func goBack()
+    func handleMessage(for cell : CategoryHeaderRow)
+}
 class CategoryHeaderRow : UICollectionViewCell {
     
-    let chatIcon : UIButton = {
-        let button = UIButton()
-        button.setBackgroundImage(#imageLiteral(resourceName: "send2").withRenderingMode(.alwaysOriginal), for: .normal)
-        return button
-    }()
-    
     let cellId = "cellId"
+    var categoryDelegate : CategoryHeaderDelegate?
     
     let pageTitle : UILabel = {
         let label = UILabel()
@@ -33,17 +32,27 @@ class CategoryHeaderRow : UICollectionViewCell {
         return view
     }()
     
-    let exploreChatIcon : UIButton = {
+    lazy var exploreChatIcon : UIButton = {
         let button = UIButton()
         button.setBackgroundImage(#imageLiteral(resourceName: "send2").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleChat), for: .touchUpInside)
         return button
     }()
     
-    let categoryBackIcon : UIButton = {
+    lazy var categoryBackIcon : UIButton = {
         let button = UIButton()
         button.setBackgroundImage(#imageLiteral(resourceName: "back-button").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleBack), for: .touchUpInside)
         return button
     }()
+    
+    @objc func handleBack(){
+        categoryDelegate?.goBack()
+    }
+    
+    @objc func handleChat(){
+        categoryDelegate?.handleMessage(for: self)
+    }
     
     func setupPageTitle(){
         addSubview(categoryBackIcon)

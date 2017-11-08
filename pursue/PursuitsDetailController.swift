@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PursuitsDetailController : UICollectionViewController, UICollectionViewDelegateFlowLayout, DetailCellChange {
+class PursuitsDetailController : UICollectionViewController, UICollectionViewDelegateFlowLayout, DetailCellChange, MessageDelegate {
     
     let headerId = "headerId"
     let commentId = "commentId"
@@ -24,7 +24,7 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
     var isChallengeView = false
     
     func goBack() {
-        self.dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
     
     func changeAbout() {
@@ -163,8 +163,16 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! PursuitsDetailHeader
         header.changeDelegate = self
+        header.messageDelegate = self
         return header
     }
+    
+    func handleMessage(for cell: PursuitsDetailHeader) {
+        let messageController = MessagesController()
+        let navController = UINavigationController(rootViewController: messageController)
+        present(navController, animated: true, completion: nil)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -60,17 +60,21 @@ class ExploreController: UICollectionViewController, UICollectionViewDelegateFlo
              categoryCell.accessExploreController = self
             return categoryCell
         case 1:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreImageRow
-            return cell
+            let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreImageRow
+            imageCell.accessExploreController = self
+            return imageCell
         case 2:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! PeopleRow
-            return cell
+            let peopleCell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! PeopleRow
+            peopleCell.accessExploreController = self
+            return peopleCell
         case 3:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! ExploreChallengeRow
-            return cell
+            let challengeCell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! ExploreChallengeRow
+            challengeCell.accessExploreController = self
+            return challengeCell
         case 4:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! ExploreExerciseRow
-            return cell
+            let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! ExploreExerciseRow
+            pursuitCell.accessExploreController = self
+            return pursuitCell
         default:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! ExploreExerciseRow
             return cell
@@ -100,6 +104,27 @@ class ExploreController: UICollectionViewController, UICollectionViewDelegateFlo
         default:
             return CGSize(width: view.frame.width, height: 260)
         }
+    }
+    
+    func showUserProfile(){
+        let userProfileController = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(userProfileController, animated: true)
+    }
+    
+    func showChallengesDetail(){
+        let challenge = ChallengesController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(challenge, animated: true)
+    }
+    
+    func showPursuitsDetail(){
+        let pursuits = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(pursuits, animated: true)
+    }
+    
+    func showPostDetailForPost(){
+        let layout = UICollectionViewFlowLayout()
+        let postDetilController = PostDetailController(collectionViewLayout: layout)
+        navigationController?.pushViewController(postDetilController, animated: true)
     }
  
     func handleMessage(for cell: ExploreHeaderRow) {

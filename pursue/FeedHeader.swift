@@ -8,7 +8,21 @@
 
 import UIKit
 
+protocol FeedDelegate {
+    func goBack()
+    func handleMessage(for cell : FeedHeader)
+}
+
 class FeedHeader : CategoryHeaderRow {
+    var feedDelegate : FeedDelegate?
+    
+    override func handleChat() {
+        feedDelegate?.handleMessage(for: self)
+    }
+    
+    override func handleBack() {
+        feedDelegate?.goBack()
+    }
     
     override func setupPageTitle() {
         super.setupPageTitle()

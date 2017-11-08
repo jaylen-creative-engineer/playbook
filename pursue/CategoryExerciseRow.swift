@@ -10,7 +10,7 @@ import UIKit
 
 class CategoryExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    var accessHomeController : HomeController?
+    var accessCategoryController : CategoryDetailController?
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -51,7 +51,7 @@ class CategoryExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessHomeController?.showPostDetailForPost()
+        accessCategoryController?.showPursuitsDetail()
     }
     
     

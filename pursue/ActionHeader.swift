@@ -25,7 +25,6 @@ class ActionHeader: HomeHeader {
         super.init(frame: frame)
         backgroundColor = .white
         pageTitle.text = "Pursue"
-        homeCameraIcon.isHidden = true
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -119,7 +119,7 @@ class LoginController: UIViewController {
     
     
     @objc func handleShowSignUp() {
-        let signupController = SignupController()
+        let signupController = InterestsController(collectionViewLayout: UICollectionViewFlowLayout())
         navigationController?.pushViewController(signupController, animated: true)
         
     }

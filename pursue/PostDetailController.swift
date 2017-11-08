@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PostDetailController : UICollectionViewController, UICollectionViewDelegateFlowLayout, PostDetailHeaderDelegate {
+class PostDetailController : UICollectionViewController, UICollectionViewDelegateFlowLayout, PostDetailHeaderDelegate, PostMessageDelegate {
     
     let headerId = "headerId"
     let commentId = "commentId"
@@ -21,7 +21,7 @@ class PostDetailController : UICollectionViewController, UICollectionViewDelegat
     var isLikesView = false
     
     func goBack() {
-        self.dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
     
     func didChangeToCommentsView() {
@@ -79,12 +79,15 @@ class PostDetailController : UICollectionViewController, UICollectionViewDelegat
             return cell
         case isCommentsView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
+            cell.accessDetailController = self
             return cell
         case isLikesView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: likeId, for: indexPath) as! PostLikes
+            cell.accessDetailController = self
             return cell
         case isRelatedView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: relatedId, for: indexPath) as! RelatedPost
+            cell.accessDetailController = self
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! PostView
@@ -99,7 +102,25 @@ class PostDetailController : UICollectionViewController, UICollectionViewDelegat
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! PostDetailHeader
         header.postDetailDelegate = self
+        header.messageDelegate = self
         return header
+    }
+    
+    func handleMessage(for cell: PostDetailHeader) {
+        let messageController = MessagesController()
+        let navController = UINavigationController(rootViewController: messageController)
+        present(navController, animated: true, completion: nil)
+    }
+    
+    func showUserProfile(){
+        let userProfileController = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(userProfileController, animated: true)
+    }
+    
+    func showPostDetail(){
+        let layout = UICollectionViewFlowLayout()
+        let postDetilController = PostDetailController(collectionViewLayout: layout)
+        navigationController?.pushViewController(postDetilController, animated: true)
     }
     
     override func viewDidLoad() {

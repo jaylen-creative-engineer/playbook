@@ -28,6 +28,7 @@ class PeopleRowCells : UICollectionViewCell {
         return label
     }()
     
+    
     func setupView(){
         addSubview(userPhoto)
         addSubview(usernameLabel)
