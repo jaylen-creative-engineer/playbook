@@ -34,7 +34,7 @@ class ExploreController: UICollectionViewController, UICollectionViewDelegateFlo
     // MARK: - Setup Views
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: (view.frame.width / 8) + 5)
+        return CGSize(width: view.frame.width, height: (view.frame.width / 8) + 35)
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -94,13 +94,13 @@ class ExploreController: UICollectionViewController, UICollectionViewDelegateFlo
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 0:
-            return CGSize(width: view.frame.width, height: 110)
+            return CGSize(width: view.frame.width, height: 130)
         case 1:
             return CGSize(width: view.frame.width, height: 260)
         case 2:
             return CGSize(width: view.frame.width, height: 210)
         case 3:
-            return CGSize(width: view.frame.width, height: 320)
+            return CGSize(width: view.frame.width, height: 360)
         default:
             return CGSize(width: view.frame.width, height: 260)
         }

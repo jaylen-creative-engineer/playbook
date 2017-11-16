@@ -12,6 +12,8 @@ class PursuitSteps :  UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
     
     let cellId = "cellId"
     
+    var accessPursuitDetailController : PursuitsDetailController?
+    
     let pursuitSteps : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -44,6 +46,10 @@ class PursuitSteps :  UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: frame.width, height: 90)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessPursuitDetailController?.showStepsDetailForSteps(for: self)
     }
     
     override init(frame: CGRect) {

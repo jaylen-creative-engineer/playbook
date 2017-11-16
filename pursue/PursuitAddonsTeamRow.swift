@@ -10,6 +10,8 @@ import UIKit
 
 class PursuitAddonsTeamRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
     
+    var accessPursuitDetailController : PursuitsDetailController?
+    
     let collectionViewContainer : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -45,6 +47,10 @@ class PursuitAddonsTeamRow : UICollectionViewCell, UICollectionViewDelegateFlowL
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamCells
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessPursuitDetailController?.showUserProfile()
     }
     
     func setupView(){

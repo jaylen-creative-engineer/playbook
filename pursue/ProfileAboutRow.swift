@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SettingsDelegate {
-    func settingLogOut(for cell : ProfileAboutRow)
+    func showSettings(for cell : ProfileAboutRow)
 }
 
 class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -20,7 +20,6 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegate, UICollec
     let rowLabel : UILabel = {
         let label = UILabel()
         label.text = "ABOUT"
-        label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 12)
         return label
     }()
@@ -77,7 +76,7 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegate, UICollec
     }()
     
     @objc func handleSettings() {
-        delegate?.settingLogOut(for: self)
+        delegate?.showSettings(for: self)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

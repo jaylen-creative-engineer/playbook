@@ -48,6 +48,7 @@ class ProfileHeader: HomeHeader {
         addSubview(chatIcon)
         pageTitle.text = "Test27"
         homeChatIcon.isHidden = true
+        searchBar.isHidden = true
     
         chatIcon.anchor(top: pageTitle.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 24, width: 0, height: 20)
     }

@@ -60,6 +60,12 @@ class ExploreChallengeCells : UICollectionViewCell {
     let leftContainerView = UIView()
     
     func setupCardDetails(){
+        containerView.layer.cornerRadius = 8
+        containerView.clipsToBounds = true
+        
+        leftContainerView.layer.cornerRadius = 8
+        leftContainerView.clipsToBounds = true
+        
         addSubview(containerView)
         addSubview(leftContainerView)
         addSubview(exploreImage)

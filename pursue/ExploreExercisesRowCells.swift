@@ -22,16 +22,19 @@ class ExploreExercisesRowCells  : UICollectionViewCell {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "backpack")
         iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
+        iv.layer.cornerRadius = 4
+        iv.layer.masksToBounds = true
+        iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
     }()
     
     func setupView(){
         addSubview(exploreImage)
         addSubview(exploreLabel)
-
-        exploreImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 200, height: 125)
-        exploreLabel.anchor(top: exploreImage.bottomAnchor, left: exploreImage.leftAnchor, bottom: nil, right: exploreImage.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 42)
+        
+        exploreImage.anchor(top: nil, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 220, height: 135)
+        exploreImage.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        exploreLabel.anchor(top: exploreImage.bottomAnchor, left: exploreImage.leftAnchor, bottom: nil, right: exploreImage.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: exploreLabel.intrinsicContentSize.height)
     }
     
     override init(frame: CGRect) {

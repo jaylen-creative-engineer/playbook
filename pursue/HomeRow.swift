@@ -20,7 +20,6 @@ class HomeRow: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewD
     let rowLabel : UILabel = {
         let label = UILabel()
         label.text = "TODAY'S PICKS"
-        label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 12)
         let tap = UITapGestureRecognizer(target: self, action: #selector(feedChange))
         label.addGestureRecognizer(tap)
@@ -28,15 +27,11 @@ class HomeRow: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewD
         return label
     }()
     
-    lazy var moreButton : UILabel = {
-        let label = UILabel()
-        label.text = "SEE MORE"
-        label.textColor = .blue
-        label.font = UIFont.boldSystemFont(ofSize: 12)
-        let tap = UITapGestureRecognizer(target: self, action: #selector(feedChange))
-        label.addGestureRecognizer(tap)
-        label.isUserInteractionEnabled = true
-        return label
+    lazy var moreButton : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "right-arrow-1").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(feedChange), for: .touchUpInside)
+        return button
     }()
     
     @objc func feedChange(){
@@ -84,7 +79,7 @@ class HomeRow: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewD
         addSubview(moreButton)
         
         rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
-        moreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: moreButton.intrinsicContentSize.width, height: moreButton.intrinsicContentSize.height)
+        moreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 24, height: 12)
         postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 330)
         postCollection.register(HomeRowCells.self, forCellWithReuseIdentifier: cellId)
         postCollection.dataSource = self

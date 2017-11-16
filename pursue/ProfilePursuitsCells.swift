@@ -36,7 +36,8 @@ class ProfilePursuitsCells : UICollectionViewCell {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "backpack")
         iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
+        iv.layer.cornerRadius = 6
+        iv.layer.masksToBounds = true
         return iv
     }()
     
@@ -51,7 +52,7 @@ class ProfilePursuitsCells : UICollectionViewCell {
         addSubview(pursuitButton)
         pursuitButton.addSubview(pursuitImage)
         
-        pursuitButton.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 175)
+        pursuitButton.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 185)
         pursuitImage.anchor(top: pursuitButton.topAnchor, left: pursuitButton.leftAnchor, bottom: pursuitButton.bottomAnchor, right: pursuitButton.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     

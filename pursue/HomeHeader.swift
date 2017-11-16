@@ -30,6 +30,7 @@ class HomeHeader: ExploreHeaderRow {
     func setupViews(){
         pageTitle.text = "Home"
         exploreChatIcon.isHidden = true
+        searchBar.isHidden = true
         
         addSubview(homeChatIcon)
         addSubview(pageTitle)

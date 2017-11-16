@@ -15,6 +15,7 @@ class ExploreImageRow : UICollectionViewCell, UICollectionViewDelegate, UICollec
     let rowLabel : UILabel = {
         let label = UILabel()
         label.textColor = .black
+        label.text = "ANIMALS"
         label.font = UIFont.boldSystemFont(ofSize: 12)
         return label
     }()
@@ -43,7 +44,6 @@ class ExploreImageRow : UICollectionViewCell, UICollectionViewDelegate, UICollec
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExerciseImageCells
-        rowLabel.text = "ANIMALS"
         return cell
     }
     

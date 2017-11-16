@@ -47,27 +47,27 @@ class ProfileController: UICollectionViewController, UICollectionViewDelegateFlo
         
     }
     
-    func settingLogOut(for cell: ProfileAboutRow) {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        alertController.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (_) in
-            
-            do {
-                try Auth.auth().signOut()
-                
-                let loginController = LoginController()
-                let navController = UINavigationController(rootViewController: loginController)
-                self.present(navController, animated: true, completion: nil)
-                
-            } catch let signOutErr {
-                
-                print("Failed to sign out", signOutErr)
-            }
-        }))
-        
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        present(alertController, animated: true, completion: nil)
-    }
+//    func settingLogOut(for cell: ProfileAboutRow) {
+//        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+//
+//        alertController.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (_) in
+//
+//            do {
+//                try Auth.auth().signOut()
+//
+//                let loginController = LoginController()
+//                let navController = UINavigationController(rootViewController: loginController)
+//                self.present(navController, animated: true, completion: nil)
+//
+//            } catch let signOutErr {
+//
+//                print("Failed to sign out", signOutErr)
+//            }
+//        }))
+//
+//        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+//        present(alertController, animated: true, completion: nil)
+//    }
     
     // MARK: - Setup View
     
@@ -136,6 +136,11 @@ class ProfileController: UICollectionViewController, UICollectionViewDelegateFlo
     
     func showChallengesDetail(){
         
+    }
+    
+    func showSettings(for cell: ProfileAboutRow) {
+        let settingsController = SettingsController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(settingsController, animated: true)
     }
     
     func showPursuitsDetail(){

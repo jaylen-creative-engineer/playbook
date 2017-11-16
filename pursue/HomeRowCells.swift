@@ -15,6 +15,7 @@ class HomeRowCells : UICollectionViewCell {
         iv.image = #imageLiteral(resourceName: "tumblr_nbje6dualg1r46py4o1_1280")
         iv.layer.masksToBounds = true
         iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 4
         return iv
     }()
     

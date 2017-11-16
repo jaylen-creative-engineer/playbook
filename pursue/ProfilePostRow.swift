@@ -48,7 +48,7 @@ class ProfilePostRow : UICollectionViewCell, UICollectionViewDelegate, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 12, 0, 12)
+        return UIEdgeInsetsMake(12, 12, 0, 12)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -59,8 +59,8 @@ class ProfilePostRow : UICollectionViewCell, UICollectionViewDelegate, UICollect
         addSubview(postCollection)
         addSubview(rowLabel)
         
-        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 140, height: 22)
-        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 140, height: 22)
+        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 380)
         postCollection.register(ProfilePostCells.self, forCellWithReuseIdentifier: cellId)
         postCollection.delegate = self
         postCollection.dataSource = self

@@ -13,8 +13,10 @@ class ProfilePostCells : UICollectionViewCell {
     let exploreImage : UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "tumblr_nbje6dualg1r46py4o1_1280")
+        iv.layer.cornerRadius = 6
         iv.layer.masksToBounds = true
         iv.contentMode = .scaleAspectFill
+        iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
     }()
     
@@ -40,7 +42,7 @@ class ProfilePostCells : UICollectionViewCell {
         addSubview(exploreMainDescription)
         addSubview(exploreSubDesctiption)
         
-        exploreImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 250)
+        exploreImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 275)
         exploreMainDescription.anchor(top: exploreImage.bottomAnchor, left: exploreImage.leftAnchor, bottom: nil, right: exploreImage.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 14)
         exploreSubDesctiption.anchor(top: exploreMainDescription.bottomAnchor, left: exploreMainDescription.leftAnchor, bottom: nil, right: exploreMainDescription.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
     }

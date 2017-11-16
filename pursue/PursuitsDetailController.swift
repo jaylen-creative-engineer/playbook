@@ -134,21 +134,26 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
             return cell
         case isSavedView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: relatedId, for: indexPath) as! RelatedPost
+            cell.accessPursuitDetailController = self
             return cell
         case isToolsView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: toolId, for: indexPath) as! PursuitTools
             return cell
         case isTeamView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: likeId, for: indexPath) as! PostLikes
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: likeId, for: indexPath) as! PursuitTeam
+            cell.accessDetailController = self
             return cell
         case isChallengeView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! PursuitChallenge
+            cell.accessPursuitDetailController = self
             return cell
         case isNextView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: nextId, for: indexPath) as! NextPursuit
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: nextId, for: indexPath) as! NextPursuitCellsContainer
+            cell.accessPursuitDetailController = self
             return cell
         case isStepsView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! PursuitSteps
+            cell.accessPursuitDetailController = self
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! PostView
@@ -173,15 +178,42 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
         present(navController, animated: true, completion: nil)
     }
     
+    func showStepsDetailForSteps(for cell : PursuitSteps){
+        let layout = UICollectionViewFlowLayout()
+        let stepsControler = StepsDetailController(collectionViewLayout: layout)
+        navigationController?.pushViewController(stepsControler, animated: true)
+    }
+    
+    func showPursuitsDetail(){
+        let pursuits = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(pursuits, animated: true)
+    }
+    
+    func showChallengesDetail(){
+        let challenge = ChallengesController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(challenge, animated: true)
+    }
+    
+    func showUserProfile(){
+        let userProfileController = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(userProfileController, animated: true)
+    }
+    
+    func showPostDetailForPost(){
+        let layout = UICollectionViewFlowLayout()
+        let postDetilController = PostDetailController(collectionViewLayout: layout)
+        navigationController?.pushViewController(postDetilController, animated: true)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         collectionView?.register(PostView.self, forCellWithReuseIdentifier: postId)
-        collectionView?.register(PostLikes.self, forCellWithReuseIdentifier: likeId)
+        collectionView?.register(PursuitTeam.self, forCellWithReuseIdentifier: likeId)
         collectionView?.register(RelatedPost.self, forCellWithReuseIdentifier: relatedId)
         collectionView?.register(PursuitTools.self, forCellWithReuseIdentifier: toolId)
-        collectionView?.register(NextPursuit.self, forCellWithReuseIdentifier: nextId)
+        collectionView?.register(NextPursuitCellsContainer.self, forCellWithReuseIdentifier: nextId)
         collectionView?.register(PursuitSteps.self, forCellWithReuseIdentifier: stepId)
         collectionView?.register(PursuitChallenge.self, forCellWithReuseIdentifier: challengeId)
         collectionView?.register(PursuitsDetailHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
