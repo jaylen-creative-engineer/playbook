@@ -136,7 +136,6 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     
     @objc func handleSignup(){
-        print("Sign up")
         guard let email = emailTextField.text, email.count > 0 else { return }
         guard let username = usernameTextField.text, username.count > 0 else { return }
         guard let password = passwordTextField.text, password.count > 0 else { return }
@@ -170,8 +169,6 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
                         print("Failed to save user", err)
                         return
                     }
-                    
-                    print("Successfully saved user info")
                     
                     guard let mainTabController = UIApplication.shared.keyWindow?.rootViewController as? MainTabController else { return }
                     

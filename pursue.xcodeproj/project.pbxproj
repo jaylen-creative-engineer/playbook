@@ -100,6 +100,8 @@
 		E6A273FE1F68325A00F5B4C8 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A273FD1F68325A00F5B4C8 /* Post.swift */; };
 		E6A274001F68327F00F5B4C8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A273FF1F68327F00F5B4C8 /* User.swift */; };
 		E6A274021F68353E00F5B4C8 /* FirebaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A274011F68353E00F5B4C8 /* FirebaseUtils.swift */; };
+		E6A2B02B1FCA263D00DE1B9C /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A2B02A1FCA263D00DE1B9C /* MenuBar.swift */; };
+		E6A2B02D1FCA26A200DE1B9C /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A2B02C1FCA26A200DE1B9C /* MenuCell.swift */; };
 		E6AB64CD1F6F55A300033C09 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB64CC1F6F55A300033C09 /* Message.swift */; };
 		E6AB64CF1F6F566200033C09 /* ChatMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB64CE1F6F566200033C09 /* ChatMessageCell.swift */; };
 		E6AB64D11F6F58A600033C09 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB64D01F6F58A600033C09 /* ChatLogController.swift */; };
@@ -228,6 +230,8 @@
 		E6A273FD1F68325A00F5B4C8 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		E6A273FF1F68327F00F5B4C8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E6A274011F68353E00F5B4C8 /* FirebaseUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseUtils.swift; sourceTree = "<group>"; };
+		E6A2B02A1FCA263D00DE1B9C /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
+		E6A2B02C1FCA26A200DE1B9C /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		E6AB64CC1F6F55A300033C09 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		E6AB64CE1F6F566200033C09 /* ChatMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMessageCell.swift; sourceTree = "<group>"; };
 		E6AB64D01F6F58A600033C09 /* ChatLogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
@@ -433,6 +437,15 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		E6A2B0291FCA260700DE1B9C /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				E6A2B02A1FCA263D00DE1B9C /* MenuBar.swift */,
+				E6A2B02C1FCA26A200DE1B9C /* MenuCell.swift */,
+			);
+			name = Menu;
+			sourceTree = "<group>";
+		};
 		E6AB64CB1F6F557000033C09 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
@@ -486,6 +499,7 @@
 				E604CCF01FA7ACEB00A6D63E /* Feed */,
 				E6CE22901F67594C006C5755 /* Home */,
 				E6CE22891F671EC5006C5755 /* Login */,
+				E6A2B0291FCA260700DE1B9C /* Menu */,
 				E6A273FC1F68323F00F5B4C8 /* Models */,
 				E673201E1F8FE1B7000F6AAA /* Post */,
 				E6CE22961F675A35006C5755 /* Profile */,
@@ -753,6 +767,7 @@
 				E616632B1F745F0D00EC254C /* HomeRow.swift in Sources */,
 				E6AB64CD1F6F55A300033C09 /* Message.swift in Sources */,
 				E664366F1FA259E500A9B0E7 /* ProfileAboutRow.swift in Sources */,
+				E6A2B02B1FCA263D00DE1B9C /* MenuBar.swift in Sources */,
 				E6CE228B1F671ED6006C5755 /* LoginController.swift in Sources */,
 				E6308EA71FBD241000571130 /* SettingsController.swift in Sources */,
 				E6235EA81F94208F00BF1FDE /* PostComments.swift in Sources */,
@@ -812,6 +827,7 @@
 				E6AB64E61F7188C000033C09 /* PhotoSelectorHeader.swift in Sources */,
 				E664365B1FA24AD000A9B0E7 /* CategoryHeaderRow.swift in Sources */,
 				E61B48C01F9E81BF00183449 /* ExerciseImageCells.swift in Sources */,
+				E6A2B02D1FCA26A200DE1B9C /* MenuCell.swift in Sources */,
 				E6308EA91FBD262500571130 /* SettingsHeader.swift in Sources */,
 				E6CE22981F675A48006C5755 /* ProfileController.swift in Sources */,
 				E675405D1FB3B08000F7D492 /* StepsHeader.swift in Sources */,

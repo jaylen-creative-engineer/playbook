@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout, HomeHeaderDelegate, ChangeToFeed {
+class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout, ChangeToFeed {
     
     let cellId = "cellId"
     let secondaryId = "secondaryId"
@@ -16,12 +16,29 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     let headerId = "headerId"
     var delegate : HomeHeaderDelegate?
     
+    lazy var menuBar: MenuBar = {
+        let mb = MenuBar()
+        mb.homeController = self
+        return mb
+    }()
+    
+    private func setupMenuBar() {
+       let guide = view.safeAreaLayoutGuide
+       view.addSubview(menuBar)
+       menuBar.anchor(top: guide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.backgroundColor = .white
         collectionView?.register(HomeRow.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.register(HomeHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         self.navigationController?.isNavigationBarHidden = true
+        setupMenuBar()
+    }
+    
+    func scrollToMenuIndex(menuIndex: Int) {
+        let indexPath = IndexPath(item: menuIndex, section: 0)
+        collectionView?.scrollToItem(at: indexPath, at: [], animated: true)
     }
     
     func showPostDetailForPost(){
@@ -51,21 +68,10 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         return CGSize(width: view.frame.width, height: (view.frame.width / 8) + 5)
     }
     
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! HomeHeader
-        header.homeDelegate = self
-        return header
-    }
     
     func handleChangeToFeed(for cell: HomeRow) {
         let pursuits = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
         navigationController?.pushViewController(pursuits, animated: true)
-    }
-    
-    func handleChat(for cell: HomeHeader) {
-        let messageController = MessagesController()
-        let navController = UINavigationController(rootViewController: messageController)
-        present(navController, animated: true, completion: nil)
     }
     
 
