@@ -26,11 +26,11 @@ class MenuBar : UIView, UICollectionViewDataSource, UICollectionViewDelegate, UI
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        let guide = safeAreaLayoutGuide
         collectionView.register(MenuCell.self, forCellWithReuseIdentifier: cellId)
         
         addSubview(collectionView)
-        collectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        collectionView.anchor(top: topAnchor, left: guide.leftAnchor, bottom: bottomAnchor, right: guide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
         let selectedIndexPath = IndexPath(item: 1, section: 0)
         collectionView.selectItem(at: selectedIndexPath, animated: false, scrollPosition: [])
@@ -59,8 +59,7 @@ class MenuBar : UIView, UICollectionViewDataSource, UICollectionViewDelegate, UI
             cell.imageView.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 28, height: 28)
         }
         
-        cell.tintColor = UIColor.black
-        cell.homeLogo?.image = UIImage(named: imageNames[1])
+        cell.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
         return cell
     }
     
@@ -69,11 +68,11 @@ class MenuBar : UIView, UICollectionViewDataSource, UICollectionViewDelegate, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            return CGSize(width: frame.width / 3.8, height: frame.height)
+            return CGSize(width: (frame.width - 30) / 3.7, height: frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return 1
     }
     
     required init?(coder aDecoder: NSCoder) {

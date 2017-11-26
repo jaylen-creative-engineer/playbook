@@ -10,18 +10,9 @@ import UIKit
 
 class MenuCell : UICollectionViewCell {
     
-    var homeLogo : UIImageView? {
-        didSet {
-            guard let home = homeLogo else { return }
-            addSubview(home)
-            home.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 44, height: 28)
-            updateConstraints()
-        }
-    }
-    
     let imageView: UIImageView = {
         let iv = UIImageView()
-        iv.tintColor = UIColor.black
+        iv.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
         iv.backgroundColor = .clear
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
@@ -29,13 +20,13 @@ class MenuCell : UICollectionViewCell {
     
     override var isHighlighted: Bool {
         didSet {
-            imageView.tintColor = isHighlighted ? UIColor.black : UIColor.rgb(red: 91, green: 14, blue: 13)
+            imageView.tintColor = isHighlighted ? UIColor.black : UIColor.rgb(red: 128, green: 128, blue: 128)
         }
     }
     
     override var isSelected: Bool {
         didSet {
-            imageView.tintColor = isSelected ? UIColor.black : UIColor.rgb(red: 91, green: 14, blue: 13)
+            imageView.tintColor = isSelected ? UIColor.black : UIColor.rgb(red: 128, green: 128, blue: 128)
         }
     }
     
