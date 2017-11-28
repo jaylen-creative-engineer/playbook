@@ -8,32 +8,76 @@
 
 import UIKit
 
-class MenuCell : UICollectionViewCell {
+protocol CustomNavigationDelegate {
+    func changeToExplore()
+    func changeToHome()
+    func changeToProfile()
+}
+
+class MenuCell : UICollectionViewCell, UIGestureRecognizerDelegate {
     
-    let imageView: UIImageView = {
-        let iv = UIImageView()
-        iv.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
-        iv.backgroundColor = .clear
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        return iv
+    var delegate : CustomNavigationDelegate?
+    
+    lazy var homeIcon : UIButton = {
+       let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(#imageLiteral(resourceName: "instagram_logo").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.contentMode = .scaleAspectFit
+        button.addTarget(self, action: #selector(homeActive), for: .touchUpInside)
+        return button
     }()
     
-    override var isHighlighted: Bool {
-        didSet {
-            imageView.tintColor = isHighlighted ? UIColor.black : UIColor.rgb(red: 128, green: 128, blue: 128)
-        }
-    }
+    lazy var exploreIcon : UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(#imageLiteral(resourceName: "explore_icon").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.contentMode = .scaleAspectFit
+        button.addTarget(self, action: #selector(exploreActive), for: .touchUpInside)
+        return button
+    }()
     
-    override var isSelected: Bool {
-        didSet {
-            imageView.tintColor = isSelected ? UIColor.black : UIColor.rgb(red: 128, green: 128, blue: 128)
-        }
-    }
-    
+    lazy var profileIcon : UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(#imageLiteral(resourceName: "profile_icon").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.contentMode = .scaleAspectFit
+        button.addTarget(self, action: #selector(profileActive), for: .touchUpInside)
+        return button
+    }()
+        
     func setupView(){
-        addSubview(imageView)
-        imageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        imageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        addSubview(exploreIcon)
+        addSubview(homeIcon)
+        addSubview(profileIcon)
+        
+        exploreIcon.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 28, height: 28)
+        
+        homeIcon.anchor(top: topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 120, height: 42)
+        homeIcon.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        profileIcon.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 28, height: 28)
+        homeActive()
+    }
+    
+    @objc func exploreActive(){
+        delegate?.changeToExplore()
+        profileIcon.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
+        exploreIcon.tintColor = UIColor.black
+        homeIcon.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
+    }
+    
+    @objc func homeActive(){
+        delegate?.changeToHome()
+        profileIcon.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
+        homeIcon.tintColor = UIColor.black
+        exploreIcon.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
+    }
+
+    
+    @objc func profileActive(){
+        delegate?.changeToProfile()
+        homeIcon.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
+        profileIcon.tintColor = UIColor.black
+        exploreIcon.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
     }
     
     override init(frame: CGRect) {

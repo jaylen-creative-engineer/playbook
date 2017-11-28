@@ -113,8 +113,8 @@ class PostDetailController : UICollectionViewController, UICollectionViewDelegat
     }
     
     func showUserProfile(){
-        let userProfileController = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
-        navigationController?.pushViewController(userProfileController, animated: true)
+//        let userProfileController = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+//        navigationController?.pushViewController(userProfileController, animated: true)
     }
     
     func showPostDetail(){

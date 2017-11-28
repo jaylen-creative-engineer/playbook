@@ -23,7 +23,9 @@ protocol MessageDelegate {
     func goBack()
 }
 
-class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PursuitDetailDelegate {
+class PursuitsDetailHeader : UICollectionViewCell {
+    
+    var delegate : DetailCellChange?
     
     var isAboutView = true
     var isSavedView = false
@@ -32,111 +34,16 @@ class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UIC
     var isNextView = false
     var isStepsView = false
     var isChallenge = false
-    
-    func aboutLabelSelected() {
-        changeDelegate?.changeAbout()
-        isAboutView = true
-        isSavedView = false
-        isToolsView = false
-        isTeamView = false
-        isNextView = false
-        isStepsView = false
-        isChallenge = false
-        
-        collectionViewContainer.reloadData()
-        collectionViewContainer.updateConstraints()
-    }
-    
-    func challengeLabelSelected() {
-        changeDelegate?.changeChallenge()
-        
-        isAboutView = false
-        isSavedView = false
-        isToolsView = false
-        isTeamView = false
-        isNextView = false
-        isStepsView = false
-        isChallenge = true
-        collectionViewContainer.reloadData()
-        collectionViewContainer.updateConstraints()
-    }
-    
-    func savedLabelSelected() {
-        changeDelegate?.changeSaved()
-        isAboutView = false
-        isSavedView = true
-        isToolsView = false
-        isTeamView = false
-        isNextView = false
-        isStepsView = false
-        isChallenge = false
-        collectionViewContainer.reloadData()
-        collectionViewContainer.updateConstraints()
-
-    }
-    
-    func toolsLabelSelected() {
-        changeDelegate?.changeTool()
-        isAboutView = false
-        isSavedView = false
-        isToolsView = true
-        isTeamView = false
-        isNextView = false
-        isStepsView = false
-        isChallenge = false
-        collectionViewContainer.reloadData()
-        collectionViewContainer.updateConstraints()
-    }
-    
-    func teamLabelSelected() {
-        changeDelegate?.changeTeam()
-        isAboutView = false
-        isSavedView = false
-        isToolsView = false
-        isTeamView = true
-        isNextView = false
-        isStepsView = false
-        isChallenge = false
-        
-        collectionViewContainer.reloadData()
-        collectionViewContainer.updateConstraints()
-        
-    }
-    
-    func nextLabelSelected() {
-        changeDelegate?.changeNext()
-        isAboutView = false
-        isSavedView = false
-        isToolsView = false
-        isTeamView = false
-        isNextView = true
-        isStepsView = false
-        isChallenge = false
-        
-        collectionViewContainer.reloadData()
-        collectionViewContainer.updateConstraints()
-        
-    }
-    
-    func stepLabelSelected() {
-        changeDelegate?.changeSteps()
-        isAboutView = false
-        isSavedView = false
-        isToolsView = false
-        isTeamView = false
-        isNextView = false
-        isStepsView = true
-        isChallenge = false
-        
-        collectionViewContainer.reloadData()
-        collectionViewContainer.updateConstraints()
-    }
-    
-    
     var pursuitsDetailController : PursuitsDetailController?
-    var delegate : PursuitDetailDelegate?
     var changeDelegate : DetailCellChange?
     var messageDelegate : MessageDelegate?
+    let headerId = "headerId"
+    var stackView = UIStackView()
+    let bottomDividerView = UIView()
+    let aboutLabelUnderline = UIView()
+    let stepsLabelUnderline = UIView()
+    let teamLabelUnderline = UIView()
+    let savedLabelUnderline = UIView()
     
     lazy var backButton : UIButton = {
         let button = UIButton()
@@ -168,22 +75,39 @@ class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UIC
         return label
     }()
     
-    let collectionViewContainer : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        collectionView.isScrollEnabled = true
-        return collectionView
+    lazy var aboutButton : UIButton = {
+        let label = UIButton()
+        label.setTitle("ABOUT", for: .normal)
+        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        label.addTarget(self, action: #selector(toggleAboutUnderline), for: .touchUpInside)
+        return label
     }()
     
-    let headerId = "headerId"
+    lazy var stepsLabel : UIButton = {
+        let label = UIButton()
+        label.setTitle("STEPS", for: .normal)
+        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        label.addTarget(self, action: #selector(toggleStepsUnderline), for: .touchUpInside)
+        return label
+    }()
     
-    var stackView = UIStackView()
-    var trailing : NSLayoutConstraint?
-    var leading : NSLayoutConstraint?
     
-    let bottomDividerView = UIView()
+    lazy var teamLabel : UIButton = {
+        let label = UIButton()
+        label.setTitle("ADDED", for: .normal)
+        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        label.addTarget(self, action: #selector(toggleTeamLabel), for: .touchUpInside)
+        return label
+    }()
+    
+    
+    lazy var savedLabel : UIButton = {
+        let label = UIButton()
+        label.setTitle("SAVED", for: .normal)
+        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        label.addTarget(self, action: #selector(toggleSavedUnderline), for: .touchUpInside)
+        return label
+    }()
     
     @objc func dismissView(){
         messageDelegate?.goBack()
@@ -192,6 +116,101 @@ class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UIC
     @objc func handleChat() {
         messageDelegate?.handleMessage(for: self)
     }
+    
+    @objc func toggleAboutUnderline(){
+        aboutLabelUnderline.backgroundColor = .black
+        
+        stepsLabel.setTitleColor(.gray, for: .normal)
+        aboutButton.setTitleColor(.black, for: .normal)
+        savedLabel.setTitleColor(.gray, for: .normal)
+        teamLabel.setTitleColor(.gray, for: .normal)
+        
+        aboutActive()
+        
+        addSubview(aboutLabelUnderline)
+        aboutLabelUnderline.anchor(top: nil, left: aboutButton.leftAnchor, bottom: bottomDividerView.topAnchor, right: aboutButton.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
+    }
+    
+    func aboutActive(){
+        delegate?.changeAbout()
+        
+        aboutLabelUnderline.isHidden = false
+        stepsLabelUnderline.isHidden = true
+        teamLabelUnderline.isHidden = true
+        savedLabelUnderline.isHidden = true
+        
+    }
+    
+    @objc func toggleStepsUnderline(){
+        stepsLabelUnderline.backgroundColor = .black
+        
+        stepsLabel.setTitleColor(.black, for: .normal)
+        aboutButton.setTitleColor(.gray, for: .normal)
+        savedLabel.setTitleColor(.gray, for: .normal)
+        teamLabel.setTitleColor(.gray, for: .normal)
+        
+        stepsActive()
+        
+        addSubview(stepsLabelUnderline)
+        stepsLabelUnderline.anchor(top: nil, left: stepsLabel.leftAnchor, bottom: bottomDividerView.topAnchor, right: stepsLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
+    }
+    func stepsActive(){
+        delegate?.changeSteps()
+        
+        stepsLabelUnderline.isHidden = false
+        aboutLabelUnderline.isHidden = true
+        savedLabelUnderline.isHidden = true
+        teamLabelUnderline.isHidden = true
+    }
+    
+    @objc func toggleTeamLabel(){
+        teamLabelUnderline.backgroundColor = .black
+        
+        stepsLabel.setTitleColor(.gray, for: .normal)
+        aboutButton.setTitleColor(.gray, for: .normal)
+        savedLabel.setTitleColor(.gray, for: .normal)
+        teamLabel.setTitleColor(.black, for: .normal)
+        
+        teamActive()
+        
+        addSubview(teamLabelUnderline)
+        teamLabelUnderline.anchor(top: nil, left: teamLabel.leftAnchor, bottom: bottomDividerView.topAnchor, right: teamLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
+        
+    }
+    
+    
+    func teamActive(){
+        delegate?.changeTeam()
+        
+        aboutLabelUnderline.isHidden = true
+        stepsLabelUnderline.isHidden = true
+        savedLabelUnderline.isHidden = true
+        teamLabelUnderline.isHidden = false
+    }
+    
+    @objc func toggleSavedUnderline(){
+        savedLabelUnderline.backgroundColor = .black
+        
+        stepsLabel.setTitleColor(.gray, for: .normal)
+        aboutButton.setTitleColor(.gray, for: .normal)
+        savedLabel.setTitleColor(.black, for: .normal)
+        teamLabel.setTitleColor(.gray, for: .normal)
+        
+        savedActive()
+        
+        addSubview(savedLabelUnderline)
+        savedLabelUnderline.anchor(top: nil, left: savedLabel.leftAnchor, bottom: bottomDividerView.topAnchor, right: savedLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
+    }
+    
+    func savedActive(){
+        delegate?.changeSaved()
+        
+        savedLabelUnderline.isHidden = false
+        aboutLabelUnderline.isHidden = true
+        teamLabelUnderline.isHidden = true
+        stepsLabelUnderline.isHidden = true
+    }
+    
     
     func setupTopNavBar(){
         addSubview(backButton)
@@ -203,12 +222,17 @@ class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UIC
     
     func pageOptions(){
         bottomDividerView.backgroundColor = UIColor.init(white: 0, alpha: 0.2)
+                
+        stackView = UIStackView(arrangedSubviews: [aboutButton, stepsLabel, teamLabel, savedLabel])
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
         
-        addSubview(collectionViewContainer)
+        
+        addSubview(stackView)
         addSubview(bottomDividerView)
         
-        collectionViewContainer.anchor(top: postLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
-        bottomDividerView.anchor(top: collectionViewContainer.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+        stackView.anchor(top: postLabel.bottomAnchor, left: postLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 50)
+        bottomDividerView.anchor(top: stackView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
     }
     
     func setupViews() {
@@ -223,30 +247,11 @@ class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UIC
         pageOptions()
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionViewContainer.dequeueReusableCell(withReuseIdentifier: headerId, for: indexPath) as! DetailHeaderCells
-        cell.delegate = self
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 4, 0, 12)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width + 58, height: 50)
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
-        collectionViewContainer.register(DetailHeaderCells.self, forCellWithReuseIdentifier: headerId)
-        collectionViewContainer.delegate = self
-        collectionViewContainer.dataSource = self
+        toggleAboutUnderline()
     }
     
     required init?(coder aDecoder: NSCoder) {

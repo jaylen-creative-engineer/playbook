@@ -1,7 +1,6 @@
 import UIKit
 
 class ExploreCategoryRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    var accessExploreController : ExploreController?
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -36,10 +35,6 @@ class ExploreCategoryRow : UICollectionViewCell, UICollectionViewDelegate, UICol
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessExploreController?.switchToDetail()
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(0, 12, 0, 12)
     }
@@ -49,7 +44,7 @@ class ExploreCategoryRow : UICollectionViewCell, UICollectionViewDelegate, UICol
         addSubview(postCollection)
         addSubview(rowLabel)
         
-        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 22, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 140, height: 22)
+        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 140, height: 22)
         postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         postCollection.register(ExploreCategoryCells.self, forCellWithReuseIdentifier: cellId)
         postCollection.dataSource = self

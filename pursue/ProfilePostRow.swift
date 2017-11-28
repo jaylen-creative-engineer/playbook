@@ -10,8 +10,6 @@ import UIKit
 
 class ProfilePostRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    var accessProfileController : ProfileController?
-    
     let rowLabel : UILabel = {
         let label = UILabel()
         label.textColor = .black
@@ -26,7 +24,6 @@ class ProfilePostRow : UICollectionViewCell, UICollectionViewDelegate, UICollect
     let postCollection : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         return collectionView
@@ -49,10 +46,6 @@ class ProfilePostRow : UICollectionViewCell, UICollectionViewDelegate, UICollect
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(12, 12, 0, 12)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessProfileController?.showPostDetailForPost()
     }
     
     func setupView(){

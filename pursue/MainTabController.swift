@@ -16,12 +16,10 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
     func setupViewControllers() {
         
         let homeNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "home_unselected"), selectedImage: #imageLiteral(resourceName: "home_selected"),rootViewController: HomeController(collectionViewLayout: UICollectionViewFlowLayout()))
-        let exploreNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "search_unselected"), selectedImage: #imageLiteral(resourceName: "search_selected"), rootViewController: ExploreController(collectionViewLayout: UICollectionViewFlowLayout()))
-        let profileNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "profile_unselected"), selectedImage: #imageLiteral(resourceName: "profile_selected"), rootViewController: ProfileController(collectionViewLayout: UICollectionViewFlowLayout()))
         
         tabBar.tintColor = .black
         
-        viewControllers = [homeNavController, exploreNavController, profileNavController]
+        viewControllers = [homeNavController]
         
         guard let items = tabBar.items else { return }
         for item in items {

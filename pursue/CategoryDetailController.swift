@@ -17,6 +17,7 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
     let challengeId = "challengeId"
     let toolId = "toolId"
     let categoryId = "cateogryId"
+    let principleId = "principleId"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,8 +26,9 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
         collectionView?.register(CategoryHeaderRow.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(CategoryImageRow.self, forCellWithReuseIdentifier: cellId)
         collectionView?.register(CategoryPeopleRow.self, forCellWithReuseIdentifier: peopleId)
-        collectionView?.register(CategoryChallengeRow.self, forCellWithReuseIdentifier: challengeId)
         collectionView?.register(CategoryExerciseRow.self, forCellWithReuseIdentifier: exerciseId)
+        collectionView?.register(CategoryPrincipleRow.self, forCellWithReuseIdentifier: principleId)
+        
         self.navigationController?.isNavigationBarHidden = true
     }
     
@@ -90,7 +92,7 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! CategoryPeopleRow
             return cell
         case 2:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! CategoryChallengeRow
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! CategoryPrincipleRow
             return cell
         case 3:
             let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! CategoryExerciseRow
@@ -119,7 +121,7 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
         case 1:
             return CGSize(width: view.frame.width, height: 210)
         case 2:
-            return CGSize(width: view.frame.width, height: 320)
+            return CGSize(width: view.frame.width, height: 360)
         default:
             return CGSize(width: view.frame.width, height: 260)
         }

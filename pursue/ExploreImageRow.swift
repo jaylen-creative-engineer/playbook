@@ -10,8 +10,6 @@ import UIKit
 
 class ExploreImageRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    var accessExploreController : ExploreController?
-    
     let rowLabel : UILabel = {
         let label = UILabel()
         label.textColor = .black
@@ -50,11 +48,6 @@ class ExploreImageRow : UICollectionViewCell, UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(0, 12, 0, 12)
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessExploreController?.showPostDetailForPost()
-    }
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)

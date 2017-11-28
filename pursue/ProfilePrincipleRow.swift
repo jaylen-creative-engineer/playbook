@@ -1,15 +1,15 @@
 //
-//  ExploreChallengesRow.swift
+//  ProfilePrincipleRow.swift
 //  pursue
 //
-//  Created by Jaylen Sanders on 10/24/17.
+//  Created by Jaylen Sanders on 11/27/17.
 //  Copyright © 2017 Glory. All rights reserved.
 //
 
 import UIKit
 
-class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
+class ProfilePrincipleRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+        
     let rowLabel : UILabel = {
         let label = UILabel()
         label.textColor = .black
@@ -35,12 +35,12 @@ class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICol
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: ((frame.width - 2) / 2) + 35, height: ((frame.width - 2) / 2) + 50)
+        return CGSize(width: ((frame.width - 2) / 2) + 85, height: ((frame.width - 2) / 2) + 150)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreExercisesRowCells
-        rowLabel.text = "ANIMAL PURSUITS"
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfilePrincipleCells
+        rowLabel.text = "ANIMAL PRINCIPLES"
         return cell
     }
     
@@ -48,20 +48,16 @@ class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICol
         return UIEdgeInsetsMake(0, 12, 0, 12)
     }
     
-    func setupView(){
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         addSubview(postCollection)
         addSubview(rowLabel)
         
-        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 140, height: 22)
-        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        postCollection.register(ExploreExercisesRowCells.self, forCellWithReuseIdentifier: cellId)
+        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 140, height: 22)
+        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        postCollection.register(ProfilePrincipleCells.self, forCellWithReuseIdentifier: cellId)
         postCollection.dataSource = self
         postCollection.delegate = self
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView()
     }
     
     
@@ -69,3 +65,4 @@ class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICol
         fatalError("init(coder:) has not been implemented")
     }
 }
+

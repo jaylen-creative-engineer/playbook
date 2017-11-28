@@ -9,14 +9,20 @@
 import UIKit
 
 class HomeRowCells : UICollectionViewCell {
-    
-    let homeImage : UIImageView = {
-        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "tumblr_nbje6dualg1r46py4o1_1280")
-        iv.layer.masksToBounds = true
-        iv.contentMode = .scaleAspectFill
-        iv.layer.cornerRadius = 4
-        return iv
+ 
+    lazy var homeImage : UIButton = {
+       let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "tumblr_nbje6dualg1r46py4o1_1280"), for: .normal)
+        button.layer.masksToBounds = true
+        button.contentMode = .scaleAspectFill
+        button.layer.cornerRadius = 4
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleHomeHold))
+        tapGesture.numberOfTapsRequired = 1
+        button.addGestureRecognizer(tapGesture)
+        button.addGestureRecognizer(longGesture)
+        return button
     }()
     
     let homeMainDescription : UILabel = {
@@ -25,6 +31,13 @@ class HomeRowCells : UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight(rawValue: 25))
         label.numberOfLines = 2
         label.textColor = .black
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))
+        tapGesture.numberOfTapsRequired = 1
+        label.addGestureRecognizer(tapGesture)
+        
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleHomeHold))
+        label.addGestureRecognizer(longGesture)
         return label
     }()
     
@@ -43,6 +56,14 @@ class HomeRowCells : UICollectionViewCell {
         card.translatesAutoresizingMaskIntoConstraints = false
         return card
     }()
+    
+    @objc func handleHomeTap(){
+        print("Button tapped")
+    }
+    
+    @objc func handleHomeHold(){
+        print("Button held")
+    }
     
     func setupView() {        
         addSubview(homeImage)

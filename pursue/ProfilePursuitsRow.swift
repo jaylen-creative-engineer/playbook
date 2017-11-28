@@ -11,18 +11,13 @@ import UIKit
 class ProfilePursuitsRow : ExploreExerciseRow {
     
     let profilePursuitsId = "profilePursuitsId"
-    var accessProfileController : ProfileController?
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: profilePursuitsId, for: indexPath) as! ProfilePursuitsCells
         rowLabel.text = "PURSUITS"
         return cell
     }
-    
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessProfileController?.showPursuitsDetail()
-    }
-    
+
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: ((frame.width - 2) / 2) + 145, height: ((frame.width - 2) / 2) + 30)
     }

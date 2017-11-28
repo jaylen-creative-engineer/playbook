@@ -16,14 +16,7 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegate, UICollec
     
     var accessHomeController : HomeController?
     var delegate : SettingsDelegate?
-    
-    let rowLabel : UILabel = {
-        let label = UILabel()
-        label.text = "ABOUT"
-        label.font = UIFont.boldSystemFont(ofSize: 12)
-        return label
-    }()
-    
+
     let cellId = "cellId"
     
     let postCollection : UICollectionView = {
@@ -119,16 +112,14 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegate, UICollec
         userInfoStack.spacing = 10
         userInfoStack.translatesAutoresizingMaskIntoConstraints = false
         
-        addSubview(rowLabel)
         addSubview(photoImageView)
         addSubview(userInfoStack)
         addSubview(userBio)
         addSubview(postCollection)
         addSubview(settingsButton)
         
-        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 140, height: 22)
-        settingsButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 26, width: 22, height: 22)
-        photoImageView.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 28, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 80, height: 80)
+        settingsButton.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 26, width: 22, height: 22)
+        photoImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 28, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 80, height: 80)
         userInfoStack.anchor(top: nil, left: photoImageView.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
         userInfoStack.centerYAnchor.constraint(equalTo: photoImageView.centerYAnchor).isActive = true
         userBio.anchor(top: photoImageView.bottomAnchor, left: photoImageView.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: userBio.intrinsicContentSize.height)
