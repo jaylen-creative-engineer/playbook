@@ -12,10 +12,17 @@ protocol ChangeToFeed {
     func handleChangeToFeed(for cell: HomeRow)
 }
 
-class HomeRow: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+protocol HomeRowImageEngagements {
+    func homeRowImageTapped()
+    func homeRowImageHeld()
+    func handleChangeToFeed()
+}
+
+class HomeRow: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, HomeImageEngagements {
     
     var accessHomeController : HomeController?
     var delegate : ChangeToFeed?
+    var homeDelegate : HomeRowImageEngagements?
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -35,7 +42,7 @@ class HomeRow: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewD
     }()
     
     @objc func feedChange(){
-        delegate?.handleChangeToFeed(for: self)
+        homeDelegate?.handleChangeToFeed()
     }
     
     let cellId = "cellId"
@@ -54,12 +61,20 @@ class HomeRow: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewD
 
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (frame.width / 2) - 20, height: frame.height)
+        return CGSize(width: (frame.width / 2) + 5, height: frame.height)
     }
     
+    func homeTapped() {
+        homeDelegate?.homeRowImageTapped()
+    }
+    
+    func homeHeld() {
+        homeDelegate?.homeRowImageHeld()
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeRowCells
+        cell.delegate = self
         return cell
     }
     
@@ -73,14 +88,15 @@ class HomeRow: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewD
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+                
         addSubview(postCollection)
         addSubview(rowLabel)
         addSubview(moreButton)
-                
-        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
+        
+        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 52, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
         moreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 24, height: 12)
-        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 330)
+        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 430)
+        postCollection.showsHorizontalScrollIndicator = false
         postCollection.register(HomeRowCells.self, forCellWithReuseIdentifier: cellId)
         postCollection.dataSource = self
         postCollection.delegate = self

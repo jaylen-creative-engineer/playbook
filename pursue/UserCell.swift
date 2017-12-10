@@ -21,7 +21,7 @@ class UserCell: UITableViewCell {
                 let timestampDate = Date(timeIntervalSince1970: seconds)
                 
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "hh:mm:ss a"
+                dateFormatter.dateFormat = "h:mm a"
                 timeLabel.text = dateFormatter.string(from: timestampDate)
             }
             
@@ -34,7 +34,7 @@ class UserCell: UITableViewCell {
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = 24
+        imageView.layer.cornerRadius = 30
         imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFill
         return imageView
@@ -69,9 +69,12 @@ class UserCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        textLabel?.frame = CGRect(x: 64, y: textLabel!.frame.origin.y - 2, width: textLabel!.frame.width, height: textLabel!.frame.height)
+        textLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        detailTextLabel?.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.thin)
         
-        detailTextLabel?.frame = CGRect(x: 64, y: detailTextLabel!.frame.origin.y + 2, width: detailTextLabel!.frame.width, height: detailTextLabel!.frame.height)
+        textLabel?.frame = CGRect(x: 84, y: textLabel!.frame.origin.y - 2, width: textLabel!.frame.width, height: textLabel!.frame.height)
+        detailTextLabel?.frame = CGRect(x: 84, y: detailTextLabel!.frame.origin.y + 2, width: detailTextLabel!.frame.width, height: detailTextLabel!.frame.height)
+        
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -82,16 +85,14 @@ class UserCell: UITableViewCell {
         
         //ios 9 constraint anchors
         //need x,y,width,height anchors
-        profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8).isActive = true
+        profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
         profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 48).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
         //need x,y,width,height anchors
-        timeLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        timeLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 18).isActive = true
-        timeLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        timeLabel.heightAnchor.constraint(equalTo: (textLabel?.heightAnchor)!).isActive = true
+        timeLabel.font = UIFont.systemFont(ofSize: 14)
+        timeLabel.anchor(top: profileImageView.topAnchor, left: nil, bottom: nil, right: self.rightAnchor, paddingTop: 14, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: timeLabel.intrinsicContentSize.width, height: timeLabel.intrinsicContentSize.height)
     }
     
     required init?(coder aDecoder: NSCoder) {

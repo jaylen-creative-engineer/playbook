@@ -40,11 +40,11 @@ class MessagesController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleNewMessage))
-        
         tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
         
         tableView.allowsMultipleSelectionDuringEditing = true
+        tableView.contentInset = UIEdgeInsetsMake(55, 0, 0, 0)
+        tableView.separatorStyle = .none
         fetchUserAndSetupNavBarTitle()
     }
     
@@ -54,6 +54,7 @@ class MessagesController: UITableViewController {
         let navController = UINavigationController(rootViewController: newMessageController)
         present(navController, animated: true, completion: nil)
     }
+    
     
     func showChatControllerForUser(_ user: User) {
         let chatLogController = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
@@ -74,12 +75,52 @@ class MessagesController: UITableViewController {
             }
             
         }, withCancel: nil)
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
     }
     
     @objc func handleCancel(){
-        dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
+    }
+    
+    lazy var backButton : UIButton = {
+       let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "back-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var searchButton : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "search_selected").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(handleNewMessage), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var chatLabel : UIButton = {
+       let button = UIButton()
+        button.setTitle("CHAT", for: .normal)
+        button.addTarget(self, action: #selector(toggleChat), for: .touchUpInside)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        return button
+    }()
+    
+    lazy var notificationsLabel : UIButton = {
+        let button = UIButton()
+        button.setTitle("NOTIFICATIONS", for: .normal)
+        button.addTarget(self, action: #selector(toggleNotifications), for: .touchUpInside)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        return button
+    }()
+    
+    @objc func toggleChat(){
+        chatLabel.setTitleColor(UIColor.black, for: .normal)
+        notificationsLabel.setTitleColor(UIColor.gray, for: .normal)
+    }
+    
+    @objc func toggleNotifications(){
+        chatLabel.setTitleColor(UIColor.gray, for: .normal)
+        notificationsLabel.setTitleColor(UIColor.black, for: .normal)
     }
     
     func setupNavBarWithUser(_ user: User) {
@@ -88,43 +129,24 @@ class MessagesController: UITableViewController {
         tableView.reloadData()
         
         observeUserMessages()
+ 
+        let guide = view.safeAreaLayoutGuide
         
-        let titleView = UIView()
-        titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = .white
         
-        let containerView = UIView()
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        titleView.addSubview(containerView)
+        view.addSubview(backgroundView)
+        backgroundView.addSubview(backButton)
+        backgroundView.addSubview(chatLabel)
+        backgroundView.addSubview(notificationsLabel)
+        backgroundView.addSubview(searchButton)
         
-        let profileImageView = UIImageView()
-        profileImageView.translatesAutoresizingMaskIntoConstraints = false
-        profileImageView.contentMode = .scaleAspectFill
-        profileImageView.layer.cornerRadius = 20
-        profileImageView.clipsToBounds = true
-        profileImageView.loadImageUsingCacheWithUrlString(user.profileImageURL)
-        
-        containerView.addSubview(profileImageView)
-
-        profileImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
-        profileImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        
-        let nameLabel = UILabel()
-        
-        containerView.addSubview(nameLabel)
-        nameLabel.text = user.username
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
-        nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
-        nameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
-        nameLabel.heightAnchor.constraint(equalTo: profileImageView.heightAnchor).isActive = true
-        
-        containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
-        containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
-        
-        self.navigationItem.titleView = titleView
+        backgroundView.anchor(top: guide.topAnchor, left: guide.leftAnchor, bottom: nil, right: guide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 45)
+        backButton.anchor(top: backgroundView.topAnchor, left: backgroundView.leftAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
+        searchButton.anchor(top: backgroundView.topAnchor, left: nil, bottom: nil, right: backgroundView.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 20, height: 20)
+        chatLabel.anchor(top: backgroundView.topAnchor, left: backButton.rightAnchor, bottom: nil, right: nil, paddingTop: 14, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: chatLabel.intrinsicContentSize.width + 20, height: chatLabel.intrinsicContentSize.height)
+        notificationsLabel.anchor(top: chatLabel.topAnchor, left: chatLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: notificationsLabel.intrinsicContentSize.width + 20, height: notificationsLabel.intrinsicContentSize.height)
+        toggleChat()
     }
     
     // MARK: - Setup TableView
@@ -167,7 +189,7 @@ class MessagesController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 72
+        return 100
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -213,8 +235,6 @@ class MessagesController: UITableViewController {
         }, withCancel: nil)
         
         ref.observe(.childRemoved, with: { (snapshot) in
-            print(snapshot.key)
-            print(self.messagesDictionary)
             
             self.messagesDictionary.removeValue(forKey: snapshot.key)
             self.attemptReloadOfTable()

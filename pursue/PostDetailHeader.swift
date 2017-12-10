@@ -14,20 +14,15 @@ protocol PostDetailHeaderDelegate {
     func didChangeToCommentsView()
     func didChangeToRelatedView()
     func didChangeToAboutView()
+    func reportPost()
 }
-
-protocol PostMessageDelegate {
-    func handleMessage(for cell : PostDetailHeader)
-}
-
 class PostDetailHeader : UICollectionViewCell {
     
     var postDetailDelegate : PostDetailHeaderDelegate?
-    var messageDelegate : PostMessageDelegate?
     
     lazy var backButton : UIButton = {
        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "back-button").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "back-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
         button.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
         return button
     }()
@@ -35,7 +30,6 @@ class PostDetailHeader : UICollectionViewCell {
     lazy var chatIcon : UIButton = {
         let button = UIButton()
         button.setBackgroundImage(#imageLiteral(resourceName: "send2").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(handleChat), for: .touchUpInside)
         return button
     }()
     
@@ -56,18 +50,24 @@ class PostDetailHeader : UICollectionViewCell {
         return label
     }()
     
-    lazy var addButton : UIButton = {
+    lazy var optionButton : UIButton = {
         let button = UIButton()
-        button.backgroundColor = .black
-        button.layer.cornerRadius = 20
         button.layer.masksToBounds = true
+        button.setImage(#imageLiteral(resourceName: "option").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(reportPost), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.contentMode = .scaleAspectFill
         return button
     }()
     
-    let plusForButton : UIImageView = {
-        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "add-button-white-hi").withRenderingMode(.alwaysOriginal)
-        iv.translatesAutoresizingMaskIntoConstraints = false
+    lazy var optionBackground : UIView = {
+       let iv = UIView()
+        iv.backgroundColor = .clear
+        iv.layer.cornerRadius = 15
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(reportPost))
+        tap.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tap)
         return iv
     }()
     
@@ -115,16 +115,15 @@ class PostDetailHeader : UICollectionViewCell {
         postDetailDelegate?.goBack()
     }
     
-    @objc func handleChat(){
-        messageDelegate?.handleMessage(for: self)
+    
+    @objc func reportPost(){
+        postDetailDelegate?.reportPost()
     }
     
     func setupTopNavBar(){
         addSubview(backButton)
-        addSubview(chatIcon)
         
-        backButton.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 25, height: 25)
-        chatIcon.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 24, width: 0, height: 20)
+        backButton.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 16, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
     }
     
     func pageOptions(){
@@ -133,6 +132,7 @@ class PostDetailHeader : UICollectionViewCell {
         stackView = UIStackView(arrangedSubviews: [aboutButton, likesLabel, commentsLabel, relatedLabel])
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
+        stackView.spacing = 5
         
         addSubview(stackView)
         addSubview(bottomDividerView)
@@ -146,15 +146,14 @@ class PostDetailHeader : UICollectionViewCell {
         
         addSubview(postImage)
         addSubview(postLabel)
-        addSubview(addButton)
-        addButton.addSubview(plusForButton)
+        addSubview(optionButton)
+        addSubview(optionBackground)
 
         postImage.anchor(top: backButton.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (frame.height / 2) + 50)
-        postLabel.anchor(top: postImage.bottomAnchor, left: postImage.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 300, height: 52)
-        addButton.anchor(top: postImage.bottomAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 26, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 40, height: 40)
-        plusForButton.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
-        plusForButton.centerYAnchor.constraint(equalTo: addButton.centerYAnchor).isActive = true
-        plusForButton.centerXAnchor.constraint(equalTo: addButton.centerXAnchor).isActive = true
+        optionButton.anchor(top: postImage.bottomAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 22, width: 4.5, height: 20)
+        optionBackground.anchor(top: optionButton.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
+        optionBackground.centerXAnchor.constraint(equalTo: optionButton.centerXAnchor).isActive = true
+        postLabel.anchor(top: postImage.bottomAnchor, left: postImage.leftAnchor, bottom: nil, right: optionButton.rightAnchor, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 52)
         pageOptions()
     }
     

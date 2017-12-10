@@ -18,7 +18,6 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
    
     var user: User? {
         didSet {
-            navigationItem.title = user?.username
             observeMessages()
         }
     }
@@ -206,7 +205,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         let fromId = Auth.auth().currentUser!.uid
         let timestamp = Int(Date().timeIntervalSince1970)
         
-        var values: [String: AnyObject] = ["toId": toId as AnyObject, "fromId": fromId as AnyObject, "timestamp": timestamp as AnyObject]
+        let values: [String: AnyObject] = ["toId": toId as AnyObject, "fromId": fromId as AnyObject, "timestamp": timestamp as AnyObject]
         
 //        properties.forEach({values[$0] = $1})
         
@@ -434,15 +433,77 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         return cell
     }
     
+    lazy var backButton : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "back-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func handleCancel(){
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func setupNavBarWithUser(_ user: User) {
+        let guide = view.safeAreaLayoutGuide
+        
+        let titleView = UIView()
+        
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = .white
+        
+        let profileImageView = UIImageView()
+        profileImageView.translatesAutoresizingMaskIntoConstraints = false
+        profileImageView.contentMode = .scaleAspectFill
+        profileImageView.layer.cornerRadius = 20
+        profileImageView.clipsToBounds = true
+        profileImageView.loadImageUsingCacheWithUrlString(user.profileImageURL)
+        
+        let nameLabel = UILabel()
+        
+        nameLabel.text = user.username
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(backgroundView)
+        view.addSubview(backButton)
+        view.addSubview(titleView)
+        titleView.addSubview(containerView)
+        containerView.addSubview(profileImageView)
+        containerView.addSubview(nameLabel)
+        
+        nameLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        
+        backgroundView.anchor(top: guide.topAnchor, left: guide.leftAnchor, bottom: nil, right: guide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 40)
+        backButton.anchor(top: backgroundView.topAnchor, left: backgroundView.leftAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
+        titleView.anchor(top: backgroundView.topAnchor, left: backButton.rightAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 22, paddingBottom: 0, paddingRight: 12, width: 100, height: 40)
+        containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
+        containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
+        profileImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
+        profileImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
+        nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
+        nameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
+        nameLabel.heightAnchor.constraint(equalTo: profileImageView.heightAnchor).isActive = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+        collectionView?.contentInset = UIEdgeInsets(top: 55, left: 0, bottom: 8, right: 0)
         collectionView?.alwaysBounceVertical = true
         collectionView?.backgroundColor = UIColor.white
         collectionView?.register(ChatMessageCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.keyboardDismissMode = .interactive
         
         setupKeyboardObservers()
+        
+        guard let user = user else { return }
+        setupNavBarWithUser(user)
     }
 }

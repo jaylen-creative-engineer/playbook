@@ -20,15 +20,7 @@ class ProfilePursuitsCells : UICollectionViewCell {
         let label = UILabel()
         label.text = "Battle"
         label.numberOfLines = 2
-        label.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight(rawValue: 25))
-        return label
-    }()
-    
-    let pursuitDetailLabel : UILabel = {
-        let label = UILabel()
-        label.text = "My effort is different from yours"
-        label.numberOfLines = 2
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.thin)
+        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight(rawValue: 25))
         return label
     }()
     
@@ -36,24 +28,43 @@ class ProfilePursuitsCells : UICollectionViewCell {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "backpack")
         iv.contentMode = .scaleAspectFill
-        iv.layer.cornerRadius = 6
         iv.layer.masksToBounds = true
         return iv
     }()
     
+    let profileProgressLabel : UILabel = {
+        let label = UILabel()
+        label.text = "30%"
+        label.textColor = UIColor.rgb(red: 0, green: 128, blue: 0)
+        label.font = UIFont.boldSystemFont(ofSize: 12)
+        return label
+    }()
+    
+    let progressBar : UIProgressView = {
+        let pv = UIProgressView()
+        pv.trackTintColor = UIColor.rgb(red: 211, green: 211, blue: 211)
+        pv.progress = 0.3
+        pv.progressTintColor = UIColor.rgb(red: 0, green: 128, blue: 0)
+        pv.translatesAutoresizingMaskIntoConstraints = false
+        return pv
+    }()
+    
     func setupCardDetails(){
         addSubview(pursuitLabel)
-        addSubview(pursuitDetailLabel)
-        pursuitLabel.anchor(top: pursuitImage.bottomAnchor, left: pursuitImage.leftAnchor, bottom: nil, right: pursuitImage.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 14)
-        pursuitDetailLabel.anchor(top: pursuitLabel.bottomAnchor, left: pursuitLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: pursuitDetailLabel.intrinsicContentSize.width, height: pursuitDetailLabel.intrinsicContentSize.height + 2)
+        pursuitLabel.anchor(top: pursuitImage.bottomAnchor, left: pursuitImage.leftAnchor, bottom: nil, right: pursuitImage.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 14)
     }
     
     func setupView(){
         addSubview(pursuitButton)
         pursuitButton.addSubview(pursuitImage)
+        addSubview(profileProgressLabel)
+        addSubview(progressBar)
         
-        pursuitButton.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 185)
+        pursuitButton.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
         pursuitImage.anchor(top: pursuitButton.topAnchor, left: pursuitButton.leftAnchor, bottom: pursuitButton.bottomAnchor, right: pursuitButton.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        profileProgressLabel.anchor(top: pursuitImage.bottomAnchor, left: nil, bottom: nil, right: pursuitImage.rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: profileProgressLabel.intrinsicContentSize.width, height: profileProgressLabel.intrinsicContentSize.height)
+        progressBar.anchor(top: nil, left: pursuitImage.leftAnchor, bottom: nil, right: profileProgressLabel.leftAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 3)
+        progressBar.centerYAnchor.constraint(equalTo: profileProgressLabel.centerYAnchor).isActive = true
     }
     
     override init(frame: CGRect) {

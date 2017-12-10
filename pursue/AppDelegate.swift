@@ -21,8 +21,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
+        let defaults = UserDefaults.standard
         let layout = UICollectionViewFlowLayout()
-        window?.rootViewController = UINavigationController(rootViewController: HomeController(collectionViewLayout: layout))
+
+        if defaults.object(forKey: "isFirstTime") != nil {
+            defaults.set("No", forKey:"isFirstTime")
+            defaults.synchronize()
+            let viewController = UINavigationController(rootViewController: HomeController(collectionViewLayout: layout))
+            self.window?.rootViewController = viewController
+            self.window?.makeKeyAndVisible()
+        } else {
+            layout.scrollDirection = .horizontal
+            let swipingController = SwipingController(collectionViewLayout: layout)
+            window?.rootViewController = swipingController
+            self.window?.makeKeyAndVisible()
+        }
+
         return true
     }
     

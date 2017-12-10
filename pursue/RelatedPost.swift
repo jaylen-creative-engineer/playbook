@@ -50,7 +50,7 @@ class RelatedPost : UICollectionViewCell, UICollectionViewDelegate, UICollection
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (frame.width - 2) / 3
-        return CGSize(width: width - 12, height: width + 140)
+        return CGSize(width: width - 12, height: width + 120)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

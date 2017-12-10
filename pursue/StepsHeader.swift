@@ -24,12 +24,6 @@ class StepsHeader : PursuitsDetailHeader {
         return button
     }()
     
-    lazy var stepChatIcon : UIButton = {
-        let button = UIButton()
-        button.setBackgroundImage(#imageLiteral(resourceName: "send2").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(handleChat), for: .touchUpInside)
-        return button
-    }()
     
     override func dismissView() {
         stepsDelegate?.goBack()
@@ -42,12 +36,9 @@ class StepsHeader : PursuitsDetailHeader {
     override func setupTopNavBar() {
         super.setupTopNavBar()
         backButton.isHidden = true
-        chatIcon.isHidden = true
         
         addSubview(stepBackButton)
-        addSubview(stepChatIcon)
         stepBackButton.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 25, height: 25)
-        stepChatIcon.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 24, width: 0, height: 20)
 
     }
 }

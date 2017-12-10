@@ -21,7 +21,6 @@ class FeedController : UICollectionViewController, UICollectionViewDelegateFlowL
         collectionView?.register(FeedHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(FeedRow.self, forCellWithReuseIdentifier: rowId)
         collectionView?.register(FeedPictureRow.self, forCellWithReuseIdentifier: pictureId)
-        collectionView?.register(FeedChallengeRow.self, forCellWithReuseIdentifier: challengeId)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -33,12 +32,6 @@ class FeedController : UICollectionViewController, UICollectionViewDelegateFlowL
         switch indexPath.item {
         case 0:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: rowId, for: indexPath) as! FeedRow
-            return cell
-        case 1:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: pictureId, for: indexPath) as! FeedPictureRow
-            return cell
-        case 2:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! FeedChallengeRow
             return cell
         default:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: rowId, for: indexPath) as! FeedRow
@@ -60,13 +53,10 @@ class FeedController : UICollectionViewController, UICollectionViewDelegateFlowL
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 0:
-            return CGSize(width: view.frame.width, height: view.frame.height / 2)
-        case 1:
-            return CGSize(width: view.frame.width, height: view.frame.height / 1.25)
-        case 2:
-            return CGSize(width: view.frame.width, height: (view.frame.height / 3) - 30)
+            return CGSize(width: view.frame.width, height: 350)
+        
         default:
-            return CGSize(width: view.frame.width, height: view.frame.height / 2)
+            return CGSize(width: view.frame.width, height: 350)
         }
     }
     

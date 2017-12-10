@@ -13,7 +13,6 @@ class ExploreExercisesRowCells  : UICollectionViewCell {
     let exploreLabel : UILabel = {
         let label = UILabel()
         label.text = "Battle"
-        label.numberOfLines = 2
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
         return label
     }()
@@ -22,19 +21,38 @@ class ExploreExercisesRowCells  : UICollectionViewCell {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "backpack")
         iv.contentMode = .scaleAspectFill
-        iv.layer.cornerRadius = 4
         iv.layer.masksToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
     }()
     
+    let exploreProgressLabel : UILabel = {
+        let label = UILabel()
+        label.text = "30%"
+        label.textColor = UIColor.rgb(red: 0, green: 128, blue: 0)
+        label.font = UIFont.boldSystemFont(ofSize: 12)
+        return label
+    }()
+    
+    let progressBar : UIProgressView = {
+        let pv = UIProgressView()
+        pv.trackTintColor = UIColor.rgb(red: 211, green: 211, blue: 211)
+        pv.progress = 0.3
+        pv.progressTintColor = UIColor.rgb(red: 0, green: 128, blue: 0)
+        return pv
+    }()
+    
     func setupView(){
         addSubview(exploreImage)
         addSubview(exploreLabel)
+        addSubview(progressBar)
+        addSubview(exploreProgressLabel)
         
-        exploreImage.anchor(top: nil, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 220, height: 135)
-        exploreImage.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        exploreImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 250, height: 145)
         exploreLabel.anchor(top: exploreImage.bottomAnchor, left: exploreImage.leftAnchor, bottom: nil, right: exploreImage.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: exploreLabel.intrinsicContentSize.height)
+        exploreProgressLabel.anchor(top: exploreImage.bottomAnchor, left: nil, bottom: nil, right: exploreImage.rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: exploreProgressLabel.intrinsicContentSize.width, height: exploreProgressLabel.intrinsicContentSize.height)
+        progressBar.anchor(top: nil, left: exploreImage.leftAnchor, bottom: nil, right: exploreProgressLabel.leftAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 3)
+        progressBar.centerYAnchor.constraint(equalTo: exploreProgressLabel.centerYAnchor).isActive = true
     }
     
     override init(frame: CGRect) {

@@ -15,6 +15,7 @@ protocol DetailCellChange {
     func changeTeam()
     func changeNext()
     func changeSteps()
+    func changeDiscussion()
     func changeChallenge()
 }
 
@@ -24,9 +25,6 @@ protocol MessageDelegate {
 }
 
 class PursuitsDetailHeader : UICollectionViewCell {
-    
-    var delegate : DetailCellChange?
-    
     var isAboutView = true
     var isSavedView = false
     var isToolsView = false
@@ -34,9 +32,11 @@ class PursuitsDetailHeader : UICollectionViewCell {
     var isNextView = false
     var isStepsView = false
     var isChallenge = false
+    
     var pursuitsDetailController : PursuitsDetailController?
-    var changeDelegate : DetailCellChange?
     var messageDelegate : MessageDelegate?
+    var delegate : DetailCellChange?
+
     let headerId = "headerId"
     var stackView = UIStackView()
     let bottomDividerView = UIView()
@@ -44,18 +44,12 @@ class PursuitsDetailHeader : UICollectionViewCell {
     let stepsLabelUnderline = UIView()
     let teamLabelUnderline = UIView()
     let savedLabelUnderline = UIView()
+    let discusionLabelUnderline = UIView()
     
     lazy var backButton : UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "back-button").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "back-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
         button.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var chatIcon : UIButton = {
-        let button = UIButton()
-        button.setBackgroundImage(#imageLiteral(resourceName: "send2").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(handleChat), for: .touchUpInside)
         return button
     }()
     
@@ -91,6 +85,13 @@ class PursuitsDetailHeader : UICollectionViewCell {
         return label
     }()
     
+    lazy var discussionLabel : UIButton = {
+        let label = UIButton()
+        label.setTitle("DISCUSSIONS", for: .normal)
+        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        label.addTarget(self, action: #selector(toggleDiscussionUnderline), for: .touchUpInside)
+        return label
+    }()
     
     lazy var teamLabel : UIButton = {
         let label = UIButton()
@@ -124,6 +125,7 @@ class PursuitsDetailHeader : UICollectionViewCell {
         aboutButton.setTitleColor(.black, for: .normal)
         savedLabel.setTitleColor(.gray, for: .normal)
         teamLabel.setTitleColor(.gray, for: .normal)
+        discussionLabel.setTitleColor(.gray, for: .normal)
         
         aboutActive()
         
@@ -138,6 +140,7 @@ class PursuitsDetailHeader : UICollectionViewCell {
         stepsLabelUnderline.isHidden = true
         teamLabelUnderline.isHidden = true
         savedLabelUnderline.isHidden = true
+        discusionLabelUnderline.isHidden = true
         
     }
     
@@ -148,6 +151,7 @@ class PursuitsDetailHeader : UICollectionViewCell {
         aboutButton.setTitleColor(.gray, for: .normal)
         savedLabel.setTitleColor(.gray, for: .normal)
         teamLabel.setTitleColor(.gray, for: .normal)
+        discussionLabel.setTitleColor(.gray, for: .normal)
         
         stepsActive()
         
@@ -161,6 +165,7 @@ class PursuitsDetailHeader : UICollectionViewCell {
         aboutLabelUnderline.isHidden = true
         savedLabelUnderline.isHidden = true
         teamLabelUnderline.isHidden = true
+        discusionLabelUnderline.isHidden = true
     }
     
     @objc func toggleTeamLabel(){
@@ -170,6 +175,7 @@ class PursuitsDetailHeader : UICollectionViewCell {
         aboutButton.setTitleColor(.gray, for: .normal)
         savedLabel.setTitleColor(.gray, for: .normal)
         teamLabel.setTitleColor(.black, for: .normal)
+        discussionLabel.setTitleColor(.gray, for: .normal)
         
         teamActive()
         
@@ -186,6 +192,7 @@ class PursuitsDetailHeader : UICollectionViewCell {
         stepsLabelUnderline.isHidden = true
         savedLabelUnderline.isHidden = true
         teamLabelUnderline.isHidden = false
+        discusionLabelUnderline.isHidden = true
     }
     
     @objc func toggleSavedUnderline(){
@@ -195,6 +202,7 @@ class PursuitsDetailHeader : UICollectionViewCell {
         aboutButton.setTitleColor(.gray, for: .normal)
         savedLabel.setTitleColor(.black, for: .normal)
         teamLabel.setTitleColor(.gray, for: .normal)
+        discussionLabel.setTitleColor(.gray, for: .normal)
         
         savedActive()
         
@@ -209,29 +217,52 @@ class PursuitsDetailHeader : UICollectionViewCell {
         aboutLabelUnderline.isHidden = true
         teamLabelUnderline.isHidden = true
         stepsLabelUnderline.isHidden = true
+        discusionLabelUnderline.isHidden = true
+    }
+    
+    @objc func toggleDiscussionUnderline(){
+        discusionLabelUnderline.backgroundColor = .black
+        
+        stepsLabel.setTitleColor(.gray, for: .normal)
+        aboutButton.setTitleColor(.gray, for: .normal)
+        savedLabel.setTitleColor(.gray, for: .normal)
+        teamLabel.setTitleColor(.gray, for: .normal)
+        discussionLabel.setTitleColor(.black, for: .normal)
+        
+        discussionActive()
+        
+        addSubview(discusionLabelUnderline)
+        discusionLabelUnderline.anchor(top: nil, left: discussionLabel.leftAnchor, bottom: bottomDividerView.topAnchor, right: discussionLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
+    }
+    
+    func discussionActive(){
+        delegate?.changeDiscussion()
+        
+        savedLabelUnderline.isHidden = true
+        aboutLabelUnderline.isHidden = true
+        teamLabelUnderline.isHidden = true
+        stepsLabelUnderline.isHidden = true
+        discusionLabelUnderline.isHidden = false
     }
     
     
     func setupTopNavBar(){
         addSubview(backButton)
-        addSubview(chatIcon)
         
-        backButton.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 25, height: 25)
-        chatIcon.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 24, width: 0, height: 20)
+        backButton.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 16, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
     }
     
     func pageOptions(){
         bottomDividerView.backgroundColor = UIColor.init(white: 0, alpha: 0.2)
                 
-        stackView = UIStackView(arrangedSubviews: [aboutButton, stepsLabel, teamLabel, savedLabel])
+        stackView = UIStackView(arrangedSubviews: [aboutButton, stepsLabel, discussionLabel, teamLabel, savedLabel])
         stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        
+        stackView.distribution = .equalSpacing
         
         addSubview(stackView)
         addSubview(bottomDividerView)
         
-        stackView.anchor(top: postLabel.bottomAnchor, left: postLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 50)
+        stackView.anchor(top: postLabel.bottomAnchor, left: postImage.leftAnchor, bottom: nil, right: postImage.rightAnchor, paddingTop: 20, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 50)
         bottomDividerView.anchor(top: stackView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
     }
     

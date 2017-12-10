@@ -8,7 +8,14 @@
 
 import UIKit
 
-class ProfileContainer : UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+protocol ProfileContainerDelegate {
+    func showChat()
+    func showSettings()
+}
+
+class ProfileContainer : UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ProfileHeaderDelegate {
+    
+    var delegate : ProfileContainerDelegate?
     
     let cellId = "cellId"
     let secondaryId = "secondaryId"
@@ -20,6 +27,8 @@ class ProfileContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
     let pursuitsId = "pursuitsId"
     let postId = "postId"
     let addedId = "addedId"
+    let headerId = "headerId"
+    let discussionId = "discussionId"
     
     let profileCollection : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -33,13 +42,14 @@ class ProfileContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
         profileCollection.delegate = self
         profileCollection.dataSource = self
         
-        profileCollection.register(ProfileAboutRow.self, forCellWithReuseIdentifier: cellId)
         profileCollection.register(ProfilePursuitsRow.self, forCellWithReuseIdentifier: pursuitsId)
         profileCollection.register(ProfilePostRow.self, forCellWithReuseIdentifier: postId)
         profileCollection.register(ProfileAddedRow.self, forCellWithReuseIdentifier: addedId)
         profileCollection.register(ProfilePrincipleRow.self, forCellWithReuseIdentifier: principleId)
+        profileCollection.register(ProfileDiscussion.self, forCellWithReuseIdentifier: discussionId)
+        profileCollection.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         
-        profileCollection.contentInset = UIEdgeInsetsMake(55, 0, 0, 0)
+        profileCollection.contentInset = UIEdgeInsetsMake(55, 0, 105, 0)
         
         addSubview(profileCollection)
         profileCollection.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
@@ -49,21 +59,39 @@ class ProfileContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
         fatalError("init(coder:) has not been implemented")
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! ProfileHeader
+        header.delegate = self
+        return header
+    }
+    
+    func handleSettings() {
+        delegate?.showSettings()
+    }
+    
+    func handleMessage() {
+        delegate?.showChat()
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: frame.width, height: 270)
+    }
+    
     // MARK: - Setup View
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         switch indexPath.item {
         case 0:
-            return CGSize(width: frame.width, height: 264)
+            return CGSize(width: frame.width, height: 330)
         case 1:
-            return CGSize(width: frame.width, height: 435)
+            return CGSize(width: frame.width, height: 330)
         case 2:
-            return CGSize(width: frame.width, height: 260)
+             return CGSize(width: frame.width, height: 320)
         case 3:
-            return CGSize(width: frame.width, height: 350)
+            return CGSize(width: frame.width, height: 205)
         case 4:
-            return CGSize(width: frame.width, height: 360)
+            return CGSize(width: frame.width, height: 385)
         default:
             return CGSize(width: frame.width, height: 264)
         }
@@ -85,20 +113,20 @@ class ProfileContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
         let cell : UICollectionViewCell
         switch indexPath.item {
         case 0:
-            let aboutCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfileAboutRow
-            return aboutCell
-        case 1:
-            let postCell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! ProfilePostRow
-            return postCell
-        case 2:
-            let addedCell = collectionView.dequeueReusableCell(withReuseIdentifier: addedId, for: indexPath) as! ProfileAddedRow
-            return addedCell
-        case 3:
             let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuitsRow
             return pursuitCell
-        case 4:
+        case 1:
             let principleCell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! ProfilePrincipleRow
             return principleCell
+        case 2:
+            let discussionCell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! ProfileDiscussion
+            return discussionCell
+        case 3:
+            let addedCell = collectionView.dequeueReusableCell(withReuseIdentifier: addedId, for: indexPath) as! ProfileAddedRow
+            return addedCell
+        case 4:
+            let postCell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! ProfilePostRow
+            return postCell
         default:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuitsRow
             return cell

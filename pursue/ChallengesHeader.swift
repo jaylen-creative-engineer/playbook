@@ -34,7 +34,7 @@ class ChallengesHeader : PostDetailHeader {
         challengeDelegate?.goBack()
     }
     
-    @objc override func handleChat() {
+    @objc func handleChat() {
         challengeDelegate?.handleMessage(for: self)
     }
     

@@ -18,15 +18,8 @@ class ExplorePrincipleCells : UICollectionViewCell {
     
     let exploreLabel : UILabel = {
         let label = UILabel()
-        label.text = "DRAW"
-        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight(rawValue: 25))
-        return label
-    }()
-    
-    let exploreDetailLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Put In More Effort"
-        label.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight(rawValue: 25))
+        label.text = "Draw"
+        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight(rawValue: 25))
         return label
     }()
     
@@ -35,7 +28,6 @@ class ExplorePrincipleCells : UICollectionViewCell {
         iv.image = #imageLiteral(resourceName: "samuel-l")
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        iv.layer.cornerRadius = 4
         return iv
     }()
     
@@ -43,11 +35,9 @@ class ExplorePrincipleCells : UICollectionViewCell {
         
         addSubview(exploreImage)
         addSubview(exploreLabel)
-        addSubview(exploreDetailLabel)
         
-        exploreImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
+        exploreImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 145)
         exploreLabel.anchor(top: exploreImage.bottomAnchor, left: exploreImage.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: exploreLabel.intrinsicContentSize.height)
-        exploreDetailLabel.anchor(top: exploreLabel.bottomAnchor, left: exploreLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: exploreDetailLabel.intrinsicContentSize.height)
     }
     
     override init(frame: CGRect) {

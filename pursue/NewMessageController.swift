@@ -18,11 +18,30 @@ class NewMessageController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
-        
         tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
+        tableView.separatorStyle = .none
+        navigationController?.navigationBar.isHidden = true
+        tableView.contentInset = UIEdgeInsetsMake(55, 0, 0, 0)
         
         fetchUser()
+        setupNavBarWithUser()
+    }
+    
+    lazy var backButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("CANCEL", for: .normal)
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
+        return button
+    }()
+    
+    func setupNavBarWithUser() {
+        let guide = view.safeAreaLayoutGuide
+        
+        view.addSubview(backButton)
+        backButton.anchor(top: guide.topAnchor, left: guide.leftAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: backButton.intrinsicContentSize.width, height: backButton.intrinsicContentSize.height)
+     
     }
     
     func fetchUser() {
@@ -53,6 +72,7 @@ class NewMessageController: UITableViewController {
     }
     
     @objc func handleCancel() {
+        navigationController?.popViewController(animated: true)
         dismiss(animated: true, completion: nil)
     }
     
@@ -74,7 +94,7 @@ class NewMessageController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 72
+        return 100
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

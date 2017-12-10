@@ -8,14 +8,18 @@
 
 import UIKit
 
+protocol HomeImageEngagements {
+    func homeTapped()
+    func homeHeld()
+}
+
 class HomeRowCells : UICollectionViewCell {
+    
+    var delegate : HomeImageEngagements?
  
     lazy var homeImage : UIButton = {
        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "tumblr_nbje6dualg1r46py4o1_1280"), for: .normal)
         button.layer.masksToBounds = true
-        button.contentMode = .scaleAspectFill
-        button.layer.cornerRadius = 4
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleHomeHold))
@@ -25,10 +29,18 @@ class HomeRowCells : UICollectionViewCell {
         return button
     }()
     
+    let postImage : UIImageView = {
+       let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "tumblr_nbje6dualg1r46py4o1_1280")
+        iv.contentMode = .scaleAspectFill
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    
     let homeMainDescription : UILabel = {
        let label = UILabel()
         label.text = "Wonder Woman Again"
-        label.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight(rawValue: 25))
+        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight(rawValue: 25))
         label.numberOfLines = 2
         label.textColor = .black
         
@@ -41,15 +53,6 @@ class HomeRowCells : UICollectionViewCell {
         return label
     }()
     
-    let homeSubDesctiption : UILabel = {
-        let label = UILabel()
-        label.text = "Return To IMAX"
-        label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.thin)
-        label.numberOfLines = 2
-        return label
-    }()
-    
     let cardView : HomeView = {
         let card = HomeView()
         card.backgroundColor = .clear
@@ -58,21 +61,21 @@ class HomeRowCells : UICollectionViewCell {
     }()
     
     @objc func handleHomeTap(){
-        print("Button tapped")
+        delegate?.homeTapped()
     }
     
     @objc func handleHomeHold(){
-        print("Button held")
+        delegate?.homeHeld()
     }
     
     func setupView() {        
         addSubview(homeImage)
+        homeImage.addSubview(postImage)
         addSubview(homeMainDescription)
-        addSubview(homeSubDesctiption)
         
-        homeImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 250)
+        homeImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 300)
+        postImage.anchor(top: homeImage.topAnchor, left: homeImage.leftAnchor, bottom: homeImage.bottomAnchor, right: homeImage.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         homeMainDescription.anchor(top: homeImage.bottomAnchor, left: homeImage.leftAnchor, bottom: nil, right: homeImage.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: homeMainDescription.intrinsicContentSize.height)
-        homeSubDesctiption.anchor(top: homeMainDescription.bottomAnchor, left: homeMainDescription.leftAnchor, bottom: nil, right: homeMainDescription.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
     }
     
     override init(frame: CGRect) {

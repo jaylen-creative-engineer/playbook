@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class MenuBar : UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, CustomNavigationDelegate  {
     
@@ -20,7 +21,6 @@ class MenuBar : UIView, UICollectionViewDataSource, UICollectionViewDelegate, UI
     }()
     
     let cellId = "cellId"
-    let imageNames = ["explore_icon", "instagram_logo", "profile_icon"]
     
     var homeController: HomeController?
     
@@ -28,7 +28,6 @@ class MenuBar : UIView, UICollectionViewDataSource, UICollectionViewDelegate, UI
         super.init(frame: frame)
         let guide = safeAreaLayoutGuide
         collectionView.register(MenuCell.self, forCellWithReuseIdentifier: cellId)
-        
         addSubview(collectionView)
         collectionView.anchor(top: guide.topAnchor, left: guide.leftAnchor, bottom: guide.bottomAnchor, right: guide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         

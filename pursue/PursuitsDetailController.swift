@@ -7,14 +7,17 @@
 //
 
 import UIKit
+import XLActionController
 
 class PursuitsDetailController : UICollectionViewController, UICollectionViewDelegateFlowLayout, DetailCellChange, MessageDelegate {
+    
     
     let headerId = "headerId"
     let commentId = "commentId"
     let likeId = "likeId"
     let postId = "postId"
     let relatedId = "relatedId"
+    let discussionId = "discussionId"
     var isAboutView = true
     var isSavedView = false
     var isToolsView = false
@@ -22,6 +25,7 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
     var isNextView = false
     var isStepsView = false
     var isChallengeView = false
+    var isDiscussionView = false
     
     func goBack() {
         navigationController?.popViewController(animated: true)
@@ -35,6 +39,20 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
         isNextView = false
         isStepsView = false
         isChallengeView = false
+        isDiscussionView = false
+        collectionView?.reloadData()
+        collectionView?.updateConstraints()
+    }
+    
+    func changeDiscussion() {
+        isAboutView = false
+        isSavedView = false
+        isToolsView = false
+        isTeamView = false
+        isNextView = false
+        isStepsView = false
+        isChallengeView = false
+        isDiscussionView = true
         collectionView?.reloadData()
         collectionView?.updateConstraints()
     }
@@ -47,6 +65,7 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
         isNextView = false
         isStepsView = false
         isChallengeView = true
+        isDiscussionView = false
         collectionView?.reloadData()
         collectionView?.updateConstraints()
     }
@@ -59,6 +78,7 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
         isNextView = false
         isStepsView = false
         isChallengeView = false
+        isDiscussionView = false
         collectionView?.reloadData()
         collectionView?.updateConstraints()
     }
@@ -71,6 +91,7 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
         isNextView = false
         isStepsView = false
         isChallengeView = false
+        isDiscussionView = false
         collectionView?.reloadData()
         collectionView?.updateConstraints()
     }
@@ -83,6 +104,7 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
         isNextView = false
         isStepsView = false
         isChallengeView = false
+        isDiscussionView = false
         collectionView?.reloadData()
         collectionView?.updateConstraints()
     }
@@ -95,6 +117,7 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
         isNextView = true
         isStepsView = false
         isChallengeView = false
+        isDiscussionView = false
         collectionView?.reloadData()
         collectionView?.updateConstraints()
     }
@@ -107,6 +130,7 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
         isNextView = false
         isStepsView = true
         isChallengeView = false
+        isDiscussionView = false
         collectionView?.reloadData()
         collectionView?.updateConstraints()
     }
@@ -125,6 +149,56 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
         return CGSize(width: view.frame.width, height: view.frame.height)
     }
     
+    lazy var floatingCamera : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 20
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(addSteps), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var stepIcon : UIImageView = {
+        let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "add").withRenderingMode(.alwaysTemplate)
+        iv.tintColor = .white
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.contentMode = .scaleAspectFill
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(addSteps))
+        iv.addGestureRecognizer(tap)
+        return iv
+    }()
+    
+    @objc func addSteps(){
+        let actionController = SkypeActionController()
+        actionController.addAction(Action("ADD STEPS", style: .default, handler: { action in
+            // do something useful
+        }))
+        actionController.addAction(Action("START A DISCUSSION", style: .default, handler: { action in
+            // do something useful
+        }))
+        actionController.addAction(Action("SHARE", style: .default, handler: { action in
+            // do something useful
+        }))
+        actionController.addAction(Action("CANCEL", style: .default, handler: {action in
+            
+        }))
+        present(actionController, animated: true, completion: nil)
+    }
+    
+    private func setupFloatingCamera(){
+        let guide = view.safeAreaLayoutGuide
+        view.addSubview(floatingCamera)
+        floatingCamera.addSubview(stepIcon)
+        
+        floatingCamera.anchor(top: nil, left: nil, bottom: guide.bottomAnchor, right: guide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 12, width: 40, height: 40)
+        
+        stepIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
+        stepIcon.centerXAnchor.constraint(equalTo: floatingCamera.centerXAnchor).isActive = true
+        stepIcon.centerYAnchor.constraint(equalTo: floatingCamera.centerYAnchor).isActive = true
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let isTrue = true
         
@@ -136,19 +210,12 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: relatedId, for: indexPath) as! RelatedPost
             cell.accessPursuitDetailController = self
             return cell
-        case isToolsView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: toolId, for: indexPath) as! PursuitTools
-            return cell
         case isTeamView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: likeId, for: indexPath) as! PursuitTeam
             cell.accessDetailController = self
             return cell
-        case isChallengeView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! PursuitChallenge
-            cell.accessPursuitDetailController = self
-            return cell
-        case isNextView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: nextId, for: indexPath) as! NextPursuitCellsContainer
+        case isDiscussionView:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! PursuitDiscussion
             cell.accessPursuitDetailController = self
             return cell
         case isStepsView:
@@ -162,12 +229,12 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: (view.frame.height / 2) + 100)
+        return CGSize(width: view.frame.width - 10, height: (view.frame.height / 2) + 100)
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! PursuitsDetailHeader
-        header.changeDelegate = self
+        header.delegate = self
         header.messageDelegate = self
         return header
     }
@@ -187,6 +254,11 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
     func showPursuitsDetail(){
         let pursuits = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
         navigationController?.pushViewController(pursuits, animated: true)
+    }
+    
+    func showDiscussionDetail(){
+        let discussion = DiscussionDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(discussion, animated: true)
     }
     
     func showChallengesDetail(){
@@ -212,11 +284,10 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
         collectionView?.register(PostView.self, forCellWithReuseIdentifier: postId)
         collectionView?.register(PursuitTeam.self, forCellWithReuseIdentifier: likeId)
         collectionView?.register(RelatedPost.self, forCellWithReuseIdentifier: relatedId)
-        collectionView?.register(PursuitTools.self, forCellWithReuseIdentifier: toolId)
-        collectionView?.register(NextPursuitCellsContainer.self, forCellWithReuseIdentifier: nextId)
         collectionView?.register(PursuitSteps.self, forCellWithReuseIdentifier: stepId)
-        collectionView?.register(PursuitChallenge.self, forCellWithReuseIdentifier: challengeId)
+        collectionView?.register(PursuitDiscussion.self, forCellWithReuseIdentifier: discussionId)
         collectionView?.register(PursuitsDetailHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.backgroundColor = .white
+        setupFloatingCamera()
     }
 }

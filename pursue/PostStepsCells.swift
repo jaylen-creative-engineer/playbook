@@ -13,30 +13,28 @@ class PostStepsCells : UICollectionViewCell {
     let skillLabel : UILabel = {
         let label = UILabel()
         label.text = "Work Hard Right Now"
-        label.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight(rawValue: 25))
+        label.font = UIFont.systemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     let selectSkill : UIButton = {
         let iv = UIButton()
-        iv.layer.cornerRadius = 15
-        iv.layer.borderWidth = 3
+        iv.layer.borderWidth = 1
         iv.contentMode = .scaleAspectFill
         iv.layer.borderColor = UIColor.gray.cgColor
         iv.clipsToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
-        
     }()
     
     func setupView(){
         addSubview(selectSkill)
         addSubview(skillLabel)
         
-        selectSkill.anchor(top: nil, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
-        selectSkill.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        skillLabel.anchor(top: nil, left: selectSkill.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
+        selectSkill.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 16, height: 2)
+        
+        skillLabel.anchor(top: nil, left: selectSkill.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 16, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
         skillLabel.centerYAnchor.constraint(equalTo: selectSkill.centerYAnchor).isActive = true
     }
     

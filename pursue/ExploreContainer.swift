@@ -17,6 +17,7 @@ class ExploreContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
     let principleId = "principleId"
     let exerciseId = "exerciseId"
     let categoryId = "categoryId"
+    let discussionId = "discussionId"
     
     let exploreCollection : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -29,13 +30,14 @@ class ExploreContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
         super.init(frame: frame)
         exploreCollection.delegate = self
         exploreCollection.dataSource = self
-        exploreCollection.contentInset = UIEdgeInsetsMake(55, 0, 0, 0)
+        exploreCollection.contentInset = UIEdgeInsetsMake(65, 0, 105, 0)
         
         exploreCollection.register(ExploreImageRow.self, forCellWithReuseIdentifier: cellId)
         exploreCollection.register(PeopleRow.self, forCellWithReuseIdentifier: peopleId)
         exploreCollection.register(ExplorePrinciplesRow.self, forCellWithReuseIdentifier: principleId)
         exploreCollection.register(ExploreExerciseRow.self, forCellWithReuseIdentifier: exerciseId)
         exploreCollection.register(ExploreCategoryRow.self, forCellWithReuseIdentifier: categoryId)
+        exploreCollection.register(ExploreDiscussion.self, forCellWithReuseIdentifier: discussionId)
         addSubview(exploreCollection)
         exploreCollection.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
@@ -47,7 +49,7 @@ class ExploreContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
     // MARK: - Setup View
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return 6
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -61,16 +63,24 @@ class ExploreContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 0:
-            return CGSize(width: frame.width, height: 130)
+            return CGSize(width: frame.width, height: 110)
         case 1:
             return CGSize(width: frame.width, height: 260)
         case 2:
-            return CGSize(width: frame.width, height: 210)
+            return CGSize(width: frame.width, height: 270)
         case 3:
-            return CGSize(width: frame.width, height: 360)
+            return CGSize(width: frame.width, height: 270)
+        case 4:
+            return CGSize(width: frame.width, height: 208)
+        case 5:
+            return CGSize(width: frame.width, height: 308)
         default:
             return CGSize(width: frame.width, height: 260)
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -80,17 +90,20 @@ class ExploreContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
             let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: categoryId, for: indexPath) as! ExploreCategoryRow
             return categoryCell
         case 1:
-            let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreImageRow
-            return imageCell
-        case 2:
-            let peopleCell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! PeopleRow
-            return peopleCell
-        case 3:
-            let principleCell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! ExplorePrinciplesRow
-            return principleCell
-        case 4:
             let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! ExploreExerciseRow
             return pursuitCell
+        case 2:
+            let principleCell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! ExplorePrinciplesRow
+            return principleCell
+        case 3:
+            let discussionCell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! ExploreDiscussion
+            return discussionCell
+        case 4:
+            let peopleCell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! PeopleRow
+            return peopleCell
+        case 5:
+            let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreImageRow
+            return imageCell
         default:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! ExploreExerciseRow
             return cell

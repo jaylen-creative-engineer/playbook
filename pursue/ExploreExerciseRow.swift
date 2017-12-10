@@ -17,6 +17,12 @@ class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICol
         return label
     }()
     
+    lazy var moreButton : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "right-arrow-1").withRenderingMode(.alwaysOriginal), for: .normal)
+        return button
+    }()
+    
     let cellId = "cellId"
     let peopleId = "peopleId"
     
@@ -35,7 +41,7 @@ class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICol
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: ((frame.width - 2) / 2) + 35, height: ((frame.width - 2) / 2) + 50)
+        return CGSize(width: ((frame.width - 2) / 2) + 65, height: ((frame.width - 2) / 2) + 50)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -51,9 +57,11 @@ class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICol
     func setupView(){
         addSubview(postCollection)
         addSubview(rowLabel)
-        
-        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 140, height: 22)
-        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        addSubview(moreButton)
+        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
+        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        moreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 24, height: 12)
+        postCollection.showsHorizontalScrollIndicator = false
         postCollection.register(ExploreExercisesRowCells.self, forCellWithReuseIdentifier: cellId)
         postCollection.dataSource = self
         postCollection.delegate = self

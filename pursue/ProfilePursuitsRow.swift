@@ -19,21 +19,13 @@ class ProfilePursuitsRow : ExploreExerciseRow {
     }
 
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: ((frame.width - 2) / 2) + 145, height: ((frame.width - 2) / 2) + 30)
+        return CGSize(width: ((frame.width - 2) / 2) + 125, height: 310)
     }
     
     override func setupView() {
         super.setupView()
         postCollection.register(ProfilePursuitsCells.self, forCellWithReuseIdentifier: profilePursuitsId)
-        
+        postCollection.showsHorizontalScrollIndicator = false
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }

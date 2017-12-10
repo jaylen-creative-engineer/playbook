@@ -18,11 +18,11 @@ class ExploreCategoryCells : UICollectionViewCell {
     
     lazy var selectInterests : UIButton = {
        let button = UIButton()
-        button.backgroundColor = UIColor.black
+        button.backgroundColor = UIColor.white
         button.setTitle("ANIMALS", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.titleLabel?.textColor = .white
-        button.layer.cornerRadius = 16
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.layer.cornerRadius = 15
         button.layer.borderWidth = 1
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(handleTouch), for: .touchUpInside)
@@ -33,10 +33,14 @@ class ExploreCategoryCells : UICollectionViewCell {
         delegate?.changeToDetail(for: self)
     }
 
+    func setupView(){
+        addSubview(selectInterests)
+        selectInterests.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 90, height: 0)
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(selectInterests)
-        selectInterests.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: selectInterests.intrinsicContentSize.width + 30, height: 0)
+        setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {

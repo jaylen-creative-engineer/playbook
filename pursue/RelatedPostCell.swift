@@ -27,22 +27,12 @@ class RelatedPostCell : UICollectionViewCell {
         return label
     }()
     
-    let relatedSubDesctiption : UILabel = {
-        let label = UILabel()
-        label.text = "Return To IMAX"
-        label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.thin)
-        return label
-    }()
-    
     func setupView(){
         addSubview(relatedImage)
         addSubview(relatedMainDescription)
-        addSubview(relatedSubDesctiption)
         
         relatedImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 185)
         relatedMainDescription.anchor(top: relatedImage.bottomAnchor, left: relatedImage.leftAnchor, bottom: nil, right: relatedImage.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 14)
-        relatedSubDesctiption.anchor(top: relatedMainDescription.bottomAnchor, left: relatedMainDescription.leftAnchor, bottom: nil, right: relatedMainDescription.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
     }
     
     override init(frame: CGRect) {

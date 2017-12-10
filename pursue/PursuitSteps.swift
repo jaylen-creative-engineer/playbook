@@ -45,7 +45,7 @@ class PursuitSteps :  UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width, height: 90)
+        return CGSize(width: frame.width, height: 70)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -55,7 +55,6 @@ class PursuitSteps :  UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
-        
         pursuitSteps.dataSource = self
         pursuitSteps.delegate = self
         pursuitSteps.register(PostStepsCells.self, forCellWithReuseIdentifier: cellId)

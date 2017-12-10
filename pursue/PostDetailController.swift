@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import XLActionController
 
-class PostDetailController : UICollectionViewController, UICollectionViewDelegateFlowLayout, PostDetailHeaderDelegate, PostMessageDelegate {
+class PostDetailController : UICollectionViewController, UICollectionViewDelegateFlowLayout, PostDetailHeaderDelegate {
     
     let headerId = "headerId"
     let commentId = "commentId"
@@ -96,13 +97,12 @@ class PostDetailController : UICollectionViewController, UICollectionViewDelegat
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: (view.frame.height / 2) + 100)
+        return CGSize(width: view.frame.width - 10, height: (view.frame.height / 2) + 100)
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! PostDetailHeader
         header.postDetailDelegate = self
-        header.messageDelegate = self
         return header
     }
     
@@ -121,6 +121,17 @@ class PostDetailController : UICollectionViewController, UICollectionViewDelegat
         let layout = UICollectionViewFlowLayout()
         let postDetilController = PostDetailController(collectionViewLayout: layout)
         navigationController?.pushViewController(postDetilController, animated: true)
+    }
+    
+    func reportPost() {
+        let actionController = SkypeActionController()
+        actionController.addAction(Action("REPORT", style: .default, handler: { action in
+            // do something useful
+        }))
+        actionController.addAction(Action("CANCEL", style: .default, handler: {action in
+            
+        }))
+        present(actionController, animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
