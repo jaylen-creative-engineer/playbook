@@ -8,14 +8,9 @@
 
 import UIKit
 
-protocol ProfileContainerDelegate {
-    func showChat()
-    func showSettings()
-}
-
-class ProfileContainer : UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ProfileHeaderDelegate {
+class ProfileContainer : UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ProfileHeaderDelegate, ProfilePursuitsRowDelegate, ProfilePostDelegate, ProfilePrincipleDelegate, ProfileDiscussionDelegate {
     
-    var delegate : ProfileContainerDelegate?
+    var homeController : HomeController?
     
     let cellId = "cellId"
     let secondaryId = "secondaryId"
@@ -65,14 +60,47 @@ class ProfileContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
         return header
     }
     
+    func profileDiscussionTapped() {
+        homeController?.homeDiscussionTapped()
+    }
+    
+    func profileDiscussionHeld() {
+        homeController?.homeDiscussionHeld()
+    }
+    
     func handleSettings() {
-        delegate?.showSettings()
+        homeController?.showSettings()
     }
     
     func handleMessage() {
-        delegate?.showChat()
+        homeController?.showChat()
     }
 
+    func pursuitClicked() {
+        homeController?.pursuitClicked()
+    }
+    
+    func pursuitHeld() {
+        homeController?.pursuitHeld()
+    }
+    
+    
+    func profilePostTapped() {
+        homeController?.rowImageTapped()
+    }
+    
+    func profilePostHeld() {
+        homeController?.pursuitHeld()
+    }
+    
+    func profilePrincipleTapped() {
+        homeController?.principleTapped()
+    }
+    
+    func profilePrincipleHeld() {
+        homeController?.principleHeld()
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: frame.width, height: 270)
     }
@@ -114,18 +142,22 @@ class ProfileContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
         switch indexPath.item {
         case 0:
             let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuitsRow
+            pursuitCell.delegate = self
             return pursuitCell
         case 1:
             let principleCell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! ProfilePrincipleRow
+            principleCell.delegate = self
             return principleCell
         case 2:
             let discussionCell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! ProfileDiscussion
+            discussionCell.profileDelegate = self
             return discussionCell
         case 3:
             let addedCell = collectionView.dequeueReusableCell(withReuseIdentifier: addedId, for: indexPath) as! ProfileAddedRow
             return addedCell
         case 4:
             let postCell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! ProfilePostRow
+            postCell.delegate = self
             return postCell
         default:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuitsRow

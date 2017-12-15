@@ -8,61 +8,29 @@
 
 import UIKit
 
-class CategoryPrincipleRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class CategoryPrincipleRow : HomePrinciples, CategoryPrincipleDelegate {
     
-    let rowLabel : UILabel = {
-        let label = UILabel()
-        label.textColor = .black
-        label.font = UIFont.boldSystemFont(ofSize: 12)
-        return label
-    }()
+    let categoryPrincipleId = "categoryPrincipleId"
+    var categoryDetailController : CategoryDetailController?
     
-    let cellId = "cellId"
-    let peopleId = "peopleId"
-    
-    let postCollection : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        return collectionView
-    }()
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+    override func principleTapped() {
+        categoryDetailController?.principleTapped()
     }
     
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: ((frame.width - 2) / 2) + 85, height: ((frame.width - 2) / 2) + 150)
+    override func principleHeld() {
+        categoryDetailController?.principleHeld()
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CategoryPrincipleCells
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: categoryPrincipleId, for: indexPath) as! CategoryPrincipleCells
+        cell.categoryDelegate = self
         rowLabel.text = "ANIMAL PRINCIPLES"
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 12, 0, 12)
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        addSubview(postCollection)
-        addSubview(rowLabel)
-        
-        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 140, height: 22)
-        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        postCollection.register(CategoryPrincipleCells.self, forCellWithReuseIdentifier: cellId)
-        postCollection.dataSource = self
-        postCollection.delegate = self
-    }
-    
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override func setupView() {
+        super.setupView()
+        postCollection.register(CategoryPrincipleCells.self, forCellWithReuseIdentifier: categoryPrincipleId)
     }
 }
 

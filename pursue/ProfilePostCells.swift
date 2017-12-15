@@ -8,14 +8,25 @@
 
 import UIKit
 
+protocol ProfilePostCellDelegate {
+    func postTapped()
+    func postHeld()
+}
+
 class ProfilePostCells : UICollectionViewCell {
     
-    let exploreImage : UIImageView = {
+    lazy var exploreImage : UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "tumblr_nbje6dualg1r46py4o1_1280")
         iv.layer.masksToBounds = true
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleHomeHold))
+        tapGesture.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tapGesture)
+        iv.addGestureRecognizer(longGesture)
+        iv.isUserInteractionEnabled = true
         return iv
     }()
     
@@ -28,6 +39,15 @@ class ProfilePostCells : UICollectionViewCell {
         return label
     }()
     
+    var delegate : ProfilePostCellDelegate?
+    
+    @objc func handleHomeTap(){
+        delegate?.postTapped()
+    }
+    
+    @objc func handleHomeHold(){
+        delegate?.postHeld()
+    }
     
     func setupView() {        
         addSubview(exploreImage)

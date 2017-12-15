@@ -32,37 +32,31 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
-class MessagesController: UITableViewController {
+class MessagesController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     let cellId = "cellId"
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
-        
-        tableView.allowsMultipleSelectionDuringEditing = true
-        tableView.contentInset = UIEdgeInsetsMake(55, 0, 0, 0)
-        tableView.separatorStyle = .none
+        collectionView?.allowsMultipleSelection = true
+        collectionView?.contentInset = UIEdgeInsetsMake(55, 0, 0, 0)
+        collectionView?.register(UserCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.backgroundColor = .white
         fetchUserAndSetupNavBarTitle()
     }
     
     @objc func handleNewMessage() {
-        let newMessageController = NewMessageController()
+        let newMessageController = NewMessageController(collectionViewLayout: UICollectionViewFlowLayout())
         newMessageController.messagesController = self
-        let navController = UINavigationController(rootViewController: newMessageController)
-        present(navController, animated: true, completion: nil)
+        navigationController?.pushViewController(newMessageController, animated: true)
     }
     
     
-    func showChatControllerForUser(_ user: User) {
+    func showChatControllerForUser(user: User) {
         let chatLogController = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
-        chatLogController.user = user
         navigationController?.pushViewController(chatLogController, animated: true)
     }
-    
-    // MARK: - Setup Navbar
     
     func fetchUserAndSetupNavBarTitle() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -71,7 +65,7 @@ class MessagesController: UITableViewController {
             
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 let user = User(uid: snapshot.key, dictionary: dictionary)
-                self.setupNavBarWithUser(user)
+                self.setupNavBarWithUser()
             }
             
         }, withCancel: nil)
@@ -82,7 +76,7 @@ class MessagesController: UITableViewController {
     }
     
     lazy var backButton : UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "back-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
         button.contentMode = .scaleAspectFill
         button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
@@ -98,10 +92,11 @@ class MessagesController: UITableViewController {
     }()
     
     lazy var chatLabel : UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.setTitle("CHAT", for: .normal)
         button.addTarget(self, action: #selector(toggleChat), for: .touchUpInside)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
@@ -109,8 +104,14 @@ class MessagesController: UITableViewController {
         let button = UIButton()
         button.setTitle("NOTIFICATIONS", for: .normal)
         button.addTarget(self, action: #selector(toggleNotifications), for: .touchUpInside)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         return button
+    }()
+    
+    let backgroundView : UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
     }()
     
     @objc func toggleChat(){
@@ -123,17 +124,14 @@ class MessagesController: UITableViewController {
         notificationsLabel.setTitleColor(UIColor.black, for: .normal)
     }
     
-    func setupNavBarWithUser(_ user: User) {
+    var messages = [Message]()
+    var messagesDictionary = [String: Message]()
+    
+    func setupNavBarWithUser() {
         messages.removeAll()
         messagesDictionary.removeAll()
-        tableView.reloadData()
-        
+        collectionView?.reloadData()
         observeUserMessages()
- 
-        let guide = view.safeAreaLayoutGuide
-        
-        let backgroundView = UIView()
-        backgroundView.backgroundColor = .white
         
         view.addSubview(backgroundView)
         backgroundView.addSubview(backButton)
@@ -141,63 +139,34 @@ class MessagesController: UITableViewController {
         backgroundView.addSubview(notificationsLabel)
         backgroundView.addSubview(searchButton)
         
-        backgroundView.anchor(top: guide.topAnchor, left: guide.leftAnchor, bottom: nil, right: guide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 45)
-        backButton.anchor(top: backgroundView.topAnchor, left: backgroundView.leftAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
-        searchButton.anchor(top: backgroundView.topAnchor, left: nil, bottom: nil, right: backgroundView.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 20, height: 20)
-        chatLabel.anchor(top: backgroundView.topAnchor, left: backButton.rightAnchor, bottom: nil, right: nil, paddingTop: 14, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: chatLabel.intrinsicContentSize.width + 20, height: chatLabel.intrinsicContentSize.height)
+        backgroundView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 90)
+        backButton.anchor(top: nil, left: backgroundView.leftAnchor, bottom: backgroundView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 16, paddingRight: 0, width: 20, height: 20)
+        searchButton.anchor(top: nil, left: nil, bottom: backgroundView.bottomAnchor, right: backgroundView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 16, paddingRight: 16, width: 20, height: 20)
+        chatLabel.anchor(top: nil, left: backButton.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 18, paddingBottom: 16, paddingRight: 0, width: chatLabel.intrinsicContentSize.width + 20, height: chatLabel.intrinsicContentSize.height)
+        chatLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
         notificationsLabel.anchor(top: chatLabel.topAnchor, left: chatLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: notificationsLabel.intrinsicContentSize.width + 20, height: notificationsLabel.intrinsicContentSize.height)
         toggleChat()
     }
     
-    // MARK: - Setup TableView
-    
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        
-        let message = self.messages[indexPath.row]
-        
-        if let chatPartnerId = message.chatPartnerId() {
-            Database.database().reference().child("user-messages").child(uid).child(chatPartnerId).removeValue(completionBlock: { (error, ref) in
-                
-                if error != nil {
-                    print("Failed to delete message:", error!)
-                    return
-                }
-                
-                self.messagesDictionary.removeValue(forKey: chatPartnerId)
-                self.attemptReloadOfTable()
-            })
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserCell
-        
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! UserCell
         let message = messages[indexPath.row]
         cell.message = message
-        
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: 100)
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let message = messages[indexPath.row]
         
-        guard let chatPartnerId = message.chatPartnerId() else {
-            return
-        }
+        guard let chatPartnerId = message.chatPartnerId() else { return }
         
         let ref = Database.database().reference().child("users").child(chatPartnerId)
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
@@ -206,15 +175,10 @@ class MessagesController: UITableViewController {
             }
             
             let user = User(uid: chatPartnerId, dictionary: dictionary)
-            self.showChatControllerForUser(user)
+            self.showChatControllerForUser(user: user)
             
         }, withCancel: nil)
     }
-    
-    // MARK: - User Messages Array
-    
-    var messages = [Message]()
-    var messagesDictionary = [String: Message]()
     
     func observeUserMessages() {
         guard let uid = Auth.auth().currentUser?.uid else {
@@ -276,8 +240,7 @@ class MessagesController: UITableViewController {
         })
         
         DispatchQueue.main.async(execute: {
-            self.tableView.reloadData()
+            self.collectionView?.reloadData()
         })
     }
-    
 }

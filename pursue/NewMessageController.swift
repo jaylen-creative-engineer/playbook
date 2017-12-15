@@ -9,23 +9,12 @@
 import UIKit
 import Firebase
 
-class NewMessageController: UITableViewController {
+class NewMessageController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     let cellId = "cellId"
     
     var users = [User]()
     var messagesController: MessagesController?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
-        tableView.separatorStyle = .none
-        navigationController?.navigationBar.isHidden = true
-        tableView.contentInset = UIEdgeInsetsMake(55, 0, 0, 0)
-        
-        fetchUser()
-        setupNavBarWithUser()
-    }
     
     lazy var backButton : UIButton = {
         let button = UIButton()
@@ -41,7 +30,7 @@ class NewMessageController: UITableViewController {
         
         view.addSubview(backButton)
         backButton.anchor(top: guide.topAnchor, left: guide.leftAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: backButton.intrinsicContentSize.width, height: backButton.intrinsicContentSize.height)
-     
+        
     }
     
     func fetchUser() {
@@ -56,15 +45,15 @@ class NewMessageController: UITableViewController {
                 if user.uid == userId {
                     
                     dictionary.removeValue(forKey: snapshot.key)
-                
+                    
                 } else {
                     
                     self.users.append(user)
                 }
                 
-
+                
                 DispatchQueue.main.async(execute: {
-                    self.tableView.reloadData()
+                    self.collectionView?.reloadData()
                 })
             }
             
@@ -76,32 +65,39 @@ class NewMessageController: UITableViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    // MARK: Setup Table View
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        collectionView?.register(UserCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.contentInset = UIEdgeInsetsMake(55, 0, 0, 0)
+        navigationController?.navigationBar.isHidden = true
+        fetchUser()
+        setupNavBarWithUser()
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return users.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserCell
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: 100)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let user = self.users[indexPath.row]
+        let chatLogController = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
+        chatLogController.user = user
+        self.navigationController?.pushViewController(chatLogController, animated: true)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! UserCell
         
         let user = users[indexPath.row]
-        cell.textLabel?.text = user.username
-        cell.detailTextLabel?.text = user.fullname
+        cell.textLabel.text = user.username
+        cell.detailTextLabel.text = user.fullname
         cell.profileImageView.loadImageUsingCacheWithUrlString(user.profileImageURL)
         
         return cell
     }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            let user = self.users[indexPath.row]
-            let chatLogController = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
-            chatLogController.user = user
-            self.navigationController?.pushViewController(chatLogController, animated: true)
-    }
-
 }

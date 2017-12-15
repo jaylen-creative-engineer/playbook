@@ -25,6 +25,7 @@ class ExploreHeaderRow: UICollectionViewCell, UISearchBarDelegate {
         label.font = UIFont.boldSystemFont(ofSize: 28)
         label.textColor = .black
         label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     

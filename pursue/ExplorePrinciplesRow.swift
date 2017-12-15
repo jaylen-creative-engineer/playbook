@@ -8,8 +8,15 @@
 
 import UIKit
 
-class ExplorePrinciplesRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-        
+protocol ExplorePrincipleDelegate {
+    func explorePrincipleTapped()
+    func explorePrincipleHeld()
+}
+
+class ExplorePrinciplesRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ExplorePrincipleCellsDelegate {
+    
+    var exploreDelegate : ExplorePrincipleDelegate?
+    
     let rowLabel : UILabel = {
         let label = UILabel()
         label.textColor = .black
@@ -44,8 +51,17 @@ class ExplorePrinciplesRow : UICollectionViewCell, UICollectionViewDelegate, UIC
         return CGSize(width: ((frame.width - 2) / 2) - 5, height: ((frame.width - 2) / 2) + 70)
     }
     
+    func explorePrincipleTapped() {
+        exploreDelegate?.explorePrincipleTapped()
+    }
+    
+    func explorePrincipleHeld() {
+        exploreDelegate?.explorePrincipleHeld()
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExplorePrincipleCells
+        cell.explorePrincipleDelegate = self
         rowLabel.text = "ANIMAL PRINCIPLES"
         return cell
     }

@@ -8,7 +8,14 @@
 
 import UIKit
 
+protocol ProfilePrincipleCellsDelegate {
+    func principleTapped()
+    func principleHeld()
+}
+
 class ProfilePrincipleCells : UICollectionViewCell {
+    
+    var delegate : ProfilePrincipleCellsDelegate?
     
     let profileLabel : UILabel = {
         let label = UILabel()
@@ -17,13 +24,27 @@ class ProfilePrincipleCells : UICollectionViewCell {
         return label
     }()
     
-    let profileImage : UIImageView = {
+    lazy var profileImage : UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "samuel-l")
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleHomeHold))
+        tapGesture.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tapGesture)
+        iv.addGestureRecognizer(longGesture)
+        iv.isUserInteractionEnabled = true
         return iv
     }()
+    
+    @objc func handleHomeTap(){
+        delegate?.principleTapped()
+    }
+    
+    @objc func handleHomeHold(){
+        delegate?.principleHeld()
+    }
     
     func setupCardDetails(){
         

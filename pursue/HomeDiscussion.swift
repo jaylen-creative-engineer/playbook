@@ -8,7 +8,13 @@
 
 import UIKit
 
-class HomeDiscussion : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+protocol HomeDiscussionDelegate {
+    func homeDiscussionTapped()
+    func homeDiscussionHeld()
+    func homeDiscussionFeed()
+}
+
+class HomeDiscussion : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, HomeDiscussionCellDelegate {
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -16,6 +22,8 @@ class HomeDiscussion : UICollectionViewCell, UICollectionViewDelegate, UICollect
         label.font = UIFont.boldSystemFont(ofSize: 12)
         return label
     }()
+    
+    var delegate : HomeDiscussionDelegate?
     
     let cellId = "cellId"
     let peopleId = "peopleId"
@@ -32,6 +40,7 @@ class HomeDiscussion : UICollectionViewCell, UICollectionViewDelegate, UICollect
     lazy var moreButton : UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "right-arrow-1").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleDiscussionFeed), for: .touchUpInside)
         return button
     }()
     
@@ -46,12 +55,25 @@ class HomeDiscussion : UICollectionViewCell, UICollectionViewDelegate, UICollect
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeDiscussionCells
+        cell.homeDelegate = self
         rowLabel.text = "ANIMAL DISCUSSIONS"
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(0, 12, 0, 12)
+    }
+    
+    func discussionTapped() {
+        delegate?.homeDiscussionTapped()
+    }
+    
+    func discussionHeld() {
+        delegate?.homeDiscussionHeld()
+    }
+    
+    func handleDiscussionFeed(){
+        delegate?.homeDiscussionFeed()
     }
     
     func setupView(){

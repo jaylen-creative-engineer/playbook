@@ -8,55 +8,39 @@
 
 import UIKit
 
-class CategoryPrincipleCells : UICollectionViewCell {
+protocol CategoryPrincipleDelegate {
+    func principleTapped()
+    func principleHeld()
+}
+class CategoryPrincipleCells : HomePrinciplesCells {
     
-    let exploreButton : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = UIColor.init(white: 0.4, alpha: 0.05)
-        return button
-    }()
+    var categoryDelegate : CategoryPrincipleDelegate?
     
-    let exploreLabel : UILabel = {
-        let label = UILabel()
-        label.text = "DRAW"
-        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight(rawValue: 25))
-        return label
-    }()
-    
-    let exploreDetailLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Put In More Effort"
-        label.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight(rawValue: 25))
-        return label
-    }()
-    
-    let exploreImage : UIImageView = {
+    lazy var categoryPrincipleImage : UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "samuel-l")
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        iv.layer.cornerRadius = 4
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handlePrincipleTap))
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handlePrincipleHold))
+        tapGesture.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tapGesture)
+        iv.addGestureRecognizer(longGesture)
+        iv.isUserInteractionEnabled = true
         return iv
     }()
     
-    func setupCardDetails(){
-        
-        addSubview(exploreImage)
-        addSubview(exploreLabel)
-        addSubview(exploreDetailLabel)
-        
-        exploreImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
-        exploreLabel.anchor(top: exploreImage.bottomAnchor, left: exploreImage.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: exploreLabel.intrinsicContentSize.height)
-        exploreDetailLabel.anchor(top: exploreLabel.bottomAnchor, left: exploreLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: exploreDetailLabel.intrinsicContentSize.height)
+    @objc override func handlePrincipleTap() {
+        categoryDelegate?.principleTapped()
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupCardDetails()
+    @objc override func handlePrincipleHold(){
+        categoryDelegate?.principleHeld()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override func setupCardDetails() {
+        super.setupCardDetails()
+        addSubview(categoryPrincipleImage)
+        categoryPrincipleImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
     }
-    
 }

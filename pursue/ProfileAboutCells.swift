@@ -10,7 +10,4 @@ import UIKit
 
 class ProfileAboutCells : ExploreCategoryCells {
 
-    override func setupView() {
-        super.setupView()
-    }
 }

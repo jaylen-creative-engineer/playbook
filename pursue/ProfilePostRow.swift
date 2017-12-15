@@ -8,7 +8,12 @@
 
 import UIKit
 
-class ProfilePostRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+protocol ProfilePostDelegate {
+    func profilePostTapped()
+    func profilePostHeld()
+}
+
+class ProfilePostRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ProfilePostCellDelegate {
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -20,6 +25,7 @@ class ProfilePostRow : UICollectionViewCell, UICollectionViewDelegate, UICollect
     
     let cellId = "cellId"
     let peopleId = "peopleId"
+    var delegate : ProfilePostDelegate?
     
     let postCollection : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -35,6 +41,7 @@ class ProfilePostRow : UICollectionViewCell, UICollectionViewDelegate, UICollect
         return button
     }()
     
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 6
     }
@@ -47,6 +54,7 @@ class ProfilePostRow : UICollectionViewCell, UICollectionViewDelegate, UICollect
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfilePostCells
+        cell.delegate = self
         return cell
     }
     
@@ -54,10 +62,18 @@ class ProfilePostRow : UICollectionViewCell, UICollectionViewDelegate, UICollect
         return UIEdgeInsetsMake(12, 12, 0, 12)
     }
     
+    func postTapped() {
+        delegate?.profilePostTapped()
+    }
+    
+    func postHeld() {
+        delegate?.profilePostHeld()
+    }
+    
     func setupView(){
-        addSubview(postCollection)
         addSubview(rowLabel)
         addSubview(moreButton)
+        addSubview(postCollection)
         
         rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 42, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 140, height: 22)
         moreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 24, height: 12)

@@ -8,13 +8,14 @@
 
 import UIKit
 
+protocol HomeDiscussionCellDelegate {
+    func discussionTapped()
+    func discussionHeld()
+}
+
 class HomeDiscussionCells : UICollectionViewCell {
     
-    let discussionButton : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = UIColor.init(white: 0.4, alpha: 0.05)
-        return button
-    }()
+    var homeDelegate : HomeDiscussionCellDelegate?
     
     let discussionLabel : UILabel = {
         let label = UILabel()
@@ -24,32 +25,39 @@ class HomeDiscussionCells : UICollectionViewCell {
         return label
     }()
     
-    let discussionImage : UIImageView = {
+    lazy var discussionImage : UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "trees")
         iv.contentMode = .scaleAspectFill
         iv.layer.masksToBounds = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDiscussionTap))
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleDiscussionHold))
+        tapGesture.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tapGesture)
+        iv.addGestureRecognizer(longGesture)
+        iv.isUserInteractionEnabled = true
         return iv
     }()
     
+    @objc func handleDiscussionTap(){
+        homeDelegate?.discussionTapped()
+    }
     
-    func setupCardDetails(){
-        addSubview(discussionLabel)
-        discussionLabel.anchor(top: discussionImage.bottomAnchor, left: discussionImage.leftAnchor, bottom: nil, right: discussionImage.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 14)
+    @objc func handleDiscussionHold(){
+        homeDelegate?.discussionHeld()
     }
     
     func setupView(){
-        addSubview(discussionButton)
-        discussionButton.addSubview(discussionImage)
-        
-        discussionButton.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
-        discussionImage.anchor(top: discussionButton.topAnchor, left: discussionButton.leftAnchor, bottom: discussionButton.bottomAnchor, right: discussionButton.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        addSubview(discussionImage)
+        addSubview(discussionLabel)
+
+        discussionImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
+        discussionLabel.anchor(top: discussionImage.bottomAnchor, left: discussionImage.leftAnchor, bottom: nil, right: discussionImage.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 14)
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
-        setupCardDetails()
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -8,7 +8,14 @@
 
 import UIKit
 
+protocol ExplorePrincipleCellsDelegate {
+    func explorePrincipleTapped()
+    func explorePrincipleHeld()
+}
+
 class ExplorePrincipleCells : UICollectionViewCell {
+    
+    var explorePrincipleDelegate : ExplorePrincipleCellsDelegate?
     
     let exploreButton : UIButton = {
         let button = UIButton()
@@ -19,17 +26,31 @@ class ExplorePrincipleCells : UICollectionViewCell {
     let exploreLabel : UILabel = {
         let label = UILabel()
         label.text = "Draw"
-        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight(rawValue: 25))
+        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
         return label
     }()
     
-    let exploreImage : UIImageView = {
+    lazy var exploreImage : UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "samuel-l")
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handlePrincipleTap))
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handlePrincipleHold))
+        tapGesture.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tapGesture)
+        iv.addGestureRecognizer(longGesture)
+        iv.isUserInteractionEnabled = true
         return iv
     }()
+    
+    @objc func handlePrincipleTap(){
+        explorePrincipleDelegate?.explorePrincipleTapped()
+    }
+    
+    @objc func handlePrincipleHold(){
+        explorePrincipleDelegate?.explorePrincipleHeld()
+    }
     
     func setupCardDetails(){
         

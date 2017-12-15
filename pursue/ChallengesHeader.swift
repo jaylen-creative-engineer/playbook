@@ -30,7 +30,7 @@ class ChallengesHeader : PostDetailHeader {
         return button
     }()
     
-    @objc override func dismissView(){
+    @objc func dismissView(){
         challengeDelegate?.goBack()
     }
     
@@ -38,10 +38,7 @@ class ChallengesHeader : PostDetailHeader {
         challengeDelegate?.handleMessage(for: self)
     }
     
-    override func setupTopNavBar() {
-        super.setupTopNavBar()
-        backButton.isHidden = true
-        chatIcon.isHidden = true
+     func setupTopNavBar() {
         addSubview(challengeBackButton)
         addSubview(challengeChatIcon)
         

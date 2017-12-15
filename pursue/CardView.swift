@@ -10,7 +10,7 @@ import UIKit
 
 class CardView: UIView {
     
-    var cornerRadius : CGFloat = 8
+    var cornerRadius : CGFloat = 20
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 20
     var shadowColor = UIColor.black

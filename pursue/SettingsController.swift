@@ -122,7 +122,8 @@ class SettingsController : UICollectionViewController, UICollectionViewDelegateF
         let button = UIButton()
         button.setTitle("SETTINGS", for: .normal)
         button.setTitleColor(UIColor.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
@@ -289,8 +290,9 @@ class SettingsController : UICollectionViewController, UICollectionViewDelegateF
         backgroundView.addSubview(settingsLabel)
         
         backgroundView.anchor(top: guide.topAnchor, left: guide.leftAnchor, bottom: nil, right: guide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 45)
-        backButton.anchor(top: backgroundView.topAnchor, left: backgroundView.leftAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
-        settingsLabel.anchor(top: backgroundView.topAnchor, left: backButton.rightAnchor, bottom: nil, right: nil, paddingTop: 14, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: settingsLabel.intrinsicContentSize.width, height: settingsLabel.intrinsicContentSize.height)
+        backButton.anchor(top: backgroundView.topAnchor, left: backgroundView.leftAnchor, bottom: nil, right: nil, paddingTop: 16, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
+        settingsLabel.anchor(top: nil, left: backButton.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: settingsLabel.intrinsicContentSize.width, height: settingsLabel.intrinsicContentSize.height)
+        settingsLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
     }
     
     func setupSettingsSection(){
@@ -309,7 +311,7 @@ class SettingsController : UICollectionViewController, UICollectionViewDelegateF
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.backgroundColor = .white
-        collectionView?.contentInset = UIEdgeInsetsMake(85, 0, 30, 0)
+        collectionView?.contentInset = UIEdgeInsetsMake(85, 0, 105, 0)
         setupAccountSection()
         setupSettingsSection()
         setupNavBarWithUser()

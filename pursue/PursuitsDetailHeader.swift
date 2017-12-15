@@ -8,16 +8,6 @@
 
 import UIKit
 
-protocol DetailCellChange {
-    func changeAbout()
-    func changeSaved()
-    func changeTool()
-    func changeTeam()
-    func changeNext()
-    func changeSteps()
-    func changeDiscussion()
-    func changeChallenge()
-}
 
 protocol MessageDelegate {
     func handleMessage(for cell : PursuitsDetailHeader)
@@ -35,16 +25,55 @@ class PursuitsDetailHeader : UICollectionViewCell {
     
     var pursuitsDetailController : PursuitsDetailController?
     var messageDelegate : MessageDelegate?
-    var delegate : DetailCellChange?
-
+    
     let headerId = "headerId"
     var stackView = UIStackView()
     let bottomDividerView = UIView()
-    let aboutLabelUnderline = UIView()
-    let stepsLabelUnderline = UIView()
-    let teamLabelUnderline = UIView()
-    let savedLabelUnderline = UIView()
-    let discusionLabelUnderline = UIView()
+    
+    let aboutLabelUnderline : UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 3
+        view.layer.masksToBounds = true
+        return view
+    }()
+    
+    let stepsLabelUnderline : UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 3
+        view.layer.masksToBounds = true
+        return view
+    }()
+    
+    let discusionLabelUnderline : UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 3
+        view.layer.masksToBounds = true
+        return view
+    }()
+    
+    let savedLabelUnderline : UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 3
+        view.layer.masksToBounds = true
+        return view
+    }()
+    
+    let principleLabelUnderline : UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 3
+        view.layer.masksToBounds = true
+        return view
+    }()
     
     lazy var backButton : UIButton = {
         let button = UIButton()
@@ -71,44 +100,45 @@ class PursuitsDetailHeader : UICollectionViewCell {
     
     lazy var aboutButton : UIButton = {
         let label = UIButton()
-        label.setTitle("ABOUT", for: .normal)
-        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        label.setTitle("About", for: .normal)
+        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         label.addTarget(self, action: #selector(toggleAboutUnderline), for: .touchUpInside)
         return label
     }()
     
     lazy var stepsLabel : UIButton = {
         let label = UIButton()
-        label.setTitle("STEPS", for: .normal)
-        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        label.setTitle("Steps", for: .normal)
+        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         label.addTarget(self, action: #selector(toggleStepsUnderline), for: .touchUpInside)
         return label
     }()
     
     lazy var discussionLabel : UIButton = {
         let label = UIButton()
-        label.setTitle("DISCUSSIONS", for: .normal)
-        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        label.setTitle("Discussions", for: .normal)
+        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         label.addTarget(self, action: #selector(toggleDiscussionUnderline), for: .touchUpInside)
         return label
     }()
     
-    lazy var teamLabel : UIButton = {
+    lazy var principleLabel : UIButton = {
         let label = UIButton()
-        label.setTitle("ADDED", for: .normal)
-        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
-        label.addTarget(self, action: #selector(toggleTeamLabel), for: .touchUpInside)
+        label.setTitle("Principles", for: .normal)
+        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        label.addTarget(self, action: #selector(togglePrinciplesLabel), for: .touchUpInside)
         return label
     }()
     
     
     lazy var savedLabel : UIButton = {
         let label = UIButton()
-        label.setTitle("SAVED", for: .normal)
-        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        label.setTitle("Saved", for: .normal)
+        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         label.addTarget(self, action: #selector(toggleSavedUnderline), for: .touchUpInside)
         return label
     }()
+    
     
     @objc func dismissView(){
         messageDelegate?.goBack()
@@ -124,21 +154,23 @@ class PursuitsDetailHeader : UICollectionViewCell {
         stepsLabel.setTitleColor(.gray, for: .normal)
         aboutButton.setTitleColor(.black, for: .normal)
         savedLabel.setTitleColor(.gray, for: .normal)
-        teamLabel.setTitleColor(.gray, for: .normal)
+        principleLabel.setTitleColor(.gray, for: .normal)
         discussionLabel.setTitleColor(.gray, for: .normal)
         
         aboutActive()
         
         addSubview(aboutLabelUnderline)
-        aboutLabelUnderline.anchor(top: nil, left: aboutButton.leftAnchor, bottom: bottomDividerView.topAnchor, right: aboutButton.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
+        aboutLabelUnderline.anchor(top: nil, left: nil, bottom: bottomDividerView.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
+        aboutLabelUnderline.centerXAnchor.constraint(equalTo: aboutButton.centerXAnchor).isActive = true
+       
     }
     
     func aboutActive(){
-        delegate?.changeAbout()
+        pursuitsDetailController?.changeAbout()
         
         aboutLabelUnderline.isHidden = false
         stepsLabelUnderline.isHidden = true
-        teamLabelUnderline.isHidden = true
+        principleLabelUnderline.isHidden = true
         savedLabelUnderline.isHidden = true
         discusionLabelUnderline.isHidden = true
         
@@ -150,48 +182,50 @@ class PursuitsDetailHeader : UICollectionViewCell {
         stepsLabel.setTitleColor(.black, for: .normal)
         aboutButton.setTitleColor(.gray, for: .normal)
         savedLabel.setTitleColor(.gray, for: .normal)
-        teamLabel.setTitleColor(.gray, for: .normal)
+        principleLabel.setTitleColor(.gray, for: .normal)
         discussionLabel.setTitleColor(.gray, for: .normal)
         
         stepsActive()
         
         addSubview(stepsLabelUnderline)
-        stepsLabelUnderline.anchor(top: nil, left: stepsLabel.leftAnchor, bottom: bottomDividerView.topAnchor, right: stepsLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
+        stepsLabelUnderline.anchor(top: nil, left: nil, bottom: bottomDividerView.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
+        stepsLabelUnderline.centerXAnchor.constraint(equalTo: stepsLabel.centerXAnchor).isActive = true
     }
+    
     func stepsActive(){
-        delegate?.changeSteps()
+        pursuitsDetailController?.changeSteps()
         
         stepsLabelUnderline.isHidden = false
         aboutLabelUnderline.isHidden = true
         savedLabelUnderline.isHidden = true
-        teamLabelUnderline.isHidden = true
+        principleLabelUnderline.isHidden = true
         discusionLabelUnderline.isHidden = true
     }
     
-    @objc func toggleTeamLabel(){
-        teamLabelUnderline.backgroundColor = .black
+    @objc func togglePrinciplesLabel(){
+        principleLabelUnderline.backgroundColor = .black
         
         stepsLabel.setTitleColor(.gray, for: .normal)
         aboutButton.setTitleColor(.gray, for: .normal)
         savedLabel.setTitleColor(.gray, for: .normal)
-        teamLabel.setTitleColor(.black, for: .normal)
+        principleLabel.setTitleColor(.black, for: .normal)
         discussionLabel.setTitleColor(.gray, for: .normal)
         
-        teamActive()
+        principlesActive()
         
-        addSubview(teamLabelUnderline)
-        teamLabelUnderline.anchor(top: nil, left: teamLabel.leftAnchor, bottom: bottomDividerView.topAnchor, right: teamLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
-        
+        addSubview(principleLabelUnderline)
+        principleLabelUnderline.anchor(top: nil, left: nil, bottom: bottomDividerView.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
+        principleLabelUnderline.centerXAnchor.constraint(equalTo: principleLabel.centerXAnchor).isActive = true
     }
     
     
-    func teamActive(){
-        delegate?.changeTeam()
+    func principlesActive(){
+        pursuitsDetailController?.changePrinciple()
         
         aboutLabelUnderline.isHidden = true
         stepsLabelUnderline.isHidden = true
         savedLabelUnderline.isHidden = true
-        teamLabelUnderline.isHidden = false
+        principleLabelUnderline.isHidden = false
         discusionLabelUnderline.isHidden = true
     }
     
@@ -201,21 +235,22 @@ class PursuitsDetailHeader : UICollectionViewCell {
         stepsLabel.setTitleColor(.gray, for: .normal)
         aboutButton.setTitleColor(.gray, for: .normal)
         savedLabel.setTitleColor(.black, for: .normal)
-        teamLabel.setTitleColor(.gray, for: .normal)
+        principleLabel.setTitleColor(.gray, for: .normal)
         discussionLabel.setTitleColor(.gray, for: .normal)
         
         savedActive()
         
         addSubview(savedLabelUnderline)
-        savedLabelUnderline.anchor(top: nil, left: savedLabel.leftAnchor, bottom: bottomDividerView.topAnchor, right: savedLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
+        savedLabelUnderline.anchor(top: nil, left: nil, bottom: bottomDividerView.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
+        savedLabelUnderline.centerXAnchor.constraint(equalTo: savedLabel.centerXAnchor).isActive = true
     }
     
     func savedActive(){
-        delegate?.changeSaved()
+        pursuitsDetailController?.changeSaved()
         
         savedLabelUnderline.isHidden = false
         aboutLabelUnderline.isHidden = true
-        teamLabelUnderline.isHidden = true
+        principleLabelUnderline.isHidden = true
         stepsLabelUnderline.isHidden = true
         discusionLabelUnderline.isHidden = true
     }
@@ -226,36 +261,30 @@ class PursuitsDetailHeader : UICollectionViewCell {
         stepsLabel.setTitleColor(.gray, for: .normal)
         aboutButton.setTitleColor(.gray, for: .normal)
         savedLabel.setTitleColor(.gray, for: .normal)
-        teamLabel.setTitleColor(.gray, for: .normal)
+        principleLabel.setTitleColor(.gray, for: .normal)
         discussionLabel.setTitleColor(.black, for: .normal)
         
         discussionActive()
         
         addSubview(discusionLabelUnderline)
-        discusionLabelUnderline.anchor(top: nil, left: discussionLabel.leftAnchor, bottom: bottomDividerView.topAnchor, right: discussionLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
+        discusionLabelUnderline.anchor(top: nil, left: nil, bottom: bottomDividerView.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
+        discusionLabelUnderline.centerXAnchor.constraint(equalTo: discussionLabel.centerXAnchor).isActive = true
     }
     
     func discussionActive(){
-        delegate?.changeDiscussion()
+        pursuitsDetailController?.changeDiscussion()
         
         savedLabelUnderline.isHidden = true
         aboutLabelUnderline.isHidden = true
-        teamLabelUnderline.isHidden = true
+        principleLabelUnderline.isHidden = true
         stepsLabelUnderline.isHidden = true
         discusionLabelUnderline.isHidden = false
     }
     
-    
-    func setupTopNavBar(){
-        addSubview(backButton)
-        
-        backButton.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 16, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
-    }
-    
     func pageOptions(){
-        bottomDividerView.backgroundColor = UIColor.init(white: 0, alpha: 0.2)
+        bottomDividerView.backgroundColor = UIColor.clear
                 
-        stackView = UIStackView(arrangedSubviews: [aboutButton, stepsLabel, discussionLabel, teamLabel, savedLabel])
+        stackView = UIStackView(arrangedSubviews: [aboutButton, stepsLabel, discussionLabel, principleLabel, savedLabel])
         stackView.axis = .horizontal
         stackView.distribution = .equalSpacing
         
@@ -268,12 +297,11 @@ class PursuitsDetailHeader : UICollectionViewCell {
     
     func setupViews() {
         backgroundColor = .clear
-        setupTopNavBar()
         
         addSubview(postImage)
         addSubview(postLabel)
         
-        postImage.anchor(top: backButton.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (frame.height / 2) + 50)
+        postImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 44, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (frame.height / 2) + 50)
         postLabel.anchor(top: postImage.bottomAnchor, left: postImage.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 300, height: 52)
         pageOptions()
     }

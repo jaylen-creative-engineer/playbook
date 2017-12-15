@@ -8,7 +8,14 @@
 
 import UIKit
 
-class ExploreDiscussion : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+protocol ExploreDiscussionDelegate {
+    func exploreDiscussionTapped()
+    func exploreDiscussionHeld()
+}
+
+class ExploreDiscussion : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ExploreDiscussionCellDelegate {
+    
+    var exploreDiscussionDelegate : ExploreDiscussionDelegate?
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -47,11 +54,20 @@ class ExploreDiscussion : UICollectionViewCell, UICollectionViewDelegate, UIColl
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreDiscussionCells
         rowLabel.text = "ANIMAL DISCUSSIONS"
+        cell.exploreDelegate = self
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(0, 12, 0, 12)
+    }
+    
+    func discussionHeld() {
+        exploreDiscussionDelegate?.exploreDiscussionHeld()
+    }
+    
+    func discussionTapped() {
+        exploreDiscussionDelegate?.exploreDiscussionTapped()
     }
     
     func setupView(){

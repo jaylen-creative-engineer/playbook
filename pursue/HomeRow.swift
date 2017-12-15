@@ -26,7 +26,7 @@ class HomeRow: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewD
     
     let rowLabel : UILabel = {
         let label = UILabel()
-        label.text = "TODAY'S PICKS"
+        label.text = "ANIMALS"
         label.font = UIFont.boldSystemFont(ofSize: 12)
         let tap = UITapGestureRecognizer(target: self, action: #selector(feedChange))
         label.addGestureRecognizer(tap)
@@ -82,13 +82,7 @@ class HomeRow: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewD
         return UIEdgeInsetsMake(0, 12, 0, 12)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessHomeController?.showPostDetailForPost()
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-                
+    func setupView(){
         addSubview(postCollection)
         addSubview(rowLabel)
         addSubview(moreButton)
@@ -100,6 +94,11 @@ class HomeRow: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewD
         postCollection.register(HomeRowCells.self, forCellWithReuseIdentifier: cellId)
         postCollection.dataSource = self
         postCollection.delegate = self
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
     }
     
     

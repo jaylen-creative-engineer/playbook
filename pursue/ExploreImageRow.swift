@@ -8,7 +8,14 @@
 
 import UIKit
 
-class ExploreImageRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+protocol ExploreImageDelegate {
+    func imageTapped()
+    func imageHeld()
+}
+
+class ExploreImageRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ExerciseImageCellDelegate {
+    
+    var exploreDelegate : ExploreImageDelegate?
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -42,17 +49,26 @@ class ExploreImageRow : UICollectionViewCell, UICollectionViewDelegate, UICollec
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (frame.width / 2) - 75, height: frame.height)
+        return CGSize(width: (frame.width / 2) - 55, height: frame.height)
     }
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExerciseImageCells
+        cell.exerciseImageDelegate = self
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(0, 12, 0, 12)
+    }
+    
+    func imageCellTapped() {
+        exploreDelegate?.imageTapped()
+    }
+    
+    func imageCellHeld() {
+        exploreDelegate?.imageHeld()
     }
     
     override init(frame: CGRect) {
@@ -61,7 +77,7 @@ class ExploreImageRow : UICollectionViewCell, UICollectionViewDelegate, UICollec
         addSubview(rowLabel)
         addSubview(moreButton)
         
-        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 40, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 140, height: 22)
+        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 40, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
         postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         moreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 24, height: 12)
         postCollection.showsHorizontalScrollIndicator = false

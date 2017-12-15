@@ -33,8 +33,7 @@ class StepsHeader : PursuitsDetailHeader {
         stepsDelegate?.handleMessage(for: self)
     }
     
-    override func setupTopNavBar() {
-        super.setupTopNavBar()
+     func setupTopNavBar() {
         backButton.isHidden = true
         
         addSubview(stepBackButton)

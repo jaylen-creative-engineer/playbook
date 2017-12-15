@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol ExploreExerciseCellsDelegate {
+    func pursuitTapped()
+    func pursuitHeld()
+}
 class ExploreExercisesRowCells  : UICollectionViewCell {
+    
+    var exploreExereciseDelegate : ExploreExerciseCellsDelegate?
     
     let exploreLabel : UILabel = {
         let label = UILabel()
@@ -17,12 +23,18 @@ class ExploreExercisesRowCells  : UICollectionViewCell {
         return label
     }()
     
-    let exploreImage : UIImageView = {
+    lazy var exploreImage : UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "backpack")
         iv.contentMode = .scaleAspectFill
         iv.layer.masksToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handlePursuitTap))
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handlePursuitHold))
+        tapGesture.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tapGesture)
+        iv.addGestureRecognizer(longGesture)
+        iv.isUserInteractionEnabled = true
         return iv
     }()
     
@@ -41,6 +53,14 @@ class ExploreExercisesRowCells  : UICollectionViewCell {
         pv.progressTintColor = UIColor.rgb(red: 0, green: 128, blue: 0)
         return pv
     }()
+    
+    @objc func handlePursuitTap(){
+        exploreExereciseDelegate?.pursuitTapped()
+    }
+    
+    @objc func handlePursuitHold(){
+        exploreExereciseDelegate?.pursuitHeld()
+    }
     
     func setupView(){
         addSubview(exploreImage)

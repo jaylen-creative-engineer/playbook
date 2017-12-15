@@ -17,7 +17,7 @@ class HomePrinciplesCells : ProfilePrincipleCells {
     
     var principleCellDelegate : HomePrinciplesCellDelegate?
     
-    let homePrincipleImage : UIImageView = {
+    lazy var homePrincipleImage : UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "samuel-l")
         iv.contentMode = .scaleAspectFill
@@ -27,6 +27,7 @@ class HomePrinciplesCells : ProfilePrincipleCells {
         tapGesture.numberOfTapsRequired = 1
         iv.addGestureRecognizer(tapGesture)
         iv.addGestureRecognizer(longGesture)
+        iv.isUserInteractionEnabled = true
         return iv
     }()
     

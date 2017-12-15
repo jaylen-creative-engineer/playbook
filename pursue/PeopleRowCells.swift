@@ -8,14 +8,24 @@
 
 import UIKit
 
+protocol PeopleRowCellDelegate {
+    func profileTapped()
+}
+
 class PeopleRowCells : UICollectionViewCell {
     
-    let userPhoto : UIImageView = {
+    var peopleDelegate : PeopleRowCellDelegate?
+    
+    lazy var userPhoto : UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "clean-8")
         iv.layer.cornerRadius = 40
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleProfileTap))
+        tapGesture.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tapGesture)
+        iv.isUserInteractionEnabled = true
         return iv
     }()
     
@@ -28,6 +38,9 @@ class PeopleRowCells : UICollectionViewCell {
         return label
     }()
     
+    @objc func handleProfileTap(){
+        peopleDelegate?.profileTapped()
+    }
     
     func setupView(){
         addSubview(userPhoto)

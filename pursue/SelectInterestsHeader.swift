@@ -12,7 +12,7 @@ protocol SelectToProfile {
     func switchToProfile()
 }
 
-class SelectInterestsHeader : FeedHeader {
+class SelectInterestsHeader : StepsHeader {
     
     var delegate : SelectToProfile?
     
@@ -32,10 +32,8 @@ class SelectInterestsHeader : FeedHeader {
         delegate?.switchToProfile()
     }
     
-    override func setupPageTitle() {
-        super.setupPageTitle()
-        pageTitle.text = "Select Interests"
-        exploreChatIcon.isHidden = true
+    func setupPageTitle() {
+//        pageTitle.text = "Select Interests"
         addSubview(nextLabel)
         nextLabel.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: nextLabel.intrinsicContentSize.width, height: 18)
     }

@@ -12,19 +12,17 @@ protocol SettingsHeaderDelegate {
     func goBack()
 }
 
-class SettingsHeader : FeedHeader {
+class SettingsHeader : StepsHeader {
     
     var settingsHeaderDelegate : SettingsHeaderDelegate?
     
-    override func handleBack() {
-        super.handleBack()
+    func handleBack() {
         settingsHeaderDelegate?.goBack()
     }
     
-    override func setupPageTitle() {
-        super.setupPageTitle()
-        pageTitle.text = "Settings"
-        exploreChatIcon.isHidden = true
+    func setupPageTitle() {
+//        pageTitle.text = "Settings"
+//        pageTitle.font = UIFont.boldSystemFont(ofSize: 14)
     }
     
 }

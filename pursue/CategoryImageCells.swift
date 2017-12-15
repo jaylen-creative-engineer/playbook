@@ -8,51 +8,41 @@
 
 import UIKit
 
-class CategoryImageCells : UICollectionViewCell {
+protocol CategoryImageDelegate {
+    func homeImageTapped()
+    func homeImageHeld()
+}
+
+class CategoryImageCells : HomeRowCells {
     
-    let exploreImage : UIImageView = {
+    var categoryImageDelegate : CategoryImageDelegate?
+    
+    lazy var categoryPostImage : UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "tumblr_nbje6dualg1r46py4o1_1280")
-        iv.layer.masksToBounds = true
         iv.contentMode = .scaleAspectFill
+        iv.layer.masksToBounds = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleHomeHold))
+        tapGesture.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tapGesture)
+        iv.addGestureRecognizer(longGesture)
+        iv.isUserInteractionEnabled = true
         return iv
     }()
     
-    let exploreMainDescription : UILabel = {
-        let label = UILabel()
-        label.text = "Wonder Woman"
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
-        label.numberOfLines = 0
-        label.textColor = .black
-        return label
-    }()
-    
-    let exploreSubDesctiption : UILabel = {
-        let label = UILabel()
-        label.text = "Return To IMAX"
-        label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.thin)
-        return label
-    }()
-    
-    func setupView() {
-        backgroundColor = .clear
-        
-        addSubview(exploreImage)
-        addSubview(exploreMainDescription)
-        addSubview(exploreSubDesctiption)
-        
-        exploreImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 150)
-        exploreMainDescription.anchor(top: exploreImage.bottomAnchor, left: exploreImage.leftAnchor, bottom: nil, right: exploreImage.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 14)
-        exploreSubDesctiption.anchor(top: exploreMainDescription.bottomAnchor, left: exploreMainDescription.leftAnchor, bottom: nil, right: exploreMainDescription.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
+    @objc override func handleHomeTap(){
+        categoryImageDelegate?.homeImageTapped()
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView()
+    @objc override func handleHomeHold(){
+        categoryImageDelegate?.homeImageHeld()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override func setupView() {
+        super.setupView()
+        
+        addSubview(categoryPostImage)
+         categoryPostImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 300)
     }
 }

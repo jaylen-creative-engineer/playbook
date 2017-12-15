@@ -23,35 +23,11 @@ class DiscussionPursuitsCells : UICollectionViewCell {
         return label
     }()
     
-    let dayLabel : UILabel = {
-        let label = UILabel()
-        label.text = "TOMORROW • "
-        label.font = UIFont.boldSystemFont(ofSize: 12)
-        label.textColor = .gray
-        return label
-    }()
-    
     let percentageLabel : UILabel = {
         let label = UILabel()
-        label.text = "42% Complete"
+        label.text = "30%"
+        label.textColor = UIColor.rgb(red: 0, green: 128, blue: 0)
         label.font = UIFont.boldSystemFont(ofSize: 12)
-        label.textColor = .gray
-        return label
-    }()
-    
-    let execeriseCompletedLabel : UILabel = {
-        let label = UILabel()
-        label.text = "123,456 Completions •"
-        label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.thin)
-        return label
-    }()
-    
-    let execeriseTimeLabel : UILabel = {
-        let label = UILabel()
-        label.text = "01:23:45"
-        label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.thin)
         return label
     }()
     
@@ -63,28 +39,32 @@ class DiscussionPursuitsCells : UICollectionViewCell {
         return iv
     }()
     
-    
+    let progressBar : UIProgressView = {
+        let pv = UIProgressView()
+        pv.trackTintColor = UIColor.rgb(red: 211, green: 211, blue: 211)
+        pv.progress = 0.3
+        pv.progressTintColor = UIColor.rgb(red: 0, green: 128, blue: 0)
+        pv.translatesAutoresizingMaskIntoConstraints = false
+        return pv
+    }()
     
     func setupCardDetails(){
         addSubview(exerciseLabel)
-        addSubview(execeriseCompletedLabel)
-        addSubview(execeriseTimeLabel)
+        addSubview(progressBar)
+        addSubview(percentageLabel)
         
-        exerciseLabel.anchor(top: nextImage.bottomAnchor, left: nextImage.leftAnchor, bottom: nil, right: nextImage.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 18)
-        execeriseCompletedLabel.anchor(top: exerciseLabel.bottomAnchor, left: exerciseLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 130, height: 16)
-        execeriseTimeLabel.anchor(top: execeriseCompletedLabel.topAnchor, left: execeriseCompletedLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 120, height: 16)
+        exerciseLabel.anchor(top: nextImage.bottomAnchor, left: nextImage.leftAnchor, bottom: nil, right: nextImage.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: exerciseLabel.intrinsicContentSize.width, height: exerciseLabel.intrinsicContentSize.height)
+       
+        progressBar.anchor(top: nil, left: nextImage.leftAnchor, bottom: nil, right: percentageLabel.leftAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 3)
+        progressBar.centerYAnchor.constraint(equalTo: percentageLabel.centerYAnchor).isActive = true
+        
+        percentageLabel.anchor(top: nextImage.bottomAnchor, left: nil, bottom: nil, right: nextImage.rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: percentageLabel.intrinsicContentSize.width, height: percentageLabel.intrinsicContentSize.height)
     }
     
     func setupView(){
-        addSubview(nextButton)
-        addSubview(dayLabel)
-        addSubview(percentageLabel)
-        nextButton.addSubview(nextImage)
-        
-        dayLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 88, height: 18)
-        percentageLabel.anchor(top: dayLabel.topAnchor, left: dayLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 120, height: 18)
-        nextButton.anchor(top: percentageLabel.bottomAnchor, left: dayLabel.leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        nextImage.anchor(top: nextButton.topAnchor, left: nextButton.leftAnchor, bottom: nextButton.bottomAnchor, right: nextButton.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        addSubview(nextImage)
+       
+        nextImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 6, paddingBottom: 0, paddingRight: 6, width: 0, height: 190)
         setupCardDetails()
     }
     

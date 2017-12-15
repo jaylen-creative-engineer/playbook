@@ -8,26 +8,15 @@
 
 import UIKit
 
-protocol HomeRowEngagements {
-    func rowImageTapped()
-    func rowImageHeld()
-    func feedChangeTapped()
-    func pursuitsFeedTapped()
-    func pursuitClicked()
-    func pursuitHeld()
-    func showPrinciplesFeed()
-    func principleTapped()
-    func principleHeld()
-}
 
-class HomeRowContainer : UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, HomeRowImageEngagements, HomePursuitsRowDelegate, HomePrinciplesDelegate {
+class HomeRowContainer : UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, HomeRowImageEngagements, HomePursuitsRowDelegate, HomePrinciplesDelegate, HomeDiscussionDelegate {
     
     let cellId = "cellId"
     let secondaryId = "secondaryId"
     let customRowId = "customRowId"
     let pursuitId = "pursuitId"
     let principleId = "principleId"
-    var delegate : HomeRowEngagements?
+    var homeController : HomeController?
     let discussionId = "discussionId"
     
     let homeCollection : UICollectionView = {
@@ -65,40 +54,52 @@ class HomeRowContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
         return 0
     }
     
+    func homeDiscussionFeed(){
+        homeController?.handleChangeToFeed(viewType: "isDiscussionFeed")
+    }
+    
+    func homeDiscussionTapped() {
+        homeController?.homeDiscussionTapped()
+    }
+    
+    func homeDiscussionHeld() {
+        homeController?.homeDiscussionHeld()
+    }
+    
     func principleTapped() {
-        delegate?.principleTapped()
+        homeController?.principleTapped()
     }
     
     func principleHeld() {
-        delegate?.principleHeld()
+        homeController?.principleHeld()
     }
     
     func showPrinciplesFeed(){
-        delegate?.showPrinciplesFeed()
+        homeController?.handleChangeToFeed(viewType: "isPrinciplesFeed")
     }
     
     func showPursuitsFeed() {
-        delegate?.pursuitsFeedTapped()
+        homeController?.handleChangeToFeed(viewType: "isPursuitFeed")
     }
     
     func homeRowImageTapped() {
-        delegate?.rowImageTapped()
+        homeController?.rowImageTapped()
     }
     
     func homeRowImageHeld() {
-        delegate?.rowImageHeld()
+        homeController?.rowImageHeld()
     }
     
     func handleChangeToFeed() {
-        delegate?.feedChangeTapped()
+        homeController?.handleChangeToFeed(viewType: "isImageFeed")
     }
     
     func pursuitClicked() {
-        delegate?.pursuitClicked()
+        homeController?.pursuitClicked()
     }
     
     func pursuitHeld() {
-        delegate?.pursuitHeld()
+        homeController?.pursuitHeld()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -128,6 +129,7 @@ class HomeRowContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
             return cell
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! HomeDiscussion
+            cell.delegate = self
             return cell
         case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeRow

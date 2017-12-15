@@ -23,16 +23,41 @@ class DiscussionDetailHeader : UICollectionViewCell {
     let headerId = "headerId"
     var stackView = UIStackView()
     let bottomDividerView = UIView()
-    let aboutLabelUnderline = UIView()
-    let commentsLabelUnderline = UIView()
-    let pursuitsLabelUnderline = UIView()
-    let principlesLabelUnderline = UIView()
     
-    lazy var backButton : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "back-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
-        return button
+    let aboutLabelUnderline : UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 3
+        view.layer.masksToBounds = true
+        return view
+    }()
+    
+    let commentsLabelUnderline : UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 3
+        view.layer.masksToBounds = true
+        return view
+    }()
+    
+    let pursuitsLabelUnderline : UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 3
+        view.layer.masksToBounds = true
+        return view
+    }()
+    
+    let principlesLabelUnderline : UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 3
+        view.layer.masksToBounds = true
+        return view
     }()
     
     let postImage : UIImageView = {
@@ -53,41 +78,39 @@ class DiscussionDetailHeader : UICollectionViewCell {
     
     lazy var aboutButton : UIButton = {
         let label = UIButton()
-        label.setTitle("ABOUT", for: .normal)
-        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        label.setTitle("About", for: .normal)
+        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         label.addTarget(self, action: #selector(toggleAboutUnderline), for: .touchUpInside)
         return label
     }()
     
     lazy var pursuitsLabel : UIButton = {
         let label = UIButton()
-        label.setTitle("PURSUITS", for: .normal)
-        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        label.setTitle("Pursuits", for: .normal)
+        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         label.addTarget(self, action: #selector(togglePursuitsUnderline), for: .touchUpInside)
         return label
     }()
 
     lazy var principlesLabel : UIButton = {
         let label = UIButton()
-        label.setTitle("PRINCIPLES", for: .normal)
-        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
-        label.addTarget(self, action: #selector(toggleAboutUnderline), for: .touchUpInside)
+        label.setTitle("Principles", for: .normal)
+        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        label.addTarget(self, action: #selector(togglePrinciplesUnderline), for: .touchUpInside)
         return label
     }()
     
     lazy var commentsLabel : UIButton = {
         let label = UIButton()
-        label.setTitle("COMMENTS", for: .normal)
-        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        label.setTitle("Comments", for: .normal)
+        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         label.addTarget(self, action: #selector(toggleCommentsUnderline), for: .touchUpInside)
         return label
     }()
     
+
     var detailController : DiscussionDetailController?
     
-    @objc func dismissView(){
-        detailController?.goBack()
-    }
     
     @objc func toggleAboutUnderline(){
         aboutLabelUnderline.backgroundColor = .black
@@ -100,7 +123,8 @@ class DiscussionDetailHeader : UICollectionViewCell {
         aboutActive()
         
         addSubview(aboutLabelUnderline)
-        aboutLabelUnderline.anchor(top: nil, left: aboutButton.leftAnchor, bottom: bottomDividerView.topAnchor, right: aboutButton.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
+        aboutLabelUnderline.anchor(top: nil, left: nil, bottom: bottomDividerView.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
+        aboutLabelUnderline.centerXAnchor.constraint(equalTo: aboutButton.centerXAnchor).isActive = true
     }
     
     func aboutActive(){
@@ -123,7 +147,8 @@ class DiscussionDetailHeader : UICollectionViewCell {
         commentsActive()
         
         addSubview(commentsLabelUnderline)
-        commentsLabelUnderline.anchor(top: nil, left: commentsLabel.leftAnchor, bottom: bottomDividerView.topAnchor, right: commentsLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
+        commentsLabelUnderline.anchor(top: nil, left: nil, bottom: bottomDividerView.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
+        commentsLabelUnderline.centerXAnchor.constraint(equalTo: commentsLabel.centerXAnchor).isActive = true
     }
     
     func commentsActive(){
@@ -146,7 +171,8 @@ class DiscussionDetailHeader : UICollectionViewCell {
         pursuitsActive()
         
         addSubview(pursuitsLabelUnderline)
-        pursuitsLabelUnderline.anchor(top: nil, left: pursuitsLabel.leftAnchor, bottom: bottomDividerView.topAnchor, right: pursuitsLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
+        pursuitsLabelUnderline.anchor(top: nil, left: nil, bottom: bottomDividerView.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
+        pursuitsLabelUnderline.centerXAnchor.constraint(equalTo: pursuitsLabel.centerXAnchor).isActive = true
     }
     
     func pursuitsActive(){
@@ -160,8 +186,6 @@ class DiscussionDetailHeader : UICollectionViewCell {
     
     
     @objc func togglePrinciplesUnderline(){
-        principlesLabelUnderline.backgroundColor = .black
-        
         aboutButton.setTitleColor(.gray, for: .normal)
         commentsLabel.setTitleColor(.gray, for: .normal)
         principlesLabel.setTitleColor(.black, for: .normal)
@@ -170,7 +194,8 @@ class DiscussionDetailHeader : UICollectionViewCell {
         principlesActive()
         
         addSubview(principlesLabelUnderline)
-        principlesLabelUnderline.anchor(top: nil, left: principlesLabel.leftAnchor, bottom: bottomDividerView.topAnchor, right: principlesLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
+        principlesLabelUnderline.anchor(top: nil, left: nil, bottom: bottomDividerView.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
+        principlesLabelUnderline.centerXAnchor.constraint(equalTo: principlesLabel.centerXAnchor).isActive = true
     }
     
     func principlesActive(){
@@ -178,23 +203,16 @@ class DiscussionDetailHeader : UICollectionViewCell {
         
         aboutLabelUnderline.isHidden = true
         commentsLabelUnderline.isHidden = true
-        pursuitsLabelUnderline.isHidden = false
-        principlesLabelUnderline.isHidden = true
-    }
-    
-    func setupTopNavBar(){
-        addSubview(backButton)
-        
-        backButton.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 16, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
+        pursuitsLabelUnderline.isHidden = true
+        principlesLabelUnderline.isHidden = false
     }
     
     func pageOptions(){
-        bottomDividerView.backgroundColor = UIColor.init(white: 0, alpha: 0.2)
+        bottomDividerView.backgroundColor = .clear
         
         stackView = UIStackView(arrangedSubviews: [aboutButton, commentsLabel, pursuitsLabel, principlesLabel])
         stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.spacing = 20
+        stackView.distribution = .equalSpacing
         
         addSubview(stackView)
         addSubview(bottomDividerView)
@@ -205,12 +223,11 @@ class DiscussionDetailHeader : UICollectionViewCell {
     
     func setupViews() {
         backgroundColor = .clear
-        setupTopNavBar()
         
         addSubview(postImage)
         addSubview(postLabel)
         
-        postImage.anchor(top: backButton.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (frame.height / 2) + 50)
+        postImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 44, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (frame.height / 2) + 50)
         postLabel.anchor(top: postImage.bottomAnchor, left: postImage.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 300, height: 52)
         pageOptions()
     }

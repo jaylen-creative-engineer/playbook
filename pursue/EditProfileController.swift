@@ -28,62 +28,106 @@ class EditProfileController : UICollectionViewController {
         return iv
     }()
     
-    let nameLabel : UILabel = {
-       let label = UILabel()
-        label.text = "NAME"
-        label.font = UIFont.boldSystemFont(ofSize: 14)
-        return label
-    }()
-    
-    let fullnameLabel : UILabel = {
-       let tv = UILabel()
-        tv.text = "FULL NAME"
-        tv.font = UIFont.boldSystemFont(ofSize: 16)
+    let nameLabel : UITextView = {
+       let tv = UITextView()
+        tv.text = "NAME"
+        tv.font = UIFont.boldSystemFont(ofSize: 14)
+        tv.textColor = .black
         return tv
     }()
     
-    let usernameLabel : UILabel = {
-        let tv = UILabel()
-        tv.text = "USERNAME"
+    let fullnameLabel : UITextField = {
+       let tv = UITextField()
+        tv.textColor = .black
         tv.font = UIFont.boldSystemFont(ofSize: 16)
+        tv.attributedPlaceholder = NSAttributedString(string: "FULL NAME", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
         return tv
     }()
     
-    let bioLabel : UILabel = {
-        let tv = UILabel()
-        tv.text = "CREATE BIO"
+    let usernameLabel : UITextField = {
+        let tv = UITextField()
         tv.font = UIFont.boldSystemFont(ofSize: 16)
+        tv.attributedPlaceholder = NSAttributedString(string: "USERNAME", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
+        tv.textColor = .black
         return tv
     }()
     
-    let currentLabel : UILabel = {
-        let tv = UILabel()
-        tv.text = "CURRENT PASSWORD"
+    let bioLabel : UITextField = {
+        let tv = UITextField()
         tv.font = UIFont.boldSystemFont(ofSize: 16)
+        tv.attributedPlaceholder = NSAttributedString(string: "CREATE BIO", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
+        tv.textColor = .black
         return tv
     }()
     
-    let confirmLabel : UILabel = {
-        let tv = UILabel()
-        tv.text = "CONFIRM PASSWORD"
+    let currentLabel : UITextField = {
+        let tv = UITextField()
+        tv.placeholder = "CURRENT PASSWORD"
         tv.font = UIFont.boldSystemFont(ofSize: 16)
+        tv.attributedPlaceholder = NSAttributedString(string: "CURRENT PASSWORD", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
+        tv.textColor = .black
         return tv
     }()
     
-    let updateLabel : UILabel = {
-        let tv = UILabel()
-        tv.text = "UPDATE PASSWORD"
+    let confirmLabel : UITextField = {
+        let tv = UITextField()
         tv.font = UIFont.boldSystemFont(ofSize: 16)
+        tv.attributedPlaceholder = NSAttributedString(string: "CONFIRM PASSWORD", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
+        tv.textColor = .black
         return tv
     }()
     
-    let deleteLabel : UILabel = {
-        let tv = UILabel()
-        tv.text = "DELETE ACCOUNT"
-        tv.textColor = .gray
+    let updateLabel : UITextField = {
+        let tv = UITextField()
+        tv.placeholder = "UPDATE PASSWORD"
         tv.font = UIFont.boldSystemFont(ofSize: 16)
+        tv.attributedPlaceholder = NSAttributedString(string: "UPDATE PASSWORD", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
+        tv.textColor = .black
         return tv
     }()
+    
+    let deleteLabel : UIButton = {
+        let button = UIButton()
+        button.setTitle("DELETE ACCOUNT", for: .normal)
+        button.setTitleColor(.gray, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        return button
+    }()
+    
+    lazy var saveButton : UIButton = {
+       let button = UIButton()
+        button.setTitle("SAVE", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    lazy var pictureButton : CardView = {
+       let view = CardView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 20
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleCamera))
+        tap.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tap)
+        return view
+    }()
+    
+    lazy var cameraIcon : UIImageView = {
+       let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "camera_icon")
+        iv.contentMode = .scaleAspectFill
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        return iv
+    }()
+    
+    @objc func handleCamera(){
+        let layout = UICollectionViewFlowLayout()
+        let cameraController = SelectCameraController(collectionViewLayout: layout)
+        navigationController?.present(cameraController, animated: true, completion: nil)
+    }
     
     @objc func handleCancel(){
         navigationController?.popViewController(animated: true)
@@ -104,33 +148,43 @@ class EditProfileController : UICollectionViewController {
         view.addSubview(confirmLabel)
         view.addSubview(updateLabel)
         view.addSubview(deleteLabel)
+        view.addSubview(pictureButton)
+        view.addSubview(cameraIcon)
         
         profilePicture.anchor(top: backButton.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 120, height: 120)
         profilePicture.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        fullnameLabel.anchor(top: profilePicture.bottomAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: fullnameLabel.intrinsicContentSize.width, height: fullnameLabel.intrinsicContentSize.height)
-        usernameLabel.anchor(top: fullnameLabel.bottomAnchor, left: fullnameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width
+        
+        pictureButton.anchor(top: nil, left: nil, bottom: profilePicture.bottomAnchor, right: profilePicture.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
+        cameraIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
+        cameraIcon.centerYAnchor.constraint(equalTo: pictureButton.centerYAnchor).isActive = true
+        cameraIcon.centerXAnchor.constraint(equalTo: pictureButton.centerXAnchor).isActive = true
+        
+        fullnameLabel.anchor(top: profilePicture.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 48, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: fullnameLabel.intrinsicContentSize.height)
+        usernameLabel.anchor(top: fullnameLabel.bottomAnchor, left: fullnameLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0
             , height: usernameLabel.intrinsicContentSize.height)
-        bioLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: bioLabel.intrinsicContentSize.width
+        bioLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0
             , height: bioLabel.intrinsicContentSize.height)
-        currentLabel.anchor(top: bioLabel.bottomAnchor, left: bioLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: currentLabel.intrinsicContentSize.width, height: currentLabel.intrinsicContentSize.height)
-        confirmLabel.anchor(top: currentLabel.bottomAnchor, left: currentLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: confirmLabel.intrinsicContentSize.width, height: confirmLabel.intrinsicContentSize.height)
-        updateLabel.anchor(top: confirmLabel.bottomAnchor, left: confirmLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: updateLabel.intrinsicContentSize.width, height: updateLabel.intrinsicContentSize.height)
+        currentLabel.anchor(top: bioLabel.bottomAnchor, left: bioLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: currentLabel.intrinsicContentSize.height)
+        confirmLabel.anchor(top: currentLabel.bottomAnchor, left: currentLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: confirmLabel.intrinsicContentSize.height)
+        updateLabel.anchor(top: confirmLabel.bottomAnchor, left: confirmLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: updateLabel.intrinsicContentSize.height)
         deleteLabel.anchor(top: updateLabel.bottomAnchor, left: updateLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: deleteLabel.intrinsicContentSize.width, height: deleteLabel.intrinsicContentSize.height)
     }
     
     
     
     func setupNavBarWithUser() {
-        let guide = view.safeAreaLayoutGuide
-        
         let backgroundView = UIView()
         backgroundView.backgroundColor = .white
         
         view.addSubview(backgroundView)
         backgroundView.addSubview(backButton)
+        backgroundView.addSubview(saveButton)
         
-        backgroundView.anchor(top: guide.topAnchor, left: guide.leftAnchor, bottom: nil, right: guide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 45)
-        backButton.anchor(top: backgroundView.topAnchor, left: backgroundView.leftAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
+        backgroundView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 90)
+        backButton.anchor(top: nil, left: backgroundView.leftAnchor, bottom: backgroundView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 16, paddingRight: 0, width: 20, height: 20)
+        saveButton.anchor(top: nil, left: nil, bottom: nil, right: backgroundView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: saveButton.intrinsicContentSize.width, height: saveButton.intrinsicContentSize.height)
+        saveButton.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
         setupProfileSection()
+        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 85, 0)
     }
 }

@@ -1,14 +1,14 @@
 //
-//  FeedChallengeRowCells.swift
+//  PrincipleDiscussionCells.swift
 //  pursue
 //
-//  Created by Jaylen Sanders on 10/30/17.
+//  Created by Jaylen Sanders on 12/11/17.
 //  Copyright © 2017 Glory. All rights reserved.
 //
 
 import UIKit
 
-class FeedChallengeCells : UICollectionViewCell {
+class PrincipleDiscussionCells : UICollectionViewCell {
     
     let usernameLabel : UILabel = {
         let label = UILabel()
@@ -96,33 +96,7 @@ class FeedChallengeCells : UICollectionViewCell {
         return label
     }()
     
-    let postUsernameLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Test27"
-        label.font = UIFont.boldSystemFont(ofSize: 16)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
     
-    let postTimeDetail : UILabel = {
-        let label = UILabel()
-        label.text = "6 minutes ago"
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.thin)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let postUserPhoto : UIImageView = {
-        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "samuel-l")
-        iv.layer.cornerRadius = 30
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        return iv
-        
-    }()
-    
-    let bottomDividerView = UIView()
     var stackView = UIStackView()
     let pathView = PathView()
     
@@ -144,6 +118,34 @@ class FeedChallengeCells : UICollectionViewCell {
         finishingDateLabel.centerXAnchor.constraint(equalTo: pursuitName.centerXAnchor).isActive = true
     }
     
+    func setupDiagonalLine(){
+        // create path
+        let path = UIBezierPath()
+        path.move(to: CGPoint(x: 10, y: 10))
+        path.addLine(to: CGPoint(x: 100, y: 100))
+        path.lineWidth = 3
+        
+        
+        // Create a `CAShapeLayer` that uses that `UIBezierPath`:
+        
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = path.cgPath
+        shapeLayer.strokeColor = UIColor.blue.cgColor
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.lineWidth = 3
+        
+        // Add that `CAShapeLayer` to your view's layer:
+        
+        layer.addSublayer(shapeLayer)
+        addSubview(pathView)
+        pathView.anchor(top: addedUserPhoto.topAnchor, left: nil, bottom: addedUserPhoto.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        pathView.leadingAnchor.constraint(equalTo: addedUserPhoto.leadingAnchor).isActive = true
+        pathView.trailingAnchor.constraint(equalTo: addedUserPhoto.trailingAnchor).isActive = true
+        pathView.backgroundColor = .clear
+        
+        pathView.path = path
+    }
+    
     func setupAddedUser(){
         addSubview(addedUserPhoto)
         addSubview(addedFullnameLabel)
@@ -152,7 +154,7 @@ class FeedChallengeCells : UICollectionViewCell {
         
         pathView.translatesAutoresizingMaskIntoConstraints = false
         
-        addedUserPhoto.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 60, height: 60)
+        addedUserPhoto.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 60, height: 60)
         addedFullnameLabel.anchor(top: addedUserPhoto.bottomAnchor, left: nil, bottom: nil, right: addedUserPhoto.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 150, height: 16)
         addedUsernameLabel.anchor(top: addedFullnameLabel.bottomAnchor, left: nil, bottom: nil, right: addedFullnameLabel.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: addedUsernameLabel.intrinsicContentSize.width, height: 18)
     }
@@ -161,17 +163,16 @@ class FeedChallengeCells : UICollectionViewCell {
         addSubview(userPhoto)
         addSubview(fullnameLabel)
         addSubview(usernameLabel)
-        addSubview(bottomDividerView)
         addSubview(userPercentage)
         
-        userPhoto.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 60, height: 60)
+        userPhoto.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 60, height: 60)
         fullnameLabel.anchor(top: userPhoto.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 150, height: 16)
         usernameLabel.anchor(top: fullnameLabel.bottomAnchor, left: fullnameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: 18)
         
         setupAddedUser()
         setupScores()
+        
     }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()

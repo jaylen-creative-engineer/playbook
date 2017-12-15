@@ -16,17 +16,21 @@ class ExploreCategoryCells : UICollectionViewCell {
     
     var delegate : CategoryDetailDelegate?
     
-    lazy var selectInterests : UIButton = {
-       let button = UIButton()
-        button.backgroundColor = UIColor.white
-        button.setTitle("ANIMALS", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
-        button.setTitleColor(UIColor.black, for: .normal)
-        button.layer.cornerRadius = 15
-        button.layer.borderWidth = 1
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(handleTouch), for: .touchUpInside)
-        return button
+    lazy var selectInterests : UILabel = {
+       let label = UILabel()
+        label.text = "ANIMALS"
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.layer.borderWidth = 1
+        label.layer.borderColor = UIColor.black.cgColor
+        label.layer.cornerRadius = 15
+        label.backgroundColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTouch))
+        tap.numberOfTapsRequired = 1
+        label.addGestureRecognizer(tap)
+        label.isUserInteractionEnabled = true
+        return label
     }()
     
     @objc func handleTouch(){
@@ -35,7 +39,8 @@ class ExploreCategoryCells : UICollectionViewCell {
 
     func setupView(){
         addSubview(selectInterests)
-        selectInterests.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 90, height: 0)
+        
+        selectInterests.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 90, height: 29)
     }
     
     override init(frame: CGRect) {

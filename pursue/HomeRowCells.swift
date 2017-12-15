@@ -16,24 +16,18 @@ protocol HomeImageEngagements {
 class HomeRowCells : UICollectionViewCell {
     
     var delegate : HomeImageEngagements?
- 
-    lazy var homeImage : UIButton = {
-       let button = UIButton()
-        button.layer.masksToBounds = true
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))
-        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleHomeHold))
-        tapGesture.numberOfTapsRequired = 1
-        button.addGestureRecognizer(tapGesture)
-        button.addGestureRecognizer(longGesture)
-        return button
-    }()
     
-    let postImage : UIImageView = {
+    lazy var postImage : UIImageView = {
        let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "tumblr_nbje6dualg1r46py4o1_1280")
         iv.contentMode = .scaleAspectFill
         iv.layer.masksToBounds = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleHomeHold))
+        tapGesture.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tapGesture)
+        iv.addGestureRecognizer(longGesture)
+        iv.isUserInteractionEnabled = true
         return iv
     }()
     
@@ -69,13 +63,11 @@ class HomeRowCells : UICollectionViewCell {
     }
     
     func setupView() {        
-        addSubview(homeImage)
-        homeImage.addSubview(postImage)
+        addSubview(postImage)
         addSubview(homeMainDescription)
         
-        homeImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 300)
-        postImage.anchor(top: homeImage.topAnchor, left: homeImage.leftAnchor, bottom: homeImage.bottomAnchor, right: homeImage.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        homeMainDescription.anchor(top: homeImage.bottomAnchor, left: homeImage.leftAnchor, bottom: nil, right: homeImage.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: homeMainDescription.intrinsicContentSize.height)
+        postImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 300)
+        homeMainDescription.anchor(top: postImage.bottomAnchor, left: postImage.leftAnchor, bottom: nil, right: postImage.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: homeMainDescription.intrinsicContentSize.height)
     }
     
     override init(frame: CGRect) {

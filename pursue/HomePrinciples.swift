@@ -30,11 +30,11 @@ class HomePrinciples : ProfilePrincipleRow, HomePrinciplesCellDelegate {
         principlesDelegate?.showPrinciplesFeed()
     }
     
-    func principleTapped(){
+    override func principleTapped(){
         principlesDelegate?.principleTapped()
     }
     
-    func principleHeld() {
+    override func principleHeld() {
         principlesDelegate?.principleHeld()
     }
     

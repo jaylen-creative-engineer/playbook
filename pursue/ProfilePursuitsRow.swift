@@ -8,12 +8,27 @@
 
 import UIKit
 
-class ProfilePursuitsRow : ExploreExerciseRow {
+protocol ProfilePursuitsRowDelegate {
+    func pursuitClicked()
+    func pursuitHeld()
+}
+
+class ProfilePursuitsRow : ExploreExerciseRow, ProfilePursuitsDelegate {
     
     let profilePursuitsId = "profilePursuitsId"
+    var delegate : ProfilePursuitsRowDelegate?
+    
+    func pursuitClicked() {
+        delegate?.pursuitClicked()
+    }
+    
+    override func pursuitHeld() {
+        delegate?.pursuitHeld()
+    }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: profilePursuitsId, for: indexPath) as! ProfilePursuitsCells
+        cell.delegate = self
         rowLabel.text = "PURSUITS"
         return cell
     }

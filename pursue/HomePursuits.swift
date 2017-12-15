@@ -30,11 +30,11 @@ class HomePursuits : ProfilePursuitsRow, PursuitSelected {
         pursuitsDelegate?.showPursuitsFeed()
     }
     
-    func pursuitTapped() {
+    override func pursuitTapped() {
         pursuitsDelegate?.pursuitClicked()
     }
     
-    func pursuitHeld() {
+    override func pursuitHeld() {
         pursuitsDelegate?.pursuitHeld()
     }
     
@@ -44,7 +44,7 @@ class HomePursuits : ProfilePursuitsRow, PursuitSelected {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: homeCellId, for: indexPath) as! HomePursuitsCells
-        cell.delegate = self
+        cell.homePursuitDelegate = self
         rowLabel.text = "YOUR PURSUITS"
         return cell
     }

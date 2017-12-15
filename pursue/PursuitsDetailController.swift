@@ -9,19 +9,19 @@
 import UIKit
 import XLActionController
 
-class PursuitsDetailController : UICollectionViewController, UICollectionViewDelegateFlowLayout, DetailCellChange, MessageDelegate {
+class PursuitsDetailController : UICollectionViewController, UICollectionViewDelegateFlowLayout, MessageDelegate {
     
     
     let headerId = "headerId"
     let commentId = "commentId"
-    let likeId = "likeId"
+    let principleId = "principleId"
     let postId = "postId"
     let relatedId = "relatedId"
     let discussionId = "discussionId"
     var isAboutView = true
     var isSavedView = false
     var isToolsView = false
-    var isTeamView = false
+    var isPrincipleView = false
     var isNextView = false
     var isStepsView = false
     var isChallengeView = false
@@ -34,11 +34,9 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
     func changeAbout() {
         isAboutView = true
         isSavedView = false
-        isToolsView = false
-        isTeamView = false
+        isPrincipleView = false
         isNextView = false
         isStepsView = false
-        isChallengeView = false
         isDiscussionView = false
         collectionView?.reloadData()
         collectionView?.updateConstraints()
@@ -47,11 +45,9 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
     func changeDiscussion() {
         isAboutView = false
         isSavedView = false
-        isToolsView = false
-        isTeamView = false
+        isPrincipleView = false
         isNextView = false
         isStepsView = false
-        isChallengeView = false
         isDiscussionView = true
         collectionView?.reloadData()
         collectionView?.updateConstraints()
@@ -60,11 +56,9 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
     func changeChallenge() {
         isAboutView = false
         isSavedView = false
-        isToolsView = false
-        isTeamView = false
+        isPrincipleView = false
         isNextView = false
         isStepsView = false
-        isChallengeView = true
         isDiscussionView = false
         collectionView?.reloadData()
         collectionView?.updateConstraints()
@@ -73,11 +67,9 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
     func changeSaved() {
         isAboutView = false
         isSavedView = true
-        isToolsView = false
-        isTeamView = false
+        isPrincipleView = false
         isNextView = false
         isStepsView = false
-        isChallengeView = false
         isDiscussionView = false
         collectionView?.reloadData()
         collectionView?.updateConstraints()
@@ -86,24 +78,20 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
     func changeTool() {
         isAboutView = false
         isSavedView = false
-        isToolsView = true
-        isTeamView = false
+        isPrincipleView = false
         isNextView = false
         isStepsView = false
-        isChallengeView = false
         isDiscussionView = false
         collectionView?.reloadData()
         collectionView?.updateConstraints()
     }
     
-    func changeTeam() {
+    func changePrinciple() {
         isAboutView = false
         isSavedView = false
-        isToolsView = false
-        isTeamView = true
+        isPrincipleView = true
         isNextView = false
         isStepsView = false
-        isChallengeView = false
         isDiscussionView = false
         collectionView?.reloadData()
         collectionView?.updateConstraints()
@@ -112,11 +100,9 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
     func changeNext() {
         isAboutView = false
         isSavedView = false
-        isToolsView = false
-        isTeamView = false
+        isPrincipleView = false
         isNextView = true
         isStepsView = false
-        isChallengeView = false
         isDiscussionView = false
         collectionView?.reloadData()
         collectionView?.updateConstraints()
@@ -125,11 +111,9 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
     func changeSteps() {
         isAboutView = false
         isSavedView = false
-        isToolsView = false
-        isTeamView = false
+        isPrincipleView = false
         isNextView = false
         isStepsView = true
-        isChallengeView = false
         isDiscussionView = false
         collectionView?.reloadData()
         collectionView?.updateConstraints()
@@ -146,7 +130,11 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height)
+        if isPrincipleView {
+            return CGSize(width: view.frame.width, height: 330)
+        } else {
+            return CGSize(width: view.frame.width, height: view.frame.height)
+        }
     }
     
     lazy var floatingCamera : UIButton = {
@@ -210,9 +198,8 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: relatedId, for: indexPath) as! RelatedPost
             cell.accessPursuitDetailController = self
             return cell
-        case isTeamView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: likeId, for: indexPath) as! PursuitTeam
-            cell.accessDetailController = self
+        case isPrincipleView:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! PursuitPrinciple
             return cell
         case isDiscussionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! PursuitDiscussion
@@ -228,14 +215,97 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
         }
     }
     
+    lazy var backButton : UIButton = {
+        let button = UIButton()
+        button.setBackgroundImage(#imageLiteral(resourceName: "back-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleBack), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var homeIcon : UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(#imageLiteral(resourceName: "home").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.contentMode = .scaleAspectFit
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(homeActive), for: .touchUpInside)
+        button.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
+        return button
+    }()
+    
+    lazy var exploreIcon : UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(#imageLiteral(resourceName: "explore_icon").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.contentMode = .scaleAspectFit
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(exploreActive), for: .touchUpInside)
+        button.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
+        return button
+    }()
+    
+    lazy var profileIcon : UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(#imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.contentMode = .scaleAspectFit
+        button.layer.cornerRadius = 12.5
+        button.layer.masksToBounds = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(profileActive), for: .touchUpInside)
+        button.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
+        return button
+    }()
+    
+    @objc func exploreActive(){
+        exploreActive()
+        homeIcon.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
+        exploreIcon.tintColor = UIColor.black
+    }
+    
+    @objc func homeActive(){
+        homeActive()
+        homeIcon.tintColor = UIColor.black
+        exploreIcon.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
+    }
+    
+    
+    @objc func profileActive(){
+        profileActive()
+    }
+    
+    @objc func handleBack(){
+        goBack()
+    }
+    
+    func setupTopNavBar(){
+        let backgroundFill = UIView()
+        backgroundFill.backgroundColor = .white
+        
+        view.addSubview(backgroundFill)
+        backgroundFill.addSubview(backButton)
+        view.addSubview(profileIcon)
+        view.addSubview(homeIcon)
+        view.addSubview(exploreIcon)
+        
+        backgroundFill.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 88)
+        backButton.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 16, paddingRight: 0, width: 20, height: 20)
+        profileIcon.anchor(top: nil, left: nil, bottom: nil, right: backgroundFill.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 25.5, height: 25)
+        profileIcon.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
+        homeIcon.anchor(top: nil, left: nil, bottom: nil, right: profileIcon.leftAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 24, width: 28, height: 25)
+        homeIcon.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
+        exploreIcon.anchor(top: nil, left: nil, bottom: nil, right: homeIcon.leftAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 24, width: 25, height: 25)
+        exploreIcon.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: view.frame.width - 10, height: (view.frame.height / 2) + 100)
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! PursuitsDetailHeader
-        header.delegate = self
         header.messageDelegate = self
+        header.pursuitsDetailController = self
         return header
     }
     
@@ -282,12 +352,13 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
         super.viewDidLoad()
         
         collectionView?.register(PostView.self, forCellWithReuseIdentifier: postId)
-        collectionView?.register(PursuitTeam.self, forCellWithReuseIdentifier: likeId)
+        collectionView?.register(PursuitPrinciple.self, forCellWithReuseIdentifier: principleId)
         collectionView?.register(RelatedPost.self, forCellWithReuseIdentifier: relatedId)
         collectionView?.register(PursuitSteps.self, forCellWithReuseIdentifier: stepId)
         collectionView?.register(PursuitDiscussion.self, forCellWithReuseIdentifier: discussionId)
         collectionView?.register(PursuitsDetailHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.backgroundColor = .white
+        setupTopNavBar()
         setupFloatingCamera()
     }
 }

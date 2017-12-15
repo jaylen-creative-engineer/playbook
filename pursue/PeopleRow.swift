@@ -8,7 +8,13 @@
 
 import UIKit
 
-class PeopleRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+protocol PeopleRowDelegate {
+    func profileTapped()
+}
+
+class PeopleRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PeopleRowCellDelegate {
+    
+    var peopleDelegate : PeopleRowDelegate?
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -41,8 +47,13 @@ class PeopleRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PeopleRowCells
+        cell.peopleDelegate = self
         rowLabel.text = "PEOPLE"
         return cell
+    }
+    
+    func profileTapped() {
+        peopleDelegate?.profileTapped()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

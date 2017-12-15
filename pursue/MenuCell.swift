@@ -41,7 +41,7 @@ class MenuCell : UICollectionViewCell, UIGestureRecognizerDelegate {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(#imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal), for: .normal)
         button.contentMode = .scaleAspectFit
-        button.layer.cornerRadius = 20
+        button.layer.cornerRadius = 15
         button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(profileActive), for: .touchUpInside)
         return button
@@ -51,11 +51,10 @@ class MenuCell : UICollectionViewCell, UIGestureRecognizerDelegate {
         addSubview(exploreIcon)
         addSubview(homeIcon)
         addSubview(profileIcon)
-        exploreIcon.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 36, height: 36)
-        
+        exploreIcon.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
         homeIcon.anchor(top: topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 115, height: 42)
         homeIcon.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        profileIcon.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 40.2, height: 40)
+        profileIcon.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 30.5, height: 30)
         homeActive()
     }
     

@@ -8,7 +8,14 @@
 
 import UIKit
 
-class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+protocol ExploreExerciseDelegate {
+    func explorePursuitTapped()
+    func explorePursuitHeld()
+}
+
+class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ExploreExerciseCellsDelegate {
+    
+    var exploreDelegate : ExploreExerciseDelegate?
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -46,12 +53,21 @@ class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICol
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreExercisesRowCells
+        cell.exploreExereciseDelegate = self
         rowLabel.text = "ANIMAL PURSUITS"
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(0, 12, 0, 12)
+    }
+    
+    func pursuitTapped() {
+        exploreDelegate?.explorePursuitTapped()
+    }
+    
+    func pursuitHeld() {
+        exploreDelegate?.explorePursuitHeld()
     }
     
     func setupView(){

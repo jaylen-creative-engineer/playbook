@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExploreContainer : UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class ExploreContainer : UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ExploreDiscussionDelegate, ExploreExerciseDelegate, ExplorePrincipleDelegate, ExploreImageDelegate, ExploreCategoryDelegate, PeopleRowDelegate {
     
     let cellId = "cellId"
     let secondaryId = "secondaryId"
@@ -25,6 +25,8 @@ class ExploreContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
         collectionView.backgroundColor = .clear
         return collectionView
     }()
+    
+    var homeController : HomeController?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -73,7 +75,7 @@ class ExploreContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
         case 4:
             return CGSize(width: frame.width, height: 208)
         case 5:
-            return CGSize(width: frame.width, height: 308)
+            return CGSize(width: frame.width, height: 348)
         default:
             return CGSize(width: frame.width, height: 260)
         }
@@ -83,26 +85,72 @@ class ExploreContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
         return 2
     }
     
+    func exploreCategoryTapped() {
+        homeController?.categoryClicked()
+    }
+    
+    func imageTapped() {
+        homeController?.rowImageTapped()
+    }
+    
+    func imageHeld() {
+        homeController?.rowImageHeld()
+    }
+    
+    func explorePrincipleTapped() {
+        homeController?.principleTapped()
+    }
+    
+    func explorePrincipleHeld() {
+        homeController?.pursuitHeld()
+    }
+    
+    func exploreDiscussionTapped() {
+        homeController?.homeDiscussionTapped()
+    }
+    
+    func exploreDiscussionHeld() {
+        homeController?.homeDiscussionHeld()
+    }
+    
+    func explorePursuitHeld() {
+        homeController?.pursuitHeld()
+    }
+    
+    func explorePursuitTapped() {
+        homeController?.pursuitClicked()
+    }
+    
+    func profileTapped() {
+        homeController?.showUserProfile()
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell : UICollectionViewCell
         switch indexPath.item {
         case 0:
             let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: categoryId, for: indexPath) as! ExploreCategoryRow
+            categoryCell.exploreDelegate = self
             return categoryCell
         case 1:
             let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! ExploreExerciseRow
+            pursuitCell.exploreDelegate = self
             return pursuitCell
         case 2:
             let principleCell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! ExplorePrinciplesRow
+            principleCell.exploreDelegate = self
             return principleCell
         case 3:
             let discussionCell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! ExploreDiscussion
+            discussionCell.exploreDiscussionDelegate = self
             return discussionCell
         case 4:
             let peopleCell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! PeopleRow
+            peopleCell.peopleDelegate = self
             return peopleCell
         case 5:
             let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreImageRow
+            imageCell.exploreDelegate = self
             return imageCell
         default:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! ExploreExerciseRow

@@ -1,6 +1,18 @@
+
 import UIKit
 
-class ExploreCategoryRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+protocol ExploreCategoryDelegate {
+    func exploreCategoryTapped()
+}
+
+class ExploreCategoryRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, CategoryDetailDelegate {
+    
+    var exploreDelegate : ExploreCategoryDelegate?
+    
+    func changeToDetail(for cell: ExploreCategoryCells) {
+        exploreDelegate?.exploreCategoryTapped()
+    }
+    
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -32,6 +44,7 @@ class ExploreCategoryRow : UICollectionViewCell, UICollectionViewDelegate, UICol
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreCategoryCells
+        cell.delegate = self
         return cell
     }
     

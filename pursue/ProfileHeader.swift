@@ -124,15 +124,11 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
         return UIEdgeInsetsMake(0, 12, 0, 12)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessHomeController?.showPostDetailForPost()
-    }
-    
     func setupProfileOptions(){
         addSubview(settingsButton)
         addSubview(chatButton)
         
-        settingsButton.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 26, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 26, height: 26)
+        settingsButton.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 26, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 26, height: 26)
         chatButton.anchor(top: settingsButton.topAnchor, left: nil, bottom: nil, right: settingsButton.leftAnchor, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 32, width: 30, height: 22)
     }
     

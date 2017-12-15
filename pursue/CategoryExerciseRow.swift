@@ -8,67 +8,28 @@
 
 import UIKit
 
-class CategoryExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class CategoryExerciseRow : HomePursuits, CategoryExerciseDelegate {
     
-    var accessCategoryController : CategoryDetailController?
+    let categoryExerciseId = "categoryExerciseId"
+    var categoryDetailController : CategoryDetailController?
     
-    let rowLabel : UILabel = {
-        let label = UILabel()
-        label.textColor = .black
-        label.font = UIFont.boldSystemFont(ofSize: 12)
-        return label
-    }()
-    
-    let cellId = "cellId"
-    let peopleId = "peopleId"
-    
-    let postCollection : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        return collectionView
-    }()
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: ((frame.width - 2) / 2) + 15, height: ((frame.width - 2) / 2) + 20)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CategoryExerciseCells
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: categoryExerciseId, for: indexPath) as! CategoryExerciseCells
+        cell.categoryDelegate = self
         rowLabel.text = "ANIMAL PURSUITS"
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 12, 0, 12)
+    func categoryTapped() {
+        categoryDetailController?.pursuitTapped()
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessCategoryController?.showPursuitsDetail()
+    func categoryHeld() {
+        categoryDetailController?.pursuitHeld()
     }
-    
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        addSubview(postCollection)
-        addSubview(rowLabel)
-        
-        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 140, height: 22)
-        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        postCollection.register(CategoryExerciseCells.self, forCellWithReuseIdentifier: cellId)
-        postCollection.dataSource = self
-        postCollection.delegate = self
-    }
-    
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+ 
+    override func setupView() {
+        super.setupView()
+        postCollection.register(CategoryExerciseCells.self, forCellWithReuseIdentifier: categoryExerciseId)
     }
 }

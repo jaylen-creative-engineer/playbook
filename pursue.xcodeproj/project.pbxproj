@@ -11,14 +11,7 @@
 		E604CCED1FA7A58300A6D63E /* ProfileAddedRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604CCEC1FA7A58300A6D63E /* ProfileAddedRow.swift */; };
 		E604CCEF1FA7A5CC00A6D63E /* PeopleAddedCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604CCEE1FA7A5CC00A6D63E /* PeopleAddedCells.swift */; };
 		E604CCF21FA7AD0A00A6D63E /* FeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604CCF11FA7AD0A00A6D63E /* FeedController.swift */; };
-		E604CCF41FA7AF1600A6D63E /* FeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604CCF31FA7AF1600A6D63E /* FeedHeader.swift */; };
 		E604CCF61FA7B0D700A6D63E /* FeedRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604CCF51FA7B0D700A6D63E /* FeedRow.swift */; };
-		E604CCF81FA7B27700A6D63E /* FeedRowCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604CCF71FA7B27700A6D63E /* FeedRowCells.swift */; };
-		E604CCFA1FA7CCD000A6D63E /* FeedLikesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604CCF91FA7CCD000A6D63E /* FeedLikesCell.swift */; };
-		E604CCFC1FA7F0C500A6D63E /* FeedPictureRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604CCFB1FA7F0C500A6D63E /* FeedPictureRow.swift */; };
-		E604CCFE1FA7F0EE00A6D63E /* FeedPictureRowCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604CCFD1FA7F0EE00A6D63E /* FeedPictureRowCells.swift */; };
-		E604CD001FA7F5C700A6D63E /* FeedChallengeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604CCFF1FA7F5C700A6D63E /* FeedChallengeRow.swift */; };
-		E604CD021FA7F62E00A6D63E /* FeedChallengeCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604CD011FA7F62E00A6D63E /* FeedChallengeCells.swift */; };
 		E6136EA31F968EAB00E29101 /* PursuitsDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6136EA21F968EAB00E29101 /* PursuitsDetailController.swift */; };
 		E6136EA61F968FC800E29101 /* PursuitsDetailHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6136EA51F968FC800E29101 /* PursuitsDetailHeader.swift */; };
 		E616632B1F745F0D00EC254C /* HomeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E616632A1F745F0D00EC254C /* HomeRow.swift */; };
@@ -43,6 +36,7 @@
 		E61B48C41F9EB27900183449 /* PeopleRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61B48C31F9EB27900183449 /* PeopleRow.swift */; };
 		E61B48C61F9EB6E500183449 /* ExplorePrinciplesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61B48C51F9EB6E500183449 /* ExplorePrinciplesRow.swift */; };
 		E61B48C81F9EB73700183449 /* ExplorePrincipleCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61B48C71F9EB73700183449 /* ExplorePrincipleCells.swift */; };
+		E61CCC361FE1C1AF002D57FF /* MessageHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61CCC351FE1C1AF002D57FF /* MessageHeader.swift */; };
 		E61EA9BF1FDCBE3A001FBDB1 /* HomeDiscussion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61EA9BE1FDCBE3A001FBDB1 /* HomeDiscussion.swift */; };
 		E61EA9C11FDCBEAB001FBDB1 /* HomeDiscussionCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61EA9C01FDCBEAB001FBDB1 /* HomeDiscussionCells.swift */; };
 		E61EA9C31FDCC268001FBDB1 /* ExploreDiscussion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61EA9C21FDCC268001FBDB1 /* ExploreDiscussion.swift */; };
@@ -56,6 +50,8 @@
 		E61EA9D61FDCEE2A001FBDB1 /* DiscussionPursuitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61EA9D51FDCEE2A001FBDB1 /* DiscussionPursuitsView.swift */; };
 		E61EA9D81FDCEE89001FBDB1 /* DiscussionPrinciples.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61EA9D71FDCEE89001FBDB1 /* DiscussionPrinciples.swift */; };
 		E61EA9DA1FDCEF89001FBDB1 /* DiscussionPursuitsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61EA9D91FDCEF89001FBDB1 /* DiscussionPursuitsCells.swift */; };
+		E621B9921FE048FE007324E2 /* PursuitPrinciple.swift in Sources */ = {isa = PBXBuildFile; fileRef = E621B9911FE048FE007324E2 /* PursuitPrinciple.swift */; };
+		E621B9941FE04925007324E2 /* PursuitPrincipleCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E621B9931FE04925007324E2 /* PursuitPrincipleCells.swift */; };
 		E621C4E91FB2789F007FBBD0 /* ChallengesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E621C4E81FB2789F007FBBD0 /* ChallengesController.swift */; };
 		E621C4EB1FB27924007FBBD0 /* ChallengesHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E621C4EA1FB27924007FBBD0 /* ChallengesHeader.swift */; };
 		E6235EA01F92B1CC00BF1FDE /* PostDetailHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6235E9F1F92B1CC00BF1FDE /* PostDetailHeader.swift */; };
@@ -63,6 +59,12 @@
 		E6235EA61F94160E00BF1FDE /* PostLikes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6235EA51F94160E00BF1FDE /* PostLikes.swift */; };
 		E6235EA81F94208F00BF1FDE /* PostComments.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6235EA71F94208F00BF1FDE /* PostComments.swift */; };
 		E6235EAA1F94232C00BF1FDE /* RelatedPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6235EA91F94232C00BF1FDE /* RelatedPost.swift */; };
+		E623C9E11FDF078E00023785 /* CategoryDiscussionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E623C9E01FDF078E00023785 /* CategoryDiscussionRow.swift */; };
+		E623C9E31FDF0C0000023785 /* CategoryDiscussionCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E623C9E21FDF0C0000023785 /* CategoryDiscussionCells.swift */; };
+		E623C9E51FDF71F400023785 /* PrincipleDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E623C9E41FDF71F400023785 /* PrincipleDetailController.swift */; };
+		E623C9E71FDF72D200023785 /* PrincipleDetailHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E623C9E61FDF72D200023785 /* PrincipleDetailHeader.swift */; };
+		E623C9E91FDF751600023785 /* PrincipleDiscussion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E623C9E81FDF751600023785 /* PrincipleDiscussion.swift */; };
+		E623C9EB1FDF754200023785 /* PrincipleDiscussionCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E623C9EA1FDF754200023785 /* PrincipleDiscussionCells.swift */; };
 		E623F1471F9FB83500F8BDA7 /* ExploreExerciseRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E623F1461F9FB83500F8BDA7 /* ExploreExerciseRow.swift */; };
 		E623F1491F9FB93100F8BDA7 /* ExploreExercisesRowCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E623F1481F9FB93100F8BDA7 /* ExploreExercisesRowCells.swift */; };
 		E6253F3E1F75444100F6CFE7 /* ExploreHeaderRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6253F3D1F75444100F6CFE7 /* ExploreHeaderRow.swift */; };
@@ -78,6 +80,9 @@
 		E6308EA91FBD262500571130 /* SettingsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6308EA81FBD262500571130 /* SettingsHeader.swift */; };
 		E634E6A51FA175A4000F329C /* ExploreCategoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E634E6A41FA175A4000F329C /* ExploreCategoryRow.swift */; };
 		E634E6A71FA175D4000F329C /* ExploreCategoryCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E634E6A61FA175D4000F329C /* ExploreCategoryCells.swift */; };
+		E63C1D881FE36E3B00A99F2F /* FeedPursuit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63C1D871FE36E3B00A99F2F /* FeedPursuit.swift */; };
+		E63C1D8A1FE36EC800A99F2F /* FeedPrinciple.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63C1D891FE36EC800A99F2F /* FeedPrinciple.swift */; };
+		E63C1D8C1FE36F3300A99F2F /* FeedDiscussion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63C1D8B1FE36F3300A99F2F /* FeedDiscussion.swift */; };
 		E63CC5191F9A88D6002DC733 /* PostStepsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CC5181F9A88D6002DC733 /* PostStepsCells.swift */; };
 		E63CC51B1F9A99A5002DC733 /* NextPursuitCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CC51A1F9A99A5002DC733 /* NextPursuitCells.swift */; };
 		E63CC51D1F9A9A7E002DC733 /* NextPursuitCellsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CC51C1F9A9A7E002DC733 /* NextPursuitCellsContainer.swift */; };
@@ -153,14 +158,7 @@
 		E604CCEC1FA7A58300A6D63E /* ProfileAddedRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAddedRow.swift; sourceTree = "<group>"; };
 		E604CCEE1FA7A5CC00A6D63E /* PeopleAddedCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleAddedCells.swift; sourceTree = "<group>"; };
 		E604CCF11FA7AD0A00A6D63E /* FeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedController.swift; sourceTree = "<group>"; };
-		E604CCF31FA7AF1600A6D63E /* FeedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedHeader.swift; sourceTree = "<group>"; };
 		E604CCF51FA7B0D700A6D63E /* FeedRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRow.swift; sourceTree = "<group>"; };
-		E604CCF71FA7B27700A6D63E /* FeedRowCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRowCells.swift; sourceTree = "<group>"; };
-		E604CCF91FA7CCD000A6D63E /* FeedLikesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLikesCell.swift; sourceTree = "<group>"; };
-		E604CCFB1FA7F0C500A6D63E /* FeedPictureRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPictureRow.swift; sourceTree = "<group>"; };
-		E604CCFD1FA7F0EE00A6D63E /* FeedPictureRowCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPictureRowCells.swift; sourceTree = "<group>"; };
-		E604CCFF1FA7F5C700A6D63E /* FeedChallengeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedChallengeRow.swift; sourceTree = "<group>"; };
-		E604CD011FA7F62E00A6D63E /* FeedChallengeCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedChallengeCells.swift; sourceTree = "<group>"; };
 		E6136EA21F968EAB00E29101 /* PursuitsDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PursuitsDetailController.swift; sourceTree = "<group>"; };
 		E6136EA51F968FC800E29101 /* PursuitsDetailHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PursuitsDetailHeader.swift; sourceTree = "<group>"; };
 		E616632A1F745F0D00EC254C /* HomeRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRow.swift; sourceTree = "<group>"; };
@@ -185,6 +183,7 @@
 		E61B48C31F9EB27900183449 /* PeopleRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleRow.swift; sourceTree = "<group>"; };
 		E61B48C51F9EB6E500183449 /* ExplorePrinciplesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePrinciplesRow.swift; sourceTree = "<group>"; };
 		E61B48C71F9EB73700183449 /* ExplorePrincipleCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePrincipleCells.swift; sourceTree = "<group>"; };
+		E61CCC351FE1C1AF002D57FF /* MessageHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHeader.swift; sourceTree = "<group>"; };
 		E61EA9BE1FDCBE3A001FBDB1 /* HomeDiscussion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDiscussion.swift; sourceTree = "<group>"; };
 		E61EA9C01FDCBEAB001FBDB1 /* HomeDiscussionCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDiscussionCells.swift; sourceTree = "<group>"; };
 		E61EA9C21FDCC268001FBDB1 /* ExploreDiscussion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDiscussion.swift; sourceTree = "<group>"; };
@@ -198,6 +197,8 @@
 		E61EA9D51FDCEE2A001FBDB1 /* DiscussionPursuitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionPursuitsView.swift; sourceTree = "<group>"; };
 		E61EA9D71FDCEE89001FBDB1 /* DiscussionPrinciples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionPrinciples.swift; sourceTree = "<group>"; };
 		E61EA9D91FDCEF89001FBDB1 /* DiscussionPursuitsCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionPursuitsCells.swift; sourceTree = "<group>"; };
+		E621B9911FE048FE007324E2 /* PursuitPrinciple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PursuitPrinciple.swift; sourceTree = "<group>"; };
+		E621B9931FE04925007324E2 /* PursuitPrincipleCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PursuitPrincipleCells.swift; sourceTree = "<group>"; };
 		E621C4E81FB2789F007FBBD0 /* ChallengesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesController.swift; sourceTree = "<group>"; };
 		E621C4EA1FB27924007FBBD0 /* ChallengesHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesHeader.swift; sourceTree = "<group>"; };
 		E6235E9F1F92B1CC00BF1FDE /* PostDetailHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailHeader.swift; sourceTree = "<group>"; };
@@ -205,6 +206,12 @@
 		E6235EA51F94160E00BF1FDE /* PostLikes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostLikes.swift; sourceTree = "<group>"; };
 		E6235EA71F94208F00BF1FDE /* PostComments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostComments.swift; sourceTree = "<group>"; };
 		E6235EA91F94232C00BF1FDE /* RelatedPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelatedPost.swift; sourceTree = "<group>"; };
+		E623C9E01FDF078E00023785 /* CategoryDiscussionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDiscussionRow.swift; sourceTree = "<group>"; };
+		E623C9E21FDF0C0000023785 /* CategoryDiscussionCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDiscussionCells.swift; sourceTree = "<group>"; };
+		E623C9E41FDF71F400023785 /* PrincipleDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrincipleDetailController.swift; sourceTree = "<group>"; };
+		E623C9E61FDF72D200023785 /* PrincipleDetailHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrincipleDetailHeader.swift; sourceTree = "<group>"; };
+		E623C9E81FDF751600023785 /* PrincipleDiscussion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrincipleDiscussion.swift; sourceTree = "<group>"; };
+		E623C9EA1FDF754200023785 /* PrincipleDiscussionCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrincipleDiscussionCells.swift; sourceTree = "<group>"; };
 		E623F1461F9FB83500F8BDA7 /* ExploreExerciseRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreExerciseRow.swift; sourceTree = "<group>"; };
 		E623F1481F9FB93100F8BDA7 /* ExploreExercisesRowCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreExercisesRowCells.swift; sourceTree = "<group>"; };
 		E6253F3D1F75444100F6CFE7 /* ExploreHeaderRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreHeaderRow.swift; sourceTree = "<group>"; };
@@ -220,6 +227,9 @@
 		E6308EA81FBD262500571130 /* SettingsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHeader.swift; sourceTree = "<group>"; };
 		E634E6A41FA175A4000F329C /* ExploreCategoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreCategoryRow.swift; sourceTree = "<group>"; };
 		E634E6A61FA175D4000F329C /* ExploreCategoryCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreCategoryCells.swift; sourceTree = "<group>"; };
+		E63C1D871FE36E3B00A99F2F /* FeedPursuit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPursuit.swift; sourceTree = "<group>"; };
+		E63C1D891FE36EC800A99F2F /* FeedPrinciple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPrinciple.swift; sourceTree = "<group>"; };
+		E63C1D8B1FE36F3300A99F2F /* FeedDiscussion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDiscussion.swift; sourceTree = "<group>"; };
 		E63CC5181F9A88D6002DC733 /* PostStepsCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStepsCells.swift; sourceTree = "<group>"; };
 		E63CC51A1F9A99A5002DC733 /* NextPursuitCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextPursuitCells.swift; sourceTree = "<group>"; };
 		E63CC51C1F9A9A7E002DC733 /* NextPursuitCellsContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextPursuitCellsContainer.swift; sourceTree = "<group>"; };
@@ -323,14 +333,10 @@
 			isa = PBXGroup;
 			children = (
 				E604CCF11FA7AD0A00A6D63E /* FeedController.swift */,
-				E604CCF31FA7AF1600A6D63E /* FeedHeader.swift */,
 				E604CCF51FA7B0D700A6D63E /* FeedRow.swift */,
-				E604CCF71FA7B27700A6D63E /* FeedRowCells.swift */,
-				E604CCF91FA7CCD000A6D63E /* FeedLikesCell.swift */,
-				E604CCFB1FA7F0C500A6D63E /* FeedPictureRow.swift */,
-				E604CCFD1FA7F0EE00A6D63E /* FeedPictureRowCells.swift */,
-				E604CCFF1FA7F5C700A6D63E /* FeedChallengeRow.swift */,
-				E604CD011FA7F62E00A6D63E /* FeedChallengeCells.swift */,
+				E63C1D871FE36E3B00A99F2F /* FeedPursuit.swift */,
+				E63C1D891FE36EC800A99F2F /* FeedPrinciple.swift */,
+				E63C1D8B1FE36F3300A99F2F /* FeedDiscussion.swift */,
 			);
 			name = Feed;
 			sourceTree = "<group>";
@@ -360,6 +366,10 @@
 		E61EA9D41FDCEBFF001FBDB1 /* Principle */ = {
 			isa = PBXGroup;
 			children = (
+				E623C9E41FDF71F400023785 /* PrincipleDetailController.swift */,
+				E623C9E61FDF72D200023785 /* PrincipleDetailHeader.swift */,
+				E623C9E81FDF751600023785 /* PrincipleDiscussion.swift */,
+				E623C9EA1FDF754200023785 /* PrincipleDiscussionCells.swift */,
 			);
 			name = Principle;
 			sourceTree = "<group>";
@@ -402,6 +412,8 @@
 				E67540601FB3B59300F7D492 /* PursuitTeamCells.swift */,
 				E61EA9CA1FDCE202001FBDB1 /* PursuitDiscussion.swift */,
 				E61EA9CE1FDCE263001FBDB1 /* PursuitDiscussionCells.swift */,
+				E621B9911FE048FE007324E2 /* PursuitPrinciple.swift */,
+				E621B9931FE04925007324E2 /* PursuitPrincipleCells.swift */,
 			);
 			name = Pursuits;
 			sourceTree = "<group>";
@@ -418,6 +430,8 @@
 				E66436661FA24D7700A9B0E7 /* CategoryPrincipleCells.swift */,
 				E66436681FA24DC200A9B0E7 /* CategoryExerciseRow.swift */,
 				E664366A1FA24E3200A9B0E7 /* CategoryExerciseCells.swift */,
+				E623C9E01FDF078E00023785 /* CategoryDiscussionRow.swift */,
+				E623C9E21FDF0C0000023785 /* CategoryDiscussionCells.swift */,
 				E664365A1FA24AD000A9B0E7 /* CategoryHeaderRow.swift */,
 			);
 			name = Category;
@@ -479,6 +493,7 @@
 				E6AB64D41F6F611D00033C09 /* UserCell.swift */,
 				E6AB64D61F6F687D00033C09 /* MessagesController.swift */,
 				E6AB64D81F6F6B2E00033C09 /* NewMessageController.swift */,
+				E61CCC351FE1C1AF002D57FF /* MessageHeader.swift */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -801,13 +816,13 @@
 				E61EA9CB1FDCE202001FBDB1 /* PursuitDiscussion.swift in Sources */,
 				E61B48C61F9EB6E500183449 /* ExplorePrinciplesRow.swift in Sources */,
 				E65F1E521FCCBE5000BD850E /* HomeRowContainer.swift in Sources */,
+				E63C1D8A1FE36EC800A99F2F /* FeedPrinciple.swift in Sources */,
 				E61EA9C11FDCBEAB001FBDB1 /* HomeDiscussionCells.swift in Sources */,
 				E617BB1D1FD8A350008B2EA1 /* HomePursuits.swift in Sources */,
 				E65F1E541FCCC34600BD850E /* ExploreContainer.swift in Sources */,
 				E62AAB1B1FD0A54D0053EAD7 /* TermsController.swift in Sources */,
 				E6235EAA1F94232C00BF1FDE /* RelatedPost.swift in Sources */,
 				E66436751FA273DA00A9B0E7 /* ProfilePursuitsCells.swift in Sources */,
-				E604CD001FA7F5C700A6D63E /* FeedChallengeRow.swift in Sources */,
 				E617BB231FD8A3F3008B2EA1 /* HomePrinciplesCells.swift in Sources */,
 				E61B48BC1F9E48D300183449 /* PursuitChallengeCells.swift in Sources */,
 				E61EA9C71FDCCC56001FBDB1 /* ProfileDiscussion.swift in Sources */,
@@ -837,7 +852,7 @@
 				E66436771FA2968D00A9B0E7 /* ProfilePostRow.swift in Sources */,
 				E61EA9DA1FDCEF89001FBDB1 /* DiscussionPursuitsCells.swift in Sources */,
 				E61B48BE1F9E80C000183449 /* ExploreImageRow.swift in Sources */,
-				E604CCFA1FA7CCD000A6D63E /* FeedLikesCell.swift in Sources */,
+				E623C9E71FDF72D200023785 /* PrincipleDetailHeader.swift in Sources */,
 				E6CE229E1F67616F006C5755 /* CameraController.swift in Sources */,
 				E66472611F97E85E006922C6 /* PursuitSteps.swift in Sources */,
 				E66436631FA24D0400A9B0E7 /* CategoryPeopleCells.swift in Sources */,
@@ -848,22 +863,25 @@
 				E6AB64E41F7188B100033C09 /* PhotoSelectorCell.swift in Sources */,
 				E6CE228F1F675894006C5755 /* MainTabController.swift in Sources */,
 				E61B48C81F9EB73700183449 /* ExplorePrincipleCells.swift in Sources */,
+				E623C9E11FDF078E00023785 /* CategoryDiscussionRow.swift in Sources */,
 				E66436711FA25ACC00A9B0E7 /* ProfileAboutCells.swift in Sources */,
 				E617BB151FD886D6008B2EA1 /* IntroController.swift in Sources */,
 				E63CC51B1F9A99A5002DC733 /* NextPursuitCells.swift in Sources */,
 				E61B48C21F9E877D00183449 /* PeopleRowCells.swift in Sources */,
 				E62AAB211FD1E8680053EAD7 /* CameraBar.swift in Sources */,
+				E623C9E91FDF751600023785 /* PrincipleDiscussion.swift in Sources */,
 				E61EA9C31FDCC268001FBDB1 /* ExploreDiscussion.swift in Sources */,
 				E621C4E91FB2789F007FBBD0 /* ChallengesController.swift in Sources */,
 				E6AB64D31F6F5B6000033C09 /* ChatInputContainerView.swift in Sources */,
 				E6CE22881F671E3D006C5755 /* Extensions.swift in Sources */,
+				E621B9921FE048FE007324E2 /* PursuitPrinciple.swift in Sources */,
 				E65F1E501FCC943C00BD850E /* ProfilePrincipleCells.swift in Sources */,
 				E61EA9D31FDCE890001FBDB1 /* DiscussionDetailHeader.swift in Sources */,
 				E604CCEF1FA7A5CC00A6D63E /* PeopleAddedCells.swift in Sources */,
 				E61EA9C51FDCC2B2001FBDB1 /* ExploreDiscussionCells.swift in Sources */,
 				E62AAB191FD0A49A0053EAD7 /* NotificationsController.swift in Sources */,
-				E604CCFC1FA7F0C500A6D63E /* FeedPictureRow.swift in Sources */,
 				E63CC5191F9A88D6002DC733 /* PostStepsCells.swift in Sources */,
+				E623C9EB1FDF754200023785 /* PrincipleDiscussionCells.swift in Sources */,
 				E61EA9D81FDCEE89001FBDB1 /* DiscussionPrinciples.swift in Sources */,
 				E621C4EB1FB27924007FBBD0 /* ChallengesHeader.swift in Sources */,
 				E66436671FA24D7700A9B0E7 /* CategoryPrincipleCells.swift in Sources */,
@@ -874,17 +892,20 @@
 				E6AB64E61F7188C000033C09 /* PhotoSelectorHeader.swift in Sources */,
 				E664365B1FA24AD000A9B0E7 /* CategoryHeaderRow.swift in Sources */,
 				E61B48C01F9E81BF00183449 /* ExerciseImageCells.swift in Sources */,
+				E623C9E51FDF71F400023785 /* PrincipleDetailController.swift in Sources */,
 				E6A2B02D1FCA26A200DE1B9C /* MenuCell.swift in Sources */,
 				E6308EA91FBD262500571130 /* SettingsHeader.swift in Sources */,
 				E61EA9D61FDCEE2A001FBDB1 /* DiscussionPursuitsView.swift in Sources */,
 				E675405D1FB3B08000F7D492 /* StepsHeader.swift in Sources */,
 				E63CC51D1F9A9A7E002DC733 /* NextPursuitCellsContainer.swift in Sources */,
-				E604CCF41FA7AF1600A6D63E /* FeedHeader.swift in Sources */,
 				E617BB211FD8A3BF008B2EA1 /* HomePrinciples.swift in Sources */,
 				E634E6A71FA175D4000F329C /* ExploreCategoryCells.swift in Sources */,
 				E623F1471F9FB83500F8BDA7 /* ExploreExerciseRow.swift in Sources */,
 				E617BB1F1FD8A396008B2EA1 /* HomePursuitsCells.swift in Sources */,
+				E63C1D8C1FE36F3300A99F2F /* FeedDiscussion.swift in Sources */,
 				E617BB1B1FD887A9008B2EA1 /* Page.swift in Sources */,
+				E63C1D881FE36E3B00A99F2F /* FeedPursuit.swift in Sources */,
+				E61CCC361FE1C1AF002D57FF /* MessageHeader.swift in Sources */,
 				E66436791FA2970500A9B0E7 /* ProfilePostCells.swift in Sources */,
 				E6B49F2D1FACDD1D00AEDAFD /* SelectInterestsHeader.swift in Sources */,
 				E6AB64E81F7188CB00033C09 /* SharePhotoController.swift in Sources */,
@@ -893,11 +914,9 @@
 				E604CCF21FA7AD0A00A6D63E /* FeedController.swift in Sources */,
 				E6235EA01F92B1CC00BF1FDE /* PostDetailHeader.swift in Sources */,
 				E66436651FA24D3500A9B0E7 /* CategoryPrincipleRow.swift in Sources */,
-				E604CCFE1FA7F0EE00A6D63E /* FeedPictureRowCells.swift in Sources */,
 				E67540611FB3B59300F7D492 /* PursuitTeamCells.swift in Sources */,
 				E675405B1FB3B01600F7D492 /* StepsDetailController.swift in Sources */,
 				E62AAB271FD210300053EAD7 /* SelectCameraController.swift in Sources */,
-				E604CCF81FA7B27700A6D63E /* FeedRowCells.swift in Sources */,
 				E6AB64CF1F6F566200033C09 /* ChatMessageCell.swift in Sources */,
 				E67320201F8FE1DA000F6AAA /* PostDetailController.swift in Sources */,
 				E617BB191FD88775008B2EA1 /* PageCell.swift in Sources */,
@@ -905,7 +924,7 @@
 				E6AB64DB1F71878A00033C09 /* PreviewPhotoContainerView.swift in Sources */,
 				E6A273F71F6830BD00F5B4C8 /* ProfileHeader.swift in Sources */,
 				E6B49F2B1FACDCE800AEDAFD /* InterestsController.swift in Sources */,
-				E604CD021FA7F62E00A6D63E /* FeedChallengeCells.swift in Sources */,
+				E623C9E31FDF0C0000023785 /* CategoryDiscussionCells.swift in Sources */,
 				E664366B1FA24E3200A9B0E7 /* CategoryExerciseCells.swift in Sources */,
 				E64324B51F79A47F0090075F /* CardView.swift in Sources */,
 				E617BB171FD8874B008B2EA1 /* SwipingController.swift in Sources */,
@@ -913,6 +932,7 @@
 				E6235EA21F92C70400BF1FDE /* PostView.swift in Sources */,
 				E6AB64D51F6F611D00033C09 /* UserCell.swift in Sources */,
 				E62AAB1D1FD0A5D30053EAD7 /* PolicyController.swift in Sources */,
+				E621B9941FE04925007324E2 /* PursuitPrincipleCells.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,27 +8,39 @@
 
 import UIKit
 
+protocol ProfilePursuitsDelegate {
+    func pursuitClicked()
+    func pursuitHeld()
+}
+
 class ProfilePursuitsCells : UICollectionViewCell {
     
-    let pursuitButton : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = UIColor.init(white: 0.4, alpha: 0.05)
-        return button
-    }()
+    var delegate : ProfilePursuitsDelegate?
     
-    let pursuitLabel : UILabel = {
+    lazy var pursuitLabel : UILabel = {
         let label = UILabel()
         label.text = "Battle"
         label.numberOfLines = 2
         label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight(rawValue: 25))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleHomeHold))
+        tapGesture.numberOfTapsRequired = 1
+        label.addGestureRecognizer(tapGesture)
+        label.addGestureRecognizer(longGesture)
         return label
     }()
     
-    let pursuitImage : UIImageView = {
+    lazy var pursuitImage : UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "backpack")
         iv.contentMode = .scaleAspectFill
         iv.layer.masksToBounds = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleHomeHold))
+        tapGesture.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tapGesture)
+        iv.addGestureRecognizer(longGesture)
+        iv.isUserInteractionEnabled = true
         return iv
     }()
     
@@ -49,28 +61,30 @@ class ProfilePursuitsCells : UICollectionViewCell {
         return pv
     }()
     
-    func setupCardDetails(){
-        addSubview(pursuitLabel)
-        pursuitLabel.anchor(top: pursuitImage.bottomAnchor, left: pursuitImage.leftAnchor, bottom: nil, right: pursuitImage.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 14)
+    @objc func handleHomeTap(){
+        delegate?.pursuitClicked()
+    }
+    
+    @objc func handleHomeHold() {
+        delegate?.pursuitHeld()
     }
     
     func setupView(){
-        addSubview(pursuitButton)
-        pursuitButton.addSubview(pursuitImage)
+        addSubview(pursuitImage)
         addSubview(profileProgressLabel)
         addSubview(progressBar)
+        addSubview(pursuitLabel)
         
-        pursuitButton.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
-        pursuitImage.anchor(top: pursuitButton.topAnchor, left: pursuitButton.leftAnchor, bottom: pursuitButton.bottomAnchor, right: pursuitButton.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        pursuitImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
         profileProgressLabel.anchor(top: pursuitImage.bottomAnchor, left: nil, bottom: nil, right: pursuitImage.rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: profileProgressLabel.intrinsicContentSize.width, height: profileProgressLabel.intrinsicContentSize.height)
         progressBar.anchor(top: nil, left: pursuitImage.leftAnchor, bottom: nil, right: profileProgressLabel.leftAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 3)
         progressBar.centerYAnchor.constraint(equalTo: profileProgressLabel.centerYAnchor).isActive = true
+        pursuitLabel.anchor(top: pursuitImage.bottomAnchor, left: pursuitImage.leftAnchor, bottom: nil, right: pursuitImage.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 14)
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
-        setupCardDetails()
     }
     
     required init?(coder aDecoder: NSCoder) {

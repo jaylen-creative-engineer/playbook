@@ -9,13 +9,13 @@
 import UIKit
 import Firebase
 
-class UserCell: UITableViewCell {
+class UserCell: UICollectionViewCell {
     
     var message: Message? {
         didSet {
             setupNameAndProfileImage()
             
-            detailTextLabel?.text = message?.text?.description
+            detailTextLabel.text = message?.text?.description
             
             if let seconds = message?.timestamp?.doubleValue {
                 let timestampDate = Date(timeIntervalSince1970: seconds)
@@ -29,7 +29,15 @@ class UserCell: UITableViewCell {
         }
     }
     
-    // MARK: - Setup Message Layout
+    let detailTextLabel : UILabel = {
+        let label = UILabel()
+        return label
+    }()
+    
+    let textLabel : UILabel = {
+        let label = UILabel()
+        return label
+    }()
     
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -42,7 +50,7 @@ class UserCell: UITableViewCell {
     
     let timeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 13)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.darkGray
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -55,7 +63,7 @@ class UserCell: UITableViewCell {
             ref.observeSingleEvent(of: .value, with: { (snapshot) in
                 
                 if let dictionary = snapshot.value as? [String: AnyObject] {
-                    self.textLabel?.text = dictionary["username"] as? String
+                    self.textLabel.text = dictionary["username"] as? String
                     
                     if let profileImageUrl = dictionary["profileImageURL"] as? String {
                         self.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
@@ -66,20 +74,24 @@ class UserCell: UITableViewCell {
         }
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    func setupMessageText(){
+        addSubview(textLabel)
+        addSubview(detailTextLabel)
         
-        textLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        detailTextLabel?.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.thin)
+        textLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        detailTextLabel.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.thin)
         
-        textLabel?.frame = CGRect(x: 84, y: textLabel!.frame.origin.y - 2, width: textLabel!.frame.width, height: textLabel!.frame.height)
-        detailTextLabel?.frame = CGRect(x: 84, y: detailTextLabel!.frame.origin.y + 2, width: detailTextLabel!.frame.width, height: detailTextLabel!.frame.height)
+        textLabel.frame = CGRect(x: 84, y: textLabel.frame.origin.y - 2, width: textLabel.frame.width, height: textLabel.frame.height)
+        detailTextLabel.frame = CGRect(x: 84, y: detailTextLabel.frame.origin.y + 2, width: detailTextLabel.frame.width, height: detailTextLabel.frame.height)
+        
+        textLabel.anchor(top: profileImageView.topAnchor, left: profileImageView.rightAnchor, bottom: nil, right: nil, paddingTop: 14, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 120, height: textLabel.intrinsicContentSize.height)
+        detailTextLabel.anchor(top: textLabel.bottomAnchor, left: textLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: detailTextLabel.intrinsicContentSize.width, height: detailTextLabel.intrinsicContentSize.height)
         
     }
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
-        
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .black
         addSubview(profileImageView)
         addSubview(timeLabel)
         
@@ -93,9 +105,11 @@ class UserCell: UITableViewCell {
         //need x,y,width,height anchors
         timeLabel.font = UIFont.systemFont(ofSize: 14)
         timeLabel.anchor(top: profileImageView.topAnchor, left: nil, bottom: nil, right: self.rightAnchor, paddingTop: 14, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: timeLabel.intrinsicContentSize.width, height: timeLabel.intrinsicContentSize.height)
+        setupMessageText()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }
