@@ -34,7 +34,6 @@ class PursuitsDetailHeader : UICollectionViewCell {
         let view = UIView()
         view.backgroundColor = .black
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 3
         view.layer.masksToBounds = true
         return view
     }()
@@ -43,7 +42,6 @@ class PursuitsDetailHeader : UICollectionViewCell {
         let view = UIView()
         view.backgroundColor = .black
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 3
         view.layer.masksToBounds = true
         return view
     }()
@@ -52,7 +50,6 @@ class PursuitsDetailHeader : UICollectionViewCell {
         let view = UIView()
         view.backgroundColor = .black
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 3
         view.layer.masksToBounds = true
         return view
     }()
@@ -61,7 +58,6 @@ class PursuitsDetailHeader : UICollectionViewCell {
         let view = UIView()
         view.backgroundColor = .black
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 3
         view.layer.masksToBounds = true
         return view
     }()
@@ -70,7 +66,6 @@ class PursuitsDetailHeader : UICollectionViewCell {
         let view = UIView()
         view.backgroundColor = .black
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 3
         view.layer.masksToBounds = true
         return view
     }()
@@ -160,8 +155,7 @@ class PursuitsDetailHeader : UICollectionViewCell {
         aboutActive()
         
         addSubview(aboutLabelUnderline)
-        aboutLabelUnderline.anchor(top: nil, left: nil, bottom: bottomDividerView.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
-        aboutLabelUnderline.centerXAnchor.constraint(equalTo: aboutButton.centerXAnchor).isActive = true
+        aboutLabelUnderline.anchor(top: nil, left: aboutButton.leftAnchor, bottom: bottomDividerView.topAnchor, right: aboutButton.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
        
     }
     
@@ -188,8 +182,7 @@ class PursuitsDetailHeader : UICollectionViewCell {
         stepsActive()
         
         addSubview(stepsLabelUnderline)
-        stepsLabelUnderline.anchor(top: nil, left: nil, bottom: bottomDividerView.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
-        stepsLabelUnderline.centerXAnchor.constraint(equalTo: stepsLabel.centerXAnchor).isActive = true
+        stepsLabelUnderline.anchor(top: nil, left: stepsLabel.leftAnchor, bottom: bottomDividerView.topAnchor, right: stepsLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
     }
     
     func stepsActive(){
@@ -214,8 +207,7 @@ class PursuitsDetailHeader : UICollectionViewCell {
         principlesActive()
         
         addSubview(principleLabelUnderline)
-        principleLabelUnderline.anchor(top: nil, left: nil, bottom: bottomDividerView.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
-        principleLabelUnderline.centerXAnchor.constraint(equalTo: principleLabel.centerXAnchor).isActive = true
+        principleLabelUnderline.anchor(top: nil, left: principleLabel.leftAnchor, bottom: bottomDividerView.topAnchor, right: principleLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
     }
     
     
@@ -241,8 +233,7 @@ class PursuitsDetailHeader : UICollectionViewCell {
         savedActive()
         
         addSubview(savedLabelUnderline)
-        savedLabelUnderline.anchor(top: nil, left: nil, bottom: bottomDividerView.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
-        savedLabelUnderline.centerXAnchor.constraint(equalTo: savedLabel.centerXAnchor).isActive = true
+        savedLabelUnderline.anchor(top: nil, left: savedLabel.leftAnchor, bottom: bottomDividerView.topAnchor, right: savedLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
     }
     
     func savedActive(){
@@ -267,8 +258,7 @@ class PursuitsDetailHeader : UICollectionViewCell {
         discussionActive()
         
         addSubview(discusionLabelUnderline)
-        discusionLabelUnderline.anchor(top: nil, left: nil, bottom: bottomDividerView.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
-        discusionLabelUnderline.centerXAnchor.constraint(equalTo: discussionLabel.centerXAnchor).isActive = true
+        discusionLabelUnderline.anchor(top: nil, left: discussionLabel.leftAnchor, bottom: bottomDividerView.topAnchor, right: discussionLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
     }
     
     func discussionActive(){
@@ -282,27 +272,31 @@ class PursuitsDetailHeader : UICollectionViewCell {
     }
     
     func pageOptions(){
-        bottomDividerView.backgroundColor = UIColor.clear
-                
+        bottomDividerView.backgroundColor = UIColor.rgb(red: 211, green: 211, blue: 211)
+        
+        let scrollView = UIScrollView()
+        scrollView.isScrollEnabled = true
+        
         stackView = UIStackView(arrangedSubviews: [aboutButton, stepsLabel, discussionLabel, principleLabel, savedLabel])
         stackView.axis = .horizontal
-        stackView.distribution = .equalSpacing
+        stackView.distribution = .fillEqually
+        stackView.spacing = 20
         
-        addSubview(stackView)
+        addSubview(scrollView)
+        scrollView.addSubview(stackView)
         addSubview(bottomDividerView)
         
-        stackView.anchor(top: postLabel.bottomAnchor, left: postImage.leftAnchor, bottom: nil, right: postImage.rightAnchor, paddingTop: 20, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 50)
-        bottomDividerView.anchor(top: stackView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+        scrollView.anchor(top: postImage.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+        stackView.anchor(top: scrollView.topAnchor, left: scrollView.leftAnchor, bottom: scrollView.bottomAnchor, right: scrollView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+        bottomDividerView.anchor(top: stackView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 1)
     }
     
     func setupViews() {
         backgroundColor = .clear
         
         addSubview(postImage)
-        addSubview(postLabel)
         
-        postImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 44, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (frame.height / 2) + 50)
-        postLabel.anchor(top: postImage.bottomAnchor, left: postImage.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 300, height: 52)
+        postImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 44, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 325)
         pageOptions()
     }
     

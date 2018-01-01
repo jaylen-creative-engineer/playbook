@@ -21,7 +21,7 @@ class MenuCell : UICollectionViewCell, UIGestureRecognizerDelegate {
     lazy var homeIcon : UIButton = {
        let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(#imageLiteral(resourceName: "instagram_logo").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Pursuit").withRenderingMode(.alwaysTemplate), for: .normal)
         button.contentMode = .scaleAspectFit
         button.addTarget(self, action: #selector(homeActive), for: .touchUpInside)
         return button
@@ -52,7 +52,7 @@ class MenuCell : UICollectionViewCell, UIGestureRecognizerDelegate {
         addSubview(homeIcon)
         addSubview(profileIcon)
         exploreIcon.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
-        homeIcon.anchor(top: topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 115, height: 42)
+        homeIcon.anchor(top: topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: 65, height: 34)
         homeIcon.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         profileIcon.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 30.5, height: 30)
         homeActive()

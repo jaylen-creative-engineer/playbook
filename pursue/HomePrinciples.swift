@@ -18,6 +18,8 @@ class HomePrinciples : ProfilePrincipleRow, HomePrinciplesCellDelegate {
     
     let homePrincipleId = "homePrincipleId"
     var principlesDelegate : HomePrinciplesDelegate?
+    let imageNames = ["mel-robbins", "reality", "census", "realist", "inheritance"]
+    let homePrincipleLabel = ["5 Seconds", "Your reality is just a take on reality", "False Census Effect", "Naive Realism", "Treat others like they control your inheritance"]
     
     lazy var homeMoreButton : UIButton = {
         let button = UIButton()
@@ -42,10 +44,16 @@ class HomePrinciples : ProfilePrincipleRow, HomePrinciplesCellDelegate {
         return CGSize(width: ((frame.width - 2) / 2) + 55, height: ((frame.width - 2) / 2) + 50)
     }
     
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: homePrincipleId, for: indexPath) as! HomePrinciplesCells
         cell.principleCellDelegate = self
-        rowLabel.text = "ANIMAL PRINCIPLES"
+        cell.profileLabel.text = homePrincipleLabel[indexPath.item]
+        cell.homePrincipleImage.image = UIImage(named: imageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
+        rowLabel.text = "MINDFUL PRINCIPLES"
         return cell
     }
     

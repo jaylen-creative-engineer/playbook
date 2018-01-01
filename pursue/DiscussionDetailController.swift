@@ -152,7 +152,7 @@ class DiscussionDetailController : UICollectionViewController, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width - 10, height: (view.frame.height / 2) + 100)
+        return CGSize(width: view.frame.width - 10, height: (view.frame.height / 2) - 5)
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

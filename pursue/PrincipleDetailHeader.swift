@@ -34,7 +34,6 @@ class PrincipleDetailHeader : PostDetailHeader {
         let view = UIView()
         view.backgroundColor = .black
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 3
         view.layer.masksToBounds = true
         return view
     }()
@@ -43,7 +42,6 @@ class PrincipleDetailHeader : PostDetailHeader {
         let view = UIView()
         view.backgroundColor = .black
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 3
         view.layer.masksToBounds = true
         return view
     }()
@@ -60,8 +58,7 @@ class PrincipleDetailHeader : PostDetailHeader {
         pursuitActive()
         
         addSubview(pursuitLabelUnderline)
-        pursuitLabelUnderline.anchor(top: nil, left: nil, bottom: bottomDividerView.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
-        pursuitLabelUnderline.centerXAnchor.constraint(equalTo: pursuitLabel.centerXAnchor).isActive = true
+        pursuitLabelUnderline.anchor(top: nil, left: pursuitLabel.leftAnchor, bottom: bottomDividerView.topAnchor, right: pursuitLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
     }
     
     func pursuitActive(){
@@ -87,8 +84,7 @@ class PrincipleDetailHeader : PostDetailHeader {
         discussionActive()
         
         addSubview(discussionLabelUnderline)
-        discussionLabelUnderline.anchor(top: nil, left: nil, bottom: bottomDividerView.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
-        discussionLabelUnderline.centerXAnchor.constraint(equalTo: discussionLabel.centerXAnchor).isActive = true
+        discussionLabelUnderline.anchor(top: nil, left: discussionLabel.leftAnchor, bottom: bottomDividerView.topAnchor, right: discussionLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
     }
     
     func discussionActive(){
@@ -113,8 +109,7 @@ class PrincipleDetailHeader : PostDetailHeader {
         aboutActive()
         
         addSubview(aboutLabelUnderline)
-        aboutLabelUnderline.anchor(top: nil, left: nil, bottom: bottomDividerView.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
-        aboutLabelUnderline.centerXAnchor.constraint(equalTo: aboutButton.centerXAnchor).isActive = true
+        aboutLabelUnderline.anchor(top: nil, left: aboutButton.leftAnchor, bottom: bottomDividerView.topAnchor, right: aboutButton.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
     }
     
     override func aboutActive(){
@@ -141,8 +136,7 @@ class PrincipleDetailHeader : PostDetailHeader {
         
         addSubview(commentsLabelUnderline)
         
-        commentsLabelUnderline.anchor(top: nil, left: nil, bottom: bottomDividerView.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
-        commentsLabelUnderline.centerXAnchor.constraint(equalTo: commentsLabel.centerXAnchor).isActive = true
+        commentsLabelUnderline.anchor(top: nil, left: commentsLabel.leftAnchor, bottom: bottomDividerView.topAnchor, right: commentsLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
     }
     
     override func commentsActive(){
@@ -155,30 +149,28 @@ class PrincipleDetailHeader : PostDetailHeader {
     }
     
     override func pageOptions(){
-        bottomDividerView.backgroundColor = .clear
+        bottomDividerView.backgroundColor = UIColor.rgb(red: 211, green: 211, blue: 211)
+        let scrollView = UIScrollView()
         
         stackView = UIStackView(arrangedSubviews: [aboutButton, commentsLabel, pursuitLabel, discussionLabel])
         stackView.axis = .horizontal
-        stackView.distribution = .equalSpacing
+        stackView.distribution = .fillEqually
+        stackView.spacing = 20
         
-        addSubview(stackView)
+        addSubview(scrollView)
+        scrollView.addSubview(stackView)
         addSubview(bottomDividerView)
-        stackView.anchor(top: postLabel.bottomAnchor, left: postLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 0, height: 50)
-        bottomDividerView.anchor(top: stackView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+        
+        scrollView.anchor(top: postImage.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 6, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+        stackView.anchor(top: postImage.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+        bottomDividerView.anchor(top: stackView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 1)
        
     }
     
     override func setupViews() {
         addSubview(postImage)
-        addSubview(postLabel)
-        addSubview(optionButton)
-        addSubview(optionBackground)
         
-        postImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 44, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (frame.height / 2) + 50)
-        optionButton.anchor(top: postImage.bottomAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 22, width: 4.5, height: 20)
-        optionBackground.anchor(top: optionButton.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
-        optionBackground.centerXAnchor.constraint(equalTo: optionButton.centerXAnchor).isActive = true
-        postLabel.anchor(top: postImage.bottomAnchor, left: postImage.leftAnchor, bottom: nil, right: optionButton.rightAnchor, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 52)
+        postImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 44, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 250)
         pageOptions()
     }
 }

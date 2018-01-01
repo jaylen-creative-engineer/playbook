@@ -30,6 +30,9 @@ class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICol
         return button
     }()
     
+    let exploreImageNames = ["fire", "flights", "currency", "map"]
+    let exerciseLabelText = ["Start a fire", "How to find cheaper flights?", "Converting your money", "How to read a map?"]
+
     let cellId = "cellId"
     let peopleId = "peopleId"
     
@@ -43,7 +46,7 @@ class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICol
     }()
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return 4
     }
     
     
@@ -53,8 +56,10 @@ class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICol
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreExercisesRowCells
+        cell.exploreImage.image = UIImage(named: exploreImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
+        cell.exploreLabel.text = exerciseLabelText[indexPath.item]
         cell.exploreExereciseDelegate = self
-        rowLabel.text = "ANIMAL PURSUITS"
+        rowLabel.text = "ADVENTURE PURSUITS"
         return cell
     }
     

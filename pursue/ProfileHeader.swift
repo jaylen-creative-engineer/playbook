@@ -69,13 +69,13 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 50
         iv.clipsToBounds = true
-        iv.image = #imageLiteral(resourceName: "samuel-l")
+        iv.image = #imageLiteral(resourceName: "profile-2")
         return iv
     }()
     
     let usernameLabel : UILabel = {
         let label = UILabel()
-        label.text = "Test27"
+        label.text = "Jubilee"
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -83,7 +83,7 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
     
     let fullnameLabel : UILabel = {
         let label = UILabel()
-        label.text = "Jaylen Sanders"
+        label.text = "Thomas Sanders"
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.thin)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -92,7 +92,7 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
     let userBio : UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.text = "My effort is different from yours."
+        label.text = "Get better today."
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -115,8 +115,11 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
     }
     
     
+    let interestsNames = ["Adventure", "Animals", "Art", "Business"]
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfileAboutCells
+        cell.selectInterests.text = interestsNames[indexPath.item]
         return cell
     }
     

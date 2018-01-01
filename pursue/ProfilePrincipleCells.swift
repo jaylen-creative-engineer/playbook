@@ -19,14 +19,12 @@ class ProfilePrincipleCells : UICollectionViewCell {
     
     let profileLabel : UILabel = {
         let label = UILabel()
-        label.text = "Draw"
-        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight(rawValue: 25))
+        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
         return label
     }()
     
     lazy var profileImage : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "samuel-l")
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))

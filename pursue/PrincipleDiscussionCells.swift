@@ -56,7 +56,7 @@ class PrincipleDiscussionCells : UICollectionViewCell {
     
     let addedUserPhoto : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "clean-8")
+        iv.image = #imageLiteral(resourceName: "samuel-l")
         iv.layer.cornerRadius = 30
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true

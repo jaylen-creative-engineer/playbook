@@ -35,7 +35,7 @@ class PhotoSelectorController : UICollectionViewCell, UICollectionViewDelegate, 
        
         let guide = safeAreaLayoutGuide
         addSubview(photoCollection)
-        photoCollection.contentInset = UIEdgeInsetsMake((frame.width / 3) - 40, 0, 75, 0)
+        photoCollection.contentInset = UIEdgeInsetsMake((frame.width / 3) - 50, 0, 75, 0)
         photoCollection.anchor(top: nil, left: guide.leftAnchor, bottom: guide.bottomAnchor, right: guide.rightAnchor, paddingTop: 0, paddingLeft: 6, paddingBottom: 0, paddingRight: 6, width: 0, height: frame.height)
         fetchPhotos()
     }

@@ -22,6 +22,8 @@ class HomeDiscussion : UICollectionViewCell, UICollectionViewDelegate, UICollect
         label.font = UIFont.boldSystemFont(ofSize: 12)
         return label
     }()
+    let imageNames = ["bunt", "tackle", "vertical", "40yard", "steph"]
+    let discussionLabels = ["How to bunt properly?, How to tackle without using my head?", "How to increase my vertical?", "40 yard dash tips?", "How to shoot like Steph?"]
     
     var delegate : HomeDiscussionDelegate?
     
@@ -34,6 +36,7 @@ class HomeDiscussion : UICollectionViewCell, UICollectionViewDelegate, UICollect
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
+        collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
     
@@ -45,18 +48,18 @@ class HomeDiscussion : UICollectionViewCell, UICollectionViewDelegate, UICollect
     }()
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return 5
     }
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: ((frame.width - 2) / 2), height: ((frame.width - 2) / 2) + 15)
+        return CGSize(width: 320, height: ((frame.width - 2) / 2) + 15)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeDiscussionCells
         cell.homeDelegate = self
-        rowLabel.text = "ANIMAL DISCUSSIONS"
+        rowLabel.text = "SPORTS DISCUSSIONS"
         return cell
     }
     
@@ -82,8 +85,7 @@ class HomeDiscussion : UICollectionViewCell, UICollectionViewDelegate, UICollect
         addSubview(moreButton)
         rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 140, height: 22)
         moreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 24, height: 12)
-        discussionCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        discussionCollection.showsHorizontalScrollIndicator = false
+        discussionCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 215)
         discussionCollection.register(HomeDiscussionCells.self, forCellWithReuseIdentifier: cellId)
         discussionCollection.dataSource = self
         discussionCollection.delegate = self

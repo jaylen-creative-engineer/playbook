@@ -64,13 +64,13 @@ class DiscussionDetailHeader : UICollectionViewCell {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        iv.image = #imageLiteral(resourceName: "tumblr_nbje6dualg1r46py4o1_1280")
+        iv.image = #imageLiteral(resourceName: "social-marketing")
         return iv
     }()
     
     let postLabel : UILabel = {
         let label = UILabel()
-        label.text = "Wonder Woman"
+        label.text = "Instagram Marketing"
         label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight(rawValue: 25))
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

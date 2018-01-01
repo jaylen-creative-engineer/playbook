@@ -28,9 +28,8 @@ class HomePursuitsCells : ProfilePursuitsCells {
     
     lazy var homePursuitLabel : UILabel = {
         let label = UILabel()
-        label.text = "Battle"
         label.numberOfLines = 2
-        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight(rawValue: 25))
+        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleHomeHold))
         tapGesture.numberOfTapsRequired = 1
@@ -49,7 +48,6 @@ class HomePursuitsCells : ProfilePursuitsCells {
     
     lazy var homePursuitImage : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "backpack")
         iv.contentMode = .scaleAspectFill
         iv.layer.masksToBounds = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handlePursuitTap))
@@ -60,7 +58,6 @@ class HomePursuitsCells : ProfilePursuitsCells {
         iv.isUserInteractionEnabled = true
         return iv
     }()
-
     
     @objc func handlePursuitTap(){
         homePursuitDelegate?.pursuitTapped()
@@ -71,6 +68,7 @@ class HomePursuitsCells : ProfilePursuitsCells {
     }
     
     override func setupView() {
+        
         addSubview(homePursuitImage)
         addSubview(progressLabel)
         addSubview(homeProgressBar)
@@ -80,6 +78,6 @@ class HomePursuitsCells : ProfilePursuitsCells {
         progressLabel.anchor(top: homePursuitImage.bottomAnchor, left: nil, bottom: nil, right: homePursuitImage.rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: progressLabel.intrinsicContentSize.width, height: progressLabel.intrinsicContentSize.height)
         homeProgressBar.anchor(top: nil, left: homePursuitImage.leftAnchor, bottom: nil, right: progressLabel.leftAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 3)
         homeProgressBar.centerYAnchor.constraint(equalTo: progressLabel.centerYAnchor).isActive = true
-        homePursuitLabel.anchor(top: homePursuitImage.bottomAnchor, left: homePursuitImage.leftAnchor, bottom: nil, right: homePursuitImage.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 14)
+        homePursuitLabel.anchor(top: homePursuitImage.bottomAnchor, left: homePursuitImage.leftAnchor, bottom: nil, right: homePursuitImage.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: homePursuitLabel.intrinsicContentSize.height)
     }
 }

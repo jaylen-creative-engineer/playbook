@@ -19,9 +19,8 @@ class HomeRowCells : UICollectionViewCell {
     
     lazy var postImage : UIImageView = {
        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "tumblr_nbje6dualg1r46py4o1_1280")
         iv.contentMode = .scaleAspectFill
-        iv.layer.masksToBounds = true
+        iv.clipsToBounds = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleHomeHold))
         tapGesture.numberOfTapsRequired = 1
@@ -33,8 +32,7 @@ class HomeRowCells : UICollectionViewCell {
     
     let homeMainDescription : UILabel = {
        let label = UILabel()
-        label.text = "Wonder Woman Again"
-        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight(rawValue: 25))
+        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
         label.numberOfLines = 2
         label.textColor = .black
         
@@ -62,12 +60,12 @@ class HomeRowCells : UICollectionViewCell {
         delegate?.homeHeld()
     }
     
-    func setupView() {        
-        addSubview(postImage)
+    func setupView() {
         addSubview(homeMainDescription)
-        
+        addSubview(postImage)
+
         postImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 300)
-        homeMainDescription.anchor(top: postImage.bottomAnchor, left: postImage.leftAnchor, bottom: nil, right: postImage.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: homeMainDescription.intrinsicContentSize.height)
+        homeMainDescription.anchor(top: bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 8, paddingRight: 8, width: 0, height: homeMainDescription.intrinsicContentSize.height)
     }
     
     override init(frame: CGRect) {

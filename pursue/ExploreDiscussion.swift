@@ -26,6 +26,8 @@ class ExploreDiscussion : UICollectionViewCell, UICollectionViewDelegate, UIColl
     
     let cellId = "cellId"
     let peopleId = "peopleId"
+    let exploreImageNames = ["api", "databases", "campus", "bitcoin-talk", "magic-leap"]
+    let exploreLabelText = ["Leveraging API's before you have content", "Properly Using SQL Databases", "The need for college", "Bitcoins Success", "Magic Leap AR"]
     
     let discussionCollection : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -43,18 +45,19 @@ class ExploreDiscussion : UICollectionViewCell, UICollectionViewDelegate, UIColl
     }()
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return 5
     }
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: ((frame.width - 2) / 3), height: ((frame.width - 2) / 3) + 5)
+        return CGSize(width: 310, height: ((frame.width - 2) / 2) + 15)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreDiscussionCells
-        rowLabel.text = "ANIMAL DISCUSSIONS"
+        rowLabel.text = "TECH DISCUSSIONS"
         cell.exploreDelegate = self
+        cell.discussionLabel.text = exploreLabelText[indexPath.item]
         return cell
     }
     

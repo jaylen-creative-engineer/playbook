@@ -19,6 +19,9 @@ class HomePursuits : ProfilePursuitsRow, PursuitSelected {
     var pursuitsDelegate : HomePursuitsRowDelegate?
     let homeCellId = "homeCellId"
     
+    let homeImageNames = ["movie-app", "messenger-app", "workout", "wim-hof", "meditation"]
+    let homePursuitDescriptions = ["Movie App", "Messenger App", "Gain 15 Pounds", "Wim Hof Breathing", "Guided Meditation"]
+
     lazy var homeMoreButton : UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "right-arrow-1").withRenderingMode(.alwaysOriginal), for: .normal)
@@ -42,8 +45,14 @@ class HomePursuits : ProfilePursuitsRow, PursuitSelected {
         return CGSize(width: ((frame.width - 2) / 2) + 125, height: 300)
     }
     
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: homeCellId, for: indexPath) as! HomePursuitsCells
+        cell.homePursuitImage.image = UIImage(named: homeImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
+        cell.homePursuitLabel.text = homePursuitDescriptions[indexPath.item]
         cell.homePursuitDelegate = self
         rowLabel.text = "YOUR PURSUITS"
         return cell

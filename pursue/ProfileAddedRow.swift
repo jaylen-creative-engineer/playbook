@@ -11,9 +11,13 @@ import UIKit
 class ProfileAddedRow : PeopleRow {
     
     let addedId = "addedId"
+    let profileImageNames = ["samuel-l", "scarlett", "fall", "profile-4", "profile-5"]
+    let profileUsernameText = ["Samuel", "Scarlett", "boldceo", "Soulection", "GQ"]
         
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: addedId, for: indexPath) as! PeopleAddedCells
+        cell.userPhoto.image = UIImage(named: profileImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
+        cell.usernameLabel.text = profileUsernameText[indexPath.item]
         return cell
     }
     

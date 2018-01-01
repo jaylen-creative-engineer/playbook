@@ -24,6 +24,7 @@ class ExploreCategoryRow : UICollectionViewCell, UICollectionViewDelegate, UICol
     
     let cellId = "cellId"
     let peopleId = "peopleId"
+    let interestsNames = ["Adventure", "Animals", "Art", "Business", "Cars", "Design", "Finance", "Fashion", "Food", "Health", "Home", "Math", "Music", "Self", "Science", "Sports", "Tech", "Writing"]
     
     let postCollection : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -34,7 +35,7 @@ class ExploreCategoryRow : UICollectionViewCell, UICollectionViewDelegate, UICol
     }()
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return 18
     }
     
     
@@ -44,6 +45,7 @@ class ExploreCategoryRow : UICollectionViewCell, UICollectionViewDelegate, UICol
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreCategoryCells
+        cell.selectInterests.text = interestsNames[indexPath.item]
         cell.delegate = self
         return cell
     }

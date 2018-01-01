@@ -18,7 +18,6 @@ class ExploreCategoryCells : UICollectionViewCell {
     
     lazy var selectInterests : UILabel = {
        let label = UILabel()
-        label.text = "ANIMALS"
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 12)
         label.layer.borderWidth = 1

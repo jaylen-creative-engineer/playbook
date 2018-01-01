@@ -24,9 +24,12 @@ class HomeRow: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewD
     var delegate : ChangeToFeed?
     var homeDelegate : HomeRowImageEngagements?
     
+    let imageNames = ["chat-app", "stock-exchange", "travel", "contacts", "3d-touch"]
+    let homeDescriptions = ["iChat App", "New York Exchange", "Travel App", "Contact Page", "Settings 3d touch"]
+    
     let rowLabel : UILabel = {
         let label = UILabel()
-        label.text = "ANIMALS"
+        label.text = "MOBILE DESIGN"
         label.font = UIFont.boldSystemFont(ofSize: 12)
         let tap = UITapGestureRecognizer(target: self, action: #selector(feedChange))
         label.addGestureRecognizer(tap)
@@ -56,12 +59,12 @@ class HomeRow: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewD
     }()
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return 5
     }
 
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (frame.width / 2) + 5, height: frame.height)
+        return CGSize(width: (frame.width / 2) + 80, height: frame.height)
     }
     
     func homeTapped() {
@@ -74,6 +77,8 @@ class HomeRow: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeRowCells
+        cell.postImage.image = UIImage(named: imageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
+        cell.homeMainDescription.text = homeDescriptions[indexPath.item]
         cell.delegate = self
         return cell
     }

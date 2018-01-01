@@ -82,6 +82,7 @@ class RectangleView : UIView {
         
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
         layer.shadowPath = shadowPath.cgPath
+        layer.shouldRasterize = true
         layer.shadowOpacity = Float(shadowOpacity)
     }
 }
@@ -89,18 +90,93 @@ class RectangleView : UIView {
 class TopRectangleView : UIView {
     var cornerRadius : CGFloat = 0
     var shadowOffSetWidth : CGFloat = 0
-    var shadowOffSetHeight : CGFloat = -1
+    var shadowOffSetHeight : CGFloat = -5
     var shadowColor = UIColor.gray
-    var shadowOpacity : CGFloat = 0.2
+    var shadowOpacity : CGFloat = 0.5
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColor.cgColor
-        layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
+        self.layer.masksToBounds = false
+        self.layer.shadowColor = UIColor.gray.cgColor
+        self.layer.shadowOpacity = 0.5
+        self.layer.shadowOffset = CGSize(width: -1, height: 1)
+        self.layer.shadowRadius = 3
         
-        let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
-        layer.shadowPath = shadowPath.cgPath
-        layer.shadowOpacity = Float(shadowOpacity)
+        let scale = true
+        self.layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
+        self.layer.shouldRasterize = true
+        self.layer.rasterizationScale = scale ? UIScreen.main.scale : 1
+    }
+}
+
+class ResizedHomeImage : UIImageView {
+    
+    func setupResize(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+        }
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
+    }
+}
+
+extension UIImage {
+    
+    func resizedImage(newSize: CGSize) -> UIImage {
+        // Guard newSize is different
+        guard self.size != newSize else { return self }
+        
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0);
+        self.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+        guard let newImage : UIImage = UIGraphicsGetImageFromCurrentImageContext() else { fatalError("Could Find New Image") }
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    
+    func resizedImageWithinRect(rectSize: CGSize) -> UIImage {
+        let widthFactor = size.width / rectSize.width
+        let heightFactor = size.height / rectSize.height
+        
+        var resizeFactor = widthFactor
+        if size.height > size.width {
+            resizeFactor = heightFactor
+        }
+        
+        let newSize = CGSize(width: size.width/resizeFactor, height: size.height/resizeFactor)
+        let resized = resizedImage(newSize: newSize)
+        return resized
+    }
+    
+}
+
+extension UIView {
+    func dropShadow(color: UIColor, opacity: Float = 0.5, offSet: CGSize, radius: CGFloat = 1, scale: Bool = true) {
+        self.layer.masksToBounds = false
+        self.layer.shadowColor = color.cgColor
+        self.layer.shadowOpacity = opacity
+        self.layer.shadowOffset = offSet
+        self.layer.shadowRadius = radius
+        
+        self.layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
+        self.layer.shouldRasterize = true
+        self.layer.rasterizationScale = scale ? UIScreen.main.scale : 1
     }
 }

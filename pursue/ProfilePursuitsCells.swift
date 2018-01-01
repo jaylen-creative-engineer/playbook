@@ -19,9 +19,8 @@ class ProfilePursuitsCells : UICollectionViewCell {
     
     lazy var pursuitLabel : UILabel = {
         let label = UILabel()
-        label.text = "Battle"
         label.numberOfLines = 2
-        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight(rawValue: 25))
+        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleHomeHold))
         tapGesture.numberOfTapsRequired = 1
@@ -32,7 +31,6 @@ class ProfilePursuitsCells : UICollectionViewCell {
     
     lazy var pursuitImage : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "backpack")
         iv.contentMode = .scaleAspectFill
         iv.layer.masksToBounds = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))

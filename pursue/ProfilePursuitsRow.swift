@@ -16,6 +16,8 @@ protocol ProfilePursuitsRowDelegate {
 class ProfilePursuitsRow : ExploreExerciseRow, ProfilePursuitsDelegate {
     
     let profilePursuitsId = "profilePursuitsId"
+    let imageNames = ["winter", "fall", "home-remodel", "food"]
+    let profileLabelText = ["Winter Fashion", "Fall Fasion", "Home", "Food"]
     var delegate : ProfilePursuitsRowDelegate?
     
     func pursuitClicked() {
@@ -26,9 +28,15 @@ class ProfilePursuitsRow : ExploreExerciseRow, ProfilePursuitsDelegate {
         delegate?.pursuitHeld()
     }
     
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 4
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: profilePursuitsId, for: indexPath) as! ProfilePursuitsCells
         cell.delegate = self
+        cell.pursuitImage.image = UIImage(named: imageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
+        cell.pursuitLabel.text = profileLabelText[indexPath.item]
         rowLabel.text = "PURSUITS"
         return cell
     }

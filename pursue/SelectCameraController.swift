@@ -31,6 +31,7 @@ class SelectCameraController : UICollectionViewController, UICollectionViewDeleg
         }
         
         collectionView?.isPagingEnabled = true
+        collectionView?.isScrollEnabled = false
         navigationController?.navigationBar.isHidden = true
         collectionView?.register(CameraController.self, forCellWithReuseIdentifier: cellId)
         collectionView?.register(PhotoSelectorController.self, forCellWithReuseIdentifier: selectId)
@@ -70,21 +71,17 @@ class SelectCameraController : UICollectionViewController, UICollectionViewDeleg
     
     let select : UILabel = {
        let label = UILabel()
-        label.text = "SELECT PHOTO"
         return label
     }()
     
     let captureLabel : UILabel = {
        let label = UILabel()
-        label.text = "CAPTURE"
         return label
     }()
     
-    let titles = ["LIBRARY", "CAPTURE"]
     
     func scrollToMenuIndex(menuIndex: Int) {
         let indexPath = IndexPath(item: menuIndex, section: 0)
-        cameraTitle.text = "\(titles[menuIndex])"
         collectionView?.scrollToItem(at: indexPath, at: [], animated: true)
     }
     
@@ -120,7 +117,6 @@ class SelectCameraController : UICollectionViewController, UICollectionViewDeleg
     
     let cameraTitle : UILabel = {
         let label = UILabel()
-        label.text = "PHOTO"
         label.font = UIFont.boldSystemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

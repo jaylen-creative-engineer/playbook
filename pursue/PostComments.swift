@@ -14,6 +14,10 @@ class PostComments: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     
     var accessDetailController : PostDetailController?
     
+    let photosOfCommenters = ["comment-1", "comment-2", "comment-3", "comment-4", "comment-5", "comment-6", "comment-7"]
+    let nameOfCommenters = ["Colion Noir", "Mike O'Hearn", "Jocko", "Tai Lopez", "Whitesse", "Traction Conf", "Nasseh"]
+    let textForComments = ["Take advantage of free Instagram tools", "Promote instagram post across your other social media profiles.", "Don't overwhelm your audience", "Interact with followers to spark growth", "Create an interactive hashtag.", "Repurpose content from other relevant accounts.", "Use creativity to connect with your audience."]
+    
     let postComments : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -29,6 +33,9 @@ class PostComments: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PostCommentsCell
+        cell.userPhoto.image = UIImage(named: photosOfCommenters[indexPath.item])?.withRenderingMode(.alwaysOriginal)
+        cell.commentText.text = textForComments[indexPath.item]
+        cell.usernameLabel.text = nameOfCommenters[indexPath.item]
         return cell
     }
     

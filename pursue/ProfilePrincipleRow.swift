@@ -24,6 +24,9 @@ class ProfilePrincipleRow : UICollectionViewCell, UICollectionViewDelegate, UICo
         return label
     }()
     
+    let profileImageNames = ["realist", "inheritance", "value-first", "menu-numbers"]
+    let profileLabelText = ["Naive Realism", "Treat others like they control your inheritance","Show value upfront", "Organize and label menu categories"]
+    
     let cellId = "cellId"
     let peopleId = "peopleId"
     
@@ -43,7 +46,7 @@ class ProfilePrincipleRow : UICollectionViewCell, UICollectionViewDelegate, UICo
     }()
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return 4
     }
     
     
@@ -55,6 +58,8 @@ class ProfilePrincipleRow : UICollectionViewCell, UICollectionViewDelegate, UICo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfilePrincipleCells
         rowLabel.text = "PRINCIPLES"
         cell.delegate = self
+        cell.profileLabel.text = profileLabelText[indexPath.item]
+        cell.profileImage.image = UIImage(named: profileImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
         return cell
     }
     

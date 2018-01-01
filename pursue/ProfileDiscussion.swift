@@ -18,12 +18,20 @@ class ProfileDiscussion : HomeDiscussion, ProfileDiscussionCellsDelegate {
     let profileDiscussionId = "profileDiscussionId"
     
     var profileDelegate : ProfileDiscussionDelegate?
+    let profileImageNames = ["social-marketing", "google-adds", "content-marketing", "seo"]
+    let profileLabelText = ["Instagram Marketing", "Using Google Ads", "Content Marketing", "SEO Little Known Tricks"]
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: profileDiscussionId, for: indexPath) as! ProfileDiscussionCells
         cell.delegate = self
+        cell.profileDiscussionLabel.text = profileLabelText[indexPath.item]
+        cell.profileDiscussionImage.image = UIImage(named: profileImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
         rowLabel.text = "DISCUSSIONS"
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 4
     }
     
     override func discussionTapped() {

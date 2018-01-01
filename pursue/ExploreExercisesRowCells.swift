@@ -18,14 +18,12 @@ class ExploreExercisesRowCells  : UICollectionViewCell {
     
     let exploreLabel : UILabel = {
         let label = UILabel()
-        label.text = "Battle"
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
         return label
     }()
     
     lazy var exploreImage : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "backpack")
         iv.contentMode = .scaleAspectFill
         iv.layer.masksToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false

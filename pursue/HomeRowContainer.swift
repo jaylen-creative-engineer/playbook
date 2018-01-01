@@ -35,7 +35,7 @@ class HomeRowContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
         homeCollection.register(HomePursuits.self, forCellWithReuseIdentifier: pursuitId)
         homeCollection.register(HomePrinciples.self, forCellWithReuseIdentifier: principleId)
         homeCollection.register(HomeDiscussion.self, forCellWithReuseIdentifier: discussionId)
-        homeCollection.contentInset = UIEdgeInsetsMake(55, 0, 85, 0)
+        homeCollection.contentInset = UIEdgeInsetsMake(55, 0, 125, 0)
         addSubview(homeCollection)
         homeCollection.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
@@ -109,9 +109,9 @@ class HomeRowContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
         case 1:
             return CGSize(width: frame.width, height: 310)
         case 2:
-            return CGSize(width: frame.width, height: 320)
-        case 3:
             return CGSize(width: frame.width, height: 445)
+        case 3:
+            return CGSize(width: frame.width, height: 250)
         default:
             return CGSize(width: frame.width, height: 430)
         }
@@ -128,12 +128,12 @@ class HomeRowContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
             cell.principlesDelegate = self
             return cell
         case 2:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! HomeDiscussion
-            cell.delegate = self
-            return cell
-        case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeRow
             cell.homeDelegate = self
+            return cell
+        case 3:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! HomeDiscussion
+            cell.delegate = self
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeRow

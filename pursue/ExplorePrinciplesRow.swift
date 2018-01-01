@@ -32,6 +32,8 @@ class ExplorePrinciplesRow : UICollectionViewCell, UICollectionViewDelegate, UIC
     
     let cellId = "cellId"
     let peopleId = "peopleId"
+    let exploreImageNames = ["value-first", "menu-numbers", "go-back", "change-location"]
+    let exploreLabelText = ["Show value upfront", "Organize and label menu categories", "Allow users to go back easily in one step.", "Make it easy to manually change location."]
     
     let postCollection : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -43,7 +45,7 @@ class ExplorePrinciplesRow : UICollectionViewCell, UICollectionViewDelegate, UIC
     }()
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return 4
     }
     
     
@@ -62,7 +64,9 @@ class ExplorePrinciplesRow : UICollectionViewCell, UICollectionViewDelegate, UIC
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExplorePrincipleCells
         cell.explorePrincipleDelegate = self
-        rowLabel.text = "ANIMAL PRINCIPLES"
+        cell.exploreImage.image = UIImage(named: exploreImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
+        cell.exploreLabel.text = exploreLabelText[indexPath.item]
+        rowLabel.text = "DESIGN PRINCIPLES"
         return cell
     }
     

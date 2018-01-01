@@ -16,11 +16,13 @@ protocol ExploreImageDelegate {
 class ExploreImageRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ExerciseImageCellDelegate {
     
     var exploreDelegate : ExploreImageDelegate?
+    let exploreImageNames = ["ferrari", "pagani", "ferrari-f70", "ghost"]
+    let exploreLabelText = ["Ferrari", "Desvre", "La Ferrari F70", "Ghost"]
     
     let rowLabel : UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.text = "ANIMALS"
+        label.text = "CARS"
         label.font = UIFont.boldSystemFont(ofSize: 12)
         return label
     }()
@@ -49,12 +51,14 @@ class ExploreImageRow : UICollectionViewCell, UICollectionViewDelegate, UICollec
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (frame.width / 2) - 55, height: frame.height)
+        return CGSize(width: (frame.width / 2) - 30, height: frame.height)
     }
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExerciseImageCells
+        cell.exploreImage.image = UIImage(named: exploreImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
+        cell.exploreMainDescription.text = exploreLabelText[indexPath.item]
         cell.exerciseImageDelegate = self
         return cell
     }

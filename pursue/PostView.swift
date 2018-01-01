@@ -11,17 +11,23 @@ import UIKit
 class PostView : UICollectionViewCell {
         
     let postDescription : UILabel = {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 5
         let label = UILabel()
         label.numberOfLines = 0
-        label.text = "I’m still pretty sick today, I think it would be smart to take at least one more day to get to one hundred percent."
+        
+        let attrString = NSMutableAttributedString(string: "I need some help getting started with marketing my profile on Instagram.")
+        attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
+        
         label.font = UIFont.systemFont(ofSize: 14)
+        label.attributedText = attrString
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     let usernameLabel : UILabel = {
         let label = UILabel()
-        label.text = "Test27"
+        label.text = "Jubilee"
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -29,7 +35,7 @@ class PostView : UICollectionViewCell {
     
     let fullnameLabel : UILabel = {
         let label = UILabel()
-        label.text = "Jaylen Sanders"
+        label.text = "Thomas Sanders"
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.thin)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -37,7 +43,7 @@ class PostView : UICollectionViewCell {
     
     let userPhoto : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "samuel-l")
+        iv.image = #imageLiteral(resourceName: "profile-2")
         iv.layer.cornerRadius = 30
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
@@ -75,6 +81,13 @@ class PostView : UICollectionViewCell {
         button.contentMode = .scaleAspectFill
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(toggleSave), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var optionButton : UIButton = {
+       let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "option").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.contentMode = .scaleAspectFill
         return button
     }()
     
@@ -126,6 +139,8 @@ class PostView : UICollectionViewCell {
         userInfoStack.anchor(top: nil, left: userPhoto.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
         userInfoStack.centerYAnchor.constraint(equalTo: userPhoto.centerYAnchor).isActive = true
         
+        addSubview(optionButton)
+        optionButton.anchor(top: userInfoStack.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 6.2, height: 25)
     }
     
     func setupEngagements(){
@@ -151,7 +166,7 @@ class PostView : UICollectionViewCell {
         
         userPhoto.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 60, height: 60)
         usernameUnderLine.anchor(top: userPhoto.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0.5)
-        postDescription.anchor(top: userPhoto.bottomAnchor, left: userPhoto.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 6, paddingBottom: 0, paddingRight: 28, width: 0, height: 70)
+        postDescription.anchor(top: userPhoto.bottomAnchor, left: userPhoto.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 10, paddingLeft: 6, paddingBottom: 0, paddingRight: 24, width: 0, height: 70)
         userNameSetup()
         setupEngagements()
 

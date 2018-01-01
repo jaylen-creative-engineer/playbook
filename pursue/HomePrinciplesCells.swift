@@ -19,7 +19,6 @@ class HomePrinciplesCells : ProfilePrincipleCells {
     
     lazy var homePrincipleImage : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "samuel-l")
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handlePrincipleTap))

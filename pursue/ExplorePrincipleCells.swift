@@ -25,14 +25,12 @@ class ExplorePrincipleCells : UICollectionViewCell {
     
     let exploreLabel : UILabel = {
         let label = UILabel()
-        label.text = "Draw"
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
         return label
     }()
     
     lazy var exploreImage : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "samuel-l")
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handlePrincipleTap))

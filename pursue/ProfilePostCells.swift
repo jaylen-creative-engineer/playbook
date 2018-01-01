@@ -33,7 +33,7 @@ class ProfilePostCells : UICollectionViewCell {
     let exploreMainDescription : UILabel = {
         let label = UILabel()
         label.text = "Wonder Woman"
-        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight(rawValue: 25))
+        label.font = UIFont.systemFont(ofSize:  14, weight: UIFont.Weight(rawValue: 25))
         label.numberOfLines = 0
         label.textColor = .black
         return label

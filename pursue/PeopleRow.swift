@@ -15,6 +15,8 @@ protocol PeopleRowDelegate {
 class PeopleRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PeopleRowCellDelegate {
     
     var peopleDelegate : PeopleRowDelegate?
+    let exploreImageNames = ["profile-1", "profile-2", "profile-3", "profile-4", "profile-5"]
+    let usernameText = ["Vice", "Jubilee", "boldceo", "Soulection", "GQ"]
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -36,7 +38,7 @@ class PeopleRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionVi
     }()
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return 5
     }
     
     
@@ -48,6 +50,8 @@ class PeopleRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PeopleRowCells
         cell.peopleDelegate = self
+        cell.userPhoto.image = UIImage(named: exploreImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
+        cell.usernameLabel.text = usernameText[indexPath.item]
         rowLabel.text = "PEOPLE"
         return cell
     }
