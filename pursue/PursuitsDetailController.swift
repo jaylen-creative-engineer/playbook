@@ -8,6 +8,7 @@
 
 import UIKit
 import XLActionController
+import JHTAlertController
 
 class PursuitsDetailController : UICollectionViewController, UICollectionViewDelegateFlowLayout, MessageDelegate {
     
@@ -29,6 +30,45 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
     
     func goBack() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    func showStepOptions(){
+        let actionController = SkypeActionController()
+        actionController.addAction(Action("Update Step", style: .default, handler: { action in
+            // do something useful
+            let stepsDetailController = PostStepsCells()
+            stepsDetailController.skillLabel.isEnabled = true
+            stepsDetailController.skillLabel.textColor = .gray
+        }))
+        
+        actionController.addAction(Action("Delete Step", style: .default, handler: { action in
+            let alertController = JHTAlertController(title: "Delete Step", message: "Are you sure you want to delete this?", preferredStyle: .alert)
+            let cancelAction = JHTAlertAction(title: "Cancel", style: .cancel, bgColor: .white, handler: nil)
+            let deleteAction = JHTAlertAction(title: "Delete", style: .default, bgColor: .white) { _ in
+                print("Do something here!")
+            }
+            
+            alertController.addAction(cancelAction)
+            alertController.addAction(deleteAction)
+            alertController.alertBackgroundColor = .white
+            
+            alertController.titleTextColor = .black
+            alertController.titleFont = UIFont.boldSystemFont(ofSize: 18)
+            alertController.titleViewBackgroundColor = .white
+            
+            alertController.messageFont = .systemFont(ofSize: 16)
+            alertController.messageTextColor = .black
+            
+            alertController.hasRoundedCorners = false
+            alertController.dividerColor = .clear
+            alertController.setButtonTextColorFor(.default, to: .black)
+            alertController.setButtonTextColorFor(.cancel, to: .black)
+            self.present(alertController, animated: true, completion: nil)
+        }))
+        actionController.addAction(Action("Cancel", style: .default, handler: {action in
+            
+        }))
+        present(actionController, animated: true, completion: nil)
     }
     
     func changeAbout() {
@@ -160,16 +200,14 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
     
     @objc func addSteps(){
         let actionController = SkypeActionController()
-        actionController.addAction(Action("ADD STEPS", style: .default, handler: { action in
+        
+        actionController.addAction(Action("Start a Discussion", style: .default, handler: { action in
             // do something useful
         }))
-        actionController.addAction(Action("START A DISCUSSION", style: .default, handler: { action in
+        actionController.addAction(Action("Share", style: .default, handler: { action in
             // do something useful
         }))
-        actionController.addAction(Action("SHARE", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("CANCEL", style: .default, handler: {action in
+        actionController.addAction(Action("Cancel", style: .default, handler: {action in
             
         }))
         present(actionController, animated: true, completion: nil)

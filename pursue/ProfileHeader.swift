@@ -90,10 +90,19 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
     }()
     
     let userBio : UILabel = {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 5
         let label = UILabel()
+        label.numberOfLines = 0
+        
+        let attrString = NSMutableAttributedString(string: "Being the richest man.")
+        attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
+        
         label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.text = "Get better today."
+        label.attributedText = attrString
+        label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.sizeToFit()
         return label
     }()
     
@@ -136,7 +145,6 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
     }
     
     func setupView(){
-        
         let userInfoStack = UIStackView(arrangedSubviews: [usernameLabel, fullnameLabel])
         userInfoStack.axis = .vertical
         userInfoStack.spacing = 10
@@ -146,12 +154,11 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
         addSubview(userInfoStack)
         addSubview(userBio)
         addSubview(postCollection)
-        
         photoImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 36, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 100, height: 100)
         userInfoStack.anchor(top: nil, left: photoImageView.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
         userInfoStack.centerYAnchor.constraint(equalTo: photoImageView.centerYAnchor).isActive = true
         userBio.anchor(top: photoImageView.bottomAnchor, left: photoImageView.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: userBio.intrinsicContentSize.height)
-        postCollection.anchor(top: userBio.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 80)
+        postCollection.anchor(top: userBio.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 80)
         setupProfileOptions()
     }
     

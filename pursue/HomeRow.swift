@@ -24,7 +24,7 @@ class HomeRow: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewD
     var delegate : ChangeToFeed?
     var homeDelegate : HomeRowImageEngagements?
     
-    let imageNames = ["chat-app", "stock-exchange", "travel", "contacts", "3d-touch"]
+    let imageNames = ["ferrari", "pagani", "travel", "contacts", "3d-touch"]
     let homeDescriptions = ["iChat App", "New York Exchange", "Travel App", "Contact Page", "Settings 3d touch"]
     
     let rowLabel : UILabel = {
@@ -64,7 +64,7 @@ class HomeRow: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewD
 
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (frame.width / 2) + 80, height: frame.height)
+        return CGSize(width: (frame.width / 2) + 60, height: frame.height)
     }
     
     func homeTapped() {
@@ -91,10 +91,9 @@ class HomeRow: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewD
         addSubview(postCollection)
         addSubview(rowLabel)
         addSubview(moreButton)
-        
         rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 52, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
         moreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 24, height: 12)
-        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 430)
+        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 350)
         postCollection.showsHorizontalScrollIndicator = false
         postCollection.register(HomeRowCells.self, forCellWithReuseIdentifier: cellId)
         postCollection.dataSource = self

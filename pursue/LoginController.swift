@@ -26,12 +26,12 @@ class LoginController: UIViewController {
     
     let emailTextField : UITextField = {
         let tf = UITextField()
-        tf.font = UIFont.boldSystemFont(ofSize: 16)
+        tf.font = UIFont.systemFont(ofSize: 14)
         tf.textColor = .black
         
         let attributes = [ NSAttributedStringKey.foregroundColor: UIColor.black,
-            NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 16)]
-        tf.attributedPlaceholder = NSAttributedString(string: "EMAIL", attributes:attributes)
+            NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)]
+        tf.attributedPlaceholder = NSAttributedString(string: "Email", attributes:attributes)
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         return tf
     }()
@@ -39,11 +39,11 @@ class LoginController: UIViewController {
     let passwordTextField : UITextField = {
         let tf = UITextField()
         tf.textColor = .black
-        tf.font = UIFont.boldSystemFont(ofSize: 16)
+        tf.font = UIFont.systemFont(ofSize: 14)
         
         let attributes = [ NSAttributedStringKey.foregroundColor: UIColor.black,
-                           NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 16)]
-        tf.attributedPlaceholder = NSAttributedString(string: "PASSWORD", attributes:attributes)
+                           NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)]
+        tf.attributedPlaceholder = NSAttributedString(string: "Password", attributes:attributes)
         tf.isSecureTextEntry = true
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         return tf
@@ -51,9 +51,9 @@ class LoginController: UIViewController {
     
     lazy var forgotButton : UIButton = {
        let button = UIButton()
-        button.setTitle("FORGOT", for: .normal)
+        button.setTitle("Forgot", for: .normal)
         button.setTitleColor(UIColor.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.addTarget(self, action: #selector(handleForgot), for: .touchUpInside)
         return button
     }()
@@ -98,20 +98,22 @@ class LoginController: UIViewController {
         return iv
     }()
     
-    lazy var signupButton : UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("SIGN UP", for: .normal)
-        button.backgroundColor = UIColor.white
-        button.layer.cornerRadius = 17
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+    let haveAccountLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Don't have an account?"
+        label.font = UIFont.systemFont(ofSize: 14)
+        return label
+    }()
+    
+    let signupButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("Sign Up", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         button.setTitleColor(.black, for: .normal)
-        button.layer.borderColor = UIColor.black.cgColor
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.borderWidth = 1
         button.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
         return button
     }()
-    
     
     var stackView = UIStackView()
     var socialLoginStack = UIStackView()
@@ -124,17 +126,30 @@ class LoginController: UIViewController {
     
     fileprivate func setupInputFields() {
         
-        stackView = UIStackView(arrangedSubviews: [emailTextField, passwordTextField, loginButton])
-        stackView.axis = .vertical
-        stackView.spacing = 20
-        stackView.distribution = .fillEqually
+        view.addSubview(emailTextField)
+        emailTextField.anchor(top: logoContainerView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 64, paddingLeft: 32, paddingBottom: 0, paddingRight: 32, width: 0, height: emailTextField.intrinsicContentSize.height)
         
-        view.addSubview(stackView)
+        let emailUnderline = UIView()
+        emailUnderline.backgroundColor = .black
         
-        stackView.anchor(top: logoContainerView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 64, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 160)
+        view.addSubview(emailUnderline)
+        emailUnderline.anchor(top: emailTextField.bottomAnchor, left: emailTextField.leftAnchor, bottom: nil, right: emailTextField.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+        
+        view.addSubview(passwordTextField)
+        passwordTextField.anchor(top: emailUnderline.bottomAnchor, left: emailUnderline.leftAnchor, bottom: nil, right: emailUnderline.rightAnchor, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: passwordTextField.intrinsicContentSize.height)
+        
+        let passwordUnderline = UIView()
+        passwordUnderline.backgroundColor = .black
+        
+        view.addSubview(passwordUnderline)
+        passwordUnderline.anchor(top: passwordTextField.bottomAnchor, left: passwordTextField.leftAnchor, bottom: nil, right: passwordTextField.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+        
+        view.addSubview(loginButton)
+        loginButton.anchor(top: passwordUnderline.bottomAnchor, left: passwordUnderline.leftAnchor, bottom: nil, right: passwordUnderline.rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 40)
         
         view.addSubview(forgotButton)
-        forgotButton.anchor(top: stackView.bottomAnchor, left: nil, bottom: nil, right: stackView.rightAnchor, paddingTop: 26, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: forgotButton.intrinsicContentSize.width, height: forgotButton.intrinsicContentSize.height)
+        forgotButton.anchor(top: loginButton.bottomAnchor, left: nil, bottom: nil, right: loginButton.rightAnchor, paddingTop: 26, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: forgotButton.intrinsicContentSize.width, height: forgotButton.intrinsicContentSize.height)
+        
         setupOrLabel()
     }
     
@@ -145,9 +160,9 @@ class LoginController: UIViewController {
         
         orSignInLabel.anchor(top: forgotButton.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: orSignInLabel.intrinsicContentSize.width, height: orSignInLabel.intrinsicContentSize.height)
         orSignInLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        signInLeftLine.anchor(top: nil, left: stackView.leftAnchor, bottom: nil, right: orSignInLabel.leftAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 0.5)
+        signInLeftLine.anchor(top: nil, left: loginButton.leftAnchor, bottom: nil, right: orSignInLabel.leftAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 0.5)
         signInLeftLine.centerYAnchor.constraint(equalTo: orSignInLabel.centerYAnchor).isActive = true
-        signInRightLine.anchor(top: nil, left: orSignInLabel.rightAnchor, bottom: nil, right: stackView.rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+        signInRightLine.anchor(top: nil, left: orSignInLabel.rightAnchor, bottom: nil, right: loginButton.rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
         signInRightLine.centerYAnchor.constraint(equalTo: orSignInLabel.centerYAnchor).isActive = true
         setupSocialLogin()
         
@@ -161,14 +176,18 @@ class LoginController: UIViewController {
         googleIcon.centerXAnchor.constraint(equalTo: signInLeftLine.centerXAnchor).isActive = true
         facebookIcon.anchor(top: signInRightLine.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 60, height: 60.2)
         facebookIcon.centerXAnchor.constraint(equalTo: signInRightLine.centerXAnchor).isActive = true
+        switchToLogin()
     }
     
-    func addSignInButton(){
-        let guide = view.safeAreaLayoutGuide
+    func switchToLogin(){
+        view.addSubview(haveAccountLabel)
         view.addSubview(signupButton)
         
-        signupButton.anchor(top: nil, left: googleIcon.rightAnchor, bottom: guide.bottomAnchor, right: facebookIcon.leftAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 24, paddingRight: 0, width: 0, height: 37)
-        signupButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        let guide = view.safeAreaLayoutGuide
+        
+        haveAccountLabel.anchor(top: nil, left: loginButton.leftAnchor, bottom: guide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 24, paddingRight: 0, width: haveAccountLabel.intrinsicContentSize.width, height: haveAccountLabel.intrinsicContentSize.height)
+        signupButton.anchor(top: nil, left: haveAccountLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 6, paddingBottom: 0, paddingRight: 0, width: signupButton.intrinsicContentSize.width, height: signupButton.intrinsicContentSize.height)
+        signupButton.centerYAnchor.constraint(equalTo: haveAccountLabel.centerYAnchor).isActive = true
     }
     
     // MARK: - Handle Login 
@@ -247,6 +266,5 @@ class LoginController: UIViewController {
         logoContainerView.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 32, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
         logoContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         setupInputFields()
-        addSignInButton()
     }
 }

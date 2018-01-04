@@ -25,6 +25,7 @@
 		E617BB1F1FD8A396008B2EA1 /* HomePursuitsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E617BB1E1FD8A396008B2EA1 /* HomePursuitsCells.swift */; };
 		E617BB211FD8A3BF008B2EA1 /* HomePrinciples.swift in Sources */ = {isa = PBXBuildFile; fileRef = E617BB201FD8A3BF008B2EA1 /* HomePrinciples.swift */; };
 		E617BB231FD8A3F3008B2EA1 /* HomePrinciplesCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E617BB221FD8A3F3008B2EA1 /* HomePrinciplesCells.swift */; };
+		E61867711FFD843000F2C11C /* InterestsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61867701FFD843000F2C11C /* InterestsCells.swift */; };
 		E61A41AE1F952A1B002F4045 /* PostLikesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61A41AD1F952A1B002F4045 /* PostLikesCell.swift */; };
 		E61A41B01F952C0D002F4045 /* PostCommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61A41AF1F952C0D002F4045 /* PostCommentsCell.swift */; };
 		E61A41B21F952EDD002F4045 /* RelatedPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61A41B11F952EDD002F4045 /* RelatedPostCell.swift */; };
@@ -68,6 +69,7 @@
 		E623C9EB1FDF754200023785 /* PrincipleDiscussionCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E623C9EA1FDF754200023785 /* PrincipleDiscussionCells.swift */; };
 		E623F1471F9FB83500F8BDA7 /* ExploreExerciseRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E623F1461F9FB83500F8BDA7 /* ExploreExerciseRow.swift */; };
 		E623F1491F9FB93100F8BDA7 /* ExploreExercisesRowCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E623F1481F9FB93100F8BDA7 /* ExploreExercisesRowCells.swift */; };
+		E62530A51FFD341400E41794 /* SharePhotoOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62530A41FFD341400E41794 /* SharePhotoOptions.swift */; };
 		E6253F3E1F75444100F6CFE7 /* ExploreHeaderRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6253F3D1F75444100F6CFE7 /* ExploreHeaderRow.swift */; };
 		E62AAB171FD0A2D10053EAD7 /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62AAB161FD0A2D10053EAD7 /* EditProfileController.swift */; };
 		E62AAB191FD0A49A0053EAD7 /* NotificationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62AAB181FD0A49A0053EAD7 /* NotificationsController.swift */; };
@@ -173,6 +175,7 @@
 		E617BB1E1FD8A396008B2EA1 /* HomePursuitsCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePursuitsCells.swift; sourceTree = "<group>"; };
 		E617BB201FD8A3BF008B2EA1 /* HomePrinciples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePrinciples.swift; sourceTree = "<group>"; };
 		E617BB221FD8A3F3008B2EA1 /* HomePrinciplesCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePrinciplesCells.swift; sourceTree = "<group>"; };
+		E61867701FFD843000F2C11C /* InterestsCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsCells.swift; sourceTree = "<group>"; };
 		E61A41AD1F952A1B002F4045 /* PostLikesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostLikesCell.swift; sourceTree = "<group>"; };
 		E61A41AF1F952C0D002F4045 /* PostCommentsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCommentsCell.swift; sourceTree = "<group>"; };
 		E61A41B11F952EDD002F4045 /* RelatedPostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelatedPostCell.swift; sourceTree = "<group>"; };
@@ -216,6 +219,7 @@
 		E623C9EA1FDF754200023785 /* PrincipleDiscussionCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrincipleDiscussionCells.swift; sourceTree = "<group>"; };
 		E623F1461F9FB83500F8BDA7 /* ExploreExerciseRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreExerciseRow.swift; sourceTree = "<group>"; };
 		E623F1481F9FB93100F8BDA7 /* ExploreExercisesRowCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreExercisesRowCells.swift; sourceTree = "<group>"; };
+		E62530A41FFD341400E41794 /* SharePhotoOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePhotoOptions.swift; sourceTree = "<group>"; };
 		E6253F3D1F75444100F6CFE7 /* ExploreHeaderRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreHeaderRow.swift; sourceTree = "<group>"; };
 		E62AAB161FD0A2D10053EAD7 /* EditProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
 		E62AAB181FD0A49A0053EAD7 /* NotificationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsController.swift; sourceTree = "<group>"; };
@@ -385,6 +389,16 @@
 			name = Challenges;
 			sourceTree = "<group>";
 		};
+		E62530A61FFD611000E41794 /* Interests */ = {
+			isa = PBXGroup;
+			children = (
+				E6B49F2A1FACDCE800AEDAFD /* InterestsController.swift */,
+				E6B49F2E1FACDE4100AEDAFD /* SelectInterestsList.swift */,
+				E61867701FFD843000F2C11C /* InterestsCells.swift */,
+			);
+			name = Interests;
+			sourceTree = "<group>";
+		};
 		E6308EA51FBD23F700571130 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -507,6 +521,7 @@
 				E6AB64E31F7188B100033C09 /* PhotoSelectorCell.swift */,
 				E6AB64E51F7188C000033C09 /* PhotoSelectorHeader.swift */,
 				E6AB64E71F7188CB00033C09 /* SharePhotoController.swift */,
+				E62530A41FFD341400E41794 /* SharePhotoOptions.swift */,
 			);
 			name = SelectPhoto;
 			sourceTree = "<group>";
@@ -540,6 +555,7 @@
 				E6CE22931F6759A8006C5755 /* Explore */,
 				E604CCF01FA7ACEB00A6D63E /* Feed */,
 				E6CE22901F67594C006C5755 /* Home */,
+				E62530A61FFD611000E41794 /* Interests */,
 				E617BB131FD886BB008B2EA1 /* Intro */,
 				E6CE22891F671EC5006C5755 /* Login */,
 				E6A2B0291FCA260700DE1B9C /* Menu */,
@@ -579,9 +595,7 @@
 			children = (
 				E6CE22761F671D10006C5755 /* SignupController.swift */,
 				E6CE228A1F671ED6006C5755 /* LoginController.swift */,
-				E6B49F2A1FACDCE800AEDAFD /* InterestsController.swift */,
 				E6B49F2C1FACDD1D00AEDAFD /* SelectInterestsHeader.swift */,
-				E6B49F2E1FACDE4100AEDAFD /* SelectInterestsList.swift */,
 				E61692431FD64544008BF11D /* ForgotController.swift */,
 			);
 			name = Login;
@@ -755,16 +769,22 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-pursue/Pods-pursue-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CropViewController/CropViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/JHTAlertController/JHTAlertController.framework",
+				"${BUILT_PRODUCTS_DIR}/TOCropViewController/TOCropViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/XLActionController/XLActionController.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CropViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JHTAlertController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TOCropViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLActionController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -866,6 +886,7 @@
 				E6A274001F68327F00F5B4C8 /* User.swift in Sources */,
 				E6AB64E41F7188B100033C09 /* PhotoSelectorCell.swift in Sources */,
 				E6CE228F1F675894006C5755 /* MainTabController.swift in Sources */,
+				E61867711FFD843000F2C11C /* InterestsCells.swift in Sources */,
 				E61B48C81F9EB73700183449 /* ExplorePrincipleCells.swift in Sources */,
 				E623C9E11FDF078E00023785 /* CategoryDiscussionRow.swift in Sources */,
 				E66436711FA25ACC00A9B0E7 /* ProfileAboutCells.swift in Sources */,
@@ -936,6 +957,7 @@
 				E6235EA21F92C70400BF1FDE /* PostView.swift in Sources */,
 				E6AB64D51F6F611D00033C09 /* UserCell.swift in Sources */,
 				E62AAB1D1FD0A5D30053EAD7 /* PolicyController.swift in Sources */,
+				E62530A51FFD341400E41794 /* SharePhotoOptions.swift in Sources */,
 				E621B9941FE04925007324E2 /* PursuitPrincipleCells.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

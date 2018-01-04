@@ -74,17 +74,31 @@ class FeedController : UICollectionViewController, UICollectionViewDelegateFlowL
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 6
+        let viewType = true
+        
+        switch viewType {
+        case isImageView:
+            return 6
+        default:
+            return 6
+        }
     }
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 6
+        let viewType = true
+        
+        switch viewType {
+        case isImageView:
+            return 6
+        default:
+            return 6
+        }
     }
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 6, 0, 6)
+        return UIEdgeInsetsMake(0, 12, 0, 12)
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -119,17 +133,17 @@ class FeedController : UICollectionViewController, UICollectionViewDelegateFlowL
         
         switch viewType {
         case isImageView:
-            let width = (view.frame.width - 25) / 3
-            return CGSize(width: width, height: width + 70)
+            let width = (view.frame.width / 4) + 75
+            return CGSize(width: width, height: width + 75)
         case isPursuitView:
-            let width = (view.frame.width - 2) / 2.5
-            return CGSize(width: width + 25, height: width + 30)
+            let width = (view.frame.width / 3)
+            return CGSize(width: width + 40, height: width + 45)
         case isPrinciplesView:
-            let width = (view.frame.width - 2) / 2.5
-            return CGSize(width: width + 25, height: width + 50)
+            let width = (view.frame.width / 3)
+            return CGSize(width: width + 40, height: width + 55)
         case isDiscussionView:
-            let width = (view.frame.width - 2) / 3
-            return CGSize(width: width - 12, height: width + 65)
+            let width = (view.frame.width / 3) + 40
+            return CGSize(width: width, height: width - 35)
         default:
             let width = (view.frame.width - 2) / 3
             return CGSize(width: width - 12, height: width + 120)
@@ -180,7 +194,7 @@ class FeedController : UICollectionViewController, UICollectionViewDelegateFlowL
     
     let pageTitle : UILabel = {
         let label = UILabel()
-        label.text = "FEED"
+        label.text = "Feed"
         label.font = UIFont.boldSystemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

@@ -108,7 +108,7 @@ class ExploreDiscussionCells : UICollectionViewCell, UICollectionViewDelegate, U
         addSubview(discussionSubLabel)
         addSubview(userCollectionView)
         
-        discussionBackground.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 300, height: 175)
+        discussionBackground.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 175)
         discussionLabel.anchor(top: discussionBackground.topAnchor, left: discussionBackground.leftAnchor, bottom: nil, right: discussionBackground.rightAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 55)
         discussionSubLabel.anchor(top: discussionLabel.bottomAnchor, left: discussionLabel.leftAnchor, bottom: nil, right: discussionBackground.rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 45)
         userCollectionView.anchor(top: discussionSubLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: 220, height: 60)

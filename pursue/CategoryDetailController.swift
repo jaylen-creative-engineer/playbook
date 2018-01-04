@@ -332,9 +332,9 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
         case 1:
             return CGSize(width: view.frame.width, height: 310)
         case 2:
-            return CGSize(width: view.frame.width, height: 320)
+            return CGSize(width: view.frame.width, height: 290)
         case 3:
-            return CGSize(width: view.frame.width, height: 205)
+            return CGSize(width: view.frame.width, height: 185)
         case 4:
             return CGSize(width: view.frame.width, height: 445)
         default:

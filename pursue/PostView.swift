@@ -140,7 +140,7 @@ class PostView : UICollectionViewCell {
         userInfoStack.centerYAnchor.constraint(equalTo: userPhoto.centerYAnchor).isActive = true
         
         addSubview(optionButton)
-        optionButton.anchor(top: userInfoStack.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 6.2, height: 25)
+        optionButton.anchor(top: userInfoStack.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 6.2, height: 22)
     }
     
     func setupEngagements(){

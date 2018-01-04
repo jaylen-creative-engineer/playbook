@@ -119,7 +119,7 @@ class ProfileContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
         case 3:
             return CGSize(width: frame.width, height: 205)
         case 4:
-            return CGSize(width: frame.width, height: 385)
+            return CGSize(width: frame.width, height: 445)
         default:
             return CGSize(width: frame.width, height: 264)
         }

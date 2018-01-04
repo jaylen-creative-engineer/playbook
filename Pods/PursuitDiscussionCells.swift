@@ -21,7 +21,7 @@ class PursuitDiscussionCells : UICollectionViewCell {
     
     let discussionPhoto : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "car-3")
+        iv.image = #imageLiteral(resourceName: "ferrari")
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         return iv

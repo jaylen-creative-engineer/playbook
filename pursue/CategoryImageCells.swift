@@ -31,6 +31,22 @@ class CategoryImageCells : HomeRowCells {
         return iv
     }()
     
+    let categoryMainDescription : UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
+        label.numberOfLines = 2
+        label.textColor = .black
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))
+        tapGesture.numberOfTapsRequired = 1
+        label.addGestureRecognizer(tapGesture)
+        
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleHomeHold))
+        label.addGestureRecognizer(longGesture)
+        label.text = "Gone on a trip"
+        return label
+    }()
+    
     @objc override func handleHomeTap(){
         categoryImageDelegate?.homeImageTapped()
     }
@@ -43,6 +59,9 @@ class CategoryImageCells : HomeRowCells {
         super.setupView()
         
         addSubview(categoryPostImage)
+        addSubview(categoryMainDescription)
+        
          categoryPostImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 300)
+        categoryMainDescription.anchor(top: categoryPostImage.bottomAnchor, left: categoryPostImage.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: categoryMainDescription.intrinsicContentSize.height)
     }
 }

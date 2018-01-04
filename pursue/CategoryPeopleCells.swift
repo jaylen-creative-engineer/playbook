@@ -18,7 +18,7 @@ class CategoryPeopleCells : PeopleRowCells {
     
     lazy var categoryUserPhoto : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "clean-8")
+        iv.image = #imageLiteral(resourceName: "samuel-l")
         iv.layer.cornerRadius = 40
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
@@ -29,6 +29,15 @@ class CategoryPeopleCells : PeopleRowCells {
         return iv
     }()
     
+    let categoryUsernameLabel : UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.text = "MyName"
+        return label
+    }()
+    
     @objc override func handleProfileTap(){
         categoryPeopleDelegate?.profileTapped()
     }
@@ -36,6 +45,10 @@ class CategoryPeopleCells : PeopleRowCells {
     override func setupView() {
         super.setupView()
         addSubview(categoryUserPhoto)
+        addSubview(categoryUsernameLabel)
+        
         categoryUserPhoto.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 80, height: 80)
+        categoryUsernameLabel.anchor(top: categoryUserPhoto.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: categoryUsernameLabel.intrinsicContentSize.width, height: categoryUsernameLabel.intrinsicContentSize.height)
+        categoryUsernameLabel.centerXAnchor.constraint(equalTo: categoryUserPhoto.centerXAnchor).isActive = true
     }
 }

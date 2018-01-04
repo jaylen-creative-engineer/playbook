@@ -49,7 +49,6 @@ class PursuitSteps :  UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessPursuitDetailController?.showStepsDetailForSteps(for: self)
     }
     
     override init(frame: CGRect) {

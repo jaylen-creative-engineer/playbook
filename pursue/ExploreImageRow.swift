@@ -46,12 +46,12 @@ class ExploreImageRow : UICollectionViewCell, UICollectionViewDelegate, UICollec
     }()
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return 4
     }
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (frame.width / 2) - 30, height: frame.height)
+        return CGSize(width: (frame.width / 2) + 10, height: frame.height)
     }
     
     

@@ -18,11 +18,11 @@ class ForgotController : UICollectionViewController, UICollectionViewDelegateFlo
     
     let emailLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
+        label.font = UIFont.systemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 10
+        paragraphStyle.lineSpacing = 5
         
         let attrString = NSMutableAttributedString(string:  "We will send a password reset link to your email.")
         attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
@@ -51,12 +51,12 @@ class ForgotController : UICollectionViewController, UICollectionViewDelegateFlo
     
     let emailTextField : UITextField = {
         let tf = UITextField()
-        tf.font = UIFont.boldSystemFont(ofSize: 16)
+        tf.font = UIFont.systemFont(ofSize: 14)
         tf.textColor = .black
         
         let attributes = [ NSAttributedStringKey.foregroundColor: UIColor.black,
-                           NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 16)]
-        tf.attributedPlaceholder = NSAttributedString(string: "EMAIL", attributes:attributes)
+                           NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)]
+        tf.attributedPlaceholder = NSAttributedString(string: "Email", attributes:attributes)
         return tf
     }()
     
@@ -69,7 +69,7 @@ class ForgotController : UICollectionViewController, UICollectionViewDelegateFlo
     
     let forgotLabel : UILabel = {
         let label = UILabel()
-        label.text = "FORGOT"
+        label.text = "Forgot"
         label.font = UIFont.boldSystemFont(ofSize: 18)
         return label
     }()
@@ -98,8 +98,17 @@ class ForgotController : UICollectionViewController, UICollectionViewDelegateFlo
         view.addSubview(emailTextField)
         view.addSubview(submitButton)
         
-        emailLabel.anchor(top: forgotLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 42, paddingLeft: 12, paddingBottom: 0, paddingRight: 40, width: 0, height: 60)
-        emailTextField.anchor(top: emailLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 40, width: 0, height: 50)
-        submitButton.anchor(top: emailTextField.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 42, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 40)
+        emailLabel.anchor(top: forgotLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 42, paddingLeft: 32, paddingBottom: 0, paddingRight: 32, width: 0, height: 60)
+        
+        view.addSubview(emailTextField)
+        emailTextField.anchor(top: emailLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 32, paddingLeft: 32, paddingBottom: 0, paddingRight: 32, width: 0, height: emailTextField.intrinsicContentSize.height)
+        
+        let emailUnderline = UIView()
+        emailUnderline.backgroundColor = .black
+        
+        view.addSubview(emailUnderline)
+        emailUnderline.anchor(top: emailTextField.bottomAnchor, left: emailTextField.leftAnchor, bottom: nil, right: emailTextField.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+        
+        submitButton.anchor(top: emailUnderline.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 42, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 40)
     }
 }

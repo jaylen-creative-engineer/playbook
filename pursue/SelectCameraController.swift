@@ -8,11 +8,15 @@
 
 import UIKit
 import AVFoundation
+import TOCropViewController
 
-class SelectCameraController : UICollectionViewController, UICollectionViewDelegateFlowLayout, AVCapturePhotoCaptureDelegate {
+class SelectCameraController : UICollectionViewController, UICollectionViewDelegateFlowLayout, AVCapturePhotoCaptureDelegate, TOCropViewControllerDelegate {
     
     let cellId = "cellId"
     let selectId = "selectId"
+    
+    private var croppedRect = CGRect.zero
+    private var croppedAngle = 0
     
     lazy var capturePhotoButton : UIButton = {
         let button = UIButton(type: .system)
@@ -64,10 +68,35 @@ class SelectCameraController : UICollectionViewController, UICollectionViewDeleg
     }
     
     @objc func handleNext(image : UIImage){
-        let sharePhotoController = SharePhotoController()
-        sharePhotoController.selectedImage = image
-        present(sharePhotoController, animated: true, completion: nil)
+        let cropViewController = TOCropViewController(image: image)
+        cropViewController.delegate = self
+        present(cropViewController, animated: true, completion: nil)
+        
     }
+    
+    func cropViewController(_ cropViewController: TOCropViewController, didCropToImage image: UIImage, rect cropRect: CGRect, angle: Int) {
+        self.croppedRect = cropRect
+        self.croppedAngle = angle
+        updateImageViewWithImage(image, fromCropViewController: cropViewController)
+        
+    }
+    
+    public func updateImageViewWithImage(_ image: UIImage, fromCropViewController cropViewController: TOCropViewController) {
+        
+        if cropViewController.croppingStyle != .circular {
+            let layout = UICollectionViewLayout()
+            let sharePhotoController = SharePhotoController(collectionViewLayout: layout)
+            sharePhotoController.selectedImage = image
+            cropViewController.present(sharePhotoController, animated: true, completion: nil)
+            
+        } else {
+            let layout = UICollectionViewLayout()
+            let sharePhotoController = SharePhotoController(collectionViewLayout: layout)
+            sharePhotoController.selectedImage = image
+            cropViewController.present(sharePhotoController, animated: true, completion: nil)
+        }
+    }
+
     
     let select : UILabel = {
        let label = UILabel()
@@ -153,12 +182,9 @@ class SelectCameraController : UICollectionViewController, UICollectionViewDeleg
         let guide = view.safeAreaLayoutGuide
         view.addSubview(backgroundFill)
         view.addSubview(cancelButton)
-        view.addSubview(cameraTitle)
         
         backgroundFill.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (view.frame.height / 8.5) - 10)
         cancelButton.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 16, paddingRight: 0, width: 18, height: 18)
-        cameraTitle.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 16, paddingRight: 0, width: cameraTitle.intrinsicContentSize.width + 30, height: cameraTitle.intrinsicContentSize.height)
-        cameraTitle.centerXAnchor.constraint(equalTo: backgroundFill.centerXAnchor).isActive = true
     }
     
     private func setupMenuBar() {

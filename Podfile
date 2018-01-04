@@ -11,5 +11,7 @@ target 'pursue' do
   pod 'Firebase/Storage'
   pod 'XLActionController'
   pod 'XLActionController/Skype'
-
+  pod 'CropViewController'
+  pod 'JHTAlertController', '~> 0.2'
+ 
 end

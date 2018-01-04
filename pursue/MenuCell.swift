@@ -54,7 +54,7 @@ class MenuCell : UICollectionViewCell, UIGestureRecognizerDelegate {
         exploreIcon.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
         homeIcon.anchor(top: topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: 65, height: 34)
         homeIcon.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        profileIcon.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 30.5, height: 30)
+        profileIcon.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 30.5, height: 30.5)
         homeActive()
     }
     

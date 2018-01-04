@@ -10,30 +10,56 @@ import UIKit
 
 class FeedDiscussion : UICollectionViewCell {
     
-    let relatedImage : UIImageView = {
-        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "samuel-l")
-        iv.layer.masksToBounds = true
-        iv.contentMode = .scaleAspectFill
-        return iv
+    lazy var discussionBackground : TopRectangleView = {
+        let view = TopRectangleView()
+        view.backgroundColor = .white
+        return view
     }()
     
-    let relatedMainDescription : UILabel = {
+    let discussionLabel : UILabel = {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 3
         let label = UILabel()
-        label.text = "Wonder Woman"
-        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight(rawValue: 25))
-        label.numberOfLines = 2
-        label.textColor = .black
+        label.numberOfLines = 0
+        
+        let attrString = NSMutableAttributedString(string: "I need some help getting started with marketing my profile on Instagram.")
+        attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
+        
+        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
+        label.attributedText = attrString
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        return label
+        
+    }()
+    
+    let discussionSubLabel : UILabel = {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 5
+        let label = UILabel()
+        label.numberOfLines = 0
+        
+        let attrString = NSMutableAttributedString(string: "I need some help getting started with marketing my profile on Instagram.")
+        attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
+        
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.attributedText = attrString
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     func setupView(){
-        addSubview(relatedImage)
-        addSubview(relatedMainDescription)
+        addSubview(discussionBackground)
+        addSubview(discussionLabel)
+        addSubview(discussionSubLabel)
         
-        relatedImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 125)
-        relatedMainDescription.anchor(top: relatedImage.bottomAnchor, left: relatedImage.leftAnchor, bottom: nil, right: relatedImage.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
+        discussionBackground.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 95)
+        discussionLabel.anchor(top: discussionBackground.topAnchor, left: discussionBackground.leftAnchor, bottom: nil, right: discussionBackground.rightAnchor, paddingTop: 2, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 40)
+        discussionSubLabel.anchor(top: discussionLabel.bottomAnchor, left: discussionLabel.leftAnchor, bottom: nil, right: discussionBackground.rightAnchor, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 45)
+        
     }
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)

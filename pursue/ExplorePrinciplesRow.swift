@@ -32,7 +32,7 @@ class ExplorePrinciplesRow : UICollectionViewCell, UICollectionViewDelegate, UIC
     
     let cellId = "cellId"
     let peopleId = "peopleId"
-    let exploreImageNames = ["value-first", "menu-numbers", "go-back", "change-location"]
+    let exploreImageNames = ["mel-robbins", "menu-numbers", "go-back", "change-location"]
     let exploreLabelText = ["Show value upfront", "Organize and label menu categories", "Allow users to go back easily in one step.", "Make it easy to manually change location."]
     
     let postCollection : UICollectionView = {
@@ -50,7 +50,7 @@ class ExplorePrinciplesRow : UICollectionViewCell, UICollectionViewDelegate, UIC
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: ((frame.width - 2) / 2) - 5, height: ((frame.width - 2) / 2) + 70)
+        return CGSize(width: (frame.width / 2) + 20, height: ((frame.width - 2) / 2) + 80)
     }
     
     func explorePrincipleTapped() {
@@ -80,7 +80,7 @@ class ExplorePrinciplesRow : UICollectionViewCell, UICollectionViewDelegate, UIC
         addSubview(rowLabel)
         addSubview(moreButton)
         rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
-        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         moreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 24, height: 12)
         postCollection.showsHorizontalScrollIndicator = false
         postCollection.register(ExplorePrincipleCells.self, forCellWithReuseIdentifier: cellId)

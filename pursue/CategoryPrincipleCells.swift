@@ -30,6 +30,13 @@ class CategoryPrincipleCells : HomePrinciplesCells {
         return iv
     }()
     
+    let categoryLabel : UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
+        label.text = "Follow these"
+        return label
+    }()
+    
     @objc override func handlePrincipleTap() {
         categoryDelegate?.principleTapped()
     }
@@ -41,6 +48,8 @@ class CategoryPrincipleCells : HomePrinciplesCells {
     override func setupCardDetails() {
         super.setupCardDetails()
         addSubview(categoryPrincipleImage)
+        addSubview(categoryLabel)
         categoryPrincipleImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
+        categoryLabel.anchor(top: categoryPrincipleImage.bottomAnchor, left: categoryPrincipleImage.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: categoryLabel.intrinsicContentSize.height)
     }
 }

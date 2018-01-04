@@ -50,7 +50,7 @@ class ExploreDiscussion : UICollectionViewCell, UICollectionViewDelegate, UIColl
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 310, height: ((frame.width - 2) / 2) + 15)
+        return CGSize(width: 270, height: ((frame.width - 2) / 2) + 15)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

@@ -1,4 +1,6 @@
 PODS:
+  - CropViewController (2.3.4):
+    - TOCropViewController
   - Firebase/Auth (4.7.0):
     - Firebase/Core
     - FirebaseAuth (= 4.4.0)
@@ -42,12 +44,14 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.3)
   - GTMSessionFetcher/Core (1.1.12)
+  - JHTAlertController (0.2.4)
   - leveldb-library (1.20)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - TOCropViewController (2.3.4)
   - XLActionController (4.0.0):
     - XLActionController/Core (= 4.0.0)
   - XLActionController/Core (4.0.0)
@@ -55,13 +59,16 @@ PODS:
     - XLActionController/Core
 
 DEPENDENCIES:
+  - CropViewController
   - Firebase/Auth
   - Firebase/Database
   - Firebase/Storage
+  - JHTAlertController (~> 0.2)
   - XLActionController
   - XLActionController/Skype
 
 SPEC CHECKSUMS:
+  CropViewController: b5ecd6625fb6bbefaacc19fe42ecee719f81f75e
   Firebase: dbfb98ccec2dcfcd21ab9cc1b4981a3f3c8c5e26
   FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
   FirebaseAuth: cdeee95b528958dbb7dcf220ad0fb804d3a284b0
@@ -71,10 +78,12 @@ SPEC CHECKSUMS:
   FirebaseStorage: 0930e97994dc79b404179bdfafb6b16f59433a82
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
+  JHTAlertController: 8999fdf41c60a3d6698a3415ff1448f4ce4680e5
   leveldb-library: 4f9eedf84ab46b4fa3b7893bf30714b2a1a74022
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  TOCropViewController: 808c9724904be931dd2de5f97fcccf4cc8f8b03f
   XLActionController: 7e88fece1799e61357cb00b1cc67104d66ec4d2c
 
-PODFILE CHECKSUM: a1c50336beffdb5a494b98ef020fbe432bbd7d77
+PODFILE CHECKSUM: 0ed2995e409904a1ed617ca2ec5fa2de58de6491
 
 COCOAPODS: 1.3.1
