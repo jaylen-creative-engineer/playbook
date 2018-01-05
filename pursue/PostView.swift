@@ -28,15 +28,7 @@ class PostView : UICollectionViewCell {
     let usernameLabel : UILabel = {
         let label = UILabel()
         label.text = "Jubilee"
-        label.font = UIFont.boldSystemFont(ofSize: 16)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let fullnameLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Thomas Sanders"
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.thin)
+        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight(rawValue: 25))
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -44,131 +36,37 @@ class PostView : UICollectionViewCell {
     let userPhoto : UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "profile-2")
-        iv.layer.cornerRadius = 30
+        iv.layer.cornerRadius = 25
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         return iv
     }()
     
-    lazy var likeIcon : UIButton = {
-        let button = UIButton()
-        button.contentMode = .scaleAspectFill
-        button.tintColor = .black
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(toggleLike), for: .touchUpInside)
-        return button
-    }()
-    
-    let likeCounter : UILabel = {
-        let label = UILabel()
-        label.text = "132"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    lazy var commentIcon : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "comment").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.contentMode = .scaleAspectFill
-        button.tintColor = .gray
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-   
-    lazy var saveIcon : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "add").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.contentMode = .scaleAspectFill
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(toggleSave), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var optionButton : UIButton = {
-       let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "option").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFill
-        return button
-    }()
-    
-    let usernameUnderLine = UIView()
-    let userstackUnderLine = UIView()
-    let userstackTopLine = UIView()
     
     let cellId = "cellId"
     let commentId = "commentId"
     let relatedId = "relatedId"
-    var isLiked = false
-    var isSaved = false
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setupView()
-    }
-    
-    @objc func toggleSave(){
-        isSaved = !isSaved
-        
-        if isSaved == true {
-            saveIcon.tintColor = .black
-        } else {
-            saveIcon.tintColor = .gray
-        }
-    }
-    
-    @objc func toggleLike(){
-    isLiked = !isLiked
-        likeIcon.setImage(isLiked == true ? #imageLiteral(resourceName: "like_selected").withRenderingMode(.alwaysTemplate) : #imageLiteral(resourceName: "like_unselected").withRenderingMode(.alwaysOriginal), for: .normal)
-        
-        if isLiked == true {
-            likeCounter.font = UIFont.boldSystemFont(ofSize: 16)
-        } else {
-            likeCounter.font = UIFont.systemFont(ofSize: 16)
-        }
-    }
-    
-    func userNameSetup(){
-        let userInfoStack = UIStackView(arrangedSubviews: [usernameLabel, fullnameLabel])
-        userInfoStack.axis = .vertical
-        userInfoStack.spacing = 10
-        userInfoStack.translatesAutoresizingMaskIntoConstraints = false
-        
-        addSubview(userInfoStack)
-        
-        userInfoStack.anchor(top: nil, left: userPhoto.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
-        userInfoStack.centerYAnchor.constraint(equalTo: userPhoto.centerYAnchor).isActive = true
-        
-        addSubview(optionButton)
-        optionButton.anchor(top: userInfoStack.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 6.2, height: 22)
-    }
-    
-    func setupEngagements(){
-        addSubview(likeIcon)
-        addSubview(likeCounter)
-        addSubview(commentIcon)
-        addSubview(saveIcon)
-        
-        likeIcon.anchor(top: postDescription.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 35, height: 30)
-        likeIcon.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        likeCounter.anchor(top: likeIcon.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: likeCounter.intrinsicContentSize.width, height: likeCounter.intrinsicContentSize.height)
-        likeCounter.centerXAnchor.constraint(equalTo: likeIcon.centerXAnchor).isActive = true
-        commentIcon.anchor(top: likeIcon.topAnchor, left: likeIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 48, paddingBottom: 0, paddingRight: 0, width: 20, height: 18)
-        saveIcon.anchor(top: likeIcon.topAnchor, left: nil, bottom: nil, right: likeIcon.leftAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 52, width: 22, height: 22)
-        toggleLike()
-        toggleSave()
     }
 
     func setupView(){
         addSubview(userPhoto)
-        addSubview(usernameUnderLine)
-        addSubview(postDescription)
         
-        userPhoto.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 60, height: 60)
-        usernameUnderLine.anchor(top: userPhoto.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0.5)
-        postDescription.anchor(top: userPhoto.bottomAnchor, left: userPhoto.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 10, paddingLeft: 6, paddingBottom: 0, paddingRight: 24, width: 0, height: 70)
-        userNameSetup()
-        setupEngagements()
+        userPhoto.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 50, height: 50)
+        
+        let underlineView = UIView()
+        underlineView.backgroundColor = .gray
+        
+        addSubview(usernameLabel)
+        addSubview(postDescription)
+        addSubview(underlineView)
+        usernameLabel.anchor(top: userPhoto.topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
+        postDescription.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: userPhoto.leftAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 14, width: postDescription.intrinsicContentSize.width, height: postDescription.intrinsicContentSize.height)
+        underlineView.anchor(top: postDescription.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: userPhoto.rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.75)
 
     }
     

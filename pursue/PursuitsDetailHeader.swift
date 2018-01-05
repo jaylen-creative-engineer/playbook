@@ -70,10 +70,29 @@ class PursuitsDetailHeader : UICollectionViewCell {
         return view
     }()
     
-    lazy var backButton : UIButton = {
+    lazy var likeIcon : UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "back-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
+        button.contentMode = .scaleAspectFill
+        button.setImage(#imageLiteral(resourceName: "like_selected").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(toggleLike), for: .touchUpInside)
+        return button
+    }()
+    
+    let likeCounter : UILabel = {
+        let label = UILabel()
+        label.text = "132"
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var saveIcon : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "add").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.contentMode = .scaleAspectFill
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(toggleSave), for: .touchUpInside)
         return button
     }()
     
@@ -93,48 +112,15 @@ class PursuitsDetailHeader : UICollectionViewCell {
         return label
     }()
     
-    lazy var aboutButton : UIButton = {
-        let label = UIButton()
-        label.setTitle("About", for: .normal)
-        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        label.addTarget(self, action: #selector(toggleAboutUnderline), for: .touchUpInside)
-        return label
+    lazy var optionButton : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "option").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.contentMode = .scaleAspectFill
+        return button
     }()
     
-    lazy var stepsLabel : UIButton = {
-        let label = UIButton()
-        label.setTitle("Steps", for: .normal)
-        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        label.addTarget(self, action: #selector(toggleStepsUnderline), for: .touchUpInside)
-        return label
-    }()
-    
-    lazy var discussionLabel : UIButton = {
-        let label = UIButton()
-        label.setTitle("Discussions", for: .normal)
-        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        label.addTarget(self, action: #selector(toggleDiscussionUnderline), for: .touchUpInside)
-        return label
-    }()
-    
-    lazy var principleLabel : UIButton = {
-        let label = UIButton()
-        label.setTitle("Principles", for: .normal)
-        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        label.addTarget(self, action: #selector(togglePrinciplesLabel), for: .touchUpInside)
-        return label
-    }()
-    
-    
-    lazy var savedLabel : UIButton = {
-        let label = UIButton()
-        label.setTitle("Saved", for: .normal)
-        label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        label.addTarget(self, action: #selector(toggleSavedUnderline), for: .touchUpInside)
-        return label
-    }()
-    
-    
+    let scrollView = UIScrollView()
+
     @objc func dismissView(){
         messageDelegate?.goBack()
     }
@@ -143,168 +129,64 @@ class PursuitsDetailHeader : UICollectionViewCell {
         messageDelegate?.handleMessage(for: self)
     }
     
-    @objc func toggleAboutUnderline(){
-        aboutLabelUnderline.backgroundColor = .black
-        
-        stepsLabel.setTitleColor(.gray, for: .normal)
-        aboutButton.setTitleColor(.black, for: .normal)
-        savedLabel.setTitleColor(.gray, for: .normal)
-        principleLabel.setTitleColor(.gray, for: .normal)
-        discussionLabel.setTitleColor(.gray, for: .normal)
-        
-        aboutActive()
-        
-        addSubview(aboutLabelUnderline)
-        aboutLabelUnderline.anchor(top: nil, left: aboutButton.leftAnchor, bottom: bottomDividerView.topAnchor, right: aboutButton.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
-       
-    }
     
-    func aboutActive(){
-        pursuitsDetailController?.changeAbout()
-        
-        aboutLabelUnderline.isHidden = false
-        stepsLabelUnderline.isHidden = true
-        principleLabelUnderline.isHidden = true
-        savedLabelUnderline.isHidden = true
-        discusionLabelUnderline.isHidden = true
-        
-    }
-    
-    @objc func toggleStepsUnderline(){
-        stepsLabelUnderline.backgroundColor = .black
-        
-        stepsLabel.setTitleColor(.black, for: .normal)
-        aboutButton.setTitleColor(.gray, for: .normal)
-        savedLabel.setTitleColor(.gray, for: .normal)
-        principleLabel.setTitleColor(.gray, for: .normal)
-        discussionLabel.setTitleColor(.gray, for: .normal)
-        
-        stepsActive()
-        
-        addSubview(stepsLabelUnderline)
-        stepsLabelUnderline.anchor(top: nil, left: stepsLabel.leftAnchor, bottom: bottomDividerView.topAnchor, right: stepsLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
-    }
-    
-    func stepsActive(){
-        pursuitsDetailController?.changeSteps()
-        
-        stepsLabelUnderline.isHidden = false
-        aboutLabelUnderline.isHidden = true
-        savedLabelUnderline.isHidden = true
-        principleLabelUnderline.isHidden = true
-        discusionLabelUnderline.isHidden = true
-    }
-    
-    @objc func togglePrinciplesLabel(){
-        principleLabelUnderline.backgroundColor = .black
-        
-        stepsLabel.setTitleColor(.gray, for: .normal)
-        aboutButton.setTitleColor(.gray, for: .normal)
-        savedLabel.setTitleColor(.gray, for: .normal)
-        principleLabel.setTitleColor(.black, for: .normal)
-        discussionLabel.setTitleColor(.gray, for: .normal)
-        
-        principlesActive()
-        
-        addSubview(principleLabelUnderline)
-        principleLabelUnderline.anchor(top: nil, left: principleLabel.leftAnchor, bottom: bottomDividerView.topAnchor, right: principleLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
-    }
-    
-    
-    func principlesActive(){
-        pursuitsDetailController?.changePrinciple()
-        
-        aboutLabelUnderline.isHidden = true
-        stepsLabelUnderline.isHidden = true
-        savedLabelUnderline.isHidden = true
-        principleLabelUnderline.isHidden = false
-        discusionLabelUnderline.isHidden = true
-    }
-    
-    @objc func toggleSavedUnderline(){
-        savedLabelUnderline.backgroundColor = .black
-        
-        stepsLabel.setTitleColor(.gray, for: .normal)
-        aboutButton.setTitleColor(.gray, for: .normal)
-        savedLabel.setTitleColor(.black, for: .normal)
-        principleLabel.setTitleColor(.gray, for: .normal)
-        discussionLabel.setTitleColor(.gray, for: .normal)
-        
-        savedActive()
-        
-        addSubview(savedLabelUnderline)
-        savedLabelUnderline.anchor(top: nil, left: savedLabel.leftAnchor, bottom: bottomDividerView.topAnchor, right: savedLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
-    }
-    
-    func savedActive(){
-        pursuitsDetailController?.changeSaved()
-        
-        savedLabelUnderline.isHidden = false
-        aboutLabelUnderline.isHidden = true
-        principleLabelUnderline.isHidden = true
-        stepsLabelUnderline.isHidden = true
-        discusionLabelUnderline.isHidden = true
-    }
-    
-    @objc func toggleDiscussionUnderline(){
-        discusionLabelUnderline.backgroundColor = .black
-        
-        stepsLabel.setTitleColor(.gray, for: .normal)
-        aboutButton.setTitleColor(.gray, for: .normal)
-        savedLabel.setTitleColor(.gray, for: .normal)
-        principleLabel.setTitleColor(.gray, for: .normal)
-        discussionLabel.setTitleColor(.black, for: .normal)
-        
-        discussionActive()
-        
-        addSubview(discusionLabelUnderline)
-        discusionLabelUnderline.anchor(top: nil, left: discussionLabel.leftAnchor, bottom: bottomDividerView.topAnchor, right: discussionLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2.5)
-    }
-    
-    func discussionActive(){
-        pursuitsDetailController?.changeDiscussion()
-        
-        savedLabelUnderline.isHidden = true
-        aboutLabelUnderline.isHidden = true
-        principleLabelUnderline.isHidden = true
-        stepsLabelUnderline.isHidden = true
-        discusionLabelUnderline.isHidden = false
-    }
-    
-    func pageOptions(){
-        bottomDividerView.backgroundColor = UIColor.rgb(red: 211, green: 211, blue: 211)
-        
-        let scrollView = UIScrollView()
-        scrollView.isScrollEnabled = true
-        
-        stackView = UIStackView(arrangedSubviews: [aboutButton, stepsLabel, discussionLabel, principleLabel, savedLabel])
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.spacing = 20
-        
-        addSubview(scrollView)
-        scrollView.addSubview(stackView)
-        addSubview(bottomDividerView)
-        
-        scrollView.anchor(top: postImage.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
-        stackView.anchor(top: scrollView.topAnchor, left: scrollView.leftAnchor, bottom: scrollView.bottomAnchor, right: scrollView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
-        bottomDividerView.anchor(top: stackView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 1)
-    }
-    
-    func setupViews() {
-        backgroundColor = .clear
-        
+    func setupTopNavBar(){
         addSubview(postImage)
         
-        postImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 44, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 325)
-        pageOptions()
+        let topShade = UIView()
+        topShade.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        
+        addSubview(topShade)
+        
+        postImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 365)
+        topShade.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 95)
+        setupEngagements()
+    }
+    
+    var isSaved = false
+    var isLiked = false
+    
+    @objc func toggleSave(){
+        isSaved = !isSaved
+        
+        if isSaved == true {
+            saveIcon.tintColor = .black
+        } else {
+            saveIcon.tintColor = .gray
+        }
+    }
+    
+    @objc func toggleLike(){
+        isLiked = !isLiked
+        if isLiked == true {
+            likeIcon.tintColor = .black
+            likeCounter.textColor = .black
+        } else {
+            likeIcon.tintColor = .gray
+            likeCounter.textColor = .gray
+        }
+    }
+    
+    func setupEngagements(){
+        addSubview(likeIcon)
+        addSubview(likeCounter)
+        addSubview(saveIcon)
+        
+        likeIcon.anchor(top: postImage.bottomAnchor, left: postImage.leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 25, height: 20)
+        likeCounter.anchor(top: likeIcon.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: likeCounter.intrinsicContentSize.width, height: likeCounter.intrinsicContentSize.height)
+        likeCounter.centerXAnchor.constraint(equalTo: likeIcon.centerXAnchor).isActive = true
+        saveIcon.anchor(top: postImage.bottomAnchor, left: likeIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 22, paddingLeft: 32, paddingBottom: 0, paddingRight: 0, width: 22, height: 21)
+        toggleLike()
+        toggleSave()
+        
+        addSubview(optionButton)
+        optionButton.anchor(top: postImage.bottomAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 5.2, height: 20)
     }
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupViews()
-        toggleAboutUnderline()
+        setupTopNavBar()
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -46,7 +46,6 @@ class PrincipleDiscussion :  UICollectionViewCell, UICollectionViewDelegateFlowL
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessPursuitDetailController?.showChallengesDetail()
     }
     
     override init(frame: CGRect) {

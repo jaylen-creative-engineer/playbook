@@ -16,15 +16,26 @@ class RelatedPost : UICollectionViewCell, UICollectionViewDelegate, UICollection
     
     let relatedPost : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         return collectionView
     }()
     
+    let relatedLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Related"
+        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight(rawValue: 25))
+        return label
+    }()
+    
     func setupView(){
+        addSubview(relatedLabel)
         addSubview(relatedPost)
         
-        relatedPost.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: frame.height)
+        relatedLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: relatedLabel.intrinsicContentSize.width, height: relatedLabel.intrinsicContentSize.height)
+        relatedPost.anchor(top: relatedLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 60, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 280)
+        relatedPost.showsHorizontalScrollIndicator = false
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -35,22 +46,13 @@ class RelatedPost : UICollectionViewCell, UICollectionViewDelegate, UICollection
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 12
     }
-   
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
-    }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 12, 12, 12)
+        return UIEdgeInsetsMake(12, 12, 0, 12)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (frame.width - 2) / 3
-        return CGSize(width: width - 12, height: width + 120)
+        return CGSize(width: (frame.width / 2) + 50, height: frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

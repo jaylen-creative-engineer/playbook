@@ -20,12 +20,18 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
     }
     
     let cellId = "cellId"
+    let stepId = "stepId"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        collectionView?.isScrollEnabled = true
+        collectionView?.alwaysBounceVertical = true
+        collectionView?.alwaysBounceHorizontal = true
         collectionView?.backgroundColor = .white
         collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
         collectionView?.register(SharePhotoOptions.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(AddSharingSteps.self, forCellWithReuseIdentifier: stepId)
+        collectionView?.heightAnchor.constraint(equalToConstant: 800)
         setupTopBar()
         setupImageAndTextViews()
     }
@@ -210,6 +216,16 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        switch indexPath.item {
+        case 0:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SharePhotoOptions
+            return cell
+        case 1:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! AddSharingSteps
+            return cell
+        default:
+            assert(false, "Not a valid sharing option")
+        }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SharePhotoOptions
         return cell
     }
@@ -227,7 +243,7 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 120)
+        return CGSize(width: view.frame.width, height: 60)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -255,7 +271,7 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
     
     func setupTags(){
         view.addSubview(selectTagsCollection)
-        selectTagsCollection.backgroundColor = .yellow
+        selectTagsCollection.backgroundColor = .clear
         selectTagsCollection.anchor(top: descriptionUnderline.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 320)
     }
     

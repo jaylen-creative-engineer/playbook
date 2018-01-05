@@ -21,10 +21,32 @@ class PursuitSteps :  UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
         return collectionView
     }()
     
+    let stepsLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Steps To Take"
+        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight(rawValue: 25))
+        return label
+    }()
+    
+    let downArrow : UIImageView = {
+       let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "expand_arrow1600").withRenderingMode(.alwaysOriginal)
+        iv.contentMode = .scaleAspectFill
+        return iv
+    }()
     func setupView(){
-        addSubview(pursuitSteps)
+        let underlineView = UIView()
+        underlineView.backgroundColor = .gray
         
-        pursuitSteps.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        addSubview(downArrow)
+        addSubview(stepsLabel)
+        addSubview(pursuitSteps)
+        addSubview(underlineView)
+        
+        stepsLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: stepsLabel.intrinsicContentSize.width, height: stepsLabel.intrinsicContentSize.height)
+        downArrow.anchor(top: stepsLabel.bottomAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 14, width: 25, height: 25)
+        pursuitSteps.anchor(top: stepsLabel.bottomAnchor, left: stepsLabel.leftAnchor, bottom: nil, right: downArrow.leftAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 30)
+        underlineView.anchor(top: pursuitSteps.bottomAnchor, left: stepsLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 0.5)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -32,8 +54,12 @@ class PursuitSteps :  UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(0, 48, 0, 0)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

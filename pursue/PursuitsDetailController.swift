@@ -10,7 +10,7 @@ import UIKit
 import XLActionController
 import JHTAlertController
 
-class PursuitsDetailController : UICollectionViewController, UICollectionViewDelegateFlowLayout, MessageDelegate {
+class PursuitsDetailController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     
     let headerId = "headerId"
@@ -28,7 +28,7 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
     var isChallengeView = false
     var isDiscussionView = false
     
-    func goBack() {
+    @objc func goBack() {
         navigationController?.popViewController(animated: true)
     }
     
@@ -166,15 +166,27 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
     let challengeId = "challengeId"
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if isPrincipleView {
-            return CGSize(width: view.frame.width, height: 330)
-        } else {
-            return CGSize(width: view.frame.width, height: view.frame.height)
+        switch indexPath.item {
+        case 1:
+            return CGSize(width: view.frame.width, height: 130)
+        case 2:
+            return CGSize(width: view.frame.width, height: 320)
+        case 3:
+            return CGSize(width: view.frame.width, height: 336)
+        case 4:
+            return CGSize(width: view.frame.width, height: 382)
+        default:
+            return CGSize(width: view.frame.width, height: 120)
         }
+     
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
     }
     
     lazy var floatingCamera : UIButton = {
@@ -198,6 +210,13 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
         return iv
     }()
     
+    lazy var backButton : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "back-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(goBack), for: .touchUpInside)
+        return button
+    }()
+    
     @objc func addSteps(){
         let actionController = SkypeActionController()
         
@@ -213,6 +232,13 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
         present(actionController, animated: true, completion: nil)
     }
     
+    func setupBackButton(){
+        let guide = view.safeAreaLayoutGuide
+        
+        view.addSubview(backButton)
+        backButton.anchor(top: guide.topAnchor, left: guide.leftAnchor, bottom: nil, right: nil, paddingTop: 16, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 25, height: 25)
+    }
+    
     private func setupFloatingCamera(){
         let guide = view.safeAreaLayoutGuide
         view.addSubview(floatingCamera)
@@ -223,135 +249,40 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
         stepIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
         stepIcon.centerXAnchor.constraint(equalTo: floatingCamera.centerXAnchor).isActive = true
         stepIcon.centerYAnchor.constraint(equalTo: floatingCamera.centerYAnchor).isActive = true
+        setupBackButton()
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let isTrue = true
-        
-        switch isTrue {
-        case isAboutView:
+        switch indexPath.item {
+        case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! PostView
             return cell
-        case isSavedView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: relatedId, for: indexPath) as! RelatedPost
-            cell.accessPursuitDetailController = self
+        case 1:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! PursuitSteps
             return cell
-        case isPrincipleView:
+        case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! PursuitPrinciple
             return cell
-        case isDiscussionView:
+        case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! PursuitDiscussion
-            cell.accessPursuitDetailController = self
             return cell
-        case isStepsView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! PursuitSteps
-            cell.accessPursuitDetailController = self
+        case 4:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: relatedId, for: indexPath) as! RelatedPost
             return cell
         default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! PostView
-            return cell
+            assert(false, "Not a valid cell")
         }
     }
     
-    lazy var backButton : UIButton = {
-        let button = UIButton()
-        button.setBackgroundImage(#imageLiteral(resourceName: "back-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(handleBack), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var homeIcon : UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(#imageLiteral(resourceName: "home").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.contentMode = .scaleAspectFit
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(homeActive), for: .touchUpInside)
-        button.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
-        return button
-    }()
-    
-    lazy var exploreIcon : UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(#imageLiteral(resourceName: "explore_icon").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.contentMode = .scaleAspectFit
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(exploreActive), for: .touchUpInside)
-        button.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
-        return button
-    }()
-    
-    lazy var profileIcon : UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(#imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFit
-        button.layer.cornerRadius = 12.5
-        button.layer.masksToBounds = true
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(profileActive), for: .touchUpInside)
-        button.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
-        return button
-    }()
-    
-    @objc func exploreActive(){
-        exploreActive()
-        homeIcon.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
-        exploreIcon.tintColor = UIColor.black
-    }
-    
-    @objc func homeActive(){
-        homeActive()
-        homeIcon.tintColor = UIColor.black
-        exploreIcon.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
-    }
-    
-    
-    @objc func profileActive(){
-        profileActive()
-    }
-    
-    @objc func handleBack(){
-        goBack()
-    }
-    
-    func setupTopNavBar(){
-        let backgroundFill = UIView()
-        backgroundFill.backgroundColor = .white
-        
-        view.addSubview(backgroundFill)
-        backgroundFill.addSubview(backButton)
-        view.addSubview(profileIcon)
-        view.addSubview(homeIcon)
-        view.addSubview(exploreIcon)
-        
-        backgroundFill.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 88)
-        backButton.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 16, paddingRight: 0, width: 20, height: 20)
-        profileIcon.anchor(top: nil, left: nil, bottom: nil, right: backgroundFill.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 25.5, height: 25)
-        profileIcon.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
-        homeIcon.anchor(top: nil, left: nil, bottom: nil, right: profileIcon.leftAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 24, width: 28, height: 25)
-        homeIcon.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
-        exploreIcon.anchor(top: nil, left: nil, bottom: nil, right: homeIcon.leftAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 24, width: 25, height: 25)
-        exploreIcon.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 445)
+        return CGSize(width: view.frame.width, height: 450)
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! PursuitsDetailHeader
-        header.messageDelegate = self
-        header.pursuitsDetailController = self
         return header
     }
     
-    func handleMessage(for cell: PursuitsDetailHeader) {
-        let messageController = MessagesController()
-        let navController = UINavigationController(rootViewController: messageController)
-        present(navController, animated: true, completion: nil)
-    }
     
     func showStepsDetailForSteps(for cell : PursuitSteps){
         let layout = UICollectionViewFlowLayout()
@@ -369,11 +300,6 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
         navigationController?.pushViewController(discussion, animated: true)
     }
     
-    func showChallengesDetail(){
-        let challenge = ChallengesController(collectionViewLayout: UICollectionViewFlowLayout())
-        navigationController?.pushViewController(challenge, animated: true)
-    }
-    
     func showUserProfile(){
 //        let userProfileController = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
 //        navigationController?.pushViewController(userProfileController, animated: true)
@@ -385,7 +311,6 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
         navigationController?.pushViewController(postDetilController, animated: true)
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -396,7 +321,7 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
         collectionView?.register(PursuitDiscussion.self, forCellWithReuseIdentifier: discussionId)
         collectionView?.register(PursuitsDetailHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.backgroundColor = .white
-        setupTopNavBar()
+        collectionView?.contentInset = UIEdgeInsetsMake(-45, 0, 135, 0)
         setupFloatingCamera()
     }
 }
