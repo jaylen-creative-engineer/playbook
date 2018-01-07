@@ -15,6 +15,7 @@ class RelatedPostCell : UICollectionViewCell {
         iv.image = #imageLiteral(resourceName: "ferrari")
         iv.layer.masksToBounds = true
         iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 4
         return iv
     }()
     
@@ -31,7 +32,7 @@ class RelatedPostCell : UICollectionViewCell {
         addSubview(relatedImage)
         addSubview(relatedMainDescription)
         
-        relatedImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 265)
+        relatedImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 265)
         relatedMainDescription.anchor(top: relatedImage.bottomAnchor, left: relatedImage.leftAnchor, bottom: nil, right: relatedImage.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 14)
     }
     

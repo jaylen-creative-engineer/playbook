@@ -32,9 +32,8 @@ class RelatedPost : UICollectionViewCell, UICollectionViewDelegate, UICollection
     func setupView(){
         addSubview(relatedLabel)
         addSubview(relatedPost)
-        
         relatedLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: relatedLabel.intrinsicContentSize.width, height: relatedLabel.intrinsicContentSize.height)
-        relatedPost.anchor(top: relatedLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 60, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 280)
+        relatedPost.anchor(top: relatedLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 325)
         relatedPost.showsHorizontalScrollIndicator = false
     }
     

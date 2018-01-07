@@ -23,7 +23,7 @@ class ExploreImageRow : UICollectionViewCell, UICollectionViewDelegate, UICollec
         let label = UILabel()
         label.textColor = .black
         label.text = "CARS"
-        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.init(25))
         return label
     }()
 

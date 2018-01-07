@@ -20,7 +20,7 @@ class ExploreDiscussion : UICollectionViewCell, UICollectionViewDelegate, UIColl
     let rowLabel : UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.init(25))
         return label
     }()
     

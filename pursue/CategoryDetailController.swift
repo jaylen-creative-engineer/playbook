@@ -24,8 +24,8 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
     
     let pageTitle : UILabel = {
         let label = UILabel()
-        label.text = "ANIMALS"
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.text = "Animals"
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

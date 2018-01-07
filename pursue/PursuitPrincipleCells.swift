@@ -22,6 +22,7 @@ class PursuitPrincipleCells : UICollectionViewCell {
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.isUserInteractionEnabled = true
+        iv.layer.cornerRadius = 4
         iv.image = #imageLiteral(resourceName: "mel-robbins")
         return iv
     }()

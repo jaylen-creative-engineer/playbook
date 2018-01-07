@@ -31,10 +31,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = viewController
             self.window?.makeKeyAndVisible()
         } else {
-            layout.scrollDirection = .horizontal
-            let swipingController = SwipingController(collectionViewLayout: layout)
-            window?.rootViewController = swipingController
+            defaults.set("No", forKey:"isFirstTime")
+            defaults.synchronize()
+            let viewController = UINavigationController(rootViewController: HomeController(collectionViewLayout: layout))
+            self.window?.rootViewController = viewController
             self.window?.makeKeyAndVisible()
+//            layout.scrollDirection = .horizontal
+//            let swipingController = SwipingController(collectionViewLayout: layout)
+//            window?.rootViewController = swipingController
+//            self.window?.makeKeyAndVisible()
         }
 
         return true

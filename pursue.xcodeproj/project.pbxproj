@@ -121,6 +121,7 @@
 		E6A274021F68353E00F5B4C8 /* FirebaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A274011F68353E00F5B4C8 /* FirebaseUtils.swift */; };
 		E6A2B02B1FCA263D00DE1B9C /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A2B02A1FCA263D00DE1B9C /* MenuBar.swift */; };
 		E6A2B02D1FCA26A200DE1B9C /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A2B02C1FCA26A200DE1B9C /* MenuCell.swift */; };
+		E6A2B5F92002581200E72416 /* SharePhotoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A2B5F82002581200E72416 /* SharePhotoHeader.swift */; };
 		E6AB64CD1F6F55A300033C09 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB64CC1F6F55A300033C09 /* Message.swift */; };
 		E6AB64CF1F6F566200033C09 /* ChatMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB64CE1F6F566200033C09 /* ChatMessageCell.swift */; };
 		E6AB64D11F6F58A600033C09 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB64D01F6F58A600033C09 /* ChatLogController.swift */; };
@@ -149,6 +150,7 @@
 		E6CE228F1F675894006C5755 /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CE228E1F675894006C5755 /* MainTabController.swift */; };
 		E6CE229E1F67616F006C5755 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CE229D1F67616F006C5755 /* CameraController.swift */; };
 		E6F1B04E1FDB2E2B005FB9DA /* HomeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F1B04D1FDB2E2A005FB9DA /* HomeHeader.swift */; };
+		E6F41F492002633E002FD8D4 /* possible-ui.gif in Resources */ = {isa = PBXBuildFile; fileRef = E6F41F482002633E002FD8D4 /* possible-ui.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -268,6 +270,7 @@
 		E6A274011F68353E00F5B4C8 /* FirebaseUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseUtils.swift; sourceTree = "<group>"; };
 		E6A2B02A1FCA263D00DE1B9C /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
 		E6A2B02C1FCA26A200DE1B9C /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
+		E6A2B5F82002581200E72416 /* SharePhotoHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePhotoHeader.swift; sourceTree = "<group>"; };
 		E6AB64CC1F6F55A300033C09 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		E6AB64CE1F6F566200033C09 /* ChatMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMessageCell.swift; sourceTree = "<group>"; };
 		E6AB64D01F6F58A600033C09 /* ChatLogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
@@ -298,6 +301,7 @@
 		E6CE228E1F675894006C5755 /* MainTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 		E6CE229D1F67616F006C5755 /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
 		E6F1B04D1FDB2E2A005FB9DA /* HomeHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeHeader.swift; sourceTree = "<group>"; };
+		E6F41F482002633E002FD8D4 /* possible-ui.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "possible-ui.gif"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -513,6 +517,7 @@
 				E6AB64E71F7188CB00033C09 /* SharePhotoController.swift */,
 				E62530A41FFD341400E41794 /* SharePhotoOptions.swift */,
 				E61867721FFDBD5400F2C11C /* AddSharingSteps.swift */,
+				E6A2B5F82002581200E72416 /* SharePhotoHeader.swift */,
 			);
 			name = SelectPhoto;
 			sourceTree = "<group>";
@@ -561,6 +566,7 @@
 				E6CE22861F671E2D006C5755 /* Utils */,
 				E6CE22741F671D10006C5755 /* AppDelegate.swift */,
 				E6CE228E1F675894006C5755 /* MainTabController.swift */,
+				E6F41F482002633E002FD8D4 /* possible-ui.gif */,
 				E6CE22781F671D10006C5755 /* Main.storyboard */,
 				E6CE227B1F671D11006C5755 /* Assets.xcassets */,
 				E6CE227D1F671D11006C5755 /* LaunchScreen.storyboard */,
@@ -729,6 +735,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E6CE227F1F671D11006C5755 /* LaunchScreen.storyboard in Resources */,
+				E6F41F492002633E002FD8D4 /* possible-ui.gif in Resources */,
 				E6CE227C1F671D11006C5755 /* Assets.xcassets in Resources */,
 				E6CE228D1F6721C7006C5755 /* GoogleService-Info.plist in Resources */,
 				E6CE227A1F671D10006C5755 /* Main.storyboard in Resources */,
@@ -762,6 +769,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-pursue/Pods-pursue-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CropViewController/CropViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/Gifu/Gifu.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/JHTAlertController/JHTAlertController.framework",
 				"${BUILT_PRODUCTS_DIR}/TOCropViewController/TOCropViewController.framework",
@@ -773,6 +781,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CropViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Gifu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JHTAlertController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TOCropViewController.framework",
@@ -921,6 +930,7 @@
 				E61CCC361FE1C1AF002D57FF /* MessageHeader.swift in Sources */,
 				E66436791FA2970500A9B0E7 /* ProfilePostCells.swift in Sources */,
 				E61867731FFDBD5400F2C11C /* AddSharingSteps.swift in Sources */,
+				E6A2B5F92002581200E72416 /* SharePhotoHeader.swift in Sources */,
 				E6B49F2D1FACDD1D00AEDAFD /* SelectInterestsHeader.swift in Sources */,
 				E6AB64E81F7188CB00033C09 /* SharePhotoController.swift in Sources */,
 				E66436731FA272AD00A9B0E7 /* ProfilePursuitsRow.swift in Sources */,

@@ -30,7 +30,7 @@ class HomeRow: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewD
     let rowLabel : UILabel = {
         let label = UILabel()
         label.text = "MOBILE DESIGN"
-        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.init(25))
         let tap = UITapGestureRecognizer(target: self, action: #selector(feedChange))
         label.addGestureRecognizer(tap)
         label.isUserInteractionEnabled = true

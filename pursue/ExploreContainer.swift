@@ -65,7 +65,7 @@ class ExploreContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 0:
-            return CGSize(width: frame.width, height: 204)
+            return CGSize(width: frame.width, height: 187)
         case 1:
             return CGSize(width: frame.width, height: 260)
         case 2:

@@ -27,6 +27,7 @@ class ProfilePostCells : UICollectionViewCell {
         iv.addGestureRecognizer(tapGesture)
         iv.addGestureRecognizer(longGesture)
         iv.isUserInteractionEnabled = true
+        iv.layer.cornerRadius = 4
         return iv
     }()
     

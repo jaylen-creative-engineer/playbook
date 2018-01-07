@@ -33,6 +33,7 @@ class ExploreExercisesRowCells  : UICollectionViewCell {
         iv.addGestureRecognizer(tapGesture)
         iv.addGestureRecognizer(longGesture)
         iv.isUserInteractionEnabled = true
+        iv.layer.cornerRadius = 4
         return iv
     }()
     
@@ -66,7 +67,7 @@ class ExploreExercisesRowCells  : UICollectionViewCell {
         addSubview(progressBar)
         addSubview(exploreProgressLabel)
         
-        exploreImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 250, height: 145)
+        exploreImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 250, height: 155)
         exploreLabel.anchor(top: exploreImage.bottomAnchor, left: exploreImage.leftAnchor, bottom: nil, right: exploreImage.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: exploreLabel.intrinsicContentSize.height)
         exploreProgressLabel.anchor(top: exploreImage.bottomAnchor, left: nil, bottom: nil, right: exploreImage.rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: exploreProgressLabel.intrinsicContentSize.width, height: exploreProgressLabel.intrinsicContentSize.height)
         progressBar.anchor(top: nil, left: exploreImage.leftAnchor, bottom: nil, right: exploreProgressLabel.leftAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 3)

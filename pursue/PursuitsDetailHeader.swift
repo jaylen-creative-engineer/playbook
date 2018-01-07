@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Gifu
 
 
 protocol MessageDelegate {
@@ -116,6 +117,7 @@ class PursuitsDetailHeader : UICollectionViewCell {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "option").withRenderingMode(.alwaysOriginal), for: .normal)
         button.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(something), for: .touchUpInside)
         return button
     }()
     
@@ -125,10 +127,20 @@ class PursuitsDetailHeader : UICollectionViewCell {
         messageDelegate?.goBack()
     }
     
+    @objc func something(){
+        gifImage.stopAnimatingGIF()
+    }
+    
     @objc func handleChat() {
         messageDelegate?.handleMessage(for: self)
     }
     
+    let gifImage : GIFImageView = {
+       let gif = GIFImageView()
+        gif.contentMode = .scaleAspectFill
+        gif.clipsToBounds = true
+        return gif
+    }()
     
     func setupTopNavBar(){
         addSubview(postImage)
@@ -138,7 +150,11 @@ class PursuitsDetailHeader : UICollectionViewCell {
         
         addSubview(topShade)
         
-        postImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 365)
+        addSubview(gifImage)
+        gifImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 365)
+        gifImage.animate(withGIFNamed: "possible-ui")
+
+//        postImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 365)
         topShade.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 95)
         setupEngagements()
     }
@@ -167,20 +183,25 @@ class PursuitsDetailHeader : UICollectionViewCell {
         }
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        gifImage.prepareForReuse()
+    }
+    
     func setupEngagements(){
         addSubview(likeIcon)
         addSubview(likeCounter)
         addSubview(saveIcon)
-        
-        likeIcon.anchor(top: postImage.bottomAnchor, left: postImage.leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 25, height: 20)
+
+        likeIcon.anchor(top: gifImage.bottomAnchor, left: gifImage.leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 25, height: 20)
         likeCounter.anchor(top: likeIcon.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: likeCounter.intrinsicContentSize.width, height: likeCounter.intrinsicContentSize.height)
         likeCounter.centerXAnchor.constraint(equalTo: likeIcon.centerXAnchor).isActive = true
-        saveIcon.anchor(top: postImage.bottomAnchor, left: likeIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 22, paddingLeft: 32, paddingBottom: 0, paddingRight: 0, width: 22, height: 21)
+        saveIcon.anchor(top: gifImage.bottomAnchor, left: likeIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 22, paddingLeft: 32, paddingBottom: 0, paddingRight: 0, width: 22, height: 21)
         toggleLike()
         toggleSave()
-        
+
         addSubview(optionButton)
-        optionButton.anchor(top: postImage.bottomAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 5.2, height: 20)
+        optionButton.anchor(top: gifImage.bottomAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 5.2, height: 20)
     }
     
     

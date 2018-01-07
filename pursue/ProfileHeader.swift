@@ -95,7 +95,7 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
         let label = UILabel()
         label.numberOfLines = 0
         
-        let attrString = NSMutableAttributedString(string: "Being the richest man.")
+        let attrString = NSMutableAttributedString(string: "Being the richest man")
         attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         
         label.font = UIFont.boldSystemFont(ofSize: 14)

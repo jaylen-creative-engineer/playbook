@@ -21,6 +21,7 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
     
     let cellId = "cellId"
     let stepId = "stepId"
+    let headerId = "headerId"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,12 +29,11 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
         collectionView?.alwaysBounceVertical = true
         collectionView?.alwaysBounceHorizontal = true
         collectionView?.backgroundColor = .white
-        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
+//        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
         collectionView?.register(SharePhotoOptions.self, forCellWithReuseIdentifier: cellId)
         collectionView?.register(AddSharingSteps.self, forCellWithReuseIdentifier: stepId)
-        collectionView?.heightAnchor.constraint(equalToConstant: 800)
-        setupTopBar()
-        setupImageAndTextViews()
+        collectionView?.register(SharePhotoHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+//        setupImageAndTextViews()
     }
     
     let imageView : UIImageView = {
@@ -62,31 +62,6 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
-    }()
-    
-    let backgroundFill : UIView = {
-        let view = UIView()
-        view.backgroundColor = .clear
-        return view
-    }()
-    
-    lazy var cancelButton : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "cancel_shadow").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.tintColor = .black
-        button.contentMode = .scaleAspectFill
-        button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    lazy var checkButton : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "check").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFill
-        button.addTarget(self, action: #selector(handleShare), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
     }()
     
     lazy var cameraButton : UIButton = {
@@ -215,6 +190,16 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
         
     }
     
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! SharePhotoHeader
+        header.backgroundColor = .black
+        return header
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.width, height: 120)
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.item {
         case 0:
@@ -250,17 +235,6 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
         return UIEdgeInsetsMake(0, 12, 0, 12)
     }
     
-    private func setupTopBar(){
-        let guide = view.safeAreaLayoutGuide
-        view.addSubview(backgroundFill)
-        view.addSubview(cancelButton)
-        view.addSubview(checkButton)
-        
-        backgroundFill.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (view.frame.height / 8.5) - 10)
-        cancelButton.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 16, paddingRight: 0, width: 18, height: 18)
-        checkButton.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 16, paddingRight: 12, width: 18, height: 18)
-    }
-    
     func setupBottomBar(){
         imageView.addSubview(cameraButton)
         imageView.addSubview(editPictureLabel)
@@ -283,7 +257,7 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
         view.addSubview(selectTagsCollection)
         
         let guide = view.safeAreaLayoutGuide
-        imageView.anchor(top: backgroundFill.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: (view.frame.width / 2) + 60, height: 280)
+        imageView.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: (view.frame.width / 2) + 60, height: 280)
         imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         contentModeTextField.anchor(top: imageView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 48, paddingLeft: 32, paddingBottom: 0, paddingRight: 32, width: 0, height: contentModeTextField.intrinsicContentSize.height)
