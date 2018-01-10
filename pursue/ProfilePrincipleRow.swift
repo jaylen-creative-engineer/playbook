@@ -19,7 +19,7 @@ class ProfilePrincipleRow : UICollectionViewCell, UICollectionViewDelegate, UICo
     
     let rowLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.init(25))
+        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
         return label
     }()
     
@@ -55,7 +55,7 @@ class ProfilePrincipleRow : UICollectionViewCell, UICollectionViewDelegate, UICo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfilePrincipleCells
-        rowLabel.text = "PRINCIPLES"
+        rowLabel.text = "Principles"
         cell.delegate = self
         cell.profileLabel.text = profileLabelText[indexPath.item]
         cell.profileImage.image = UIImage(named: profileImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
@@ -78,9 +78,10 @@ class ProfilePrincipleRow : UICollectionViewCell, UICollectionViewDelegate, UICo
         addSubview(rowLabel)
         addSubview(postCollection)
         addSubview(moreButton)
+        
         rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
         moreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 24, height: 12)
-        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         postCollection.showsHorizontalScrollIndicator = false
         postCollection.register(ProfilePrincipleCells.self, forCellWithReuseIdentifier: cellId)
         postCollection.dataSource = self

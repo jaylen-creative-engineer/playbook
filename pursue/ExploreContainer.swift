@@ -67,15 +67,15 @@ class ExploreContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
         case 0:
             return CGSize(width: frame.width, height: 187)
         case 1:
-            return CGSize(width: frame.width, height: 260)
+            return CGSize(width: frame.width, height: 330)
         case 2:
-            return CGSize(width: frame.width, height: 288)
+            return CGSize(width: frame.width, height: 345)
         case 3:
-            return CGSize(width: frame.width, height: 270)
+            return CGSize(width: frame.width, height: 300)
         case 4:
-            return CGSize(width: frame.width, height: 208)
+            return CGSize(width: frame.width, height: 230)
         case 5:
-            return CGSize(width: frame.width, height: 348)
+            return CGSize(width: frame.width, height: 410)
         default:
             return CGSize(width: frame.width, height: 260)
         }

@@ -20,6 +20,7 @@ class ProfilePrincipleCells : UICollectionViewCell {
     let profileLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
+        label.numberOfLines = 2
         return label
     }()
     
@@ -45,13 +46,18 @@ class ProfilePrincipleCells : UICollectionViewCell {
         delegate?.principleHeld()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        profileLabel.sizeToFit()
+    }
+    
     func setupCardDetails(){
         
         addSubview(profileImage)
         addSubview(profileLabel)
         
         profileImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
-        profileLabel.anchor(top: profileImage.bottomAnchor, left: profileImage.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: profileLabel.intrinsicContentSize.height)
+        profileLabel.anchor(top: profileImage.bottomAnchor, left: profileImage.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 55)
     }
     
     override init(frame: CGRect) {

@@ -38,9 +38,15 @@ class ExerciseImageCells : UICollectionViewCell {
         exerciseImageDelegate?.imageCellHeld()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        exploreMainDescription.sizeToFit()
+    }
+    
     let exploreMainDescription : UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
+        label.textAlignment = .justified
         return label
     }()
     
@@ -49,7 +55,7 @@ class ExerciseImageCells : UICollectionViewCell {
         addSubview(exploreMainDescription)
         
         exploreImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 225)
-        exploreMainDescription.anchor(top: exploreImage.bottomAnchor, left: exploreImage.leftAnchor, bottom: nil, right: exploreImage.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: exploreMainDescription.intrinsicContentSize.height)
+        exploreMainDescription.anchor(top: exploreImage.bottomAnchor, left: exploreImage.leftAnchor, bottom: nil, right: exploreImage.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
     }
     
     override init(frame: CGRect) {

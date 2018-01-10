@@ -23,7 +23,7 @@ class SettingsController : UICollectionViewController, UICollectionViewDelegateF
     
     lazy var editProfileButton : UILabel = {
         let label = UILabel()
-        label.text = "EDIT PROFILE"
+        label.text = "Edit Profile"
         label.font = UIFont.boldSystemFont(ofSize: 18)
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleEditClick))
         label.addGestureRecognizer(tap)
@@ -33,7 +33,7 @@ class SettingsController : UICollectionViewController, UICollectionViewDelegateF
     
     lazy var editNotificationsButton : UILabel = {
         let label = UILabel()
-        label.text = "NOTIFICATIONS"
+        label.text = "Notifications"
         label.font = UIFont.boldSystemFont(ofSize: 18)
         let tap = UITapGestureRecognizer(target: self, action: #selector(switchToEditNotifications))
         label.addGestureRecognizer(tap)
@@ -43,7 +43,7 @@ class SettingsController : UICollectionViewController, UICollectionViewDelegateF
     
     lazy var changeInterestsButton : UILabel = {
         let label = UILabel()
-        label.text = "CHANGE INTERESTS"
+        label.text = "Change Interests"
         label.font = UIFont.boldSystemFont(ofSize: 18)
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleChangeToInterests))
         label.addGestureRecognizer(tap)
@@ -53,7 +53,7 @@ class SettingsController : UICollectionViewController, UICollectionViewDelegateF
     
     lazy var helpButton : UILabel = {
         let label = UILabel()
-        label.text = "HELP"
+        label.text = "Help"
         label.font = UIFont.boldSystemFont(ofSize: 18)
         let tap = UITapGestureRecognizer(target: self, action: #selector(switchToHelp))
         label.addGestureRecognizer(tap)
@@ -63,7 +63,7 @@ class SettingsController : UICollectionViewController, UICollectionViewDelegateF
     
     lazy var termsButton : UILabel = {
         let label = UILabel()
-        label.text = "TERMS AND SERVICES"
+        label.text = "Terms and Services"
         label.font = UIFont.boldSystemFont(ofSize: 18)
         let tap = UITapGestureRecognizer(target: self, action: #selector(switchToTerms))
         label.addGestureRecognizer(tap)
@@ -73,7 +73,7 @@ class SettingsController : UICollectionViewController, UICollectionViewDelegateF
     
     lazy var privacyButton : UILabel = {
         let label = UILabel()
-        label.text = "PRIVACY POLICY"
+        label.text = "Privacy Policy"
         label.font = UIFont.boldSystemFont(ofSize: 18)
         let tap = UITapGestureRecognizer(target: self, action: #selector(switchToPolicy))
         label.addGestureRecognizer(tap)
@@ -94,7 +94,7 @@ class SettingsController : UICollectionViewController, UICollectionViewDelegateF
     
     lazy var logOutButton : UILabel = {
         let label = UILabel()
-        label.text = "LOG OUT"
+        label.text = "Log Out"
         label.textColor = .gray
         label.font = UIFont.boldSystemFont(ofSize: 18)
         let tap = UITapGestureRecognizer(target: self, action: #selector(logOut))
@@ -120,7 +120,7 @@ class SettingsController : UICollectionViewController, UICollectionViewDelegateF
     
     lazy var settingsLabel : UIButton = {
         let button = UIButton()
-        button.setTitle("SETTINGS", for: .normal)
+        button.setTitle("Settings", for: .normal)
         button.setTitleColor(UIColor.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.translatesAutoresizingMaskIntoConstraints = false

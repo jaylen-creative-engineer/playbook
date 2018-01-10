@@ -20,7 +20,8 @@ class ExplorePrinciplesRow : UICollectionViewCell, UICollectionViewDelegate, UIC
     let rowLabel : UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.init(25))
+        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
+        label.text = "Design Principles"
         return label
     }()
     
@@ -66,7 +67,6 @@ class ExplorePrinciplesRow : UICollectionViewCell, UICollectionViewDelegate, UIC
         cell.explorePrincipleDelegate = self
         cell.exploreImage.image = UIImage(named: exploreImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
         cell.exploreLabel.text = exploreLabelText[indexPath.item]
-        rowLabel.text = "DESIGN PRINCIPLES"
         return cell
     }
     
@@ -79,9 +79,11 @@ class ExplorePrinciplesRow : UICollectionViewCell, UICollectionViewDelegate, UIC
         addSubview(postCollection)
         addSubview(rowLabel)
         addSubview(moreButton)
-        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
-        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+
+        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: 20)
+        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 250)
         moreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 24, height: 12)
+       
         postCollection.showsHorizontalScrollIndicator = false
         postCollection.register(ExplorePrincipleCells.self, forCellWithReuseIdentifier: cellId)
         postCollection.dataSource = self

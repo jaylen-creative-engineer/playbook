@@ -37,7 +37,7 @@ class ProfilePursuitsRow : ExploreExerciseRow, ProfilePursuitsDelegate {
         cell.delegate = self
         cell.pursuitImage.image = UIImage(named: imageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
         cell.pursuitLabel.text = profileLabelText[indexPath.item]
-        rowLabel.text = "PURSUITS"
+        rowLabel.text = "Pursuits"
         return cell
     }
 

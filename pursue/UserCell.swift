@@ -9,52 +9,25 @@
 import UIKit
 import Firebase
 
-class UserCell: UICollectionViewCell {
+class UserCell: UITableViewCell {
     
     var message: Message? {
         didSet {
             setupNameAndProfileImage()
             
-            detailTextLabel.text = message?.text?.description
+            detailTextLabel?.text = message?.text
             
             if let seconds = message?.timestamp?.doubleValue {
                 let timestampDate = Date(timeIntervalSince1970: seconds)
                 
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "h:mm a"
+                dateFormatter.dateFormat = "hh:mm:ss a"
                 timeLabel.text = dateFormatter.string(from: timestampDate)
             }
             
             
         }
     }
-    
-    let detailTextLabel : UILabel = {
-        let label = UILabel()
-        return label
-    }()
-    
-    let textLabel : UILabel = {
-        let label = UILabel()
-        return label
-    }()
-    
-    let profileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = 30
-        imageView.layer.masksToBounds = true
-        imageView.contentMode = .scaleAspectFill
-        return imageView
-    }()
-    
-    let timeLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = UIColor.darkGray
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
     
     fileprivate func setupNameAndProfileImage() {
         
@@ -63,9 +36,9 @@ class UserCell: UICollectionViewCell {
             ref.observeSingleEvent(of: .value, with: { (snapshot) in
                 
                 if let dictionary = snapshot.value as? [String: AnyObject] {
-                    self.textLabel.text = dictionary["username"] as? String
+                    self.textLabel?.text = dictionary["name"] as? String
                     
-                    if let profileImageUrl = dictionary["profileImageURL"] as? String {
+                    if let profileImageUrl = dictionary["profileImageUrl"] as? String {
                         self.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
                     }
                 }
@@ -74,38 +47,49 @@ class UserCell: UICollectionViewCell {
         }
     }
     
-    func setupMessageText(){
-        addSubview(textLabel)
-        addSubview(detailTextLabel)
+    override func layoutSubviews() {
+        super.layoutSubviews()
         
-        textLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        detailTextLabel.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.thin)
+        textLabel?.frame = CGRect(x: 64, y: textLabel!.frame.origin.y - 2, width: textLabel!.frame.width, height: textLabel!.frame.height)
         
-        textLabel.frame = CGRect(x: 84, y: textLabel.frame.origin.y - 2, width: textLabel.frame.width, height: textLabel.frame.height)
-        detailTextLabel.frame = CGRect(x: 84, y: detailTextLabel.frame.origin.y + 2, width: detailTextLabel.frame.width, height: detailTextLabel.frame.height)
-        
-        textLabel.anchor(top: profileImageView.topAnchor, left: profileImageView.rightAnchor, bottom: nil, right: nil, paddingTop: 14, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 120, height: textLabel.intrinsicContentSize.height)
-        detailTextLabel.anchor(top: textLabel.bottomAnchor, left: textLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: detailTextLabel.intrinsicContentSize.width, height: detailTextLabel.intrinsicContentSize.height)
-        
+        detailTextLabel?.frame = CGRect(x: 64, y: detailTextLabel!.frame.origin.y + 2, width: detailTextLabel!.frame.width, height: detailTextLabel!.frame.height)
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = .black
+    let profileImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.cornerRadius = 24
+        imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
+    let timeLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = UIColor.darkGray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+        
         addSubview(profileImageView)
         addSubview(timeLabel)
         
         //ios 9 constraint anchors
         //need x,y,width,height anchors
-        profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
+        profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8).isActive = true
         profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 48).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 48).isActive = true
         
         //need x,y,width,height anchors
-        timeLabel.font = UIFont.systemFont(ofSize: 14)
-        timeLabel.anchor(top: profileImageView.topAnchor, left: nil, bottom: nil, right: self.rightAnchor, paddingTop: 14, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: timeLabel.intrinsicContentSize.width, height: timeLabel.intrinsicContentSize.height)
-        setupMessageText()
+        timeLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        timeLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 18).isActive = true
+        timeLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        timeLabel.heightAnchor.constraint(equalTo: (textLabel?.heightAnchor)!).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

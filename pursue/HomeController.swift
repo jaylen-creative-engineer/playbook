@@ -17,6 +17,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     let customRowId = "customRowId"
     let headerId = "headerId"
     var delegate : HomeHeaderDelegate?
+    var messageController : MessagesController?
     
     lazy var menuBar: MenuBar = {
         let mb = MenuBar()
@@ -230,9 +231,9 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func showChat() {
-        let layout = UICollectionViewLayout()
-        let messageController = MessagesController(collectionViewLayout: layout)
-        navigationController?.pushViewController(messageController, animated: true)
+        present(MessagesController(), animated: true) {
+            self.messageController?.fetchUserAndSetupNavBarTitle()
+        }
     }
     
     func showSettings() {

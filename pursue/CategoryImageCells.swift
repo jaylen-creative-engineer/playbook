@@ -28,6 +28,7 @@ class CategoryImageCells : HomeRowCells {
         iv.addGestureRecognizer(tapGesture)
         iv.addGestureRecognizer(longGesture)
         iv.isUserInteractionEnabled = true
+        iv.layer.cornerRadius = 4
         return iv
     }()
     
@@ -55,13 +56,18 @@ class CategoryImageCells : HomeRowCells {
         categoryImageDelegate?.homeImageHeld()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        categoryMainDescription.sizeToFit()
+    }
+    
     override func setupView() {
         super.setupView()
         
         addSubview(categoryPostImage)
         addSubview(categoryMainDescription)
         
-         categoryPostImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 300)
-        categoryMainDescription.anchor(top: categoryPostImage.bottomAnchor, left: categoryPostImage.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: categoryMainDescription.intrinsicContentSize.height)
+         categoryPostImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 62, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 280)
+        categoryMainDescription.anchor(top: categoryPostImage.bottomAnchor, left: categoryPostImage.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
     }
 }

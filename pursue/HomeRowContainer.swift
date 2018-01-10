@@ -105,11 +105,11 @@ class HomeRowContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 0:
-            return CGSize(width: frame.width, height: 335)
+            return CGSize(width: frame.width, height: 375)
         case 1:
-            return CGSize(width: frame.width, height: 310)
+            return CGSize(width: frame.width, height: 340)
         case 2:
-            return CGSize(width: frame.width, height: 445)
+            return CGSize(width: frame.width, height: 470)
         case 3:
             return CGSize(width: frame.width, height: 250)
         default:

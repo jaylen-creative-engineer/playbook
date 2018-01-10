@@ -35,7 +35,7 @@ class ProfilePostCells : UICollectionViewCell {
         let label = UILabel()
         label.text = "Wonder Woman"
         label.font = UIFont.systemFont(ofSize:  14, weight: UIFont.Weight(rawValue: 25))
-        label.numberOfLines = 0
+        label.numberOfLines = 2
         label.textColor = .black
         return label
     }()
@@ -50,11 +50,16 @@ class ProfilePostCells : UICollectionViewCell {
         delegate?.postHeld()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        exploreMainDescription.sizeToFit()
+    }
+    
     func setupView() {        
         addSubview(exploreImage)
         addSubview(exploreMainDescription)
-        exploreImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 280)
-        exploreMainDescription.anchor(top: exploreImage.bottomAnchor, left: exploreImage.leftAnchor, bottom: nil, right: exploreImage.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 14)
+        exploreImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 44, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 280)
+        exploreMainDescription.anchor(top: exploreImage.bottomAnchor, left: exploreImage.leftAnchor, bottom: nil, right: exploreImage.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 50)
     
     }
     

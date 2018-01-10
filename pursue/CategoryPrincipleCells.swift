@@ -27,6 +27,7 @@ class CategoryPrincipleCells : HomePrinciplesCells {
         iv.addGestureRecognizer(tapGesture)
         iv.addGestureRecognizer(longGesture)
         iv.isUserInteractionEnabled = true
+        iv.layer.cornerRadius = 4
         return iv
     }()
     
@@ -45,11 +46,16 @@ class CategoryPrincipleCells : HomePrinciplesCells {
         categoryDelegate?.principleHeld()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        categoryLabel.sizeToFit()
+    }
+    
     override func setupCardDetails() {
         super.setupCardDetails()
         addSubview(categoryPrincipleImage)
         addSubview(categoryLabel)
         categoryPrincipleImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
-        categoryLabel.anchor(top: categoryPrincipleImage.bottomAnchor, left: categoryPrincipleImage.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: categoryLabel.intrinsicContentSize.height)
+        categoryLabel.anchor(top: categoryPrincipleImage.bottomAnchor, left: categoryPrincipleImage.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
     }
 }

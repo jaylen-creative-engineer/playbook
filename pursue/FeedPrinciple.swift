@@ -15,6 +15,7 @@ class FeedPrinciple : UICollectionViewCell {
         iv.image = #imageLiteral(resourceName: "samuel-l")
         iv.layer.masksToBounds = true
         iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 4
         return iv
     }()
     

@@ -19,6 +19,7 @@ class ExploreExercisesRowCells  : UICollectionViewCell {
     let exploreLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
+        label.textAlignment = .justified
         return label
     }()
     
@@ -61,14 +62,19 @@ class ExploreExercisesRowCells  : UICollectionViewCell {
         exploreExereciseDelegate?.pursuitHeld()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        exploreLabel.sizeToFit()
+    }
+    
     func setupView(){
         addSubview(exploreImage)
         addSubview(exploreLabel)
         addSubview(progressBar)
         addSubview(exploreProgressLabel)
-        
-        exploreImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 250, height: 155)
-        exploreLabel.anchor(top: exploreImage.bottomAnchor, left: exploreImage.leftAnchor, bottom: nil, right: exploreImage.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: exploreLabel.intrinsicContentSize.height)
+
+        exploreImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 250, height: 155)
+        exploreLabel.anchor(top: exploreImage.bottomAnchor, left: exploreImage.leftAnchor, bottom: nil, right: exploreImage.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 55)
         exploreProgressLabel.anchor(top: exploreImage.bottomAnchor, left: nil, bottom: nil, right: exploreImage.rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: exploreProgressLabel.intrinsicContentSize.width, height: exploreProgressLabel.intrinsicContentSize.height)
         progressBar.anchor(top: nil, left: exploreImage.leftAnchor, bottom: nil, right: exploreProgressLabel.leftAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 3)
         progressBar.centerYAnchor.constraint(equalTo: exploreProgressLabel.centerYAnchor).isActive = true

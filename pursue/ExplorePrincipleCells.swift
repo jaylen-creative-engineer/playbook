@@ -26,6 +26,7 @@ class ExplorePrincipleCells : UICollectionViewCell {
     let exploreLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
+        label.textAlignment = .justified
         return label
     }()
     
@@ -51,12 +52,17 @@ class ExplorePrincipleCells : UICollectionViewCell {
         explorePrincipleDelegate?.explorePrincipleHeld()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        exploreLabel.sizeToFit()
+    }
+    
     func setupCardDetails(){
         addSubview(exploreImage)
         addSubview(exploreLabel)
         
         exploreImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 155)
-        exploreLabel.anchor(top: exploreImage.bottomAnchor, left: exploreImage.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: exploreLabel.intrinsicContentSize.height)
+        exploreLabel.anchor(top: exploreImage.bottomAnchor, left: exploreImage.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 45)
     }
     
     override init(frame: CGRect) {

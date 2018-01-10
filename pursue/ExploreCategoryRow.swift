@@ -83,9 +83,11 @@ class ExploreCategoryRow : UICollectionViewCell, UICollectionViewDelegate, UICol
         addSubview(searchBar)
         addSubview(postCollection)
         addSubview(rowLabel)
+        
         searchBar.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: searchBar.intrinsicContentSize.height)
         rowLabel.anchor(top: searchBar.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
         postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        
         postCollection.showsHorizontalScrollIndicator = false
         postCollection.register(ExploreCategoryCells.self, forCellWithReuseIdentifier: cellId)
         postCollection.dataSource = self

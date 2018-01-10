@@ -298,17 +298,17 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
             principleCell.categoryDetailController = self
             return principleCell
         case 2:
-            let discussionCell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! CategoryDiscussionRow
-            discussionCell.categoryDetailController = self
-            return discussionCell
+            let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CategoryImageRow
+            imageCell.categoryDetailController = self
+            return imageCell
         case 3:
             let peopleCell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! CategoryPeopleRow
             peopleCell.categoryDetailController = self
             return peopleCell
         case 4:
-            let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CategoryImageRow
-            imageCell.categoryDetailController = self
-            return imageCell
+            let discussionCell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! CategoryDiscussionRow
+            discussionCell.categoryDetailController = self
+            return discussionCell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! CategoryExerciseRow
             return cell
@@ -328,20 +328,41 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 0:
-            return CGSize(width: view.frame.width, height: 335)
+            return CGSize(width: view.frame.width, height: 374)
         case 1:
-            return CGSize(width: view.frame.width, height: 310)
+            return CGSize(width: view.frame.width, height: 340)
         case 2:
-            return CGSize(width: view.frame.width, height: 290)
+            return CGSize(width: view.frame.width, height: 460)
         case 3:
-            return CGSize(width: view.frame.width, height: 185)
+            return CGSize(width: view.frame.width, height: 215)
         case 4:
-            return CGSize(width: view.frame.width, height: 445)
+            return CGSize(width: view.frame.width, height: 250)
         default:
             return CGSize(width: view.frame.width, height: 430)
         }
       }
-        
-        
+    
+    func handleChangeToFeed(viewType : String) {
+        switch viewType {
+        case "isPrinciplesFeed":
+            let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
+            feed.principleView()
+            navigationController?.pushViewController(feed, animated: true)
+        case "isPursuitFeed":
+            let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
+            feed.pursuitView()
+            navigationController?.pushViewController(feed, animated: true)
+        case "isImageFeed":
+            let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
+            feed.imageView()
+            navigationController?.pushViewController(feed, animated: true)
+        case "isDiscussionFeed":
+            let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
+            feed.discussionView()
+            navigationController?.pushViewController(feed, animated: true)
+        default:
+            let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
+            navigationController?.pushViewController(feed, animated: true)
+        }
     }
-
+}

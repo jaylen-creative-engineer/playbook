@@ -40,31 +40,29 @@ class EditProfileController : UICollectionViewController {
        let tv = UITextField()
         tv.textColor = .black
         tv.font = UIFont.boldSystemFont(ofSize: 16)
-        tv.attributedPlaceholder = NSAttributedString(string: "FULL NAME", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
+        tv.attributedPlaceholder = NSAttributedString(string: "Full Name", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
         return tv
     }()
     
     let usernameLabel : UITextField = {
         let tv = UITextField()
         tv.font = UIFont.boldSystemFont(ofSize: 16)
-        tv.attributedPlaceholder = NSAttributedString(string: "USERNAME", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
+        tv.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
         tv.textColor = .black
         return tv
     }()
     
-    let bioLabel : UITextField = {
-        let tv = UITextField()
+    let bioLabel : BioInputTextView = {
+        let tv = BioInputTextView()
+        tv.isScrollEnabled = false
         tv.font = UIFont.boldSystemFont(ofSize: 16)
-        tv.attributedPlaceholder = NSAttributedString(string: "CREATE BIO", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
-        tv.textColor = .black
         return tv
     }()
     
     let currentLabel : UITextField = {
         let tv = UITextField()
-        tv.placeholder = "CURRENT PASSWORD"
         tv.font = UIFont.boldSystemFont(ofSize: 16)
-        tv.attributedPlaceholder = NSAttributedString(string: "CURRENT PASSWORD", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
+        tv.attributedPlaceholder = NSAttributedString(string: "Current Password", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
         tv.textColor = .black
         return tv
     }()
@@ -72,23 +70,22 @@ class EditProfileController : UICollectionViewController {
     let confirmLabel : UITextField = {
         let tv = UITextField()
         tv.font = UIFont.boldSystemFont(ofSize: 16)
-        tv.attributedPlaceholder = NSAttributedString(string: "CONFIRM PASSWORD", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
+        tv.attributedPlaceholder = NSAttributedString(string: "Confirm Password", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
         tv.textColor = .black
         return tv
     }()
     
     let updateLabel : UITextField = {
         let tv = UITextField()
-        tv.placeholder = "UPDATE PASSWORD"
         tv.font = UIFont.boldSystemFont(ofSize: 16)
-        tv.attributedPlaceholder = NSAttributedString(string: "UPDATE PASSWORD", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
+        tv.attributedPlaceholder = NSAttributedString(string: "Update Password", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
         tv.textColor = .black
         return tv
     }()
     
     let deleteLabel : UIButton = {
         let button = UIButton()
-        button.setTitle("DELETE ACCOUNT", for: .normal)
+        button.setTitle("Delete Account", for: .normal)
         button.setTitleColor(.gray, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         return button
@@ -96,7 +93,7 @@ class EditProfileController : UICollectionViewController {
     
     lazy var saveButton : UIButton = {
        let button = UIButton()
-        button.setTitle("SAVE", for: .normal)
+        button.setTitle("Save", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -140,6 +137,7 @@ class EditProfileController : UICollectionViewController {
     }
     
     func setupProfileSection(){
+        let guide = view.safeAreaLayoutGuide
         view.addSubview(profilePicture)
         view.addSubview(fullnameLabel)
         view.addSubview(usernameLabel)
@@ -162,7 +160,7 @@ class EditProfileController : UICollectionViewController {
         fullnameLabel.anchor(top: profilePicture.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 48, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: fullnameLabel.intrinsicContentSize.height)
         usernameLabel.anchor(top: fullnameLabel.bottomAnchor, left: fullnameLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0
             , height: usernameLabel.intrinsicContentSize.height)
-        bioLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0
+        bioLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: guide.rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0
             , height: bioLabel.intrinsicContentSize.height)
         currentLabel.anchor(top: bioLabel.bottomAnchor, left: bioLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: currentLabel.intrinsicContentSize.height)
         confirmLabel.anchor(top: currentLabel.bottomAnchor, left: currentLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: confirmLabel.intrinsicContentSize.height)

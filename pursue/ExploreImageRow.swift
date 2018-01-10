@@ -22,8 +22,8 @@ class ExploreImageRow : UICollectionViewCell, UICollectionViewDelegate, UICollec
     let rowLabel : UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.text = "CARS"
-        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.init(25))
+        label.text = "Cars"
+        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
         return label
     }()
 
@@ -81,8 +81,8 @@ class ExploreImageRow : UICollectionViewCell, UICollectionViewDelegate, UICollec
         addSubview(rowLabel)
         addSubview(moreButton)
         
-        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 40, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
-        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 52, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: 20)
+        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 325)
         moreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 24, height: 12)
         postCollection.showsHorizontalScrollIndicator = false
         postCollection.register(ExerciseImageCells.self, forCellWithReuseIdentifier: cellId)

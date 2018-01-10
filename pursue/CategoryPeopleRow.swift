@@ -21,7 +21,7 @@ class CategoryPeopleRow : PeopleRow, CategoryPeopleDelegate {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: categoryPeopleId, for: indexPath) as! CategoryPeopleCells
         cell.categoryPeopleDelegate = self
-        rowLabel.text = "PEOPLE"
+        rowLabel.text = "People"
         return cell
     }
     

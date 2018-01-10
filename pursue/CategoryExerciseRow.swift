@@ -16,8 +16,12 @@ class CategoryExerciseRow : HomePursuits, CategoryExerciseDelegate {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: categoryExerciseId, for: indexPath) as! CategoryExerciseCells
         cell.categoryDelegate = self
-        rowLabel.text = "ANIMAL PURSUITS"
+        rowLabel.text = "Animal Pursuits"
         return cell
+    }
+    
+    override func handlePursuitsChange() {
+        categoryDetailController?.handleChangeToFeed(viewType: "isPursuitFeed")
     }
     
     func categoryTapped() {
@@ -30,6 +34,6 @@ class CategoryExerciseRow : HomePursuits, CategoryExerciseDelegate {
  
     override func setupView() {
         super.setupView()
-        postCollection.register(CategoryExerciseCells.self, forCellWithReuseIdentifier: categoryExerciseId)
+        homePursuitsCollection.register(CategoryExerciseCells.self, forCellWithReuseIdentifier: categoryExerciseId)
     }
 }

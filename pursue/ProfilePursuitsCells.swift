@@ -26,6 +26,7 @@ class ProfilePursuitsCells : UICollectionViewCell {
         tapGesture.numberOfTapsRequired = 1
         label.addGestureRecognizer(tapGesture)
         label.addGestureRecognizer(longGesture)
+        label.textAlignment = .justified
         return label
     }()
     
@@ -68,13 +69,18 @@ class ProfilePursuitsCells : UICollectionViewCell {
         delegate?.pursuitHeld()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        pursuitLabel.sizeToFit()
+    }
+    
     func setupView(){
         addSubview(pursuitImage)
         addSubview(profileProgressLabel)
         addSubview(progressBar)
         addSubview(pursuitLabel)
         
-        pursuitImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
+        pursuitImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 44, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
         profileProgressLabel.anchor(top: pursuitImage.bottomAnchor, left: nil, bottom: nil, right: pursuitImage.rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: profileProgressLabel.intrinsicContentSize.width, height: profileProgressLabel.intrinsicContentSize.height)
         progressBar.anchor(top: nil, left: pursuitImage.leftAnchor, bottom: nil, right: profileProgressLabel.leftAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 3)
         progressBar.centerYAnchor.constraint(equalTo: profileProgressLabel.centerYAnchor).isActive = true

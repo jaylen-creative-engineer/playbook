@@ -21,9 +21,14 @@ class CategoryImageRow : HomeRow, CategoryImageDelegate {
         categoryDetailController?.categoryImageHeld()
     }
     
+    override func feedChange() {
+        super.feedChange()
+        categoryDetailController?.handleChangeToFeed(viewType: "isImageFeed")
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageId, for: indexPath) as! CategoryImageCells
-        rowLabel.text = "ANIMALS"
+        rowLabel.text = "Animals"
         cell.categoryImageDelegate = self
         return cell
     }

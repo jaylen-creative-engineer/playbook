@@ -24,6 +24,9 @@ class ProfileAddedRow : PeopleRow {
     override func setupView() {
         addSubview(rowLabel)
         addSubview(postCollection)
+        
+        rowLabel.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(25))
+        
         rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
         postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
@@ -31,7 +34,7 @@ class ProfileAddedRow : PeopleRow {
         postCollection.delegate = self
         postCollection.dataSource = self
         postCollection.showsHorizontalScrollIndicator = false
-        rowLabel.text = "27 ADDED"
+        rowLabel.text = "27 Added"
     }
     
     

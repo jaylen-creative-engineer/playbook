@@ -21,10 +21,14 @@ class CategoryPrincipleRow : HomePrinciples, CategoryPrincipleDelegate {
         categoryDetailController?.principleHeld()
     }
     
+    override func principlesFeed() {
+        categoryDetailController?.handleChangeToFeed(viewType: "isPrinciplesFeed")
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: categoryPrincipleId, for: indexPath) as! CategoryPrincipleCells
         cell.categoryDelegate = self
-        rowLabel.text = "ANIMAL PRINCIPLES"
+        rowLabel.text = "Animal Principles"
         return cell
     }
     

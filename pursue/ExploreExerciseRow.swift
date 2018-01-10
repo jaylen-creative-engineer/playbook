@@ -20,7 +20,7 @@ class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICol
     let rowLabel : UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.init(25))
+        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
         return label
     }()
     
@@ -59,7 +59,7 @@ class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICol
         cell.exploreImage.image = UIImage(named: exploreImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
         cell.exploreLabel.text = exerciseLabelText[indexPath.item]
         cell.exploreExereciseDelegate = self
-        rowLabel.text = "ADVENTURE PURSUITS"
+        rowLabel.text = "Adventure Pursuits"
         return cell
     }
     
@@ -76,12 +76,14 @@ class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICol
     }
     
     func setupView(){
-        addSubview(postCollection)
         addSubview(rowLabel)
+        addSubview(postCollection)
         addSubview(moreButton)
-        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
-        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+
+        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: 45)
+        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 255)
         moreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 24, height: 12)
+
         postCollection.showsHorizontalScrollIndicator = false
         postCollection.register(ExploreExercisesRowCells.self, forCellWithReuseIdentifier: cellId)
         postCollection.dataSource = self

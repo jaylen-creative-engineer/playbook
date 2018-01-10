@@ -369,7 +369,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     }
     
     fileprivate func setupCell(_ cell: ChatMessageCell, message: Message) {
-        if let profileImageURL = self.user?.profileImageURL {
+        if let profileImageURL = self.user?.profileImageUrl {
             cell.profileImageView.loadImageUsingCacheWithUrlString(profileImageURL)
         }
         
@@ -461,8 +461,10 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.layer.cornerRadius = 20
         profileImageView.clipsToBounds = true
-        profileImageView.loadImageUsingCacheWithUrlString(user.profileImageURL)
-        
+        if let profileImageUrl = user.profileImageUrl {
+            profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+        }
+                
         let nameLabel = UILabel()
         
         nameLabel.text = user.username

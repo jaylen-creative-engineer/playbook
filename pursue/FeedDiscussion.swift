@@ -13,6 +13,8 @@ class FeedDiscussion : UICollectionViewCell {
     lazy var discussionBackground : TopRectangleView = {
         let view = TopRectangleView()
         view.backgroundColor = .white
+        view.layer.cornerRadius = 4
+        view.layer.masksToBounds = true
         return view
     }()
     

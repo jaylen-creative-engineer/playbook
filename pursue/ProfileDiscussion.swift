@@ -26,7 +26,7 @@ class ProfileDiscussion : HomeDiscussion, ProfileDiscussionCellsDelegate {
         cell.delegate = self
         cell.profileDiscussionLabel.text = profileLabelText[indexPath.item]
         cell.profileDiscussionImage.image = UIImage(named: profileImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
-        rowLabel.text = "DISCUSSIONS"
+        rowLabel.text = "Discussions"
         return cell
     }
     

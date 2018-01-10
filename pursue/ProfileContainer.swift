@@ -111,7 +111,7 @@ class ProfileContainer : UICollectionViewCell, UICollectionViewDataSource, UICol
         
         switch indexPath.item {
         case 0:
-            return CGSize(width: frame.width, height: 330)
+            return CGSize(width: frame.width, height: 370)
         case 1:
             return CGSize(width: frame.width, height: 330)
         case 2:

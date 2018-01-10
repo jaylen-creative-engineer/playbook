@@ -43,6 +43,7 @@ class HomeRowCells : UICollectionViewCell {
         
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleHomeHold))
         label.addGestureRecognizer(longGesture)
+        label.textAlignment = .justified
         return label
     }()
     
@@ -61,11 +62,16 @@ class HomeRowCells : UICollectionViewCell {
         delegate?.homeHeld()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        homeMainDescription.sizeToFit()
+    }
+    
     func setupView() {
         addSubview(homeMainDescription)
         addSubview(postImage)
-        postImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 52, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 280)
-        homeMainDescription.anchor(top: postImage.bottomAnchor, left: postImage.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: homeMainDescription.intrinsicContentSize.height)
+        postImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 64, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 280)
+        homeMainDescription.anchor(top: postImage.bottomAnchor, left: postImage.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
     }
     
     override init(frame: CGRect) {

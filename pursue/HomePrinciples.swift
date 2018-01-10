@@ -53,7 +53,7 @@ class HomePrinciples : ProfilePrincipleRow, HomePrinciplesCellDelegate {
         cell.principleCellDelegate = self
         cell.profileLabel.text = homePrincipleLabel[indexPath.item]
         cell.homePrincipleImage.image = UIImage(named: imageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
-        rowLabel.text = "MINDFUL PRINCIPLES"
+        rowLabel.text = "Mindful Principles"
         return cell
     }
     
@@ -62,11 +62,10 @@ class HomePrinciples : ProfilePrincipleRow, HomePrinciplesCellDelegate {
         addSubview(rowLabel)
         addSubview(postCollection)
         addSubview(homeMoreButton)
-
-        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
-        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        homeMoreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 24, height: 12)
         
+        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
+        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        homeMoreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 24, height: 12)
         postCollection.register(HomePrinciplesCells.self, forCellWithReuseIdentifier: homePrincipleId)
     }
     

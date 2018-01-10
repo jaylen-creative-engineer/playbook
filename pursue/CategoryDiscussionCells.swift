@@ -20,6 +20,8 @@ class CategoryDiscussionCells : HomeDiscussionCells {
     lazy var categoryDiscussionBackground : TopRectangleView = {
         let view = TopRectangleView()
         view.backgroundColor = .white
+        view.layer.cornerRadius = 4
+        view.layer.masksToBounds = true
         return view
     }()
     

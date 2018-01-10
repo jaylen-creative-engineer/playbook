@@ -79,6 +79,6 @@ class HomePursuitsCells : ProfilePursuitsCells {
         progressLabel.anchor(top: homePursuitImage.bottomAnchor, left: nil, bottom: nil, right: homePursuitImage.rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: progressLabel.intrinsicContentSize.width, height: progressLabel.intrinsicContentSize.height)
         homeProgressBar.anchor(top: nil, left: homePursuitImage.leftAnchor, bottom: nil, right: progressLabel.leftAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 3)
         homeProgressBar.centerYAnchor.constraint(equalTo: progressLabel.centerYAnchor).isActive = true
-        homePursuitLabel.anchor(top: homePursuitImage.bottomAnchor, left: homePursuitImage.leftAnchor, bottom: nil, right: homePursuitImage.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: homePursuitLabel.intrinsicContentSize.height)
+        homePursuitLabel.anchor(top: homePursuitImage.bottomAnchor, left: homePursuitImage.leftAnchor, bottom: nil, right: homePursuitImage.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: homePursuitLabel.intrinsicContentSize.height)
     }
 }

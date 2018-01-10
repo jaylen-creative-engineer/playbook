@@ -32,152 +32,55 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
-class MessagesController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class MessagesController: UITableViewController {
     
     let cellId = "cellId"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let image = UIImage(named: "new_message_icon")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(handleNewMessage))
         
-        collectionView?.allowsMultipleSelection = true
-        collectionView?.contentInset = UIEdgeInsetsMake(55, 0, 0, 0)
-        collectionView?.register(UserCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.backgroundColor = .white
-        fetchUserAndSetupNavBarTitle()
-    }
-    
-    @objc func handleNewMessage() {
-        let newMessageController = NewMessageController(collectionViewLayout: UICollectionViewFlowLayout())
-        newMessageController.messagesController = self
-        navigationController?.pushViewController(newMessageController, animated: true)
-    }
-    
-    
-    func showChatControllerForUser(user: User) {
-        let chatLogController = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
-        navigationController?.pushViewController(chatLogController, animated: true)
-    }
-    
-    func fetchUserAndSetupNavBarTitle() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
         
-        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-            
-            if let dictionary = snapshot.value as? [String: AnyObject] {
-                let user = User(uid: snapshot.key, dictionary: dictionary)
-                self.setupNavBarWithUser()
-            }
-            
-        }, withCancel: nil)
+        tableView.allowsMultipleSelectionDuringEditing = true
+        navigationController?.navigationBar.isHidden = false
     }
     
-    @objc func handleCancel(){
-        navigationController?.popViewController(animated: true)
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
     
-    lazy var backButton : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "back-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFill
-        button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var searchButton : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "search_selected").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFill
-        button.addTarget(self, action: #selector(handleNewMessage), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var chatLabel : UIButton = {
-        let button = UIButton()
-        button.setTitle("CHAT", for: .normal)
-        button.addTarget(self, action: #selector(toggleChat), for: .touchUpInside)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    lazy var notificationsLabel : UIButton = {
-        let button = UIButton()
-        button.setTitle("NOTIFICATIONS", for: .normal)
-        button.addTarget(self, action: #selector(toggleNotifications), for: .touchUpInside)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        return button
-    }()
-    
-    let backgroundView : UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        return view
-    }()
-    
-    @objc func toggleChat(){
-        chatLabel.setTitleColor(UIColor.black, for: .normal)
-        notificationsLabel.setTitleColor(UIColor.gray, for: .normal)
-    }
-    
-    @objc func toggleNotifications(){
-        chatLabel.setTitleColor(UIColor.gray, for: .normal)
-        notificationsLabel.setTitleColor(UIColor.black, for: .normal)
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        let message = self.messages[indexPath.row]
+        
+        if let chatPartnerId = message.chatPartnerId() {
+            Database.database().reference().child("user-messages").child(uid).child(chatPartnerId).removeValue(completionBlock: { (error, ref) in
+                
+                if error != nil {
+                    print("Failed to delete message:", error!)
+                    return
+                }
+                
+                self.messagesDictionary.removeValue(forKey: chatPartnerId)
+                self.attemptReloadOfTable()
+            })
+        }
     }
     
     var messages = [Message]()
     var messagesDictionary = [String: Message]()
     
-    func setupNavBarWithUser() {
-        messages.removeAll()
-        messagesDictionary.removeAll()
-        collectionView?.reloadData()
-        observeUserMessages()
-        
-        view.addSubview(backgroundView)
-        backgroundView.addSubview(backButton)
-        backgroundView.addSubview(chatLabel)
-        backgroundView.addSubview(notificationsLabel)
-        backgroundView.addSubview(searchButton)
-        
-        backgroundView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 90)
-        backButton.anchor(top: nil, left: backgroundView.leftAnchor, bottom: backgroundView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 16, paddingRight: 0, width: 20, height: 20)
-        searchButton.anchor(top: nil, left: nil, bottom: backgroundView.bottomAnchor, right: backgroundView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 16, paddingRight: 16, width: 20, height: 20)
-        chatLabel.anchor(top: nil, left: backButton.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 18, paddingBottom: 16, paddingRight: 0, width: chatLabel.intrinsicContentSize.width + 20, height: chatLabel.intrinsicContentSize.height)
-        chatLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
-        notificationsLabel.anchor(top: chatLabel.topAnchor, left: chatLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: notificationsLabel.intrinsicContentSize.width + 20, height: notificationsLabel.intrinsicContentSize.height)
-        toggleChat()
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! UserCell
-        let message = messages[indexPath.row]
-        cell.message = message
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 100)
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let message = messages[indexPath.row]
-        
-        guard let chatPartnerId = message.chatPartnerId() else { return }
-        
-        let ref = Database.database().reference().child("users").child(chatPartnerId)
-        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            guard let dictionary = snapshot.value as? [String: AnyObject] else {
-                return
-            }
-            
-            let user = User(uid: chatPartnerId, dictionary: dictionary)
-            self.showChatControllerForUser(user: user)
-            
-        }, withCancel: nil)
+    func handleGoBack(){
+        let homeController = HomeController()
+        homeController.messageController = self
+        dismiss(animated: true, completion: nil)
     }
     
     func observeUserMessages() {
@@ -199,6 +102,8 @@ class MessagesController: UICollectionViewController, UICollectionViewDelegateFl
         }, withCancel: nil)
         
         ref.observe(.childRemoved, with: { (snapshot) in
+            print(snapshot.key)
+            print(self.messagesDictionary)
             
             self.messagesDictionary.removeValue(forKey: snapshot.key)
             self.attemptReloadOfTable()
@@ -239,8 +144,126 @@ class MessagesController: UICollectionViewController, UICollectionViewDelegateFl
             return message1.timestamp?.int32Value > message2.timestamp?.int32Value
         })
         
+        //this will crash because of background thread, so lets call this on dispatch_async main thread
         DispatchQueue.main.async(execute: {
-            self.collectionView?.reloadData()
+            self.tableView.reloadData()
         })
     }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return messages.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserCell
+        
+        let message = messages[indexPath.row]
+        cell.message = message
+        
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 72
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let message = messages[indexPath.row]
+        
+        guard let chatPartnerId = message.chatPartnerId() else {
+            return
+        }
+        
+        let ref = Database.database().reference().child("users").child(chatPartnerId)
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let dictionary = snapshot.value as? [String: AnyObject] else {
+                return
+            }
+            
+            let user = User(uid: chatPartnerId, dictionary: dictionary)
+            self.showChatControllerForUser(user)
+            
+        }, withCancel: nil)
+    }
+    
+    @objc func handleNewMessage() {
+        let newMessageController = NewMessageController()
+        newMessageController.messagesController = self
+        let navController = UINavigationController(rootViewController: newMessageController)
+        present(navController, animated: true, completion: nil)
+    }
+
+    func fetchUserAndSetupNavBarTitle() {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            //for some reason uid = nil
+            return
+        }
+        
+        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                
+                let user = User(uid: uid, dictionary: dictionary)
+                self.setupNavBarWithUser(user)
+            }
+            
+        }, withCancel: nil)
+    }
+    
+    func setupNavBarWithUser(_ user: User) {
+        messages.removeAll()
+        messagesDictionary.removeAll()
+        tableView.reloadData()
+        
+        observeUserMessages()
+        
+        let titleView = UIView()
+        titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
+        
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        titleView.addSubview(containerView)
+        
+        let profileImageView = UIImageView()
+        profileImageView.translatesAutoresizingMaskIntoConstraints = false
+        profileImageView.contentMode = .scaleAspectFill
+        profileImageView.layer.cornerRadius = 20
+        profileImageView.clipsToBounds = true
+        if let profileImageUrl = user.profileImageUrl {
+            profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+        }
+        
+        containerView.addSubview(profileImageView)
+        
+        //ios 9 constraint anchors
+        //need x,y,width,height anchors
+        profileImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
+        profileImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        let nameLabel = UILabel()
+        
+        containerView.addSubview(nameLabel)
+        nameLabel.text = user.username
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
+        nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
+        nameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
+        nameLabel.heightAnchor.constraint(equalTo: profileImageView.heightAnchor).isActive = true
+        
+        containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
+        containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
+        
+        self.navigationItem.titleView = titleView
+    }
+    
+    func showChatControllerForUser(_ user: User) {
+        let chatLogController = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
+        chatLogController.user = user
+        navigationController?.pushViewController(chatLogController, animated: true)
+    }
+    
+    
 }

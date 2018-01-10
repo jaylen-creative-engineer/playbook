@@ -28,6 +28,7 @@ class CategoryExerciseCells  : HomePursuitsCells {
         iv.addGestureRecognizer(tapGesture)
         iv.addGestureRecognizer(longGesture)
         iv.isUserInteractionEnabled = true
+        iv.layer.cornerRadius = 4
         return iv
     }()
     
@@ -61,6 +62,11 @@ class CategoryExerciseCells  : HomePursuitsCells {
         return label
     }()
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        categoryPursuitLabel.sizeToFit()
+    }
+    
     override func setupView() {
         addSubview(categoryPursuitImage)
         addSubview(categoryPursuitLabel)
@@ -71,7 +77,7 @@ class CategoryExerciseCells  : HomePursuitsCells {
         categoryProgressLabel.anchor(top: categoryPursuitImage.bottomAnchor, left: nil, bottom: nil, right: categoryPursuitImage.rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: categoryProgressLabel.intrinsicContentSize.width, height: categoryProgressLabel.intrinsicContentSize.height)
         categoryProgressBar.anchor(top: nil, left: categoryPursuitImage.leftAnchor, bottom: nil, right: categoryProgressLabel.leftAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 3)
         categoryProgressBar.centerYAnchor.constraint(equalTo: categoryProgressLabel.centerYAnchor).isActive = true
-        categoryPursuitLabel.anchor(top: categoryProgressBar.bottomAnchor, left: categoryProgressBar.leftAnchor, bottom: nil, right: categoryPursuitImage.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: categoryPursuitLabel.intrinsicContentSize.height)
+        categoryPursuitLabel.anchor(top: categoryProgressBar.bottomAnchor, left: categoryProgressBar.leftAnchor, bottom: nil, right: categoryPursuitImage.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
     }
     
     @objc override func handlePursuitTap(){

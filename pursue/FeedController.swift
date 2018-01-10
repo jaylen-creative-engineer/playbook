@@ -134,7 +134,7 @@ class FeedController : UICollectionViewController, UICollectionViewDelegateFlowL
         switch viewType {
         case isImageView:
             let width = (view.frame.width / 4) + 75
-            return CGSize(width: width, height: width + 75)
+            return CGSize(width: width, height: width + 85)
         case isPursuitView:
             let width = (view.frame.width / 3)
             return CGSize(width: width + 40, height: width + 45)

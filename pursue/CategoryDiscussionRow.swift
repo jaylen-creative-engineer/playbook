@@ -21,10 +21,14 @@ class CategoryDiscussionRow : HomeDiscussion, CategoryDiscussionCellDelegate {
         categoryDetailController?.discussionHeld()
     }
     
+    override func handleDiscussionFeed() {
+        categoryDetailController?.handleChangeToFeed(viewType: "isDiscussionFeed")
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: categoryDiscussionId, for: indexPath) as! CategoryDiscussionCells
         cell.discussionDelegate = self
-        rowLabel.text = "ANIMAL DISCUSSIONS"
+        rowLabel.text = "Animal Discussions"
         return cell
     }
     
