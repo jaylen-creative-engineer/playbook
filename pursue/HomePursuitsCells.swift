@@ -69,7 +69,6 @@ class HomePursuitsCells : ProfilePursuitsCells {
     }
     
     override func setupView() {
-        
         addSubview(homePursuitImage)
         addSubview(progressLabel)
         addSubview(homeProgressBar)

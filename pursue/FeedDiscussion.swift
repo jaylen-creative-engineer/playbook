@@ -10,11 +10,20 @@ import UIKit
 
 class FeedDiscussion : UICollectionViewCell {
     
+    var feedController : FeedController?
+    
     lazy var discussionBackground : TopRectangleView = {
         let view = TopRectangleView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 4
         view.layer.masksToBounds = true
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDiscussionTap))
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleDiscussionHeld))
+        tapGesture.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tapGesture)
+        view.addGestureRecognizer(longGesture)
+        view.isUserInteractionEnabled = true
         return view
     }()
     
@@ -50,6 +59,14 @@ class FeedDiscussion : UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    @objc func handleDiscussionTap(){
+        feedController?.imageClicked()
+    }
+    
+    @objc func handleDiscussionHeld(){
+        feedController?.imageHeld()
+    }
     
     func setupView(){
         addSubview(discussionBackground)

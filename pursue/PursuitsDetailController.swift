@@ -19,32 +19,62 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
     let postId = "postId"
     let relatedId = "relatedId"
     let discussionId = "discussionId"
-    var isAboutView = true
-    var isSavedView = false
-    var isToolsView = false
-    var isPrincipleView = false
-    var isNextView = false
-    var isStepsView = false
-    var isChallengeView = false
+    let pursuitId = "discussionPursuitId"
+    let discussionPrincipleId = "discussionPrincipleId"
+    let principlePostId = "principlePostId"
+    let principleCommentId = "principleCommentId"
+    let principlePursuitsId = "principlePursuitsId"
+    let principleDiscussionId = "principleDiscussionId"
+    
+    var isImageView = false
+    var isPursuitView = false
+    var isPrinciplesView = false
     var isDiscussionView = false
     
+    func imageView(){
+        isImageView = true
+        isPursuitView = false
+        isPrinciplesView = false
+        isDiscussionView = false
+        
+        collectionView?.reloadData()
+    }
+    
+    func pursuitView(){
+        isImageView = false
+        isPursuitView = true
+        isPrinciplesView = false
+        isDiscussionView = false
+        
+        collectionView?.reloadData()
+    }
+    
+    func principleView(){
+        isImageView = false
+        isPursuitView = false
+        isPrinciplesView = true
+        isDiscussionView = false
+        collectionView?.reloadData()
+    }
+    
+    func discussionView(){
+        isImageView = false
+        isPursuitView = false
+        isPrinciplesView = false
+        isDiscussionView = true
+        collectionView?.reloadData()
+    }
     @objc func goBack() {
         navigationController?.popViewController(animated: true)
     }
     
     func showStepOptions(){
         let actionController = SkypeActionController()
-        actionController.addAction(Action("Update Step", style: .default, handler: { action in
-            // do something useful
-            let stepsDetailController = PostStepsCells()
-            stepsDetailController.skillLabel.isEnabled = true
-            stepsDetailController.skillLabel.textColor = .gray
-        }))
         
-        actionController.addAction(Action("Delete Step", style: .default, handler: { action in
-            let alertController = JHTAlertController(title: "Delete Step", message: "Are you sure you want to delete this?", preferredStyle: .alert)
+        actionController.addAction(Action("Report Post", style: .default, handler: { action in
+            let alertController = JHTAlertController(title: "Report Post", message: "Are you sure you want to report this post?", preferredStyle: .alert)
             let cancelAction = JHTAlertAction(title: "Cancel", style: .cancel, bgColor: .white, handler: nil)
-            let deleteAction = JHTAlertAction(title: "Delete", style: .default, bgColor: .white) { _ in
+            let deleteAction = JHTAlertAction(title: "Yes", style: .default, bgColor: .white) { _ in
                 print("Do something here!")
             }
             
@@ -71,94 +101,6 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
         present(actionController, animated: true, completion: nil)
     }
     
-    func changeAbout() {
-        isAboutView = true
-        isSavedView = false
-        isPrincipleView = false
-        isNextView = false
-        isStepsView = false
-        isDiscussionView = false
-        collectionView?.reloadData()
-        collectionView?.updateConstraints()
-    }
-    
-    func changeDiscussion() {
-        isAboutView = false
-        isSavedView = false
-        isPrincipleView = false
-        isNextView = false
-        isStepsView = false
-        isDiscussionView = true
-        collectionView?.reloadData()
-        collectionView?.updateConstraints()
-    }
-    
-    func changeChallenge() {
-        isAboutView = false
-        isSavedView = false
-        isPrincipleView = false
-        isNextView = false
-        isStepsView = false
-        isDiscussionView = false
-        collectionView?.reloadData()
-        collectionView?.updateConstraints()
-    }
-    
-    func changeSaved() {
-        isAboutView = false
-        isSavedView = true
-        isPrincipleView = false
-        isNextView = false
-        isStepsView = false
-        isDiscussionView = false
-        collectionView?.reloadData()
-        collectionView?.updateConstraints()
-    }
-    
-    func changeTool() {
-        isAboutView = false
-        isSavedView = false
-        isPrincipleView = false
-        isNextView = false
-        isStepsView = false
-        isDiscussionView = false
-        collectionView?.reloadData()
-        collectionView?.updateConstraints()
-    }
-    
-    func changePrinciple() {
-        isAboutView = false
-        isSavedView = false
-        isPrincipleView = true
-        isNextView = false
-        isStepsView = false
-        isDiscussionView = false
-        collectionView?.reloadData()
-        collectionView?.updateConstraints()
-    }
-    
-    func changeNext() {
-        isAboutView = false
-        isSavedView = false
-        isPrincipleView = false
-        isNextView = true
-        isStepsView = false
-        isDiscussionView = false
-        collectionView?.reloadData()
-        collectionView?.updateConstraints()
-    }
-    
-    func changeSteps() {
-        isAboutView = false
-        isSavedView = false
-        isPrincipleView = false
-        isNextView = false
-        isStepsView = true
-        isDiscussionView = false
-        collectionView?.reloadData()
-        collectionView?.updateConstraints()
-    }
-    
     let cellId = "cellId"
     let nextId = "nextId"
     let stepId = "stepId"
@@ -166,23 +108,79 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
     let challengeId = "challengeId"
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        switch true {
+        case isPrinciplesView:
+            return 4
+        case isDiscussionView:
+            return 4
+        case isPursuitView:
+            return 5
+        case isImageView:
+            return 6
+        default:
+            assert(false, "Not a valid view")
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch indexPath.item {
-        case 1:
-            return CGSize(width: view.frame.width, height: 130)
-        case 2:
-            return CGSize(width: view.frame.width, height: 320)
-        case 3:
-            return CGSize(width: view.frame.width, height: 336)
-        case 4:
-            return CGSize(width: view.frame.width, height: 382)
+        switch true {
+        case isPursuitView:
+            switch indexPath.item {
+            case 1:
+                return CGSize(width: view.frame.width, height: 130)
+            case 2:
+                return CGSize(width: view.frame.width, height: 320)
+            case 3:
+                return CGSize(width: view.frame.width, height: 336)
+            case 4:
+                return CGSize(width: view.frame.width, height: 382)
+            default:
+                return CGSize(width: view.frame.width, height: 120)
+            }
+        case isPrinciplesView:
+            switch indexPath.item {
+            case 1:
+                return CGSize(width: view.frame.width, height: 170)
+            case 2:
+                return CGSize(width: view.frame.width, height: 390)
+            case 3:
+                return CGSize(width: view.frame.width, height: 380)
+            case 4:
+                return CGSize(width: view.frame.width, height: 382)
+            default:
+                return CGSize(width: view.frame.width, height: 120)
+            }
+        case isDiscussionView :
+            switch indexPath.item {
+            case 1:
+                return CGSize(width: view.frame.width, height: 170)
+            case 2:
+                return CGSize(width: view.frame.width, height: 390)
+            case 3:
+                return CGSize(width: view.frame.width, height: 360)
+            case 4:
+                return CGSize(width: view.frame.width, height: 382)
+            default:
+                return CGSize(width: view.frame.width, height: 120)
+            }
+        case isImageView:
+            switch indexPath.item {
+            case 1:
+                return CGSize(width: view.frame.width, height: 170)
+            case 2:
+                return CGSize(width: view.frame.width, height: 390)
+            case 3:
+                return CGSize(width: view.frame.width, height: 330)
+            case 4:
+                return CGSize(width: view.frame.width, height: 350)
+            case 5:
+                return CGSize(width: view.frame.width, height: 382)
+            default:
+                return CGSize(width: view.frame.width, height: 120)
+            }
         default:
-            return CGSize(width: view.frame.width, height: 120)
+            assert(false, "Not a valid view")
         }
-     
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -253,24 +251,87 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.item {
-        case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! PostView
-            return cell
-        case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! PursuitSteps
-            return cell
-        case 2:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! PursuitPrinciple
-            return cell
-        case 3:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! PursuitDiscussion
-            return cell
-        case 4:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: relatedId, for: indexPath) as! RelatedPost
-            return cell
+        let isTrue = true
+        switch isTrue {
+        case isPrinciplesView:
+            switch indexPath.item {
+            case 0:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! PostView
+                return cell
+            case 1:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
+                return cell
+            case 2:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! DiscussionPursuitsView
+                return cell
+            case 3:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! PursuitDiscussion
+                return cell
+            default:
+                assert(false, "Not a valid cell")
+            }
+        case isDiscussionView:
+            switch indexPath.item {
+            case 0:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! PostView
+                return cell
+            case 1:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
+                return cell
+            case 2:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! DiscussionPursuitsView
+                return cell
+            case 3:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! PursuitPrinciple
+                return cell
+            default:
+                assert(false, "Not a valid cell")
+            }
+        case isPursuitView:
+            switch indexPath.item {
+            case 0:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! PostView
+                return cell
+            case 1:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! PursuitSteps
+                return cell
+            case 2:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! PursuitPrinciple
+                return cell
+            case 3:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! PursuitDiscussion
+                return cell
+            case 4:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: relatedId, for: indexPath) as! RelatedPost
+                return cell
+            default:
+                assert(false, "Not a valid cell")
+            }
+        case isImageView:
+            switch indexPath.item {
+            case 0:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! PostView
+                return cell
+            case 1:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
+                return cell
+            case 2:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! DiscussionPursuitsView
+                return cell
+            case 3:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! PursuitPrinciple
+                return cell
+            case 4:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! PursuitDiscussion
+                return cell
+            case 5:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: relatedId, for: indexPath) as! RelatedPost
+                return cell
+            default:
+                assert(false, "Not a valid cell")
+            }
         default:
-            assert(false, "Not a valid cell")
+            assert(false, "Not a valid view type")
         }
     }
     
@@ -280,24 +341,16 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! PursuitsDetailHeader
+        header.pursuitsDetailController = self
         return header
     }
     
-    
-    func showStepsDetailForSteps(for cell : PursuitSteps){
-        let layout = UICollectionViewFlowLayout()
-        let stepsControler = StepsDetailController(collectionViewLayout: layout)
-        navigationController?.pushViewController(stepsControler, animated: true)
-    }
-    
     func showPursuitsDetail(){
-        let pursuits = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-        navigationController?.pushViewController(pursuits, animated: true)
+        handleChangeToDetail(viewType: "isPursuitDetail")
     }
     
     func showDiscussionDetail(){
-        let discussion = DiscussionDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-        navigationController?.pushViewController(discussion, animated: true)
+        handleChangeToDetail(viewType: "isDiscussionDetail")
     }
     
     func showUserProfile(){
@@ -306,9 +359,31 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
     }
     
     func showPostDetailForPost(){
-        let layout = UICollectionViewFlowLayout()
-        let postDetilController = PostDetailController(collectionViewLayout: layout)
-        navigationController?.pushViewController(postDetilController, animated: true)
+        handleChangeToDetail(viewType: "isImageDetail")
+    }
+    
+    func handleChangeToDetail(viewType : String) {
+        switch viewType {
+        case "isPrinciplesDetail":
+            let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+            detail.principleView()
+            print("isPrinciple")
+            navigationController?.pushViewController(detail, animated: true)
+        case "isPursuitDetail":
+            let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+            detail.pursuitView()
+            navigationController?.pushViewController(detail, animated: true)
+        case "isImageDetail":
+            let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+            detail.imageView()
+            navigationController?.pushViewController(detail, animated: true)
+        case "isDiscussionDetail":
+            let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+            detail.discussionView()
+            navigationController?.pushViewController(detail, animated: true)
+        default:
+            assert(false, "Not a valid view type")
+        }
     }
     
     override func viewDidLoad() {
@@ -319,6 +394,8 @@ class PursuitsDetailController : UICollectionViewController, UICollectionViewDel
         collectionView?.register(RelatedPost.self, forCellWithReuseIdentifier: relatedId)
         collectionView?.register(PursuitSteps.self, forCellWithReuseIdentifier: stepId)
         collectionView?.register(PursuitDiscussion.self, forCellWithReuseIdentifier: discussionId)
+        collectionView?.register(PostComments.self, forCellWithReuseIdentifier: commentId)
+        collectionView?.register(DiscussionPursuitsView.self, forCellWithReuseIdentifier: pursuitId)
         collectionView?.register(PursuitsDetailHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.backgroundColor = .white
         collectionView?.contentInset = UIEdgeInsetsMake(-45, 0, 135, 0)

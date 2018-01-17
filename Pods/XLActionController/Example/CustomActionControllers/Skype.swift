@@ -63,7 +63,7 @@ open class SkypeActionController: ActionController<SkypeCell, String, UICollecti
     fileprivate var normalAnimationRect: UIView!
     fileprivate var springAnimationRect: UIView!
     
-    let topSpace = CGFloat(40)
+    let topSpace = CGFloat(30)
     
     public override init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -80,6 +80,7 @@ open class SkypeActionController: ActionController<SkypeCell, String, UICollecti
             cell.actionTitleLabel.text = action.data
             cell.actionTitleLabel.textColor = .black
             cell.actionTitleLabel.font = UIFont.boldSystemFont(ofSize: 14)
+            cell.actionTitleLabel.textAlignment = .justified
             cell.alpha = action.enabled ? 1.0 : 0.5
         }
     }
@@ -90,7 +91,7 @@ open class SkypeActionController: ActionController<SkypeCell, String, UICollecti
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        contextView = ContextView(frame: CGRect(x: 0, y: -topSpace, width: collectionView.bounds.width, height: contentHeight + topSpace + 20))
+        contextView = ContextView(frame: CGRect(x: 0, y: -topSpace, width: collectionView.bounds.width, height: contentHeight + topSpace))
         contextView.animatedBackgroundColor = backgroundColor;
         contextView.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
 

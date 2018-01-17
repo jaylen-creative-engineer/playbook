@@ -117,7 +117,7 @@ class PursuitsDetailHeader : UICollectionViewCell {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "option").withRenderingMode(.alwaysOriginal), for: .normal)
         button.contentMode = .scaleAspectFill
-        button.addTarget(self, action: #selector(something), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleOptions), for: .touchUpInside)
         return button
     }()
     
@@ -127,8 +127,8 @@ class PursuitsDetailHeader : UICollectionViewCell {
         messageDelegate?.goBack()
     }
     
-    @objc func something(){
-        gifImage.stopAnimatingGIF()
+    @objc func handleOptions(){
+        pursuitsDetailController?.showStepOptions()
     }
     
     @objc func handleChat() {

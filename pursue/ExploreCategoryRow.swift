@@ -33,8 +33,8 @@ class ExploreCategoryRow : UICollectionViewCell, UICollectionViewDelegate, UICol
     let rowLabel : UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.init(25))
-        label.text = "INTERESTS"
+        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
+        label.text = "Interests"
         return label
     }()
     

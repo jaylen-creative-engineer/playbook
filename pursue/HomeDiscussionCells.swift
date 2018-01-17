@@ -87,6 +87,13 @@ class HomeDiscussionCells : UICollectionViewCell, UICollectionViewDelegate, UICo
         view.backgroundColor = .white
         view.layer.cornerRadius = 4
         view.layer.masksToBounds = true
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDiscussionTap))
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleDiscussionHold))
+        tapGesture.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tapGesture)
+        view.addGestureRecognizer(longGesture)
+        view.isUserInteractionEnabled = true
         return view
     }()
     

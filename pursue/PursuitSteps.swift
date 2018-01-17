@@ -34,6 +34,7 @@ class PursuitSteps :  UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
         iv.contentMode = .scaleAspectFill
         return iv
     }()
+    
     func setupView(){
         let underlineView = UIView()
         underlineView.backgroundColor = .gray

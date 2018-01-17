@@ -11,8 +11,6 @@ import UIKit
 class RelatedPost : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     let cellId = "cellId"
-    var accessDetailController : PostDetailController?
-    var accessPursuitDetailController : PursuitsDetailController?
     
     let relatedPost : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -55,7 +53,7 @@ class RelatedPost : UICollectionViewCell, UICollectionViewDelegate, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessPursuitDetailController?.showPostDetailForPost()
+//        accessPursuitDetailController?.showPostDetailForPost()
     }
     
     override init(frame: CGRect) {

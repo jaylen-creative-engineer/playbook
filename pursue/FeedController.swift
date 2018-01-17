@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import XLActionController
 
 class FeedController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
@@ -68,6 +69,30 @@ class FeedController : UICollectionViewController, UICollectionViewDelegateFlowL
         collectionView?.reloadData()
     }
     
+    
+    func imageClicked() {
+        let layout = UICollectionViewFlowLayout()
+        let pursuitDetailController = PursuitsDetailController(collectionViewLayout: layout)
+        navigationController?.pushViewController(pursuitDetailController, animated: true)
+    }
+    
+    func imageHeld() {
+        let actionController = SkypeActionController()
+        actionController.addAction(Action("Save", style: .default, handler: { action in
+            // do something useful
+        }))
+        actionController.addAction(Action("Like", style: .default, handler: { action in
+            // do something useful
+        }))
+        actionController.addAction(Action("Share", style: .default, handler: { action in
+            // do something useful
+        }))
+        actionController.addAction(Action("Cancel", style: .default, handler: {action in
+            
+        }))
+        present(actionController, animated: true, completion: nil)
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 12
     }
@@ -107,19 +132,22 @@ class FeedController : UICollectionViewController, UICollectionViewDelegateFlowL
         switch viewType {
         case isImageView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: rowId, for: indexPath) as! FeedRow
+            cell.feedController = self
             return cell
         case isPursuitView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! FeedPursuit
+            cell.feedController = self
             return cell
         case isPrinciplesView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! FeedPrinciple
+            cell.feedController = self
             return cell
         case isDiscussionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! FeedDiscussion
+            cell.feedController = self
             return cell
         default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: rowId, for: indexPath) as! FeedRow
-            return cell
+            assert(false, "Not a valid feed type")
         }
         
     }
@@ -195,26 +223,23 @@ class FeedController : UICollectionViewController, UICollectionViewDelegateFlowL
     let pageTitle : UILabel = {
         let label = UILabel()
         label.text = "Feed"
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     @objc func exploreActive(){
-        exploreActive()
         homeIcon.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
         exploreIcon.tintColor = UIColor.black
     }
     
     @objc func homeActive(){
-        homeActive()
         homeIcon.tintColor = UIColor.black
         exploreIcon.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
     }
     
     
     @objc func profileActive(){
-        profileActive()
     }
     
     private func setupTopBar(){

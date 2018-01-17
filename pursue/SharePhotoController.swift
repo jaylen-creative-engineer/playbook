@@ -29,11 +29,10 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
         collectionView?.alwaysBounceVertical = true
         collectionView?.alwaysBounceHorizontal = true
         collectionView?.backgroundColor = .white
-//        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
         collectionView?.register(SharePhotoOptions.self, forCellWithReuseIdentifier: cellId)
         collectionView?.register(AddSharingSteps.self, forCellWithReuseIdentifier: stepId)
         collectionView?.register(SharePhotoHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
-//        setupImageAndTextViews()
+        setupTopBar()
     }
     
     let imageView : UIImageView = {
@@ -154,6 +153,25 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
         return label
     }()
     
+    lazy var cancelButton : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "cancel_shadow").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .black
+        button.contentMode = .scaleAspectFill
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    lazy var checkButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("Share", for: .normal)
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    
     @objc func switchContentType(){
         let actionController = SkypeActionController()
         actionController.addAction(Action("Inspiration", style: .default, handler: { action in
@@ -201,22 +219,13 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.item {
-        case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SharePhotoOptions
-            return cell
-        case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! AddSharingSteps
-            return cell
-        default:
-            assert(false, "Not a valid sharing option")
-        }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SharePhotoOptions
+        cell.backgroundColor = .red
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -228,25 +237,32 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 60)
+        return CGSize(width: view.frame.width, height: view.frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(0, 12, 0, 12)
     }
     
-    func setupBottomBar(){
-        imageView.addSubview(cameraButton)
-        imageView.addSubview(editPictureLabel)
+    let backgroundFill = UIView()
+    
+    private func setupTopBar(){
+        let guide = view.safeAreaLayoutGuide
+
+        view.addSubview(backgroundFill)
+        view.addSubview(cancelButton)
+        view.addSubview(checkButton)
         
-        cameraButton.anchor(top: nil, left: imageView.leftAnchor, bottom: imageView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 30, paddingRight: 0, width: 30, height: 26)
-        editPictureLabel.anchor(top: nil, left: cameraButton.rightAnchor, bottom: imageView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 30, paddingRight: 0, width: editPictureLabel.intrinsicContentSize.width, height: editPictureLabel.intrinsicContentSize.height)
+        backgroundFill.backgroundColor = .clear
+        backgroundFill.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 100)
+        cancelButton.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 16, paddingRight: 0, width: 18, height: 18)
+        checkButton.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 16, paddingRight: 12, width: checkButton.intrinsicContentSize.width, height: 18)
     }
     
     func setupTags(){
         view.addSubview(selectTagsCollection)
         selectTagsCollection.backgroundColor = .clear
-        selectTagsCollection.anchor(top: descriptionUnderline.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 320)
+        selectTagsCollection.anchor(top: descriptionUnderline.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 320)        
     }
     
     fileprivate func setupImageAndTextViews(){

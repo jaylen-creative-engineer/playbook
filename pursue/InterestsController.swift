@@ -8,7 +8,7 @@
 
 import UIKit
 
-class InterestsController : UICollectionViewController, UICollectionViewDelegateFlowLayout, SelectToProfile {
+class InterestsController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     let headerId = "headerId"
     let listId = "listId"

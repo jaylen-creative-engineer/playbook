@@ -17,15 +17,30 @@ class DiscussionPursuitsView : UICollectionViewCell, UICollectionViewDelegate, U
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
-        collectionView.isScrollEnabled = true
+        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     
     let cellId = "cellId"
     
+    let pursuitLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Pursuits"
+        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight(rawValue: 25))
+        return label
+    }()
+    
     func setupView(){
+        let underlineView = UIView()
+        underlineView.backgroundColor = .gray
+        
+        addSubview(pursuitLabel)
         addSubview(pursuitSteps)
-        pursuitSteps.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        addSubview(underlineView)
+        
+        pursuitLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: pursuitLabel.intrinsicContentSize.width, height: pursuitLabel.intrinsicContentSize.height)
+        pursuitSteps.anchor(top: pursuitLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 295)
+        underlineView.anchor(top: pursuitSteps.bottomAnchor, left: pursuitLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 0.5)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -46,7 +61,7 @@ class DiscussionPursuitsView : UICollectionViewCell, UICollectionViewDelegate, U
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width - 24, height: ((frame.width - 2) / 3) + 90)
+        return CGSize(width: frame.width - 60, height: ((frame.width - 2) / 3) + 90)
     }
     
     override init(frame: CGRect) {

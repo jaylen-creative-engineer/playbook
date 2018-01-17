@@ -10,7 +10,7 @@ import UIKit
 import FirebaseAuth
 import XLActionController
 
-class SettingsController : UICollectionViewController, UICollectionViewDelegateFlowLayout, SettingsHeaderDelegate {
+class SettingsController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     let headerId = "headerId"
     
@@ -122,7 +122,7 @@ class SettingsController : UICollectionViewController, UICollectionViewDelegateF
         let button = UIButton()
         button.setTitle("Settings", for: .normal)
         button.setTitleColor(UIColor.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()

@@ -36,6 +36,7 @@ class DiscussionPursuitsCells : UICollectionViewCell {
         iv.image = #imageLiteral(resourceName: "trees")
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
+        iv.layer.cornerRadius = 4
         return iv
     }()
     
@@ -64,7 +65,7 @@ class DiscussionPursuitsCells : UICollectionViewCell {
     func setupView(){
         addSubview(nextImage)
        
-        nextImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 6, paddingBottom: 0, paddingRight: 6, width: 0, height: 190)
+        nextImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
         setupCardDetails()
     }
     

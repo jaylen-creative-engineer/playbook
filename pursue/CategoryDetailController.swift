@@ -176,82 +176,82 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
         navigationController?.pushViewController(goToHomeController, animated: true)
     }
     
-    func handleMessage(for cell: CategoryHeaderRow) {
-        let messageController = MessagesController()
-        let navController = UINavigationController(rootViewController: messageController)
-        present(navController, animated: true, completion: nil)
-    }
-    
     func goBack() {
         navigationController?.popViewController(animated: true)
     }
     
     
     func categoryImageTapped() {
-        let layout = UICollectionViewFlowLayout()
-        let postDetailController = PostDetailController(collectionViewLayout: layout)
-        navigationController?.pushViewController(postDetailController, animated: true)
+        handleChangeToDetail(viewType: "isImageDetail")
     }
     
     
     func categoryImageHeld() {
         let actionController = SkypeActionController()
-        actionController.addAction(Action("SAVE", style: .default, handler: { action in
+        actionController.addAction(Action("Save", style: .default, handler: { action in
             // do something useful
         }))
-        actionController.addAction(Action("LIKE", style: .default, handler: { action in
+        actionController.addAction(Action("Like", style: .default, handler: { action in
             // do something useful
         }))
-        actionController.addAction(Action("SHARE", style: .default, handler: { action in
-            // do something useful
+        actionController.addAction(Action("Share", style: .default, handler: { action in
+            let text = "This is some text that I want to share."
+            let textToShare = [ text ]
+            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view
+            self.present(activityViewController, animated: true, completion: nil)
         }))
-        actionController.addAction(Action("CANCEL", style: .default, handler: {action in
+        actionController.addAction(Action("Cancel", style: .default, handler: {action in
             
         }))
         present(actionController, animated: true, completion: nil)
     }
     
     func pursuitTapped() {
-        let layout = UICollectionViewFlowLayout()
-        let pursuitDetailController = PursuitsDetailController(collectionViewLayout: layout)
-        navigationController?.pushViewController(pursuitDetailController, animated: true)
+        handleChangeToDetail(viewType: "isPursuitDetail")
     }
     
     func pursuitHeld() {
         let actionController = SkypeActionController()
-        actionController.addAction(Action("SAVE", style: .default, handler: { action in
+        actionController.addAction(Action("Save", style: .default, handler: { action in
             // do something useful
         }))
-        actionController.addAction(Action("LIKE", style: .default, handler: { action in
+        actionController.addAction(Action("Like", style: .default, handler: { action in
             // do something useful
         }))
-        actionController.addAction(Action("SHARE", style: .default, handler: { action in
-            // do something useful
+        actionController.addAction(Action("Share", style: .default, handler: { action in
+            let text = "This is some text that I want to share."
+            let textToShare = [ text ]
+            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view
+            self.present(activityViewController, animated: true, completion: nil)
         }))
-        actionController.addAction(Action("CANCEL", style: .default, handler: {action in
+        actionController.addAction(Action("Cancel", style: .default, handler: {action in
             
         }))
         present(actionController, animated: true, completion: nil)
     }
     
     func discussionTapped() {
-        let layout = UICollectionViewFlowLayout()
-        let profileDiscussionController = DiscussionDetailController(collectionViewLayout: layout)
-        navigationController?.pushViewController(profileDiscussionController, animated: true)
+        handleChangeToDetail(viewType: "isDiscussionDetail")
     }
     
     func discussionHeld() {
         let actionController = SkypeActionController()
-        actionController.addAction(Action("SAVE", style: .default, handler: { action in
+        actionController.addAction(Action("Save", style: .default, handler: { action in
             // do something useful
         }))
-        actionController.addAction(Action("LIKE", style: .default, handler: { action in
+        actionController.addAction(Action("Like", style: .default, handler: { action in
             // do something useful
         }))
-        actionController.addAction(Action("SHARE", style: .default, handler: { action in
-            // do something useful
+        actionController.addAction(Action("Share", style: .default, handler: { action in
+            let text = "This is some text that I want to share."
+            let textToShare = [ text ]
+            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view
+            self.present(activityViewController, animated: true, completion: nil)
         }))
-        actionController.addAction(Action("CANCEL", style: .default, handler: {action in
+        actionController.addAction(Action("Cancel", style: .default, handler: {action in
             
         }))
         present(actionController, animated: true, completion: nil)
@@ -259,32 +259,32 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
     
     
     func principleTapped() {
-        let layout = UICollectionViewFlowLayout()
-        let pursuitDetailController = PursuitsDetailController(collectionViewLayout: layout)
-        navigationController?.pushViewController(pursuitDetailController, animated: true)
+        handleChangeToDetail(viewType: "isPrinciplesDetail")
     }
     
     func principleHeld() {
         let actionController = SkypeActionController()
-        actionController.addAction(Action("SAVE", style: .default, handler: { action in
+        actionController.addAction(Action("Save", style: .default, handler: { action in
             // do something useful
         }))
-        actionController.addAction(Action("LIKE", style: .default, handler: { action in
+        actionController.addAction(Action("Like", style: .default, handler: { action in
             // do something useful
         }))
-        actionController.addAction(Action("SHARE", style: .default, handler: { action in
-            // do something useful
+        actionController.addAction(Action("Share", style: .default, handler: { action in
+            let text = "This is some text that I want to share."
+            let textToShare = [ text ]
+            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view
+            self.present(activityViewController, animated: true, completion: nil)
         }))
-        actionController.addAction(Action("CANCEL", style: .default, handler: {action in
+        actionController.addAction(Action("Cancel", style: .default, handler: {action in
             
         }))
         present(actionController, animated: true, completion: nil)
     }
     
     func showPostDetailForPost(){
-        let layout = UICollectionViewFlowLayout()
-        let postDetailController = PostDetailController(collectionViewLayout: layout)
-        navigationController?.pushViewController(postDetailController, animated: true)
+        handleChangeToDetail(viewType: "isImageDetail")
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -319,12 +319,6 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
         return 5
     }
     
-    func showCategoryDetailForCateogry(){
-        let layout = UICollectionViewFlowLayout()
-        let cateogryDetailController = CategoryDetailController(collectionViewLayout: layout)
-        navigationController?.pushViewController(cateogryDetailController, animated: true)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 0:
@@ -341,6 +335,30 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
             return CGSize(width: view.frame.width, height: 430)
         }
       }
+    
+    func handleChangeToDetail(viewType : String) {
+        switch viewType {
+        case "isPrinciplesDetail":
+            let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+            detail.principleView()
+            print("isPrinciple")
+            navigationController?.pushViewController(detail, animated: true)
+        case "isPursuitDetail":
+            let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+            detail.pursuitView()
+            navigationController?.pushViewController(detail, animated: true)
+        case "isImageDetail":
+            let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+            detail.imageView()
+            navigationController?.pushViewController(detail, animated: true)
+        case "isDiscussionDetail":
+            let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+            detail.discussionView()
+            navigationController?.pushViewController(detail, animated: true)
+        default:
+            assert(false, "Not a valid view type")
+        }
+    }
     
     func handleChangeToFeed(viewType : String) {
         switch viewType {
@@ -365,4 +383,5 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
             navigationController?.pushViewController(feed, animated: true)
         }
     }
+    
 }

@@ -10,11 +10,19 @@ import UIKit
 
 class FeedPursuit : UICollectionViewCell {
     
-    let relatedImage : UIImageView = {
+    var feedController : FeedController?
+    
+    lazy var relatedImage : UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "samuel-l")
         iv.layer.masksToBounds = true
         iv.contentMode = .scaleAspectFill
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleImageTap))
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleImageHeld))
+        tapGesture.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tapGesture)
+        iv.addGestureRecognizer(longGesture)
+        iv.isUserInteractionEnabled = true
         iv.layer.cornerRadius = 4
         return iv
     }()
@@ -36,6 +44,14 @@ class FeedPursuit : UICollectionViewCell {
         pv.translatesAutoresizingMaskIntoConstraints = false
         return pv
     }()
+    
+    @objc func handleImageTap(){
+        feedController?.imageClicked()
+    }
+    
+    @objc func handleImageHeld(){
+        feedController?.imageHeld()
+    }
 
     func setupView(){
         addSubview(relatedImage)
