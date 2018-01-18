@@ -157,23 +157,20 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
     
     func changeToExplore() {
         let layout = UICollectionViewFlowLayout()
-        let goToHomeController = HomeController(collectionViewLayout: layout)
-        goToHomeController.scrollToMenuIndex(menuIndex: 0)
-        navigationController?.pushViewController(goToHomeController, animated: true)
+        let goToExploreController = ExploreController(collectionViewLayout: layout)
+        navigationController?.pushViewController(goToExploreController, animated: true)
     }
     
     func changeToHome() {
         let layout = UICollectionViewFlowLayout()
         let goToHomeController = HomeController(collectionViewLayout: layout)
-        goToHomeController.scrollToMenuIndex(menuIndex: 1)
         navigationController?.pushViewController(goToHomeController, animated: true)
     }
     
     func changeToProfile() {
         let layout = UICollectionViewFlowLayout()
-        let goToHomeController = HomeController(collectionViewLayout: layout)
-        goToHomeController.scrollToMenuIndex(menuIndex: 2)
-        navigationController?.pushViewController(goToHomeController, animated: true)
+        let profileController = ProfileController(collectionViewLayout: layout)
+        navigationController?.pushViewController(profileController, animated: true)
     }
     
     func goBack() {

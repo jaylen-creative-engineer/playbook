@@ -18,24 +18,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.makeKeyAndVisible()
         
         let defaults = UserDefaults.standard
-        let layout = UICollectionViewFlowLayout()
 
         if defaults.object(forKey: "isFirstTime") != nil {
             defaults.set("No", forKey:"isFirstTime")
             defaults.synchronize()
-            let viewController = UINavigationController(rootViewController: HomeController(collectionViewLayout: layout))
-            self.window?.rootViewController = viewController
-            self.window?.makeKeyAndVisible()
+            
+            window = UIWindow(frame: UIScreen.main.bounds)
+            window?.rootViewController = UINavigationController(rootViewController: MainTabController())
+            window?.makeKeyAndVisible()
         } else {
             defaults.set("No", forKey:"isFirstTime")
             defaults.synchronize()
-            let viewController = UINavigationController(rootViewController: HomeController(collectionViewLayout: layout))
-            self.window?.rootViewController = viewController
-            self.window?.makeKeyAndVisible()
+            
+            window = UIWindow(frame: UIScreen.main.bounds)
+            window?.rootViewController = UINavigationController(rootViewController: MainTabController())
+            window?.makeKeyAndVisible()
 //            layout.scrollDirection = .horizontal
 //            let swipingController = SwipingController(collectionViewLayout: layout)
 //            window?.rootViewController = swipingController

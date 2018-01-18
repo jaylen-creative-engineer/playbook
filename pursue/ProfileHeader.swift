@@ -140,7 +140,7 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
         addSubview(settingsButton)
         addSubview(chatButton)
         
-        settingsButton.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 26, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 26, height: 26)
+        settingsButton.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 64, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 26, height: 26)
         chatButton.anchor(top: settingsButton.topAnchor, left: nil, bottom: nil, right: settingsButton.leftAnchor, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 32, width: 30, height: 22)
     }
     
@@ -149,12 +149,12 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
         userInfoStack.axis = .vertical
         userInfoStack.spacing = 10
         userInfoStack.translatesAutoresizingMaskIntoConstraints = false
-        
+                
         addSubview(photoImageView)
         addSubview(userInfoStack)
         addSubview(userBio)
         addSubview(postCollection)
-        photoImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 36, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 100, height: 100)
+        photoImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 64, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 100, height: 100)
         userInfoStack.anchor(top: nil, left: photoImageView.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
         userInfoStack.centerYAnchor.constraint(equalTo: photoImageView.centerYAnchor).isActive = true
         userBio.anchor(top: photoImageView.bottomAnchor, left: photoImageView.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: userBio.intrinsicContentSize.height)

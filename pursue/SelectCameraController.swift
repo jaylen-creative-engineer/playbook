@@ -36,13 +36,19 @@ class SelectCameraController : UICollectionViewController, UICollectionViewDeleg
         
         collectionView?.isPagingEnabled = true
         collectionView?.isScrollEnabled = false
-        navigationController?.navigationBar.isHidden = true
+        tabBarController?.navigationController?.navigationBar.isHidden = true
         collectionView?.register(CameraController.self, forCellWithReuseIdentifier: cellId)
         collectionView?.register(PhotoSelectorController.self, forCellWithReuseIdentifier: selectId)
         collectionView?.contentInset = UIEdgeInsetsMake(55, 0, 75, 0)
+        collectionView?.backgroundColor = .white
         setupCaptureSession()
         setupMenuBar()
         scrollToMenuIndex(menuIndex: 1)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

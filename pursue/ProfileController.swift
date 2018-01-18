@@ -1,5 +1,5 @@
 //
-//  HomeRowContainer.swift
+//  ProfileContainer.swift
 //  pursue
 //
 //  Created by Jaylen Sanders on 11/27/17.
@@ -9,33 +9,23 @@
 import UIKit
 import XLActionController
 
-
-class HomeController : UICollectionViewController, UICollectionViewDelegateFlowLayout, HomeRowImageEngagements, HomePursuitsRowDelegate, HomePrinciplesDelegate, HomeDiscussionDelegate {
+class ProfileController : UICollectionViewController, UICollectionViewDelegateFlowLayout, ProfileHeaderDelegate, ProfilePursuitsRowDelegate, ProfilePostDelegate, ProfilePrincipleDelegate, ProfileDiscussionDelegate {
+    
+    var homeController : HomeController?
+    var messageController : MessagesController?
     
     let cellId = "cellId"
     let secondaryId = "secondaryId"
     let customRowId = "customRowId"
-    let pursuitId = "pursuitId"
+    let peopleId = "peopleId"
     let principleId = "principleId"
-    var homeController : HomeController?
+    let exerciseId = "exerciseId"
+    let categoryId = "categoryId"
+    let pursuitsId = "pursuitsId"
+    let postId = "postId"
+    let addedId = "addedId"
+    let headerId = "headerId"
     let discussionId = "discussionId"
-    let labelId = "labelId"
-    
-    let homeCollection : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        return collectionView
-    }()
-    
-    lazy var floatingCamera : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 30
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(switchToCamera), for: .touchUpInside)
-        return button
-    }()
     
     lazy var cameraIcon : UIImageView = {
         let iv = UIImageView()
@@ -47,7 +37,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     }()
     
     lazy var homeIcon : UIImageView = {
-       let iv = UIImageView()
+        let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "Pursuit-typed").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
@@ -58,20 +48,6 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         let layout = UICollectionViewFlowLayout()
         let cameraController = SelectCameraController(collectionViewLayout: layout)
         navigationController?.present(cameraController, animated: true, completion: nil)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        tabBarController?.navigationController?.navigationBar.isHidden = true
-        collectionView?.register(HomeRow.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.register(HomePursuits.self, forCellWithReuseIdentifier: pursuitId)
-        collectionView?.register(HomePrinciples.self, forCellWithReuseIdentifier: principleId)
-        collectionView?.register(HomeDiscussion.self, forCellWithReuseIdentifier: discussionId)
-        collectionView?.register(HomeInterestsRow.self, forCellWithReuseIdentifier: labelId)
-        collectionView?.backgroundColor = .white
-        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
-        setupTopBar()
     }
     
     let backgroundFill = UIView()
@@ -87,35 +63,42 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         homeIcon.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 8, paddingLeft: 28, paddingBottom: 14, paddingRight: 0, width: 50, height: 18)
         cameraIcon.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 14, paddingRight: 22, width: 18, height: 16)
     }
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        tabBarController?.navigationController?.navigationBar.isHidden = true
+        collectionView?.register(ProfilePursuitsRow.self, forCellWithReuseIdentifier: pursuitsId)
+        collectionView?.register(ProfilePostRow.self, forCellWithReuseIdentifier: postId)
+        collectionView?.register(ProfileAddedRow.self, forCellWithReuseIdentifier: addedId)
+        collectionView?.register(ProfilePrincipleRow.self, forCellWithReuseIdentifier: principleId)
+        collectionView?.register(ProfileDiscussion.self, forCellWithReuseIdentifier: discussionId)
+        collectionView?.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView?.backgroundColor = .white
+        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
 
+        setupTopBar()
+        
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! ProfileHeader
+        header.delegate = self
+        return header
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
     }
     
-    // MARK: - Setup View
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: (view.frame.height / 8.5) - 55)
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func homeDiscussionFeed(){
-        handleChangeToFeed(viewType: "isDiscussionFeed")
-    }
-    
-    func homeDiscussionTapped() {
+    func profileDiscussionTapped() {
         handleChangeToDetail(viewType: "isDiscussionDetail")
     }
     
-    func homeDiscussionHeld() {
+    func profileDiscussionHeld() {
         let actionController = SkypeActionController()
         actionController.addAction(Action("Save", style: .default, handler: { action in
             // do something useful
@@ -136,68 +119,18 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         present(actionController, animated: true, completion: nil)
     }
     
-    func principleTapped() {
-        handleChangeToDetail(viewType: "isPrinciplesDetail")
+    func handleSettings() {
+        let layout = UICollectionViewLayout()
+        let settingsController = SettingsController(collectionViewLayout: layout)
+        navigationController?.pushViewController(settingsController, animated: true)
     }
     
-    func principleHeld() {
-        let actionController = SkypeActionController()
-        actionController.addAction(Action("Save", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Like", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Share", style: .default, handler: { action in
-            let text = "This is some text that I want to share."
-            let textToShare = [ text ]
-            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-            activityViewController.popoverPresentationController?.sourceView = self.view
-            self.present(activityViewController, animated: true, completion: nil)
-        }))
-        actionController.addAction(Action("Cancel", style: .default, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
+    func handleMessage() {
+        present(MessagesController(), animated: true) {
+            self.messageController?.fetchUserAndSetupNavBarTitle()
+        }
     }
-    
-    func showPrinciplesFeed(){
-        handleChangeToFeed(viewType: "isPrinciplesFeed")
-    }
-    
-    func showPursuitsFeed() {
-        handleChangeToFeed(viewType: "isPursuitFeed")
-    }
-    
-    func homeRowImageTapped() {
-        handleChangeToDetail(viewType: "isImageDetail")
-    }
-    
-    func homeRowImageHeld() {
-        let actionController = SkypeActionController()
-        actionController.addAction(Action("Save", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Like", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Share", style: .default, handler: { action in
-            let text = "This is some text that I want to share."
-            let textToShare = [ text ]
-            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-            activityViewController.popoverPresentationController?.sourceView = self.view
-            self.present(activityViewController, animated: true, completion: nil)
-        }))
-        actionController.addAction(Action("Cancel", style: .default, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
-    }
-    
-    func handleChangeToFeed() {
-        handleChangeToFeed(viewType: "isImageFeed")
-    }
-    
+
     func pursuitClicked() {
         handleChangeToDetail(viewType: "isPursuitDetail")
     }
@@ -205,6 +138,60 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     func pursuitHeld() {
         let actionController = SkypeActionController()
         actionController.addAction(Action("Save", style: .default, handler: { action in
+            
+        }))
+        actionController.addAction(Action("Like", style: .default, handler: { action in
+            
+        }))
+        actionController.addAction(Action("Share", style: .default, handler: { action in
+            let text = "This is some text that I want to share."
+            let textToShare = [ text ]
+            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view
+            self.present(activityViewController, animated: true, completion: nil)
+        }))
+        
+        actionController.addAction(Action("Cancel", style: .default, handler: {action in
+            
+        }))
+        present(actionController, animated: true, completion: nil)
+    }
+    
+    
+    func profilePostTapped() {
+        handleChangeToDetail(viewType: "isImageDetail")
+    }
+    
+    func profilePostHeld() {
+        let actionController = SkypeActionController()
+        actionController.addAction(Action("Save", style: .default, handler: { action in
+            
+        }))
+        actionController.addAction(Action("Like", style: .default, handler: { action in
+            
+        }))
+        actionController.addAction(Action("Share", style: .default, handler: { action in
+            let text = "This is some text that I want to share."
+            let textToShare = [ text ]
+            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view
+            self.present(activityViewController, animated: true, completion: nil)
+        }))
+        
+        actionController.addAction(Action("Cancel", style: .default, handler: {action in
+            
+        }))
+        present(actionController, animated: true, completion: nil)
+        
+    }
+    
+    func profilePrincipleTapped() {
+        handleChangeToDetail(viewType: "isPrinciplesDetail")
+    }
+    
+    func profilePrincipleHeld() {
+        let actionController = SkypeActionController()
+        actionController.addAction(Action("Save", style: .default, handler: { action in
             // do something useful
         }))
         actionController.addAction(Action("Like", style: .default, handler: { action in
@@ -221,50 +208,71 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
             
         }))
         present(actionController, animated: true, completion: nil)
+        
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.width, height: (view.frame.height / 2.5) - 15)
+    }
+    
+    // MARK: - Setup View
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         switch indexPath.item {
         case 0:
-            return CGSize(width: view.frame.width, height: 75)
+            return CGSize(width: view.frame.width, height: 370)
         case 1:
-            return CGSize(width: view.frame.width, height: 375)
+            return CGSize(width: view.frame.width, height: 330)
         case 2:
-            return CGSize(width: view.frame.width, height: 340)
+             return CGSize(width: view.frame.width, height: 320)
         case 3:
-            return CGSize(width: view.frame.width, height: 470)
+            return CGSize(width: view.frame.width, height: 205)
         case 4:
-            return CGSize(width: view.frame.width, height: 250)
+            return CGSize(width: view.frame.width, height: 445)
         default:
-            assert(false, "Not a valid row")
+            assert(false, "Not a valid cell")
+        }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        if section == 0 {
+            return UIEdgeInsetsMake(0, 0, 0, 0)
+        } else {
+            return UIEdgeInsetsMake(32, 0, 0, 0)
         }
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell : UICollectionViewCell
         switch indexPath.item {
         case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: labelId, for: indexPath) as! HomeInterestsRow
-            return cell
+            let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuitsRow
+            pursuitCell.delegate = self
+            return pursuitCell
         case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! HomePursuits
-            cell.pursuitsDelegate = self
-            return cell
+            let principleCell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! ProfilePrincipleRow
+            principleCell.delegate = self
+            return principleCell
         case 2:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciples
-            cell.principlesDelegate = self
-            return cell
+            let discussionCell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! ProfileDiscussion
+            discussionCell.profileDelegate = self
+            return discussionCell
         case 3:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeRow
-            cell.homeDelegate = self
-            return cell
+            let addedCell = collectionView.dequeueReusableCell(withReuseIdentifier: addedId, for: indexPath) as! ProfileAddedRow
+            return addedCell
         case 4:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! HomeDiscussion
-            cell.delegate = self
-            return cell
+            let postCell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! ProfilePostRow
+            postCell.delegate = self
+            return postCell
         default:
-            assert(false, "Not a valid row")
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuitsRow
+            return cell
         }
-       
     }
     
     func handleChangeToDetail(viewType : String) {
@@ -290,28 +298,4 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
             assert(false, "Not a valid view type")
         }
     }
-    
-    func handleChangeToFeed(viewType : String) {
-        switch viewType {
-        case "isPrinciplesFeed":
-            let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
-            feed.principleView()
-            navigationController?.pushViewController(feed, animated: true)
-        case "isPursuitFeed":
-            let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
-            feed.pursuitView()
-            navigationController?.pushViewController(feed, animated: true)
-        case "isImageFeed":
-            let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
-            feed.imageView()
-            navigationController?.pushViewController(feed, animated: true)
-        case "isDiscussionFeed":
-            let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
-            feed.discussionView()
-            navigationController?.pushViewController(feed, animated: true)
-        default:
-            assert(false, "Not a valid feed")
-        }
-    }
-    
 }

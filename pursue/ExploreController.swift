@@ -1,5 +1,5 @@
 //
-//  HomeRowContainer.swift
+//  ExploreContainer.swift
 //  pursue
 //
 //  Created by Jaylen Sanders on 11/27/17.
@@ -9,33 +9,45 @@
 import UIKit
 import XLActionController
 
-
-class HomeController : UICollectionViewController, UICollectionViewDelegateFlowLayout, HomeRowImageEngagements, HomePursuitsRowDelegate, HomePrinciplesDelegate, HomeDiscussionDelegate {
+class ExploreController : UICollectionViewController, UICollectionViewDelegateFlowLayout, ExploreDiscussionDelegate, ExploreExerciseDelegate, ExplorePrincipleDelegate, ExploreImageDelegate, ExploreCategoryDelegate, PeopleRowDelegate {
     
     let cellId = "cellId"
     let secondaryId = "secondaryId"
     let customRowId = "customRowId"
-    let pursuitId = "pursuitId"
+    let peopleId = "peopleId"
     let principleId = "principleId"
-    var homeController : HomeController?
+    let exerciseId = "exerciseId"
+    let categoryId = "categoryId"
     let discussionId = "discussionId"
-    let labelId = "labelId"
     
-    let homeCollection : UICollectionView = {
+    let exploreCollection : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         return collectionView
     }()
     
-    lazy var floatingCamera : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 30
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(switchToCamera), for: .touchUpInside)
-        return button
-    }()
+    var homeController : HomeController?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        tabBarController?.navigationController?.navigationBar.isHidden = true
+        collectionView?.register(ExploreImageRow.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(PeopleRow.self, forCellWithReuseIdentifier: peopleId)
+        collectionView?.register(ExplorePrinciplesRow.self, forCellWithReuseIdentifier: principleId)
+        collectionView?.register(ExploreExerciseRow.self, forCellWithReuseIdentifier: exerciseId)
+        collectionView?.register(ExploreCategoryRow.self, forCellWithReuseIdentifier: categoryId)
+        collectionView?.register(ExploreDiscussion.self, forCellWithReuseIdentifier: discussionId)
+        collectionView?.backgroundColor = .white
+        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
+        setupTopBar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
     
     lazy var cameraIcon : UIImageView = {
         let iv = UIImageView()
@@ -47,7 +59,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     }()
     
     lazy var homeIcon : UIImageView = {
-       let iv = UIImageView()
+        let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "Pursuit-typed").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
@@ -58,20 +70,6 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         let layout = UICollectionViewFlowLayout()
         let cameraController = SelectCameraController(collectionViewLayout: layout)
         navigationController?.present(cameraController, animated: true, completion: nil)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        tabBarController?.navigationController?.navigationBar.isHidden = true
-        collectionView?.register(HomeRow.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.register(HomePursuits.self, forCellWithReuseIdentifier: pursuitId)
-        collectionView?.register(HomePrinciples.self, forCellWithReuseIdentifier: principleId)
-        collectionView?.register(HomeDiscussion.self, forCellWithReuseIdentifier: discussionId)
-        collectionView?.register(HomeInterestsRow.self, forCellWithReuseIdentifier: labelId)
-        collectionView?.backgroundColor = .white
-        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
-        setupTopBar()
     }
     
     let backgroundFill = UIView()
@@ -87,184 +85,194 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         homeIcon.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 8, paddingLeft: 28, paddingBottom: 14, paddingRight: 0, width: 50, height: 18)
         cameraIcon.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 14, paddingRight: 22, width: 18, height: 16)
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = true
-    }
     
     // MARK: - Setup View
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: (view.frame.height / 8.5) - 55)
-    }
-    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return 6
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func homeDiscussionFeed(){
-        handleChangeToFeed(viewType: "isDiscussionFeed")
-    }
-    
-    func homeDiscussionTapped() {
-        handleChangeToDetail(viewType: "isDiscussionDetail")
-    }
-    
-    func homeDiscussionHeld() {
-        let actionController = SkypeActionController()
-        actionController.addAction(Action("Save", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Like", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Share", style: .default, handler: { action in
-            let text = "This is some text that I want to share."
-            let textToShare = [ text ]
-            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-            activityViewController.popoverPresentationController?.sourceView = self.view
-            self.present(activityViewController, animated: true, completion: nil)
-        }))
-        actionController.addAction(Action("Cancel", style: .default, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
-    }
-    
-    func principleTapped() {
-        handleChangeToDetail(viewType: "isPrinciplesDetail")
-    }
-    
-    func principleHeld() {
-        let actionController = SkypeActionController()
-        actionController.addAction(Action("Save", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Like", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Share", style: .default, handler: { action in
-            let text = "This is some text that I want to share."
-            let textToShare = [ text ]
-            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-            activityViewController.popoverPresentationController?.sourceView = self.view
-            self.present(activityViewController, animated: true, completion: nil)
-        }))
-        actionController.addAction(Action("Cancel", style: .default, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
-    }
-    
-    func showPrinciplesFeed(){
-        handleChangeToFeed(viewType: "isPrinciplesFeed")
-    }
-    
-    func showPursuitsFeed() {
-        handleChangeToFeed(viewType: "isPursuitFeed")
-    }
-    
-    func homeRowImageTapped() {
-        handleChangeToDetail(viewType: "isImageDetail")
-    }
-    
-    func homeRowImageHeld() {
-        let actionController = SkypeActionController()
-        actionController.addAction(Action("Save", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Like", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Share", style: .default, handler: { action in
-            let text = "This is some text that I want to share."
-            let textToShare = [ text ]
-            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-            activityViewController.popoverPresentationController?.sourceView = self.view
-            self.present(activityViewController, animated: true, completion: nil)
-        }))
-        actionController.addAction(Action("Cancel", style: .default, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
-    }
-    
-    func handleChangeToFeed() {
-        handleChangeToFeed(viewType: "isImageFeed")
-    }
-    
-    func pursuitClicked() {
-        handleChangeToDetail(viewType: "isPursuitDetail")
-    }
-    
-    func pursuitHeld() {
-        let actionController = SkypeActionController()
-        actionController.addAction(Action("Save", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Like", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Share", style: .default, handler: { action in
-            let text = "This is some text that I want to share."
-            let textToShare = [ text ]
-            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-            activityViewController.popoverPresentationController?.sourceView = self.view
-            self.present(activityViewController, animated: true, completion: nil)
-        }))
-        actionController.addAction(Action("Cancel", style: .default, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        if section == 0 {
+            return UIEdgeInsetsMake(0, 0, 0, 0)
+        } else {
+            return UIEdgeInsetsMake(32, 0, 0, 0)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 0:
-            return CGSize(width: view.frame.width, height: 75)
+            return CGSize(width: view.frame.width, height: 187)
         case 1:
-            return CGSize(width: view.frame.width, height: 375)
+            return CGSize(width: view.frame.width, height: 330)
         case 2:
-            return CGSize(width: view.frame.width, height: 340)
+            return CGSize(width: view.frame.width, height: 345)
         case 3:
-            return CGSize(width: view.frame.width, height: 470)
+            return CGSize(width: view.frame.width, height: 300)
         case 4:
-            return CGSize(width: view.frame.width, height: 250)
+            return CGSize(width: view.frame.width, height: 230)
+        case 5:
+            return CGSize(width: view.frame.width, height: 410)
         default:
-            assert(false, "Not a valid row")
+            return CGSize(width: view.frame.width, height: 260)
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.width, height: (view.frame.height / 8.5) - 45)
+    }
+    
+    func exploreCategoryTapped() {
+        let layout = UICollectionViewFlowLayout()
+        let categoryDetailController = CategoryDetailController(collectionViewLayout: layout)
+        navigationController?.pushViewController(categoryDetailController, animated: true)
+    }
+    
+    func imageTapped() {
+        handleChangeToDetail(viewType: "isImageDetail")
+    }
+    
+    func imageHeld() {
+        let actionController = SkypeActionController()
+        actionController.addAction(Action("Save", style: .default, handler: { action in
+            // do something useful
+        }))
+        actionController.addAction(Action("Like", style: .default, handler: { action in
+            // do something useful
+        }))
+        actionController.addAction(Action("Share", style: .default, handler: { action in
+            let text = "This is some text that I want to share."
+            let textToShare = [ text ]
+            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view
+            self.present(activityViewController, animated: true, completion: nil)
+        }))
+        actionController.addAction(Action("Cancel", style: .default, handler: {action in
+            
+        }))
+        present(actionController, animated: true, completion: nil)
+    }
+    
+    func explorePrincipleTapped() {
+        handleChangeToDetail(viewType: "isPrinciplesDetail")
+    }
+    
+    func explorePrincipleHeld() {
+        let actionController = SkypeActionController()
+        actionController.addAction(Action("Save", style: .default, handler: { action in
+            
+        }))
+        actionController.addAction(Action("Like", style: .default, handler: { action in
+            
+        }))
+        actionController.addAction(Action("Share", style: .default, handler: { action in
+            let text = "This is some text that I want to share."
+            let textToShare = [ text ]
+            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view
+            self.present(activityViewController, animated: true, completion: nil)
+        }))
+        
+        actionController.addAction(Action("Cancel", style: .default, handler: {action in
+            
+        }))
+        present(actionController, animated: true, completion: nil)
+        
+    }
+    
+    func exploreDiscussionTapped() {
+        handleChangeToDetail(viewType: "isDiscussionDetail")
+    }
+    
+    func exploreDiscussionHeld() {
+        let actionController = SkypeActionController()
+        actionController.addAction(Action("Save", style: .default, handler: { action in
+            // do something useful
+        }))
+        actionController.addAction(Action("Like", style: .default, handler: { action in
+            // do something useful
+        }))
+        actionController.addAction(Action("Share", style: .default, handler: { action in
+            let text = "This is some text that I want to share."
+            let textToShare = [ text ]
+            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view
+            self.present(activityViewController, animated: true, completion: nil)
+        }))
+        actionController.addAction(Action("Cancel", style: .default, handler: {action in
+            
+        }))
+        present(actionController, animated: true, completion: nil)
+    }
+    
+    func explorePursuitHeld() {
+        let actionController = SkypeActionController()
+        actionController.addAction(Action("Save", style: .default, handler: { action in
+            
+        }))
+        actionController.addAction(Action("Like", style: .default, handler: { action in
+            
+        }))
+        actionController.addAction(Action("Share", style: .default, handler: { action in
+            let text = "This is some text that I want to share."
+            let textToShare = [ text ]
+            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view
+            self.present(activityViewController, animated: true, completion: nil)
+        }))
+        
+        actionController.addAction(Action("Cancel", style: .default, handler: {action in
+            
+        }))
+        present(actionController, animated: true, completion: nil)
+    }
+    
+    func explorePursuitTapped() {
+        handleChangeToDetail(viewType: "isPursuitDetail")
+    }
+    
+    func profileTapped() {
+        let layout = UICollectionViewFlowLayout()
+        let profileController = ProfileController(collectionViewLayout: layout)
+        navigationController?.pushViewController(profileController, animated: true)
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell : UICollectionViewCell
         switch indexPath.item {
         case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: labelId, for: indexPath) as! HomeInterestsRow
-            return cell
+            let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: categoryId, for: indexPath) as! ExploreCategoryRow
+            categoryCell.exploreDelegate = self
+            return categoryCell
         case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! HomePursuits
-            cell.pursuitsDelegate = self
-            return cell
+            let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! ExploreExerciseRow
+            pursuitCell.exploreDelegate = self
+            return pursuitCell
         case 2:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciples
-            cell.principlesDelegate = self
-            return cell
+            let principleCell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! ExplorePrinciplesRow
+            principleCell.exploreDelegate = self
+            return principleCell
         case 3:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeRow
-            cell.homeDelegate = self
-            return cell
+            let discussionCell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! ExploreDiscussion
+            discussionCell.exploreDiscussionDelegate = self
+            return discussionCell
         case 4:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! HomeDiscussion
-            cell.delegate = self
-            return cell
+            let peopleCell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! PeopleRow
+            peopleCell.peopleDelegate = self
+            return peopleCell
+        case 5:
+            let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreImageRow
+            imageCell.exploreDelegate = self
+            return imageCell
         default:
-            assert(false, "Not a valid row")
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! ExploreExerciseRow
+            return cell
         }
-       
     }
     
     func handleChangeToDetail(viewType : String) {
@@ -310,8 +318,8 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
             feed.discussionView()
             navigationController?.pushViewController(feed, animated: true)
         default:
-            assert(false, "Not a valid feed")
+            let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
+            navigationController?.pushViewController(feed, animated: true)
         }
     }
-    
 }

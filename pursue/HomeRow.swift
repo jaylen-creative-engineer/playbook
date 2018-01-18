@@ -112,6 +112,4 @@ class HomeRow: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewD
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    
 }

@@ -78,9 +78,7 @@ class MessagesController: UITableViewController {
     var messagesDictionary = [String: Message]()
     
     func handleGoBack(){
-        let homeController = HomeController()
-        homeController.messageController = self
-        dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
     
     func observeUserMessages() {

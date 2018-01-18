@@ -14,5 +14,6 @@ target 'pursue' do
   pod 'CropViewController'
   pod 'JHTAlertController', '~> 0.2'
   pod 'Gifu'
+  pod 'iCarousel', '~> 1.8'
  
 end
