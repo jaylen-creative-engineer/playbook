@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import iCarousel
 
 protocol ChangeToFeed {
     func handleChangeToFeed(for cell: HomeRow)
@@ -18,55 +19,44 @@ protocol HomeRowImageEngagements {
     func handleChangeToFeed()
 }
 
-class HomeRow: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, HomeImageEngagements {
+class HomeRow: UICollectionViewCell, HomeImageEngagements, iCarouselDataSource, iCarouselDelegate {
     
     var accessHomeController : HomeController?
     var delegate : ChangeToFeed?
     var homeDelegate : HomeRowImageEngagements?
     
-    let imageNames = ["ferrari", "pagani", "travel", "contacts", "3d-touch"]
-    let homeDescriptions = ["iChat App", "New York Exchange", "Travel App", "Contact Page", "Settings 3d touch"]
+    var itemView : UIImageView = {
+        let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "ferrari")
+        iv.contentMode = .scaleAspectFill
+        return iv
+    }()
     
-    let rowLabel : UILabel = {
+    var carouselView : iCarousel = {
+       let ic = iCarousel()
+        return ic
+    }()
+    
+    var imageLabel : UILabel = {
         let label = UILabel()
-        label.text = "Mobile Design"
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
-        let tap = UITapGestureRecognizer(target: self, action: #selector(feedChange))
-        label.addGestureRecognizer(tap)
-        label.isUserInteractionEnabled = true
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 50)
+        label.tag = 1
         return label
     }()
     
-    lazy var moreButton : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "right-arrow-1").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(feedChange), for: .touchUpInside)
-        return button
-    }()
+    let imageNames = ["ferrari", "pagani", "travel", "contacts", "3d-touch"]
+    let homeDescriptions = ["iChat App", "New York Exchange", "Travel App", "Contact Page", "Settings 3d touch"]
+    var items: [Int] = []
     
     @objc func feedChange(){
         homeDelegate?.handleChangeToFeed()
     }
     
-    let cellId = "cellId"
-    
-    let postCollection : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        return collectionView
-    }()
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        items = [0, 1, 2, 3, 4, 5]
     }
-
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (frame.width / 2) + 60, height: frame.height)
-    }
-    
     func homeTapped() {
         homeDelegate?.homeRowImageTapped()
     }
@@ -75,36 +65,42 @@ class HomeRow: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewD
         homeDelegate?.homeRowImageHeld()
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeRowCells
-        cell.postImage.image = UIImage(named: imageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
-        cell.homeMainDescription.text = homeDescriptions[indexPath.item]
-        cell.delegate = self
-        return cell
+    func numberOfItems(in carousel: iCarousel) -> Int {
+        return 5
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 12, 0, 12)
-    }
-    
-    func setupView(){
-        addSubview(postCollection)
-        addSubview(rowLabel)
-        addSubview(moreButton)
+    func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
+        let tempView = UIView(frame: CGRect(x: 0, y: 0, width: 300, height: 400))
+        tempView.backgroundColor = .blue
+        tempView.layer.cornerRadius = 4
+        tempView.layer.masksToBounds = true
         
-        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 52, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
-        moreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 24, height: 12)
-        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-       
-        postCollection.showsHorizontalScrollIndicator = false
-        postCollection.register(HomeRowCells.self, forCellWithReuseIdentifier: cellId)
-        postCollection.dataSource = self
-        postCollection.delegate = self
+        let carouselImage = UIImageView()
+        carouselImage.image = #imageLiteral(resourceName: "ferrari-f70")
+        carouselImage.contentMode = .scaleAspectFill
+        
+//        tempView.addSubview(carouselImage)
+//        carouselImage.anchor(top: tempView.topAnchor, left: tempView.leftAnchor, bottom: tempView.bottomAnchor, right: tempView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        return tempView
+    }
+    
+    func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
+        if (option == .spacing) {
+            return value * 1.2
+        }
+        
+        return value
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
+        
+        let guide = safeAreaLayoutGuide
+        addSubview(carouselView)
+        carouselView.anchor(top: topAnchor, left: guide.leftAnchor, bottom: bottomAnchor, right: guide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        carouselView.dataSource = self
+        carouselView.delegate = self
+        carouselView.type = .invertedTimeMachine
     }
     
     

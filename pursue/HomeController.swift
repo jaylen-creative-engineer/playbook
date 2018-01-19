@@ -8,7 +8,7 @@
 
 import UIKit
 import XLActionController
-
+import iCarousel
 
 class HomeController : UICollectionViewController, UICollectionViewDelegateFlowLayout, HomeRowImageEngagements, HomePursuitsRowDelegate, HomePrinciplesDelegate, HomeDiscussionDelegate {
     
@@ -71,6 +71,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         collectionView?.register(HomeInterestsRow.self, forCellWithReuseIdentifier: labelId)
         collectionView?.backgroundColor = .white
         collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
+  
         setupTopBar()
     }
     
@@ -228,11 +229,11 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         case 0:
             return CGSize(width: view.frame.width, height: 75)
         case 1:
-            return CGSize(width: view.frame.width, height: 375)
+            return CGSize(width: view.frame.width, height: 470)
         case 2:
             return CGSize(width: view.frame.width, height: 340)
         case 3:
-            return CGSize(width: view.frame.width, height: 470)
+            return CGSize(width: view.frame.width, height: 375)
         case 4:
             return CGSize(width: view.frame.width, height: 250)
         default:
@@ -246,16 +247,16 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: labelId, for: indexPath) as! HomeInterestsRow
             return cell
         case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! HomePursuits
-            cell.pursuitsDelegate = self
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeRow
+            cell.homeDelegate = self
             return cell
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciples
             cell.principlesDelegate = self
             return cell
         case 3:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeRow
-            cell.homeDelegate = self
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! HomePursuits
+            cell.pursuitsDelegate = self
             return cell
         case 4:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! HomeDiscussion

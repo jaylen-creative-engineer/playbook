@@ -130,6 +130,7 @@
 		E6CE229E1F67616F006C5755 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CE229D1F67616F006C5755 /* CameraController.swift */; };
 		E6D571412010FD59008A37CC /* HomeInterestsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D571402010FD59008A37CC /* HomeInterestsRow.swift */; };
 		E6D571432010FD7D008A37CC /* HomeInterestsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D571422010FD7D008A37CC /* HomeInterestsCells.swift */; };
+		E6D5714620115644008A37CC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6D5714520115644008A37CC /* QuartzCore.framework */; };
 		E6F1B04E1FDB2E2B005FB9DA /* HomeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F1B04D1FDB2E2A005FB9DA /* HomeHeader.swift */; };
 		E6F41F492002633E002FD8D4 /* possible-ui.gif in Resources */ = {isa = PBXBuildFile; fileRef = E6F41F482002633E002FD8D4 /* possible-ui.gif */; };
 		E6F41F4B2003CD8E002FD8D4 /* ChatHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F41F4A2003CD8E002FD8D4 /* ChatHeader.swift */; };
@@ -264,6 +265,7 @@
 		E6D571402010FD59008A37CC /* HomeInterestsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInterestsRow.swift; sourceTree = "<group>"; };
 		E6D571422010FD7D008A37CC /* HomeInterestsCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInterestsCells.swift; sourceTree = "<group>"; };
 		E6D5714420110B2A008A37CC /* pursue-bridging-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "pursue-bridging-header.h"; sourceTree = "<group>"; };
+		E6D5714520115644008A37CC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E6F1B04D1FDB2E2A005FB9DA /* HomeHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeHeader.swift; sourceTree = "<group>"; };
 		E6F41F482002633E002FD8D4 /* possible-ui.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "possible-ui.gif"; sourceTree = "<group>"; };
 		E6F41F4A2003CD8E002FD8D4 /* ChatHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatHeader.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6D5714620115644008A37CC /* QuartzCore.framework in Frameworks */,
 				77792961994B0D733CE1F3C7 /* Pods_pursue.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -293,6 +296,7 @@
 		B8D5720C3FE5E65C8BA745E6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E6D5714520115644008A37CC /* QuartzCore.framework */,
 				CDC2EBDE7548534CF7FD043E /* Pods_pursue.framework */,
 			);
 			name = Frameworks;
