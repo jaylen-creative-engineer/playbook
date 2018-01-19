@@ -46,7 +46,7 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
     lazy var homeIcon : UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(#imageLiteral(resourceName: "home").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "home-selected").withRenderingMode(.alwaysTemplate), for: .normal)
         button.contentMode = .scaleAspectFit
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(homeActive), for: .touchUpInside)

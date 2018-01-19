@@ -423,20 +423,6 @@
 			name = Chat;
 			sourceTree = "<group>";
 		};
-		E6AB64E01F71888C00033C09 /* SelectPhoto */ = {
-			isa = PBXGroup;
-			children = (
-				E6AB64E11F7188A300033C09 /* PhotoSelectorController.swift */,
-				E6AB64E31F7188B100033C09 /* PhotoSelectorCell.swift */,
-				E6AB64E51F7188C000033C09 /* PhotoSelectorHeader.swift */,
-				E6AB64E71F7188CB00033C09 /* SharePhotoController.swift */,
-				E62530A41FFD341400E41794 /* SharePhotoOptions.swift */,
-				E61867721FFDBD5400F2C11C /* AddSharingSteps.swift */,
-				E6A2B5F82002581200E72416 /* SharePhotoHeader.swift */,
-			);
-			name = SelectPhoto;
-			sourceTree = "<group>";
-		};
 		E6CE22681F671D10006C5755 = {
 			isa = PBXGroup;
 			children = (
@@ -471,7 +457,6 @@
 				E6A273FC1F68323F00F5B4C8 /* Models */,
 				E6CE22961F675A35006C5755 /* Profile */,
 				E64324A61F79559D0090075F /* Pursuits */,
-				E6AB64E01F71888C00033C09 /* SelectPhoto */,
 				E6308EA51FBD23F700571130 /* Settings */,
 				E6CE22861F671E2D006C5755 /* Utils */,
 				E6CE22741F671D10006C5755 /* AppDelegate.swift */,
@@ -573,6 +558,13 @@
 		E6CE229C1F67615E006C5755 /* Camera */ = {
 			isa = PBXGroup;
 			children = (
+				E6AB64E11F7188A300033C09 /* PhotoSelectorController.swift */,
+				E6AB64E31F7188B100033C09 /* PhotoSelectorCell.swift */,
+				E6AB64E51F7188C000033C09 /* PhotoSelectorHeader.swift */,
+				E6AB64E71F7188CB00033C09 /* SharePhotoController.swift */,
+				E62530A41FFD341400E41794 /* SharePhotoOptions.swift */,
+				E61867721FFDBD5400F2C11C /* AddSharingSteps.swift */,
+				E6A2B5F82002581200E72416 /* SharePhotoHeader.swift */,
 				E62AAB261FD2102F0053EAD7 /* SelectCameraController.swift */,
 				E6CE229D1F67616F006C5755 /* CameraController.swift */,
 				E6AB64DA1F71878A00033C09 /* PreviewPhotoContainerView.swift */,

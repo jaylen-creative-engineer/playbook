@@ -27,7 +27,7 @@ class HomeDiscussionCells : UICollectionViewCell, UICollectionViewDelegate, UICo
         let attrString = NSMutableAttributedString(string: "I need some help getting started with marketing my profile on Instagram.")
         attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         
-        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight(rawValue: 25))
+        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
         label.attributedText = attrString
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -44,7 +44,7 @@ class HomeDiscussionCells : UICollectionViewCell, UICollectionViewDelegate, UICo
         let attrString = NSMutableAttributedString(string: "I need some help getting started with marketing my profile on Instagram.")
         attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.attributedText = attrString
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -73,6 +73,9 @@ class HomeDiscussionCells : UICollectionViewCell, UICollectionViewDelegate, UICo
         return 1
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(0, 4, 0, 0)
+    }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeUserImage
         return cell
@@ -106,15 +109,13 @@ class HomeDiscussionCells : UICollectionViewCell, UICollectionViewDelegate, UICo
     }
     
     func setupView(){
-        addSubview(discussionBackground)
         addSubview(discussionLabel)
         addSubview(discussionSubLabel)
         addSubview(userCollectionView)
         
-        discussionBackground.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 315, height: 175)
-        discussionLabel.anchor(top: discussionBackground.topAnchor, left: discussionBackground.leftAnchor, bottom: nil, right: discussionBackground.rightAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 55)
-        discussionSubLabel.anchor(top: discussionLabel.bottomAnchor, left: discussionLabel.leftAnchor, bottom: nil, right: discussionBackground.rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 45)
-        userCollectionView.anchor(top: discussionSubLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: 220, height: 60)
+        discussionLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 55)
+        discussionSubLabel.anchor(top: discussionLabel.bottomAnchor, left: discussionLabel.leftAnchor, bottom: nil, right: discussionLabel.rightAnchor, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 45)
+        userCollectionView.anchor(top: discussionSubLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 2, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: 220, height: 60)
         
     }
     

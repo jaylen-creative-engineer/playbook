@@ -21,7 +21,7 @@ class CategoryPrincipleRow : HomePrinciples, CategoryPrincipleDelegate {
         categoryDetailController?.principleHeld()
     }
     
-    override func principlesFeed() {
+    func principlesFeed() {
         categoryDetailController?.handleChangeToFeed(viewType: "isPrinciplesFeed")
     }
     

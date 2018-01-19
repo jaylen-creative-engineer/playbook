@@ -20,7 +20,7 @@ class CategoryExerciseRow : HomePursuits, CategoryExerciseDelegate {
         return cell
     }
     
-    override func handlePursuitsChange() {
+    func handlePursuitsChange() {
         categoryDetailController?.handleChangeToFeed(viewType: "isPursuitFeed")
     }
     

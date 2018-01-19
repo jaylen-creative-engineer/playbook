@@ -22,7 +22,7 @@ class HomeUserImage : UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(profileImage)
-        profileImage.anchor(top: nil, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: 35, height: 35)
+        profileImage.anchor(top: nil, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 35, height: 35)
         profileImage.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
 
     }

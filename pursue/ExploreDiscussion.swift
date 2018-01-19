@@ -16,6 +16,7 @@ protocol ExploreDiscussionDelegate {
 class ExploreDiscussion : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ExploreDiscussionCellDelegate {
     
     var exploreDiscussionDelegate : ExploreDiscussionDelegate?
+    var accessExploreController : ExploreController?
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -41,6 +42,7 @@ class ExploreDiscussion : UICollectionViewCell, UICollectionViewDelegate, UIColl
     lazy var moreButton : UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "right-arrow-1").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleShowMore), for: .touchUpInside)
         return button
     }()
     
@@ -51,6 +53,10 @@ class ExploreDiscussion : UICollectionViewCell, UICollectionViewDelegate, UIColl
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 270, height: ((frame.width - 2) / 2) + 5)
+    }
+    
+    @objc func handleShowMore(){
+        accessExploreController?.handleChangeToFeed(viewType: "isDiscussionFeed")
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

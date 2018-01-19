@@ -9,7 +9,6 @@
 import UIKit
 
 protocol HomePursuitsRowDelegate {
-    func showPursuitsFeed()
     func pursuitClicked()
     func pursuitHeld()
 }
@@ -23,33 +22,21 @@ class HomePursuits : UICollectionViewCell, UICollectionViewDelegate, UICollectio
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
-        label.text = "Your Pursuits"
+        label.text = "Pursuits"
         label.textAlignment = .left
         return label
     }()
     
     let homeImageNames = ["movie-app", "messenger-app", "workout", "wim-hof", "meditation"]
     let homePursuitDescriptions = ["Movie App", "Messenger App", "Gain 15 Pounds", "Wim Hof Breathing", "Guided Meditation"]
-
-    lazy var homeMoreButton : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "right-arrow-1").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(handlePursuitsChange), for: .touchUpInside)
-        return button
-    }()
     
     let homePursuitsCollection : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        
+        let layout = UICollectionViewFlowLayout()        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
+        collectionView.isScrollEnabled = false
         return collectionView
     }()
-    
-    @objc func handlePursuitsChange(){
-        pursuitsDelegate?.showPursuitsFeed()
-    }
     
     func pursuitTapped() {
         pursuitsDelegate?.pursuitClicked()
@@ -60,7 +47,7 @@ class HomePursuits : UICollectionViewCell, UICollectionViewDelegate, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: ((frame.width - 2) / 2) + 125, height: 300)
+        return CGSize(width: frame.width, height: 105)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -73,20 +60,18 @@ class HomePursuits : UICollectionViewCell, UICollectionViewDelegate, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: homeCellId, for: indexPath) as! HomePursuitsCells
-        cell.homePursuitImage.image = UIImage(named: homeImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
-        cell.homePursuitLabel.text = homePursuitDescriptions[indexPath.item]
-        cell.homePursuitDelegate = self
+        cell.pursuitImage.image = UIImage(named: homeImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
+        cell.pursuitLabel.text = homePursuitDescriptions[indexPath.item]
+        cell.delegate = self
         return cell
     }
     
      func setupView() {
         addSubview(rowLabel)
         addSubview(homePursuitsCollection)
-        addSubview(homeMoreButton)
         
         rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 20)
-        homePursuitsCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 275)
-        homeMoreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 24, height: 12)
+        homePursuitsCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 355)
     }
     
     override init(frame: CGRect) {

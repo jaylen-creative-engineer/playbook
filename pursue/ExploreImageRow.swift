@@ -16,6 +16,7 @@ protocol ExploreImageDelegate {
 class ExploreImageRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ExerciseImageCellDelegate {
     
     var exploreDelegate : ExploreImageDelegate?
+    var accessExploreController : ExploreController?
     let exploreImageNames = ["ferrari", "pagani", "ferrari-f70", "ghost"]
     let exploreLabelText = ["Ferrari", "Desvre", "La Ferrari F70", "Ghost"]
     
@@ -30,6 +31,7 @@ class ExploreImageRow : UICollectionViewCell, UICollectionViewDelegate, UICollec
     lazy var moreButton : UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "right-arrow-1").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleShowMore), for: .touchUpInside)
         return button
     }()
     
@@ -44,6 +46,10 @@ class ExploreImageRow : UICollectionViewCell, UICollectionViewDelegate, UICollec
         collectionView.backgroundColor = .clear
         return collectionView
     }()
+    
+    @objc func handleShowMore(){
+        accessExploreController?.handleChangeToFeed(viewType: "isImageFeed")
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4

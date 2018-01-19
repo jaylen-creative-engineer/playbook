@@ -38,11 +38,11 @@ class CategoryPrincipleCells : HomePrinciplesCells {
         return label
     }()
     
-    @objc override func handlePrincipleTap() {
+    @objc func handlePrincipleTap() {
         categoryDelegate?.principleTapped()
     }
     
-    @objc override func handlePrincipleHold(){
+    @objc func handlePrincipleHold(){
         categoryDelegate?.principleHeld()
     }
     

@@ -80,11 +80,11 @@ class CategoryExerciseCells  : HomePursuitsCells {
         categoryPursuitLabel.anchor(top: categoryProgressBar.bottomAnchor, left: categoryProgressBar.leftAnchor, bottom: nil, right: categoryPursuitImage.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
     }
     
-    @objc override func handlePursuitTap(){
+    @objc func handlePursuitTap(){
         categoryDelegate?.categoryTapped()
     }
     
-    @objc override func handlePursuitHold(){
+    @objc func handlePursuitHold(){
         categoryDelegate?.categoryHeld()
     }
 }

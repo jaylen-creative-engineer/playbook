@@ -16,6 +16,7 @@ protocol ExplorePrincipleDelegate {
 class ExplorePrinciplesRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ExplorePrincipleCellsDelegate {
     
     var exploreDelegate : ExplorePrincipleDelegate?
+    var accessExploreController : ExploreController?
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -28,6 +29,7 @@ class ExplorePrinciplesRow : UICollectionViewCell, UICollectionViewDelegate, UIC
     lazy var moreButton : UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "right-arrow-1").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleShowMore), for: .touchUpInside)
         return button
     }()
     
@@ -44,6 +46,10 @@ class ExplorePrinciplesRow : UICollectionViewCell, UICollectionViewDelegate, UIC
         collectionView.backgroundColor = .clear
         return collectionView
     }()
+    
+    @objc func handleShowMore(){
+        accessExploreController?.handleChangeToFeed(viewType: "isPrinciplesFeed")
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4

@@ -11,7 +11,6 @@ import UIKit
 protocol HomeDiscussionDelegate {
     func homeDiscussionTapped()
     func homeDiscussionHeld()
-    func homeDiscussionFeed()
 }
 
 class HomeDiscussion : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, HomeDiscussionCellDelegate {
@@ -21,6 +20,7 @@ class HomeDiscussion : UICollectionViewCell, UICollectionViewDelegate, UICollect
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
         return label
     }()
+    
     let imageNames = ["bunt", "tackle", "vertical", "40yard", "steph"]
     let discussionLabels = ["How to bunt properly?, How to tackle without using my head?", "How to increase my vertical?", "40 yard dash tips?", "How to shoot like Steph?"]
     
@@ -31,19 +31,11 @@ class HomeDiscussion : UICollectionViewCell, UICollectionViewDelegate, UICollect
     
     let discussionCollection : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
+        collectionView.isScrollEnabled = false
         collectionView.showsVerticalScrollIndicator = false
         return collectionView
-    }()
-    
-    lazy var moreButton : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "right-arrow-1").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(handleDiscussionFeed), for: .touchUpInside)
-        return button
     }()
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -52,18 +44,14 @@ class HomeDiscussion : UICollectionViewCell, UICollectionViewDelegate, UICollect
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 320, height: ((frame.width - 2) / 2) + 15)
+        return CGSize(width: frame.width, height: 190)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeDiscussionCells
         cell.homeDelegate = self
-        rowLabel.text = "Sports Discussions"
+        rowLabel.text = "Discussions"
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 12, 0, 12)
     }
     
     func discussionTapped() {
@@ -74,18 +62,12 @@ class HomeDiscussion : UICollectionViewCell, UICollectionViewDelegate, UICollect
         delegate?.homeDiscussionHeld()
     }
     
-    func handleDiscussionFeed(){
-        delegate?.homeDiscussionFeed()
-    }
-    
     func setupView(){
         addSubview(discussionCollection)
         addSubview(rowLabel)
-        addSubview(moreButton)
         
-        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 54, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
-        moreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 24, height: 12)
-        discussionCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 215)
+        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
+        discussionCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         discussionCollection.showsHorizontalScrollIndicator = false
         discussionCollection.register(HomeDiscussionCells.self, forCellWithReuseIdentifier: cellId)
         discussionCollection.dataSource = self

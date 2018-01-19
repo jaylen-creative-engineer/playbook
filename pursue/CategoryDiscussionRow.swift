@@ -21,7 +21,7 @@ class CategoryDiscussionRow : HomeDiscussion, CategoryDiscussionCellDelegate {
         categoryDetailController?.discussionHeld()
     }
     
-    override func handleDiscussionFeed() {
+    func handleDiscussionFeed() {
         categoryDetailController?.handleChangeToFeed(viewType: "isDiscussionFeed")
     }
     

@@ -16,6 +16,7 @@ protocol ExploreExerciseDelegate {
 class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ExploreExerciseCellsDelegate {
     
     var exploreDelegate : ExploreExerciseDelegate?
+    var accessExploreController : ExploreController?
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -27,6 +28,7 @@ class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICol
     lazy var moreButton : UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "right-arrow-1").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleShowMore), for: .touchUpInside)
         return button
     }()
     
@@ -44,6 +46,10 @@ class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICol
         collectionView.backgroundColor = .clear
         return collectionView
     }()
+    
+    @objc func handleShowMore(){
+        accessExploreController?.handleChangeToFeed(viewType: "isPursuitFeed")
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4

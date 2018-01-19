@@ -9,20 +9,14 @@
 import UIKit
 import iCarousel
 
-protocol ChangeToFeed {
-    func handleChangeToFeed(for cell: HomeRow)
-}
-
 protocol HomeRowImageEngagements {
     func homeRowImageTapped()
     func homeRowImageHeld()
-    func handleChangeToFeed()
 }
 
 class HomeRow: UICollectionViewCell, HomeImageEngagements, iCarouselDataSource, iCarouselDelegate {
     
     var accessHomeController : HomeController?
-    var delegate : ChangeToFeed?
     var homeDelegate : HomeRowImageEngagements?
     
     var itemView : UIImageView = {
@@ -48,10 +42,6 @@ class HomeRow: UICollectionViewCell, HomeImageEngagements, iCarouselDataSource, 
     let imageNames = ["ferrari", "pagani", "travel", "contacts", "3d-touch"]
     let homeDescriptions = ["iChat App", "New York Exchange", "Travel App", "Contact Page", "Settings 3d touch"]
     var items: [Int] = []
-    
-    @objc func feedChange(){
-        homeDelegate?.handleChangeToFeed()
-    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

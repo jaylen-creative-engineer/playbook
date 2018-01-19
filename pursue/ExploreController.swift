@@ -27,8 +27,6 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         return collectionView
     }()
     
-    var homeController : HomeController?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -252,14 +250,17 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         case 1:
             let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! ExploreExerciseRow
             pursuitCell.exploreDelegate = self
+            pursuitCell.accessExploreController = self
             return pursuitCell
         case 2:
             let principleCell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! ExplorePrinciplesRow
+            principleCell.accessExploreController = self
             principleCell.exploreDelegate = self
             return principleCell
         case 3:
             let discussionCell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! ExploreDiscussion
             discussionCell.exploreDiscussionDelegate = self
+            discussionCell.accessExploreController = self
             return discussionCell
         case 4:
             let peopleCell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! PeopleRow
@@ -268,6 +269,7 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         case 5:
             let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreImageRow
             imageCell.exploreDelegate = self
+            imageCell.accessExploreController = self
             return imageCell
         default:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! ExploreExerciseRow
@@ -280,7 +282,6 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         case "isPrinciplesDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
             detail.principleView()
-            print("isPrinciple")
             navigationController?.pushViewController(detail, animated: true)
         case "isPursuitDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
@@ -302,24 +303,23 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
     func handleChangeToFeed(viewType : String) {
         switch viewType {
         case "isPrinciplesFeed":
-            let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
+            let feed = HomeController(collectionViewLayout: UICollectionViewFlowLayout())
             feed.principleView()
             navigationController?.pushViewController(feed, animated: true)
         case "isPursuitFeed":
-            let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
+            let feed = HomeController(collectionViewLayout: UICollectionViewFlowLayout())
             feed.pursuitView()
             navigationController?.pushViewController(feed, animated: true)
         case "isImageFeed":
-            let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
-            feed.imageView()
+            let feed = HomeController(collectionViewLayout: UICollectionViewFlowLayout())
+            feed.imageView(isExplore: true)
             navigationController?.pushViewController(feed, animated: true)
         case "isDiscussionFeed":
-            let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
+            let feed = HomeController(collectionViewLayout: UICollectionViewFlowLayout())
             feed.discussionView()
             navigationController?.pushViewController(feed, animated: true)
         default:
-            let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
-            navigationController?.pushViewController(feed, animated: true)
+            assert(false, "Not a valid view type")
         }
     }
 }
