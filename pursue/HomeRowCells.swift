@@ -34,7 +34,7 @@ class HomeRowCells : UICollectionViewCell {
     let homeMainDescription : UILabel = {
        let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
-        label.numberOfLines = 2
+        label.numberOfLines = 4
         label.textColor = .black
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))
@@ -70,8 +70,8 @@ class HomeRowCells : UICollectionViewCell {
     func setupView() {
         addSubview(homeMainDescription)
         addSubview(postImage)
-        postImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 64, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 280)
-        homeMainDescription.anchor(top: postImage.bottomAnchor, left: postImage.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+        postImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 120, height: 140)
+        homeMainDescription.anchor(top: postImage.topAnchor, left: postImage.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 12, width: 0, height: 140)
     }
     
     override init(frame: CGRect) {
