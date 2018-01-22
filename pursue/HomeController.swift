@@ -305,7 +305,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
             case 0:
                 return CGSize(width: view.frame.width, height: 75)
             case 1:
-                return CGSize(width: view.frame.width, height: 470)
+                return CGSize(width: view.frame.width, height: 510)
             case 2:
                 return CGSize(width: view.frame.width, height: 390)
             case 3:
@@ -318,7 +318,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         case isExploreImageView:
             switch indexPath.item {
             case 0:
-                return CGSize(width: view.frame.width, height: 470)
+                return CGSize(width: view.frame.width, height: 510)
             case 1:
                 return CGSize(width: view.frame.width, height: 390)
             case 2:
@@ -357,7 +357,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         case isDiscussionView :
             switch indexPath.item {
             case 0:
-                return CGSize(width: view.frame.width, height: 330)
+                return CGSize(width: view.frame.width, height: 290)
             case 1:
                 return CGSize(width: view.frame.width, height: 390)
             case 2:

@@ -14,34 +14,14 @@ class HomeDiscussionCarousel : UICollectionViewCell, HomeImageEngagements, iCaro
     var accessHomeController : HomeController?
     var homeDelegate : HomeRowImageEngagements?
     
-    var itemView : UIImageView = {
-        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "ferrari")
-        iv.contentMode = .scaleAspectFill
-        return iv
-    }()
-    
-    var carouselView : iCarousel = {
+    lazy var carouselView : iCarousel = {
         let ic = iCarousel()
         return ic
     }()
     
-    var imageLabel : UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 50)
-        label.tag = 1
-        return label
-    }()
-    
     let imageNames = ["ferrari", "pagani", "travel", "contacts", "3d-touch"]
     let homeDescriptions = ["iChat App", "New York Exchange", "Travel App", "Contact Page", "Settings 3d touch"]
-    var items: [Int] = []
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        items = [0, 1, 2, 3, 4, 5]
-    }
     func homeTapped() {
         homeDelegate?.homeRowImageTapped()
     }
@@ -51,22 +31,22 @@ class HomeDiscussionCarousel : UICollectionViewCell, HomeImageEngagements, iCaro
     }
     
     func numberOfItems(in carousel: iCarousel) -> Int {
-        return 5
+        if carousel == carouselView {
+            return imageNames.count
+        } else {
+            return homeDescriptions.count
+        }
     }
     
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
-        let tempView = UIView(frame: CGRect(x: 0, y: 0, width: 325, height: 225))
-        tempView.backgroundColor = .purple
-        tempView.layer.cornerRadius = 4
-        tempView.layer.masksToBounds = true
-        
-        let carouselImage = UIImageView()
+        var carouselImage = UIImageView()
+        carouselImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 325, height: 225))
         carouselImage.image = UIImage(named: imageNames[index])?.withRenderingMode(.alwaysOriginal)
         carouselImage.contentMode = .scaleAspectFill
+        carouselImage.layer.cornerRadius = 4
+        carouselImage.layer.masksToBounds = true
         
-        tempView.addSubview(carouselImage)
-        carouselImage.anchor(top: tempView.topAnchor, left: tempView.leftAnchor, bottom: tempView.bottomAnchor, right: tempView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        return tempView
+        return carouselImage
     }
     
     func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
@@ -77,15 +57,22 @@ class HomeDiscussionCarousel : UICollectionViewCell, HomeImageEngagements, iCaro
         return value
     }
     
+    @objc func toggleLike(label : UILabel, index : Int){
+        label.backgroundColor = .clear
+        label.text = homeDescriptions[index]
+    }
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         let guide = safeAreaLayoutGuide
         addSubview(carouselView)
-        carouselView.anchor(top: topAnchor, left: guide.leftAnchor, bottom: bottomAnchor, right: guide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 0, height: 0)
+        carouselView.anchor(top: topAnchor, left: guide.leftAnchor, bottom: nil, right: guide.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 0, height: 235)
         carouselView.dataSource = self
         carouselView.delegate = self
         carouselView.type = .invertedTimeMachine
+        
     }
     
     
