@@ -344,7 +344,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         case isPrinciplesView:
             switch indexPath.item {
             case 0:
-                return CGSize(width: view.frame.width, height: 380)
+                return CGSize(width: view.frame.width, height: 400)
             case 1:
                 return CGSize(width: view.frame.width, height: 430)
             case 2:

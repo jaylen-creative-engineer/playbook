@@ -12,7 +12,7 @@ class HomeInterestsRow : UICollectionViewCell, UICollectionViewDelegate, UIColle
     
     var accessHomeController : HomeController?
     
-    let interestsNames = ["Your Picks", "Animals", "Art", "Business", "Cars", "Design", "Finance"]
+    let interestsNames = ["Your Picks", "Trending", "Animals", "Business", "Cars", "Design", "Finance"]
     
     let cellId = "cellId"
     
