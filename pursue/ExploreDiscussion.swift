@@ -17,6 +17,7 @@ class ExploreDiscussion : UICollectionViewCell, UICollectionViewDelegate, UIColl
     
     var exploreDiscussionDelegate : ExploreDiscussionDelegate?
     var accessExploreController : ExploreController?
+    var categoryDetailController : CategoryDetailController?
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -57,6 +58,7 @@ class ExploreDiscussion : UICollectionViewCell, UICollectionViewDelegate, UIColl
     
     @objc func handleShowMore(){
         accessExploreController?.handleChangeToFeed(viewType: "isDiscussionFeed")
+        categoryDetailController?.handleChangeToFeed(viewType: "isDiscussionFeed")
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

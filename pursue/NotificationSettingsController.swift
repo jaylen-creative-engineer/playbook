@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NotificationsController : UICollectionViewController {
+class NotificationSettingsController : UICollectionViewController {
     
     lazy var backButton : UIButton = {
         let button = UIButton()

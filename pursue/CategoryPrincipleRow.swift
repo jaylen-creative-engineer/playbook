@@ -11,7 +11,6 @@ import UIKit
 class CategoryPrincipleRow : HomePrinciples, CategoryPrincipleDelegate {
     
     let categoryPrincipleId = "categoryPrincipleId"
-    var categoryDetailController : CategoryDetailController?
     
     override func principleTapped() {
         categoryDetailController?.principleTapped()
@@ -25,16 +24,17 @@ class CategoryPrincipleRow : HomePrinciples, CategoryPrincipleDelegate {
         categoryDetailController?.handleChangeToFeed(viewType: "isPrinciplesFeed")
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: categoryPrincipleId, for: indexPath) as! CategoryPrincipleCells
-        cell.categoryDelegate = self
-        rowLabel.text = "Animal Principles"
-        return cell
-    }
-    
-    override func setupView() {
-        super.setupView()
-        postCollection.register(CategoryPrincipleCells.self, forCellWithReuseIdentifier: categoryPrincipleId)
-    }
+//    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: categoryPrincipleId, for: indexPath) as! CategoryPrincipleCells
+//        cell.categoryDelegate = self
+//        rowLabel.text = "Animal Principles"
+//        return cell
+//    }
+//    
+//    override func setupView() {
+//        super.setupView()
+//        postCollection.register(CategoryPrincipleCells.self, forCellWithReuseIdentifier: categoryPrincipleId)
+//        postCollection.delegate = self
+//    }
 }
 

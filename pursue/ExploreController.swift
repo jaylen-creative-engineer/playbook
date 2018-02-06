@@ -125,6 +125,13 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         return CGSize(width: view.frame.width, height: (view.frame.height / 8.5) - 45)
     }
     
+    func showSearchModal(){
+        let layout = UICollectionViewFlowLayout()
+        let searchModalController = SearchModalController(collectionViewLayout: layout)
+        searchModalController.transitionType = .pushFromBottom
+        present(searchModalController, animated: true, completion: nil)
+    }
+    
     func exploreCategoryTapped() {
         let layout = UICollectionViewFlowLayout()
         let categoryDetailController = CategoryDetailController(collectionViewLayout: layout)
@@ -246,6 +253,7 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         case 0:
             let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: categoryId, for: indexPath) as! ExploreCategoryRow
             categoryCell.exploreDelegate = self
+            categoryCell.accessExploreController = self
             return categoryCell
         case 1:
             let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! ExploreExerciseRow

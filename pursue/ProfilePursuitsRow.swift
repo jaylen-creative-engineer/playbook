@@ -19,13 +19,19 @@ class ProfilePursuitsRow : ExploreExerciseRow, ProfilePursuitsDelegate {
     let imageNames = ["winter", "fall", "home-remodel", "food"]
     let profileLabelText = ["Winter Fashion", "Fall Fasion", "Home", "Food"]
     var delegate : ProfilePursuitsRowDelegate?
+    var accessProfileController : ProfileController?
     
     func pursuitClicked() {
-        delegate?.pursuitClicked()
+        accessProfileController?.handleChangeToDetail(viewType: "isPursuitDetail")
     }
     
     override func pursuitHeld() {
         delegate?.pursuitHeld()
+    }
+    
+    override func handleShowMore() {
+        super.handleShowMore()
+        accessProfileController?.handleChangeToFeed(viewType: "isPursuitFeed")
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

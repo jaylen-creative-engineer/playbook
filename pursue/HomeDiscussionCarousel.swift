@@ -62,6 +62,9 @@ class HomeDiscussionCarousel : UICollectionViewCell, HomeImageEngagements, iCaro
         label.text = homeDescriptions[index]
     }
     
+    func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
+        accessHomeController?.handleChangeToDetail(viewType: "isDiscussionDetail")
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

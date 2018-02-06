@@ -11,7 +11,6 @@ import UIKit
 class CategoryPeopleRow : PeopleRow, CategoryPeopleDelegate {
     
     let categoryPeopleId = "categoryPeopleId"
-    var categoryDetailController: CategoryDetailController?
     var homeController : HomeController?
     
     override func profileTapped() {

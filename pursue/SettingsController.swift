@@ -209,7 +209,7 @@ class SettingsController : UICollectionViewController, UICollectionViewDelegateF
     }
     
     @objc func switchToEditNotifications(){
-        let notificationController = NotificationsController(collectionViewLayout: UICollectionViewFlowLayout())
+        let notificationController = NotificationSettingsController(collectionViewLayout: UICollectionViewFlowLayout())
         navigationController?.pushViewController(notificationController, animated: true)
     }
     
@@ -306,6 +306,16 @@ class SettingsController : UICollectionViewController, UICollectionViewDelegateF
         helpButton.anchor(top: privacyButton.bottomAnchor, left: privacyButton.leftAnchor, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: helpButton.intrinsicContentSize.width, height: helpButton.intrinsicContentSize.height)
         logOutButton.anchor(top: helpButton.bottomAnchor, left: helpButton.leftAnchor, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: logOutButton.intrinsicContentSize.width, height: logOutButton.intrinsicContentSize.height)
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
     }
     
     override func viewDidLoad() {

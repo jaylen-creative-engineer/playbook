@@ -10,10 +10,7 @@ import UIKit
 import XLActionController
 
 class ProfileController : UICollectionViewController, UICollectionViewDelegateFlowLayout, ProfileHeaderDelegate, ProfilePursuitsRowDelegate, ProfilePostDelegate, ProfilePrincipleDelegate, ProfileDiscussionDelegate {
-    
-    var homeController : HomeController?
-    var messageController : MessagesController?
-    
+        
     let cellId = "cellId"
     let secondaryId = "secondaryId"
     let customRowId = "customRowId"
@@ -85,6 +82,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! ProfileHeader
         header.delegate = self
+        header.accessProfileController = self
         return header
     }
     
@@ -125,10 +123,10 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         navigationController?.pushViewController(settingsController, animated: true)
     }
     
-    func handleMessage() {
-        present(MessagesController(), animated: true) {
-            self.messageController?.fetchUserAndSetupNavBarTitle()
-        }
+    func showNotifications() {
+        let layout = UICollectionViewLayout()
+        let notificationController = NotificationController(collectionViewLayout: layout)
+        navigationController?.pushViewController(notificationController, animated: true)
     }
 
     func pursuitClicked() {
@@ -253,14 +251,17 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         case 0:
             let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuitsRow
             pursuitCell.delegate = self
+            pursuitCell.accessProfileController = self
             return pursuitCell
         case 1:
             let principleCell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! ProfilePrincipleRow
             principleCell.delegate = self
+            principleCell.accessProfileController = self
             return principleCell
         case 2:
             let discussionCell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! ProfileDiscussion
             discussionCell.profileDelegate = self
+            discussionCell.accessProfileController = self
             return discussionCell
         case 3:
             let addedCell = collectionView.dequeueReusableCell(withReuseIdentifier: addedId, for: indexPath) as! ProfileAddedRow
@@ -268,10 +269,10 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         case 4:
             let postCell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! ProfilePostRow
             postCell.delegate = self
+            postCell.accessProfileController = self
             return postCell
         default:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuitsRow
-            return cell
+            assert(false, "Not a valid row")
         }
     }
     
@@ -280,7 +281,6 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         case "isPrinciplesDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
             detail.principleView()
-            print("isPrinciple")
             navigationController?.pushViewController(detail, animated: true)
         case "isPursuitDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
@@ -294,6 +294,29 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
             detail.discussionView()
             navigationController?.pushViewController(detail, animated: true)
+        default:
+            assert(false, "Not a valid view type")
+        }
+    }
+    
+    func handleChangeToFeed(viewType : String) {
+        switch viewType {
+        case "isPrinciplesFeed":
+            let feed = HomeController(collectionViewLayout: UICollectionViewFlowLayout())
+            feed.principleView()
+            navigationController?.pushViewController(feed, animated: true)
+        case "isPursuitFeed":
+            let feed = HomeController(collectionViewLayout: UICollectionViewFlowLayout())
+            feed.pursuitView()
+            navigationController?.pushViewController(feed, animated: true)
+        case "isImageFeed":
+            let feed = HomeController(collectionViewLayout: UICollectionViewFlowLayout())
+            feed.imageView(isExplore: true)
+            navigationController?.pushViewController(feed, animated: true)
+        case "isDiscussionFeed":
+            let feed = HomeController(collectionViewLayout: UICollectionViewFlowLayout())
+            feed.discussionView()
+            navigationController?.pushViewController(feed, animated: true)
         default:
             assert(false, "Not a valid view type")
         }

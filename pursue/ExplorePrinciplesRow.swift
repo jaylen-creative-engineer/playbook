@@ -17,6 +17,7 @@ class ExplorePrinciplesRow : UICollectionViewCell, UICollectionViewDelegate, UIC
     
     var exploreDelegate : ExplorePrincipleDelegate?
     var accessExploreController : ExploreController?
+    var categoryDetailController : CategoryDetailController?
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -49,6 +50,7 @@ class ExplorePrinciplesRow : UICollectionViewCell, UICollectionViewDelegate, UIC
     
     @objc func handleShowMore(){
         accessExploreController?.handleChangeToFeed(viewType: "isPrinciplesFeed")
+        categoryDetailController?.handleChangeToDetail(viewType: "isPrinciplesFeed")
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

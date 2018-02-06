@@ -16,6 +16,8 @@ protocol HomePursuitsRowDelegate {
 class HomePursuits : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PursuitSelected {
     
     var pursuitsDelegate : HomePursuitsRowDelegate?
+    var accessHomeController : HomeController?
+    var categoryDetailController : CategoryDetailController?
     let homeCellId = "homeCellId"
     
     let rowLabel : UILabel = {
@@ -56,6 +58,11 @@ class HomePursuits : UICollectionViewCell, UICollectionViewDelegate, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(0, 12, 0, 12)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessHomeController?.handleChangeToDetail(viewType: "isPursuitDetail")
+        categoryDetailController?.handleChangeToDetail(viewType: "isPursuitDetail")
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

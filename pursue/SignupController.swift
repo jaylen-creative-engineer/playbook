@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 import Firebase
 
 class SignupController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -165,15 +166,6 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
         
         view.addSubview(passwordUnderline)
         passwordUnderline.anchor(top: passwordTextField.bottomAnchor, left: passwordTextField.leftAnchor, bottom: nil, right: passwordTextField.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
-        
-        view.addSubview(reentryPasswordTextField)
-        reentryPasswordTextField.anchor(top: passwordUnderline.bottomAnchor, left: fullnameUnderline.leftAnchor, bottom: nil, right: fullnameTextField.rightAnchor, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: reentryPasswordTextField.intrinsicContentSize.height)
-        
-        let reetryPasswordUnderline = UIView()
-        reetryPasswordUnderline.backgroundColor = .black
-        
-        view.addSubview(reetryPasswordUnderline)
-        reetryPasswordUnderline.anchor(top: reentryPasswordTextField.bottomAnchor, left: reentryPasswordTextField.leftAnchor, bottom: nil, right: reentryPasswordTextField.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
         switchToLogin()
     }
     
@@ -183,12 +175,12 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
         
         let guide = view.safeAreaLayoutGuide
         
-        haveAccountLabel.anchor(top: nil, left: reentryPasswordTextField.leftAnchor, bottom: guide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 24, paddingRight: 0, width: haveAccountLabel.intrinsicContentSize.width, height: haveAccountLabel.intrinsicContentSize.height)
+        haveAccountLabel.anchor(top: nil, left: passwordTextField.leftAnchor, bottom: guide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 24, paddingRight: 0, width: haveAccountLabel.intrinsicContentSize.width, height: haveAccountLabel.intrinsicContentSize.height)
         loginButton.anchor(top: nil, left: haveAccountLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 6, paddingBottom: 0, paddingRight: 0, width: loginButton.intrinsicContentSize.width, height: loginButton.intrinsicContentSize.height)
         loginButton.centerYAnchor.constraint(equalTo: haveAccountLabel.centerYAnchor).isActive = true
         signupButton()
     }
-    
+        
     func signupButton() {
         view.addSubview(signUpButton)
         view.addSubview(signupArrow)
@@ -202,7 +194,7 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
     
     // MARK: - Handle User Sign Up
     
-    let signUpButton : UIButton = {
+    lazy var signUpButton : UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor.black
         button.layer.cornerRadius = 30
@@ -213,7 +205,7 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
         return button
     }()
     
-    let signupArrow : UIImageView = {
+    lazy var signupArrow : UIImageView = {
        let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "forward").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
@@ -262,6 +254,7 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
         guard let email = emailTextField.text, email.count > 0 else { return }
         guard let username = usernameTextField.text, username.count > 0 else { return }
         guard let password = passwordTextField.text, password.count > 0 else { return }
+        guard let fullname = fullnameTextField.text, fullname.count > 0 else { return }
         
         Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
             if let err = error {
@@ -284,24 +277,39 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
                 guard let profileImageURL = metadata?.downloadURL()?.absoluteString else { return }
                 guard let uid = user?.uid else { return }
                 
-                let dictionaryValues = ["username": username, "profileImageURL": profileImageURL]
-                let values = [uid: dictionaryValues]
+                var parameters = Alamofire.Parameters()
                 
-                Database.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (err, ref) in
-                    if let err = err {
-                        print("Failed to save user", err)
-                        return
+                parameters["userId"] = uid
+                parameters["username"] = username
+                parameters["fullname"] = fullname
+                parameters["photoUrl"] = profileImageURL
+                parameters["email"] = email
+                
+                let url = "https://pursuit-jaylenhu27.c9users.io/signup"
+                
+                Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+                    print("Response String: \(response.result.value)")
+                    
+                    switch response.result {
+                    case .success:
+                        print("Success: \(response.result.isSuccess)")
+                    case .failure:
+                        print("Failure: \(response.result.isSuccess)")
                     }
                     
-                    guard let mainTabController = UIApplication.shared.keyWindow?.rootViewController as? MainTabController else { return }
-                    
-                    mainTabController.setupViewControllers()
-                    
-                    self.dismiss(animated: true, completion: nil)
-                })
+                    self.showInterestsController()
+                }
                 
             })
         }
+    }
+    
+    
+    func showInterestsController(){
+        let layout = UICollectionViewFlowLayout()
+        let interestsController = InterestsController(collectionViewLayout: layout)
+        interestsController.viewType = "signupInterest"
+        self.navigationController?.pushViewController(interestsController, animated: true)
     }
 
     override func viewDidLoad() {

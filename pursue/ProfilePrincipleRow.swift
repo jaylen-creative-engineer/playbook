@@ -16,6 +16,7 @@ protocol ProfilePrincipleDelegate {
 class ProfilePrincipleRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ProfilePrincipleCellsDelegate {
     
     var delegate : ProfilePrincipleDelegate?
+    var accessProfileController : ProfileController?
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -41,8 +42,13 @@ class ProfilePrincipleRow : UICollectionViewCell, UICollectionViewDelegate, UICo
     lazy var moreButton : UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "right-arrow-1").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleProfilePrincipleFeed), for: .touchUpInside)
         return button
     }()
+    
+    @objc func handleProfilePrincipleFeed(){
+        accessProfileController?.handleChangeToFeed(viewType: "isPrinciplesFeed")
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
@@ -67,7 +73,7 @@ class ProfilePrincipleRow : UICollectionViewCell, UICollectionViewDelegate, UICo
     }
     
     func principleTapped() {
-        delegate?.profilePrincipleTapped()
+        accessProfileController?.handleChangeToDetail(viewType: "isPrinciplesDetail")
     }
     
     func principleHeld() {

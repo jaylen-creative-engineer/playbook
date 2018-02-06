@@ -18,6 +18,7 @@ class HomeRow: UICollectionViewCell, HomeImageEngagements, iCarouselDataSource, 
     
     var accessHomeController : HomeController?
     var homeDelegate : HomeRowImageEngagements?
+    var categoryDetailController : CategoryDetailController?
     
     var itemView : UIImageView = {
         let iv = UIImageView()
@@ -107,6 +108,10 @@ class HomeRow: UICollectionViewCell, HomeImageEngagements, iCarouselDataSource, 
         }
     }
     
+    func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
+        accessHomeController?.handleChangeToDetail(viewType: "isImageDetail")
+        categoryDetailController?.handleChangeToDetail(viewType: "isImageDetail")
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -121,6 +126,7 @@ class HomeRow: UICollectionViewCell, HomeImageEngagements, iCarouselDataSource, 
         carouselView.delegate = self
         subCarouselView.dataSource = self
         subCarouselView.delegate = self
+        subCarouselView.isScrollEnabled = false
         carouselView.type = .invertedTimeMachine
         subCarouselView.type = .invertedCylinder
         subCarouselView.backgroundColor = .clear

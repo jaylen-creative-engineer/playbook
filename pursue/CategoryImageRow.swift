@@ -11,7 +11,6 @@ import UIKit
 class CategoryImageRow : HomeRow, CategoryImageDelegate {
     
 //    let imageId = "imageId"
-    var categoryDetailController : CategoryDetailController?
 
     func homeImageTapped() {
         categoryDetailController?.categoryImageTapped()

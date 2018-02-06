@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (4.5.1)
   - CropViewController (2.3.4):
     - TOCropViewController
   - Firebase/Auth (4.7.0):
@@ -53,6 +54,12 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - Realm (3.0.2):
+    - Realm/Headers (= 3.0.2)
+  - Realm/Headers (3.0.2)
+  - RealmSwift (3.0.2):
+    - Realm (= 3.0.2)
+  - SwiftyJSON (4.0.0)
   - TOCropViewController (2.3.4)
   - XLActionController (4.0.0):
     - XLActionController/Core (= 4.0.0)
@@ -61,6 +68,7 @@ PODS:
     - XLActionController/Core
 
 DEPENDENCIES:
+  - Alamofire
   - CropViewController
   - Firebase/Auth
   - Firebase/Database
@@ -68,10 +76,13 @@ DEPENDENCIES:
   - Gifu
   - iCarousel (~> 1.8)
   - JHTAlertController (~> 0.2)
+  - RealmSwift
+  - SwiftyJSON
   - XLActionController
   - XLActionController/Skype
 
 SPEC CHECKSUMS:
+  Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   CropViewController: b5ecd6625fb6bbefaacc19fe42ecee719f81f75e
   Firebase: dbfb98ccec2dcfcd21ab9cc1b4981a3f3c8c5e26
   FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
@@ -87,9 +98,12 @@ SPEC CHECKSUMS:
   JHTAlertController: 8999fdf41c60a3d6698a3415ff1448f4ce4680e5
   leveldb-library: 4f9eedf84ab46b4fa3b7893bf30714b2a1a74022
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  Realm: 6f23fd1f178a09342eac21bfa7c2bf4312a7a180
+  RealmSwift: 695393add1b8f9d5fa75dd16e6355cf3935f71e2
+  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   TOCropViewController: 808c9724904be931dd2de5f97fcccf4cc8f8b03f
   XLActionController: 7e88fece1799e61357cb00b1cc67104d66ec4d2c
 
-PODFILE CHECKSUM: ea74e8dfc0d94b52fe832c0bc9f302facdc5d018
+PODFILE CHECKSUM: 657500e27e538650a14ca9bca0ecf58a6cf8b738
 
 COCOAPODS: 1.3.1

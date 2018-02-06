@@ -79,6 +79,10 @@ class HomePursuitCarousel : UICollectionViewCell, HomeImageEngagements, iCarouse
         return value
     }
     
+    func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
+        accessHomeController?.handleChangeToDetail(viewType: "isPursuitDetail")
+    }
+    
     @objc func toggleLike(label : UILabel, index : Int){
         label.backgroundColor = .clear
         label.text = homeDescriptions[index]

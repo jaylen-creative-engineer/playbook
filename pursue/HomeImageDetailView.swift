@@ -8,9 +8,10 @@
 
 import UIKit
 
-class HomeImageDetailView : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class HomeImageDetailView : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, HomeImageEngagements {
     
     var pursuitsDelegate : HomePursuitsRowDelegate?
+    var accessHomeController : HomeController?
     let homeCellId = "homeCellId"
     
     let rowLabel : UILabel = {
@@ -33,11 +34,11 @@ class HomeImageDetailView : UICollectionViewCell, UICollectionViewDelegate, UICo
         return collectionView
     }()
     
-    func pursuitTapped() {
-        pursuitsDelegate?.pursuitClicked()
+    func homeTapped() {
+        accessHomeController?.handleChangeToDetail(viewType: "isImageDetail")
     }
     
-    func pursuitHeld() {
+    func homeHeld() {
         pursuitsDelegate?.pursuitHeld()
     }
     
@@ -53,8 +54,13 @@ class HomeImageDetailView : UICollectionViewCell, UICollectionViewDelegate, UICo
         return UIEdgeInsetsMake(0, 12, 0, 12)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessHomeController?.handleChangeToDetail(viewType: "isImageDetail")
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: homeCellId, for: indexPath) as! HomeRowCells
+        cell.delegate = self
         cell.postImage.image = UIImage(named: homeImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
         cell.homeMainDescription.text = homePursuitDescriptions[indexPath.item]
         return cell

@@ -20,6 +20,9 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
     let categoryId = "cateogryId"
     let principleId = "principleId"
     let discussionId = "discussionId"
+    let pursuitId = "pursuitId"
+    let labelId = "labelId"
+    let imageCarouselId = "imageCarouselId"
     var categoryDelegate : CategoryHeaderDelegate?
     
     let pageTitle : UILabel = {
@@ -42,59 +45,7 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
         button.addTarget(self, action: #selector(handleBack), for: .touchUpInside)
         return button
     }()
-    
-    lazy var homeIcon : UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(#imageLiteral(resourceName: "home-selected").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.contentMode = .scaleAspectFit
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(homeActive), for: .touchUpInside)
-        button.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
-        return button
-    }()
-    
-    lazy var exploreIcon : UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(#imageLiteral(resourceName: "explore_icon").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.contentMode = .scaleAspectFit
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(exploreActive), for: .touchUpInside)
-        button.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
-        return button
-    }()
-    
-    lazy var profileIcon : UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(#imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFit
-        button.layer.cornerRadius = 12.5
-        button.layer.masksToBounds = true
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(profileActive), for: .touchUpInside)
-        button.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
-        return button
-    }()
-    
-    @objc func exploreActive(){
-        changeToExplore()
-        homeIcon.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
-        exploreIcon.tintColor = UIColor.black
-    }
-    
-    @objc func homeActive(){
-        changeToHome()
-        homeIcon.tintColor = UIColor.black
-        exploreIcon.tintColor = UIColor.rgb(red: 128, green: 128, blue: 128)
-    }
-    
-    
-    @objc func profileActive(){
-        changeToProfile()
-    }
-    
+
     @objc func handleBack(){
         goBack()
     }
@@ -104,11 +55,11 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
         
         collectionView?.backgroundColor = .white
         collectionView?.register(CategoryHeaderRow.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
-        collectionView?.register(CategoryImageRow.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.register(CategoryPeopleRow.self, forCellWithReuseIdentifier: peopleId)
-        collectionView?.register(CategoryExerciseRow.self, forCellWithReuseIdentifier: exerciseId)
-        collectionView?.register(CategoryPrincipleRow.self, forCellWithReuseIdentifier: principleId)
-        collectionView?.register(CategoryDiscussionRow.self, forCellWithReuseIdentifier: discussionId)
+        collectionView?.register(HomePursuits.self, forCellWithReuseIdentifier: pursuitId)
+        collectionView?.register(HomePrinciples.self, forCellWithReuseIdentifier: principleId)
+        collectionView?.register(HomeDiscussion.self, forCellWithReuseIdentifier: discussionId)
+        collectionView?.register(HomeInterestsRow.self, forCellWithReuseIdentifier: labelId)
+        collectionView?.register(HomeImageCarousel.self, forCellWithReuseIdentifier: imageCarouselId)
         collectionView?.contentInset = UIEdgeInsetsMake(45, 0, 85, 0)
         self.navigationController?.isNavigationBarHidden = true
         
@@ -130,16 +81,6 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
         pageTitle.anchor(top: nil, left: categoryBackIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 90, height: pageTitle.intrinsicContentSize.height)
         pageTitle.centerYAnchor.constraint(equalTo: categoryBackIcon.centerYAnchor).isActive = true
         
-        view.addSubview(profileIcon)
-        view.addSubview(homeIcon)
-        view.addSubview(exploreIcon)
-        
-        profileIcon.anchor(top: nil, left: nil, bottom: nil, right: backgroundFill.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 25.5, height: 25)
-        profileIcon.centerYAnchor.constraint(equalTo: pageTitle.centerYAnchor).isActive = true
-        homeIcon.anchor(top: nil, left: nil, bottom: nil, right: profileIcon.leftAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 24, width: 28, height: 25)
-        homeIcon.centerYAnchor.constraint(equalTo: pageTitle.centerYAnchor).isActive = true
-        exploreIcon.anchor(top: nil, left: nil, bottom: nil, right: homeIcon.leftAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 24, width: 25, height: 25)
-        exploreIcon.centerYAnchor.constraint(equalTo: pageTitle.centerYAnchor).isActive = true
     }
     
     
@@ -150,8 +91,6 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
             return UIEdgeInsetsMake(32, 0, 0, 0)
         }
     }
-    
-    
     
     var homeController : HomeController?
     
@@ -287,50 +226,45 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.item {
         case 0:
-            let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! CategoryExerciseRow
-            pursuitCell.categoryDetailController = self
-            return pursuitCell
-        case 1:
-            let principleCell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! CategoryPrincipleRow
-            principleCell.categoryDetailController = self
-            return principleCell
-        case 2:
-            let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CategoryImageRow
-            imageCell.categoryDetailController = self
-            return imageCell
-        case 3:
-            let peopleCell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! CategoryPeopleRow
-            peopleCell.categoryDetailController = self
-            return peopleCell
-        case 4:
-            let discussionCell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! CategoryDiscussionRow
-            discussionCell.categoryDetailController = self
-            return discussionCell
-        default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! CategoryExerciseRow
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageCarouselId, for: indexPath) as! HomeImageCarousel
+            cell.categoryDetailController = self
             return cell
+        case 1:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciples
+            cell.categoryDetailController = self
+            return cell
+        case 2:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! HomePursuits
+            cell.categoryDetailController = self
+            return cell
+        case 3:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! HomeDiscussion
+            cell.categoryDetailController = self
+            return cell
+        default:
+            assert(false, "Not a valid row")
         }
+        
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return 4
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 0:
-            return CGSize(width: view.frame.width, height: 374)
+            return CGSize(width: view.frame.width, height: 510)
         case 1:
-            return CGSize(width: view.frame.width, height: 340)
+            return CGSize(width: view.frame.width, height: 390)
         case 2:
-            return CGSize(width: view.frame.width, height: 460)
-        case 3:
-            return CGSize(width: view.frame.width, height: 215)
-        case 4:
-            return CGSize(width: view.frame.width, height: 250)
-        default:
             return CGSize(width: view.frame.width, height: 430)
+        case 3:
+            return CGSize(width: view.frame.width, height: 430)
+        default:
+            assert(false, "Not a valid row")
         }
+        
       }
     
     func handleChangeToDetail(viewType : String) {
@@ -338,7 +272,6 @@ class CategoryDetailController : UICollectionViewController, UICollectionViewDel
         case "isPrinciplesDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
             detail.principleView()
-            print("isPrinciple")
             navigationController?.pushViewController(detail, animated: true)
         case "isPursuitDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())

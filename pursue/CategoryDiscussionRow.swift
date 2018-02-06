@@ -11,7 +11,6 @@ import UIKit
 class CategoryDiscussionRow : HomeDiscussion, CategoryDiscussionCellDelegate {
     
     let categoryDiscussionId = "categoryDiscussionId"
-    var categoryDetailController : CategoryDetailController?
     
     func discussionCellTapped() {
         categoryDetailController?.discussionTapped()

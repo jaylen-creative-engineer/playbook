@@ -11,7 +11,6 @@ import UIKit
 class CategoryExerciseRow : HomePursuits, CategoryExerciseDelegate {
     
     let categoryExerciseId = "categoryExerciseId"
-    var categoryDetailController : CategoryDetailController?
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: categoryExerciseId, for: indexPath) as! CategoryExerciseCells

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ProfileHeaderDelegate {
-    func handleMessage()
+    func showNotifications()
     func handleSettings()
 }
 
@@ -37,21 +37,12 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
         return button
     }()
     
-    lazy var chatButton : UIButton = {
+    lazy var notificationsButton : UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "chat_2").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(handleChat), for: .touchUpInside)
+        button.setImage(#imageLiteral(resourceName: "bell").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleNotifications), for: .touchUpInside)
         button.backgroundColor = .white
         button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    lazy var chatBackground : UIButton = {
-       let button = UIButton()
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 20
-        button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(handleChat), for: .touchUpInside)
         return button
     }()
     
@@ -106,16 +97,18 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
         return label
     }()
     
+    var accessProfileController : ProfileController?
+    
     @objc func handleSettings() {
         delegate?.handleSettings()
     }
     
-    @objc func handleChat(){
-        delegate?.handleMessage()
+    @objc func handleNotifications(){
+        accessProfileController?.showNotifications()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
+        return interestsNames.count
     }
     
     
@@ -138,10 +131,10 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
     
     func setupProfileOptions(){
         addSubview(settingsButton)
-        addSubview(chatButton)
+        addSubview(notificationsButton)
         
         settingsButton.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 64, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 26, height: 26)
-        chatButton.anchor(top: settingsButton.topAnchor, left: nil, bottom: nil, right: settingsButton.leftAnchor, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 32, width: 30, height: 22)
+        notificationsButton.anchor(top: settingsButton.topAnchor, left: nil, bottom: nil, right: settingsButton.leftAnchor, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 32, width: 22, height: 22)
     }
     
     func setupView(){

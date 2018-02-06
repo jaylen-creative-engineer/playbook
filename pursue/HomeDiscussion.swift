@@ -15,6 +15,10 @@ protocol HomeDiscussionDelegate {
 
 class HomeDiscussion : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, HomeDiscussionCellDelegate {
     
+    var accessHomeController : HomeController?
+    var categoryDetailController : CategoryDetailController?
+    var delegate : HomeDiscussionDelegate?
+    
     let rowLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
@@ -23,8 +27,6 @@ class HomeDiscussion : UICollectionViewCell, UICollectionViewDelegate, UICollect
     
     let imageNames = ["bunt", "tackle", "vertical", "40yard", "steph"]
     let discussionLabels = ["How to bunt properly?, How to tackle without using my head?", "How to increase my vertical?", "40 yard dash tips?", "How to shoot like Steph?"]
-    
-    var delegate : HomeDiscussionDelegate?
     
     let cellId = "cellId"
     let peopleId = "peopleId"
@@ -54,8 +56,14 @@ class HomeDiscussion : UICollectionViewCell, UICollectionViewDelegate, UICollect
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessHomeController?.handleChangeToDetail(viewType: "isDiscussionDetail")
+        categoryDetailController?.handleChangeToDetail(viewType: "isDiscussionDetail")
+    }
+    
     func discussionTapped() {
-        delegate?.homeDiscussionTapped()
+        accessHomeController?.handleChangeToDetail(viewType: "isDiscussionDetail")
+        categoryDetailController?.handleChangeToDetail(viewType: "isDiscussionDetail")
     }
     
     func discussionHeld() {

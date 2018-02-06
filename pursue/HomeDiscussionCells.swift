@@ -18,7 +18,7 @@ class HomeDiscussionCells : UICollectionViewCell, UICollectionViewDelegate, UICo
     var homeDelegate : HomeDiscussionCellDelegate?
     let cellId = "cellId"
     
-    let discussionLabel : UILabel = {
+    lazy var discussionLabel : UILabel = {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 5
         let label = UILabel()
@@ -31,11 +31,17 @@ class HomeDiscussionCells : UICollectionViewCell, UICollectionViewDelegate, UICo
         label.attributedText = attrString
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDiscussionTap))
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleDiscussionHold))
+        tapGesture.numberOfTapsRequired = 1
+        label.addGestureRecognizer(tapGesture)
+        label.addGestureRecognizer(longGesture)
+        label.isUserInteractionEnabled = true
         return label
 
     }()
     
-    let discussionSubLabel : UILabel = {
+    lazy var discussionSubLabel : UILabel = {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 5
         let label = UILabel()
@@ -48,16 +54,28 @@ class HomeDiscussionCells : UICollectionViewCell, UICollectionViewDelegate, UICo
         label.attributedText = attrString
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDiscussionTap))
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleDiscussionHold))
+        tapGesture.numberOfTapsRequired = 1
+        label.addGestureRecognizer(tapGesture)
+        label.addGestureRecognizer(longGesture)
+        label.isUserInteractionEnabled = true
         return label
     }()
     
-    let userCollectionView : UICollectionView = {
+    lazy var userCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
-
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDiscussionTap))
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleDiscussionHold))
+        tapGesture.numberOfTapsRequired = 1
+        collectionView.addGestureRecognizer(tapGesture)
+        collectionView.addGestureRecognizer(longGesture)
+        collectionView.isUserInteractionEnabled = true
         return collectionView
     }()
     

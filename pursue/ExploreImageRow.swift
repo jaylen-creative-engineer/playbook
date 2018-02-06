@@ -17,6 +17,7 @@ class ExploreImageRow : UICollectionViewCell, UICollectionViewDelegate, UICollec
     
     var exploreDelegate : ExploreImageDelegate?
     var accessExploreController : ExploreController?
+    var categoryDetailController : CategoryDetailController?
     let exploreImageNames = ["ferrari", "pagani", "ferrari-f70", "ghost"]
     let exploreLabelText = ["Ferrari", "Desvre", "La Ferrari F70", "Ghost"]
     
@@ -49,6 +50,7 @@ class ExploreImageRow : UICollectionViewCell, UICollectionViewDelegate, UICollec
     
     @objc func handleShowMore(){
         accessExploreController?.handleChangeToFeed(viewType: "isImageFeed")
+        categoryDetailController?.handleChangeToDetail(viewType: "isImageFeed")
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

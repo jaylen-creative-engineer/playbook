@@ -8,7 +8,21 @@
 
 import UIKit
 
+protocol SelectInterestsDelegate {
+    func didSelect(for cell : SelectInterestsList)
+}
+
 class SelectInterestsList : UICollectionViewCell {
+    
+    var delegate : SelectInterestsDelegate?
+    
+    var interest : Interests? {
+        didSet {
+            guard let imageUrl = interest?.interestPhoto else { return }
+            cellBackgroundImage.loadImageUsingCacheWithUrlString(imageUrl)
+            interestsLabel.text = interest?.interestName
+        }
+    }
     
     lazy var cellBackgroundImage : UIImageView = {
        let iv = UIImageView()
@@ -52,23 +66,33 @@ class SelectInterestsList : UICollectionViewCell {
         iv.image = #imageLiteral(resourceName: "check").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleImageTapped))
+        tap.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tap)
         return iv
     }()
     
-    let checkMarkBackground : UIView = {
+    lazy var checkMarkBackground : UIView = {
        let view = UIView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 12
         view.layer.masksToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleImageTapped))
+        tap.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tap)
         return view
     }()
     
-    var isInterestsed = true
+    var isInterested = true
     
     @objc func handleImageTapped(){
-        isInterestsed = !isInterestsed
+        delegate?.didSelect(for: self)
+        isInterested = !isInterested
         
-        if isInterestsed == true {
+        if isInterested == true {
             checkMarkBackground.isHidden = false
             checkMark.isHidden = false
         } else {

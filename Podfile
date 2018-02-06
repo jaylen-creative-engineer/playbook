@@ -15,5 +15,8 @@ target 'pursue' do
   pod 'JHTAlertController', '~> 0.2'
   pod 'Gifu'
   pod 'iCarousel', '~> 1.8'
+  pod 'Alamofire'
+  pod 'RealmSwift'
+  pod 'SwiftyJSON'
  
 end

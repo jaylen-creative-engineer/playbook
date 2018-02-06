@@ -28,8 +28,35 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
         return label
     }()
     
+    var viewType = ""
+    
+    lazy var nextTitle : UILabel = {
+        let label = UILabel()
+        label.text = "Next"
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(changeToNext))
+        tap.numberOfTapsRequired = 1
+        label.addGestureRecognizer(tap)
+        return label
+    }()
+    
     @objc func goBack(){
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func changeToNext(){
+        if viewType == "signupInterest" {
+            nextTitle.isHidden = false
+            guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabController else { return }
+            mainTabBarController.setupViewControllers()
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            nextTitle.isHidden = true
+        }
+        
     }
     
     private func setupTopBar(){
@@ -39,20 +66,16 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
         view.addSubview(backgroundFill)
         view.addSubview(categoryBackIcon)
         view.addSubview(pageTitle)
+        view.addSubview(nextTitle)
         
         backgroundFill.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 90)
         categoryBackIcon.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 16, paddingRight: 0, width: 20, height: 20)
         pageTitle.anchor(top: nil, left: categoryBackIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: pageTitle.intrinsicContentSize.width, height: pageTitle.intrinsicContentSize.height)
         pageTitle.centerYAnchor.constraint(equalTo: categoryBackIcon.centerYAnchor).isActive = true
-        
+        nextTitle.anchor(top: nil, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: nextTitle.intrinsicContentSize.width, height: nextTitle.intrinsicContentSize.height)
+        nextTitle.centerYAnchor.constraint(equalTo: categoryBackIcon.centerYAnchor).isActive = true
     }
     
-    func switchToProfile() {
-        guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabController
-            else { return }
-        mainTabBarController.setupViewControllers()
-        self.dismiss(animated: true, completion: nil)
-    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: view.frame.width, height: 220)
@@ -95,5 +118,6 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
         collectionView?.delegate = self
         collectionView?.dataSource = self
         setupTopBar()
+        changeToNext()
     }
 }

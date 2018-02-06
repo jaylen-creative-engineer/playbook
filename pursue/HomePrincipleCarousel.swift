@@ -96,6 +96,10 @@ class HomePrincipleCarousel : UICollectionViewCell, HomeImageEngagements, iCarou
         }
     }
     
+    func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
+        accessHomeController?.handleChangeToDetail(viewType: "isPrinciplesDetail")
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         

@@ -32,9 +32,22 @@ class ProfileDiscussion : UICollectionViewCell, UICollectionViewDelegate, UIColl
         return label
     }()
     
+    lazy var moreButton : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "right-arrow-1").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleProfileDiscussionFeed), for: .touchUpInside)
+        return button
+    }()
+    
     var profileDelegate : ProfileDiscussionDelegate?
+    var accessProfileController : ProfileController?
+    
     let profileImageNames = ["social-marketing", "google-adds", "content-marketing", "seo"]
     let profileLabelText = ["Instagram Marketing", "Using Google Ads", "Content Marketing", "SEO Little Known Tricks"]
+    
+    @objc func handleProfileDiscussionFeed(){
+        accessProfileController?.handleChangeToFeed(viewType: "isDiscussionFeed")
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: profileDiscussionId, for: indexPath) as! ProfileDiscussionCells
@@ -58,7 +71,7 @@ class ProfileDiscussion : UICollectionViewCell, UICollectionViewDelegate, UIColl
     }
     
     func discussionTapped() {
-        profileDelegate?.profileDiscussionTapped()
+        accessProfileController?.handleChangeToDetail(viewType: "isDiscussionDetail")
     }
     
     func discussionHeld() {
@@ -68,8 +81,10 @@ class ProfileDiscussion : UICollectionViewCell, UICollectionViewDelegate, UIColl
     func setupView() {
         addSubview(rowLabel)
         addSubview(discussionCollection)
+        addSubview(moreButton)
         rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
         discussionCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 265)
+        moreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 24, height: 12)
         discussionCollection.register(ProfileDiscussionCells.self, forCellWithReuseIdentifier: profileDiscussionId)
         discussionCollection.delegate = self
         discussionCollection.dataSource = self

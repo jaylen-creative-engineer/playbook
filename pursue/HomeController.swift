@@ -9,6 +9,8 @@
 import UIKit
 import XLActionController
 import iCarousel
+import Alamofire
+import SwiftyJSON
 
 class HomeController : UICollectionViewController, UICollectionViewDelegateFlowLayout, HomeRowImageEngagements, HomePursuitsRowDelegate, HomePrinciplesDelegate, HomeDiscussionDelegate {
     
@@ -141,11 +143,12 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         collectionView?.register(HomeImageDetailView.self, forCellWithReuseIdentifier: imageDetailViewId)
         collectionView?.backgroundColor = .white
         collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
-  
         setupTopBar()
     }
     
+    
     let backgroundFill = UIView()
+
     
     private func setupTopBar(){
         let guide = view.safeAreaLayoutGuide
@@ -383,18 +386,22 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
             case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeRow
                 cell.homeDelegate = self
+                cell.accessHomeController = self
                 return cell
             case 2:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciples
                 cell.principlesDelegate = self
+                cell.accessHomeController = self
                 return cell
             case 3:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! HomePursuits
                 cell.pursuitsDelegate = self
+                cell.accessHomeController = self
                 return cell
             case 4:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! HomeDiscussion
                 cell.delegate = self
+                cell.accessHomeController = self
                 return cell
             default:
                 assert(false, "Not a valid row")
@@ -403,18 +410,22 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
             switch indexPath.item {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageCarouselId, for: indexPath) as! HomeImageCarousel
+                cell.accessHomeController = self
                 return cell
             case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciples
                 cell.principlesDelegate = self
+                cell.accessHomeController = self
                 return cell
             case 2:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! HomePursuits
                 cell.pursuitsDelegate = self
+                cell.accessHomeController = self
                 return cell
             case 3:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! HomeDiscussion
                 cell.delegate = self
+                cell.accessHomeController = self
                 return cell
             default:
                 assert(false, "Not a valid row")
@@ -423,17 +434,21 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
             switch indexPath.item {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitCarouselId, for: indexPath) as! HomePursuitCarousel
+                cell.accessHomeController = self
                 return cell
             case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciples
                 cell.principlesDelegate = self
+                cell.accessHomeController = self
                 return cell
             case 2:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! HomeDiscussion
                 cell.delegate = self
+                cell.accessHomeController = self
                 return cell
             case 3:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageDetailViewId, for: indexPath) as! HomeImageDetailView
+                cell.accessHomeController = self
                 return cell
             default:
                 assert(false, "Not a valid row")
@@ -442,17 +457,21 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
             switch indexPath.item {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleCarouselId, for: indexPath) as! HomePrincipleCarousel
+                cell.accessHomeController = self
                 return cell
             case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! HomeDiscussion
                 cell.delegate = self
+                cell.accessHomeController = self
                 return cell
             case 2:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! HomePursuits
                 cell.pursuitsDelegate = self
+                cell.accessHomeController = self
                 return cell
             case 3:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageDetailViewId, for: indexPath) as! HomeImageDetailView
+                cell.accessHomeController = self
                 return cell
             default:
                 assert(false, "Not a valid row")
@@ -461,17 +480,21 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
             switch indexPath.item {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionCarouselId, for: indexPath) as! HomeDiscussionCarousel
+                cell.accessHomeController = self
                 return cell
             case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciples
                 cell.principlesDelegate = self
+                cell.accessHomeController = self
                 return cell
             case 2:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! HomePursuits
                 cell.pursuitsDelegate = self
+                cell.accessHomeController = self
                 return cell
             case 3:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageDetailViewId, for: indexPath) as! HomeImageDetailView
+                cell.accessHomeController = self
                 return cell
             default:
                 assert(false, "Not a valid row")
@@ -486,7 +509,6 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         case "isPrinciplesDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
             detail.principleView()
-            print("isPrinciple")
             navigationController?.pushViewController(detail, animated: true)
         case "isPursuitDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())

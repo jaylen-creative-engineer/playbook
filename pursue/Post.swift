@@ -9,21 +9,18 @@
 import UIKit
 
 struct Post {
-    
-    var id : String?
-    var hasLiked : Bool = false
+    var postId : String
     let user : User
-    let imageURL : String
-    let creationDate : Date
-    let caption : String
+    let photoUrl : String
+    let created_at : String
+    let postDescription : String?
+    var is_visible = true
     
-    init(user: User, dictionary: [String: Any]){
+    init(user : User, dictionary : [String : Any]) {
         self.user = user
-        self.imageURL = dictionary["imageURL"] as? String ?? ""
-        self.caption = dictionary["caption"] as? String ?? ""
-        
-        let secondsFrom1970 = dictionary["creationDate"] as? Double ?? 0
-        self.creationDate = Date(timeIntervalSince1970: secondsFrom1970)
+        self.postId = dictionary["postId"] as? String ?? ""
+        self.photoUrl = dictionary["photoUrl"] as? String ?? ""
+        self.created_at = dictionary["created_at"] as? String ?? ""
+        self.postDescription = dictionary["postDescription"] as? String ?? ""
     }
-    
 }

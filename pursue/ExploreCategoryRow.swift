@@ -8,9 +8,10 @@ protocol ExploreCategoryDelegate {
 class ExploreCategoryRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, CategoryDetailDelegate {
     
     var exploreDelegate : ExploreCategoryDelegate?
+    var accessExploreController : ExploreController?
     
     func changeToDetail(for cell: ExploreCategoryCells) {
-        exploreDelegate?.exploreCategoryTapped()
+        accessExploreController?.exploreCategoryTapped()
     }
     
     lazy var searchBar: UISearchBar = {
@@ -29,6 +30,16 @@ class ExploreCategoryRow : UICollectionViewCell, UICollectionViewDelegate, UICol
         
         return sb
     }()
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            print("Search is empty")
+//            accessExploreController?.showSearchModal()
+        } else {
+            print("Search has text")
+            accessExploreController?.showSearchModal()
+        }
+    }
     
     let rowLabel : UILabel = {
         let label = UILabel()

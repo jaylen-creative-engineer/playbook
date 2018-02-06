@@ -26,6 +26,7 @@ class ProfilePostRow : UICollectionViewCell, UICollectionViewDelegate, UICollect
     let cellId = "cellId"
     let peopleId = "peopleId"
     var delegate : ProfilePostDelegate?
+    var accessProfileController : ProfileController?
     
     let postCollection : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -38,9 +39,13 @@ class ProfilePostRow : UICollectionViewCell, UICollectionViewDelegate, UICollect
     lazy var moreButton : UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "right-arrow-1").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleProfilePostFeed), for: .touchUpInside)
         return button
     }()
     
+    @objc func handleProfilePostFeed(){
+        accessProfileController?.handleChangeToFeed(viewType: "isImageFeed")
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 6
@@ -63,7 +68,7 @@ class ProfilePostRow : UICollectionViewCell, UICollectionViewDelegate, UICollect
     }
     
     func postTapped() {
-        delegate?.profilePostTapped()
+        accessProfileController?.handleChangeToDetail(viewType: "isImageDetail")
     }
     
     func postHeld() {
