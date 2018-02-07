@@ -12,7 +12,6 @@ struct Interests {
     let interestId : String
     let interestName : String
     let interestPhoto : String
-    
     var isSelected = false
     
     init(dictionary : [String : Any]) {

@@ -67,17 +67,29 @@ class InterestsRows : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
     }
     
     var interests = [Interests]()
+    var isVisible = false
     
     func getInterests(){
         
-        let url = "https://pursuit-jaylenhu27.c9users.io/interests"
+        let url = "https://pursuit-jaylenhu27.c9users.io/user-interests"
+        var parameters = Alamofire.Parameters()
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        print(userId)
         
-        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
+        parameters["userId"] = userId
+        
+        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default).responseJSON { response in
             switch response.result {
             case .success:
                 guard let dictionaries = response.result.value as? [Dictionary<String,AnyObject>] else { return }
                 for dictionary in dictionaries {
-                    let interest = Interests(dictionary: dictionary)
+                    var interest = Interests(dictionary: dictionary)
+                    print(interest)
+                    if let value = dictionary["isSelected"] as? Bool, value == true {
+                        interest.isSelected = true
+                    } else {
+                        interest.isSelected = false
+                    }
                     self.interests.append(interest)
                     self.interestsCollection.reloadData()
                 }
@@ -99,7 +111,8 @@ class InterestsRows : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
         
         parameters["userId"] = userId
         parameters["interestId"] = interests.interestId
-        parameters["is_selected"] = [interests.isSelected == true ? 0 : 1]
+        parameters["is_selected"] = (interests.isSelected == true ? 0 : 1)
+        print([interests.isSelected == true ? 0 : 1])
         
         let url = "https://pursuit-jaylenhu27.c9users.io/user-interests"
         

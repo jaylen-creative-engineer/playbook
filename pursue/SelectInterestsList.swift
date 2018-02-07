@@ -21,8 +21,15 @@ class SelectInterestsList : UICollectionViewCell {
             guard let imageUrl = interest?.interestPhoto else { return }
             cellBackgroundImage.loadImageUsingCacheWithUrlString(imageUrl)
             interestsLabel.text = interest?.interestName
+            guard let hasSelected = interest?.isSelected else { return }
+            isInterested = hasSelected
         }
     }
+    
+    lazy var isInterested : Bool = {
+       let bl = Bool()
+        return bl
+    }()
     
     lazy var cellBackgroundImage : UIImageView = {
        let iv = UIImageView()
@@ -86,12 +93,10 @@ class SelectInterestsList : UICollectionViewCell {
         return view
     }()
     
-    var isInterested = true
     
     @objc func handleImageTapped(){
         delegate?.didSelect(for: self)
-        isInterested = !isInterested
-        
+        print(isInterested)
         if isInterested == true {
             checkMarkBackground.isHidden = false
             checkMark.isHidden = false
