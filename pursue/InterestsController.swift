@@ -50,9 +50,12 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
     @objc func changeToNext(){
         if viewType == "signupInterest" {
             nextTitle.isHidden = false
-            guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabController else { return }
-            mainTabBarController.setupViewControllers()
+            let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+            appDelegate.window = UIWindow()
+            appDelegate.window?.rootViewController = MainTabController()
+            appDelegate.window?.makeKeyAndVisible()
             self.dismiss(animated: true, completion: nil)
+            
         } else {
             nextTitle.isHidden = true
         }
@@ -118,6 +121,5 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
         collectionView?.delegate = self
         collectionView?.dataSource = self
         setupTopBar()
-        changeToNext()
     }
 }

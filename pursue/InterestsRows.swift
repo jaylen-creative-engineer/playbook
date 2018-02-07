@@ -67,15 +67,13 @@ class InterestsRows : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
     }
     
     var interests = [Interests]()
-    var isVisible = false
+    var isVisible = [Bool]()
     
-    func getInterests(){
+    func getSelectedInterests(){
         
         let url = "https://pursuit-jaylenhu27.c9users.io/user-interests"
         var parameters = Alamofire.Parameters()
         guard let userId = Auth.auth().currentUser?.uid else { return }
-        print(userId)
-        
         parameters["userId"] = userId
         
         Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default).responseJSON { response in
@@ -84,8 +82,7 @@ class InterestsRows : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
                 guard let dictionaries = response.result.value as? [Dictionary<String,AnyObject>] else { return }
                 for dictionary in dictionaries {
                     var interest = Interests(dictionary: dictionary)
-                    print(interest)
-                    if let value = dictionary["isSelected"] as? Bool, value == true {
+                    if let value = dictionary["SelectedInterests"] as? Int, value == 1 {
                         interest.isSelected = true
                     } else {
                         interest.isSelected = false
@@ -100,27 +97,46 @@ class InterestsRows : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
         }
     }
     
+    func getInterests(){
+        
+        let url = "https://pursuit-jaylenhu27.c9users.io/interests"
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding: URLEncoding.default).responseJSON { response in
+            switch response.result {
+            case .success:
+                guard let dictionaries = response.result.value as? [Dictionary<String,AnyObject>] else { return }
+                for dictionary in dictionaries {
+                    let interest = Interests(dictionary: dictionary)
+                    self.interests.append(interest)
+                    self.interestsCollection.reloadData()
+                }
+            case .failure:
+                print("Failure: \(response.result.isSuccess)")
+            }
+            
+        }
+    }
+    
     
     func didSelect(for cell: SelectInterestsList) {
         guard let indexPath = interestsCollection.indexPath(for: cell) else { return }
-        let interests = self.interests[indexPath.item]
+        var interest = self.interests[indexPath.item]
         
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()
-        
         parameters["userId"] = userId
-        parameters["interestId"] = interests.interestId
-        parameters["is_selected"] = (interests.isSelected == true ? 0 : 1)
-        print([interests.isSelected == true ? 0 : 1])
+        parameters["interestId"] = interest.interestId
+        parameters["is_selected"] = (interest.isSelected == true ? 0 : 1)
         
         let url = "https://pursuit-jaylenhu27.c9users.io/user-interests"
         
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in            
             switch response.result {
             case .success:
-                print("Success: \(response.result.isSuccess)")
+                interest.isSelected = !interest.isSelected
+                self.interests[indexPath.item] = interest
+                self.interestsCollection.reloadItems(at: [indexPath])
             case .failure:
                 print("Failure: \(response.result.isSuccess)")
             }
@@ -164,7 +180,7 @@ class InterestsRows : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
         interestsCollection.dataSource = self
         addSubview(interestsCollection)
         interestsCollection.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        getInterests()
+        getSelectedInterests()
     }
     
     required init?(coder aDecoder: NSCoder) {

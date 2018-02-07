@@ -25,15 +25,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             defaults.set("No", forKey:"isFirstTime")
             defaults.synchronize()
             
-            window = UIWindow(frame: UIScreen.main.bounds)
-            window?.rootViewController = UINavigationController(rootViewController: MainTabController())
+            window = UIWindow()
+            window?.rootViewController = MainTabController()
             window?.makeKeyAndVisible()
         } else {
             defaults.set("No", forKey:"isFirstTime")
             defaults.synchronize()
             
-            window = UIWindow(frame: UIScreen.main.bounds)
-            window?.rootViewController = UINavigationController(rootViewController: MainTabController())
+            window = UIWindow()
+            window?.rootViewController = MainTabController()
             window?.makeKeyAndVisible()
 //            layout.scrollDirection = .horizontal
 //            let swipingController = SwipingController(collectionViewLayout: layout)
