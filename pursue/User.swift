@@ -13,7 +13,7 @@ struct User {
     let userId : String
     let username : String
     let fullname : String
-    let profileImageUrl : String
+    let photoUrl : String
     let bio : String
     let email : String
     
@@ -21,7 +21,7 @@ struct User {
         self.userId = userId
         self.username = dictionary["username"] as? String ?? ""
         self.fullname = dictionary["fullname"] as? String ?? ""
-        self.profileImageUrl = dictionary["profileImageUrl"] as? String ?? ""
+        self.photoUrl = dictionary["photoUrl"] as? String ?? ""
         self.bio = dictionary["bio"] as? String ?? ""
         self.email = dictionary["email"] as? String ?? ""
     }

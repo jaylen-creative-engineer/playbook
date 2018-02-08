@@ -131,15 +131,12 @@ class InterestsRows : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
         
         let url = "https://pursuit-jaylenhu27.c9users.io/user-interests"
         
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in            
-            switch response.result {
-            case .success:
-                interest.isSelected = !interest.isSelected
-                self.interests[indexPath.item] = interest
-                self.interestsCollection.reloadItems(at: [indexPath])
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+           
+            interest.isSelected = !interest.isSelected
+            print(interest)
+            self.interests[indexPath.item] = interest
+            self.interestsCollection.reloadItems(at: [indexPath])
             
         }
 

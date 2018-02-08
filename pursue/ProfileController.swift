@@ -8,6 +8,8 @@
 
 import UIKit
 import XLActionController
+import Alamofire
+import Firebase
 
 class ProfileController : UICollectionViewController, UICollectionViewDelegateFlowLayout, ProfileHeaderDelegate, ProfilePursuitsRowDelegate, ProfilePostDelegate, ProfilePrincipleDelegate, ProfileDiscussionDelegate {
         
@@ -76,14 +78,39 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
 
         setupTopBar()
-        
+        getUser()
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! ProfileHeader
+        header.user = user
         header.delegate = self
         header.accessProfileController = self
         return header
+    }
+    
+    var user : User?
+    func getUser(){
+        
+        let url = "https://pursuit-jaylenhu27.c9users.io/user"
+        var parameters = Alamofire.Parameters()
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        parameters["userId"] = userId
+        
+        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default).responseJSON { response in
+            switch response.result {
+            case .success:
+                guard let dictionaries = response.result.value as? [Dictionary<String,AnyObject>] else { return }
+                for dictionary in dictionaries {
+                    let person = User(userId: userId, dictionary: dictionary)
+                    self.user = person
+                    self.collectionView?.reloadData()
+                }
+            case .failure:
+                print("Failure: \(response.result.isSuccess)")
+            }
+            
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

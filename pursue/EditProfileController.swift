@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import Firebase
 
 class EditProfileController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
@@ -49,6 +51,7 @@ class EditProfileController : UICollectionViewController, UICollectionViewDelega
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! EditProfileCells
+        cell.user = user
         return cell
     }
     
@@ -57,6 +60,41 @@ class EditProfileController : UICollectionViewController, UICollectionViewDelega
         collectionView?.backgroundColor = .white
         collectionView?.register(EditProfileCells.self, forCellWithReuseIdentifier: cellId)
         setupNavBarWithUser()
+        getUser()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
+    }
+    
+    var user : User?
+    func getUser(){
+        
+        let url = "https://pursuit-jaylenhu27.c9users.io/user"
+        var parameters = Alamofire.Parameters()
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        parameters["userId"] = userId
+        
+        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default).responseJSON { response in
+            switch response.result {
+            case .success:
+                guard let dictionaries = response.result.value as? [Dictionary<String,AnyObject>] else { return }
+                for dictionary in dictionaries {
+                    let person = User(userId: userId, dictionary: dictionary)
+                    self.user = person
+                    self.collectionView?.reloadData()
+                }
+            case .failure:
+                print("Failure: \(response.result.isSuccess)")
+            }
+            
+        }
     }
     
     

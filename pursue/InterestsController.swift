@@ -47,19 +47,20 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
         navigationController?.popViewController(animated: true)
     }
     
-    @objc func changeToNext(){
+    func interestViewType(){
         if viewType == "signupInterest" {
             nextTitle.isHidden = false
-            let appDelegate = UIApplication.shared.delegate! as! AppDelegate
-            appDelegate.window = UIWindow()
-            appDelegate.window?.rootViewController = MainTabController()
-            appDelegate.window?.makeKeyAndVisible()
-            self.dismiss(animated: true, completion: nil)
-            
         } else {
             nextTitle.isHidden = true
         }
-        
+    }
+    
+    @objc func changeToNext(){
+        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+        appDelegate.window = UIWindow()
+        appDelegate.window?.rootViewController = MainTabController()
+        appDelegate.window?.makeKeyAndVisible()
+        self.dismiss(animated: true, completion: nil)
     }
     
     private func setupTopBar(){
@@ -121,5 +122,6 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
         collectionView?.delegate = self
         collectionView?.dataSource = self
         setupTopBar()
+        interestViewType()
     }
 }

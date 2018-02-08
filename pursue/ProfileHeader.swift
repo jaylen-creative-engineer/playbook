@@ -13,21 +13,23 @@ protocol ProfileHeaderDelegate {
     func handleSettings()
 }
 
-class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ProfileHeader : UICollectionViewCell {
     
     var accessHomeController : HomeController?
     var delegate : ProfileHeaderDelegate?
     
+    var user : User? {
+        didSet {
+            guard let imageUrl = user?.photoUrl else { return }
+            photoImageView.loadImageUsingCacheWithUrlString(imageUrl)
+            usernameLabel.text = user?.username
+            fullnameLabel.text = user?.fullname
+            userBio.text = user?.bio
+        }
+    }
+    
     let cellId = "cellId"
     
-    let postCollection : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        return collectionView
-    }()
     
     lazy var settingsButton : UIButton = {
         let button = UIButton()
@@ -60,13 +62,11 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 50
         iv.clipsToBounds = true
-        iv.image = #imageLiteral(resourceName: "profile-2")
         return iv
     }()
     
     let usernameLabel : UILabel = {
         let label = UILabel()
-        label.text = "Jubilee"
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -74,7 +74,6 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
     
     let fullnameLabel : UILabel = {
         let label = UILabel()
-        label.text = "Thomas Sanders"
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.thin)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -86,7 +85,7 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
         let label = UILabel()
         label.numberOfLines = 0
         
-        let attrString = NSMutableAttributedString(string: "Being the richest man")
+        let attrString = NSMutableAttributedString(string: "")
         attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         
         label.font = UIFont.boldSystemFont(ofSize: 14)
@@ -107,27 +106,6 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
         accessProfileController?.showNotifications()
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return interestsNames.count
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: ((frame.width - 2) / 5) + 20, height: ((frame.width - 2) / 6) - 25)
-    }
-    
-    
-    let interestsNames = ["Adventure", "Animals", "Art", "Business"]
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfileAboutCells
-        cell.selectInterests.text = interestsNames[indexPath.item]
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 12, 0, 12)
-    }
     
     func setupProfileOptions(){
         addSubview(settingsButton)
@@ -146,12 +124,10 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
         addSubview(photoImageView)
         addSubview(userInfoStack)
         addSubview(userBio)
-        addSubview(postCollection)
         photoImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 64, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 100, height: 100)
         userInfoStack.anchor(top: nil, left: photoImageView.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
         userInfoStack.centerYAnchor.constraint(equalTo: photoImageView.centerYAnchor).isActive = true
         userBio.anchor(top: photoImageView.bottomAnchor, left: photoImageView.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: userBio.intrinsicContentSize.height)
-        postCollection.anchor(top: userBio.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 80)
         setupProfileOptions()
     }
     
@@ -160,10 +136,6 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
-        
-        postCollection.register(ProfileAboutCells.self, forCellWithReuseIdentifier: cellId)
-        postCollection.dataSource = self
-        postCollection.delegate = self
         
     }
     

@@ -10,9 +10,18 @@ import UIKit
 
 class EditProfileCells : UICollectionViewCell {
     
+    var user : User? {
+        didSet {
+            guard let imageUrl = user?.photoUrl else { return }
+            profilePicture.loadImageUsingCacheWithUrlString(imageUrl)
+            usernameLabel.text = user?.username
+            fullnameLabel.text = user?.fullname
+            bioLabel.text = user?.bio
+        }
+    }
+    
     lazy var profilePicture : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "samuel-l")
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 60
         iv.layer.masksToBounds = true
@@ -94,10 +103,6 @@ class EditProfileCells : UICollectionViewCell {
         view.backgroundColor = .white
         view.layer.cornerRadius = 20
         view.translatesAutoresizingMaskIntoConstraints = false
-        
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(handleCamera))
-//        tap.numberOfTapsRequired = 1
-//        view.addGestureRecognizer(tap)
         return view
     }()
     
