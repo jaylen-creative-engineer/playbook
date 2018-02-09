@@ -26,6 +26,7 @@ class EditProfileController : UICollectionViewController, UICollectionViewDelega
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(handleSubmitUpdate), for: .touchUpInside)
         return button
     }()
     
@@ -35,6 +36,12 @@ class EditProfileController : UICollectionViewController, UICollectionViewDelega
         let layout = UICollectionViewFlowLayout()
         let cameraController = SelectCameraController(collectionViewLayout: layout)
         navigationController?.present(cameraController, animated: true, completion: nil)
+    }
+    
+    @objc func handleSubmitUpdate(){
+        let editProfile = EditProfileCells()
+        editProfile.handleTextInputChange()
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func handleCancel(){
@@ -52,6 +59,7 @@ class EditProfileController : UICollectionViewController, UICollectionViewDelega
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! EditProfileCells
         cell.user = user
+        cell.accessEditProfileController = self
         return cell
     }
     
@@ -74,6 +82,7 @@ class EditProfileController : UICollectionViewController, UICollectionViewDelega
     }
     
     var user : User?
+    
     func getUser(){
         
         let url = "https://pursuit-jaylenhu27.c9users.io/user"

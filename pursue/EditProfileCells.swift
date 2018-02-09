@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import Firebase
+import Alamofire
 
 class EditProfileCells : UICollectionViewCell {
+    
+    var accessEditProfileController : EditProfileController?
     
     var user : User? {
         didSet {
@@ -29,7 +33,7 @@ class EditProfileCells : UICollectionViewCell {
         return iv
     }()
     
-    let fullnameLabel : UITextField = {
+    lazy var fullnameLabel : UITextField = {
         let tv = UITextField()
         tv.textColor = .black
         tv.font = UIFont.systemFont(ofSize: 14)
@@ -37,7 +41,7 @@ class EditProfileCells : UICollectionViewCell {
         return tv
     }()
     
-    let usernameLabel : UITextField = {
+    lazy var usernameLabel : UITextField = {
         let tv = UITextField()
         tv.font = UIFont.systemFont(ofSize: 14)
         tv.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
@@ -45,7 +49,7 @@ class EditProfileCells : UICollectionViewCell {
         return tv
     }()
     
-    let bioLabel : BioInputTextView = {
+    lazy var bioLabel : BioInputTextView = {
         let tv = BioInputTextView()
         tv.isScrollEnabled = false
         tv.font = UIFont.systemFont(ofSize: 14)
@@ -57,22 +61,25 @@ class EditProfileCells : UICollectionViewCell {
         tv.font = UIFont.systemFont(ofSize: 14)
         tv.attributedPlaceholder = NSAttributedString(string: "Current Password", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
         tv.textColor = .black
+        tv.isSecureTextEntry = true
         return tv
     }()
     
-    let confirmLabel : UITextField = {
+    lazy var confirmLabel : UITextField = {
         let tv = UITextField()
         tv.font = UIFont.systemFont(ofSize: 14)
         tv.attributedPlaceholder = NSAttributedString(string: "Confirm Password", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
         tv.textColor = .black
+        tv.isSecureTextEntry = true
         return tv
     }()
     
-    let updateLabel : UITextField = {
+    lazy var updateLabel : UITextField = {
         let tv = UITextField()
         tv.font = UIFont.systemFont(ofSize: 14)
         tv.attributedPlaceholder = NSAttributedString(string: "Update Password", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
         tv.textColor = .black
+        tv.isSecureTextEntry = true
         return tv
     }()
     
@@ -120,6 +127,27 @@ class EditProfileCells : UICollectionViewCell {
     let currentUnderlineView = UIView()
     let confirmUnderlineView = UIView()
     let updateUnderlineView = UIView()
+    
+    
+    @objc func handleTextInputChange(){
+        let user = Auth.auth().currentUser
+        guard let password = currentLabel.text, password.count > 0 else { return }
+        guard let update = updateLabel.text, update.count > 0 else { return }
+        guard let email = user?.email else { return }
+        
+        let crediental = EmailAuthProvider.credential(withEmail: email, password: password)
+        user?.reauthenticate(with: crediental, completion: { (error) in
+            user?.updatePassword(to: self.updateLabel.text!, completion: { (error) in
+                if let error = error {
+                    print(error)
+                }
+            })
+            if let error = error {
+                print(error)
+            }
+        })
+    }
+    
     
     func setupProfileSection(){
         fullnameUnderlineView.backgroundColor = .black
