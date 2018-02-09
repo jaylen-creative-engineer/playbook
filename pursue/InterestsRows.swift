@@ -97,27 +97,6 @@ class InterestsRows : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
         }
     }
     
-    func getInterests(){
-        
-        let url = "https://pursuit-jaylenhu27.c9users.io/interests"
-        
-        Alamofire.request(url, method: .get, parameters: nil, encoding: URLEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                guard let dictionaries = response.result.value as? [Dictionary<String,AnyObject>] else { return }
-                for dictionary in dictionaries {
-                    let interest = Interests(dictionary: dictionary)
-                    self.interests.append(interest)
-                    self.interestsCollection.reloadData()
-                }
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
-            
-        }
-    }
-    
-    
     func didSelect(for cell: SelectInterestsList) {
         guard let indexPath = interestsCollection.indexPath(for: cell) else { return }
         var interest = self.interests[indexPath.item]
@@ -134,7 +113,6 @@ class InterestsRows : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
            
             interest.isSelected = !interest.isSelected
-            print(interest)
             self.interests[indexPath.item] = interest
             self.interestsCollection.reloadItems(at: [indexPath])
             
