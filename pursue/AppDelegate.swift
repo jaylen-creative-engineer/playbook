@@ -8,16 +8,23 @@
 
 import UIKit
 import Firebase
+import GoogleSignIn
+import Alamofire
+import FBSDKCoreKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     var window: UIWindow?
-
+    var userPhoto : Data?
+    var accessSignupController : SignupController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         FirebaseApp.configure()
+        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+        GIDSignIn.sharedInstance().delegate = self
         
         let defaults = UserDefaults.standard
 
@@ -42,6 +49,77 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         return true
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if let error = error {
+            print("Failed to login \(error)")
+            return
+        }
+        
+        guard let idToken = user.authentication.idToken else { return }
+        guard let accessToken = user.authentication.accessToken else { return }
+        let credentials = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
+        
+        Auth.auth().signIn(with: credentials) { (user, error) in
+            if let error = error {
+                print("Failed to create account: ", error)
+                return
+            }
+            
+            guard let uid = user?.uid else { return }
+            guard let email = user?.email else { return }
+            guard let fullname = user?.displayName else { return }
+            
+            if let profileImageUrl = user?.photoURL {
+                do {
+                    let imageData = try Data(contentsOf: profileImageUrl as URL)
+                    self.userPhoto = imageData
+                } catch {
+                    print("Unable to load data: \(error)")
+                }
+            }
+            
+            guard let googleProfilePic = self.userPhoto else { return }
+            let filename = NSUUID().uuidString
+            Storage.storage().reference().child("profile-images").child(filename).putData(googleProfilePic, metadata: nil, completion: { (metadata, err) in
+                
+                if let err = err {
+                    print("Failed to upload", err)
+                }
+                
+                var parameters = Alamofire.Parameters()
+                
+                parameters["userId"] = uid
+                parameters["fullname"] = fullname
+                parameters["photoUrl"] = user?.photoURL?.absoluteString
+                parameters["email"] = email
+                
+                let url = "https://pursuit-jaylenhu27.c9users.io/signup"
+                
+                Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+                    let layout = UICollectionViewFlowLayout()
+                    let interestsController = InterestsController(collectionViewLayout: layout)
+                    interestsController.viewType = "signupInterest"
+                    self.window?.rootViewController = interestsController
+                }
+            })
+            
+        }
+    }
+    
+    
+    @available(iOS 9.0, *)
+    func application(_ application: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any])
+        -> Bool {
+            let handled = FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String, annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+        
+        GIDSignIn.sharedInstance().handle(url,sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String, annotation: [:])
+        return handled;
+    }
+    
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return GIDSignIn.sharedInstance().handle(url, sourceApplication: sourceApplication, annotation: annotation)
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

@@ -237,6 +237,7 @@ class SettingsController : UICollectionViewController, UICollectionViewDelegateF
                 let loginController = LoginController()
                 let navController = UINavigationController(rootViewController: loginController)
                 self.present(navController, animated: true, completion: nil)
+                self.dismiss(animated: true, completion: nil)
                 
             } catch let signOutErr {
                 

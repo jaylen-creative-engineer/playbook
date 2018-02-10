@@ -16,7 +16,10 @@ target 'pursue' do
   pod 'Gifu'
   pod 'iCarousel', '~> 1.8'
   pod 'Alamofire'
-  pod 'RealmSwift'
+  pod 'GoogleSignIn'
   pod 'SwiftyJSON'
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKShareKit'
+  pod 'FBSDKLoginKit'
  
 end

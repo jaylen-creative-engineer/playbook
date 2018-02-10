@@ -8,10 +8,15 @@
 
 import UIKit
 import Firebase
+import GoogleSignIn
+import FBSDKLoginKit
+import Alamofire
 
-class LoginController: UIViewController {
+class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDelegate {
     
     // MARK: - Handle Logo View
+    
+    var userPhoto : Data?
     
     let logoContainerView : UIImageView = {
         let view = UIImageView()
@@ -80,22 +85,22 @@ class LoginController: UIViewController {
         return view
     }()
     
-    let facebookIcon : UIImageView = {
-       let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.layer.cornerRadius = 30
-        iv.image = #imageLiteral(resourceName: "facebook")
-        return iv
+    lazy var facebookIcon : FBSDKLoginButton = {
+       let fb = FBSDKLoginButton()
+        fb.contentMode = .scaleAspectFill
+        fb.delegate = self
+        fb.readPermissions = ["email", "public_profile"]
+        fb.translatesAutoresizingMaskIntoConstraints = false
+        fb.addTarget(self, action: #selector(handleFacebookLogin), for: .touchUpInside)
+        return fb
     }()
     
-    let googleIcon : UIImageView = {
-       let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.layer.cornerRadius = 30
-        iv.image = #imageLiteral(resourceName: "google-plus")
-        return iv
+    lazy var googleIcon : GIDSignInButton = {
+       let gb = GIDSignInButton()
+        gb.contentMode = .scaleAspectFill
+        gb.translatesAutoresizingMaskIntoConstraints = false
+        gb.addTarget(self, action: #selector(handleGoogleLogin), for: .touchUpInside)
+        return gb
     }()
     
     let haveAccountLabel : UILabel = {
@@ -122,6 +127,77 @@ class LoginController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         let forgotController = ForgotController(collectionViewLayout: layout)
         navigationController?.pushViewController(forgotController, animated: true)
+    }
+    
+    @objc func handleGoogleLogin(){
+        GIDSignIn.sharedInstance().signIn()
+    }
+    
+    @objc func handleFacebookLogin(){
+        let accessToken = FBSDKAccessToken.current()
+        guard let accessTokenString = accessToken?.tokenString else { return }
+        
+        let credentials = FacebookAuthProvider.credential(withAccessToken: accessTokenString)
+        Auth.auth().signIn(with: credentials) { (user, error) in
+            if let error = error {
+                print("Failed to create account: ", error)
+                return
+            }
+            
+            guard let uid = user?.uid else { return }
+            guard let email = user?.email else { return }
+            guard let fullname = user?.displayName else { return }
+            
+            if let profileImageUrl = user?.photoURL {
+                do {
+                    let imageData = try Data(contentsOf: profileImageUrl as URL)
+                    self.userPhoto = imageData
+                } catch {
+                    print("Unable to load data: \(error)")
+                }
+            }
+            
+            guard let googleProfilePic = self.userPhoto else { return }
+            let filename = NSUUID().uuidString
+            Storage.storage().reference().child("profile-images").child(filename).putData(googleProfilePic, metadata: nil, completion: { (metadata, err) in
+                
+                if let err = err {
+                    print("Failed to upload", err)
+                }
+                
+                var parameters = Alamofire.Parameters()
+                
+                parameters["userId"] = uid
+                parameters["fullname"] = fullname
+                parameters["photoUrl"] = user?.photoURL?.absoluteString
+                parameters["email"] = email
+                
+                let url = "https://pursuit-jaylenhu27.c9users.io/signup"
+                
+                Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+                    let layout = UICollectionViewFlowLayout()
+                    let interestsController = InterestsController(collectionViewLayout: layout)
+                    interestsController.viewType = "signupInterest"
+                    self.navigationController?.pushViewController(interestsController, animated: true)
+                    self.dismiss(animated: true, completion: nil)
+                }
+            })
+            
+        }
+
+    }
+    
+    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+        if error != nil {
+            print(error)
+            return
+        }
+        
+        handleFacebookLogin()
+    }
+    
+    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
+        print("Did log out of facebook")
     }
     
     fileprivate func setupInputFields() {
@@ -258,6 +334,9 @@ class LoginController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        GIDSignIn.sharedInstance().uiDelegate = self
+
         navigationController?.isNavigationBarHidden = true
         view.backgroundColor = .white
         

@@ -40,7 +40,7 @@ class EditProfileController : UICollectionViewController, UICollectionViewDelega
     
     @objc func handleSubmitUpdate(){
         let editProfile = EditProfileCells()
-        editProfile.handleTextInputChange()
+        editProfile.updateAccount()
         navigationController?.popViewController(animated: true)
     }
     
@@ -106,6 +106,10 @@ class EditProfileController : UICollectionViewController, UICollectionViewDelega
         }
     }
     
+    func goToLogin(){
+        let loginController = LoginController()
+        navigationController?.present(loginController, animated: true, completion: nil)
+    }
     
     func setupNavBarWithUser() {
         let backgroundView = UIView()

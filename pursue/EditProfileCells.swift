@@ -30,6 +30,10 @@ class EditProfileCells : UICollectionViewCell {
         iv.layer.cornerRadius = 60
         iv.layer.masksToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(changeProfilePicture))
+        tap.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tap)
         return iv
     }()
     
@@ -56,12 +60,14 @@ class EditProfileCells : UICollectionViewCell {
         return tv
     }()
     
-    let currentLabel : UITextField = {
+    lazy var currentLabel : UITextField = {
         let tv = UITextField()
         tv.font = UIFont.systemFont(ofSize: 14)
         tv.attributedPlaceholder = NSAttributedString(string: "Current Password", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
         tv.textColor = .black
         tv.isSecureTextEntry = true
+        tv.isUserInteractionEnabled = true
+        tv.addTarget(self, action: #selector(updateAccount), for: .editingChanged)
         return tv
     }()
     
@@ -71,6 +77,7 @@ class EditProfileCells : UICollectionViewCell {
         tv.attributedPlaceholder = NSAttributedString(string: "Confirm Password", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
         tv.textColor = .black
         tv.isSecureTextEntry = true
+        tv.addTarget(self, action: #selector(updateAccount), for: .editingChanged)
         return tv
     }()
     
@@ -80,14 +87,16 @@ class EditProfileCells : UICollectionViewCell {
         tv.attributedPlaceholder = NSAttributedString(string: "Update Password", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
         tv.textColor = .black
         tv.isSecureTextEntry = true
+        tv.addTarget(self, action: #selector(updateAccount), for: .editingChanged)
         return tv
     }()
     
-    let deleteLabel : UIButton = {
+    lazy var deleteLabel : UIButton = {
         let button = UIButton()
         button.setTitle("Delete Account", for: .normal)
         button.setTitleColor(.gray, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        button.addTarget(self, action: #selector(deleteAccount), for: .touchUpInside)
         return button
     }()
     
@@ -110,6 +119,10 @@ class EditProfileCells : UICollectionViewCell {
         view.backgroundColor = .white
         view.layer.cornerRadius = 20
         view.translatesAutoresizingMaskIntoConstraints = false
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(changeProfilePicture))
+        tap.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tap)
         return view
     }()
     
@@ -128,26 +141,31 @@ class EditProfileCells : UICollectionViewCell {
     let confirmUnderlineView = UIView()
     let updateUnderlineView = UIView()
     
-    
-    @objc func handleTextInputChange(){
+    @objc func updateAccount(){
         let user = Auth.auth().currentUser
-        guard let password = currentLabel.text, password.count > 0 else { return }
-        guard let update = updateLabel.text, update.count > 0 else { return }
-        guard let email = user?.email else { return }
-        
-        let crediental = EmailAuthProvider.credential(withEmail: email, password: password)
-        user?.reauthenticate(with: crediental, completion: { (error) in
-            user?.updatePassword(to: self.updateLabel.text!, completion: { (error) in
+        if let update = updateLabel.text, update.count > 0 {
+            user?.updatePassword(to: update, completion: { (error) in
                 if let error = error {
                     print(error)
                 }
             })
+        }
+    }
+    
+    @objc func deleteAccount(){
+        let user = Auth.auth().currentUser
+        user?.delete(completion: { (error) in
             if let error = error {
                 print(error)
+            } else {
+                self.accessEditProfileController?.goToLogin()
             }
         })
     }
     
+    @objc func changeProfilePicture(){
+        self.accessEditProfileController?.handleCamera()
+    }
     
     func setupProfileSection(){
         fullnameUnderlineView.backgroundColor = .black

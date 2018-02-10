@@ -287,9 +287,7 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
                 
                 let url = "https://pursuit-jaylenhu27.c9users.io/signup"
                 
-                Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-                    print("Response String: \(response.result.value)")
-                    
+                Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in                    
                     switch response.result {
                     case .success:
                         print("Success: \(response.result.isSuccess)")

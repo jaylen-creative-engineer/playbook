@@ -247,8 +247,6 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
     let backgroundFill = UIView()
     
     private func setupTopBar(){
-        let guide = view.safeAreaLayoutGuide
-
         view.addSubview(backgroundFill)
         view.addSubview(cancelButton)
         view.addSubview(checkButton)
@@ -272,7 +270,6 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
         view.addSubview(selectArrow)
         view.addSubview(selectTagsCollection)
         
-        let guide = view.safeAreaLayoutGuide
         imageView.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: (view.frame.width / 2) + 60, height: 280)
         imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         

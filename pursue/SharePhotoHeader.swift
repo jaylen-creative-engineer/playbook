@@ -39,9 +39,7 @@ class SharePhotoHeader : UICollectionViewCell {
         setupTopBar()
     }
     
-    private func setupTopBar(){
-        let guide = safeAreaLayoutGuide
-        
+    private func setupTopBar(){        
         addSubview(backgroundFill)
         addSubview(cancelButton)
         addSubview(checkButton)

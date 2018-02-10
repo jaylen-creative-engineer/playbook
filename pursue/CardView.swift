@@ -12,7 +12,7 @@ class CardView: UIView {
     
     var cornerRadius : CGFloat = 20
     var shadowOffSetWidth : CGFloat = 0
-    var shadowOffSetHeight : CGFloat = 20
+    var shadowOffSetHeight : CGFloat = 5
     var shadowColor = UIColor.black
     var shadowOpacity : CGFloat = 0.2
     

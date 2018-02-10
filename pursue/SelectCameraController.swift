@@ -185,7 +185,6 @@ class SelectCameraController : UICollectionViewController, UICollectionViewDeleg
     }
     
     private func setupTopBar(){
-        let guide = view.safeAreaLayoutGuide
         view.addSubview(backgroundFill)
         view.addSubview(cancelButton)
         
@@ -194,7 +193,6 @@ class SelectCameraController : UICollectionViewController, UICollectionViewDeleg
     }
     
     private func setupMenuBar() {
-        let guide = view.safeAreaLayoutGuide
         view.addSubview(menuBar)
         menuBar.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: view.frame.height / 12)
         setupTopBar()
