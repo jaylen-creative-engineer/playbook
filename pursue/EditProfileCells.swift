@@ -53,10 +53,13 @@ class EditProfileCells : UICollectionViewCell {
         return tv
     }()
     
-    lazy var bioLabel : BioInputTextView = {
-        let tv = BioInputTextView()
+    lazy var bioLabel : UITextView = {
+        let tv = UITextView()
         tv.isScrollEnabled = false
         tv.font = UIFont.systemFont(ofSize: 14)
+        tv.translatesAutoresizingMaskIntoConstraints = false
+        tv.delegate = self
+        tv.text = "Enter bio"
         return tv
     }()
     
@@ -205,15 +208,16 @@ class EditProfileCells : UICollectionViewCell {
         addSubview(usernameUnderlineView)
         addSubview(bioUnderlineView)
         
-        accountLabel.anchor(top: profilePicture.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 48, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: accountLabel.intrinsicContentSize.height)
-        fullnameLabel.anchor(top: accountLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 42, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: fullnameLabel.intrinsicContentSize.height)
+        accountLabel.anchor(top: profilePicture.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 48, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: accountLabel.intrinsicContentSize.height)
+        fullnameLabel.anchor(top: accountLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 42, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: fullnameLabel.intrinsicContentSize.height)
         fullnameUnderlineView.anchor(top: fullnameLabel.bottomAnchor, left: fullnameLabel.leftAnchor, bottom: nil, right: fullnameLabel.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
-        usernameLabel.anchor(top: fullnameUnderlineView.bottomAnchor, left: fullnameLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0
+        usernameLabel.anchor(top: fullnameUnderlineView.bottomAnchor, left: fullnameLabel.leftAnchor, bottom: nil, right: fullnameLabel.rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0
             , height: usernameLabel.intrinsicContentSize.height)
         usernameUnderlineView.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: usernameLabel.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
-        bioLabel.anchor(top: usernameUnderlineView.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: guide.rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0
+        bioLabel.anchor(top: usernameUnderlineView.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: usernameLabel.rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0
             , height: bioLabel.intrinsicContentSize.height)
         bioUnderlineView.anchor(top: bioLabel.bottomAnchor, left: bioLabel.leftAnchor, bottom: nil, right: bioLabel.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+        textViewDidChange(bioLabel)
     }
     
     func changePassword(){
@@ -225,12 +229,12 @@ class EditProfileCells : UICollectionViewCell {
         addSubview(confirmUnderlineView)
         addSubview(updateUnderlineView)
         
-        passwordLabel.anchor(top: bioUnderlineView.bottomAnchor, left: bioLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: passwordLabel.intrinsicContentSize.height)
-        currentLabel.anchor(top: passwordLabel.bottomAnchor, left: bioLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: currentLabel.intrinsicContentSize.height)
+        passwordLabel.anchor(top: bioUnderlineView.bottomAnchor, left: bioLabel.leftAnchor, bottom: nil, right: bioLabel.rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: passwordLabel.intrinsicContentSize.height)
+        currentLabel.anchor(top: passwordLabel.bottomAnchor, left: bioLabel.leftAnchor, bottom: nil, right: bioLabel.rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: currentLabel.intrinsicContentSize.height)
         currentUnderlineView.anchor(top: currentLabel.bottomAnchor, left: currentLabel.leftAnchor, bottom: nil, right: currentLabel.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
-        confirmLabel.anchor(top: currentUnderlineView.bottomAnchor, left: currentLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: confirmLabel.intrinsicContentSize.height)
+        confirmLabel.anchor(top: currentUnderlineView.bottomAnchor, left: currentLabel.leftAnchor, bottom: nil, right: currentUnderlineView.rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: confirmLabel.intrinsicContentSize.height)
         confirmUnderlineView.anchor(top: confirmLabel.bottomAnchor, left: confirmLabel.leftAnchor, bottom: nil, right: confirmLabel.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
-        updateLabel.anchor(top: confirmUnderlineView.bottomAnchor, left: confirmLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: updateLabel.intrinsicContentSize.height)
+        updateLabel.anchor(top: confirmUnderlineView.bottomAnchor, left: confirmLabel.leftAnchor, bottom: nil, right: confirmUnderlineView.rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: updateLabel.intrinsicContentSize.height)
         updateUnderlineView.anchor(top: updateLabel.bottomAnchor, left: updateLabel.leftAnchor, bottom: nil, right: updateLabel.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
     }
     
@@ -244,4 +248,20 @@ class EditProfileCells : UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+}
+
+extension EditProfileCells : UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        let size = CGSize(width: frame.width - 24, height: .infinity)
+        
+        // Calculating the height
+        
+        let estimatedSize = textView.sizeThatFits(size)
+        
+        textView.constraints.forEach { (constraint) in
+            if constraint.firstAttribute == .height {
+                constraint.constant = estimatedSize.height
+            }
+        }
+    }
 }

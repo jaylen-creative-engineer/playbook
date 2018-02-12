@@ -10,19 +10,24 @@ import UIKit
 
 class PostView : UICollectionViewCell {
         
-    let postDescription : UILabel = {
+    lazy var postDescription : UITextView = {
+        let tv = UITextView()
+        tv.delegate = self
+        tv.translatesAutoresizingMaskIntoConstraints = false
+        tv.font = UIFont.systemFont(ofSize: 14)
+        tv.isScrollEnabled = false
+        tv.isUserInteractionEnabled = false
+        
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 5
         let label = UILabel()
         label.numberOfLines = 0
         
-        let attrString = NSMutableAttributedString(string: "I need some help getting started with marketing my profile on Instagram.")
+        let attrString = NSMutableAttributedString(string: "")
         attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.attributedText = attrString
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+        tv.attributedText = attrString
+        return tv
     }()
     
     let usernameLabel : UILabel = {
@@ -35,11 +40,13 @@ class PostView : UICollectionViewCell {
     
     let userPhoto : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "profile-2")
+        iv.image = #imageLiteral(resourceName: "samuel-l")
         iv.layer.cornerRadius = 25
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
+        iv.backgroundColor = .red
         return iv
+        
     }()
     
     
@@ -51,6 +58,7 @@ class PostView : UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+        textViewDidChange(postDescription)
     }
 
     func setupView(){
@@ -74,3 +82,21 @@ class PostView : UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+extension PostView : UITextViewDelegate {
+
+    func textViewDidChange(_ textView: UITextView) {
+        let size = CGSize(width: frame.width - 24, height: .infinity)
+
+        // Calculating the height
+
+        let estimatedSize = textView.sizeThatFits(size)
+
+        textView.constraints.forEach { (constraint) in
+            if constraint.firstAttribute == .height {
+                constraint.constant = estimatedSize.height
+            }
+        }
+    }
+}
+

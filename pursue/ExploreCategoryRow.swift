@@ -1,18 +1,15 @@
 
 import UIKit
+import Alamofire
 
 protocol ExploreCategoryDelegate {
     func exploreCategoryTapped()
 }
 
-class ExploreCategoryRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, CategoryDetailDelegate {
+class ExploreCategoryRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
     
     var exploreDelegate : ExploreCategoryDelegate?
     var accessExploreController : ExploreController?
-    
-    func changeToDetail(for cell: ExploreCategoryCells) {
-        accessExploreController?.exploreCategoryTapped()
-    }
     
     lazy var searchBar: UISearchBar = {
         let sb = UISearchBar()
@@ -31,27 +28,57 @@ class ExploreCategoryRow : UICollectionViewCell, UICollectionViewDelegate, UICol
         return sb
     }()
     
+    var users = [User]()
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        
+        guard let searchText = searchBar.text else { return }
+        getSearchContent(searchText: searchText)
+    }
+
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
             print("Search is empty")
-//            accessExploreController?.showSearchModal()
         } else {
-            print("Search has text")
-            accessExploreController?.showSearchModal()
+            print(searchText)
+            getSearchContent(searchText: searchText)
         }
     }
     
-    let rowLabel : UILabel = {
-        let label = UILabel()
-        label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
-        label.text = "Interests"
-        return label
-    }()
-    
+    func getSearchContent(searchText : String){
+        let url = "https://pursuit-jaylenhu27.c9users.io/search"
+        var parameters = Alamofire.Parameters()
+        parameters["searchField"] = searchText
+        
+        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default).responseJSON { response in
+            switch response.result {
+            case .success:
+                guard let dictionaries = response.result.value as? [Dictionary<String,AnyObject>] else { return }
+                for dictionary in dictionaries {
+                    print(dictionary)
+                    let user = User(dictionary: dictionary)
+                    self.users.append(user)
+                    print(self.users)
+                    //                        var interest = Interests(dictionary: dictionary)
+                    //                        if let value = dictionary["SelectedInterests"] as? Int, value == 1 {
+                    //                            interest.isSelected = true
+                    //                        } else {
+                    //                            interest.isSelected = false
+                    //                        }
+                    //                        self.interests.append(interest)
+                    //                        self.interestsCollection.reloadData()
+                }
+            case .failure:
+                print("Failure: \(response.result.isSuccess)")
+            }
+            
+        }
+    }
+ 
     let cellId = "cellId"
     let peopleId = "peopleId"
-    let interestsNames = ["Adventure", "Animals", "Art", "Business", "Cars", "Design", "Finance", "Fashion", "Food", "Health", "Home", "Math", "Music", "Self", "Science", "Sports", "Tech", "Writing"]
+    let interestsNames = ["Trending", "Animals", "Art", "Business", "Cars", "Design", "Finance", "Fashion", "Food", "Health", "Home", "Math", "Music", "Self", "Science", "Sports", "Tech", "Writing"]
     
     let postCollection : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -65,6 +92,9 @@ class ExploreCategoryRow : UICollectionViewCell, UICollectionViewDelegate, UICol
         return 18
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessExploreController?.scrollToMenuIndex(menuIndex: indexPath.item)
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: ((frame.width - 2) / 5) + 20, height: ((frame.width - 2) / 6) - 5)
@@ -73,7 +103,6 @@ class ExploreCategoryRow : UICollectionViewCell, UICollectionViewDelegate, UICol
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreCategoryCells
         cell.selectInterests.text = interestsNames[indexPath.item]
-        cell.delegate = self
         return cell
     }
     
@@ -85,20 +114,25 @@ class ExploreCategoryRow : UICollectionViewCell, UICollectionViewDelegate, UICol
         return 1
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(0, 12, 0, 12)
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(searchBar)
         addSubview(postCollection)
-        addSubview(rowLabel)
         
         searchBar.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: searchBar.intrinsicContentSize.height)
-        rowLabel.anchor(top: searchBar.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
-        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        postCollection.anchor(top: searchBar.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 60)
         
         postCollection.showsHorizontalScrollIndicator = false
         postCollection.register(ExploreCategoryCells.self, forCellWithReuseIdentifier: cellId)
         postCollection.dataSource = self
         postCollection.delegate = self
+        
+        let selectedIndexPath = IndexPath(item: 0, section: 0)
+        postCollection.selectItem(at: selectedIndexPath, animated: false, scrollPosition: [])
     }
     
     

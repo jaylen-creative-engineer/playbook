@@ -95,7 +95,7 @@ class EditProfileController : UICollectionViewController, UICollectionViewDelega
             case .success:
                 guard let dictionaries = response.result.value as? [Dictionary<String,AnyObject>] else { return }
                 for dictionary in dictionaries {
-                    let person = User(userId: userId, dictionary: dictionary)
+                    let person = User(dictionary: dictionary)
                     self.user = person
                     self.collectionView?.reloadData()
                 }

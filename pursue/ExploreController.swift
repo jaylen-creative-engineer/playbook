@@ -8,6 +8,7 @@
 
 import UIKit
 import XLActionController
+import Alamofire
 
 class ExploreController : UICollectionViewController, UICollectionViewDelegateFlowLayout, ExploreDiscussionDelegate, ExploreExerciseDelegate, ExplorePrincipleDelegate, ExploreImageDelegate, ExploreCategoryDelegate, PeopleRowDelegate {
     
@@ -20,26 +21,29 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
     let categoryId = "categoryId"
     let discussionId = "discussionId"
     
-    let exploreCollection : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        return collectionView
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tabBarController?.navigationController?.navigationBar.isHidden = true
-        collectionView?.register(ExploreImageRow.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.register(PeopleRow.self, forCellWithReuseIdentifier: peopleId)
-        collectionView?.register(ExplorePrinciplesRow.self, forCellWithReuseIdentifier: principleId)
-        collectionView?.register(ExploreExerciseRow.self, forCellWithReuseIdentifier: exerciseId)
-        collectionView?.register(ExploreCategoryRow.self, forCellWithReuseIdentifier: categoryId)
-        collectionView?.register(ExploreDiscussion.self, forCellWithReuseIdentifier: discussionId)
+        setupCollectionView()
+        setupTopBar()
+    }
+    
+    func scrollToMenuIndex(menuIndex: Int) {
+        let indexPath = IndexPath(item: menuIndex, section: 0)
+        collectionView?.scrollToItem(at: indexPath, at: [], animated: true)
+    }
+    
+    func setupCollectionView(){
+        if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.scrollDirection = .horizontal
+            flowLayout.minimumLineSpacing = 0
+        }
+        
+        collectionView?.register(ExploreContainer.self, forCellWithReuseIdentifier: cellId)
         collectionView?.backgroundColor = .white
         collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
-        setupTopBar()
+        collectionView?.isScrollEnabled = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,7 +74,27 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         navigationController?.present(cameraController, animated: true, completion: nil)
     }
     
+    lazy var searchBar: UISearchBar = {
+        let sb = UISearchBar()
+        sb.placeholder = "Search..."
+        sb.searchBarStyle = UISearchBarStyle.prominent
+        sb.backgroundImage = UIImage(color: .clear)
+        sb.delegate = self
+        sb.barTintColor = .white
+        sb.isTranslucent = true
+        
+        let attributedPlaceholder = NSMutableAttributedString(string: "Search", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18), NSAttributedStringKey(rawValue: NSAttributedStringKey.foregroundColor.rawValue): UIColor.gray])
+        
+        let textFieldPlaceHolder = sb.value(forKey: "searchField") as? UITextField
+        textFieldPlaceHolder?.attributedPlaceholder = attributedPlaceholder
+        
+        return sb
+    }()
+    
+    var users = [User]()
+    
     let backgroundFill = UIView()
+    let categoryBarBackgroundColor = UIView()
     
     private func setupTopBar(){
         let guide = view.safeAreaLayoutGuide
@@ -79,57 +103,33 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         view.addSubview(cameraIcon)
         
         backgroundFill.backgroundColor = .white
+        
         backgroundFill.anchor(top: view.topAnchor, left: guide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (view.frame.height / 8.5) - 5)
         homeIcon.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 8, paddingLeft: 28, paddingBottom: 14, paddingRight: 0, width: 50, height: 18)
         cameraIcon.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 14, paddingRight: 22, width: 18, height: 16)
+        
+        setupCategoryBar()
+    }
+    
+    lazy var categoryBar : CategoryBar = {
+       let cb = CategoryBar()
+        cb.accessExploreController = self
+        return cb
+    }()
+    
+    private func setupCategoryBar(){
+        view.addSubview(categoryBarBackgroundColor)
+        categoryBarBackgroundColor.addSubview(categoryBar)
+        categoryBarBackgroundColor.backgroundColor = .white
+        
+        categoryBarBackgroundColor.anchor(top: homeIcon.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 44)
+        categoryBar.anchor(top: categoryBarBackgroundColor.topAnchor, left: categoryBarBackgroundColor.leftAnchor, bottom: nil, right: categoryBarBackgroundColor.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 60)
     }
     
     // MARK: - Setup View
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        if section == 0 {
-            return UIEdgeInsetsMake(0, 0, 0, 0)
-        } else {
-            return UIEdgeInsetsMake(32, 0, 0, 0)
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch indexPath.item {
-        case 0:
-            return CGSize(width: view.frame.width, height: 187)
-        case 1:
-            return CGSize(width: view.frame.width, height: 330)
-        case 2:
-            return CGSize(width: view.frame.width, height: 345)
-        case 3:
-            return CGSize(width: view.frame.width, height: 300)
-        case 4:
-            return CGSize(width: view.frame.width, height: 230)
-        case 5:
-            return CGSize(width: view.frame.width, height: 410)
-        default:
-            return CGSize(width: view.frame.width, height: 260)
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 2
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: (view.frame.height / 8.5) - 45)
-    }
-    
     func showSearchModal(){
-        let layout = UICollectionViewFlowLayout()
-        let searchModalController = SearchModalController(collectionViewLayout: layout)
-        searchModalController.transitionType = .pushFromBottom
-        present(searchModalController, animated: true, completion: nil)
+        
     }
     
     func exploreCategoryTapped() {
@@ -247,44 +247,6 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         navigationController?.pushViewController(profileController, animated: true)
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell : UICollectionViewCell
-        switch indexPath.item {
-        case 0:
-            let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: categoryId, for: indexPath) as! ExploreCategoryRow
-            categoryCell.exploreDelegate = self
-            categoryCell.accessExploreController = self
-            return categoryCell
-        case 1:
-            let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! ExploreExerciseRow
-            pursuitCell.exploreDelegate = self
-            pursuitCell.accessExploreController = self
-            return pursuitCell
-        case 2:
-            let principleCell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! ExplorePrinciplesRow
-            principleCell.accessExploreController = self
-            principleCell.exploreDelegate = self
-            return principleCell
-        case 3:
-            let discussionCell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! ExploreDiscussion
-            discussionCell.exploreDiscussionDelegate = self
-            discussionCell.accessExploreController = self
-            return discussionCell
-        case 4:
-            let peopleCell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! PeopleRow
-            peopleCell.peopleDelegate = self
-            return peopleCell
-        case 5:
-            let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreImageRow
-            imageCell.exploreDelegate = self
-            imageCell.accessExploreController = self
-            return imageCell
-        default:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! ExploreExerciseRow
-            return cell
-        }
-    }
-    
     func handleChangeToDetail(viewType : String) {
         switch viewType {
         case "isPrinciplesDetail":
@@ -331,3 +293,69 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         }
     }
 }
+
+extension ExploreController : UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        
+        guard let searchText = searchBar.text else { return }
+        getSearchContent(searchText: searchText)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            print("Search is empty")
+        } else {
+            getSearchContent(searchText: searchText)
+        }
+    }
+    
+    func getSearchContent(searchText : String){
+        let url = "https://pursuit-jaylenhu27.c9users.io/search"
+        var parameters = Alamofire.Parameters()
+        parameters["searchField"] = searchText
+        
+        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default).responseJSON { response in
+            switch response.result {
+            case .success:
+                guard let dictionaries = response.result.value as? [Dictionary<String,AnyObject>] else { return }
+                for dictionary in dictionaries {
+                    print(dictionary)
+                    let user = User(dictionary: dictionary)
+                    self.users.append(user)
+                    print(self.users)
+                }
+            case .failure:
+                print("Failure: \(response.result.isSuccess)")
+            }
+            
+        }
+    }
+}
+
+extension ExploreController {
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+       return CGSize(width: view.frame.width, height: view.frame.height)
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.width, height: (view.frame.height / 8.5) + 50)
+    }
+    
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreContainer
+        return cell
+    }
+}
+

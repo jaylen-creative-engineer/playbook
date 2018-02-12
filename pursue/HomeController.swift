@@ -35,21 +35,15 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         return collectionView
     }()
     
-    lazy var floatingCamera : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 30
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(switchToCamera), for: .touchUpInside)
-        return button
-    }()
-    
     lazy var cameraIcon : UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "add").withRenderingMode(.alwaysOriginal)
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.contentMode = .scaleAspectFill
-        iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(switchToCamera)))
+        
+        let tap = UIGestureRecognizer(target: self, action: #selector(switchToCamera))
+        iv.addGestureRecognizer(tap)
+        iv.isUserInteractionEnabled = true
         return iv
     }()
     
@@ -186,7 +180,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     // MARK: - Setup View
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: (view.frame.height / 8.5) - 55)
+        return CGSize(width: view.frame.width, height: (view.frame.height / 8.5) - 65)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -307,7 +301,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         case isImageView:
             switch indexPath.item {
             case 0:
-                return CGSize(width: view.frame.width, height: 75)
+                return CGSize(width: view.frame.width, height: 85)
             case 1:
                 return CGSize(width: view.frame.width, height: 510)
             case 2:

@@ -67,7 +67,7 @@ class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICol
         cell.exploreImage.image = UIImage(named: exploreImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
         cell.exploreLabel.text = exerciseLabelText[indexPath.item]
         cell.exploreExereciseDelegate = self
-        rowLabel.text = "Adventure Pursuits"
+        rowLabel.text = "Pursuits"
         return cell
     }
     

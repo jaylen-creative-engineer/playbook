@@ -12,7 +12,7 @@ class HomeInterestsRow : UICollectionViewCell, UICollectionViewDelegate, UIColle
     
     var accessHomeController : HomeController?
     
-    let interestsNames = ["Your Picks", "Trending", "Animals", "Business", "Cars", "Design", "Finance"]
+    let interestsNames = ["Your Picks", "Adventure", "Animals", "Business", "Cars", "Design", "Finance"]
     
     let cellId = "cellId"
     
@@ -56,20 +56,32 @@ class HomeInterestsRow : UICollectionViewCell, UICollectionViewDelegate, UIColle
         return cell
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
     }
     
+    var labelLeading : NSLayoutConstraint?
+    var labelTrailing : NSLayoutConstraint?
+//
     func setupView(){
         addSubview(labelCollection)
         
-        labelCollection.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        labelLeading = labelCollection.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0)
+        labelTrailing = labelCollection.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0)
+        labelCollection.heightAnchor.constraint(equalToConstant: frame.height).isActive = true
+        
+        labelTrailing?.isActive = true
+        labelLeading?.isActive = true
         
         labelCollection.showsHorizontalScrollIndicator = false
+        labelCollection.translatesAutoresizingMaskIntoConstraints = false
         labelCollection.register(HomeInterestsCells.self, forCellWithReuseIdentifier: cellId)
         labelCollection.dataSource = self
         labelCollection.delegate = self
     }
+    
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -77,6 +89,7 @@ class HomeInterestsRow : UICollectionViewCell, UICollectionViewDelegate, UIColle
         
         let selectedIndexPath = IndexPath(item: 0, section: 0)
         labelCollection.selectItem(at: selectedIndexPath, animated: false, scrollPosition: [])
+        
     }
     
     

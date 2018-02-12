@@ -63,7 +63,7 @@ class ExploreDiscussion : UICollectionViewCell, UICollectionViewDelegate, UIColl
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreDiscussionCells
-        rowLabel.text = "Tech Discussions"
+        rowLabel.text = "Discussions"
         cell.exploreDelegate = self
         cell.discussionLabel.text = exploreLabelText[indexPath.item]
         return cell

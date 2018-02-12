@@ -22,7 +22,6 @@ class ProfileHeader : UICollectionViewCell {
         didSet {
             guard let imageUrl = user?.photoUrl else { return }
             photoImageView.loadImageUsingCacheWithUrlString(imageUrl)
-            usernameLabel.text = user?.username
             fullnameLabel.text = user?.fullname
             userBio.text = user?.bio
         }
@@ -65,35 +64,37 @@ class ProfileHeader : UICollectionViewCell {
         return iv
     }()
     
-    let usernameLabel : UILabel = {
-        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
     let fullnameLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.thin)
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let userBio : UILabel = {
+        
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 5
-        let label = UILabel()
-        label.numberOfLines = 0
         
         let attrString = NSMutableAttributedString(string: "")
         attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         
-        label.font = UIFont.boldSystemFont(ofSize: 14)
         label.attributedText = attrString
-        label.backgroundColor = .clear
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.sizeToFit()
         return label
+    }()
+    
+    lazy var userBio : UITextView = {
+        let tv = UITextView()
+        tv.delegate = self
+        tv.translatesAutoresizingMaskIntoConstraints = false
+        tv.font = UIFont.boldSystemFont(ofSize: 16)
+        tv.isScrollEnabled = false
+        tv.isUserInteractionEnabled = false
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 5
+        
+        let attrString = NSMutableAttributedString(string: "")
+        attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
+        
+        tv.attributedText = attrString
+        return tv
     }()
     
     var accessProfileController : ProfileController?
@@ -112,26 +113,21 @@ class ProfileHeader : UICollectionViewCell {
         addSubview(notificationsButton)
         
         settingsButton.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 64, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 26, height: 26)
-        notificationsButton.anchor(top: settingsButton.topAnchor, left: nil, bottom: nil, right: settingsButton.leftAnchor, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 32, width: 22, height: 22)
+        notificationsButton.anchor(top: settingsButton.topAnchor, left: nil, bottom: nil, right: settingsButton.leftAnchor, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 32, width: 22, height: 28)
     }
     
     func setupView(){
-        let userInfoStack = UIStackView(arrangedSubviews: [usernameLabel, fullnameLabel])
-        userInfoStack.axis = .vertical
-        userInfoStack.spacing = 10
-        userInfoStack.translatesAutoresizingMaskIntoConstraints = false
-                
         addSubview(photoImageView)
-        addSubview(userInfoStack)
+        addSubview(fullnameLabel)
         addSubview(userBio)
+        
         photoImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 64, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 100, height: 100)
-        userInfoStack.anchor(top: nil, left: photoImageView.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
-        userInfoStack.centerYAnchor.constraint(equalTo: photoImageView.centerYAnchor).isActive = true
+        fullnameLabel.anchor(top: nil, left: photoImageView.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
+        fullnameLabel.centerYAnchor.constraint(equalTo: photoImageView.centerYAnchor).isActive = true
         userBio.anchor(top: photoImageView.bottomAnchor, left: photoImageView.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: userBio.intrinsicContentSize.height)
+        textViewDidChange(userBio)
         setupProfileOptions()
     }
-    
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -139,8 +135,25 @@ class ProfileHeader : UICollectionViewCell {
         
     }
     
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+
+extension ProfileHeader : UITextViewDelegate {
+    
+    func textViewDidChange(_ textView: UITextView) {
+        let size = CGSize(width: frame.width - 24, height: .infinity)
+        
+        // Calculating the height
+        
+        let estimatedSize = textView.sizeThatFits(size)
+        
+        textView.constraints.forEach { (constraint) in
+            if constraint.firstAttribute == .height {
+                constraint.constant = estimatedSize.height
+            }
+        }
     }
 }

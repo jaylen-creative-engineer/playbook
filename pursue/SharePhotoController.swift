@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import XLActionController
+import Alamofire
 
 class SharePhotoController : UICollectionViewController,  UICollectionViewDelegateFlowLayout {
     
@@ -33,6 +34,7 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
         collectionView?.register(AddSharingSteps.self, forCellWithReuseIdentifier: stepId)
         collectionView?.register(SharePhotoHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         setupTopBar()
+        predictImage()
     }
     
     let imageView : UIImageView = {
@@ -168,6 +170,7 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
         button.setTitleColor(UIColor.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(pushContent), for: .touchUpInside)
         return button
     }()
     
@@ -255,6 +258,7 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
         backgroundFill.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 100)
         cancelButton.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 16, paddingRight: 0, width: 18, height: 18)
         checkButton.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 16, paddingRight: 12, width: checkButton.intrinsicContentSize.width, height: 18)
+        setupImageAndTextViews()
     }
     
     func setupTags(){
@@ -263,15 +267,54 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
         selectTagsCollection.anchor(top: descriptionUnderline.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 320)        
     }
     
+    var post : Post?
+    
+    @objc func pushContent(){
+        guard let image = imageView.image else { return }
+        guard let uploadData = UIImageJPEGRepresentation(image, 0.3) else { return }
+        let filename = NSUUID().uuidString
+        
+        Storage.storage().reference().child("posts").child(filename).putData(uploadData, metadata: nil) { (metadata, err) in
+            
+            if let err = err {
+                print("Failed to upload", err)
+            }
+            
+            let user = Auth.auth().currentUser
+            
+            guard let postImageUrl = metadata?.downloadURL()?.absoluteString else { return }
+            guard let uid = user?.uid else { return }
+            
+            var parameters = Alamofire.Parameters()
+            
+            parameters["postId"] = filename
+            parameters["userId"] = uid
+            parameters["photoUrl"] = postImageUrl
+            parameters["postDescription"] = self.descriptionTextField.text
+            parameters["is_visible"] = 1
+            
+            let url = "https://pursuit-jaylenhu27.c9users.io/posts"
+            
+            Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+                print("Success fully posted")
+            }
+            
+        }
+    }
+    
+    let categoryLabel = UILabel()
+    
     fileprivate func setupImageAndTextViews(){
         view.addSubview(imageView)
+        view.addSubview(categoryLabel)
         view.addSubview(contentModeTextField)
         view.addSubview(descriptionTextField)
         view.addSubview(selectArrow)
         view.addSubview(selectTagsCollection)
         
-        imageView.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: (view.frame.width / 2) + 60, height: 280)
+        imageView.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 224, height: 280)
         imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        categoryLabel.anchor(top: imageView.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: categoryLabel.intrinsicContentSize.width, height: 50)
         
         contentModeTextField.anchor(top: imageView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 48, paddingLeft: 32, paddingBottom: 0, paddingRight: 32, width: 0, height: contentModeTextField.intrinsicContentSize.height)
         
@@ -291,6 +334,24 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
         view.addSubview(descriptionUnderline)
         descriptionUnderline.anchor(top: descriptionTextField.bottomAnchor, left: descriptionTextField.leftAnchor, bottom: nil, right: descriptionTextField.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
         setupTags()
+    }
+    
+    let model = GoogLeNetPlaces()
+    
+    func predictImage(){
+        guard let imageToScan = imageView.image else { return }
+        if let sceneLabelString = sceneLabel(forImage: imageToScan) {
+                categoryLabel.text = sceneLabelString
+            }
+    }
+    
+    func sceneLabel (forImage image: UIImage) -> String? {
+        if let pixelBuffer = ImageProcessor.pixelBuffer(forImage: image.cgImage!) {
+            guard let scene = try? model.prediction(sceneImage: pixelBuffer) else {fatalError("Unexpected runtime error")}
+            return scene.sceneLabel
+        }
+        
+        return nil
     }
     
     @objc func handleShare() {

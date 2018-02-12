@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "bell.png",
+      "filename" : "notification-bell.png",
       "scale" : "1x"
     },
     {

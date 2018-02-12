@@ -8,38 +8,33 @@
 
 import UIKit
 
-protocol CategoryDetailDelegate {
-    func changeToDetail(for cell : ExploreCategoryCells)
-}
-
 class ExploreCategoryCells : UICollectionViewCell {
-    
-    var delegate : CategoryDetailDelegate?
     
     lazy var selectInterests : UILabel = {
        let label = UILabel()
-        label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 12)
-        label.layer.borderWidth = 1
-        label.layer.borderColor = UIColor.black.cgColor
-        label.layer.cornerRadius = 15
-        label.backgroundColor = .white
+        label.font = UIFont.systemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTouch))
-        tap.numberOfTapsRequired = 1
-        label.addGestureRecognizer(tap)
-        label.isUserInteractionEnabled = true
         return label
     }()
     
-    @objc func handleTouch(){
-        delegate?.changeToDetail(for: self)
+    override var isHighlighted: Bool {
+        didSet {
+            selectInterests.font = isHighlighted ?  UIFont.systemFont(ofSize: 18, weight: UIFont.Weight(rawValue: 25)) : UIFont.systemFont(ofSize: 16)
+        }
     }
-
+    
+    override var isSelected: Bool {
+        didSet {
+            selectInterests.font = isSelected ? UIFont.systemFont(ofSize: 18, weight: UIFont.Weight(rawValue: 25)) : UIFont.systemFont(ofSize: 16)
+        }
+    }
+    
     func setupView(){
         addSubview(selectInterests)
         
-        selectInterests.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 90, height: 29)
+        selectInterests.anchor(top: topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: selectInterests.intrinsicContentSize.width, height: selectInterests.intrinsicContentSize.height)
+        selectInterests.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+
     }
     
     override init(frame: CGRect) {

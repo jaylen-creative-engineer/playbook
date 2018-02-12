@@ -10,7 +10,7 @@ import UIKit
 
 class HomeInterestsCells : UICollectionViewCell {
     
-    let interestsLabel : UILabel = {
+    lazy var interestsLabel : UILabel = {
        let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
