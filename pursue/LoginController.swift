@@ -120,7 +120,6 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
         return button
     }()
     
-    var stackView = UIStackView()
     var socialLoginStack = UIStackView()
     
     @objc func handleForgot(){

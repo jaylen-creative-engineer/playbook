@@ -28,7 +28,6 @@ class PursuitsDetailHeader : UICollectionViewCell {
     var messageDelegate : MessageDelegate?
     
     let headerId = "headerId"
-    var stackView = UIStackView()
     let bottomDividerView = UIView()
     
     let aboutLabelUnderline : UIView = {
