@@ -18,7 +18,7 @@ class SearchController : UICollectionViewController, UICollectionViewDelegateFlo
     }
     
     func goBack(){
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

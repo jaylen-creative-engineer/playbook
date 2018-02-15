@@ -9,18 +9,27 @@
 import UIKit
 import Alamofire
 
-class SearchHeader : UICollectionViewCell, UITextFieldDelegate {
+class SearchHeader : UICollectionViewCell, UISearchBarDelegate {
     var accessSearchController : SearchController?
     
-    lazy var searchBar : UITextField = {
-        let tv = UITextField()
-        tv.font = UIFont.boldSystemFont(ofSize: 24)
-        tv.attributedPlaceholder = NSAttributedString(string: "Search...", attributes: [NSAttributedStringKey.foregroundColor: UIColor.gray, NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 24)])
-        tv.textColor = .black
-        tv.isUserInteractionEnabled = true
-        tv.delegate = self
-        return tv
+    lazy var searchBar: UISearchBar = {
+        let sb = UISearchBar()
+        sb.placeholder = "Search..."
+        sb.searchBarStyle = UISearchBarStyle.prominent
+        sb.backgroundImage = UIImage(color: .clear)
+        sb.delegate = self
+        sb.barTintColor = .white
+        sb.isTranslucent = true
+        sb.setImage(UIImage(color: .white), for: .search, state: .normal)
+        
+        let attributedPlaceholder = NSMutableAttributedString(string: "Search...", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 24), NSAttributedStringKey(rawValue: NSAttributedStringKey.foregroundColor.rawValue): UIColor.gray])
+        
+        let textFieldPlaceHolder = sb.value(forKey: "searchField") as? UITextField
+        textFieldPlaceHolder?.attributedPlaceholder = attributedPlaceholder
+        
+        return sb
     }()
+    
     
     lazy var backButton : UIButton = {
         let button = UIButton()
@@ -39,7 +48,7 @@ class SearchHeader : UICollectionViewCell, UITextFieldDelegate {
         addSubview(backButton)
         addSubview(searchBar)
         backButton.anchor(top: safeAreaLayoutGuide.topAnchor, left: safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 16, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 25, height: 25)
-        searchBar.anchor(top: backButton.topAnchor, left: backButton.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 12, width: 0, height: searchBar.intrinsicContentSize.height)
+        searchBar.anchor(top: topAnchor, left: backButton.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: searchBar.intrinsicContentSize.height)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -47,22 +56,22 @@ class SearchHeader : UICollectionViewCell, UITextFieldDelegate {
     }
 }
 
-extension SearchController  {
+extension SearchController : UISearchBarDelegate {
     
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//        searchBar.resignFirstResponder()
-//
-//        guard let searchText = searchBar.text else { return }
-//        getSearchContent(searchText: searchText)
-//    }
-//
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        if searchText.isEmpty {
-//            print("Search is empty")
-//        } else {
-//            getSearchContent(searchText: searchText)
-//        }
-//    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        
+        guard let searchText = searchBar.text else { return }
+        getSearchContent(searchText: searchText)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            print("Search is empty")
+        } else {
+            getSearchContent(searchText: searchText)
+        }
+    }
     
     func getSearchContent(searchText : String){
         let url = "https://pursuit-jaylenhu27.c9users.io/search"
