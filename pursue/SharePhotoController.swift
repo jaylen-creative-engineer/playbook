@@ -34,7 +34,6 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
         collectionView?.register(AddSharingSteps.self, forCellWithReuseIdentifier: stepId)
         collectionView?.register(SharePhotoHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         setupTopBar()
-        predictImage()
     }
     
     let imageView : UIImageView = {
@@ -334,24 +333,6 @@ class SharePhotoController : UICollectionViewController,  UICollectionViewDelega
         view.addSubview(descriptionUnderline)
         descriptionUnderline.anchor(top: descriptionTextField.bottomAnchor, left: descriptionTextField.leftAnchor, bottom: nil, right: descriptionTextField.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
         setupTags()
-    }
-    
-    let model = GoogLeNetPlaces()
-    
-    func predictImage(){
-        guard let imageToScan = imageView.image else { return }
-        if let sceneLabelString = sceneLabel(forImage: imageToScan) {
-                categoryLabel.text = sceneLabelString
-            }
-    }
-    
-    func sceneLabel (forImage image: UIImage) -> String? {
-        if let pixelBuffer = ImageProcessor.pixelBuffer(forImage: image.cgImage!) {
-            guard let scene = try? model.prediction(sceneImage: pixelBuffer) else {fatalError("Unexpected runtime error")}
-            return scene.sceneLabel
-        }
-        
-        return nil
     }
     
     @objc func handleShare() {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeInterestsRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class HomeInterestsRow : UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var accessHomeController : HomeController?
     
@@ -30,7 +30,12 @@ class HomeInterestsRow : UICollectionViewCell, UICollectionViewDelegate, UIColle
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (frame.width / 3) + 10, height: frame.height)
+        
+        let approximateWidthOfCell = frame.width
+        let size = CGSize(width: approximateWidthOfCell, height: .infinity)
+        let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)]
+        let estimatedFrame = NSString(string: interestsNames[indexPath.item]).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+        return CGSize(width: estimatedFrame.width + 32, height: frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -50,20 +55,16 @@ class HomeInterestsRow : UICollectionViewCell, UICollectionViewDelegate, UIColle
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(0, 12, 0, 12)
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeInterestsCells
         cell.interestsLabel.text = interestsNames[indexPath.item]
         return cell
     }
     
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-    }
-    
     var labelLeading : NSLayoutConstraint?
     var labelTrailing : NSLayoutConstraint?
-//
+
     func setupView(){
         addSubview(labelCollection)
         
@@ -76,15 +77,16 @@ class HomeInterestsRow : UICollectionViewCell, UICollectionViewDelegate, UIColle
         
         labelCollection.showsHorizontalScrollIndicator = false
         labelCollection.translatesAutoresizingMaskIntoConstraints = false
-        labelCollection.register(HomeInterestsCells.self, forCellWithReuseIdentifier: cellId)
-        labelCollection.dataSource = self
-        labelCollection.delegate = self
+       
     }
     
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        labelCollection.register(HomeInterestsCells.self, forCellWithReuseIdentifier: cellId)
+        labelCollection.dataSource = self
+        labelCollection.delegate = self
         setupView()
         
         let selectedIndexPath = IndexPath(item: 0, section: 0)

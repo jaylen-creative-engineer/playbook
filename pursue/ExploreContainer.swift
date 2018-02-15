@@ -30,7 +30,7 @@ class ExploreContainer : UICollectionViewCell, UICollectionViewDelegate, UIColle
     }()
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return 4
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -46,8 +46,6 @@ class ExploreContainer : UICollectionViewCell, UICollectionViewDelegate, UIColle
         case 2:
             return CGSize(width: frame.width, height: 230)
         case 3:
-            return CGSize(width: frame.width, height: 300)
-        case 4:
             return CGSize(width: frame.width, height: 345)
         default:
             assert(false, "This is not a valid cell")
@@ -75,9 +73,6 @@ class ExploreContainer : UICollectionViewCell, UICollectionViewDelegate, UIColle
             let peopleCell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! PeopleRow
             return peopleCell
         case 3:
-            let discussionCell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! ExploreDiscussion
-            return discussionCell
-        case 4:
             let principleCell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! ExplorePrinciplesRow
             return principleCell
         default:
@@ -94,7 +89,6 @@ class ExploreContainer : UICollectionViewCell, UICollectionViewDelegate, UIColle
         exploreCollection.register(ExplorePrinciplesRow.self, forCellWithReuseIdentifier: principleId)
         exploreCollection.register(ExploreExerciseRow.self, forCellWithReuseIdentifier: exerciseId)
         exploreCollection.register(ExploreCategoryRow.self, forCellWithReuseIdentifier: categoryId)
-        exploreCollection.register(ExploreDiscussion.self, forCellWithReuseIdentifier: discussionId)
         exploreCollection.delegate = self
         exploreCollection.dataSource = self
         

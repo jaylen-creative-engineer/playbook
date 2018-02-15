@@ -11,7 +11,7 @@ import iCarousel
 
 class HomePursuitCarousel : UICollectionViewCell, HomeImageEngagements, iCarouselDataSource, iCarouselDelegate {
     
-    var accessHomeController : HomeController?
+    var accessHomeController : HomeContainer?
     var homeDelegate : HomeRowImageEngagements?
     
     lazy var carouselView : iCarousel = {

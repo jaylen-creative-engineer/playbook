@@ -11,7 +11,7 @@ import iCarousel
 
 class HomePrincipleCarousel : UICollectionViewCell, HomeImageEngagements, iCarouselDataSource, iCarouselDelegate {
     
-    var accessHomeController : HomeController?
+    var accessHomeController : HomeContainer?
     var homeDelegate : HomeRowImageEngagements?
     
     var itemView : UIImageView = {

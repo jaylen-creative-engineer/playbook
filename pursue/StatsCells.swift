@@ -12,13 +12,14 @@ class StatsCells : UICollectionViewCell {
     
     let countLabel : UILabel = {
        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont.boldSystemFont(ofSize: 20)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     let contentTypeLabel : UILabel = {
        let label = UILabel()
+        label.textColor = .lightGray
         label.font = UIFont.systemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

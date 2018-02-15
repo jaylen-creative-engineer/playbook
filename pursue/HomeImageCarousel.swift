@@ -11,8 +11,7 @@ import iCarousel
 
 class HomeImageCarousel : UICollectionViewCell, HomeImageEngagements, iCarouselDataSource, iCarouselDelegate {
     
-    var accessHomeController : HomeController?
-    var categoryDetailController : CategoryDetailController?
+    var accessHomeController : HomeContainer?
     var homeDelegate : HomeRowImageEngagements?
     
     var itemView : UIImageView = {
@@ -118,7 +117,6 @@ class HomeImageCarousel : UICollectionViewCell, HomeImageEngagements, iCarouselD
     
     func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
         accessHomeController?.handleChangeToDetail(viewType: "isImageDetail")
-        categoryDetailController?.handleChangeToDetail(viewType: "isImageDetail")
     }
     
     override init(frame: CGRect) {

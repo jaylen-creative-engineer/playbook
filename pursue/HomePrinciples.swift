@@ -16,8 +16,7 @@ protocol HomePrinciplesDelegate {
 class HomePrinciples : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ProfilePrincipleCellsDelegate {
     
     var principlesDelegate : HomePrinciplesDelegate?
-    var accessHomeController : HomeController?
-    var categoryDetailController : CategoryDetailController?
+    var accessHomeController : HomeContainer?
     
     let profileImageNames = ["realist", "inheritance", "value-first", "menu-numbers"]
     let profileLabelText = ["Naive Realism", "Treat others like they control your inheritance","Show value upfront", "Organize and label menu categories"]
@@ -68,7 +67,6 @@ class HomePrinciples : UICollectionViewCell, UICollectionViewDelegate, UICollect
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         accessHomeController?.handleChangeToDetail(viewType: "isPrinciplesDetail")
-        categoryDetailController?.handleChangeToDetail(viewType: "isPrinciplesDetail")
     }
     
     func principleTapped() {

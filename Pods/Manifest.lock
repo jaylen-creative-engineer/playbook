@@ -69,6 +69,7 @@ PODS:
   - GTMSessionFetcher/Core (1.1.12)
   - GTMSessionFetcher/Full (1.1.12):
     - GTMSessionFetcher/Core (= 1.1.12)
+  - Hero (1.0.1)
   - iCarousel (1.8.3)
   - JHTAlertController (0.2.4)
   - leveldb-library (1.20)
@@ -96,6 +97,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - Gifu
   - GoogleSignIn
+  - Hero
   - iCarousel (~> 1.8)
   - JHTAlertController (~> 0.2)
   - SwiftyJSON
@@ -121,6 +123,7 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   GTMOAuth2: be83fd28d63ae3087e7d351b1f39c1a7e24ab6e7
   GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
+  Hero: cee286821578e170d8c0c9c9cda7897357401112
   iCarousel: d782f635afac190c49bb8ee455882284cff8b85f
   JHTAlertController: 8999fdf41c60a3d6698a3415ff1448f4ce4680e5
   leveldb-library: 4f9eedf84ab46b4fa3b7893bf30714b2a1a74022
@@ -129,6 +132,6 @@ SPEC CHECKSUMS:
   TOCropViewController: 808c9724904be931dd2de5f97fcccf4cc8f8b03f
   XLActionController: 7e88fece1799e61357cb00b1cc67104d66ec4d2c
 
-PODFILE CHECKSUM: 5ed742bc0c9d074aec41dbda653c3fc36b872be6
+PODFILE CHECKSUM: e5dc0ed09cf775d9c99974cfa7e8a55fb1905771
 
 COCOAPODS: 1.3.1

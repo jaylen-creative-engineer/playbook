@@ -17,7 +17,6 @@ class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICol
     
     var exploreDelegate : ExploreExerciseDelegate?
     var accessExploreController : ExploreController?
-    var categoryDetailController : CategoryDetailController?
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -50,7 +49,6 @@ class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICol
     
     @objc func handleShowMore(){
         accessExploreController?.handleChangeToFeed(viewType: "isPursuitFeed")
-        categoryDetailController?.handleChangeToDetail(viewType: "isPursuitFeed")
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

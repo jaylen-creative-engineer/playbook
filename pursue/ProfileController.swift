@@ -42,7 +42,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
     }()
-    
+        
     @objc func switchToCamera() {
         let layout = UICollectionViewFlowLayout()
         let cameraController = SelectCameraController(collectionViewLayout: layout)
@@ -76,20 +76,14 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         collectionView?.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.backgroundColor = .white
         collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
-
+        
         setupTopBar()
         getUser()
     }
     
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! ProfileHeader
-        header.user = user
-        header.delegate = self
-        header.accessProfileController = self
-        return header
-    }
-    
     var user : User?
+
+    
     func getUser(){
         
         let url = "https://pursuit-jaylenhu27.c9users.io/user"
@@ -236,73 +230,6 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: (view.frame.height / 2.5) - 15)
-    }
-    
-    // MARK: - Setup View
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        switch indexPath.item {
-        case 0:
-            return CGSize(width: view.frame.width, height: 370)
-        case 1:
-            return CGSize(width: view.frame.width, height: 330)
-        case 2:
-             return CGSize(width: view.frame.width, height: 320)
-        case 3:
-            return CGSize(width: view.frame.width, height: 205)
-        case 4:
-            return CGSize(width: view.frame.width, height: 445)
-        default:
-            assert(false, "Not a valid cell")
-        }
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        if section == 0 {
-            return UIEdgeInsetsMake(0, 0, 0, 0)
-        } else {
-            return UIEdgeInsetsMake(32, 0, 0, 0)
-        }
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-        switch indexPath.item {
-        case 0:
-            let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuitsRow
-            pursuitCell.delegate = self
-            pursuitCell.accessProfileController = self
-            return pursuitCell
-        case 1:
-            let principleCell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! ProfilePrincipleRow
-            principleCell.delegate = self
-            principleCell.accessProfileController = self
-            return principleCell
-        case 2:
-            let discussionCell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! ProfileDiscussion
-            discussionCell.profileDelegate = self
-            discussionCell.accessProfileController = self
-            return discussionCell
-        case 3:
-            let addedCell = collectionView.dequeueReusableCell(withReuseIdentifier: addedId, for: indexPath) as! ProfileAddedRow
-            return addedCell
-        case 4:
-            let postCell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! ProfilePostRow
-            postCell.delegate = self
-            postCell.accessProfileController = self
-            return postCell
-        default:
-            assert(false, "Not a valid row")
-        }
-    }
-    
     func handleChangeToDetail(viewType : String) {
         switch viewType {
         case "isPrinciplesDetail":
@@ -340,12 +267,88 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
             let feed = HomeController(collectionViewLayout: UICollectionViewFlowLayout())
             feed.imageView(isExplore: true)
             navigationController?.pushViewController(feed, animated: true)
-        case "isDiscussionFeed":
-            let feed = HomeController(collectionViewLayout: UICollectionViewFlowLayout())
-            feed.discussionView()
-            navigationController?.pushViewController(feed, animated: true)
         default:
             assert(false, "Not a valid view type")
+        }
+    }
+    
+    var headerHeight : CGFloat?
+}
+
+extension ProfileController {
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! ProfileHeader
+        header.user = user
+        header.delegate = self
+        header.accessProfileController = self
+        
+        return header
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if let user = self.user {
+            let approximateWidthOfBio = view.frame.width - 24 - 8
+            let size = CGSize(width: approximateWidthOfBio, height: .infinity)
+            let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12)]
+            let estimatedFrame = NSString(string: user.bio).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+            return CGSize(width: view.frame.width, height: estimatedFrame.height + 270)
+        }
+        
+        return CGSize(width: view.frame.width, height: (view.frame.height / 2.5) - 15)
+    }
+    
+    // MARK: - Setup View
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        switch indexPath.item {
+        case 0:
+            return CGSize(width: view.frame.width, height: 445)
+        case 1:
+            return CGSize(width: view.frame.width, height: 205)
+        case 2:
+            return CGSize(width: view.frame.width, height: 370)
+        case 3:
+            return CGSize(width: view.frame.width, height: 330)
+        default:
+            assert(false, "Not a valid cell")
+        }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 4
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(24, 0, 0, 0)
+        
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        switch indexPath.item {
+        case 0:
+            let postCell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! ProfilePostRow
+            postCell.delegate = self
+            postCell.accessProfileController = self
+            return postCell
+            
+        case 1:
+            let addedCell = collectionView.dequeueReusableCell(withReuseIdentifier: addedId, for: indexPath) as! ProfileAddedRow
+            return addedCell
+        case 2:
+            let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuitsRow
+            pursuitCell.delegate = self
+            pursuitCell.accessProfileController = self
+            return pursuitCell
+        case 3:
+            let principleCell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! ProfilePrincipleRow
+            principleCell.delegate = self
+            principleCell.accessProfileController = self
+            return principleCell
+        default:
+            assert(false, "Not a valid row")
         }
     }
 }

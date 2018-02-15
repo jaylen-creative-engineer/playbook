@@ -97,7 +97,11 @@ class ExploreCategoryRow : UICollectionViewCell, UICollectionViewDelegate, UICol
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: ((frame.width - 2) / 5) + 20, height: ((frame.width - 2) / 6) - 5)
+        let approximateWidthOfCell = frame.width
+        let size = CGSize(width: approximateWidthOfCell, height: .infinity)
+        let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)]
+        let estimatedFrame = NSString(string: interestsNames[indexPath.item]).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+        return CGSize(width: estimatedFrame.width + 12, height: ((frame.width - 2) / 6) - 5)        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

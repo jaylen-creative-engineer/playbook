@@ -16,9 +16,8 @@ protocol HomeRowImageEngagements {
 
 class HomeRow: UICollectionViewCell, HomeImageEngagements, iCarouselDataSource, iCarouselDelegate {
     
-    var accessHomeController : HomeController?
+    var accessHomeController : HomeContainer?
     var homeDelegate : HomeRowImageEngagements?
-    var categoryDetailController : CategoryDetailController?
     
     var itemView : UIImageView = {
         let iv = UIImageView()
@@ -63,7 +62,7 @@ class HomeRow: UICollectionViewCell, HomeImageEngagements, iCarouselDataSource, 
         
         
         if carousel == subCarouselView {
-            carouselImage = UIImageView(frame: CGRect(x: 0, y: 40, width: 400, height: 100))
+            carouselImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 400, height: 100))
             
             let shadowLabel = UILabel()
             shadowLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight(25))
@@ -110,12 +109,10 @@ class HomeRow: UICollectionViewCell, HomeImageEngagements, iCarouselDataSource, 
     
     func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
         accessHomeController?.handleChangeToDetail(viewType: "isImageDetail")
-        categoryDetailController?.handleChangeToDetail(viewType: "isImageDetail")
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         let guide = safeAreaLayoutGuide
         addSubview(carouselView)
         addSubview(subCarouselView)

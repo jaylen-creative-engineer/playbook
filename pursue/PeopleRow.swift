@@ -15,7 +15,6 @@ protocol PeopleRowDelegate {
 class PeopleRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PeopleRowCellDelegate {
     
     var peopleDelegate : PeopleRowDelegate?
-    var categoryDetailController : CategoryDetailController?
     
     let exploreImageNames = ["profile-1", "profile-2", "profile-3", "profile-4", "profile-5"]
     let usernameText = ["Vice", "Jubilee", "boldceo", "Soulection", "GQ"]

@@ -202,8 +202,7 @@ class PursuitsDetailHeader : UICollectionViewCell {
         addSubview(optionButton)
         optionButton.anchor(top: gifImage.bottomAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 5.2, height: 20)
     }
-    
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupTopNavBar()

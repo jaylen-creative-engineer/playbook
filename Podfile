@@ -21,5 +21,6 @@ target 'pursue' do
   pod 'FBSDKCoreKit'
   pod 'FBSDKShareKit'
   pod 'FBSDKLoginKit'
+  pod 'Hero'
  
 end

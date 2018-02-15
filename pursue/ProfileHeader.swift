@@ -23,6 +23,7 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
             guard let imageUrl = user?.photoUrl else { return }
             photoImageView.loadImageUsingCacheWithUrlString(imageUrl)
             fullnameLabel.text = user?.fullname
+            userBio.text = user?.bio
         }
     }
     
@@ -99,14 +100,15 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
         let tv = UITextView()
         tv.delegate = self
         tv.translatesAutoresizingMaskIntoConstraints = false
-        tv.font = UIFont.boldSystemFont(ofSize: 16)
+        tv.font = UIFont.systemFont(ofSize: 12)
         tv.isScrollEnabled = false
         tv.isUserInteractionEnabled = false
         
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 8
+        paragraphStyle.lineSpacing = 60
+        paragraphStyle.paragraphSpacing = 15
         
-        let attrString = NSMutableAttributedString(string: "Here is some sample text that I am putting right here just to see how to bio text field looks, with some live data.")
+        let attrString = NSMutableAttributedString(string: "")
         attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         
         tv.attributedText = attrString
@@ -152,6 +154,7 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
         collectionView.backgroundColor = .clear
         return collectionView
     }()
+
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 3
@@ -170,7 +173,7 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 6, 0, 10)
+        return UIEdgeInsetsMake(0, 10, 0, 10)
     }
     
     var accessProfileController : ProfileController?
@@ -204,10 +207,10 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
         usernameAstric.anchor(top: fullnameLabel.bottomAnchor, left: fullnameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 10, height: 10)
         usernameLabel.anchor(top: nil, left: usernameAstric.rightAnchor, bottom: nil, right: fullnameLabel.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
         usernameLabel.centerYAnchor.constraint(equalTo: usernameAstric.centerYAnchor).isActive = true
-        userBio.anchor(top: photoImageView.bottomAnchor, left: fullnameLabel.leftAnchor, bottom: nil, right: photoImageView.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: userBio.intrinsicContentSize.height)
-        statsCollection.backgroundColor = .red
-        statsCollection.anchor(top: userBio.bottomAnchor, left: userBio.leftAnchor, bottom: nil, right: userBio.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 80)
+        userBio.anchor(top: photoImageView.bottomAnchor, left: fullnameLabel.leftAnchor, bottom: nil, right: photoImageView.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         textViewDidChange(userBio)
+        
+        statsCollection.anchor(top: userBio.bottomAnchor, left: userBio.leftAnchor, bottom: nil, right: userBio.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 70)
         setupProfileOptions()
     }
     
@@ -233,9 +236,7 @@ extension ProfileHeader : UITextViewDelegate {
         let estimatedSize = textView.sizeThatFits(size)
         
         textView.constraints.forEach { (constraint) in
-            if constraint.firstAttribute == .height {
                 constraint.constant = estimatedSize.height
-            }
         }
     }
 }

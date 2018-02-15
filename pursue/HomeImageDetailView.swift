@@ -11,7 +11,7 @@ import UIKit
 class HomeImageDetailView : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, HomeImageEngagements {
     
     var pursuitsDelegate : HomePursuitsRowDelegate?
-    var accessHomeController : HomeController?
+    var accessHomeController : HomeContainer?
     let homeCellId = "homeCellId"
     
     let rowLabel : UILabel = {

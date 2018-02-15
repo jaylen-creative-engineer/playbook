@@ -11,22 +11,17 @@ import XLActionController
 import iCarousel
 import Alamofire
 import SwiftyJSON
+import Hero
 
-class HomeController : UICollectionViewController, UICollectionViewDelegateFlowLayout, HomeRowImageEngagements, HomePursuitsRowDelegate, HomePrinciplesDelegate, HomeDiscussionDelegate {
+class HomeController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     let cellId = "cellId"
-    let secondaryId = "secondaryId"
-    let customRowId = "customRowId"
-    let pursuitId = "pursuitId"
-    let principleId = "principleId"
-    let imageCarouselId = "imageCarouselId"
-    let pursuitCarouselId = "pursuitCarouselId"
-    let principleCarouselId = "principleCarouselId"
-    let discussionCarouselId = "discussionCarouselId"
-    let imageDetailViewId = "imageDetailViewId"
-    var homeController : HomeController?
-    let discussionId = "discussionId"
     let labelId = "labelId"
+    var isImageView = true
+    var isPursuitView = false
+    var isPrinciplesView = false
+    var isDiscussionView = false
+    var isExploreImageView = false
     
     let homeCollection : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -47,9 +42,9 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         return iv
     }()
     
-    lazy var homeIcon : UIImageView = {
-       let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "Pursuit-typed").withRenderingMode(.alwaysOriginal)
+    lazy var homeIcon : UIButton = {
+       let iv = UIButton()
+        iv.setImage(#imageLiteral(resourceName: "Pursuit-typed").withRenderingMode(.alwaysOriginal), for: .normal)
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
@@ -68,11 +63,60 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         return button
     }()
     
-    var isImageView = true
-    var isPursuitView = false
-    var isPrinciplesView = false
-    var isDiscussionView = false
-    var isExploreImageView = false
+    let backgroundFill = UIView()
+    
+    lazy var interestsBar : HomeInterestsBar = {
+        let hb = HomeInterestsBar()
+        hb.accessHomeController = self
+        return hb
+    }()
+    
+    lazy var searchIcon : UIImageView = {
+        let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "search_selected").withRenderingMode(.alwaysOriginal)
+        iv.contentMode = .scaleAspectFill
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleShowSearch))
+        tap.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tap)
+        return iv
+    }()
+    
+    @objc func goBack(){
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func scrollToMenuIndex(menuIndex: Int) {
+        let indexPath = IndexPath(item: menuIndex, section: 0)
+        collectionView?.scrollToItem(at: indexPath, at: [], animated: true)
+    }
+    
+    @objc func handleShowSearch(){
+        let layout = UICollectionViewFlowLayout()
+        let searchController = SearchController(collectionViewLayout: layout)
+        navigationController?.present(searchController, animated: true, completion: nil)
+    }
+    
+    func setupCollectionView(){
+        if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.scrollDirection = .horizontal
+            flowLayout.minimumLineSpacing = 0
+        }
+        
+        collectionView?.register(HomeContainer.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.backgroundColor = UIColor.white
+        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
+        collectionView?.isScrollEnabled = false
+    }
+ 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupCollectionView()
+        setupTopBar()
+    }
     
     func imageView(isExplore : Bool){
         if isExplore == true {
@@ -92,12 +136,11 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         }
     }
     
-    func pursuitView(){
+    @objc func pursuitView(){
         isImageView = false
         isPursuitView = true
         isPrinciplesView = false
         isDiscussionView = false
-        
         collectionView?.reloadData()
     }
     
@@ -107,53 +150,25 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         isPrinciplesView = true
         isDiscussionView = false
         collectionView?.reloadData()
-    }
-    
-    func discussionView(){
-        isImageView = false
-        isPursuitView = false
-        isPrinciplesView = false
-        isDiscussionView = true
-        collectionView?.reloadData()
-    }
-    
-    @objc func goBack(){
-        navigationController?.popViewController(animated: true)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        tabBarController?.navigationController?.navigationBar.isHidden = true
-        collectionView?.register(HomeRow.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.register(HomePursuits.self, forCellWithReuseIdentifier: pursuitId)
-        collectionView?.register(HomePrinciples.self, forCellWithReuseIdentifier: principleId)
-        collectionView?.register(HomeDiscussion.self, forCellWithReuseIdentifier: discussionId)
-        collectionView?.register(HomeInterestsRow.self, forCellWithReuseIdentifier: labelId)
-        collectionView?.register(HomePrincipleCarousel.self, forCellWithReuseIdentifier: principleCarouselId)
-        collectionView?.register(HomePursuitCarousel.self, forCellWithReuseIdentifier: pursuitCarouselId)
-        collectionView?.register(HomeDiscussionCarousel.self, forCellWithReuseIdentifier: discussionCarouselId)
-        collectionView?.register(HomeImageCarousel.self, forCellWithReuseIdentifier: imageCarouselId)
-        collectionView?.register(HomeImageDetailView.self, forCellWithReuseIdentifier: imageDetailViewId)
-        collectionView?.backgroundColor = .white
-        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
-        setupTopBar()
-    }
-    
-    
-    
-    let backgroundFill = UIView()
 
+    }
+    
+    func setupInterestsBar(){
+        view.addSubview(interestsBar)
+        interestsBar.anchor(top: homeIcon.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 60)
+    }
     
     private func setupTopBar(){
         let guide = view.safeAreaLayoutGuide
         view.addSubview(backgroundFill)
-        view.addSubview(homeIcon)
         view.addSubview(cameraIcon)
+        view.addSubview(homeIcon)
+        view.addSubview(searchIcon)
         
         backgroundFill.backgroundColor = .white
         backgroundFill.anchor(top: view.topAnchor, left: guide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (view.frame.height / 8.5) - 5)
         cameraIcon.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 14, paddingRight: 22, width: 18, height: 16)
+        searchIcon.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: cameraIcon.leftAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 14, paddingRight: 32, width: 18, height: 16)
         setupBackButton()
     }
     
@@ -162,14 +177,15 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         
         if isImageView == true {
             backButton.isHidden = true
-             homeIcon.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 8, paddingLeft: 28, paddingBottom: 14, paddingRight: 0, width: 50, height: 18)
+             homeIcon.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 8, paddingLeft: 24, paddingBottom: 14, paddingRight: 0, width: 80, height: 18)
         } else {
             view.addSubview(backButton)
             
             backButton.anchor(top: nil, left: guide.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 12, paddingRight: 24, width: 25, height: 25)
-            homeIcon.anchor(top: nil, left: backButton.rightAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 8, paddingLeft: 32, paddingBottom: 14, paddingRight: 0, width: 50, height: 18)
+            homeIcon.anchor(top: nil, left: backButton.rightAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 8, paddingLeft: 24, paddingBottom: 14, paddingRight: 0, width: 80, height: 18)
             
         }
+        setupInterestsBar()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -178,23 +194,6 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     }
     
     // MARK: - Setup View
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: (view.frame.height / 8.5) - 65)
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch true {
-        case isImageView:
-            return 5
-        default:
-            return 4
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
     
     func homeDiscussionTapped() {
         handleChangeToDetail(viewType: "isDiscussionDetail")
@@ -296,209 +295,6 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         present(actionController, animated: true, completion: nil)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch true {
-        case isImageView:
-            switch indexPath.item {
-            case 0:
-                return CGSize(width: view.frame.width, height: 85)
-            case 1:
-                return CGSize(width: view.frame.width, height: 510)
-            case 2:
-                return CGSize(width: view.frame.width, height: 390)
-            case 3:
-                return CGSize(width: view.frame.width, height: 430)
-            case 4:
-                return CGSize(width: view.frame.width, height: 430)
-            default:
-                assert(false, "Not a valid row")
-            }
-        case isExploreImageView:
-            switch indexPath.item {
-            case 0:
-                return CGSize(width: view.frame.width, height: 510)
-            case 1:
-                return CGSize(width: view.frame.width, height: 390)
-            case 2:
-                return CGSize(width: view.frame.width, height: 430)
-            case 3:
-                return CGSize(width: view.frame.width, height: 430)
-            default:
-                assert(false, "Not a valid row")
-            }
-        case isPursuitView:
-            switch indexPath.item {
-            case 0:
-                return CGSize(width: view.frame.width, height: 350)
-            case 1:
-                return CGSize(width: view.frame.width, height: 390)
-            case 2:
-                return CGSize(width: view.frame.width, height: 430)
-            case 3:
-                return CGSize(width: view.frame.width, height: 535)
-            default:
-                assert(false, "Not a valid row")
-            }
-        case isPrinciplesView:
-            switch indexPath.item {
-            case 0:
-                return CGSize(width: view.frame.width, height: 400)
-            case 1:
-                return CGSize(width: view.frame.width, height: 430)
-            case 2:
-                return CGSize(width: view.frame.width, height: 430)
-            case 3:
-                return CGSize(width: view.frame.width, height: 535)
-            default:
-                assert(false, "Not a valid row")
-            }
-        case isDiscussionView :
-            switch indexPath.item {
-            case 0:
-                return CGSize(width: view.frame.width, height: 290)
-            case 1:
-                return CGSize(width: view.frame.width, height: 390)
-            case 2:
-                return CGSize(width: view.frame.width, height: 430)
-            case 3:
-                return CGSize(width: view.frame.width, height: 535)
-            default:
-                assert(false, "Not a valid row")
-            }
-        default:
-            assert(false, "Not a valid view")
-        }
-        
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch true {
-        case isImageView:
-            switch indexPath.item {
-            case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: labelId, for: indexPath) as! HomeInterestsRow
-                return cell
-            case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeRow
-                cell.homeDelegate = self
-                cell.accessHomeController = self
-                return cell
-            case 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciples
-                cell.principlesDelegate = self
-                cell.accessHomeController = self
-                return cell
-            case 3:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! HomePursuits
-                cell.pursuitsDelegate = self
-                cell.accessHomeController = self
-                return cell
-            case 4:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! HomeDiscussion
-                cell.delegate = self
-                cell.accessHomeController = self
-                return cell
-            default:
-                assert(false, "Not a valid row")
-            }
-        case isExploreImageView:
-            switch indexPath.item {
-            case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageCarouselId, for: indexPath) as! HomeImageCarousel
-                cell.accessHomeController = self
-                return cell
-            case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciples
-                cell.principlesDelegate = self
-                cell.accessHomeController = self
-                return cell
-            case 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! HomePursuits
-                cell.pursuitsDelegate = self
-                cell.accessHomeController = self
-                return cell
-            case 3:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! HomeDiscussion
-                cell.delegate = self
-                cell.accessHomeController = self
-                return cell
-            default:
-                assert(false, "Not a valid row")
-            }
-        case isPursuitView:
-            switch indexPath.item {
-            case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitCarouselId, for: indexPath) as! HomePursuitCarousel
-                cell.accessHomeController = self
-                return cell
-            case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciples
-                cell.principlesDelegate = self
-                cell.accessHomeController = self
-                return cell
-            case 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! HomeDiscussion
-                cell.delegate = self
-                cell.accessHomeController = self
-                return cell
-            case 3:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageDetailViewId, for: indexPath) as! HomeImageDetailView
-                cell.accessHomeController = self
-                return cell
-            default:
-                assert(false, "Not a valid row")
-            }
-        case isPrinciplesView:
-            switch indexPath.item {
-            case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleCarouselId, for: indexPath) as! HomePrincipleCarousel
-                cell.accessHomeController = self
-                return cell
-            case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! HomeDiscussion
-                cell.delegate = self
-                cell.accessHomeController = self
-                return cell
-            case 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! HomePursuits
-                cell.pursuitsDelegate = self
-                cell.accessHomeController = self
-                return cell
-            case 3:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageDetailViewId, for: indexPath) as! HomeImageDetailView
-                cell.accessHomeController = self
-                return cell
-            default:
-                assert(false, "Not a valid row")
-            }
-        case isDiscussionView:
-            switch indexPath.item {
-            case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionCarouselId, for: indexPath) as! HomeDiscussionCarousel
-                cell.accessHomeController = self
-                return cell
-            case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciples
-                cell.principlesDelegate = self
-                cell.accessHomeController = self
-                return cell
-            case 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! HomePursuits
-                cell.pursuitsDelegate = self
-                cell.accessHomeController = self
-                return cell
-            case 3:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageDetailViewId, for: indexPath) as! HomeImageDetailView
-                cell.accessHomeController = self
-                return cell
-            default:
-                assert(false, "Not a valid row")
-            }
-        default:
-            assert(false, "Not a valid view")
-        }
-    }
-    
     func handleChangeToDetail(viewType : String) {
         switch viewType {
         case "isPrinciplesDetail":
@@ -520,6 +316,29 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         default:
             assert(false, "Not a valid view type")
         }
+    }
+    
+}
+
+extension HomeController {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: view.frame.height)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeContainer
+        cell.accessHomeController = self
+        return cell
+    }
+    
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 5
     }
     
 }
