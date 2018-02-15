@@ -50,7 +50,10 @@
 		E62530A51FFD341400E41794 /* SharePhotoOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62530A41FFD341400E41794 /* SharePhotoOptions.swift */; };
 		E628F2DF2034A547002FE8CF /* HomeContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E628F2DE2034A547002FE8CF /* HomeContainer.swift */; };
 		E628F2E220350E75002FE8CF /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E628F2E120350E75002FE8CF /* SearchController.swift */; };
-		E628F2E4203536A9002FE8CF /* SearchHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E628F2E3203536A9002FE8CF /* SearchHeader.swift */; };
+		E628F2EA2035D978002FE8CF /* SearchUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E628F2E92035D978002FE8CF /* SearchUsers.swift */; };
+		E628F2EC2035D980002FE8CF /* SearchPursuits.swift in Sources */ = {isa = PBXBuildFile; fileRef = E628F2EB2035D980002FE8CF /* SearchPursuits.swift */; };
+		E628F2EE2035D98A002FE8CF /* SearchPrinciples.swift in Sources */ = {isa = PBXBuildFile; fileRef = E628F2ED2035D98A002FE8CF /* SearchPrinciples.swift */; };
+		E628F2F02035DAA5002FE8CF /* SearchReturn.swift in Sources */ = {isa = PBXBuildFile; fileRef = E628F2EF2035DAA5002FE8CF /* SearchReturn.swift */; };
 		E62AAB171FD0A2D10053EAD7 /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62AAB161FD0A2D10053EAD7 /* EditProfileController.swift */; };
 		E62AAB191FD0A49A0053EAD7 /* NotificationSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62AAB181FD0A49A0053EAD7 /* NotificationSettingsController.swift */; };
 		E62AAB1B1FD0A54D0053EAD7 /* TermsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62AAB1A1FD0A54D0053EAD7 /* TermsController.swift */; };
@@ -181,7 +184,10 @@
 		E62530A41FFD341400E41794 /* SharePhotoOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePhotoOptions.swift; sourceTree = "<group>"; };
 		E628F2DE2034A547002FE8CF /* HomeContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContainer.swift; sourceTree = "<group>"; };
 		E628F2E120350E75002FE8CF /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
-		E628F2E3203536A9002FE8CF /* SearchHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHeader.swift; sourceTree = "<group>"; };
+		E628F2E92035D978002FE8CF /* SearchUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUsers.swift; sourceTree = "<group>"; };
+		E628F2EB2035D980002FE8CF /* SearchPursuits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPursuits.swift; sourceTree = "<group>"; };
+		E628F2ED2035D98A002FE8CF /* SearchPrinciples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPrinciples.swift; sourceTree = "<group>"; };
+		E628F2EF2035DAA5002FE8CF /* SearchReturn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReturn.swift; sourceTree = "<group>"; };
 		E62AAB161FD0A2D10053EAD7 /* EditProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
 		E62AAB181FD0A49A0053EAD7 /* NotificationSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsController.swift; sourceTree = "<group>"; };
 		E62AAB1A1FD0A54D0053EAD7 /* TermsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsController.swift; sourceTree = "<group>"; };
@@ -338,7 +344,10 @@
 			isa = PBXGroup;
 			children = (
 				E628F2E120350E75002FE8CF /* SearchController.swift */,
-				E628F2E3203536A9002FE8CF /* SearchHeader.swift */,
+				E628F2E92035D978002FE8CF /* SearchUsers.swift */,
+				E628F2EB2035D980002FE8CF /* SearchPursuits.swift */,
+				E628F2ED2035D98A002FE8CF /* SearchPrinciples.swift */,
+				E628F2EF2035DAA5002FE8CF /* SearchReturn.swift */,
 			);
 			name = Search;
 			sourceTree = "<group>";
@@ -767,6 +776,7 @@
 				E61EA9CB1FDCE202001FBDB1 /* PursuitDiscussion.swift in Sources */,
 				E61B48C61F9EB6E500183449 /* ExplorePrinciplesRow.swift in Sources */,
 				E65F1E521FCCBE5000BD850E /* HomeController.swift in Sources */,
+				E628F2EE2035D98A002FE8CF /* SearchPrinciples.swift in Sources */,
 				E63C1D8A1FE36EC800A99F2F /* FeedPrinciple.swift in Sources */,
 				E667183C202A40660068C68A /* UserInterests.swift in Sources */,
 				E617BB1D1FD8A350008B2EA1 /* HomePursuits.swift in Sources */,
@@ -800,6 +810,7 @@
 				E6CE229E1F67616F006C5755 /* CameraController.swift in Sources */,
 				E6A4855C2032022500D61380 /* ExploreContainer.swift in Sources */,
 				E6DEC850201AC31100E02393 /* Pursuit.swift in Sources */,
+				E628F2EA2035D978002FE8CF /* SearchUsers.swift in Sources */,
 				E66472611F97E85E006922C6 /* PursuitSteps.swift in Sources */,
 				E6DEC83E201AB96C00E02393 /* Engagements.swift in Sources */,
 				E634E6A51FA175A4000F329C /* ExploreCategoryRow.swift in Sources */,
@@ -847,6 +858,7 @@
 				E6AB64E81F7188CB00033C09 /* SharePhotoController.swift in Sources */,
 				E66436731FA272AD00A9B0E7 /* ProfilePursuitsRow.swift in Sources */,
 				E61EA9CF1FDCE263001FBDB1 /* PursuitDiscussionCells.swift in Sources */,
+				E628F2EC2035D980002FE8CF /* SearchPursuits.swift in Sources */,
 				E604CCF21FA7AD0A00A6D63E /* FeedController.swift in Sources */,
 				E628F2DF2034A547002FE8CF /* HomeContainer.swift in Sources */,
 				E62AAB271FD210300053EAD7 /* SelectCameraController.swift in Sources */,
@@ -863,8 +875,8 @@
 				E6235EA21F92C70400BF1FDE /* PostView.swift in Sources */,
 				E62AAB1D1FD0A5D30053EAD7 /* PolicyController.swift in Sources */,
 				E62530A51FFD341400E41794 /* SharePhotoOptions.swift in Sources */,
+				E628F2F02035DAA5002FE8CF /* SearchReturn.swift in Sources */,
 				E6D2B8DB2018DB7A008D3055 /* Animator.swift in Sources */,
-				E628F2E4203536A9002FE8CF /* SearchHeader.swift in Sources */,
 				E6D571412010FD59008A37CC /* HomeInterestsRow.swift in Sources */,
 				E621B9941FE04925007324E2 /* PursuitPrincipleCells.swift in Sources */,
 			);

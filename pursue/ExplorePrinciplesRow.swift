@@ -80,20 +80,24 @@ class ExplorePrinciplesRow : UICollectionViewCell, UICollectionViewDelegate, UIC
         return UIEdgeInsetsMake(0, 12, 0, 12)
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    func setupView(){
         addSubview(postCollection)
         addSubview(rowLabel)
         addSubview(moreButton)
-
+        
         rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: 20)
         postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 250)
         moreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 24, height: 12)
-       
+        
         postCollection.showsHorizontalScrollIndicator = false
         postCollection.register(ExplorePrincipleCells.self, forCellWithReuseIdentifier: cellId)
         postCollection.dataSource = self
         postCollection.delegate = self
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
     }
     
     
