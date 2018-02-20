@@ -42,7 +42,26 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
     }()
+    
+    lazy var searchIcon : UIImageView = {
+        let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "search_selected").withRenderingMode(.alwaysOriginal)
+        iv.contentMode = .scaleAspectFill
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.isUserInteractionEnabled = true
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleShowSearch))
+        tap.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tap)
+        return iv
+    }()
+    
+    @objc func handleShowSearch(){
+        let layout = UICollectionViewFlowLayout()
+        let searchController = SearchController(collectionViewLayout: layout)
+        navigationController?.present(searchController, animated: true, completion: nil)
+    }
+    
     @objc func switchToCamera() {
         let layout = UICollectionViewFlowLayout()
         let cameraController = SelectCameraController(collectionViewLayout: layout)
@@ -56,11 +75,13 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         view.addSubview(backgroundFill)
         view.addSubview(homeIcon)
         view.addSubview(cameraIcon)
+        view.addSubview(searchIcon)
         
         backgroundFill.backgroundColor = .white
         backgroundFill.anchor(top: view.topAnchor, left: guide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (view.frame.height / 8.5) - 5)
         homeIcon.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 8, paddingLeft: 28, paddingBottom: 14, paddingRight: 0, width: 50, height: 18)
         cameraIcon.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 14, paddingRight: 22, width: 18, height: 16)
+        searchIcon.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: cameraIcon.leftAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 14, paddingRight: 24, width: 18, height: 16)
     }
     
     

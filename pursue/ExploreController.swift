@@ -10,21 +10,12 @@ import UIKit
 import XLActionController
 import Alamofire
 
-class ExploreController : UICollectionViewController, UICollectionViewDelegateFlowLayout, ExploreExerciseDelegate, ExplorePrincipleDelegate, ExploreImageDelegate, PeopleRowDelegate {
+class ExploreController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     let cellId = "cellId"
-    let secondaryId = "secondaryId"
-    let customRowId = "customRowId"
-    let peopleId = "peopleId"
-    let principleId = "principleId"
-    let exerciseId = "exerciseId"
-    let categoryId = "categoryId"
-    let discussionId = "discussionId"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tabBarController?.navigationController?.navigationBar.isHidden = true
         setupCollectionView()
         setupTopBar()
     }
@@ -41,13 +32,14 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         }
         
         collectionView?.register(ExploreContainer.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.backgroundColor = .white
+        collectionView?.backgroundColor = UIColor.white
         collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
         collectionView?.isScrollEnabled = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        tabBarController?.navigationController?.navigationBar.isHidden = true
         navigationController?.navigationBar.isHidden = true
     }
     
@@ -253,9 +245,16 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
             assert(false, "Not a valid view type")
         }
     }
-}
-
-extension ExploreController {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: view.frame.height)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreContainer
+        cell.accessExploreController = self
+        return cell
+    }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
@@ -265,19 +264,12 @@ extension ExploreController {
         return 5
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-       return CGSize(width: view.frame.width, height: view.frame.height)
-    }
-    
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: view.frame.width, height: (view.frame.height / 8.5) + 50)
     }
+}
+
+extension ExploreController {
     
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreContainer
-        return cell
-    }
 }
 

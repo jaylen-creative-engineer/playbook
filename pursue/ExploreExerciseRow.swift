@@ -16,7 +16,7 @@ protocol ExploreExerciseDelegate {
 class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ExploreExerciseCellsDelegate {
     
     var exploreDelegate : ExploreExerciseDelegate?
-    var accessExploreController : ExploreController?
+    var accessExploreController : ExploreContainer?
     
     let rowLabel : UILabel = {
         let label = UILabel()

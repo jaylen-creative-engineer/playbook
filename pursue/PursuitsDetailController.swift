@@ -216,6 +216,22 @@ class PursuitsDetailController : UICollectionViewController {
         }
     }
     
+    lazy var containerView: CommentInputAccessoryView = {
+        let container = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
+        let commentInputAccessoryView = CommentInputAccessoryView(frame: container)
+        return commentInputAccessoryView
+    }()
+    
+    override var inputAccessoryView: UIView? {
+        get {
+            return containerView
+        }
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
@@ -233,12 +249,13 @@ class PursuitsDetailController : UICollectionViewController {
         collectionView?.register(PursuitPrinciple.self, forCellWithReuseIdentifier: principleId)
         collectionView?.register(RelatedPost.self, forCellWithReuseIdentifier: relatedId)
         collectionView?.register(PursuitSteps.self, forCellWithReuseIdentifier: stepId)
-        collectionView?.register(PursuitDiscussion.self, forCellWithReuseIdentifier: discussionId)
         collectionView?.register(PostComments.self, forCellWithReuseIdentifier: commentId)
         collectionView?.register(DiscussionPursuitsView.self, forCellWithReuseIdentifier: pursuitId)
         collectionView?.register(PursuitsDetailHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.backgroundColor = .white
         collectionView?.contentInset = UIEdgeInsetsMake(-45, 0, 135, 0)
+        collectionView?.alwaysBounceVertical = true
+        collectionView?.keyboardDismissMode = .interactive
         setupFloatingCamera()
     }
     
@@ -253,7 +270,7 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
         case isDiscussionView:
             return 3
         case isPursuitView:
-            return 5
+            return 4
         case isImageView:
             return 5
         default:
@@ -265,8 +282,10 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
         switch true {
         case isPursuitView:
             switch indexPath.item {
+            case 0:
+                return CGSize(width: view.frame.width, height: 200)
             case 1:
-                return CGSize(width: view.frame.width, height: 130)
+                return CGSize(width: view.frame.width, height: 220)
             case 2:
                 return CGSize(width: view.frame.width, height: 320)
             case 3:
@@ -276,6 +295,8 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
             }
         case isPrinciplesView:
             switch indexPath.item {
+            case 0:
+                return CGSize(width: view.frame.width, height: 200)
             case 1:
                 return CGSize(width: view.frame.width, height: 170)
             case 2:
@@ -285,19 +306,10 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
             default:
                 return CGSize(width: view.frame.width, height: 120)
             }
-        case isDiscussionView :
-            switch indexPath.item {
-            case 1:
-                return CGSize(width: view.frame.width, height: 170)
-            case 2:
-                return CGSize(width: view.frame.width, height: 360)
-            case 3:
-                return CGSize(width: view.frame.width, height: 382)
-            default:
-                return CGSize(width: view.frame.width, height: 120)
-            }
         case isImageView:
             switch indexPath.item {
+            case 0:
+                return CGSize(width: view.frame.width, height: 200)
             case 1:
                 return CGSize(width: view.frame.width, height: 170)
             case 2:
@@ -331,9 +343,6 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
                 return cell
             case 2:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! DiscussionPursuitsView
-                return cell
-            case 3:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: discussionId, for: indexPath) as! PursuitDiscussion
                 return cell
             default:
                 assert(false, "Not a valid cell")

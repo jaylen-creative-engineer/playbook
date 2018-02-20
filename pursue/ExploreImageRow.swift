@@ -16,7 +16,7 @@ protocol ExploreImageDelegate {
 class ExploreImageRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ExerciseImageCellDelegate {
     
     var exploreDelegate : ExploreImageDelegate?
-    var accessExploreController : ExploreController?
+    var accessExploreController : ExploreContainer?
     let exploreImageNames = ["ferrari", "pagani", "ferrari-f70", "ghost"]
     let exploreLabelText = ["Ferrari", "Desvre", "La Ferrari F70", "Ghost"]
     

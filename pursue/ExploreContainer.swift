@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExploreContainer : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout  {
+class ExploreContainer : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ExploreExerciseDelegate, ExplorePrincipleDelegate, ExploreImageDelegate, PeopleRowDelegate  {
     
     let cellId = "cellId"
     let secondaryId = "secondaryId"
@@ -18,6 +18,8 @@ class ExploreContainer : UICollectionViewCell, UICollectionViewDelegate, UIColle
     let exerciseId = "exerciseId"
     let categoryId = "categoryId"
     let discussionId = "discussionId"
+    
+    var accessExploreController : ExploreController?
     
     let exploreCollection : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -65,35 +67,87 @@ class ExploreContainer : UICollectionViewCell, UICollectionViewDelegate, UIColle
         switch indexPath.item {
         case 0:
             let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreImageRow
+            imageCell.exploreDelegate = self
+            imageCell.accessExploreController = self
             return imageCell
         case 1:
             let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! ExploreExerciseRow
+            pursuitCell.exploreDelegate = self
+            pursuitCell.accessExploreController = self
             return pursuitCell
         case 2:
             let peopleCell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! PeopleRow
+            peopleCell.peopleDelegate = self
             return peopleCell
         case 3:
             let principleCell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! ExplorePrinciplesRow
+            principleCell.exploreDelegate = self
+            principleCell.accessExploreController = self
             return principleCell
         default:
             assert(false, "This is not a valid cell")
         }
     }
     
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = .white
+    func setupView(){
         exploreCollection.register(ExploreImageRow.self, forCellWithReuseIdentifier: cellId)
         exploreCollection.register(PeopleRow.self, forCellWithReuseIdentifier: peopleId)
         exploreCollection.register(ExplorePrinciplesRow.self, forCellWithReuseIdentifier: principleId)
         exploreCollection.register(ExploreExerciseRow.self, forCellWithReuseIdentifier: exerciseId)
         exploreCollection.register(ExploreCategoryRow.self, forCellWithReuseIdentifier: categoryId)
-        exploreCollection.delegate = self
-        exploreCollection.dataSource = self
+        
         
         addSubview(exploreCollection)
         exploreCollection.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+    }
+    
+    func explorePrincipleTapped() {
+        accessExploreController?.explorePrincipleTapped()
+    }
+    
+    func explorePrincipleHeld() {
+        accessExploreController?.explorePrincipleHeld()
+    }
+    
+    func explorePursuitTapped() {
+        accessExploreController?.explorePursuitTapped()
+    }
+    
+    func explorePursuitHeld() {
+        accessExploreController?.explorePursuitHeld()
+    }
+    
+    func profileTapped() {
+        accessExploreController?.profileTapped()
+    }
+    
+    func imageTapped() {
+        accessExploreController?.imageTapped()
+    }
+    
+    func imageHeld() {
+        accessExploreController?.imageHeld()
+    }
+    
+    func handleChangeToFeed(viewType : String) {
+        switch viewType {
+        case "isPrinciplesFeed":
+            accessExploreController?.handleChangeToFeed(viewType: "isPrinciplesFeed")
+        case "isPursuitFeed":
+            accessExploreController?.handleChangeToFeed(viewType: "isPursuitFeed")
+        case "isImageFeed":
+            accessExploreController?.handleChangeToFeed(viewType: "isImageFeed")
+        default:
+            assert(false, "Not a valid view type")
+        }
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .white
+        exploreCollection.delegate = self
+        exploreCollection.dataSource = self
+        setupView()
         
     }
     

@@ -8,15 +8,16 @@
 
 import UIKit
 
-class PursuitSteps :  UICollectionViewCell, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
-    
+class PursuitSteps :  UICollectionViewCell, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource, StepsResizing {
     let cellId = "cellId"
     
     var accessPursuitDetailController : PursuitsDetailController?
+    let skillsLabel = ["Work hard everyday it's very important. A whole lot of extra words. There it is keep getting it, keep pushing through it."]
     
     let pursuitSteps : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.isScrollEnabled = false
         collectionView.backgroundColor = .clear
         return collectionView
     }()
@@ -35,6 +36,13 @@ class PursuitSteps :  UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
         return iv
     }()
     
+    var adjustedHeight : CGFloat = 0
+    
+    func cellHeight(height: CGFloat) -> CGFloat {
+        adjustedHeight = height
+        return height
+    }
+    
     func setupView(){
         let underlineView = UIView()
         underlineView.backgroundColor = .gray
@@ -46,12 +54,14 @@ class PursuitSteps :  UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
         
         stepsLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: stepsLabel.intrinsicContentSize.width, height: stepsLabel.intrinsicContentSize.height)
         downArrow.anchor(top: stepsLabel.bottomAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 14, width: 25, height: 25)
-        pursuitSteps.anchor(top: stepsLabel.bottomAnchor, left: stepsLabel.leftAnchor, bottom: nil, right: downArrow.leftAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 30)
+        pursuitSteps.anchor(top: stepsLabel.bottomAnchor, left: stepsLabel.leftAnchor, bottom: nil, right: downArrow.leftAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 40)
         underlineView.anchor(top: pursuitSteps.bottomAnchor, left: stepsLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 0.5)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PostStepsCells
+        cell.delegate = self
+        cell.skillLabel.text = "Work hard everyday it's very important. A whole lot of extra words. There it is keep getting it, keep pushing through it."
         return cell
     }
     
@@ -60,7 +70,7 @@ class PursuitSteps :  UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return skillsLabel.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -72,7 +82,23 @@ class PursuitSteps :  UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width, height: 70)
+        if adjustedHeight != 0.0 {
+            pursuitSteps.constraints.forEach { (constraint) in
+                constraint.constant = adjustedHeight
+            }
+            return CGSize(width: frame.width, height: adjustedHeight)
+        } else {
+            let approximateWidthOfCell = frame.width - 40 - 14 - 12 - 24
+            let size = CGSize(width: approximateWidthOfCell, height: .infinity)
+            let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)]
+            let estimatedFrame = NSString(string: skillsLabel[indexPath.item]).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+            
+            pursuitSteps.constraints.forEach { (constraint) in
+                constraint.constant = estimatedFrame.height + 30
+            }
+            return CGSize(width: frame.width, height: estimatedFrame.height + 30)
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

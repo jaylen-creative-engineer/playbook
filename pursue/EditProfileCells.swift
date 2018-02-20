@@ -235,6 +235,7 @@ class EditProfileCells : UICollectionViewCell {
         confirmLabel.anchor(top: currentUnderlineView.bottomAnchor, left: currentLabel.leftAnchor, bottom: nil, right: currentUnderlineView.rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: confirmLabel.intrinsicContentSize.height)
         confirmUnderlineView.anchor(top: confirmLabel.bottomAnchor, left: confirmLabel.leftAnchor, bottom: nil, right: confirmLabel.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
         updateLabel.anchor(top: confirmUnderlineView.bottomAnchor, left: confirmLabel.leftAnchor, bottom: nil, right: confirmUnderlineView.rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: updateLabel.intrinsicContentSize.height)
+        
         updateUnderlineView.anchor(top: updateLabel.bottomAnchor, left: updateLabel.leftAnchor, bottom: nil, right: updateLabel.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
     }
     

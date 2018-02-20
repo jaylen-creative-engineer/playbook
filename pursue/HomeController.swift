@@ -23,13 +23,6 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     var isDiscussionView = false
     var isExploreImageView = false
     
-    let homeCollection : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        return collectionView
-    }()
-    
     lazy var cameraIcon : UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "add").withRenderingMode(.alwaysOriginal)
@@ -168,7 +161,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         backgroundFill.backgroundColor = .white
         backgroundFill.anchor(top: view.topAnchor, left: guide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (view.frame.height / 8.5) - 5)
         cameraIcon.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 14, paddingRight: 22, width: 18, height: 16)
-        searchIcon.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: cameraIcon.leftAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 14, paddingRight: 32, width: 18, height: 16)
+        searchIcon.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: cameraIcon.leftAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 14, paddingRight: 24, width: 18, height: 16)
         setupBackButton()
     }
     
@@ -177,12 +170,12 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         
         if isImageView == true {
             backButton.isHidden = true
-             homeIcon.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 8, paddingLeft: 24, paddingBottom: 14, paddingRight: 0, width: 80, height: 18)
+             homeIcon.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 14, paddingRight: 0, width: 82, height: 18)
         } else {
             view.addSubview(backButton)
             
             backButton.anchor(top: nil, left: guide.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 12, paddingRight: 24, width: 25, height: 25)
-            homeIcon.anchor(top: nil, left: backButton.rightAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 8, paddingLeft: 24, paddingBottom: 14, paddingRight: 0, width: 80, height: 18)
+            homeIcon.anchor(top: nil, left: backButton.rightAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 8, paddingLeft: 22, paddingBottom: 14, paddingRight: 0, width: 82, height: 18)
             
         }
         setupInterestsBar()

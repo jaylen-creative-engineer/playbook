@@ -8,21 +8,23 @@
 
 import UIKit
 
-class PostStepsCells : UICollectionViewCell {
+protocol StepsResizing {
+    func cellHeight(height : CGFloat) -> CGFloat
+}
+
+class PostStepsCells : UICollectionViewCell, UITextViewDelegate {
     
-    lazy var skillLabel : UITextField = {
-        let tf = UITextField()
-        tf.font = UIFont.systemFont(ofSize: 14)
-        
-        let attributes = [ NSAttributedStringKey.foregroundColor: UIColor.black,
-                           NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)]
-        tf.attributedPlaceholder = NSAttributedString(string: "Work Hard Right Now", attributes:attributes)
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(toggleSteps))
-        tap.numberOfTapsRequired = 1
-        tf.addGestureRecognizer(tap)
-        tf.isUserInteractionEnabled = true
-        return tf
+    var delegate : StepsResizing?
+    
+    lazy var skillLabel : UITextView = {
+        let tv = UITextView()
+        tv.isScrollEnabled = false
+        tv.font = UIFont.systemFont(ofSize: 14)
+        tv.translatesAutoresizingMaskIntoConstraints = false
+        tv.isUserInteractionEnabled = false
+        tv.delegate = self
+        tv.text = "Enter bio"
+        return tv
     }()
     
     let selectSkill : UIButton = {
@@ -61,12 +63,10 @@ class PostStepsCells : UICollectionViewCell {
     
     func setupView(){
         addSubview(selectSkill)
-        addSubview(skillLabel)
-        
+        addSubview(skillLabel)        
         selectSkill.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 16, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 16, height: 2)
-        
-        skillLabel.anchor(top: nil, left: selectSkill.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 16, paddingBottom: 0, paddingRight: 12, width: 0, height: skillLabel.intrinsicContentSize.height)
-        skillLabel.centerYAnchor.constraint(equalTo: selectSkill.centerYAnchor).isActive = true
+        textViewDidChange(skillLabel)
+        skillLabel.anchor(top: topAnchor, left: selectSkill.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 16, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
     override init(frame: CGRect) {
@@ -76,5 +76,21 @@ class PostStepsCells : UICollectionViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension PostStepsCells {
+    
+    func textViewDidChange(_ textView: UITextView) {
+        let size = CGSize(width: frame.width - 32 - 24, height: .infinity)
+        
+        let estimatedSize = textView.sizeThatFits(size)
+        
+        textView.constraints.forEach { (constraint) in
+            if constraint.firstAttribute == .height {
+                constraint.constant = estimatedSize.height
+                delegate?.cellHeight(height: estimatedSize.height)
+            }
+        }
     }
 }

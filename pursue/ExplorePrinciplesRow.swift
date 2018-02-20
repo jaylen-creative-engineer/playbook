@@ -16,7 +16,7 @@ protocol ExplorePrincipleDelegate {
 class ExplorePrinciplesRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ExplorePrincipleCellsDelegate {
     
     var exploreDelegate : ExplorePrincipleDelegate?
-    var accessExploreController : ExploreController?
+    var accessExploreController : ExploreContainer?
     
     let rowLabel : UILabel = {
         let label = UILabel()

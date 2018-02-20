@@ -40,7 +40,7 @@ class PursuitPrinciple : UICollectionViewCell, UICollectionViewDelegate, UIColle
     
     let principlesLabel : UILabel = {
        let label = UILabel()
-        label.text = "Recommended Principles"
+        label.text = "Principles"
         label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight(rawValue: 25))
         return label
     }()

@@ -15,8 +15,6 @@ class CategoryBar : UIView, UICollectionViewDataSource, UICollectionViewDelegate
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .white
-        cv.dataSource = self
-        cv.delegate = self
         cv.showsHorizontalScrollIndicator = false
         return cv
     }()
@@ -59,6 +57,8 @@ class CategoryBar : UIView, UICollectionViewDataSource, UICollectionViewDelegate
     override init(frame: CGRect) {
         super.init(frame: frame)
         collectionView.register(ExploreCategoryCells.self, forCellWithReuseIdentifier: cellId)
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
         addSubview(collectionView)
         collectionView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 35)

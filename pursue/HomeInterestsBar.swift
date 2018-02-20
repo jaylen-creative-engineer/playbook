@@ -40,7 +40,7 @@ class HomeInterestsBar : UIView, UICollectionViewDelegate, UICollectionViewDeleg
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         if let _ = homeInterestsNames.first {
-            return UIEdgeInsetsMake(0, 24, 0, 12)
+            return UIEdgeInsetsMake(0, 18, 0, 12)
         }
         
         return UIEdgeInsetsMake(0, 12, 0, 12)
