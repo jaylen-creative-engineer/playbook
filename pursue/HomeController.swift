@@ -23,18 +23,6 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     var isDiscussionView = false
     var isExploreImageView = false
     
-    lazy var cameraIcon : UIImageView = {
-        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "add").withRenderingMode(.alwaysOriginal)
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.contentMode = .scaleAspectFill
-        
-        let tap = UIGestureRecognizer(target: self, action: #selector(switchToCamera))
-        iv.addGestureRecognizer(tap)
-        iv.isUserInteractionEnabled = true
-        return iv
-    }()
-    
     lazy var homeIcon : UIButton = {
        let iv = UIButton()
         iv.setImage(#imageLiteral(resourceName: "Pursuit-typed").withRenderingMode(.alwaysOriginal), for: .normal)
@@ -42,12 +30,6 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
     }()
-    
-    @objc func switchToCamera() {
-        let layout = UICollectionViewFlowLayout()
-        let cameraController = SelectCameraController(collectionViewLayout: layout)
-        navigationController?.present(cameraController, animated: true, completion: nil)
-    }
     
     lazy var backButton : UIButton = {
         let button = UIButton()
@@ -148,20 +130,18 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     
     func setupInterestsBar(){
         view.addSubview(interestsBar)
-        interestsBar.anchor(top: homeIcon.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 60)
+        interestsBar.anchor(top: homeIcon.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 60)
     }
     
     private func setupTopBar(){
         let guide = view.safeAreaLayoutGuide
         view.addSubview(backgroundFill)
-        view.addSubview(cameraIcon)
         view.addSubview(homeIcon)
         view.addSubview(searchIcon)
         
         backgroundFill.backgroundColor = .white
         backgroundFill.anchor(top: view.topAnchor, left: guide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (view.frame.height / 8.5) - 5)
-        cameraIcon.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 14, paddingRight: 22, width: 18, height: 16)
-        searchIcon.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: cameraIcon.leftAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 14, paddingRight: 24, width: 18, height: 16)
+        searchIcon.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 14, paddingRight: 22, width: 18, height: 16)
         setupBackButton()
     }
     

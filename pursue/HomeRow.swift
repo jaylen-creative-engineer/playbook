@@ -10,20 +10,19 @@ import UIKit
 import iCarousel
 
 protocol HomeRowImageEngagements {
-    func homeRowImageTapped()
-    func homeRowImageHeld()
+    func homeRowScrolled(for cell : HomeRow)
 }
 
-class HomeRow: UICollectionViewCell, HomeImageEngagements, iCarouselDataSource, iCarouselDelegate {
+class HomeRow: UICollectionViewCell, iCarouselDataSource, iCarouselDelegate {
     
     var accessHomeController : HomeContainer?
     var homeDelegate : HomeRowImageEngagements?
+    let pursuitId = "pursuitId"
+    let principleId = "principleId"
+    let stepId = "stepId"
     
-    var itemView : UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        return iv
-    }()
+    let homeImageNames = ["movie-app", "messenger-app", "workout", "wim-hof", "meditation"]
+    let homePursuitDescriptions = ["Movie App", "Messenger App", "Gain 15 Pounds", "Wim Hof Breathing", "Guided Meditation"]
     
     lazy var carouselView : iCarousel = {
        let ic = iCarousel()
@@ -32,7 +31,6 @@ class HomeRow: UICollectionViewCell, HomeImageEngagements, iCarouselDataSource, 
     
     lazy var subCarouselView : iCarousel = {
       let ic = iCarousel()
-        ic.type = .invertedTimeMachine
         return ic
     }()
     
@@ -40,28 +38,92 @@ class HomeRow: UICollectionViewCell, HomeImageEngagements, iCarouselDataSource, 
     
     let imageNames = ["ferrari", "pagani", "travel", "contacts", "3d-touch"]
     let homeDescriptions = ["iChat App", "New York Exchange", "Travel App", "Contact Page", "Settings 3d touch"]
+
+    func homeDiscussionTapped() {
+        accessHomeController?.handleChangeToDetail(viewType: "isDiscussionDetail")
+    }
+    
+    func homeDiscussionHeld() {
+        accessHomeController?.homeDiscussionHeld()
+    }
+    
+    func principleTapped() {
+        accessHomeController?.handleChangeToDetail(viewType: "isPrinciplesDetail")
+    }
+    
+    func principleHeld() {
+        accessHomeController?.principleHeld()
+    }
+    
+    func homeRowImageTapped() {
+        accessHomeController?.handleChangeToDetail(viewType: "isImageDetail")
+    }
+    
+    func homeRowImageHeld() {
+        accessHomeController?.homeRowImageHeld()
+    }
+    
+    func pursuitClicked() {
+        accessHomeController?.handleChangeToDetail(viewType: "isPursuitDetail")
+    }
+    
+    func pursuitHeld() {
+        accessHomeController?.pursuitHeld()
+    }
+    
+    func handleChangeToDetail(viewType : String) {
+        switch viewType {
+        case "isPrinciplesDetail":
+            accessHomeController?.handleChangeToDetail(viewType: "isPrinciplesDetail")
+        case "isPursuitDetail":
+            accessHomeController?.handleChangeToDetail(viewType: "isPursuitDetail")
+        case "isImageDetail":
+            accessHomeController?.handleChangeToDetail(viewType: "isImageDetail")
+        case "isDiscussionDetail":
+            accessHomeController?.handleChangeToDetail(viewType: "isDiscussionDetail")
+        default:
+            assert(false, "Not a valid view type")
+        }
+    }
+    
+    func imageView(isExplore : Bool){
+        if isExplore == true {
+            accessHomeController?.imageView(isExplore: true)
+        } else {
+            accessHomeController?.imageView(isExplore: false)
+        }
+    }
+    
+    func pursuitView(){
+        accessHomeController?.pursuitView()
+    }
+    
+    func principleView(){
+        accessHomeController?.principleView()
+    }
     
     func homeTapped() {
-        homeDelegate?.homeRowImageTapped()
     }
     
     func homeHeld() {
-        homeDelegate?.homeRowImageHeld()
     }
     
     func numberOfItems(in carousel: iCarousel) -> Int {
-        if carousel == carouselView {
+        switch carousel {
+        case carouselView:
             return imageNames.count
-        } else {
+        case subCarouselView:
             return homeDescriptions.count
+        default:
+            assert(false, "Not a valid cell")
         }
     }
     
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
         var carouselImage = UIImageView()
         
-        
-        if carousel == subCarouselView {
+        switch carousel {
+        case subCarouselView:
             carouselImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 400, height: 100))
             
             let shadowLabel = UILabel()
@@ -73,18 +135,21 @@ class HomeRow: UICollectionViewCell, HomeImageEngagements, iCarouselDataSource, 
             carouselImage.addSubview(shadowLabel)
             shadowLabel.anchor(top: nil, left: carouselImage.leftAnchor, bottom: carouselImage.bottomAnchor, right: carouselImage.rightAnchor, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 24, width: 0, height: 70)
             toggleLike(label: shadowLabel, index: index)
+            return carouselImage
+        case carouselView:
+            carouselImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 325, height: 400))
             
-        } else if carousel == carouselView{
-            carouselImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 300, height: 400))
             carouselImage.image = UIImage(named: imageNames[index])?.withRenderingMode(.alwaysOriginal)
             carouselImage.contentMode = .scaleAspectFill
             carouselImage.layer.cornerRadius = 4
             carouselImage.layer.masksToBounds = true
+            return carouselImage
+        default:
+            return carouselImage
         }
 
-        return carouselImage
     }
- 
+    
     func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
         if (option == .spacing) {
             return value * 0.6
@@ -103,6 +168,7 @@ class HomeRow: UICollectionViewCell, HomeImageEngagements, iCarouselDataSource, 
     
     func carouselDidScroll(_ carousel: iCarousel) {
         if carousel == carouselView {
+            homeDelegate?.homeRowScrolled(for: self)
             subCarouselView.scrollOffset = carouselView.scrollOffset
         }
     }
@@ -110,24 +176,38 @@ class HomeRow: UICollectionViewCell, HomeImageEngagements, iCarouselDataSource, 
     func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
         accessHomeController?.handleChangeToDetail(viewType: "isImageDetail")
     }
+
+    func setupCarousels(){
+        setupStandardCarousel()
+        labelSubCarousel()
+    }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        let guide = safeAreaLayoutGuide
-        addSubview(carouselView)
-        addSubview(subCarouselView)
-        subCarouselView.backgroundColor = .clear
-        carouselView.anchor(top: topAnchor, left: guide.leftAnchor, bottom: nil, right: guide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 28, width: 0, height: 412)
-        subCarouselView.anchor(top: carouselView.bottomAnchor, left: guide.leftAnchor, bottom: nil, right: guide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 60)
+    func setupStandardCarousel(){
         carouselView.dataSource = self
         carouselView.delegate = self
+        carouselView.type = .invertedTimeMachine
+        
+        let guide = safeAreaLayoutGuide
+        addSubview(carouselView)
+        carouselView.anchor(top: topAnchor, left: guide.leftAnchor, bottom: nil, right: guide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 28, width: 0, height: 412)
+    }
+    
+    func labelSubCarousel(){
         subCarouselView.dataSource = self
         subCarouselView.delegate = self
         subCarouselView.isScrollEnabled = false
-        carouselView.type = .invertedTimeMachine
         subCarouselView.type = .invertedCylinder
         subCarouselView.backgroundColor = .clear
         subCarouselView.isVertical = true
+        
+        let guide = safeAreaLayoutGuide
+        addSubview(subCarouselView)
+        subCarouselView.anchor(top: carouselView.bottomAnchor, left: guide.leftAnchor, bottom: nil, right: guide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 60)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupCarousels()
     }
     
     
@@ -136,3 +216,5 @@ class HomeRow: UICollectionViewCell, HomeImageEngagements, iCarouselDataSource, 
     }
     
 }
+
+

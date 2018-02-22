@@ -33,8 +33,7 @@ class EditProfileController : UICollectionViewController, UICollectionViewDelega
     let cellId = "cellId"
     
     @objc func handleCamera(){
-        let layout = UICollectionViewFlowLayout()
-        let cameraController = SelectCameraController(collectionViewLayout: layout)
+        let cameraController = SelectCameraController()
         navigationController?.present(cameraController, animated: true, completion: nil)
     }
     

@@ -1,14 +1,19 @@
 //
-//  SearchPursuits.swift
+//  HomePursuits.swift
 //  pursue
 //
-//  Created by Jaylen Sanders on 2/15/18.
-//  Copyright © 2018 Glory. All rights reserved.
+//  Created by Jaylen Sanders on 12/6/17.
+//  Copyright © 2017 Glory. All rights reserved.
 //
 
 import UIKit
 
-class SearchPursuits : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PursuitSelected {
+protocol HomePursuitsRowDelegate {
+    func pursuitClicked()
+    func pursuitHeld()
+}
+
+class HomeSteps : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PursuitSelected {
     
     var pursuitsDelegate : HomePursuitsRowDelegate?
     var accessHomeController : HomeContainer?
@@ -18,7 +23,7 @@ class SearchPursuits : UICollectionViewCell, UICollectionViewDelegate, UICollect
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
-        label.text = "Pursuits"
+        label.text = "Steps"
         label.textAlignment = .left
         return label
     }()
@@ -27,7 +32,7 @@ class SearchPursuits : UICollectionViewCell, UICollectionViewDelegate, UICollect
     let homePursuitDescriptions = ["Movie App", "Messenger App", "Gain 15 Pounds", "Wim Hof Breathing", "Guided Meditation"]
     
     let homePursuitsCollection : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
+        let layout = UICollectionViewFlowLayout()        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.isScrollEnabled = false
@@ -66,7 +71,7 @@ class SearchPursuits : UICollectionViewCell, UICollectionViewDelegate, UICollect
         return cell
     }
     
-    func setupView() {
+     func setupView() {
         addSubview(rowLabel)
         addSubview(homePursuitsCollection)
         

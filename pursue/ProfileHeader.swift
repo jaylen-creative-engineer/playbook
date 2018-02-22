@@ -143,8 +143,8 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
         return label
     }()
     
-    let countsArray = ["165", "247", "553"]
-    let labelArray = ["Posts", "Pursuits", "Principles"]
+    let countsArray = ["165", "247"]
+    let labelArray = ["Added", "Pursuits"]
     
     let statsCollection : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -157,7 +157,7 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
 
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

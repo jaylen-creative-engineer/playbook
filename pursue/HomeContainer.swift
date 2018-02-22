@@ -106,12 +106,12 @@ class HomeContainer : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
         addSubview(homeCollection)
         homeCollection.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         homeCollection.register(HomeRow.self, forCellWithReuseIdentifier: cellId)
-        homeCollection.register(HomePursuits.self, forCellWithReuseIdentifier: pursuitId)
+        homeCollection.register(HomeSteps.self, forCellWithReuseIdentifier: pursuitId)
         homeCollection.register(HomePrinciples.self, forCellWithReuseIdentifier: principleId)
-        homeCollection.register(HomePrincipleCarousel.self, forCellWithReuseIdentifier: principleCarouselId)
-        homeCollection.register(HomePursuitCarousel.self, forCellWithReuseIdentifier: pursuitCarouselId)
-        homeCollection.register(HomeImageCarousel.self, forCellWithReuseIdentifier: imageCarouselId)
-        homeCollection.register(HomeImageDetailView.self, forCellWithReuseIdentifier: imageDetailViewId)
+    }
+    
+    func homeRowScrolled(for cell: HomeRow) {
+        print("Image view scrolled")        
     }
     
     override init(frame: CGRect) {
@@ -130,137 +130,38 @@ class HomeContainer : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
 extension HomeContainer {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch true {
-        case isImageView:
-            switch indexPath.item {
-            case 0:
-                return CGSize(width: frame.width, height: 510)
-            case 1:
-                return CGSize(width: frame.width, height: 390)
-            case 2:
-                return CGSize(width: frame.width, height: 430)
-            default:
-                assert(false, "Not a valid row")
-            }
-        case isExploreImageView:
-            switch indexPath.item {
-            case 0:
-                return CGSize(width: frame.width, height: 510)
-            case 1:
-                return CGSize(width: frame.width, height: 390)
-            case 2:
-                return CGSize(width: frame.width, height: 430)
-            default:
-                assert(false, "Not a valid row")
-            }
-        case isPursuitView:
-            switch indexPath.item {
-            case 0:
-                return CGSize(width: frame.width, height: 350)
-            case 1:
-                return CGSize(width: frame.width, height: 390)
-            case 2:
-                return CGSize(width: frame.width, height: 535)
-            default:
-                assert(false, "Not a valid row")
-            }
-        case isPrinciplesView:
-            switch indexPath.item {
-            case 0:
-                return CGSize(width: frame.width, height: 400)
-            case 1:
-                return CGSize(width: frame.width, height: 430)
-            case 2:
-                return CGSize(width: frame.width, height: 535)
-            default:
-                assert(false, "Not a valid row")
-            }
+        switch indexPath.item {
+        case 0:
+            return CGSize(width: frame.width, height: 510)
+        case 1:
+            return CGSize(width: frame.width, height: 430)
+        case 2:
+            return CGSize(width: frame.width, height: 390)
         default:
-            assert(false, "Not a valid view")
+            assert(false, "Not a valid row")
         }
-        
+
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch true {
-        case isImageView:
-            switch indexPath.item {
-            case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeRow
-                cell.homeDelegate = self
-                cell.accessHomeController = self
-                return cell
-            case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciples
-                cell.principlesDelegate = self
-                cell.accessHomeController = self
-                return cell
-            case 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! HomePursuits
-                cell.pursuitsDelegate = self
-                cell.accessHomeController = self
-                return cell
-            default:
-                assert(false, "Not a valid row")
-            }
-        case isExploreImageView:
-            switch indexPath.item {
-            case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageCarouselId, for: indexPath) as! HomeImageCarousel
-                cell.accessHomeController = self
-                return cell
-            case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciples
-                cell.principlesDelegate = self
-                cell.accessHomeController = self
-                return cell
-            case 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! HomePursuits
-                cell.pursuitsDelegate = self
-                cell.accessHomeController = self
-                return cell
-            default:
-                assert(false, "Not a valid row")
-            }
-        case isPursuitView:
-            switch indexPath.item {
-            case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitCarouselId, for: indexPath) as! HomePursuitCarousel
-                cell.accessHomeController = self
-                return cell
-            case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciples
-                cell.principlesDelegate = self
-                cell.accessHomeController = self
-                return cell
-            case 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageDetailViewId, for: indexPath) as! HomeImageDetailView
-                cell.accessHomeController = self
-                return cell
-            default:
-                assert(false, "Not a valid row")
-            }
-        case isPrinciplesView:
-            switch indexPath.item {
-            case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleCarouselId, for: indexPath) as! HomePrincipleCarousel
-                cell.accessHomeController = self
-                return cell
-            case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! HomePursuits
-                cell.pursuitsDelegate = self
-                cell.accessHomeController = self
-                return cell
-            case 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageDetailViewId, for: indexPath) as! HomeImageDetailView
-                cell.accessHomeController = self
-                return cell
-            default:
-                assert(false, "Not a valid row")
-            }
-            
+        switch indexPath.item {
+        case 0:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeRow
+            cell.homeDelegate = self
+            cell.accessHomeController = self
+            return cell
+        case 1:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! HomeSteps
+            cell.pursuitsDelegate = self
+            cell.accessHomeController = self
+            return cell
+        case 2:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciples
+            cell.principlesDelegate = self
+            cell.accessHomeController = self
+            return cell
         default:
-            assert(false, "Not a valid view")
+            assert(false, "Not a valid row")
         }
     }
     

@@ -11,7 +11,7 @@ import XLActionController
 import Alamofire
 import Firebase
 
-class ProfileController : UICollectionViewController, UICollectionViewDelegateFlowLayout, ProfileHeaderDelegate, ProfilePursuitsRowDelegate, ProfilePostDelegate, ProfilePrincipleDelegate, ProfileDiscussionDelegate {
+class ProfileController : UICollectionViewController, UICollectionViewDelegateFlowLayout, ProfileHeaderDelegate, ProfilePursuitsRowDelegate, ProfilePostDelegate, ProfilePrincipleDelegate {
         
     let cellId = "cellId"
     let secondaryId = "secondaryId"
@@ -25,15 +25,6 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     let addedId = "addedId"
     let headerId = "headerId"
     let discussionId = "discussionId"
-    
-    lazy var cameraIcon : UIImageView = {
-        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "add").withRenderingMode(.alwaysOriginal)
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.contentMode = .scaleAspectFill
-        iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(switchToCamera)))
-        return iv
-    }()
     
     lazy var homeIcon : UIImageView = {
         let iv = UIImageView()
@@ -62,26 +53,18 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         navigationController?.present(searchController, animated: true, completion: nil)
     }
     
-    @objc func switchToCamera() {
-        let layout = UICollectionViewFlowLayout()
-        let cameraController = SelectCameraController(collectionViewLayout: layout)
-        navigationController?.present(cameraController, animated: true, completion: nil)
-    }
-    
     let backgroundFill = UIView()
     
     private func setupTopBar(){
         let guide = view.safeAreaLayoutGuide
         view.addSubview(backgroundFill)
         view.addSubview(homeIcon)
-        view.addSubview(cameraIcon)
         view.addSubview(searchIcon)
         
         backgroundFill.backgroundColor = .white
         backgroundFill.anchor(top: view.topAnchor, left: guide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (view.frame.height / 8.5) - 5)
         homeIcon.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 8, paddingLeft: 28, paddingBottom: 14, paddingRight: 0, width: 50, height: 18)
-        cameraIcon.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 14, paddingRight: 22, width: 18, height: 16)
-        searchIcon.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: cameraIcon.leftAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 14, paddingRight: 24, width: 18, height: 16)
+        searchIcon.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 14, paddingRight: 22, width: 18, height: 16)
     }
     
     
@@ -89,11 +72,8 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         super.viewDidLoad()
         
         tabBarController?.navigationController?.navigationBar.isHidden = true
-        collectionView?.register(ProfilePursuitsRow.self, forCellWithReuseIdentifier: pursuitsId)
         collectionView?.register(ProfilePostRow.self, forCellWithReuseIdentifier: postId)
         collectionView?.register(ProfileAddedRow.self, forCellWithReuseIdentifier: addedId)
-        collectionView?.register(ProfilePrincipleRow.self, forCellWithReuseIdentifier: principleId)
-        collectionView?.register(ProfileDiscussion.self, forCellWithReuseIdentifier: discussionId)
         collectionView?.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.backgroundColor = .white
         collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
@@ -325,20 +305,16 @@ extension ProfileController {
         
         switch indexPath.item {
         case 0:
-            return CGSize(width: view.frame.width, height: 445)
-        case 1:
             return CGSize(width: view.frame.width, height: 205)
-        case 2:
+        case 1:
             return CGSize(width: view.frame.width, height: 370)
-        case 3:
-            return CGSize(width: view.frame.width, height: 330)
         default:
             assert(false, "Not a valid cell")
         }
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -350,24 +326,11 @@ extension ProfileController {
         
         switch indexPath.item {
         case 0:
-            let postCell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! ProfilePostRow
-            postCell.delegate = self
-            postCell.accessProfileController = self
-            return postCell
-            
-        case 1:
             let addedCell = collectionView.dequeueReusableCell(withReuseIdentifier: addedId, for: indexPath) as! ProfileAddedRow
             return addedCell
-        case 2:
-            let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuitsRow
-            pursuitCell.delegate = self
-            pursuitCell.accessProfileController = self
+        case 1:
+            let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! ProfilePostRow
             return pursuitCell
-        case 3:
-            let principleCell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! ProfilePrincipleRow
-            principleCell.delegate = self
-            principleCell.accessProfileController = self
-            return principleCell
         default:
             assert(false, "Not a valid row")
         }

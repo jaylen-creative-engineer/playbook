@@ -114,8 +114,8 @@ class PursuitsDetailHeader : UICollectionViewCell {
     
     lazy var optionButton : UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "option").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFill
+        button.setTitle("•••", for: .normal)
+        button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(handleOptions), for: .touchUpInside)
         return button
     }()
@@ -200,7 +200,7 @@ class PursuitsDetailHeader : UICollectionViewCell {
         toggleSave()
 
         addSubview(optionButton)
-        optionButton.anchor(top: gifImage.bottomAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 5.2, height: 20)
+        optionButton.anchor(top: gifImage.bottomAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 44, height: optionButton.intrinsicContentSize.height)
     }
 
     override init(frame: CGRect) {

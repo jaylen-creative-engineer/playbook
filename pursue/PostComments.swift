@@ -38,19 +38,13 @@ class PostComments: UICollectionViewCell, UICollectionViewDataSource, UICollecti
         return iv
     }()
     
-    func setupView(){
-        let underlineView = UIView()
-        underlineView.backgroundColor = .gray
-        
+    func setupView(){        
         addSubview(downArrow)
         addSubview(commentsLabel)
         addSubview(postComments)
-        addSubview(underlineView)
         
         commentsLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: commentsLabel.intrinsicContentSize.width, height: commentsLabel.intrinsicContentSize.height)
-        downArrow.anchor(top: commentsLabel.bottomAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 14, width: 25, height: 25)
-        postComments.anchor(top: commentsLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: downArrow.leftAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 70)
-        underlineView.anchor(top: postComments.bottomAnchor, left: commentsLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 0.5)
+        postComments.anchor(top: commentsLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 70)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

@@ -51,11 +51,11 @@ class CameraBar : UIView, UICollectionViewDataSource, UICollectionViewDelegate, 
     }
     
     func changeToLibrary() {
-        cameraController?.scrollToMenuIndex(menuIndex: 0)
+//        cameraController?.scrollToMenuIndex(menuIndex: 0)
     }
     
     func changeToPhoto() {
-        cameraController?.scrollToMenuIndex(menuIndex: 1)
+//        cameraController?.scrollToMenuIndex(menuIndex: 1)
     }
     
     required init?(coder aDecoder: NSCoder) {

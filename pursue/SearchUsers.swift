@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchUsers : PeopleRow {
+class SearchUsers : ProfileAddedRow {
  
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1

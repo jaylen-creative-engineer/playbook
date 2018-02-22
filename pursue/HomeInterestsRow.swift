@@ -58,7 +58,7 @@ class HomeInterestsRow : UIView, UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeInterestsCells
-        cell.interestsLabel.text = interestsNames[indexPath.item]
+        cell.selectInterests.text = interestsNames[indexPath.item]
         return cell
     }
     

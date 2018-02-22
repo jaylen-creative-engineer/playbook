@@ -13,11 +13,35 @@ protocol ProfilePursuitsRowDelegate {
     func pursuitHeld()
 }
 
-class ProfilePursuitsRow : ExploreExerciseRow, ProfilePursuitsDelegate {
+class ProfilePursuitsRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, ProfilePursuitsDelegate {
     
     let profilePursuitsId = "profilePursuitsId"
     let imageNames = ["winter", "fall", "home-remodel", "food"]
     let profileLabelText = ["Winter Fashion", "Fall Fasion", "Home", "Food"]
+    
+    let rowLabel : UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
+        return label
+    }()
+    
+    let postCollection : UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        return collectionView
+    }()
+    
+    lazy var moreButton : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "right-arrow-1").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleShowMore), for: .touchUpInside)
+        return button
+    }()
+
     var delegate : ProfilePursuitsRowDelegate?
     var accessProfileController : ProfileController?
     
@@ -25,20 +49,19 @@ class ProfilePursuitsRow : ExploreExerciseRow, ProfilePursuitsDelegate {
         accessProfileController?.handleChangeToDetail(viewType: "isPursuitDetail")
     }
     
-    override func pursuitHeld() {
+    func pursuitHeld() {
         delegate?.pursuitHeld()
     }
     
-    override func handleShowMore() {
-        super.handleShowMore()
+    @objc func handleShowMore() {
         accessProfileController?.handleChangeToFeed(viewType: "isPursuitFeed")
     }
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: profilePursuitsId, for: indexPath) as! ProfilePursuitsCells
         cell.delegate = self
         cell.pursuitImage.image = UIImage(named: imageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
@@ -47,14 +70,31 @@ class ProfilePursuitsRow : ExploreExerciseRow, ProfilePursuitsDelegate {
         return cell
     }
 
-    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: ((frame.width - 2) / 2) + 125, height: 310)
     }
-    
-    override func setupView() {
-        super.setupView()
-        postCollection.register(ProfilePursuitsCells.self, forCellWithReuseIdentifier: profilePursuitsId)
+
+    func setupView(){
+        addSubview(rowLabel)
+        addSubview(postCollection)
+        addSubview(moreButton)
+        
+        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: 45)
+        postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 255)
+        moreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 24, height: 12)
+        
         postCollection.showsHorizontalScrollIndicator = false
+        postCollection.register(ProfilePursuitsCells.self, forCellWithReuseIdentifier: profilePursuitsId)
+        postCollection.dataSource = self
+        postCollection.delegate = self
     }
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }

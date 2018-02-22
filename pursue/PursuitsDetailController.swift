@@ -250,7 +250,7 @@ class PursuitsDetailController : UICollectionViewController {
         collectionView?.register(RelatedPost.self, forCellWithReuseIdentifier: relatedId)
         collectionView?.register(PursuitSteps.self, forCellWithReuseIdentifier: stepId)
         collectionView?.register(PostComments.self, forCellWithReuseIdentifier: commentId)
-        collectionView?.register(DiscussionPursuitsView.self, forCellWithReuseIdentifier: pursuitId)
+        collectionView?.register(DetailSteps.self, forCellWithReuseIdentifier: pursuitId)
         collectionView?.register(PursuitsDetailHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.backgroundColor = .white
         collectionView?.contentInset = UIEdgeInsetsMake(-45, 0, 135, 0)
@@ -259,6 +259,7 @@ class PursuitsDetailController : UICollectionViewController {
         setupFloatingCamera()
     }
     
+    var postDescription = ""
 }
 
 extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
@@ -266,13 +267,11 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch true {
         case isPrinciplesView:
-            return 3
-        case isDiscussionView:
-            return 3
+            return 4
         case isPursuitView:
             return 4
         case isImageView:
-            return 5
+            return 4
         default:
             assert(false, "Not a valid view")
         }
@@ -283,43 +282,65 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
         case isPursuitView:
             switch indexPath.item {
             case 0:
-                return CGSize(width: view.frame.width, height: 200)
+                let approximateWidthOfCell = view.frame.width
+                let size = CGSize(width: approximateWidthOfCell, height: .infinity)
+                let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)]
+                let estimatedFrame = NSString(string: postDescription).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+                return CGSize(width: view.frame.width, height: estimatedFrame.height + 80)
             case 1:
-                return CGSize(width: view.frame.width, height: 220)
+                return CGSize(width: view.frame.width, height: 390)
             case 2:
-                return CGSize(width: view.frame.width, height: 320)
+                return CGSize(width: view.frame.width, height: 330)
             case 3:
-                return CGSize(width: view.frame.width, height: 382)
+                let approximateWidthOfCell = view.frame.width
+                let size = CGSize(width: approximateWidthOfCell, height: .infinity)
+                let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)]
+                let estimatedFrame = NSString(string: postDescription).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+                return CGSize(width: view.frame.width, height: estimatedFrame.height + 80)
             default:
-                return CGSize(width: view.frame.width, height: 120)
+                assert(false, "Not a valid cell")
             }
         case isPrinciplesView:
             switch indexPath.item {
             case 0:
-                return CGSize(width: view.frame.width, height: 200)
+                let approximateWidthOfCell = view.frame.width
+                let size = CGSize(width: approximateWidthOfCell, height: .infinity)
+                let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)]
+                let estimatedFrame = NSString(string: postDescription).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+                return CGSize(width: view.frame.width, height: estimatedFrame.height + 80)
             case 1:
-                return CGSize(width: view.frame.width, height: 170)
-            case 2:
                 return CGSize(width: view.frame.width, height: 390)
+            case 2:
+                return CGSize(width: view.frame.width, height: 330)
             case 3:
-                return CGSize(width: view.frame.width, height: 380)
+                let approximateWidthOfCell = view.frame.width
+                let size = CGSize(width: approximateWidthOfCell, height: .infinity)
+                let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)]
+                let estimatedFrame = NSString(string: postDescription).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+                return CGSize(width: view.frame.width, height: estimatedFrame.height + 80)
             default:
-                return CGSize(width: view.frame.width, height: 120)
+                assert(false, "Not a valid cell")
             }
         case isImageView:
             switch indexPath.item {
             case 0:
-                return CGSize(width: view.frame.width, height: 200)
+                let approximateWidthOfCell = view.frame.width
+                let size = CGSize(width: approximateWidthOfCell, height: .infinity)
+                let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)]
+                let estimatedFrame = NSString(string: postDescription).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+                return CGSize(width: view.frame.width, height: estimatedFrame.height + 80)
             case 1:
-                return CGSize(width: view.frame.width, height: 170)
-            case 2:
                 return CGSize(width: view.frame.width, height: 390)
-            case 3:
+            case 2:
                 return CGSize(width: view.frame.width, height: 330)
-            case 4:
-                return CGSize(width: view.frame.width, height: 382)
+            case 3:
+                let approximateWidthOfCell = view.frame.width
+                let size = CGSize(width: approximateWidthOfCell, height: .infinity)
+                let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)]
+                let estimatedFrame = NSString(string: postDescription).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+                return CGSize(width: view.frame.width, height: estimatedFrame.height + 80)
             default:
-                return CGSize(width: view.frame.width, height: 120)
+                assert(false, "Not a valid cell")
             }
         default:
             assert(false, "Not a valid view")
@@ -339,24 +360,13 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! PostView
                 return cell
             case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
-                return cell
-            case 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! DiscussionPursuitsView
-                return cell
-            default:
-                assert(false, "Not a valid cell")
-            }
-        case isDiscussionView:
-            switch indexPath.item {
-            case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! PostView
-                return cell
-            case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! DetailSteps
                 return cell
             case 2:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! PursuitPrinciple
+                return cell
+            case 3:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
                 return cell
             default:
                 assert(false, "Not a valid cell")
@@ -367,13 +377,13 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! PostView
                 return cell
             case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! PursuitSteps
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! DetailSteps
                 return cell
             case 2:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! PursuitPrinciple
                 return cell
             case 3:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: relatedId, for: indexPath) as! RelatedPost
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
                 return cell
             default:
                 assert(false, "Not a valid cell")
@@ -384,16 +394,13 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! PostView
                 return cell
             case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! DetailSteps
                 return cell
             case 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! DiscussionPursuitsView
-                return cell
-            case 3:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! PursuitPrinciple
                 return cell
-            case 4:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: relatedId, for: indexPath) as! RelatedPost
+            case 3:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
                 return cell
             default:
                 assert(false, "Not a valid cell")
