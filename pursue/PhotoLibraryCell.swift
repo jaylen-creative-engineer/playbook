@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol PhotoDelegate {
+    func didSelect(for cell : PhotoLibraryCell)
+}
+
 class PhotoLibraryCell : UICollectionViewCell {
+    
+    var delegate : PhotoDelegate?
     
     lazy var imageView : UIImageView = {
        let iv = UIImageView()
@@ -26,6 +32,12 @@ class PhotoLibraryCell : UICollectionViewCell {
         label.textAlignment = .right
         return label
     }()
+    
+    override var isSelected: Bool {
+        didSet {
+            delegate?.didSelect(for: self)
+        }
+    }
     
     var representedAssetIdentifier: String!
 

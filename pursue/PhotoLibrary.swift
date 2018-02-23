@@ -9,6 +9,7 @@
 import UIKit
 import Hero
 import Photos
+import SwiftyCam
 
 private extension UICollectionView {
     func indexPathsForElements(in rect: CGRect) -> [IndexPath] {
@@ -17,7 +18,7 @@ private extension UICollectionView {
     }
 }
 
-class PhotoLibrary : UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class PhotoLibrary : SwiftyCamViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PhotoDelegate, SwiftyCamViewControllerDelegate {
     
     var fetchResult: PHFetchResult<PHAsset>!
     
@@ -47,6 +48,16 @@ class PhotoLibrary : UICollectionViewController, UICollectionViewDelegateFlowLay
         return button
     }()
     
+    let collectionView : UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.showsVerticalScrollIndicator = false
+        return collectionView
+    }()
+    
     lazy var photoLibraryButton : UIButton = {
         let button = UIButton()
         button.contentMode = .scaleAspectFill
@@ -57,8 +68,7 @@ class PhotoLibrary : UICollectionViewController, UICollectionViewDelegateFlowLay
     }()
     
     @objc func handleLibrary(){
-        let layout = UICollectionViewFlowLayout()
-        let libraryController = PhotoLibrary(collectionViewLayout: layout)
+        let libraryController = PhotoLibrary()
         navigationController?.isHeroEnabled = true
         navigationController?.heroNavigationAnimationType = .fade
         navigationController?.pushViewController(libraryController, animated: true)
@@ -73,14 +83,19 @@ class PhotoLibrary : UICollectionViewController, UICollectionViewDelegateFlowLay
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.backgroundColor = .white
-        collectionView?.register(PhotoLibraryCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.backgroundColor = .white
+        collectionView.register(PhotoLibraryCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.delegate = self
+        collectionView.dataSource = self
         setupView()
     }
     
     func setupView(){
+        view.addSubview(collectionView)
         view.addSubview(captureButton)
         view.addSubview(photoLibraryButton)
+        
+        collectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
         captureButton.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 0, width: 50, height: 50)
         captureButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -120,14 +135,18 @@ class PhotoLibrary : UICollectionViewController, UICollectionViewDelegateFlowLay
         return UIEdgeInsetsMake(0, 6, 0, 6)
     }
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return fetchResult.count
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    var imageAsset : PHAsset?
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let asset = fetchResult.object(at: indexPath.item)
+        self.imageAsset = asset
         let targetSize = CGSize(width: 200, height: 200)
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PhotoLibraryCell
+        cell.delegate = self
         cell.representedAssetIdentifier = asset.localIdentifier
         imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: nil) { (image, _) in
             if cell.representedAssetIdentifier == asset.localIdentifier && image != nil {
@@ -146,7 +165,7 @@ class PhotoLibrary : UICollectionViewController, UICollectionViewDelegateFlowLay
         return cell
     }
     
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         updateCachedAssets()
     }
     
@@ -160,7 +179,7 @@ class PhotoLibrary : UICollectionViewController, UICollectionViewDelegateFlowLay
         guard isViewLoaded && view.window != nil else { return }
         
         // The preheat window is twice the height of the visible rect.
-        let visibleRect = CGRect(origin: collectionView!.contentOffset, size: collectionView!.bounds.size)
+        let visibleRect = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)
         let preheatRect = visibleRect.insetBy(dx: 0, dy: -0.5 * visibleRect.height)
         
         // Update only if the visible area is significantly different from the last preheated area.
@@ -170,10 +189,10 @@ class PhotoLibrary : UICollectionViewController, UICollectionViewDelegateFlowLay
         // Compute the assets to start caching and to stop caching.
         let (addedRects, removedRects) = differencesBetweenRects(previousPreheatRect, preheatRect)
         let addedAssets = addedRects
-            .flatMap { rect in collectionView!.indexPathsForElements(in: rect) }
+            .flatMap { rect in collectionView.indexPathsForElements(in: rect) }
             .map { indexPath in fetchResult.object(at: indexPath.item) }
         let removedAssets = removedRects
-            .flatMap { rect in collectionView!.indexPathsForElements(in: rect) }
+            .flatMap { rect in collectionView.indexPathsForElements(in: rect) }
             .map { indexPath in fetchResult.object(at: indexPath.item) }
         
         // Update the assets the PHCachingImageManager is caching.
@@ -227,8 +246,7 @@ extension PhotoLibrary : PHPhotoLibraryChangeObserver {
             fetchResult = changes.fetchResultAfterChanges
             if changes.hasIncrementalChanges {
                 // If we have incremental diffs, animate them in the collection view.
-                guard let collectionView = self.collectionView else { fatalError() }
-                collectionView.performBatchUpdates({
+                self.collectionView.performBatchUpdates({
                     // For indexes to make sense, updates must be in this order:
                     // delete, insert, reload, move
                     if let removed = changes.removedIndexes, !removed.isEmpty {
@@ -241,15 +259,59 @@ extension PhotoLibrary : PHPhotoLibraryChangeObserver {
                         collectionView.reloadItems(at: changed.map({ IndexPath(item: $0, section: 0) }))
                     }
                     changes.enumerateMoves { fromIndex, toIndex in
-                        collectionView.moveItem(at: IndexPath(item: fromIndex, section: 0),
+                        self.collectionView.moveItem(at: IndexPath(item: fromIndex, section: 0),
                                                 to: IndexPath(item: toIndex, section: 0))
                     }
                 })
             } else {
                 // Reload the collection view if incremental diffs are not available.
-                collectionView!.reloadData()
+                collectionView.reloadData()
             }
             resetCachedAssets()
         }
     }
+    
 }
+
+extension PhotoLibrary {
+    
+    func didSelect(for cell: PhotoLibraryCell) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        let asset = fetchResult.object(at: indexPath.item)
+        let targetSize = CGSize(width: 200, height: 200)
+
+        if cell.timeLabel.text == "" {
+            imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: nil) { (image, _) in
+                guard let selectedImage = image else { return }
+                self.swiftyCam(self, didTake: selectedImage)
+            }
+        } else {
+                let options: PHVideoRequestOptions = PHVideoRequestOptions()
+                options.version = .original
+                self.imageManager.requestAVAsset(forVideo: asset, options: options, resultHandler: {(asset: AVAsset?, audioMix: AVAudioMix?, info: [AnyHashable : Any]?) -> Void in
+                    DispatchQueue.main.sync {
+                        if let urlAsset = asset as? AVURLAsset {
+                            let localVideoUrl: URL = urlAsset.url as URL
+                            self.swiftyCam(self, didFinishProcessVideoAt: localVideoUrl)
+                        } else {
+                            print("Failed")
+                        }
+                    }
+                })
+                
+            }
+    }
+    
+    func swiftyCam(_ swiftyCam: SwiftyCamViewController, didFinishProcessVideoAt url: URL) {
+        let newVC = VideoViewController(videoURL: url)
+        self.present(newVC, animated: true, completion: nil)
+    }
+    
+    func swiftyCam(_ swiftyCam: SwiftyCamViewController, didTake photo: UIImage) {
+        let newVC = PhotoViewController(image: photo)
+        guard let viewAsset = imageAsset else { return }
+        newVC.asset = viewAsset
+        self.present(newVC, animated: true, completion: nil)
+    }
+}
+

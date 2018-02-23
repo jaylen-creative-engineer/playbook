@@ -74,6 +74,15 @@
 		E6D0B402203E13D2008D4268 /* ViewWithDiagonalLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D0B401203E13D2008D4268 /* ViewWithDiagonalLine.swift */; };
 		E6D0B406203E2A5E008D4268 /* PhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D0B405203E2A5E008D4268 /* PhotoLibrary.swift */; };
 		E6D0B40C203E70A7008D4268 /* PhotoLibraryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D0B40B203E70A7008D4268 /* PhotoLibraryCell.swift */; };
+		E6D0B41D203FDEEF008D4268 /* ExplorePrinciplesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D0B414203FDEE6008D4268 /* ExplorePrinciplesRow.swift */; };
+		E6D0B41F203FDEEF008D4268 /* ExploreImageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D0B416203FDEE8008D4268 /* ExploreImageRow.swift */; };
+		E6D0B420203FDEEF008D4268 /* ExploreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D0B417203FDEE9008D4268 /* ExploreController.swift */; };
+		E6D0B422203FDEEF008D4268 /* ExplorePrincipleCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D0B419203FDEED008D4268 /* ExplorePrincipleCells.swift */; };
+		E6D0B423203FDEEF008D4268 /* ExploreExerciseRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D0B41A203FDEED008D4268 /* ExploreExerciseRow.swift */; };
+		E6D0B424203FDEEF008D4268 /* ExploreExercisesRowCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D0B41B203FDEEE008D4268 /* ExploreExercisesRowCells.swift */; };
+		E6D0B428203FDFFD008D4268 /* PeopleRowCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D0B426203FDFFC008D4268 /* PeopleRowCells.swift */; };
+		E6D0B429203FDFFD008D4268 /* PeopleRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D0B427203FDFFD008D4268 /* PeopleRow.swift */; };
+		E6D0B42B203FE249008D4268 /* ExerciseImageCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D0B42A203FE248008D4268 /* ExerciseImageCells.swift */; };
 		E6D2B8D52017BB17008D3055 /* InterestsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D2B8D42017BB17008D3055 /* InterestsHeader.swift */; };
 		E6D2B8D72017D603008D3055 /* InterestsRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D2B8D62017D603008D3055 /* InterestsRows.swift */; };
 		E6D2B8DB2018DB7A008D3055 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D2B8DA2018DB7A008D3055 /* Animator.swift */; };
@@ -180,6 +189,15 @@
 		E6D0B401203E13D2008D4268 /* ViewWithDiagonalLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewWithDiagonalLine.swift; sourceTree = "<group>"; };
 		E6D0B405203E2A5E008D4268 /* PhotoLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibrary.swift; sourceTree = "<group>"; };
 		E6D0B40B203E70A7008D4268 /* PhotoLibraryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryCell.swift; sourceTree = "<group>"; };
+		E6D0B414203FDEE6008D4268 /* ExplorePrinciplesRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplorePrinciplesRow.swift; sourceTree = "<group>"; };
+		E6D0B416203FDEE8008D4268 /* ExploreImageRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreImageRow.swift; sourceTree = "<group>"; };
+		E6D0B417203FDEE9008D4268 /* ExploreController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreController.swift; sourceTree = "<group>"; };
+		E6D0B419203FDEED008D4268 /* ExplorePrincipleCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplorePrincipleCells.swift; sourceTree = "<group>"; };
+		E6D0B41A203FDEED008D4268 /* ExploreExerciseRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreExerciseRow.swift; sourceTree = "<group>"; };
+		E6D0B41B203FDEEE008D4268 /* ExploreExercisesRowCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreExercisesRowCells.swift; sourceTree = "<group>"; };
+		E6D0B426203FDFFC008D4268 /* PeopleRowCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeopleRowCells.swift; sourceTree = "<group>"; };
+		E6D0B427203FDFFD008D4268 /* PeopleRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeopleRow.swift; sourceTree = "<group>"; };
+		E6D0B42A203FE248008D4268 /* ExerciseImageCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExerciseImageCells.swift; sourceTree = "<group>"; };
 		E6D2B8D42017BB17008D3055 /* InterestsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsHeader.swift; sourceTree = "<group>"; };
 		E6D2B8D62017D603008D3055 /* InterestsRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsRows.swift; sourceTree = "<group>"; };
 		E6D2B8DA2018DB7A008D3055 /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
@@ -365,6 +383,7 @@
 				E67FB8C0202FB18C0008732C /* pursue.entitlements */,
 				E6CE229C1F67615E006C5755 /* Camera */,
 				E64324A61F79559D0090075F /* Detail */,
+				E6D0B413203FDEAC008D4268 /* Explore */,
 				E6CE22901F67594C006C5755 /* Home */,
 				E62530A61FFD611000E41794 /* Interests */,
 				E617BB131FD886BB008B2EA1 /* Intro */,
@@ -463,6 +482,22 @@
 				E6D0B40B203E70A7008D4268 /* PhotoLibraryCell.swift */,
 			);
 			name = Camera;
+			sourceTree = "<group>";
+		};
+		E6D0B413203FDEAC008D4268 /* Explore */ = {
+			isa = PBXGroup;
+			children = (
+				E6D0B417203FDEE9008D4268 /* ExploreController.swift */,
+				E6D0B41A203FDEED008D4268 /* ExploreExerciseRow.swift */,
+				E6D0B41B203FDEEE008D4268 /* ExploreExercisesRowCells.swift */,
+				E6D0B416203FDEE8008D4268 /* ExploreImageRow.swift */,
+				E6D0B42A203FE248008D4268 /* ExerciseImageCells.swift */,
+				E6D0B427203FDFFD008D4268 /* PeopleRow.swift */,
+				E6D0B426203FDFFC008D4268 /* PeopleRowCells.swift */,
+				E6D0B414203FDEE6008D4268 /* ExplorePrinciplesRow.swift */,
+				E6D0B419203FDEED008D4268 /* ExplorePrincipleCells.swift */,
+			);
+			name = Explore;
 			sourceTree = "<group>";
 		};
 		E6D2B8DC20194AE6008D3055 /* Notifications */ = {
@@ -662,11 +697,14 @@
 				E6DF9EC3203C7084005C86DB /* ProfilePrincipleRow.swift in Sources */,
 				E667183C202A40660068C68A /* UserInterests.swift in Sources */,
 				E617BB1D1FD8A350008B2EA1 /* HomeSteps.swift in Sources */,
+				E6D0B420203FDEEF008D4268 /* ExploreController.swift in Sources */,
+				E6D0B42B203FE249008D4268 /* ExerciseImageCells.swift in Sources */,
 				E62AAB1B1FD0A54D0053EAD7 /* TermsController.swift in Sources */,
 				E6235EAA1F94232C00BF1FDE /* RelatedPost.swift in Sources */,
 				E66436751FA273DA00A9B0E7 /* ProfilePursuitsCells.swift in Sources */,
 				E617BB231FD8A3F3008B2EA1 /* HomePrinciplesCells.swift in Sources */,
 				E6A273F91F68314F00F5B4C8 /* CustomImageView.swift in Sources */,
+				E6D0B429203FDFFD008D4268 /* PeopleRow.swift in Sources */,
 				E62AAB171FD0A2D10053EAD7 /* EditProfileController.swift in Sources */,
 				E6D0B406203E2A5E008D4268 /* PhotoLibrary.swift in Sources */,
 				E6DF9ECB203CF8FB005C86DB /* PhotoViewController.swift in Sources */,
@@ -674,11 +712,13 @@
 				E616632B1F745F0D00EC254C /* HomeRow.swift in Sources */,
 				E6DEC840201ABA1100E02393 /* Comment.swift in Sources */,
 				E6CE228B1F671ED6006C5755 /* LoginController.swift in Sources */,
+				E6D0B424203FDEEF008D4268 /* ExploreExercisesRowCells.swift in Sources */,
 				E6DF9EC2203C7084005C86DB /* ProfilePrincipleCells.swift in Sources */,
 				E6308EA71FBD241000571130 /* SettingsController.swift in Sources */,
 				E6235EA81F94208F00BF1FDE /* PostComments.swift in Sources */,
 				E6B49F2F1FACDE4100AEDAFD /* SelectInterestsList.swift in Sources */,
 				E6136EA61F968FC800E29101 /* PursuitsDetailHeader.swift in Sources */,
+				E6D0B41D203FDEEF008D4268 /* ExplorePrinciplesRow.swift in Sources */,
 				E6136EA31F968EAB00E29101 /* PursuitsDetailController.swift in Sources */,
 				E6DEC846201ABF4D00E02393 /* Interests.swift in Sources */,
 				E65F1E561FCCC7BF00BD850E /* ProfileController.swift in Sources */,
@@ -686,11 +726,13 @@
 				E66436771FA2968D00A9B0E7 /* ProfilePostRow.swift in Sources */,
 				E6D2B8D52017BB17008D3055 /* InterestsHeader.swift in Sources */,
 				E6DF9EBD203BAAB1005C86DB /* CommentInputAccessoryView.swift in Sources */,
+				E6D0B423203FDEEF008D4268 /* ExploreExerciseRow.swift in Sources */,
 				E6DEC850201AC31100E02393 /* Pursuit.swift in Sources */,
 				E628F2EA2035D978002FE8CF /* SearchUsers.swift in Sources */,
 				E66472611F97E85E006922C6 /* PursuitSteps.swift in Sources */,
 				E6DF9EBB203B8778005C86DB /* DetailSteps.swift in Sources */,
 				E6DEC83E201AB96C00E02393 /* Engagements.swift in Sources */,
+				E6D0B41F203FDEEF008D4268 /* ExploreImageRow.swift in Sources */,
 				E6D571432010FD7D008A37CC /* HomeInterestsCells.swift in Sources */,
 				E6A274001F68327F00F5B4C8 /* User.swift in Sources */,
 				E6DEC84C201AC15B00E02393 /* Steps.swift in Sources */,
@@ -699,6 +741,7 @@
 				E6CE228F1F675894006C5755 /* MainTabController.swift in Sources */,
 				E628F2E220350E75002FE8CF /* SearchController.swift in Sources */,
 				E617BB151FD886D6008B2EA1 /* IntroController.swift in Sources */,
+				E6D0B422203FDEEF008D4268 /* ExplorePrincipleCells.swift in Sources */,
 				E62AAB211FD1E8680053EAD7 /* CameraBar.swift in Sources */,
 				E6CE22881F671E3D006C5755 /* Extensions.swift in Sources */,
 				E6DEC83A201AB0D200E02393 /* Tags.swift in Sources */,
@@ -721,6 +764,7 @@
 				E617BB191FD88775008B2EA1 /* PageCell.swift in Sources */,
 				E6D571502012AC45008A37CC /* HomeUserImage.swift in Sources */,
 				E62AAB1F1FD0A66B0053EAD7 /* HelpController.swift in Sources */,
+				E6D0B428203FDFFD008D4268 /* PeopleRowCells.swift in Sources */,
 				E6A273F71F6830BD00F5B4C8 /* ProfileHeader.swift in Sources */,
 				E6B49F2B1FACDCE800AEDAFD /* InterestsController.swift in Sources */,
 				E6DF9EC7203CF7F2005C86DB /* SwiftyRecordButton.swift in Sources */,

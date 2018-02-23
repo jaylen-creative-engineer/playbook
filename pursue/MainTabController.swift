@@ -16,7 +16,7 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         
         let index = viewControllers?.index(of: viewController)
-        if index == 1 {
+        if index == 2 {
             
             let photoSelectorController = SelectCameraController()
             let navController = UINavigationController(rootViewController: photoSelectorController)
@@ -50,6 +50,7 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
     func setupViewControllers() {
         
         let homeNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "home-unselected"), selectedImage: #imageLiteral(resourceName: "home-selected"),rootViewController: HomeController(collectionViewLayout: UICollectionViewFlowLayout()))
+        let searchNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "search_unselected"), selectedImage: #imageLiteral(resourceName: "search_selected"), rootViewController: ExploreController(collectionViewLayout: UICollectionViewFlowLayout()))
         let userProfileNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "profile-unselected"), selectedImage: #imageLiteral(resourceName: "profile-selected"), rootViewController: ProfileController(collectionViewLayout: UICollectionViewFlowLayout()))
         
         let plusNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "plus_unselected"), selectedImage: #imageLiteral(resourceName: "plus_unselected"))
@@ -57,7 +58,7 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
         tabBar.tintColor = .black
         tabBar.barTintColor = .white
         
-        viewControllers = [homeNavController, plusNavController, userProfileNavController]
+        viewControllers = [homeNavController,searchNavController, plusNavController, userProfileNavController]
         
         guard let items = tabBar.items else { return }
         for item in items {

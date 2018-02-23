@@ -128,38 +128,17 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
 
     }
     
-    func setupInterestsBar(){
-        view.addSubview(interestsBar)
-        interestsBar.anchor(top: homeIcon.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 60)
-    }
-    
     private func setupTopBar(){
         let guide = view.safeAreaLayoutGuide
         view.addSubview(backgroundFill)
-        view.addSubview(homeIcon)
-        view.addSubview(searchIcon)
+        view.addSubview(interestsBar)
+
         
         backgroundFill.backgroundColor = .white
-        backgroundFill.anchor(top: view.topAnchor, left: guide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (view.frame.height / 8.5) - 5)
-        searchIcon.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 14, paddingRight: 22, width: 18, height: 16)
-        setupBackButton()
+        backgroundFill.anchor(top: view.topAnchor, left: guide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+        interestsBar.anchor(top: backgroundFill.bottomAnchor, left: backgroundFill.leftAnchor, bottom: nil, right: backgroundFill.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 60)
     }
-    
-    private func setupBackButton(){
-        let guide = view.safeAreaLayoutGuide
-        
-        if isImageView == true {
-            backButton.isHidden = true
-             homeIcon.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 14, paddingRight: 0, width: 82, height: 18)
-        } else {
-            view.addSubview(backButton)
-            
-            backButton.anchor(top: nil, left: guide.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 12, paddingRight: 24, width: 25, height: 25)
-            homeIcon.anchor(top: nil, left: backButton.rightAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 8, paddingLeft: 22, paddingBottom: 14, paddingRight: 0, width: 82, height: 18)
-            
-        }
-        setupInterestsBar()
-    }
+
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

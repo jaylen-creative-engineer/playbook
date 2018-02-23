@@ -41,7 +41,6 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
         button.layer.borderColor = UIColor.white.cgColor
         button.layer.cornerRadius = 25
         button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(handleCamera), for: .touchUpInside)
         return button
     }()
     
@@ -91,17 +90,13 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
     }()
     
     @objc func handleLibrary(){
-        let layout = UICollectionViewFlowLayout()
-        let libraryController = PhotoLibrary(collectionViewLayout: layout)
+        let libraryController = PhotoLibrary()
         libraryController.fetchResult = allPhotos
         navigationController?.isHeroEnabled = true
         navigationController?.heroNavigationAnimationType = .fade
         navigationController?.pushViewController(libraryController, animated: true)
     }
-    
-    @objc func handleCamera(){
-    }
-    
+
     var photos : PHFetchResult<PHAsset>!
     fileprivate let imageManager = PHCachingImageManager()
     
