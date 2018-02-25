@@ -275,6 +275,12 @@ class PursuitsDetailController : UICollectionViewController {
         imageView.image = #imageLiteral(resourceName: "music").withRenderingMode(.alwaysOriginal)
         imageView.contentMode = .scaleAspectFill
         
+        let leftTapView = UIImageView()
+        leftTapView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let rightTapView = UIImageView()
+        rightTapView.translatesAutoresizingMaskIntoConstraints = false
+        
         let label = UILabel()
         label.text = "Label"
         label.textColor = .white
@@ -303,19 +309,25 @@ class PursuitsDetailController : UICollectionViewController {
         playIcon.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(imageView)
+        imageView.addSubview(leftTapView)
+        imageView.addSubview(rightTapView)
         imageView.addSubview(label)
         imageView.addSubview(subLabel)
         imageView.addSubview(playBackground)
         imageView.addSubview(playIcon)
         imageView.addSubview(viewMoreLabel)
         
-        label.anchor(top: imageView.centerYAnchor, left: imageView.leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: label.intrinsicContentSize.width, height: label.intrinsicContentSize.height)
+        leftTapView.anchor(top: imageView.topAnchor, left: imageView.leftAnchor, bottom: imageView.bottomAnchor, right: imageView.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        rightTapView.anchor(top: imageView.topAnchor, left: imageView.centerXAnchor, bottom: imageView.bottomAnchor, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        label.anchor(top: leftTapView.centerYAnchor, left: leftTapView.leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: label.intrinsicContentSize.width, height: label.intrinsicContentSize.height)
         subLabel.anchor(top: label.bottomAnchor, left: label.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 0, height: 40)
         playBackground.anchor(top: subLabel.bottomAnchor, left: subLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
         playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
         playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true
         playIcon.centerYAnchor.constraint(equalTo: playBackground.centerYAnchor).isActive = true
         viewMoreLabel.anchor(top: playBackground.bottomAnchor, left: playBackground.leftAnchor, bottom: nil, right: nil, paddingTop: 84, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: viewMoreLabel.intrinsicContentSize.width, height: viewMoreLabel.intrinsicContentSize.height)
+        
+        
         collectionView?.parallaxHeader.view = imageView
         collectionView?.parallaxHeader.height = view.frame.height
         collectionView?.parallaxHeader.minimumHeight = 0

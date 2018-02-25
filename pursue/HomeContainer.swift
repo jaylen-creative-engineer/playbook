@@ -111,7 +111,6 @@ class HomeContainer : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
     }
     
     func homeRowScrolled(for cell: HomeRow) {
-        print("Image view scrolled")        
     }
     
     override init(frame: CGRect) {

@@ -119,6 +119,9 @@ class HomeRow: UICollectionViewCell, iCarouselDataSource, iCarouselDelegate {
         }
     }
     
+    var isLeft = true
+    var isRight = true
+    
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
         var carouselImage = UIImageView()
         
@@ -134,7 +137,9 @@ class HomeRow: UICollectionViewCell, iCarouselDataSource, iCarouselDelegate {
             
             carouselImage.addSubview(shadowLabel)
             shadowLabel.anchor(top: nil, left: carouselImage.leftAnchor, bottom: carouselImage.bottomAnchor, right: carouselImage.rightAnchor, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 24, width: 0, height: 70)
+            
             toggleLike(label: shadowLabel, index: index)
+            
             return carouselImage
         case carouselView:
             carouselImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 325, height: 400))
@@ -143,19 +148,44 @@ class HomeRow: UICollectionViewCell, iCarouselDataSource, iCarouselDelegate {
             carouselImage.contentMode = .scaleAspectFill
             carouselImage.layer.cornerRadius = 4
             carouselImage.layer.masksToBounds = true
+            carouselImage.isUserInteractionEnabled = true
             
-            let blueView = UIView()
-            blueView.backgroundColor = .blue
+            carouselView.isUserInteractionEnabled = true
+            
+            let blueView = UIButton()
             blueView.translatesAutoresizingMaskIntoConstraints = false
+            blueView.isUserInteractionEnabled = true
+            blueView.addTarget(self, action: #selector(handleLeftTap), for: .touchUpInside)
             
-            let redView = UIView()
-            redView.backgroundColor = .red
+            let redView = UIButton()
             redView.translatesAutoresizingMaskIntoConstraints = false
+            redView.isUserInteractionEnabled = true
+            redView.addTarget(self, action: #selector(handleRightTap), for: .touchUpInside)
+            
+            let backgroundButton = UIButton()
+            backgroundButton.backgroundColor = .white
+            backgroundButton.translatesAutoresizingMaskIntoConstraints = false
+            backgroundButton.layer.cornerRadius = 2
+            backgroundButton.clipsToBounds = true
+            backgroundButton.addTarget(self, action: #selector(showDetail), for: .touchUpInside)
+            
+            let fullscreenLabel = UILabel()
+            fullscreenLabel.text = "Full Screen"
+            fullscreenLabel.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight(25))
+            fullscreenLabel.translatesAutoresizingMaskIntoConstraints = false
             
             carouselImage.addSubview(blueView)
             carouselImage.addSubview(redView)
+            carouselImage.addSubview(backgroundButton)
+            carouselImage.addSubview(fullscreenLabel)
+            
             blueView.anchor(top: carouselImage.topAnchor, left: carouselImage.leftAnchor, bottom: carouselImage.bottomAnchor, right: carouselImage.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
             redView.anchor(top: carouselImage.topAnchor, left: carouselImage.centerXAnchor, bottom: carouselImage.bottomAnchor, right: carouselImage.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+            
+            backgroundButton.anchor(top: nil, left: blueView.leftAnchor, bottom: blueView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 12, paddingRight: 0, width: 100, height: 30)
+            fullscreenLabel.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: fullscreenLabel.intrinsicContentSize.width, height: fullscreenLabel.intrinsicContentSize.height)
+            fullscreenLabel.centerXAnchor.constraint(equalTo: backgroundButton.centerXAnchor).isActive = true
+            fullscreenLabel.centerYAnchor.constraint(equalTo: backgroundButton.centerYAnchor).isActive = true
             return carouselImage
         default:
             return carouselImage
@@ -178,21 +208,41 @@ class HomeRow: UICollectionViewCell, iCarouselDataSource, iCarouselDelegate {
         label.text = homeDescriptions[index]
     }
     
+    @objc func handleLeftTap(){
+        carouselView.scrollToItem(at: cellIndex - 1, animated: true)
+        cellIndex = cellIndex - 1
+        
+        if cellIndex < 0 {
+            cellIndex = cellIndex + 1
+        }
+    }
     
+    @objc func handleRightTap(){
+        carouselView.scrollToItem(at: cellIndex + 1, animated: true)
+        cellIndex = cellIndex + 1
+
+        if cellIndex > imageNames.count {
+            cellIndex = cellIndex - 1
+        }
+    }
+    
+    var cellIndex : Int = 0
+
     func carouselDidScroll(_ carousel: iCarousel) {
         if carousel == carouselView {
             homeDelegate?.homeRowScrolled(for: self)
             subCarouselView.scrollOffset = carouselView.scrollOffset
         }
     }
-    
-    func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
-        accessHomeController?.handleChangeToDetail(viewType: "isImageDetail")
-    }
 
     func setupCarousels(){
         setupStandardCarousel()
         labelSubCarousel()
+    }
+    
+    func carouselCurrentItemIndexDidChange(_ carousel: iCarousel) {
+        let currentIndex = carouselView.currentItemIndex
+        cellIndex = currentIndex
     }
     
     func setupStandardCarousel(){
@@ -203,6 +253,10 @@ class HomeRow: UICollectionViewCell, iCarouselDataSource, iCarouselDelegate {
         let guide = safeAreaLayoutGuide
         addSubview(carouselView)
         carouselView.anchor(top: topAnchor, left: guide.leftAnchor, bottom: nil, right: guide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 28, width: 0, height: 412)
+    }
+    
+    @objc func showDetail(){
+        accessHomeController?.handleChangeToDetail(viewType: "isImageDetail")
     }
     
     func labelSubCarousel(){
