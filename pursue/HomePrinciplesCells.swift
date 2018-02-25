@@ -15,8 +15,6 @@ protocol HomePrinciplesCellDelegate {
 
 class HomePrinciplesCells : UICollectionViewCell {
     
-    var delegate : ProfilePrincipleCellsDelegate?
-    
     let principleLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
@@ -39,11 +37,9 @@ class HomePrinciplesCells : UICollectionViewCell {
     }()
     
     @objc func handleHomeTap(){
-        delegate?.principleTapped()
     }
     
     @objc func handleHomeHold(){
-        delegate?.principleHeld()
     }
     
     override func layoutSubviews() {

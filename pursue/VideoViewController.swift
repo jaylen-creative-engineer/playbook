@@ -66,6 +66,32 @@ class VideoViewController: UIViewController {
         return label
     }()
     
+    lazy var pursuitTitle : UITextView = {
+        let tv = UITextView()
+        tv.delegate = self
+        tv.translatesAutoresizingMaskIntoConstraints = false
+        tv.font = UIFont.boldSystemFont(ofSize: 14)
+        tv.isScrollEnabled = false
+        tv.isUserInteractionEnabled = false
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 5
+        paragraphStyle.paragraphSpacing = 5
+        
+        let attrString = NSMutableAttributedString(string: "Add description")
+        attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
+        
+        tv.attributedText = attrString
+        return tv
+    }()
+    
+    lazy var pursuitUnderline : UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     lazy var saveIcon : UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "save").withRenderingMode(.alwaysOriginal), for: .normal)
@@ -236,4 +262,8 @@ class VideoViewController: UIViewController {
             self.player!.play()
         }
     }
+}
+
+extension VideoViewController : UITextViewDelegate {
+    
 }

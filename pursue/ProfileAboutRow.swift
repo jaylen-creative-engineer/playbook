@@ -166,7 +166,7 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         addSubview(followingLabel)
         addSubview(userBio)
         
-        followersLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 46, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: followersLabel.intrinsicContentSize.width, height: followersLabel.intrinsicContentSize.height)
+        followersLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 54, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: followersLabel.intrinsicContentSize.width, height: followersLabel.intrinsicContentSize.height)
         followersCount.anchor(top: nil, left: nil, bottom: followersLabel.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 6, paddingRight: 0, width: followersCount.intrinsicContentSize.width, height: followersCount.intrinsicContentSize.height)
         followersCount.centerXAnchor.constraint(equalTo: followersLabel.centerXAnchor).isActive = true
         

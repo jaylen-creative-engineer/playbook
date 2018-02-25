@@ -12,7 +12,7 @@ import Alamofire
 import Firebase
 import ParallaxHeader
 
-class ProfileController : UICollectionViewController, UICollectionViewDelegateFlowLayout, ProfileHeaderDelegate, ProfilePursuitsRowDelegate, ProfilePostDelegate, ProfilePrincipleDelegate {
+class ProfileController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
         
     let cellId = "cellId"
     let secondaryId = "secondaryId"
@@ -42,6 +42,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
        let view = UIView()
         view.backgroundColor = UIColor.init(white: 0.8, alpha: 0.3)
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 15
         return view
     }()
     
@@ -64,9 +65,12 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     private func setupTopBar(){
         view.addSubview(topBackground)
         topBackground.addSubview(optionButton)
-        topBackground.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 70)
         
-        optionButton.anchor(top: topBackground.safeAreaLayoutGuide.topAnchor, left: nil, bottom: topBackground.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 4, paddingRight: 18, width: optionButton.intrinsicContentSize.width, height: optionButton.intrinsicContentSize.height)
+        topBackground.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 30, height: 30)
+        
+        optionButton.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: optionButton.intrinsicContentSize.width, height: optionButton.intrinsicContentSize.height)
+        optionButton.centerXAnchor.constraint(equalTo: topBackground.centerXAnchor).isActive = true
+        optionButton.centerYAnchor.constraint(equalTo: topBackground.centerYAnchor).isActive = true
     }
     
     
@@ -74,10 +78,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         super.viewDidLoad()
         
         tabBarController?.navigationController?.navigationBar.isHidden = true
-        collectionView?.register(ProfilePostRow.self, forCellWithReuseIdentifier: postId)
-        collectionView?.register(ProfileAddedRow.self, forCellWithReuseIdentifier: addedId)
         collectionView?.register(ProfileAboutRow.self, forCellWithReuseIdentifier: peopleId)
-        collectionView?.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
 
         collectionView?.backgroundColor = .white
         collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
@@ -295,7 +296,7 @@ extension ProfileController {
     // MARK: - Setup View
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height)
+        return CGSize(width: view.frame.width, height: view.frame.height - 32)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

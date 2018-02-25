@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchPrinciples : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ProfilePrincipleCellsDelegate {
+class SearchPrinciples : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var principlesDelegate : HomePrinciplesDelegate?
     var accessHomeController : HomeContainer?
@@ -54,7 +54,6 @@ class SearchPrinciples : UICollectionViewCell, UICollectionViewDelegate, UIColle
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomePrinciplesCells
         rowLabel.text = "Principles"
-        cell.delegate = self
         cell.principleLabel.text = profileLabelText[indexPath.item]
         cell.principleImage.image = UIImage(named: profileImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
         return cell

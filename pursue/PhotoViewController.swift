@@ -141,6 +141,30 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         return button
     }()
     
+    lazy var pursuitTitle : UITextView = {
+        let tv = UITextView()
+        tv.delegate = self
+        tv.translatesAutoresizingMaskIntoConstraints = false
+        tv.font = UIFont.boldSystemFont(ofSize: 14)
+        tv.isScrollEnabled = false
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 5
+        paragraphStyle.paragraphSpacing = 5
+        
+        let textStyling = [NSAttributedStringKey.paragraphStyle: paragraphStyle]
+        let attrString = NSAttributedString(string: "", attributes: textStyling)
+        tv.attributedText = attrString
+        return tv
+    }()
+    
+    lazy var pursuitUnderline : UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     @objc func handlePursuit(){
         let customAlert = CustomAlertView()
         customAlert.providesPresentationContextTransitionStyle = true
@@ -228,12 +252,17 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     func setupView(){
         view.addSubview(cancelButton)
         view.addSubview(backgroundImageView)
+        view.addSubview(pursuitTitle)
+        view.addSubview(pursuitUnderline)
         view.addSubview(continueButton)
         view.addSubview(forwardArrow)
         
 
         cancelButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
         backgroundImageView.anchor(top: cancelButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 32, paddingLeft: 42, paddingBottom: 0, paddingRight: 42, width: 0, height: view.frame.height / 2)
+        pursuitTitle.anchor(top: backgroundImageView.bottomAnchor, left: backgroundImageView.leftAnchor, bottom: nil, right: backgroundImageView.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: pursuitTitle.intrinsicContentSize.height)
+        pursuitUnderline.anchor(top: pursuitTitle.bottomAnchor, left: pursuitTitle.leftAnchor, bottom: nil, right: pursuitTitle.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+        
         continueButton.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 24, width: 40, height: 40)
         forwardArrow.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 15, height: 10)
         forwardArrow.centerXAnchor.constraint(equalTo: continueButton.centerXAnchor).isActive = true
@@ -246,6 +275,9 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         navigationController?.isHeroEnabled = true
+        pursuitTitle.becomeFirstResponder()
+        
+        pursuitTitle.selectedTextRange = pursuitTitle.textRange(from: pursuitTitle.beginningOfDocument, to: pursuitTitle.beginningOfDocument)
         setupView()
     }
     
@@ -254,4 +286,39 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         navigationController?.heroNavigationAnimationType = .fade
         dismiss(animated: true, completion: nil)
     }
+}
+
+extension PhotoViewController : UITextViewDelegate {
+
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let currentText:String = textView.text
+        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
+
+        if updatedText.isEmpty {
+            
+            textView.text = "Add Caption"
+            textView.textColor = .gray
+            textView.font = UIFont.boldSystemFont(ofSize: 14)
+            
+            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+            
+            return false
+        }
+            
+        else if textView.textColor == UIColor.lightGray && !text.isEmpty {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+        
+        return true
+    }
+    
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        if self.view.window != nil {
+            if textView.textColor == UIColor.lightGray {
+                textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+            }
+        }
+    }
+
 }
