@@ -10,6 +10,7 @@ import UIKit
 import XLActionController
 import JHTAlertController
 import Hero
+import ParallaxHeader
 
 class PursuitsDetailController : UICollectionViewController {
     
@@ -136,6 +137,14 @@ class PursuitsDetailController : UICollectionViewController {
         return button
     }()
     
+    let topBackground : UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.init(white: 0.8, alpha: 0.3)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 15
+        return view
+    }()
+    
     @objc func addSteps(){
         let actionController = SkypeActionController()
         
@@ -152,10 +161,14 @@ class PursuitsDetailController : UICollectionViewController {
     }
     
     func setupBackButton(){
-        let guide = view.safeAreaLayoutGuide
+        view.addSubview(topBackground)
+        topBackground.addSubview(backButton)
         
-        view.addSubview(backButton)
-        backButton.anchor(top: guide.topAnchor, left: guide.leftAnchor, bottom: nil, right: nil, paddingTop: 16, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 25, height: 25)
+        topBackground.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
+        backButton.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 25, height: 25)
+        backButton.centerXAnchor.constraint(equalTo: topBackground.centerXAnchor).isActive = true
+        backButton.centerYAnchor.constraint(equalTo: topBackground.centerYAnchor).isActive = true
+        
     }
     
     private func setupFloatingCamera(){
@@ -247,12 +260,68 @@ class PursuitsDetailController : UICollectionViewController {
         collectionView?.register(PursuitSteps.self, forCellWithReuseIdentifier: stepId)
         collectionView?.register(PostComments.self, forCellWithReuseIdentifier: commentId)
         collectionView?.register(DetailSteps.self, forCellWithReuseIdentifier: pursuitId)
-        collectionView?.register(PursuitsDetailHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView?.register(PursuitsDetailHeader.self, forCellWithReuseIdentifier: headerId)
+        
         collectionView?.backgroundColor = .white
-        collectionView?.contentInset = UIEdgeInsetsMake(-45, 0, 135, 0)
+        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
+        collectionView?.showsVerticalScrollIndicator = false
+        containerView.isHidden = true
+        
+        setupCollectionViewHeader()
+    }
+    
+    func setupCollectionViewHeader(){
+        let imageView = UIImageView()
+        imageView.image = #imageLiteral(resourceName: "music").withRenderingMode(.alwaysOriginal)
+        imageView.contentMode = .scaleAspectFill
+        
+        let label = UILabel()
+        label.text = "Label"
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 32, weight: UIFont.Weight.init(25))
+        
+        let subLabel = UILabel()
+        subLabel.text = "Simple way to add parallax header to UIScrollView or it's subclasses."
+        subLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        subLabel.numberOfLines = 2
+        subLabel.textColor = .white
+        
+        let viewMoreLabel = UILabel()
+        viewMoreLabel.text = "Scroll Down For Details"
+        viewMoreLabel.textColor = .white
+        viewMoreLabel.font = UIFont.systemFont(ofSize: 16)
+        
+        let playBackground = CardView()
+        playBackground.layer.cornerRadius = 20
+        playBackground.translatesAutoresizingMaskIntoConstraints = false
+        playBackground.backgroundColor = .white
+        playBackground.layer.masksToBounds = true
+        
+        let playIcon = UIImageView()
+        playIcon.image = #imageLiteral(resourceName: "view-more").withRenderingMode(.alwaysOriginal)
+        playIcon.contentMode = .scaleAspectFill
+        playIcon.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(imageView)
+        imageView.addSubview(label)
+        imageView.addSubview(subLabel)
+        imageView.addSubview(playBackground)
+        imageView.addSubview(playIcon)
+        imageView.addSubview(viewMoreLabel)
+        
+        label.anchor(top: imageView.centerYAnchor, left: imageView.leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: label.intrinsicContentSize.width, height: label.intrinsicContentSize.height)
+        subLabel.anchor(top: label.bottomAnchor, left: label.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 0, height: 40)
+        playBackground.anchor(top: subLabel.bottomAnchor, left: subLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
+        playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
+        playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true
+        playIcon.centerYAnchor.constraint(equalTo: playBackground.centerYAnchor).isActive = true
+        viewMoreLabel.anchor(top: playBackground.bottomAnchor, left: playBackground.leftAnchor, bottom: nil, right: nil, paddingTop: 84, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: viewMoreLabel.intrinsicContentSize.width, height: viewMoreLabel.intrinsicContentSize.height)
+        collectionView?.parallaxHeader.view = imageView
+        collectionView?.parallaxHeader.height = view.frame.height
+        collectionView?.parallaxHeader.minimumHeight = 0
+        collectionView?.parallaxHeader.mode = .topFill
         collectionView?.alwaysBounceVertical = true
-        collectionView?.keyboardDismissMode = .interactive
-        setupFloatingCamera()
+        setupBackButton()
     }
     
     var postDescription = ""
@@ -267,7 +336,7 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
         case isPursuitView:
             return 4
         case isImageView:
-            return 4
+            return 1
         default:
             assert(false, "Not a valid view")
         }
@@ -318,26 +387,7 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
                 assert(false, "Not a valid cell")
             }
         case isImageView:
-            switch indexPath.item {
-            case 0:
-                let approximateWidthOfCell = view.frame.width
-                let size = CGSize(width: approximateWidthOfCell, height: .infinity)
-                let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)]
-                let estimatedFrame = NSString(string: postDescription).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-                return CGSize(width: view.frame.width, height: estimatedFrame.height + 80)
-            case 1:
-                return CGSize(width: view.frame.width, height: 390)
-            case 2:
-                return CGSize(width: view.frame.width, height: 330)
-            case 3:
-                let approximateWidthOfCell = view.frame.width
-                let size = CGSize(width: approximateWidthOfCell, height: .infinity)
-                let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)]
-                let estimatedFrame = NSString(string: postDescription).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-                return CGSize(width: view.frame.width, height: estimatedFrame.height + 80)
-            default:
-                assert(false, "Not a valid cell")
-            }
+            return CGSize(width: view.frame.width, height: view.frame.height * 1.5)
         default:
             assert(false, "Not a valid view")
         }
@@ -385,35 +435,12 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
                 assert(false, "Not a valid cell")
             }
         case isImageView:
-            switch indexPath.item {
-            case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! PostView
-                return cell
-            case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! DetailSteps
-                return cell
-            case 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! PursuitPrinciple
-                return cell
-            case 3:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
-                return cell
-            default:
-                assert(false, "Not a valid cell")
-            }
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: headerId, for: indexPath) as! PursuitsDetailHeader
+            cell.pursuitsDetailController = self
+            return cell
         default:
             assert(false, "Not a valid view type")
         }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 450)
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! PursuitsDetailHeader
-        header.pursuitsDetailController = self
-        return header
     }
     
 }

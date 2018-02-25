@@ -45,9 +45,7 @@ class PostView : UICollectionViewCell {
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         return iv
-        
     }()
-    
     
     let cellId = "cellId"
     let commentId = "commentId"
@@ -59,7 +57,7 @@ class PostView : UICollectionViewCell {
         setupView()
         textViewDidChange(postDescription)
     }
-
+    
     func setupView(){
         addSubview(userPhoto)
         addSubview(usernameLabel)

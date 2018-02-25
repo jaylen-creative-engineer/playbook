@@ -82,7 +82,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
 
         collectionView?.backgroundColor = .white
         collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
-        collectionView?.showsVerticalScrollIndicator = true
+        collectionView?.showsVerticalScrollIndicator = false
  
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "music").withRenderingMode(.alwaysOriginal)
