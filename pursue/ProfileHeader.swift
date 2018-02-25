@@ -188,10 +188,8 @@ class ProfileHeader : UICollectionViewCell, UICollectionViewDelegate, UICollecti
     
     
     func setupProfileOptions(){
-        addSubview(settingsButton)
         addSubview(notificationsButton)
         notificationsButton.anchor(top: usernameAstric.bottomAnchor, left: usernameAstric.leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 19, height: 24)
-        settingsButton.anchor(top: notificationsButton.topAnchor, left: notificationsButton.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 0, width: 21, height: 21)
     }
     
     func setupView(){

@@ -9,6 +9,7 @@
 import UIKit
 import Photos
 import XLActionController
+import Hero
 
 class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     
@@ -141,16 +142,12 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     }()
     
     @objc func handlePursuit(){
-        let actionController = SkypeActionController()
-        
-        actionController.addAction(Action("Mark as principle", style: .default, handler: { action in
-            // do something useful
-        }))
-        
-        actionController.addAction(Action("Cancel", style: .default, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
+        let customAlert = CustomAlertView()
+        customAlert.providesPresentationContextTransitionStyle = true
+        customAlert.definesPresentationContext = true
+        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.present(customAlert, animated: true, completion: nil)
     }
     
     @objc func handleSave(){
@@ -227,7 +224,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         saveBackground.anchor(top: saveIcon.topAnchor, left: saveLabel.leftAnchor, bottom: saveLabel.bottomAnchor, right: saveLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
     }
-    
+ 
     func setupView(){
         view.addSubview(cancelButton)
         view.addSubview(backgroundImageView)
@@ -248,10 +245,13 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        navigationController?.isHeroEnabled = true
         setupView()
     }
     
     @objc func cancel() {
+        navigationController?.isHeroEnabled = true
+        navigationController?.heroNavigationAnimationType = .fade
         dismiss(animated: true, completion: nil)
     }
 }

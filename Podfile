@@ -22,5 +22,6 @@ target 'pursue' do
   pod 'FBSDKShareKit'
   pod 'FBSDKLoginKit'
   pod 'Hero'
- 
+  pod 'ParallaxHeader'
+
 end

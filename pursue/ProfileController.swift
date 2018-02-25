@@ -10,6 +10,7 @@ import UIKit
 import XLActionController
 import Alamofire
 import Firebase
+import ParallaxHeader
 
 class ProfileController : UICollectionViewController, UICollectionViewDelegateFlowLayout, ProfileHeaderDelegate, ProfilePursuitsRowDelegate, ProfilePostDelegate, ProfilePrincipleDelegate {
         
@@ -25,25 +26,30 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     let addedId = "addedId"
     let headerId = "headerId"
     let discussionId = "discussionId"
+    let parallaxId = "parallaxId"
     
-    lazy var homeIcon : UIImageView = {
-        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "Pursuit-typed").withRenderingMode(.alwaysOriginal)
-        iv.contentMode = .scaleAspectFill
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        return iv
+    lazy var optionButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("•••", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
+        return button
     }()
     
-    lazy var searchIcon : UIImageView = {
+    
+    let topBackground : UIView = {
+       let view = UIView()
+        view.backgroundColor = UIColor.init(white: 0.8, alpha: 0.3)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let photoImageView : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "search_selected").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.isUserInteractionEnabled = true
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleShowSearch))
-        tap.numberOfTapsRequired = 1
-        iv.addGestureRecognizer(tap)
+//        iv.image = #imageLiteral(resourceName: "music").withRenderingMode(.alwaysOriginal)
+        iv.clipsToBounds = true
         return iv
     }()
     
@@ -56,15 +62,11 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     let backgroundFill = UIView()
     
     private func setupTopBar(){
-        let guide = view.safeAreaLayoutGuide
-        view.addSubview(backgroundFill)
-        view.addSubview(homeIcon)
-        view.addSubview(searchIcon)
+        view.addSubview(topBackground)
+        topBackground.addSubview(optionButton)
+        topBackground.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 70)
         
-        backgroundFill.backgroundColor = .white
-        backgroundFill.anchor(top: view.topAnchor, left: guide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (view.frame.height / 8.5) - 5)
-        homeIcon.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 8, paddingLeft: 28, paddingBottom: 14, paddingRight: 0, width: 50, height: 18)
-        searchIcon.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 14, paddingRight: 22, width: 18, height: 16)
+        optionButton.anchor(top: topBackground.safeAreaLayoutGuide.topAnchor, left: nil, bottom: topBackground.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 4, paddingRight: 18, width: optionButton.intrinsicContentSize.width, height: optionButton.intrinsicContentSize.height)
     }
     
     
@@ -74,9 +76,21 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         tabBarController?.navigationController?.navigationBar.isHidden = true
         collectionView?.register(ProfilePostRow.self, forCellWithReuseIdentifier: postId)
         collectionView?.register(ProfileAddedRow.self, forCellWithReuseIdentifier: addedId)
+        collectionView?.register(ProfileAboutRow.self, forCellWithReuseIdentifier: peopleId)
         collectionView?.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+
         collectionView?.backgroundColor = .white
         collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
+        collectionView?.showsVerticalScrollIndicator = true
+ 
+        let imageView = UIImageView()
+        imageView.image = #imageLiteral(resourceName: "music").withRenderingMode(.alwaysOriginal)
+        imageView.contentMode = .scaleAspectFill
+        
+        collectionView?.parallaxHeader.view = imageView
+        collectionView?.parallaxHeader.height = view.frame.height / 2
+        collectionView?.parallaxHeader.minimumHeight = 0
+        collectionView?.parallaxHeader.mode = .topFill
         
         setupTopBar()
         getUser()
@@ -139,7 +153,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         present(actionController, animated: true, completion: nil)
     }
     
-    func handleSettings() {
+    @objc func handleSettings() {
         let layout = UICollectionViewLayout()
         let settingsController = SettingsController(collectionViewLayout: layout)
         navigationController?.pushViewController(settingsController, animated: true)
@@ -278,61 +292,18 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
 
 extension ProfileController {
     
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! ProfileHeader
-        header.user = user
-        header.delegate = self
-        header.accessProfileController = self
-        
-        return header
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if let user = self.user {
-            let approximateWidthOfBio = view.frame.width - 24 - 8
-            let size = CGSize(width: approximateWidthOfBio, height: .infinity)
-            let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12)]
-            let estimatedFrame = NSString(string: user.bio).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-            return CGSize(width: view.frame.width, height: estimatedFrame.height + 270)
-        }
-        
-        return CGSize(width: view.frame.width, height: (view.frame.height / 2.5) - 15)
-    }
-    
     // MARK: - Setup View
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        switch indexPath.item {
-        case 0:
-            return CGSize(width: view.frame.width, height: 205)
-        case 1:
-            return CGSize(width: view.frame.width, height: 370)
-        default:
-            assert(false, "Not a valid cell")
-        }
+        return CGSize(width: view.frame.width, height: view.frame.height)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(24, 0, 0, 0)
-        
+        return 1
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        switch indexPath.item {
-        case 0:
-            let addedCell = collectionView.dequeueReusableCell(withReuseIdentifier: addedId, for: indexPath) as! ProfileAddedRow
-            return addedCell
-        case 1:
-            let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! ProfilePostRow
-            return pursuitCell
-        default:
-            assert(false, "Not a valid row")
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! ProfileAboutRow
+        return cell
     }
 }

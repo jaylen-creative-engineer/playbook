@@ -28,6 +28,7 @@ class VideoViewController: UIViewController {
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.layer.cornerRadius = 20
         cv.layer.masksToBounds = true
+        cv.addTarget(self, action: #selector(handlePursuit), for: .touchUpInside)
         return cv
     }()
     
@@ -37,6 +38,10 @@ class VideoViewController: UIViewController {
         iv.tintColor = .white
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handlePursuit))
+        tap.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tap)
         return iv
     }()
     
@@ -97,6 +102,16 @@ class VideoViewController: UIViewController {
         button.addTarget(self, action: #selector(handleHighlight), for: .touchUpInside)
         return button
     }()
+    
+    @objc func handlePursuit(){
+        let customAlert = CustomAlertView()
+        customAlert.providesPresentationContextTransitionStyle = true
+        customAlert.definesPresentationContext = true
+        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.present(customAlert, animated: true, completion: nil)
+    }
+    
     
     @objc func handleSave(){
         PHPhotoLibrary.shared().performChanges({
@@ -185,6 +200,8 @@ class VideoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
+        navigationController?.isHeroEnabled = true
+        
         player = AVPlayer(url: videoURL)
         playerController = AVPlayerViewController()
         playerController?.videoGravity = AVLayerVideoGravity.resizeAspectFill.rawValue
@@ -208,6 +225,8 @@ class VideoViewController: UIViewController {
     }
     
     @objc func cancel() {
+        navigationController?.isHeroEnabled = true
+        navigationController?.heroNavigationAnimationType = .fade
         dismiss(animated: true, completion: nil)
     }
     

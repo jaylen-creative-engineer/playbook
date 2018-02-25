@@ -83,11 +83,20 @@ class PhotoLibrary : SwiftyCamViewController, UICollectionViewDelegate, UICollec
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.isHeroEnabled = true
         collectionView.backgroundColor = .white
         collectionView.register(PhotoLibraryCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.isHeroEnabled = true
+        collectionView.heroModifiers = [.fade, .translate(x:0, y:-250), .rotate(x:-1.6), .scale(1.5)]
         setupView()
+        
+        if fetchResult == nil {
+            let allPhotosOptions = PHFetchOptions()
+            allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+            fetchResult = PHAsset.fetchAssets(with: allPhotosOptions)
+        }
     }
     
     func setupView(){
@@ -304,14 +313,18 @@ extension PhotoLibrary {
     
     func swiftyCam(_ swiftyCam: SwiftyCamViewController, didFinishProcessVideoAt url: URL) {
         let newVC = VideoViewController(videoURL: url)
-        self.present(newVC, animated: true, completion: nil)
+        navigationController?.isHeroEnabled = true
+        navigationController?.heroNavigationAnimationType = .fade
+        navigationController?.pushViewController(newVC, animated: true)
     }
     
     func swiftyCam(_ swiftyCam: SwiftyCamViewController, didTake photo: UIImage) {
         let newVC = PhotoViewController(image: photo)
         guard let viewAsset = imageAsset else { return }
         newVC.asset = viewAsset
-        self.present(newVC, animated: true, completion: nil)
+        navigationController?.isHeroEnabled = true
+        navigationController?.heroNavigationAnimationType =  .fade
+        navigationController?.pushViewController(newVC, animated: true)
     }
 }
 

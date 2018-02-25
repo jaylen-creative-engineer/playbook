@@ -8,6 +8,8 @@
 
 #ifndef pursue_bridging_header_h
 #define pursue_bridging_header_h
+
 #import "iCarousel.h"
+#import "CSStickyHeaderFlowLayout/CSStickyHeaderFlowLayout.h"
 
 #endif /* pursue_bridging_header_h */

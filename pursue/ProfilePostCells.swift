@@ -14,40 +14,26 @@ protocol ProfilePostCellDelegate {
 }
 
 class ProfilePostCells : UICollectionViewCell {
-    
+        
     lazy var exploreImage : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "tumblr_nbje6dualg1r46py4o1_1280")
         iv.layer.masksToBounds = true
         iv.contentMode = .scaleAspectFill
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))
-        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleHomeHold))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleImageTap))
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleImageHold))
         tapGesture.numberOfTapsRequired = 1
         iv.addGestureRecognizer(tapGesture)
         iv.addGestureRecognizer(longGesture)
         iv.isUserInteractionEnabled = true
+        iv.image = #imageLiteral(resourceName: "samuel-l")
         iv.layer.cornerRadius = 4
         return iv
     }()
     
-    let exploreMainDescription : UILabel = {
-        let label = UILabel()
-        label.text = "Wonder Woman"
-        label.font = UIFont.systemFont(ofSize:  14, weight: UIFont.Weight(rawValue: 25))
-        label.numberOfLines = 2
-        label.textColor = .black
-        return label
-    }()
-    
-    var delegate : ProfilePostCellDelegate?
-    
-    @objc func handleHomeTap(){
-        delegate?.postTapped()
+    @objc func handleImageTap(){
     }
     
-    @objc func handleHomeHold(){
-        delegate?.postHeld()
+    @objc func handleImageHold(){
     }
     
     override func layoutSubviews() {
@@ -55,12 +41,21 @@ class ProfilePostCells : UICollectionViewCell {
         exploreMainDescription.sizeToFit()
     }
     
-    func setupView() {        
+    let exploreMainDescription : UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
+        label.textAlignment = .justified
+        label.text = "Text is here"
+        return label
+    }()
+    
+    func setupView() {
         addSubview(exploreImage)
         addSubview(exploreMainDescription)
-        exploreImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 44, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 280)
-        exploreMainDescription.anchor(top: exploreImage.bottomAnchor, left: exploreImage.leftAnchor, bottom: nil, right: exploreImage.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 50)
-    
+        
+        exploreImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 305)
+//        exploreImage.centerYAnchor.constraint(equalTo: <#T##NSLayoutAnchor<NSLayoutYAxisAnchor>#>)
+        exploreMainDescription.anchor(top: exploreImage.bottomAnchor, left: exploreImage.leftAnchor, bottom: nil, right: exploreImage.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
     }
     
     override init(frame: CGRect) {
@@ -72,3 +67,4 @@ class ProfilePostCells : UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+

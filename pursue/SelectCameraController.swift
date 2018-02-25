@@ -27,6 +27,8 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
         setupView()
         toggleFlash()
         
+        navigationController?.isHeroEnabled = true
+
         let allPhotosOptions = PHFetchOptions()
         allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
         allPhotos = PHAsset.fetchAssets(with: allPhotosOptions)
@@ -93,7 +95,7 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
         let libraryController = PhotoLibrary()
         libraryController.fetchResult = allPhotos
         navigationController?.isHeroEnabled = true
-        navigationController?.heroNavigationAnimationType = .fade
+        navigationController?.heroNavigationAnimationType = .push(direction: .right)
         navigationController?.pushViewController(libraryController, animated: true)
     }
 

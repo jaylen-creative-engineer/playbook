@@ -127,7 +127,7 @@ class HomeRow: UICollectionViewCell, iCarouselDataSource, iCarouselDelegate {
             carouselImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 400, height: 100))
             
             let shadowLabel = UILabel()
-            shadowLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight(25))
+            shadowLabel.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(25))
             shadowLabel.textAlignment = .justified
             shadowLabel.numberOfLines = 2
             shadowLabel.sizeToFit()
@@ -143,6 +143,19 @@ class HomeRow: UICollectionViewCell, iCarouselDataSource, iCarouselDelegate {
             carouselImage.contentMode = .scaleAspectFill
             carouselImage.layer.cornerRadius = 4
             carouselImage.layer.masksToBounds = true
+            
+            let blueView = UIView()
+            blueView.backgroundColor = .blue
+            blueView.translatesAutoresizingMaskIntoConstraints = false
+            
+            let redView = UIView()
+            redView.backgroundColor = .red
+            redView.translatesAutoresizingMaskIntoConstraints = false
+            
+            carouselImage.addSubview(blueView)
+            carouselImage.addSubview(redView)
+            blueView.anchor(top: carouselImage.topAnchor, left: carouselImage.leftAnchor, bottom: carouselImage.bottomAnchor, right: carouselImage.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+            redView.anchor(top: carouselImage.topAnchor, left: carouselImage.centerXAnchor, bottom: carouselImage.bottomAnchor, right: carouselImage.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
             return carouselImage
         default:
             return carouselImage
