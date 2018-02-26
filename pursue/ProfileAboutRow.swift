@@ -22,7 +22,7 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
     
     let usernameLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont.boldSystemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "JaylenHU27"
         return label
@@ -40,9 +40,9 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         return view
     }()
     
-    lazy var gearImageView : UIImageView = {
+    lazy var notificationImageView : UIImageView = {
        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "gear").withRenderingMode(.alwaysTemplate)
+        iv.image = #imageLiteral(resourceName: "notification-bell").withRenderingMode(.alwaysTemplate)
         iv.tintColor = .white
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
@@ -183,13 +183,13 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         addSubview(fullnameLabel)
         addSubview(usernameLabel)
         addSubview(notificationsBackground)
-        addSubview(gearImageView)
+        addSubview(notificationImageView)
         fullnameLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: fullnameLabel.intrinsicContentSize.width, height: fullnameLabel.intrinsicContentSize.height)
         usernameLabel.anchor(top: fullnameLabel.bottomAnchor, left: fullnameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
         notificationsBackground.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 40, height: 40)
-        gearImageView.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
-        gearImageView.centerXAnchor.constraint(equalTo: notificationsBackground.centerXAnchor).isActive = true
-        gearImageView.centerYAnchor.constraint(equalTo: notificationsBackground.centerYAnchor).isActive = true
+        notificationImageView.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
+        notificationImageView.centerXAnchor.constraint(equalTo: notificationsBackground.centerXAnchor).isActive = true
+        notificationImageView.centerYAnchor.constraint(equalTo: notificationsBackground.centerYAnchor).isActive = true
         setupFollowSystem()
     }
     

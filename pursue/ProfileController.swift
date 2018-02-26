@@ -154,10 +154,15 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         present(actionController, animated: true, completion: nil)
     }
     
+    
     @objc func handleSettings() {
-        let layout = UICollectionViewLayout()
-        let settingsController = SettingsController(collectionViewLayout: layout)
-        navigationController?.pushViewController(settingsController, animated: true)
+        let customAlert = CustomSettingsView()
+        customAlert.providesPresentationContextTransitionStyle = true
+        customAlert.definesPresentationContext = true
+        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.present(customAlert, animated: true, completion: nil)
+        
     }
     
     func showNotifications() {

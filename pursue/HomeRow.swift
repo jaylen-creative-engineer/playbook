@@ -152,15 +152,26 @@ class HomeRow: UICollectionViewCell, iCarouselDataSource, iCarouselDelegate {
             
             carouselView.isUserInteractionEnabled = true
             
-            let blueView = UIButton()
-            blueView.translatesAutoresizingMaskIntoConstraints = false
-            blueView.isUserInteractionEnabled = true
-            blueView.addTarget(self, action: #selector(handleLeftTap), for: .touchUpInside)
+            let leftButton = UIButton()
+            leftButton.translatesAutoresizingMaskIntoConstraints = false
+            leftButton.isUserInteractionEnabled = true
+            leftButton.addTarget(self, action: #selector(handleLeftTap), for: .touchUpInside)
             
-            let redView = UIButton()
-            redView.translatesAutoresizingMaskIntoConstraints = false
-            redView.isUserInteractionEnabled = true
-            redView.addTarget(self, action: #selector(handleRightTap), for: .touchUpInside)
+            let rightButton = UIButton()
+            rightButton.translatesAutoresizingMaskIntoConstraints = false
+            rightButton.isUserInteractionEnabled = true
+            rightButton.addTarget(self, action: #selector(handleRightTap), for: .touchUpInside)
+            
+            let playBackground = PlayView()
+            playBackground.layer.cornerRadius = 15
+            playBackground.translatesAutoresizingMaskIntoConstraints = false
+            playBackground.backgroundColor = .white
+            playBackground.layer.masksToBounds = true
+            
+            let playIcon = UIImageView()
+            playIcon.image = #imageLiteral(resourceName: "view-more").withRenderingMode(.alwaysOriginal)
+            playIcon.contentMode = .scaleAspectFill
+            playIcon.translatesAutoresizingMaskIntoConstraints = false
             
             let backgroundButton = UIButton()
             backgroundButton.backgroundColor = .white
@@ -174,18 +185,24 @@ class HomeRow: UICollectionViewCell, iCarouselDataSource, iCarouselDelegate {
             fullscreenLabel.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight(25))
             fullscreenLabel.translatesAutoresizingMaskIntoConstraints = false
             
-            carouselImage.addSubview(blueView)
-            carouselImage.addSubview(redView)
+            carouselImage.addSubview(leftButton)
+            carouselImage.addSubview(rightButton)
             carouselImage.addSubview(backgroundButton)
             carouselImage.addSubview(fullscreenLabel)
+            carouselImage.addSubview(playBackground)
+            carouselImage.addSubview(playIcon)
             
-            blueView.anchor(top: carouselImage.topAnchor, left: carouselImage.leftAnchor, bottom: carouselImage.bottomAnchor, right: carouselImage.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-            redView.anchor(top: carouselImage.topAnchor, left: carouselImage.centerXAnchor, bottom: carouselImage.bottomAnchor, right: carouselImage.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+            leftButton.anchor(top: carouselImage.topAnchor, left: carouselImage.leftAnchor, bottom: carouselImage.bottomAnchor, right: carouselImage.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+            rightButton.anchor(top: carouselImage.topAnchor, left: carouselImage.centerXAnchor, bottom: carouselImage.bottomAnchor, right: carouselImage.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
             
-            backgroundButton.anchor(top: nil, left: blueView.leftAnchor, bottom: blueView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 12, paddingRight: 0, width: 100, height: 30)
+            backgroundButton.anchor(top: nil, left: leftButton.leftAnchor, bottom: leftButton.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 12, paddingRight: 0, width: 100, height: 30)
             fullscreenLabel.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: fullscreenLabel.intrinsicContentSize.width, height: fullscreenLabel.intrinsicContentSize.height)
             fullscreenLabel.centerXAnchor.constraint(equalTo: backgroundButton.centerXAnchor).isActive = true
             fullscreenLabel.centerYAnchor.constraint(equalTo: backgroundButton.centerYAnchor).isActive = true
+            playBackground.anchor(top: nil, left: nil, bottom: rightButton.bottomAnchor, right: rightButton.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 12, width: 30, height: 30)
+            playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 10, height: 10)
+            playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true
+            playIcon.centerYAnchor.constraint(equalTo: playBackground.centerYAnchor).isActive = true
             return carouselImage
         default:
             return carouselImage

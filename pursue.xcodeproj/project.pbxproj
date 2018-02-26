@@ -26,6 +26,8 @@
 		E61A41B21F952EDD002F4045 /* RelatedPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61A41B11F952EDD002F4045 /* RelatedPostCell.swift */; };
 		E621B9921FE048FE007324E2 /* PursuitPrinciple.swift in Sources */ = {isa = PBXBuildFile; fileRef = E621B9911FE048FE007324E2 /* PursuitPrinciple.swift */; };
 		E621B9941FE04925007324E2 /* PursuitPrincipleCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E621B9931FE04925007324E2 /* PursuitPrincipleCells.swift */; };
+		E6234E962044719C00A57A2C /* CustomSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6234E952044719C00A57A2C /* CustomSettingsView.swift */; };
+		E6234E98204478E700A57A2C /* CustomLogOutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6234E97204478E700A57A2C /* CustomLogOutView.swift */; };
 		E6235EA21F92C70400BF1FDE /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6235EA11F92C70400BF1FDE /* PostView.swift */; };
 		E6235EA81F94208F00BF1FDE /* PostComments.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6235EA71F94208F00BF1FDE /* PostComments.swift */; };
 		E6235EAA1F94232C00BF1FDE /* RelatedPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6235EA91F94232C00BF1FDE /* RelatedPost.swift */; };
@@ -134,6 +136,8 @@
 		E61A41B11F952EDD002F4045 /* RelatedPostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelatedPostCell.swift; sourceTree = "<group>"; };
 		E621B9911FE048FE007324E2 /* PursuitPrinciple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PursuitPrinciple.swift; sourceTree = "<group>"; };
 		E621B9931FE04925007324E2 /* PursuitPrincipleCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PursuitPrincipleCells.swift; sourceTree = "<group>"; };
+		E6234E952044719C00A57A2C /* CustomSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSettingsView.swift; sourceTree = "<group>"; };
+		E6234E97204478E700A57A2C /* CustomLogOutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLogOutView.swift; sourceTree = "<group>"; };
 		E6235EA11F92C70400BF1FDE /* PostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		E6235EA71F94208F00BF1FDE /* PostComments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostComments.swift; sourceTree = "<group>"; };
 		E6235EA91F94232C00BF1FDE /* RelatedPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelatedPost.swift; sourceTree = "<group>"; };
@@ -452,6 +456,8 @@
 				E66436781FA2970500A9B0E7 /* ProfilePostCells.swift */,
 				E60433EC2042189F00E6D4DA /* ProfileAboutRow.swift */,
 				E60433EE20422EB800E6D4DA /* ProfileUserImage.swift */,
+				E6234E952044719C00A57A2C /* CustomSettingsView.swift */,
+				E6234E97204478E700A57A2C /* CustomLogOutView.swift */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -729,12 +735,14 @@
 				E6CE228F1F675894006C5755 /* MainTabController.swift in Sources */,
 				E628F2E220350E75002FE8CF /* SearchController.swift in Sources */,
 				E617BB151FD886D6008B2EA1 /* IntroController.swift in Sources */,
+				E6234E962044719C00A57A2C /* CustomSettingsView.swift in Sources */,
 				E6D0B422203FDEEF008D4268 /* ExplorePrincipleCells.swift in Sources */,
 				E62AAB211FD1E8680053EAD7 /* CameraBar.swift in Sources */,
 				E6CE22881F671E3D006C5755 /* Extensions.swift in Sources */,
 				E6DEC83A201AB0D200E02393 /* Tags.swift in Sources */,
 				E621B9921FE048FE007324E2 /* PursuitPrinciple.swift in Sources */,
 				E6DF9EC5203CA9F3005C86DB /* HomeContainer.swift in Sources */,
+				E6234E98204478E700A57A2C /* CustomLogOutView.swift in Sources */,
 				E62AAB191FD0A49A0053EAD7 /* NotificationSettingsController.swift in Sources */,
 				E67FB8C2203117C70008732C /* ImageProcessor.swift in Sources */,
 				E659EB192040786500CA8DB5 /* CustomAlertViewCell.swift in Sources */,

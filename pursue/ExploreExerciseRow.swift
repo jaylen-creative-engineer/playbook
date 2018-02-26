@@ -84,11 +84,9 @@ class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICol
     func setupView(){
         addSubview(rowLabel)
         addSubview(postCollection)
-        addSubview(moreButton)
 
         rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: 45)
         postCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 255)
-        moreButton.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 24, height: 12)
 
         postCollection.showsHorizontalScrollIndicator = false
         postCollection.register(ExploreExercisesRowCells.self, forCellWithReuseIdentifier: cellId)
