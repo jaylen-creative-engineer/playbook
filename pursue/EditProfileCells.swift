@@ -198,8 +198,6 @@ class EditProfileCells : UICollectionViewCell {
     }
     
     func updateAccountDetails(){
-        let guide = safeAreaLayoutGuide
-        
         addSubview(accountLabel)
         addSubview(fullnameLabel)
         addSubview(usernameLabel)

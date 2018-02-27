@@ -48,6 +48,14 @@ class PhotoLibrary : SwiftyCamViewController, UICollectionViewDelegate, UICollec
         return button
     }()
     
+    lazy var linkButton : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "link").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(handleLink), for: .touchUpInside)
+        return button
+    }()
+    
     let collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -115,11 +123,23 @@ class PhotoLibrary : SwiftyCamViewController, UICollectionViewDelegate, UICollec
     
     func setupTopOptions(){
         view.addSubview(cancelButton)
+        view.addSubview(linkButton)
         cancelButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
+        linkButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 17, height: 15)
+       
     }
     
     @objc func handleDismiss(){
         dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func handleLink(){
+        let customAlert = CustomLinkView()
+        customAlert.providesPresentationContextTransitionStyle = true
+        customAlert.definesPresentationContext = true
+        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.showDetailViewController(customAlert, sender: self)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -324,6 +344,19 @@ extension PhotoLibrary {
         navigationController?.isHeroEnabled = true
         navigationController?.heroNavigationAnimationType =  .fade
         navigationController?.pushViewController(newVC, animated: true)
+    }
+}
+
+extension PhotoLibrary : UITextViewDelegate {
+    
+    func textViewDidChange(_ textView: UITextView) {
+        let size = CGSize(width: view.frame.width - 24, height: .infinity)
+        
+        let estimatedSize = textView.sizeThatFits(size)
+        
+        textView.constraints.forEach { (constraint) in
+            constraint.constant = estimatedSize.height
+        }
     }
 }
 

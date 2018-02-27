@@ -53,7 +53,7 @@ class SearchController : UICollectionViewController, UICollectionViewDelegateFlo
         searchBar.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
     }
     
-    func goBack(){
+    @objc func goBack(){
         dismiss(animated: true, completion: nil)
     }
     
@@ -101,7 +101,7 @@ extension SearchController : UISearchBarDelegate {
         Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default).responseJSON { response in
             switch response.result {
             case .success:
-                guard let dictionaries = response.result.value as? [Dictionary<String,AnyObject>] else { return }
+                guard let _ = response.result.value as? [Dictionary<String,AnyObject>] else { return }
                 
             case .failure:
                 print("Failure: \(response.result.isSuccess)")

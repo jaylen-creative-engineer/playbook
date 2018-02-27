@@ -88,7 +88,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
  
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupCollectionView()
         setupTopBar()
     }

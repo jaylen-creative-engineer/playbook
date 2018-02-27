@@ -283,7 +283,7 @@ extension ExploreController : UISearchBarDelegate {
         Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default).responseJSON { response in
             switch response.result {
             case .success:
-                guard let dictionaries = response.result.value as? [Dictionary<String,AnyObject>] else { return }
+                guard let _ = response.result.value as? [Dictionary<String,AnyObject>] else { return }
                 
             case .failure:
                 print("Failure: \(response.result.isSuccess)")

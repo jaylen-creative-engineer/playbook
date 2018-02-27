@@ -257,7 +257,6 @@ class PursuitsDetailController : UICollectionViewController {
         collectionView?.register(PostView.self, forCellWithReuseIdentifier: postId)
         collectionView?.register(PursuitPrinciple.self, forCellWithReuseIdentifier: principleId)
         collectionView?.register(RelatedPost.self, forCellWithReuseIdentifier: relatedId)
-        collectionView?.register(PursuitSteps.self, forCellWithReuseIdentifier: stepId)
         collectionView?.register(PostComments.self, forCellWithReuseIdentifier: commentId)
         collectionView?.register(DetailSteps.self, forCellWithReuseIdentifier: pursuitId)
         collectionView?.register(PursuitsDetailHeader.self, forCellWithReuseIdentifier: headerId)
@@ -410,8 +409,7 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let isTrue = true
-        switch isTrue {
+        switch true {
         case isPrinciplesView:
             switch indexPath.item {
             case 0:
