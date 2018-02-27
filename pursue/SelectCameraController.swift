@@ -66,7 +66,6 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
     
     lazy var cancelFlashLine : ViewWithDiagonalLine = {
        let v = ViewWithDiagonalLine()
-        
         let tap = UITapGestureRecognizer(target: self, action: #selector(toggleFlash))
         tap.numberOfTapsRequired = 1
         v.addGestureRecognizer(tap)

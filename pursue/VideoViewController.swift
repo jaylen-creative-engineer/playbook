@@ -11,8 +11,9 @@ import AVFoundation
 import AVKit
 import XLActionController
 import Photos
+import PryntTrimmerView
 
-class VideoViewController: UIViewController {
+class VideoViewController: AssetSelectionViewController {
     
     lazy var cancelButton : UIButton = {
         let button = UIButton()
@@ -129,6 +130,32 @@ class VideoViewController: UIViewController {
         return button
     }()
     
+    lazy var keyboardButton : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "keyboard").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.contentMode = .scaleAspectFill
+        return button
+    }()
+    
+    lazy var trimmerButton : UIButton = {
+       let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "trim").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(loadVideo), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var trimmerView : TrimmerView = {
+       let tv = TrimmerView()
+        tv.handleColor = .white
+        tv.mainColor = .gray
+        tv.delegate = self
+        return tv
+    }()
+    
+    var playbackTimeCheckerTimer: Timer?
+    var trimmerPositionChangedTimer: Timer?
+    
     @objc func handlePursuit(){
         let customAlert = CustomAlertView()
         customAlert.providesPresentationContextTransitionStyle = true
@@ -205,11 +232,22 @@ class VideoViewController: UIViewController {
         
     }
     
+    func setupTopOptions() {
+        view.addSubview(keyboardButton)
+        view.addSubview(trimmerButton)
+        
+        keyboardButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 22, height: 17)
+        trimmerButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: keyboardButton.leftAnchor, paddingTop: 11, paddingLeft: 0, paddingBottom: 0, paddingRight: 24, width: 24, height: 19)
+    }
+    
     func setupView(){
         view.addSubview(cancelButton)
+        setupTopOptions()
+        
         view.addSubview(playerController!.view)
         view.addSubview(continueButton)
         view.addSubview(forwardArrow)
+        view.addSubview(trimmerView)
         
         playerController!.view.layer.masksToBounds = true
         playerController!.view.layer.cornerRadius = 4
@@ -219,6 +257,7 @@ class VideoViewController: UIViewController {
         forwardArrow.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 15, height: 10)
         forwardArrow.centerXAnchor.constraint(equalTo: continueButton.centerXAnchor).isActive = true
         forwardArrow.centerYAnchor.constraint(equalTo: continueButton.centerYAnchor).isActive = true
+        trimmerView.anchor(top: nil, left: playerController!.view.leftAnchor, bottom: playerController!.view.bottomAnchor, right: playerController!.view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 30)
         
         setupBottomLeftOptions()
     }
@@ -238,16 +277,20 @@ class VideoViewController: UIViewController {
         self.addChildViewController(playerController!)
         setupView()
         NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.player!.currentItem)
+        trimmerView.isHidden = true
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         player?.play()
+        startPlaybackTimeChecker()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         player?.pause()
+        stopPlaybackTimeChecker()
     }
     
     @objc func cancel() {
@@ -258,12 +301,72 @@ class VideoViewController: UIViewController {
     
     @objc fileprivate func playerItemDidReachEnd(_ notification: Notification) {
         if self.player != nil {
-            self.player!.seek(to: kCMTimeZero)
-            self.player!.play()
+            if let startTime = trimmerView.startTime {
+                self.player!.seek(to: startTime)
+                self.player!.play()
+            }
         }
     }
+    
+    // MARK: - Trim Video
+    var isCrop = false
+    
+    func loadVideo() {
+        // override in subclass
+        isCrop = !isCrop
+        if isCrop == true {
+            let asset = AVAsset(url: videoURL)
+            trimmerView.asset = asset
+            trimmerView.isHidden = false
+        } else {
+            trimmerView.isHidden = true
+        }
+    }
+
+    func startPlaybackTimeChecker() {
+        stopPlaybackTimeChecker()
+        playbackTimeCheckerTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self,
+                                                        selector:
+            #selector(onPlaybackTimeChecker), userInfo: nil, repeats: true)
+    }
+    
+    func stopPlaybackTimeChecker() {
+        playbackTimeCheckerTimer?.invalidate()
+        playbackTimeCheckerTimer = nil
+    }
+    
+    @objc func onPlaybackTimeChecker() {
+        
+        guard let startTime = trimmerView.startTime, let endTime = trimmerView.endTime, let player = player else { return }
+        
+        let playBackTime = player.currentTime()
+        trimmerView.seek(to: playBackTime)
+        
+        if playBackTime >= endTime {
+            player.seek(to: startTime, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
+            trimmerView.seek(to: startTime)
+        }
+    }
+
 }
 
 extension VideoViewController : UITextViewDelegate {
     
+}
+
+extension VideoViewController: TrimmerViewDelegate {
+    
+    func positionBarStoppedMoving(_ playerTime: CMTime) {
+        player?.seek(to: playerTime, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
+        player?.play()
+        startPlaybackTimeChecker()
+    }
+    
+    func didChangePositionBar(_ playerTime: CMTime) {
+        stopPlaybackTimeChecker()
+        player?.pause()
+        player?.seek(to: playerTime, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
+        let duration = (trimmerView.endTime! - trimmerView.startTime!).seconds
+        print(duration)
+    }
 }

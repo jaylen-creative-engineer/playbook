@@ -13,6 +13,7 @@ import Hero
 class CustomLogOutView : UIViewController {
     
     let alertViewGrayColor = UIColor(red: 224.0/255.0, green: 224.0/255.0, blue: 224.0/255.0, alpha: 1)
+    
     let cellId = "cellId"
     
     lazy var alertView : UIView = {
@@ -49,6 +50,14 @@ class CustomLogOutView : UIViewController {
         return label
     }()
     
+    lazy var dismissBackground : UIButton = {
+       let button = UIButton()
+        button.backgroundColor = .clear
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(handleNo), for: .touchUpInside)
+        return button
+    }()
+    
     @objc func handleYes(){
         do {
             try Auth.auth().signOut()
@@ -72,15 +81,18 @@ class CustomLogOutView : UIViewController {
         super.viewDidLoad()
         navigationController?.isHeroEnabled = true
         view.addSubview(alertView)
+        alertView.isUserInteractionEnabled = false
         alertView.addSubview(confirmLabel)
         alertView.addSubview(yesLabel)
         alertView.addSubview(noLabel)
+        view.addSubview(dismissBackground)
         
         alertView.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 150)
         confirmLabel.anchor(top: alertView.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: confirmLabel.intrinsicContentSize.width, height: confirmLabel.intrinsicContentSize.height)
         confirmLabel.centerXAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
         yesLabel.anchor(top: confirmLabel.bottomAnchor, left: confirmLabel.leftAnchor, bottom: nil, right: confirmLabel.centerXAnchor, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: yesLabel.intrinsicContentSize.height)
         noLabel.anchor(top: confirmLabel.bottomAnchor, left: confirmLabel.centerXAnchor, bottom: nil, right: confirmLabel.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 12, paddingRight: 12, width: 0, height: noLabel.intrinsicContentSize.height)
+        dismissBackground.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: alertView.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
     override func viewWillAppear(_ animated: Bool) {

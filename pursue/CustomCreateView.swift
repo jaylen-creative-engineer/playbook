@@ -98,6 +98,14 @@ class CustomCreateView : UIViewController {
         return view
     }()
     
+    lazy var dismissBackground : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
+        return button
+    }()
+    
     @objc func handleSend(){
         
     }
@@ -121,6 +129,7 @@ class CustomCreateView : UIViewController {
         alertView.addSubview(pursuitUnderline)
         alertView.addSubview(sendButton)
         alertView.addSubview(cancelBackground)
+        view.addSubview(dismissBackground)
         
         alertView.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 325)
        
@@ -135,6 +144,7 @@ class CustomCreateView : UIViewController {
         cancelLabel.centerXAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
         cancelBackground.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 8, paddingRight: 0, width: 100, height: 50)
         cancelBackground.centerXAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
+        dismissBackground.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: alertView.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
     override func viewWillAppear(_ animated: Bool) {

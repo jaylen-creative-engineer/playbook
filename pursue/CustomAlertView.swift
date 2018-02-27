@@ -52,6 +52,14 @@ class CustomAlertView: UIViewController, UICollectionViewDelegate, UICollectionV
         return label
     }()
     
+    lazy var dismissBackground : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
+        return button
+    }()
+    
     lazy var createButton : UIButton = {
        let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "add").withRenderingMode(.alwaysOriginal), for: .normal)
@@ -104,6 +112,8 @@ class CustomAlertView: UIViewController, UICollectionViewDelegate, UICollectionV
         alertView.addSubview(createButton)
         alertView.addSubview(cancelLabel)
         alertView.addSubview(cancelBackground)
+        view.addSubview(dismissBackground)
+        
         alertView.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 325)
         sendLabel.anchor(top: alertView.topAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: sendLabel.intrinsicContentSize.width, height: sendLabel.intrinsicContentSize.height)
         createButton.anchor(top: sendLabel.topAnchor, left: nil, bottom: nil, right: alertView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 18, height: 18)
@@ -111,6 +121,7 @@ class CustomAlertView: UIViewController, UICollectionViewDelegate, UICollectionV
         cancelLabel.centerXAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
         cancelBackground.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 8, paddingRight: 0, width: 100, height: 50)
         cancelBackground.centerXAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
+        dismissBackground.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: alertView.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
        setupCollectionView()
     }
     

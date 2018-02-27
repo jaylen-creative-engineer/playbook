@@ -30,7 +30,7 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         collectionView?.register(ExplorePrinciplesRow.self, forCellWithReuseIdentifier: principleId)
         collectionView?.register(ExploreExerciseRow.self, forCellWithReuseIdentifier: exerciseId)
         collectionView?.backgroundColor = .white
-        collectionView?.showsVerticalScrollIndicator = true
+        collectionView?.showsVerticalScrollIndicator = false
     }
     
     

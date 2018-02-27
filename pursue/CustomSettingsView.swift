@@ -131,6 +131,14 @@ class CustomSettingsView : UIViewController {
         return button
     }()
     
+    lazy var dismissBackground : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
+        return button
+    }()
+    
     func addRowsBehindLabel(){
         view.addSubview(editBackground)
         view.addSubview(interestsBackground)
@@ -166,10 +174,12 @@ class CustomSettingsView : UIViewController {
         view.addSubview(alertView)
         alertView.addSubview(settingsLabel)
         alertView.addSubview(cancelButton)
+        view.addSubview(dismissBackground)
         
         alertView.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 375)
         settingsLabel.anchor(top: alertView.topAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: settingsLabel.intrinsicContentSize.width, height: settingsLabel.intrinsicContentSize.height)
         cancelButton.anchor(top: settingsLabel.topAnchor, left: nil, bottom: nil, right: alertView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 18, height: 18)
+        dismissBackground.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: alertView.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
     override func viewWillAppear(_ animated: Bool) {

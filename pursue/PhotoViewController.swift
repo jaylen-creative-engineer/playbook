@@ -10,6 +10,7 @@ import UIKit
 import Photos
 import XLActionController
 import Hero
+import SnapSliderFilters
 
 class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     
@@ -25,6 +26,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     
     private var backgroundImage: UIImage
     var asset: PHAsset!
+    fileprivate var data:[SNFilter] = []
     
     var targetSize: CGSize {
         let scale = UIScreen.main.scale
@@ -130,6 +132,22 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         button.backgroundColor = .clear
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var soundButton : UIButton = {
+       let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "sound").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.contentMode = .scaleAspectFill
+        return button
+    }()
+    
+
+    lazy var keyboardButton : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "keyboard").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(setupEditTextField), for: .touchUpInside)
         return button
     }()
     
@@ -248,18 +266,25 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         saveBackground.anchor(top: saveIcon.topAnchor, left: saveLabel.leftAnchor, bottom: saveLabel.bottomAnchor, right: saveLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
     }
+    
+    func setupTopOptions() {
+        view.addSubview(cancelButton)
+        view.addSubview(keyboardButton)
+        
+        cancelButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
+        keyboardButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 22, height: 17)
+    }
  
     func setupView(){
-        view.addSubview(cancelButton)
+        setupTopOptions()
+        
         view.addSubview(backgroundImageView)
         view.addSubview(pursuitTitle)
         view.addSubview(pursuitUnderline)
         view.addSubview(continueButton)
         view.addSubview(forwardArrow)
-        
-
-        cancelButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
-        backgroundImageView.anchor(top: cancelButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 32, paddingLeft: 42, paddingBottom: 0, paddingRight: 42, width: 0, height: view.frame.height / 2)
+       
+        backgroundImageView.anchor(top: cancelButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 52, paddingLeft: 42, paddingBottom: 0, paddingRight: 42, width: 0, height: view.frame.height / 2)
         pursuitTitle.anchor(top: backgroundImageView.bottomAnchor, left: backgroundImageView.leftAnchor, bottom: nil, right: backgroundImageView.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: pursuitTitle.intrinsicContentSize.height)
         pursuitUnderline.anchor(top: pursuitTitle.bottomAnchor, left: pursuitTitle.leftAnchor, bottom: nil, right: pursuitTitle.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
         
@@ -271,11 +296,33 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         setupBottomLeftOptions()
     }
     
+    @objc func setupEditTextField(){
+        let textfield = SNTextField(x: backgroundImageView.frame.minX, y: SNUtils.screenSize.height / 2, width: backgroundImageView.frame.width, heightOfScreen: SNUtils.screenSize.height)
+        textfield.layer.zPosition = 100
+        textfield.backgroundColor = .lightGray
+        view.addSubview(textfield)
+        self.textFieldCheck = textfield
+        textfield.handleTap()
+        NotificationCenter.default.addObserver(textfield, selector: #selector(SNTextField.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(textfield, selector: #selector(SNTextField.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(textfield, selector: #selector(SNTextField.keyboardTypeChanged(_:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+    }
+    
+    var isLeaving = false
+    var textFieldCheck : SNTextField?
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        isLeaving = true
+        if textFieldCheck != nil {
+            NotificationCenter.default.removeObserver(textFieldCheck!)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         navigationController?.isHeroEnabled = true
-        pursuitTitle.becomeFirstResponder()
         
         pursuitTitle.selectedTextRange = pursuitTitle.textRange(from: pursuitTitle.beginningOfDocument, to: pursuitTitle.beginningOfDocument)
         setupView()
@@ -322,3 +369,19 @@ extension PhotoViewController : UITextViewDelegate {
     }
 
 }
+
+extension PhotoViewController : SNSliderDataSource {
+    
+    func numberOfSlides(_ slider: SNSlider) -> Int {
+        return data.count
+    }
+    
+    func slider(_ slider: SNSlider, slideAtIndex index: Int) -> SNFilter {
+        return data[index]
+    }
+    
+    func startAtIndex(_ slider: SNSlider) -> Int {
+        return 0
+    }
+}
+

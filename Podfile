@@ -13,7 +13,6 @@ target 'pursue' do
   pod 'XLActionController/Skype'
   pod 'SwiftyCam'
   pod 'JHTAlertController', '~> 0.2'
-  pod 'Gifu'
   pod 'iCarousel', '~> 1.8'
   pod 'Alamofire'
   pod 'GoogleSignIn'
@@ -23,5 +22,7 @@ target 'pursue' do
   pod 'FBSDKLoginKit'
   pod 'Hero'
   pod 'ParallaxHeader'
+  pod 'PryntTrimmerView'
+  pod 'SnapSliderFilters'
 
 end

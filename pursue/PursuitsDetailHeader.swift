@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Gifu
-
 
 protocol MessageDelegate {
     func handleMessage(for cell : PursuitsDetailHeader)
