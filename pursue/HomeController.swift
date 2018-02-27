@@ -88,7 +88,19 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
  
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        let url = "https://www.googleapis.com/youtube/v3/videos"
+        var parameters = Alamofire.Parameters()
+        parameters["part"] = "snippet"
+        parameters["id"] = "7xUSH1QLHzk"
+        
+        Alamofire.request(url, method: .get, parameters: parameters, encoding: JSONEncoding.default).responseJSON { (response) in
+            print(response)
+            if let JSON = response.result.value {
+                print(JSON)
+                
+            }
+        }
         setupCollectionView()
         setupTopBar()
     }

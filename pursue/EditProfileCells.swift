@@ -131,7 +131,7 @@ class EditProfileCells : UICollectionViewCell {
     
     lazy var cameraIcon : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "camera_icon")
+        iv.image = #imageLiteral(resourceName: "camera_icon").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv

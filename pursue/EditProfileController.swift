@@ -40,11 +40,13 @@ class EditProfileController : UICollectionViewController, UICollectionViewDelega
     @objc func handleSubmitUpdate(){
         let editProfile = EditProfileCells()
         editProfile.updateAccount()
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
+//        navigationController?.popViewController(animated: true)
     }
     
     @objc func handleCancel(){
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
+//        navigationController?.popViewController(animated: true)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

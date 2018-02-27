@@ -19,7 +19,7 @@ class PolicyController : UICollectionViewController {
     }()
     
     @objc func handleCancel(){
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {

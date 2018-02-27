@@ -23,7 +23,7 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
     let pageTitle : UILabel = {
         let label = UILabel()
         label.text = "Select Interests"
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -33,7 +33,7 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
     lazy var nextTitle : UILabel = {
         let label = UILabel()
         label.text = "Next"
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = true
         
@@ -44,7 +44,7 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
     }()
     
     @objc func goBack(){
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
     }
     
     func interestViewType(){

@@ -61,6 +61,8 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     }
     
     let backgroundFill = UIView()
+    var user : User?
+    let imageView = UIImageView()
     
     private func setupTopBar(){
         view.addSubview(topBackground)
@@ -73,7 +75,6 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         optionButton.centerYAnchor.constraint(equalTo: topBackground.centerYAnchor).isActive = true
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -84,7 +85,6 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
         collectionView?.showsVerticalScrollIndicator = false
  
-        let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "music").withRenderingMode(.alwaysOriginal)
         imageView.contentMode = .scaleAspectFill
         
@@ -96,9 +96,6 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         setupTopBar()
         getUser()
     }
-    
-    var user : User?
-
     
     func getUser(){
         
@@ -131,6 +128,12 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     
     func profileDiscussionTapped() {
         handleChangeToDetail(viewType: "isDiscussionDetail")
+    }
+    
+    func showFriendsController(){
+        let layout = UICollectionViewFlowLayout()
+        let friendsController = FriendsController(collectionViewLayout: layout)
+        navigationController?.pushViewController(friendsController, animated: true)
     }
     
     func profileDiscussionHeld() {
@@ -310,6 +313,7 @@ extension ProfileController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! ProfileAboutRow
+        cell.accessProfileController = self
         return cell
     }
 }

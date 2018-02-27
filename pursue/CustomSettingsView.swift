@@ -178,7 +178,7 @@ class CustomSettingsView : UIViewController {
         
         alertView.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 375)
         settingsLabel.anchor(top: alertView.topAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: settingsLabel.intrinsicContentSize.width, height: settingsLabel.intrinsicContentSize.height)
-        cancelButton.anchor(top: settingsLabel.topAnchor, left: nil, bottom: nil, right: alertView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 18, height: 18)
+        cancelButton.anchor(top: settingsLabel.topAnchor, left: nil, bottom: nil, right: alertView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 15, height: 15)
         dismissBackground.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: alertView.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
@@ -216,22 +216,22 @@ class CustomSettingsView : UIViewController {
     
     @objc func switchToPolicy(){
         let policyController = PolicyController(collectionViewLayout: UICollectionViewFlowLayout())
-        navigationController?.pushViewController(policyController, animated: true)
+        present(policyController, animated: true, completion: nil)
     }
     
     @objc func switchToTerms(){
         let termsController = TermsController(collectionViewLayout: UICollectionViewFlowLayout())
-        navigationController?.pushViewController(termsController, animated: true)
+        present(termsController, animated: true, completion: nil)
     }
     
     @objc func handleChangeToInterests(){
         let interestsController = InterestsController(collectionViewLayout: UICollectionViewFlowLayout())
-        navigationController?.pushViewController(interestsController, animated: true)
+        present(interestsController, animated: true, completion: nil)
     }
     
     @objc func handleEditClick(){
         let editController = EditProfileController(collectionViewLayout: UICollectionViewFlowLayout())
-        navigationController?.pushViewController(editController, animated: true)
+        present(editController, animated: true, completion: nil)
     }
     
     @objc func logOut(){
