@@ -134,6 +134,12 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         return label
     }()
     
+    lazy var followingTapBackground : UIButton = {
+       let view = UIButton()
+        view.backgroundColor = .clear
+        view.addTarget(self, action: #selector(followersSelected), for: .touchUpInside)
+        return view
+    }()
     let pursuitsCount : UILabel = {
        let label = UILabel()
         label.text = "125"
@@ -239,6 +245,9 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         followersCount.centerXAnchor.constraint(equalTo: followersLabel.centerXAnchor).isActive = true
         
         setupFollowingView()
+        addSubview(followingTapBackground)
+        
+        followingTapBackground.anchor(top: followingCount.topAnchor, left: leftAnchor, bottom: followingLabel.bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         userBio.anchor(top: followingCollectionView.bottomAnchor, left: leftAnchor, bottom: nil, right: notificationsBackground.rightAnchor, paddingTop: 12, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         textViewDidChange(userBio)
         setupCollectionView()

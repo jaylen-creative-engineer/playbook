@@ -22,14 +22,19 @@ class HomeInterestsBar : UIView, UICollectionViewDataSource, UICollectionViewDel
     var accessHomeController : HomeController?
     let cellId = "cellId"
     
-    let interestsNames = ["Trending", "Animals", "Art", "Business", "Cars", "Design", "Finance", "Fashion", "Food", "Health", "Home", "Math", "Music", "Self", "Science", "Sports", "Tech", "Writing"]
+    let interestsNames = ["My Pursuits", "Your Picks", "Art", "Business", "Cars", "Design", "Finance", "Fashion", "Food", "Health", "Home", "Math", "Music", "Self", "Science", "Sports", "Tech", "Writing"]
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return interestsNames.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: ((frame.width - 2) / 5) + 20, height: ((frame.width - 2) / 6) - 5)
+        
+        let approximateWidthOfCell = frame.width
+        let size = CGSize(width: approximateWidthOfCell, height: .infinity)
+        let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)]
+        let estimatedFrame = NSString(string: interestsNames[indexPath.item]).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+        return CGSize(width: estimatedFrame.width + 32, height: frame.height - 12)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -51,7 +56,7 @@ class HomeInterestsBar : UIView, UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 4, 0, 12)
+        return UIEdgeInsetsMake(0, 0, 0, 12)
     }
     
     override init(frame: CGRect) {

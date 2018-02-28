@@ -118,6 +118,7 @@ class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UIC
         let button = UIButton()
         button.setTitle("•••", for: .normal)
         button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.addTarget(self, action: #selector(handleOptions), for: .touchUpInside)
         return button
     }()

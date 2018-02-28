@@ -93,7 +93,6 @@
 		E6D2B8D72017D603008D3055 /* InterestsRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D2B8D62017D603008D3055 /* InterestsRows.swift */; };
 		E6D2B8DB2018DB7A008D3055 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D2B8DA2018DB7A008D3055 /* Animator.swift */; };
 		E6D2B8DE20194AFB008D3055 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D2B8DD20194AFB008D3055 /* NotificationController.swift */; };
-		E6D571412010FD59008A37CC /* HomeInterestsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D571402010FD59008A37CC /* HomeInterestsRow.swift */; };
 		E6D571432010FD7D008A37CC /* HomeInterestsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D571422010FD7D008A37CC /* HomeInterestsCells.swift */; };
 		E6D5714620115644008A37CC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6D5714520115644008A37CC /* QuartzCore.framework */; };
 		E6D571502012AC45008A37CC /* HomeUserImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D5714F2012AC44008A37CC /* HomeUserImage.swift */; };
@@ -212,7 +211,6 @@
 		E6D2B8D62017D603008D3055 /* InterestsRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsRows.swift; sourceTree = "<group>"; };
 		E6D2B8DA2018DB7A008D3055 /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
 		E6D2B8DD20194AFB008D3055 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
-		E6D571402010FD59008A37CC /* HomeInterestsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInterestsRow.swift; sourceTree = "<group>"; };
 		E6D571422010FD7D008A37CC /* HomeInterestsCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInterestsCells.swift; sourceTree = "<group>"; };
 		E6D5714420110B2A008A37CC /* pursue-bridging-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "pursue-bridging-header.h"; sourceTree = "<group>"; };
 		E6D5714520115644008A37CC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -447,7 +445,6 @@
 			isa = PBXGroup;
 			children = (
 				E65F1E511FCCBE5000BD850E /* HomeController.swift */,
-				E6D571402010FD59008A37CC /* HomeInterestsRow.swift */,
 				E6DF9EC4203CA9F2005C86DB /* HomeContainer.swift */,
 				E6D571422010FD7D008A37CC /* HomeInterestsCells.swift */,
 				E616632A1F745F0D00EC254C /* HomeRow.swift */,
@@ -798,7 +795,6 @@
 				E6DF9EBA203B8778005C86DB /* DetailStepCells.swift in Sources */,
 				E628F2F02035DAA5002FE8CF /* SearchReturn.swift in Sources */,
 				E6D2B8DB2018DB7A008D3055 /* Animator.swift in Sources */,
-				E6D571412010FD59008A37CC /* HomeInterestsRow.swift in Sources */,
 				E621B9941FE04925007324E2 /* PursuitPrincipleCells.swift in Sources */,
 				E6DF9ECD203CF985005C86DB /* SelectCameraController.swift in Sources */,
 			);
