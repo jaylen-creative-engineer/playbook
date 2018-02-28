@@ -27,6 +27,7 @@ class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UIC
     var messageDelegate : MessageDelegate?
     
     let headerId = "headerId"
+    let followId = "followId"
     let bottomDividerView = UIView()
     
     let aboutLabelUnderline : UIView = {
@@ -229,7 +230,7 @@ class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UIC
     let commentsId = "commentsId"
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return 4
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -237,8 +238,10 @@ class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UIC
         case 0:
             return CGSize(width: frame.width, height: 390)
         case 1:
-            return CGSize(width: frame.width, height: 330)
+            return CGSize(width: frame.width, height: 220)
         case 2:
+            return CGSize(width: frame.width, height: 330)
+        case 3:
             let approximateWidthOfCell = frame.width
             let size = CGSize(width: approximateWidthOfCell, height: .infinity)
             let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)]
@@ -255,9 +258,12 @@ class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UIC
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepsId, for: indexPath) as! DetailSteps
             return cell
         case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! PursuitPrinciple
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: followId, for: indexPath) as! FollowPursuit
             return cell
         case 2:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! PursuitPrinciple
+            return cell
+        case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentsId, for: indexPath) as! PostComments
             return cell
         default:
@@ -275,6 +281,7 @@ class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UIC
         collectionView.register(DetailSteps.self, forCellWithReuseIdentifier: stepsId)
         collectionView.register(PursuitPrinciple.self, forCellWithReuseIdentifier: principleId)
         collectionView.register(PostComments.self, forCellWithReuseIdentifier: commentsId)
+        collectionView.register(FollowPursuit.self, forCellWithReuseIdentifier: followId)
         
         addSubview(collectionView)
         collectionView.anchor(top: underlineView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: frame.height)

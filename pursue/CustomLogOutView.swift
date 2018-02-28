@@ -36,6 +36,7 @@ class CustomLogOutView : UIViewController {
         label.setTitleColor(.black, for: .normal)
         label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         label.titleLabel?.textAlignment = .left
+        label.isUserInteractionEnabled = true
         label.addTarget(self, action: #selector(handleYes), for: .touchUpInside)
         return label
     }()

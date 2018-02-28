@@ -22,16 +22,11 @@ class PursuitsDetailController : UICollectionViewController {
     let relatedId = "relatedId"
     let discussionId = "discussionId"
     let pursuitId = "discussionPursuitId"
-    let discussionPrincipleId = "discussionPrincipleId"
-    let principlePostId = "principlePostId"
-    let principleCommentId = "principleCommentId"
-    let principlePursuitsId = "principlePursuitsId"
-    let principleDiscussionId = "principleDiscussionId"
     let cellId = "cellId"
     let nextId = "nextId"
     let stepId = "stepId"
-    let toolId = "toolId"
     let challengeId = "challengeId"
+    let followId = "followId"
     
     var isImageView = false
     var isPursuitView = false

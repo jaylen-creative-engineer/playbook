@@ -25,29 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         FirebaseApp.configure()
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
+        window = UIWindow()
+        window?.rootViewController = MainTabController()
+        window?.makeKeyAndVisible()
         
-        let defaults = UserDefaults.standard
-
-        if defaults.object(forKey: "isFirstTime") != nil {
-            defaults.set("No", forKey:"isFirstTime")
-            defaults.synchronize()
-            
-            window = UIWindow()
-            window?.rootViewController = MainTabController()
-            window?.makeKeyAndVisible()
-        } else {
-            defaults.set("No", forKey:"isFirstTime")
-            defaults.synchronize()
-            
-            window = UIWindow()
-            window?.rootViewController = MainTabController()
-            window?.makeKeyAndVisible()
-//            layout.scrollDirection = .horizontal
-//            let swipingController = SwipingController(collectionViewLayout: layout)
-//            window?.rootViewController = swipingController
-//            self.window?.makeKeyAndVisible()
-        }
-
         return true
     }
     
@@ -113,9 +94,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func application(_ application: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any])
         -> Bool {
             let handled = FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String, annotation: options[UIApplicationOpenURLOptionsKey.annotation])
-        
-        GIDSignIn.sharedInstance().handle(url,sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String, annotation: [:])
-        return handled;
+    GIDSignIn.sharedInstance().handle(url,sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String, annotation: [:])
+        return handled
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
@@ -143,7 +123,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
 
 }
 
