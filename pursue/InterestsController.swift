@@ -121,6 +121,7 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
         collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
         collectionView?.delegate = self
         collectionView?.dataSource = self
+        collectionView?.showsVerticalScrollIndicator = false
         setupTopBar()
         interestViewType()
     }
