@@ -31,16 +31,11 @@ class DetailSteps : UICollectionViewCell, UICollectionViewDelegate, UICollection
     }()
     
     func setupView(){
-        let underlineView = UIView()
-        underlineView.backgroundColor = .gray
-        
         addSubview(pursuitLabel)
         addSubview(pursuitSteps)
-        addSubview(underlineView)
         
         pursuitLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: pursuitLabel.intrinsicContentSize.width, height: pursuitLabel.intrinsicContentSize.height)
         pursuitSteps.anchor(top: pursuitLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 295)
-        underlineView.anchor(top: pursuitSteps.bottomAnchor, left: pursuitLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 0.5)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

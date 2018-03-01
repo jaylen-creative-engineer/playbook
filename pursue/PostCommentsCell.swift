@@ -17,8 +17,9 @@ class PostCommentsCell : UICollectionViewCell {
         return label
     }()
     
-    let commentText : UILabel = {
-        let label = UILabel()
+    let commentText : UITextView = {
+        let label = UITextView()
+        label.isScrollEnabled = false
         label.text = "Keep up the great work."
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.thin)
         label.translatesAutoresizingMaskIntoConstraints = false

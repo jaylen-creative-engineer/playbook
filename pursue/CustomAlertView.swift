@@ -22,7 +22,7 @@ class CustomAlertView: UIViewController, UICollectionViewDelegate, UICollectionV
     
     lazy var sendLabel : UILabel = {
        let label = UILabel()
-        label.text = "Send to"
+        label.text = "Save To"
         label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
         label.textAlignment = .left
         return label

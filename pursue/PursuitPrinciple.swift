@@ -55,15 +55,12 @@ class PursuitPrinciple : UICollectionViewCell, UICollectionViewDelegate, UIColle
     }
     
     func setupView() {
-        let underlineView = UIView()
-        underlineView.backgroundColor = .gray
         addSubview(principlesLabel)
         addSubview(principleDetailCollection)
-        addSubview(underlineView)
         
         principlesLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: principlesLabel.intrinsicContentSize.width, height: 18)
         principleDetailCollection.anchor(top: principlesLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 230)
-        underlineView.anchor(top: principleDetailCollection.bottomAnchor, left: principlesLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 0.5)
+
     }
     
     required init?(coder aDecoder: NSCoder) {

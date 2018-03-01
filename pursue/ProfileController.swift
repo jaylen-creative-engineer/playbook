@@ -169,7 +169,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func showNotifications() {
-        let layout = UICollectionViewLayout()
+        let layout = UICollectionViewFlowLayout()
         let notificationController = NotificationController(collectionViewLayout: layout)
         navigationController?.pushViewController(notificationController, animated: true)
     }

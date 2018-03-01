@@ -79,24 +79,7 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func imageHeld() {
-        let actionController = SkypeActionController()
-        actionController.addAction(Action("Save", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Like", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Share", style: .default, handler: { action in
-            let text = "This is some text that I want to share."
-            let textToShare = [ text ]
-            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-            activityViewController.popoverPresentationController?.sourceView = self.view
-            self.present(activityViewController, animated: true, completion: nil)
-        }))
-        actionController.addAction(Action("Cancel", style: .default, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
+        
     }
     
     func explorePrincipleTapped() {
@@ -104,49 +87,22 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func explorePrincipleHeld() {
-        let actionController = SkypeActionController()
-        actionController.addAction(Action("Save", style: .default, handler: { action in
-            
-        }))
-        actionController.addAction(Action("Like", style: .default, handler: { action in
-            
-        }))
-        actionController.addAction(Action("Share", style: .default, handler: { action in
-            let text = "This is some text that I want to share."
-            let textToShare = [ text ]
-            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-            activityViewController.popoverPresentationController?.sourceView = self.view
-            self.present(activityViewController, animated: true, completion: nil)
-        }))
-        
-        actionController.addAction(Action("Cancel", style: .default, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
-        
+        let customAlert = CustomAlertView()
+        customAlert.providesPresentationContextTransitionStyle = true
+        customAlert.definesPresentationContext = true
+        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.showDetailViewController(customAlert, sender: self)
     }
     
     
     func explorePursuitHeld() {
-        let actionController = SkypeActionController()
-        actionController.addAction(Action("Save", style: .default, handler: { action in
-            
-        }))
-        actionController.addAction(Action("Like", style: .default, handler: { action in
-            
-        }))
-        actionController.addAction(Action("Share", style: .default, handler: { action in
-            let text = "This is some text that I want to share."
-            let textToShare = [ text ]
-            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-            activityViewController.popoverPresentationController?.sourceView = self.view
-            self.present(activityViewController, animated: true, completion: nil)
-        }))
-        
-        actionController.addAction(Action("Cancel", style: .default, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
+        let customAlert = CustomAlertView()
+        customAlert.providesPresentationContextTransitionStyle = true
+        customAlert.definesPresentationContext = true
+        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.showDetailViewController(customAlert, sender: self)
     }
     
     func explorePursuitTapped() {

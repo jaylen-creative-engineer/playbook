@@ -33,10 +33,11 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         view.backgroundColor = .black
         view.layer.cornerRadius = 20
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.isUserInteractionEnabled = true
         
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(changeProfilePicture))
-//        tap.numberOfTapsRequired = 1
-//        view.addGestureRecognizer(tap)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleNotification))
+        tap.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tap)
         return view
     }()
     
@@ -46,6 +47,11 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         iv.tintColor = .white
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleNotification))
+        tap.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tap)
         return iv
     }()
     
@@ -54,6 +60,11 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         label.text = "123"
         label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(followersSelected))
+        tap.numberOfTapsRequired = 1
+        label.addGestureRecognizer(tap)
         return label
     }()
     
@@ -62,22 +73,37 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         label.text = "Followers"
         label.font = UIFont.boldSystemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(followersSelected))
+        tap.numberOfTapsRequired = 1
+        label.addGestureRecognizer(tap)
         return label
     }()
     
-    let followingCount : UILabel = {
+    lazy var followingCount : UILabel = {
         let label = UILabel()
         label.text = "123"
         label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(followersSelected))
+        tap.numberOfTapsRequired = 1
+        label.addGestureRecognizer(tap)
         return label
     }()
     
-    let followingLabel : UILabel = {
+    lazy var followingLabel : UILabel = {
         let label = UILabel()
         label.text = "Following"
         label.font = UIFont.boldSystemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(followersSelected))
+        tap.numberOfTapsRequired = 1
+        label.addGestureRecognizer(tap)
         return label
     }()
     
@@ -140,17 +166,24 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         view.addTarget(self, action: #selector(followersSelected), for: .touchUpInside)
         return view
     }()
-    let pursuitsCount : UILabel = {
+    
+    lazy var pursuitsCount : UILabel = {
        let label = UILabel()
         label.text = "125"
+        label.isUserInteractionEnabled = true
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(25))
         return label
     }()
     
-    let additionalFollowing : UILabel = {
+    lazy var additionalFollowing : UILabel = {
        let label = UILabel()
         label.text = "5k +"
+        label.isUserInteractionEnabled = true
         label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.init(25))
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(followersSelected))
+        tap.numberOfTapsRequired = 1
+        label.addGestureRecognizer(tap)
         return label
     }()
     
@@ -160,6 +193,10 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
     
     @objc func followersSelected(){
         accessProfileController?.showFriendsController()
+    }
+    
+    @objc func handleNotification(){
+        accessProfileController?.showNotifications()
     }
     
     func setupFollowingView(){

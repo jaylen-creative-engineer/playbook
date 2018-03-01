@@ -36,6 +36,15 @@ class HomePrinciplesCells : UICollectionViewCell {
         return iv
     }()
     
+    lazy var saveImageView : UIImageView = {
+        let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "bookmark-1").withRenderingMode(.alwaysTemplate)
+        iv.tintColor = .gray
+        iv.contentMode = .scaleAspectFill
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        return iv
+    }()
+    
     @objc func handleHomeTap(){
     }
     

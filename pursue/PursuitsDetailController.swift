@@ -72,36 +72,12 @@ class PursuitsDetailController : UICollectionViewController {
     }
     
     func showStepOptions(){
-        let actionController = SkypeActionController()
-        
-        actionController.addAction(Action("Report Post", style: .default, handler: { action in
-            let alertController = JHTAlertController(title: "Report Post", message: "Are you sure you want to report this post?", preferredStyle: .alert)
-            let cancelAction = JHTAlertAction(title: "Cancel", style: .cancel, bgColor: .white, handler: nil)
-            let deleteAction = JHTAlertAction(title: "Yes", style: .default, bgColor: .white) { _ in
-                print("Do something here!")
-            }
-            
-            alertController.addAction(cancelAction)
-            alertController.addAction(deleteAction)
-            alertController.alertBackgroundColor = .white
-            
-            alertController.titleTextColor = .black
-            alertController.titleFont = UIFont.boldSystemFont(ofSize: 18)
-            alertController.titleViewBackgroundColor = .white
-            
-            alertController.messageFont = .systemFont(ofSize: 16)
-            alertController.messageTextColor = .black
-            
-            alertController.hasRoundedCorners = false
-            alertController.dividerColor = .clear
-            alertController.setButtonTextColorFor(.default, to: .black)
-            alertController.setButtonTextColorFor(.cancel, to: .black)
-            self.present(alertController, animated: true, completion: nil)
-        }))
-        actionController.addAction(Action("Cancel", style: .default, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
+        let customAlert = CustomDetailView()
+        customAlert.providesPresentationContextTransitionStyle = true
+        customAlert.definesPresentationContext = true
+        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.showDetailViewController(customAlert, sender: self)
     }
     
     lazy var floatingCamera : UIButton = {
@@ -249,9 +225,7 @@ class PursuitsDetailController : UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView?.register(PostView.self, forCellWithReuseIdentifier: postId)
         collectionView?.register(PursuitPrinciple.self, forCellWithReuseIdentifier: principleId)
-        collectionView?.register(RelatedPost.self, forCellWithReuseIdentifier: relatedId)
         collectionView?.register(PostComments.self, forCellWithReuseIdentifier: commentId)
         collectionView?.register(DetailSteps.self, forCellWithReuseIdentifier: pursuitId)
         collectionView?.register(PursuitsDetailHeader.self, forCellWithReuseIdentifier: headerId)
@@ -408,7 +382,8 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
         case isPrinciplesView:
             switch indexPath.item {
             case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! PostView
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: headerId, for: indexPath) as! PursuitsDetailHeader
+                cell.pursuitsDetailController = self
                 return cell
             case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! DetailSteps
@@ -425,7 +400,8 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
         case isPursuitView:
             switch indexPath.item {
             case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! PostView
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: headerId, for: indexPath) as! PursuitsDetailHeader
+                cell.pursuitsDetailController = self
                 return cell
             case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! DetailSteps

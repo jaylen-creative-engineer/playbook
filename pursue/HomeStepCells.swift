@@ -44,7 +44,6 @@ class HomeStepCells : UICollectionViewCell {
         return iv
     }()
     
-    
     @objc func handleHomeTap(){
         delegate?.pursuitTapped()
     }

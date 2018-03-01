@@ -295,7 +295,7 @@ class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UIC
         
         userPhoto.anchor(top: optionButton.bottomAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 50, height: 50)
         
-        underlineView.backgroundColor = .gray
+        underlineView.backgroundColor = .clear
         addSubview(underlineView)
         
         usernameLabel.anchor(top: userPhoto.topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
