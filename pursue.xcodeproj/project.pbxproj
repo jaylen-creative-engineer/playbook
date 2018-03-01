@@ -35,7 +35,6 @@
 		E6234E9C2044F93F00A57A2C /* AVPlayer+isPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6234E9B2044F93F00A57A2C /* AVPlayer+isPlaying.swift */; };
 		E6234E9E2044F96B00A57A2C /* AssetSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6234E9D2044F96B00A57A2C /* AssetSelectionViewController.swift */; };
 		E6235EA81F94208F00BF1FDE /* PostComments.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6235EA71F94208F00BF1FDE /* PostComments.swift */; };
-		E628F2E220350E75002FE8CF /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E628F2E120350E75002FE8CF /* SearchController.swift */; };
 		E628F2EA2035D978002FE8CF /* SearchUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E628F2E92035D978002FE8CF /* SearchUsers.swift */; };
 		E628F2EC2035D980002FE8CF /* SearchPursuits.swift in Sources */ = {isa = PBXBuildFile; fileRef = E628F2EB2035D980002FE8CF /* SearchPursuits.swift */; };
 		E628F2EE2035D98A002FE8CF /* SearchPrinciples.swift in Sources */ = {isa = PBXBuildFile; fileRef = E628F2ED2035D98A002FE8CF /* SearchPrinciples.swift */; };
@@ -48,6 +47,7 @@
 		E62AAB211FD1E8680053EAD7 /* CameraBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62AAB201FD1E8680053EAD7 /* CameraBar.swift */; };
 		E62AAB231FD1E8A20053EAD7 /* CameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62AAB221FD1E8A20053EAD7 /* CameraCell.swift */; };
 		E6308EA71FBD241000571130 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6308EA61FBD241000571130 /* SettingsController.swift */; };
+		E63980682048523D0049A71B /* CustomSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63980672048523D0049A71B /* CustomSearchView.swift */; };
 		E64324B51F79A47F0090075F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64324B41F79A47F0090075F /* CardView.swift */; };
 		E647D27B2007CD3C00656DEF /* EditProfileCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E647D27A2007CD3C00656DEF /* EditProfileCells.swift */; };
 		E659EB192040786500CA8DB5 /* CustomAlertViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E659EB182040786500CA8DB5 /* CustomAlertViewCell.swift */; };
@@ -155,7 +155,6 @@
 		E6234E9B2044F93F00A57A2C /* AVPlayer+isPlaying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayer+isPlaying.swift"; sourceTree = "<group>"; };
 		E6234E9D2044F96B00A57A2C /* AssetSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetSelectionViewController.swift; sourceTree = "<group>"; };
 		E6235EA71F94208F00BF1FDE /* PostComments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostComments.swift; sourceTree = "<group>"; };
-		E628F2E120350E75002FE8CF /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		E628F2E92035D978002FE8CF /* SearchUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUsers.swift; sourceTree = "<group>"; };
 		E628F2EB2035D980002FE8CF /* SearchPursuits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPursuits.swift; sourceTree = "<group>"; };
 		E628F2ED2035D98A002FE8CF /* SearchPrinciples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPrinciples.swift; sourceTree = "<group>"; };
@@ -168,6 +167,7 @@
 		E62AAB201FD1E8680053EAD7 /* CameraBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraBar.swift; sourceTree = "<group>"; };
 		E62AAB221FD1E8A20053EAD7 /* CameraCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraCell.swift; sourceTree = "<group>"; };
 		E6308EA61FBD241000571130 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		E63980672048523D0049A71B /* CustomSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchView.swift; sourceTree = "<group>"; };
 		E64324B41F79A47F0090075F /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		E647D27A2007CD3C00656DEF /* EditProfileCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileCells.swift; sourceTree = "<group>"; };
 		E659EB182040786500CA8DB5 /* CustomAlertViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertViewCell.swift; sourceTree = "<group>"; };
@@ -303,7 +303,6 @@
 		E628F2E020350E69002FE8CF /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				E628F2E120350E75002FE8CF /* SearchController.swift */,
 				E628F2E92035D978002FE8CF /* SearchUsers.swift */,
 				E628F2EB2035D980002FE8CF /* SearchPursuits.swift */,
 				E628F2ED2035D98A002FE8CF /* SearchPrinciples.swift */,
@@ -506,6 +505,7 @@
 			isa = PBXGroup;
 			children = (
 				E6D0B417203FDEE9008D4268 /* ExploreController.swift */,
+				E63980672048523D0049A71B /* CustomSearchView.swift */,
 				E6D0B41A203FDEED008D4268 /* ExploreExerciseRow.swift */,
 				E6D0B41B203FDEEE008D4268 /* ExploreExercisesRowCells.swift */,
 				E6D0B416203FDEE8008D4268 /* ExploreImageRow.swift */,
@@ -774,7 +774,6 @@
 				E60B0836200513FE003F6B70 /* BioInputTextView.swift in Sources */,
 				E6D0B40C203E70A7008D4268 /* PhotoLibraryCell.swift in Sources */,
 				E6CE228F1F675894006C5755 /* MainTabController.swift in Sources */,
-				E628F2E220350E75002FE8CF /* SearchController.swift in Sources */,
 				E617BB151FD886D6008B2EA1 /* IntroController.swift in Sources */,
 				E6989BFD2047A5C60067A55B /* CommentNotification.swift in Sources */,
 				E6234E962044719C00A57A2C /* CustomSettingsView.swift in Sources */,
@@ -794,6 +793,7 @@
 				E60433ED2042189F00E6D4DA /* ProfileAboutRow.swift in Sources */,
 				E647D27B2007CD3C00656DEF /* EditProfileCells.swift in Sources */,
 				E6D2B8D72017D603008D3055 /* InterestsRows.swift in Sources */,
+				E63980682048523D0049A71B /* CustomSearchView.swift in Sources */,
 				E617BB211FD8A3BF008B2EA1 /* HomePrinciples.swift in Sources */,
 				E617BB1F1FD8A396008B2EA1 /* HomeStepCells.swift in Sources */,
 				E66436791FA2970500A9B0E7 /* ProfilePostCells.swift in Sources */,

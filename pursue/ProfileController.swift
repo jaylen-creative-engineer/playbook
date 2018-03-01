@@ -54,12 +54,6 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         return iv
     }()
     
-    @objc func handleShowSearch(){
-        let layout = UICollectionViewFlowLayout()
-        let searchController = SearchController(collectionViewLayout: layout)
-        navigationController?.present(searchController, animated: true, completion: nil)
-    }
-    
     let backgroundFill = UIView()
     var user : User?
     let imageView = UIImageView()

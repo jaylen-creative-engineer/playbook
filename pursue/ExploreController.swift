@@ -31,6 +31,7 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         collectionView?.register(ExploreExerciseRow.self, forCellWithReuseIdentifier: exerciseId)
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
+        tableView.separatorColor = .clear
     }
     
     
@@ -64,6 +65,17 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         return sb
     }()
     
+    lazy var tableView : UITableView = {
+       let tv = UITableView()
+        tv.translatesAutoresizingMaskIntoConstraints = false
+        tv.delegate = self
+        tv.dataSource = self
+        return tv
+    }()
+    
+    let searchController = UISearchController(searchResultsController: nil)
+    let tableViewCellId = "tableViewCellId"
+    
     private func setupTopBar(){
         let guide = view.safeAreaLayoutGuide
         view.addSubview(backgroundFill)
@@ -71,6 +83,7 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         backgroundFill.backgroundColor = .white
         backgroundFill.anchor(top: view.topAnchor, left: guide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 95)
         searchBar.anchor(top: nil, left: view.leftAnchor, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: searchBar.intrinsicContentSize.height)
+        tableView.register(SearchReturn.self, forCellReuseIdentifier: tableViewCellId)
     }
     
     
@@ -156,6 +169,9 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
             assert(false, "Not a valid view type")
         }
     }
+    
+    var listOfNames = ["random", "person", "name"]
+    var detailList = ["random", "detail", "list"]
 }
 
 extension ExploreController {
@@ -212,10 +228,23 @@ extension ExploreController {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: view.frame.width, height: 70)
     }
+    
+    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        tableView.reloadData()
+    }
+    
+    func searchBarIsEmpty() -> Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    func isFiltering() -> Bool {
+        let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
+        return searchController.isActive && (!searchBarIsEmpty() || searchBarScopeIsFiltering)
+    }
 }
 
 extension ExploreController : UISearchBarDelegate {
-    
+ 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         
@@ -226,8 +255,11 @@ extension ExploreController : UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
             print("Search is empty")
+            tableView.isHidden = true
         } else {
-            getSearchContent(searchText: searchText)
+            tableView.isHidden = false
+            view.addSubview(tableView)
+            tableView.anchor(top: searchBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         }
     }
     
@@ -249,3 +281,32 @@ extension ExploreController : UISearchBarDelegate {
     }
 }
 
+extension ExploreController : UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return view.frame.height * 2
+    }
+}
+
+extension ExploreController : UITableViewDelegate {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: tableViewCellId, for: indexPath) as! SearchReturn
+        return cell
+    }
+}
+
+extension ExploreController: UISearchResultsUpdating {
+    // MARK: - UISearchResultsUpdating Delegate
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
+        filterContentForSearchText(searchController.searchBar.text!, scope: scope)
+    }
+}

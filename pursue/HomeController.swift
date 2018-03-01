@@ -45,20 +45,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         hb.accessHomeController = self
         return hb
     }()
-    
-    lazy var searchIcon : UIImageView = {
-        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "search_selected").withRenderingMode(.alwaysOriginal)
-        iv.contentMode = .scaleAspectFill
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.isUserInteractionEnabled = true
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleShowSearch))
-        tap.numberOfTapsRequired = 1
-        iv.addGestureRecognizer(tap)
-        return iv
-    }()
-    
+
     @objc func goBack(){
         navigationController?.popViewController(animated: true)
     }
@@ -66,12 +53,6 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     func scrollToMenuIndex(menuIndex: Int) {
         let indexPath = IndexPath(item: menuIndex, section: 0)
         collectionView?.scrollToItem(at: indexPath, at: [], animated: true)
-    }
-    
-    @objc func handleShowSearch(){
-        let layout = UICollectionViewFlowLayout()
-        let searchController = SearchController(collectionViewLayout: layout)
-        navigationController?.present(searchController, animated: true, completion: nil)
     }
     
     func setupCollectionView(){
