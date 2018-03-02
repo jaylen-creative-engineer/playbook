@@ -24,5 +24,7 @@ target 'pursue' do
   pod 'ParallaxHeader'
   pod 'PryntTrimmerView'
   pod 'SnapSliderFilters'
+  pod 'Instructions'
+  pod 'BWWalkthrough'
 
 end

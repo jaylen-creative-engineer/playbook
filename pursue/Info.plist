@@ -53,6 +53,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+    <key>NSContactsUsageDescription</key>
+    <string>We would like to access your contacts</string>
 	<key>NSCameraUsageDescription</key>
 	<string>We would like to access your camera</string>
 	<key>NSMicrophoneUsageDescription</key>

@@ -9,6 +9,7 @@
 import UIKit
 import XLActionController
 import Alamofire
+import Instructions
 
 class ExploreController : UICollectionViewController, UICollectionViewDelegateFlowLayout, ExploreExerciseDelegate, ExplorePrincipleDelegate, ExploreImageDelegate, PeopleRowDelegate  {
     
@@ -21,6 +22,12 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
     let categoryId = "categoryId"
     let discussionId = "discussionId"
     
+    let coachMarksController : CoachMarksController = {
+        let cmc = CoachMarksController()
+        cmc.overlay.color = UIColor.init(white: 0.6, alpha: 0.6)
+        return cmc
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTopBar()
@@ -31,7 +38,7 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         collectionView?.register(ExploreExerciseRow.self, forCellWithReuseIdentifier: exerciseId)
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
-        tableView.separatorColor = .clear
+        coachMarksController.dataSource = self as? CoachMarksControllerDataSource
     }
     
     
@@ -39,8 +46,13 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         super.viewWillAppear(animated)
         tabBarController?.navigationController?.navigationBar.isHidden = true
         navigationController?.navigationBar.isHidden = true
+        coachMarksController.start(on: self)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        coachMarksController.stop(immediately: true)
+    }
     
     var users = [User]()
     
@@ -308,5 +320,40 @@ extension ExploreController: UISearchResultsUpdating {
         let searchBar = searchController.searchBar
         let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
         filterContentForSearchText(searchController.searchBar.text!, scope: scope)
+    }
+}
+
+extension HomeController : CoachMarksControllerDataSource, CoachMarksControllerDelegate {
+    
+    func coachMarksController(_ coachMarksController: CoachMarksController, coachMarkViewsAt index: Int, madeFrom coachMark: CoachMark) -> (bodyView: CoachMarkBodyView, arrowView: CoachMarkArrowView?) {
+        
+        let coachView = coachMarksController.helper.makeDefaultCoachViews(withArrow: true, arrowOrientation: coachMark.arrowOrientation)
+        coachView.bodyView.hintLabel.text = "Hello! I'm a Coach Mark"
+        coachView.bodyView.nextLabel.text = "Ok!"
+        
+        
+        return (bodyView: coachView.bodyView, arrowView: coachView.arrowView)
+    }
+    
+    func coachMarksController(_ coachMarksController: CoachMarksController, coachMarkAt index: Int) -> CoachMark {
+        let flatBezierPathBlock = { (frame: CGRect) -> UIBezierPath in
+            return UIBezierPath(rect: frame)
+        }
+        
+        
+        let cell = collectionViewCellFor(coachMarkIndex: index)!
+        return coachMarksController.helper.makeCoachMark(for: interestsBar, pointOfInterest: interestsBar.center, cutoutPathMaker: flatBezierPathBlock)
+    }
+    
+    func collectionViewCellFor(coachMarkIndex : Int) -> UIView? {
+        guard let collection = collectionView else { fatalError("Not a valid collection") }
+        
+        let indexPath = collection.numberOfItems(inSection: 0) > 1 ? IndexPath(item: coachMarkIndex, section: 0) : IndexPath(item: 0, section: 0)
+        return collectionView?.cellForItem(at: indexPath)
+        
+    }
+    
+    func numberOfCoachMarks(for coachMarksController: CoachMarksController) -> Int {
+        return 1
     }
 }

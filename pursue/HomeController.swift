@@ -12,6 +12,7 @@ import iCarousel
 import Alamofire
 import SwiftyJSON
 import Hero
+import Instructions
 
 class HomeController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
@@ -69,7 +70,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
  
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         let url = "https://www.googleapis.com/youtube/v3/videos"
         var parameters = Alamofire.Parameters()
         parameters["part"] = "snippet"
@@ -137,7 +138,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
     }
-    
+   
     // MARK: - Setup View
     
     func homeDiscussionTapped() {
@@ -250,7 +251,6 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
             assert(false, "Not a valid view type")
         }
     }
-    
 }
 
 extension HomeController {
@@ -275,3 +275,4 @@ extension HomeController {
     }
     
 }
+
