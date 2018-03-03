@@ -52,6 +52,10 @@
 		E639806E20490E920049A71B /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E639806D20490E920049A71B /* Contacts.swift */; };
 		E6398070204911D80049A71B /* InviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E639806F204911D80049A71B /* InviteCell.swift */; };
 		E639807220491EBC0049A71B /* MessageComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E639807120491EBB0049A71B /* MessageComposer.swift */; };
+		E6398076204B39010049A71B /* StepsPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6398075204B39010049A71B /* StepsPageCell.swift */; };
+		E6398078204B392A0049A71B /* PrinciplesPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6398077204B392A0049A71B /* PrinciplesPageCell.swift */; };
+		E639807A204B624A0049A71B /* StepsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6398079204B624A0049A71B /* StepsPage.swift */; };
+		E639807C204B6A350049A71B /* PrinciplesPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E639807B204B6A350049A71B /* PrinciplesPage.swift */; };
 		E64324B51F79A47F0090075F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64324B41F79A47F0090075F /* CardView.swift */; };
 		E647D27B2007CD3C00656DEF /* EditProfileCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E647D27A2007CD3C00656DEF /* EditProfileCells.swift */; };
 		E659EB192040786500CA8DB5 /* CustomAlertViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E659EB182040786500CA8DB5 /* CustomAlertViewCell.swift */; };
@@ -176,6 +180,10 @@
 		E639806D20490E920049A71B /* Contacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contacts.swift; sourceTree = "<group>"; };
 		E639806F204911D80049A71B /* InviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCell.swift; sourceTree = "<group>"; };
 		E639807120491EBB0049A71B /* MessageComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageComposer.swift; sourceTree = "<group>"; };
+		E6398075204B39010049A71B /* StepsPageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsPageCell.swift; sourceTree = "<group>"; };
+		E6398077204B392A0049A71B /* PrinciplesPageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrinciplesPageCell.swift; sourceTree = "<group>"; };
+		E6398079204B624A0049A71B /* StepsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsPage.swift; sourceTree = "<group>"; };
+		E639807B204B6A350049A71B /* PrinciplesPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrinciplesPage.swift; sourceTree = "<group>"; };
 		E64324B41F79A47F0090075F /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		E647D27A2007CD3C00656DEF /* EditProfileCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileCells.swift; sourceTree = "<group>"; };
 		E659EB182040786500CA8DB5 /* CustomAlertViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertViewCell.swift; sourceTree = "<group>"; };
@@ -292,7 +300,12 @@
 			children = (
 				E617BB141FD886D6008B2EA1 /* IntroController.swift */,
 				E617BB161FD8874B008B2EA1 /* SwipingController.swift */,
+				E6DEC85B201ACDD300E02393 /* Page.swift */,
 				E617BB181FD88775008B2EA1 /* PageCell.swift */,
+				E6398079204B624A0049A71B /* StepsPage.swift */,
+				E6398075204B39010049A71B /* StepsPageCell.swift */,
+				E6398077204B392A0049A71B /* PrinciplesPageCell.swift */,
+				E639807B204B6A350049A71B /* PrinciplesPage.swift */,
 			);
 			name = Intro;
 			sourceTree = "<group>";
@@ -369,7 +382,6 @@
 				E6A273FF1F68327F00F5B4C8 /* User.swift */,
 				E667183B202A40660068C68A /* UserInterests.swift */,
 				E6DEC841201ABD0C00E02393 /* FooUser.swift */,
-				E6DEC85B201ACDD300E02393 /* Page.swift */,
 				E639806D20490E920049A71B /* Contacts.swift */,
 			);
 			name = Models;
@@ -799,15 +811,18 @@
 				E62AAB211FD1E8680053EAD7 /* CameraBar.swift in Sources */,
 				E639806C20490B550049A71B /* InviteController.swift in Sources */,
 				E6CE22881F671E3D006C5755 /* Extensions.swift in Sources */,
+				E639807A204B624A0049A71B /* StepsPage.swift in Sources */,
 				E6DEC83A201AB0D200E02393 /* Tags.swift in Sources */,
 				E621B9921FE048FE007324E2 /* PursuitPrinciple.swift in Sources */,
 				E6DF9EC5203CA9F3005C86DB /* HomeContainer.swift in Sources */,
 				E6234E98204478E700A57A2C /* CustomLogOutView.swift in Sources */,
 				E62AAB191FD0A49A0053EAD7 /* NotificationSettingsController.swift in Sources */,
 				E67FB8C2203117C70008732C /* ImageProcessor.swift in Sources */,
+				E639807C204B6A350049A71B /* PrinciplesPage.swift in Sources */,
 				E659EB192040786500CA8DB5 /* CustomAlertViewCell.swift in Sources */,
 				E6DEC85C201ACDD300E02393 /* Page.swift in Sources */,
 				E6CE22751F671D10006C5755 /* AppDelegate.swift in Sources */,
+				E6398078204B392A0049A71B /* PrinciplesPageCell.swift in Sources */,
 				E60433ED2042189F00E6D4DA /* ProfileAboutRow.swift in Sources */,
 				E647D27B2007CD3C00656DEF /* EditProfileCells.swift in Sources */,
 				E6D2B8D72017D603008D3055 /* InterestsRows.swift in Sources */,
@@ -826,6 +841,7 @@
 				E6B49F2B1FACDCE800AEDAFD /* InterestsController.swift in Sources */,
 				E6DF9EC7203CF7F2005C86DB /* SwiftyRecordButton.swift in Sources */,
 				E6DEC85A201AC7CE00E02393 /* Discussions.swift in Sources */,
+				E6398076204B39010049A71B /* StepsPageCell.swift in Sources */,
 				E6989BFF2047A5FD0067A55B /* StepNotification.swift in Sources */,
 				E64324B51F79A47F0090075F /* CardView.swift in Sources */,
 				E617BB171FD8874B008B2EA1 /* SwipingController.swift in Sources */,

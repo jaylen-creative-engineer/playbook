@@ -52,7 +52,7 @@ class InviteCell : UICollectionViewCell {
     
     lazy var inviteButton : UIButton = {
        let button = UIButton()
-        button.setTitle("Send", for: .normal)
+        button.setTitle("Invite", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
         button.layer.borderColor = UIColor.black.cgColor
         button.layer.masksToBounds = true

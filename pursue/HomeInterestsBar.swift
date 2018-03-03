@@ -22,7 +22,7 @@ class HomeInterestsBar : UIView, UICollectionViewDataSource, UICollectionViewDel
     var accessHomeController : HomeController?
     let cellId = "cellId"
     
-    let interestsNames = ["My Pursuits", "Your Picks", "Art", "Business", "Cars", "Design", "Finance", "Fashion", "Food", "Health", "Home", "Math", "Music", "Self", "Science", "Sports", "Tech", "Writing"]
+    let interestsNames = ["Top Picks", "My Pursuits"]
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return interestsNames.count

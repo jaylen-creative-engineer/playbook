@@ -26,9 +26,11 @@ class PageCell: UICollectionViewCell {
     }
     
     private let bearImageView: UIImageView = {
-        let imageView = UIImageView(image: #imageLiteral(resourceName: "bear_first"))
+        let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 4
+        imageView.layer.masksToBounds = true
         return imageView
     }()
     
@@ -47,33 +49,68 @@ class PageCell: UICollectionViewCell {
         return textView
     }()
     
+    let backgroundButton : UIButton = {
+       let button = UIButton()
+        button.backgroundColor = .white
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 2
+        button.clipsToBounds = true
+        return button
+    }()
+    
+    let fullscreenLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Full Screen"
+        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight(25))
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let playBackground : PlayView = {
+       let pv = PlayView()
+        pv.layer.cornerRadius = 15
+        pv.translatesAutoresizingMaskIntoConstraints = false
+        pv.backgroundColor = .white
+        pv.layer.masksToBounds = true
+        return pv
+    }()
+    
+    let playIcon : UIImageView = {
+       let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "view-more").withRenderingMode(.alwaysOriginal)
+        iv.contentMode = .scaleAspectFill
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        return iv
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        if bearImageView.image == UIImage(named: "heart_second") {
+            playIcon.isHidden = true
+        }
+        
         setupLayout()
     }
     
     private func setupLayout() {
-        let topImageContainerView = UIView()
-        addSubview(topImageContainerView)
-        topImageContainerView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(bearImageView)
+        addSubview(backgroundButton)
+        addSubview(fullscreenLabel)
+        addSubview(playBackground)
+        addSubview(playIcon)
         
-        topImageContainerView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        
-        topImageContainerView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        topImageContainerView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        
-        topImageContainerView.addSubview(bearImageView)
-        bearImageView.centerXAnchor.constraint(equalTo: topImageContainerView.centerXAnchor).isActive = true
-        bearImageView.centerYAnchor.constraint(equalTo: topImageContainerView.centerYAnchor).isActive = true
-        bearImageView.heightAnchor.constraint(equalTo: topImageContainerView.heightAnchor, multiplier: 0.5).isActive = true
-        
-        topImageContainerView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5).isActive = true
-        
+        bearImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: (frame.height / 5) - 12, paddingLeft: 42, paddingBottom: 0, paddingRight: 42, width: 0, height: 400)
+        backgroundButton.anchor(top: nil, left: bearImageView.leftAnchor, bottom: bearImageView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 12, paddingRight: 0, width: 100, height: 30)
+        fullscreenLabel.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: fullscreenLabel.intrinsicContentSize.width, height: fullscreenLabel.intrinsicContentSize.height)
+        fullscreenLabel.centerXAnchor.constraint(equalTo: backgroundButton.centerXAnchor).isActive = true
+        fullscreenLabel.centerYAnchor.constraint(equalTo: backgroundButton.centerYAnchor).isActive = true
+        playBackground.anchor(top: nil, left: nil, bottom: bearImageView.bottomAnchor, right: bearImageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 12, width: 30, height: 30)
+        playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 10, height: 10)
+        playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true
+        playIcon.centerYAnchor.constraint(equalTo: playBackground.centerYAnchor).isActive = true
         addSubview(descriptionTextView)
-        descriptionTextView.topAnchor.constraint(equalTo: topImageContainerView.bottomAnchor).isActive = true
-        descriptionTextView.leftAnchor.constraint(equalTo: leftAnchor, constant: 24).isActive = true
-        descriptionTextView.rightAnchor.constraint(equalTo: rightAnchor, constant: -24).isActive = true
-        descriptionTextView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+        descriptionTextView.anchor(top: bearImageView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 24, width: 0, height: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {
