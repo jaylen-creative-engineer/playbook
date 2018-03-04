@@ -88,12 +88,23 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
             }
         }
         
-//        setupCollectionView()
         setupTopBar()
         
-       setupIntro()
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+        if launchedBefore {
+            print("Not first launch.")
+            setupCollectionView()
+        } else {
+            print("First launch, setting UserDefault.")
+            isFirstLaunch = !isFirstLaunch
+            setupIntro()
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+        }
+        
     }
     
+    
+    var isFirstLaunch = false
     func setupIntro(){
         setupBottomControls()
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
@@ -335,6 +346,9 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
     
+}
+
+extension HomeController {
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         
         let x = targetContentOffset.pointee.x
@@ -365,53 +379,46 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return pages.count
+        if isFirstLaunch == true {
+            return pages.count
+        } else {
+            return 5
+        }
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.item {
-        case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! PageCell
-            cell.page = pages[indexPath.item]
-            return cell
-        case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "stepsId", for: indexPath) as! StepsPage
-            return cell
-        case 2:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "principleId", for: indexPath) as! PrinciplesPage
-            return cell
-        default:
-            assert(false, "Not a valid cell")
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        if isFirstLaunch == false {
+            return 5
+        } else {
+            return 1
         }
-       
+    }
+    
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if isFirstLaunch == true {
+            switch indexPath.item {
+            case 0:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! PageCell
+                cell.page = pages[indexPath.item]
+                return cell
+            case 1:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "stepsId", for: indexPath) as! StepsPage
+                return cell
+            case 2:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "principleId", for: indexPath) as! PrinciplesPage
+                return cell
+            default:
+                assert(false, "Not a valid cell")
+            }
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeContainer
+            cell.accessHomeController = self
+            return cell
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: view.frame.height)
     }
-    
 }
-
-//extension HomeController {
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: view.frame.width, height: view.frame.height)
-//    }
-//
-//    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeContainer
-//        cell.accessHomeController = self
-//        return cell
-//    }
-//
-//
-//    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return 5
-//    }
-//
-//    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        return 5
-//    }
-//
-//}
-
