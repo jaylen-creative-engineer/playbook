@@ -9,18 +9,22 @@
 import UIKit
 
 struct Post {
-    var postId : String
+    let postId : String
+    let pursuitId : String
     let user : User
-    let photoUrl : String
+    let contentUrl : String
+    let thumbnailUrl : String
     let created_at : String
-    let postDescription : String?
     var is_visible = true
+    var is_liked = false
+    var is_saved = false
     
     init(user : User, dictionary : [String : Any]) {
         self.user = user
+        self.pursuitId = dictionary["pursuitId"] as? String ?? ""
         self.postId = dictionary["postId"] as? String ?? ""
-        self.photoUrl = dictionary["photoUrl"] as? String ?? ""
+        self.contentUrl = dictionary["contentUrl"] as? String ?? ""
+        self.thumbnailUrl = dictionary["thumbnailUrl"] as? String ?? ""
         self.created_at = dictionary["created_at"] as? String ?? ""
-        self.postDescription = dictionary["postDescription"] as? String ?? ""
     }
 }

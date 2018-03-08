@@ -8,13 +8,14 @@
 
 import UIKit
 import Alamofire
+import Firebase
 
 class ExploreServices {
     
     // MARK: - GET pursuits by interests
     
-    func getPursuits(pursuitId : String, completion: @escaping (Pursuit) -> ()){
-        let url = ""
+    func getPursuits(pursuitId : String, completion: @escaping (Pursuit, Post, Steps, User, Principles, Comment) -> ()){
+        let url = "https://pursuit-jaylenhu27.c9users.io/"
         var parameters = Alamofire.Parameters()
         parameters["pursuitId"] = pursuitId
         
@@ -31,12 +32,10 @@ class ExploreServices {
     
     // MARK: - GET users
     
-    func getUsers(userId : String, completion: @escaping (User) -> ()){
-        let url = ""
-        var parameters = Alamofire.Parameters()
-        parameters["userId"] = userId
+    func getUsers(completion: @escaping (User) -> ()){
+        let url = "https://pursuit-jaylenhu27.c9users.io/"
         
-        Alamofire.request(url, method: .get, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
             switch response.result {
             case .success:
                 print("Success: \(response.result.isSuccess)")
@@ -50,7 +49,7 @@ class ExploreServices {
     // MARK: - QUERY database by user input
     
     func queryDatabase(userId : String, completion: @escaping (User, Pursuit, Steps, Principles) -> ()){
-        let url = ""
+        let url = "https://pursuit-jaylenhu27.c9users.io/"
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId
         

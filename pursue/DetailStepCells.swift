@@ -36,7 +36,7 @@ class DetailStepCells : UICollectionViewCell {
         addSubview(nextImage)
         addSubview(exerciseLabel)
        
-        nextImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
+        nextImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
         exerciseLabel.anchor(top: nextImage.bottomAnchor, left: nextImage.leftAnchor, bottom: nil, right: nextImage.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: exerciseLabel.intrinsicContentSize.width, height: exerciseLabel.intrinsicContentSize.height)
     }
     

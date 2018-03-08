@@ -11,14 +11,24 @@ import UIKit
 struct Steps {
     
     let stepId : String
-    let label : String
+    let pursuitId : String
+    let stepDescription : String
+    let contentUrl : String
+    let thumbnailUrl : String
+    let user : User
     let created_at : String
-    let is_visible = true
-    let is_complete = false
     
-    init(stepId : String, dictionary : [String : Any]){
-        self.stepId = stepId
-        self.label = dictionary["label"] as? String ?? ""
+    var is_visible = true
+    var is_liked = false
+    var is_saved = false
+    
+    init(user : User, dictionary : [String : Any]){
+        self.user = user
+        self.stepId = dictionary["stepId"] as? String ?? ""
+        self.contentUrl = dictionary["contentUrl"] as? String ?? ""
+        self.thumbnailUrl = dictionary["thumbnailUrl"] as? String ?? ""
+        self.pursuitId = dictionary["pursuitId"] as? String ?? ""
+        self.stepDescription = dictionary["stepDescription"] as? String ?? ""
         self.created_at = dictionary["created_at"] as? String ?? ""
     }
 }

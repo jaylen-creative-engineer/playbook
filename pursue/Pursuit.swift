@@ -12,17 +12,21 @@ struct Pursuit {
     
     let pursuitId : String
     let user : User
+    let contentUrl : String
+    let thumbnailUrl : String
     let pursuitDescription : String
-    let photoUrl : String
     let created_at : String
     
-    let is_visible = true
+    var is_visible = true
+    var is_liked = false
+    var is_saved = false
     
-    init(pursuitId : String, user : User, dictionary : [String : Any]){
-        self.pursuitId = pursuitId
+    init(user : User, dictionary : [String : Any]){
         self.user = user
+        self.pursuitId = dictionary["pursuitId"] as? String ?? ""
         self.pursuitDescription = dictionary["pursuitDescription"] as? String ?? ""
-        self.photoUrl = dictionary["photoUrl"] as? String ?? ""
+        self.contentUrl = dictionary["contentUrl"] as? String ?? ""
+        self.thumbnailUrl = dictionary["thumbnailUrl"] as? String ?? ""
         self.created_at = dictionary["created_at"] as? String ?? ""
     }
 }

@@ -123,10 +123,7 @@ class PhotoLibrary : SwiftyCamViewController, UICollectionViewDelegate, UICollec
     
     func setupTopOptions(){
         view.addSubview(cancelButton)
-        view.addSubview(linkButton)
         cancelButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
-        linkButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 17, height: 15)
-       
     }
     
     @objc func handleDismiss(){

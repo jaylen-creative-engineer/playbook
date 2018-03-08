@@ -8,13 +8,16 @@
 
 import UIKit
 import Alamofire
+import Firebase
 
 class HomeServices {
     
     // MARK: - GET pursuits by users interests
     
-    func getPursuits(userId : String, completion: @escaping (Pursuit, Steps, Principles) -> ()){
-        let url = ""
+    func getPursuits(completion: @escaping (Pursuit, Steps, Principles) -> ()){
+        let url = "https://pursuit-jaylenhu27.c9users.io/"
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId
         
@@ -31,8 +34,10 @@ class HomeServices {
     
     // MARK: - GET users pursuits
     
-    func getUserPursuits(userId : String, completion: @escaping (Pursuit, Steps, Principles) -> ()){
-        let url = ""
+    func getUserPursuits(completion: @escaping (Pursuit, Post, Steps, User, Principles, Comment) -> ()){
+        let url = "https://pursuit-jaylenhu27.c9users.io/"
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId
         
@@ -49,8 +54,8 @@ class HomeServices {
     
     // MARK: - GET post by id
     
-    func getPost(postId : String, completion: @escaping (Post, Steps, User, Principles, Comment) -> ()){
-        let url = ""
+    func getPost(postId : String, completion: @escaping (Pursuit, Post, Steps, User, Principles, Comment) -> ()){
+        let url = "https://pursuit-jaylenhu27.c9users.io/"
         var parameters = Alamofire.Parameters()
         parameters["postId"] = postId
         

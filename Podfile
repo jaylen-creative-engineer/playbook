@@ -26,5 +26,6 @@ target 'pursue' do
   pod 'SnapSliderFilters'
   pod 'Instructions'
   pod 'BWWalkthrough'
+  pod 'AWSS3'
 
 end

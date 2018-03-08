@@ -8,13 +8,16 @@
 
 import UIKit
 import Alamofire
+import Firebase
 
 class NotificationServices {
     
     // MARK: - GET user followed info
     
-    func getNotifications(userId: String, completion: @escaping (Notification) -> ()){
-        let url = ""
+    func getNotifications(completion: @escaping (Notification) -> ()){
+        let url = "https://pursuit-jaylenhu27.c9users.io/"
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId
         
@@ -25,7 +28,6 @@ class NotificationServices {
             case .failure:
                 print("Failure: \(response.result.isSuccess)")
             }
-            
         }
     }
     

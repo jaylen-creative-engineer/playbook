@@ -22,7 +22,7 @@ struct User {
         self.username = dictionary["username"] as? String ?? ""
         self.fullname = dictionary["fullname"] as? String ?? ""
         self.photoUrl = dictionary["photoUrl"] as? String ?? ""
-        self.bio = dictionary["bio"] as? String ?? "Here is some sample text that I am putting right here just to see how to bio text field looks, with some live data. Here is some sample text that I am putting right here just to see how to bio text field looks, with some live data. Here is some sample text that I am putting right here just to see how to bio text field looks, with some live data."
+        self.bio = dictionary["bio"] as? String ?? ""
         self.email = dictionary["email"] as? String ?? ""
     }
    
