@@ -134,14 +134,6 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
         return button
     }()
-    
-    lazy var soundButton : UIButton = {
-       let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "sound").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFill
-        return button
-    }()
-    
 
     lazy var keyboardButton : UIButton = {
         let button = UIButton()

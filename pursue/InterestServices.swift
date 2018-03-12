@@ -14,19 +14,42 @@ class InterestServices {
     
     // MARK: - POST interests lists
     
-    func createInterestsList(interestId: String){
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
-        var parameters = Alamofire.Parameters()
-        parameters["interestId"] = interestId
-        
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
+    var interestsNames = ["Academics", "Animals", "Beauty", "Business", "Cars", "Digital Design", "Fashion Design", "Food", "Graphic Design", "Health", "Interior Design", "Men Style", "Music", "Photography", "Productivity", "Self", "Sports", "Technology", "Travel", "Women Style"]
+    var imageNames = ["academics", "animals", "beauty", "business", "cars", "digital-design", "fashion-design", "food", "graphic-design", "health", "interior-design", "mens-fashion", "music", "photography", "productivity", "self", "sports", "technology", "travel", "womens-fashion"]
+    
+    func createInterestsList(){
+        for i in 0...interestsNames.count - 1 {
+            guard let image = UIImage(named: imageNames[i])?.withRenderingMode(.alwaysOriginal) else { return }
+            guard let uploadData = UIImageJPEGRepresentation(image, 0.3) else { return }
             
+            let filename = NSUUID().uuidString
+            Storage.storage().reference().child("interests-images").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, err) in
+                
+                if let err = err {
+                    print("Failed to upload", err)
+                }
+                
+                guard let interestsImageURL = metadata?.downloadURL()?.absoluteString else { return }
+                
+                var parameters = Alamofire.Parameters()
+                
+                parameters["interestId"] = filename
+                parameters["interest_name"] = self.interestsNames[i]
+                parameters["interest_photo"] = interestsImageURL
+                
+                let url = "https://pursuit-jaylenhu27.c9users.io/interests"
+                
+                Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+                    switch response.result {
+                    case .success:
+                        print("Success: \(response.result.isSuccess)")
+                    case .failure:
+                        print("Failure: \(response.result.isSuccess)")
+                    }
+                    
+                }
+                
+            })
         }
     }
     
@@ -50,6 +73,7 @@ class InterestServices {
                     } else {
                         interest.isSelected = false
                     }
+                    completion(interest)
                 }
             case .failure:
                 print("Failure: \(response.result.isSuccess)")

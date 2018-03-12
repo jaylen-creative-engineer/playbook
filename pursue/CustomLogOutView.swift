@@ -9,12 +9,15 @@
 import UIKit
 import Firebase
 import Hero
+import FBSDKCoreKit
+import GoogleSignIn
 
 class CustomLogOutView : UIViewController {
     
     let alertViewGrayColor = UIColor(red: 224.0/255.0, green: 224.0/255.0, blue: 224.0/255.0, alpha: 1)
     
     let cellId = "cellId"
+    var accessLoginController : LoginController?
     
     lazy var alertView : UIView = {
         let view = UIView()
@@ -37,6 +40,7 @@ class CustomLogOutView : UIViewController {
         label.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         label.titleLabel?.textAlignment = .left
         label.isUserInteractionEnabled = true
+        label.backgroundColor = .red
         label.addTarget(self, action: #selector(handleYes), for: .touchUpInside)
         return label
     }()
@@ -62,11 +66,12 @@ class CustomLogOutView : UIViewController {
     @objc func handleYes(){
         do {
             try Auth.auth().signOut()
+            accessLoginController?.facebookSignOut()
+            GIDSignIn.sharedInstance().signOut()
             
             let loginController = LoginController()
             let navController = UINavigationController(rootViewController: loginController)
             self.present(navController, animated: true, completion: nil)
-            self.dismiss(animated: true, completion: nil)
             
         } catch let signOutErr {
             
@@ -94,6 +99,7 @@ class CustomLogOutView : UIViewController {
         yesLabel.anchor(top: confirmLabel.bottomAnchor, left: confirmLabel.leftAnchor, bottom: nil, right: confirmLabel.centerXAnchor, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: yesLabel.intrinsicContentSize.height)
         noLabel.anchor(top: confirmLabel.bottomAnchor, left: confirmLabel.centerXAnchor, bottom: nil, right: confirmLabel.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 12, paddingRight: 12, width: 0, height: noLabel.intrinsicContentSize.height)
         dismissBackground.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: alertView.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        handleYes()
     }
     
     override func viewWillAppear(_ animated: Bool) {

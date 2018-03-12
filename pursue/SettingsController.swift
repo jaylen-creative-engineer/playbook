@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+import FBSDKCoreKit
 import XLActionController
 
 class SettingsController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
@@ -233,6 +234,8 @@ class SettingsController : UICollectionViewController, UICollectionViewDelegateF
         actionController.addAction(Action("LOG OUT", style: .default, handler: { action in
             do {
                 try Auth.auth().signOut()
+                
+                FBSDKAccessToken.setCurrent(nil)
                 
                 let loginController = LoginController()
                 let navController = UINavigationController(rootViewController: loginController)

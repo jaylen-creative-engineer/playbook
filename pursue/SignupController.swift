@@ -246,6 +246,8 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
         return button
     }()
     
+    let profileService = ProfileServices()
+    
     @objc func handleAlreadyHaveAccount() {
         dismiss(animated: true, completion: nil)
     }
@@ -275,29 +277,8 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
                 }
                 
                 guard let profileImageURL = metadata?.downloadURL()?.absoluteString else { return }
-                guard let uid = user?.uid else { return }
                 
-                var parameters = Alamofire.Parameters()
-                
-                parameters["userId"] = uid
-                parameters["username"] = username
-                parameters["fullname"] = fullname
-                parameters["photoUrl"] = profileImageURL
-                parameters["email"] = email
-                
-                let url = "https://pursuit-jaylenhu27.c9users.io/signup"
-                
-                Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in                    
-                    switch response.result {
-                    case .success:
-                        print("Success: \(response.result.isSuccess)")
-                    case .failure:
-                        print("Failure: \(response.result.isSuccess)")
-                    }
-                    
-                    self.showInterestsController()
-                }
-                
+                self.profileService.createAccount(email: email, username: username, fullname: fullname, photoUrl: profileImageURL)
             })
         }
     }

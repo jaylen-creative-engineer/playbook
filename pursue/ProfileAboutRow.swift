@@ -160,6 +160,14 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         return label
     }()
     
+    let viewMoreLabel : UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.text = "See all"
+        label.font = UIFont.boldSystemFont(ofSize: 12)
+        return label
+    }()
+    
     lazy var followingTapBackground : UIButton = {
        let view = UIButton()
         view.backgroundColor = .clear
@@ -215,11 +223,13 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         pursuitCollectionView.dataSource = self
         pursuitCollectionView.register(ProfilePostCells.self, forCellWithReuseIdentifier: cellId)
         addSubview(rowLabel)
+        addSubview(viewMoreLabel)
         addSubview(pursuitsCount)
         addSubview(pursuitCollectionView)
         
         pursuitsCount.anchor(top: userBio.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: pursuitsCount.intrinsicContentSize.width, height: pursuitsCount.intrinsicContentSize.height)
         rowLabel.anchor(top: userBio.bottomAnchor, left: pursuitsCount.rightAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
+        viewMoreLabel.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: viewMoreLabel.intrinsicContentSize.width, height: viewMoreLabel.intrinsicContentSize.height)
         pursuitCollectionView.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 370)
     }
     

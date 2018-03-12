@@ -48,7 +48,6 @@ class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICol
     }()
     
     @objc func handleShowMore(){
-        accessExploreController?.handleChangeToFeed(viewType: "isPursuitFeed")
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

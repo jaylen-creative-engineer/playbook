@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import GoogleSignIn
+import FBSDKCoreKit
 import FBSDKLoginKit
 import Alamofire
 
@@ -61,28 +62,6 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.addTarget(self, action: #selector(handleForgot), for: .touchUpInside)
         return button
-    }()
-    
-    let orSignInLabel : UILabel = {
-       let label = UILabel()
-        label.text = "OR SIGN IN WITH"
-        label.font = UIFont.boldSystemFont(ofSize: 12)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let signInLeftLine : UIView = {
-       let view = UIView()
-        view.backgroundColor = .black
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    let signInRightLine : UIView = {
-        let view = UIView()
-        view.backgroundColor = .black
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
     }()
 
     lazy var customFacebookLogin : UIButton = {
@@ -139,56 +118,64 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
     }
     
     @objc func handleFacebookLogin(){
-        let accessToken = FBSDKAccessToken.current()
-        guard let accessTokenString = accessToken?.tokenString else { return }
-        
-        let credentials = FacebookAuthProvider.credential(withAccessToken: accessTokenString)
-        Auth.auth().signIn(with: credentials) { (user, error) in
+        let fbLoginManager = FBSDKLoginManager()
+        fbLoginManager.logIn(withReadPermissions: ["public_profile", "email"], from: self) { (result, error) in
             if let error = error {
-                print("Failed to create account: ", error)
+                print("Failed to login: \(error.localizedDescription)")
                 return
             }
             
-            guard let uid = user?.uid else { return }
-            guard let email = user?.email else { return }
-            guard let fullname = user?.displayName else { return }
+            let accessToken = FBSDKAccessToken.current()
+            guard let accessTokenString = accessToken?.tokenString else { return }
             
-            if let profileImageUrl = user?.photoURL {
-                do {
-                    let imageData = try Data(contentsOf: profileImageUrl as URL)
-                    self.userPhoto = imageData
-                } catch {
-                    print("Unable to load data: \(error)")
+            let credentials = FacebookAuthProvider.credential(withAccessToken: accessTokenString)
+            Auth.auth().signIn(with: credentials) { (user, error) in
+                if let error = error {
+                    print("Failed to create account: ", error)
+                    return
                 }
+                
+                guard let uid = user?.uid else { return }
+                guard let email = user?.email else { return }
+                guard let fullname = user?.displayName else { return }
+                
+                if let profileImageUrl = user?.photoURL {
+                    do {
+                        let imageData = try Data(contentsOf: profileImageUrl as URL)
+                        self.userPhoto = imageData
+                    } catch {
+                        print("Unable to load data: \(error)")
+                    }
+                }
+                
+                guard let googleProfilePic = self.userPhoto else { return }
+                let filename = NSUUID().uuidString
+                Storage.storage().reference().child("profile-images").child(filename).putData(googleProfilePic, metadata: nil, completion: { (metadata, err) in
+                    
+                    if let err = err {
+                        print("Failed to upload", err)
+                    }
+                    
+                    var parameters = Alamofire.Parameters()
+                    
+                    parameters["userId"] = uid
+                    parameters["fullname"] = fullname
+                    parameters["photoUrl"] = user?.photoURL?.absoluteString
+                    parameters["email"] = email
+                    
+                    let url = "https://pursuit-jaylenhu27.c9users.io/signup"
+                    
+                    Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+                        let layout = UICollectionViewFlowLayout()
+                        let interestsController = InterestsController(collectionViewLayout: layout)
+                        interestsController.viewType = "signupInterest"
+                        self.navigationController?.pushViewController(interestsController, animated: true)
+                    }
+                })
+                
             }
             
-            guard let googleProfilePic = self.userPhoto else { return }
-            let filename = NSUUID().uuidString
-            Storage.storage().reference().child("profile-images").child(filename).putData(googleProfilePic, metadata: nil, completion: { (metadata, err) in
-                
-                if let err = err {
-                    print("Failed to upload", err)
-                }
-                
-                var parameters = Alamofire.Parameters()
-                
-                parameters["userId"] = uid
-                parameters["fullname"] = fullname
-                parameters["photoUrl"] = user?.photoURL?.absoluteString
-                parameters["email"] = email
-                
-                let url = "https://pursuit-jaylenhu27.c9users.io/signup"
-                
-                Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-                    let layout = UICollectionViewFlowLayout()
-                    let interestsController = InterestsController(collectionViewLayout: layout)
-                    interestsController.viewType = "signupInterest"
-                    self.navigationController?.pushViewController(interestsController, animated: true)
-                }
-            })
-            
         }
-
     }
     
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
@@ -198,6 +185,13 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
         }
         
         handleFacebookLogin()
+    }
+    
+    var customLogOutView = CustomLogOutView()
+    
+    func facebookSignOut(){
+        customLogOutView.accessLoginController = self
+        loginButtonDidLogOut(customFacebookLogin as! FBSDKLoginButton)
     }
     
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
@@ -239,6 +233,10 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
         
         customGoogleLogin.anchor(top: loginButton.bottomAnchor, left: loginButton.leftAnchor, bottom: nil, right: loginButton.rightAnchor, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 40)
         switchToLogin()
+        
+        let facebookLoginButton = FBSDKLoginButton()
+        facebookLoginButton.delegate = self
+        facebookLoginButton.readPermissions = ["email", "public_profile"]
         
         view.addSubview(customFacebookLogin)
         customFacebookLogin.anchor(top: customGoogleLogin.bottomAnchor, left: customGoogleLogin.leftAnchor, bottom: nil, right: customGoogleLogin.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 40)

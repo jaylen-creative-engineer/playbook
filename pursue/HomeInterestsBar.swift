@@ -22,7 +22,7 @@ class HomeInterestsBar : UIView, UICollectionViewDataSource, UICollectionViewDel
     var accessHomeController : HomeController?
     let cellId = "cellId"
     
-    let interestsNames = ["Top Picks", "My Pursuits"]
+    let interestsNames = ["Your Picks", "Trending"]
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return interestsNames.count
@@ -34,7 +34,7 @@ class HomeInterestsBar : UIView, UICollectionViewDataSource, UICollectionViewDel
         let size = CGSize(width: approximateWidthOfCell, height: .infinity)
         let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)]
         let estimatedFrame = NSString(string: interestsNames[indexPath.item]).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-        return CGSize(width: estimatedFrame.width + 32, height: frame.height - 12)
+        return CGSize(width: estimatedFrame.width + 24, height: frame.height - 12)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

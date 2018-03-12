@@ -15,7 +15,7 @@ class ProfileServices {
     // MARK: - CREATE account
     
     func createAccount(email : String, username : String, fullname : String, photoUrl : String){
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
+        let url = "https://pursuit-jaylenhu27.c9users.io/signup"
         guard let userId = Auth.auth().currentUser?.uid else { return }
 
         var parameters = Alamofire.Parameters()
@@ -37,18 +37,19 @@ class ProfileServices {
     }
     
     // MARK: - GET user account info
-    
-    func getAccount(completion: @escaping (User) -> ()) {
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
+    func getAccountDetails(completion: @escaping (User) -> ()) {
+        let url = "https://pursuit-jaylenhu27.c9users.io/user"
         guard let userId = Auth.auth().currentUser?.uid else { return }
-
+        
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId
         
         Alamofire.request(url, method: .get, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
             switch response.result {
             case .success:
-                print("Success: \(response.result.isSuccess)")
+                guard let dictionary = response.result.value as? [String: Any] else { return }
+                let user = User(dictionary: dictionary)
+                completion(user)
             case .failure:
                 print("Failure: \(response.result.isSuccess)")
             }
@@ -56,19 +57,24 @@ class ProfileServices {
         }
     }
     
-    // MARK: - GET users followers/following
     
-    func getFollowersAndFollowing(completion: @escaping (User) -> ()) {
+    func getAccount(completion: @escaping (User, Follower, Pursuit) -> ()) {
         let url = "https://pursuit-jaylenhu27.c9users.io/"
         guard let userId = Auth.auth().currentUser?.uid else { return }
-        
+
         var parameters = Alamofire.Parameters()
+        parameters["userId"] = userId
         parameters["followerId"] = userId
-        
+
         Alamofire.request(url, method: .get, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
             switch response.result {
             case .success:
-                print("Success: \(response.result.isSuccess)")
+                guard let dictionary = response.result.value as? [String: Any] else { return }
+                let user = User(dictionary: dictionary)
+                // Don't use
+                let follower = Follower(userPhoto: "random")
+                let pursuit = Pursuit(user: user, dictionary: dictionary)
+                completion(user, follower, pursuit)
             case .failure:
                 print("Failure: \(response.result.isSuccess)")
             }
@@ -76,10 +82,11 @@ class ProfileServices {
         }
     }
     
+    
     // MARK: - UPDATE user account info
     
-    func updateAccount(username : String, fullname : String, photoUrl : String, completion: @escaping (User) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
+    func updateAccount(username : String, fullname : String, photoUrl : String){
+        let url = "https://pursuit-jaylenhu27.c9users.io/signup"
         guard let userId = Auth.auth().currentUser?.uid else { return }
 
         var parameters = Alamofire.Parameters()
@@ -89,31 +96,20 @@ class ProfileServices {
         parameters["photoUrl"] = photoUrl
         
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
+           
         }
     }
     
     // MARK: - DELETE user account
     
     func deleteAccount(){
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
+        let url = "https://pursuit-jaylenhu27.c9users.io/delete_account"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId
         
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
         }
     }
 }

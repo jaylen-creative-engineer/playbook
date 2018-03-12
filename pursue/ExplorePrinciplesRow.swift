@@ -48,7 +48,6 @@ class ExplorePrinciplesRow : UICollectionViewCell, UICollectionViewDelegate, UIC
     }()
     
     @objc func handleShowMore(){
-        accessExploreController?.handleChangeToFeed(viewType: "isPrinciplesFeed")
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

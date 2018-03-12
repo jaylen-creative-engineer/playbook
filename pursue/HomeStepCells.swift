@@ -20,7 +20,7 @@ class HomeStepCells : UICollectionViewCell {
     lazy var pursuitLabel : UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
+        label.font = UIFont.boldSystemFont(ofSize: 14)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleHomeHold))
         tapGesture.numberOfTapsRequired = 1

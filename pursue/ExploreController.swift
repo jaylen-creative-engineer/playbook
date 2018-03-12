@@ -21,29 +21,6 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
     let categoryId = "categoryId"
     let discussionId = "discussionId"
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupTopBar()
-        
-        collectionView?.register(ExploreImageRow.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.register(PeopleRow.self, forCellWithReuseIdentifier: peopleId)
-        collectionView?.register(ExplorePrinciplesRow.self, forCellWithReuseIdentifier: principleId)
-        collectionView?.register(ExploreExerciseRow.self, forCellWithReuseIdentifier: exerciseId)
-        collectionView?.backgroundColor = .white
-        collectionView?.showsVerticalScrollIndicator = false
-    }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        tabBarController?.navigationController?.navigationBar.isHidden = true
-        navigationController?.navigationBar.isHidden = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
     var users = [User]()
     
     let backgroundFill = UIView()
@@ -68,7 +45,7 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
     }()
     
     lazy var tableView : UITableView = {
-       let tv = UITableView()
+        let tv = UITableView()
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.delegate = self
         tv.dataSource = self
@@ -77,6 +54,40 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
     
     let searchController = UISearchController(searchResultsController: nil)
     let tableViewCellId = "tableViewCellId"
+    let exploreService = ExploreServices()
+    var pursuits = [Pursuit]()
+    var posts = [Post]()
+    var steps = [User]()
+    var principles = [Principles]()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupTopBar()
+        
+        collectionView?.register(ExploreImageRow.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(PeopleRow.self, forCellWithReuseIdentifier: peopleId)
+        collectionView?.register(ExplorePrinciplesRow.self, forCellWithReuseIdentifier: principleId)
+        collectionView?.register(ExploreExerciseRow.self, forCellWithReuseIdentifier: exerciseId)
+        collectionView?.backgroundColor = .white
+        collectionView?.showsVerticalScrollIndicator = false
+        getContent()
+    }
+    
+    func getContent(){
+//        exploreService.getPursuits { (pursuits, posts, steps, users, principles) in
+//            <#code#>
+//        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
     
     private func setupTopBar(){
         let guide = view.safeAreaLayoutGuide
@@ -134,39 +145,16 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         switch viewType {
         case "isPrinciplesDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-            detail.principleView()
             navigationController?.pushViewController(detail, animated: true)
         case "isPursuitDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-            detail.pursuitView()
             navigationController?.pushViewController(detail, animated: true)
         case "isImageDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-            detail.imageView()
             navigationController?.pushViewController(detail, animated: true)
         case "isDiscussionDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-            detail.discussionView()
             navigationController?.pushViewController(detail, animated: true)
-        default:
-            assert(false, "Not a valid view type")
-        }
-    }
-    
-    func handleChangeToFeed(viewType : String) {
-        switch viewType {
-        case "isPrinciplesFeed":
-            let feed = HomeController(collectionViewLayout: UICollectionViewFlowLayout())
-            feed.principleView()
-            navigationController?.pushViewController(feed, animated: true)
-        case "isPursuitFeed":
-            let feed = HomeController(collectionViewLayout: UICollectionViewFlowLayout())
-            feed.pursuitView()
-            navigationController?.pushViewController(feed, animated: true)
-        case "isImageFeed":
-            let feed = HomeController(collectionViewLayout: UICollectionViewFlowLayout())
-            feed.imageView(isExplore: true)
-            navigationController?.pushViewController(feed, animated: true)
         default:
             assert(false, "Not a valid view type")
         }
@@ -266,20 +254,9 @@ extension ExploreController : UISearchBarDelegate {
     }
     
     func getSearchContent(searchText : String){
-        let url = "https://pursuit-jaylenhu27.c9users.io/search"
-        var parameters = Alamofire.Parameters()
-        parameters["searchField"] = searchText
-        
-        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                guard let _ = response.result.value as? [Dictionary<String,AnyObject>] else { return }
-                
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
-            
-        }
+//        exploreService.queryDatabase(searchText: searchText) { (user, pursuit, steps, principles) in
+//            <#code#>
+//        }
     }
 }
 

@@ -13,16 +13,21 @@ protocol HomeRowImageEngagements {
     func homeRowScrolled(for cell : HomeRow)
 }
 
-class HomeRow: UICollectionViewCell, iCarouselDataSource, iCarouselDelegate {
+class HomeRow: UICollectionViewCell {
     
     var accessHomeController : HomeContainer?
     var homeDelegate : HomeRowImageEngagements?
     let pursuitId = "pursuitId"
     let principleId = "principleId"
     let stepId = "stepId"
+    var isLeft = true
+    var isRight = true
+    var cellIndex : Int = 0
+    var isLiked = false
     
-    let homeImageNames = ["movie-app", "messenger-app", "workout", "wim-hof", "meditation"]
-    let homePursuitDescriptions = ["Movie App", "Messenger App", "Gain 15 Pounds", "Wim Hof Breathing", "Guided Meditation"]
+    let imageNames = ["ferrari", "pagani", "travel", "contacts", "3d-touch"]
+    let profileNames = ["profile-1", "profile-2", "profile-3", "profile-4", "profile-5"]
+    let homeDescriptions = ["iChat App", "New York Exchange", "Travel App", "Contact Page", "Settings 3d touch"]
     
     lazy var carouselView : iCarousel = {
        let ic = iCarousel()
@@ -33,43 +38,6 @@ class HomeRow: UICollectionViewCell, iCarouselDataSource, iCarouselDelegate {
       let ic = iCarousel()
         return ic
     }()
-    
-    var isLiked = false
-    
-    let imageNames = ["ferrari", "pagani", "travel", "contacts", "3d-touch"]
-    let homeDescriptions = ["iChat App", "New York Exchange", "Travel App", "Contact Page", "Settings 3d touch"]
-
-    func homeDiscussionTapped() {
-        accessHomeController?.handleChangeToDetail(viewType: "isDiscussionDetail")
-    }
-    
-    func homeDiscussionHeld() {
-        accessHomeController?.homeDiscussionHeld()
-    }
-    
-    func principleTapped() {
-        accessHomeController?.handleChangeToDetail(viewType: "isPrinciplesDetail")
-    }
-    
-    func principleHeld() {
-        accessHomeController?.principleHeld()
-    }
-    
-    func homeRowImageTapped() {
-        accessHomeController?.handleChangeToDetail(viewType: "isImageDetail")
-    }
-    
-    func homeRowImageHeld() {
-        accessHomeController?.homeRowImageHeld()
-    }
-    
-    func pursuitClicked() {
-        accessHomeController?.handleChangeToDetail(viewType: "isPursuitDetail")
-    }
-    
-    func pursuitHeld() {
-        accessHomeController?.pursuitHeld()
-    }
     
     func handleChangeToDetail(viewType : String) {
         switch viewType {
@@ -86,27 +54,33 @@ class HomeRow: UICollectionViewCell, iCarouselDataSource, iCarouselDelegate {
         }
     }
     
-    func imageView(isExplore : Bool){
-        if isExplore == true {
-            accessHomeController?.imageView(isExplore: true)
-        } else {
-            accessHomeController?.imageView(isExplore: false)
-        }
+    func imageView(){
+        accessHomeController?.imageView()
     }
     
-    func pursuitView(){
-        accessHomeController?.pursuitView()
+    @objc func toggleLike(label : UILabel, index : Int){
+        label.backgroundColor = .clear
+        label.text = homeDescriptions[index]
     }
     
-    func principleView(){
-        accessHomeController?.principleView()
+    @objc func showDetail(){
+        accessHomeController?.handleChangeToDetail(viewType: "isImageDetail")
     }
     
-    func homeTapped() {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupCarousels()
     }
     
-    func homeHeld() {
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
+    
+}
+
+
+extension HomeRow : iCarouselDataSource, iCarouselDelegate {
     
     func numberOfItems(in carousel: iCarousel) -> Int {
         switch carousel {
@@ -119,9 +93,6 @@ class HomeRow: UICollectionViewCell, iCarouselDataSource, iCarouselDelegate {
         }
     }
     
-    var isLeft = true
-    var isRight = true
-    
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
         var carouselImage = UIImageView()
         
@@ -129,16 +100,35 @@ class HomeRow: UICollectionViewCell, iCarouselDataSource, iCarouselDelegate {
         case subCarouselView:
             carouselImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 400, height: 100))
             
-            let shadowLabel = UILabel()
-            shadowLabel.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(25))
-            shadowLabel.textAlignment = .justified
-            shadowLabel.numberOfLines = 2
-            shadowLabel.sizeToFit()
+            let postLabel = UILabel()
+            postLabel.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(25))
+            postLabel.textAlignment = .justified
+            postLabel.numberOfLines = 1
+            postLabel.sizeToFit()
             
-            carouselImage.addSubview(shadowLabel)
-            shadowLabel.anchor(top: nil, left: carouselImage.leftAnchor, bottom: carouselImage.bottomAnchor, right: carouselImage.rightAnchor, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 24, width: 0, height: 70)
+            let usernameLabel = UILabel()
+            usernameLabel.font = UIFont.boldSystemFont(ofSize: 12)
+            usernameLabel.textAlignment = .justified
+            usernameLabel.numberOfLines = 1
+            usernameLabel.text = imageNames[index]
+            usernameLabel.sizeToFit()
             
-            toggleLike(label: shadowLabel, index: index)
+            let profilePicture = UIImageView()
+            profilePicture.contentMode = .scaleAspectFill
+            profilePicture.translatesAutoresizingMaskIntoConstraints = false
+            profilePicture.layer.cornerRadius = 25
+            profilePicture.layer.masksToBounds = true
+            profilePicture.image = UIImage(named: profileNames[index])?.withRenderingMode(.alwaysOriginal)
+            
+            carouselImage.addSubview(postLabel)
+            carouselImage.addSubview(usernameLabel)
+            carouselImage.addSubview(profilePicture)
+            
+            profilePicture.anchor(top: carouselImage.topAnchor, left: carouselImage.leftAnchor, bottom: nil, right: nil, paddingTop: 46, paddingLeft: 25, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
+            postLabel.anchor(top: profilePicture.topAnchor, left: profilePicture.rightAnchor, bottom: nil, right: carouselImage.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 24, width: 0, height: postLabel.intrinsicContentSize.height)
+            usernameLabel.anchor(top: postLabel.bottomAnchor, left: postLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
+            
+            toggleLike(label: postLabel, index: index)
             
             return carouselImage
         case carouselView:
@@ -207,7 +197,7 @@ class HomeRow: UICollectionViewCell, iCarouselDataSource, iCarouselDelegate {
         default:
             return carouselImage
         }
-
+        
     }
     
     func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
@@ -220,9 +210,11 @@ class HomeRow: UICollectionViewCell, iCarouselDataSource, iCarouselDelegate {
         return value
     }
     
-    @objc func toggleLike(label : UILabel, index : Int){
-        label.backgroundColor = .clear
-        label.text = homeDescriptions[index]
+    func carouselDidScroll(_ carousel: iCarousel) {
+        if carousel == carouselView {
+            homeDelegate?.homeRowScrolled(for: self)
+            subCarouselView.scrollOffset = carouselView.scrollOffset
+        }
     }
     
     @objc func handleLeftTap(){
@@ -237,21 +229,12 @@ class HomeRow: UICollectionViewCell, iCarouselDataSource, iCarouselDelegate {
     @objc func handleRightTap(){
         carouselView.scrollToItem(at: cellIndex + 1, animated: true)
         cellIndex = cellIndex + 1
-
+        
         if cellIndex > imageNames.count {
             cellIndex = cellIndex - 1
         }
     }
     
-    var cellIndex : Int = 0
-
-    func carouselDidScroll(_ carousel: iCarousel) {
-        if carousel == carouselView {
-            homeDelegate?.homeRowScrolled(for: self)
-            subCarouselView.scrollOffset = carouselView.scrollOffset
-        }
-    }
-
     func setupCarousels(){
         setupStandardCarousel()
         labelSubCarousel()
@@ -272,10 +255,6 @@ class HomeRow: UICollectionViewCell, iCarouselDataSource, iCarouselDelegate {
         carouselView.anchor(top: topAnchor, left: guide.leftAnchor, bottom: nil, right: guide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 28, width: 0, height: 412)
     }
     
-    @objc func showDetail(){
-        accessHomeController?.handleChangeToDetail(viewType: "isImageDetail")
-    }
-    
     func labelSubCarousel(){
         subCarouselView.dataSource = self
         subCarouselView.delegate = self
@@ -288,17 +267,5 @@ class HomeRow: UICollectionViewCell, iCarouselDataSource, iCarouselDelegate {
         addSubview(subCarouselView)
         subCarouselView.anchor(top: carouselView.bottomAnchor, left: guide.leftAnchor, bottom: nil, right: guide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 60)
     }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupCarousels()
-    }
-    
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
 }
-
 

@@ -143,6 +143,7 @@ class EditProfileCells : UICollectionViewCell {
     let currentUnderlineView = UIView()
     let confirmUnderlineView = UIView()
     let updateUnderlineView = UIView()
+    let profileService = ProfileServices()
     
     @objc func updateAccount(){
         let user = Auth.auth().currentUser
@@ -161,6 +162,7 @@ class EditProfileCells : UICollectionViewCell {
             if let error = error {
                 print(error)
             } else {
+                self.profileService.deleteAccount()
                 self.accessEditProfileController?.goToLogin()
             }
         })

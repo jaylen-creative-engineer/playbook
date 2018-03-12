@@ -9,7 +9,7 @@
 import UIKit
 import Hero
 
-class CustomAlertView: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class CustomAlertView: UIViewController{
     
     let alertViewGrayColor = UIColor(red: 224.0/255.0, green: 224.0/255.0, blue: 224.0/255.0, alpha: 1)
     let cellId = "cellId"
@@ -78,22 +78,8 @@ class CustomAlertView: UIViewController, UICollectionViewDelegate, UICollectionV
         return collectionView
     }()
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (view.frame.width / 3) + 10, height: (view.frame.height))
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 12, 0, 12)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CustomAlertViewCell
-        return cell
-    }
+    let createService = CreateServices()
+    var pursuits = [Pursuit]()
     
     func setupCollectionView(){
         collectionView.register(CustomAlertViewCell.self, forCellWithReuseIdentifier: cellId)
@@ -102,6 +88,13 @@ class CustomAlertView: UIViewController, UICollectionViewDelegate, UICollectionV
         
         alertView.addSubview(collectionView)
          collectionView.anchor(top: sendLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
+    }
+    
+    func getPursuits(){
+        createService.getUserPursuits { (pursuit) in
+            self.pursuits.append(pursuit)
+            self.collectionView.reloadData()
+        }
     }
     
     override func viewDidLoad() {
@@ -123,6 +116,7 @@ class CustomAlertView: UIViewController, UICollectionViewDelegate, UICollectionV
         cancelBackground.centerXAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
         dismissBackground.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: alertView.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
        setupCollectionView()
+       getPursuits()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -158,5 +152,29 @@ class CustomAlertView: UIViewController, UICollectionViewDelegate, UICollectionV
             self.alertView.alpha = 1.0;
             self.alertView.frame.origin.y = self.alertView.frame.origin.y - 50
         })
+    }
+}
+
+extension CustomAlertView : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout  {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: (view.frame.width / 3) + 10, height: (view.frame.height))
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(0, 12, 0, 12)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let pursuitId = pursuits[indexPath.item].pursuitId
+//        createService.addPostToPursuit(pursuitId: pursuitId, postId: <#T##String#>, contentUrl: <#T##String#>, thumbnailUrl: <#T##String#>)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CustomAlertViewCell
+        return cell
     }
 }

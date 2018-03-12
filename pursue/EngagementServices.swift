@@ -15,7 +15,7 @@ class EngagementServices {
     // MARK: - COMMENT ON step/principle/pursuit
     
     func commentOnPost(postId : String, commentId : String, comment_text : String, completion: @escaping (PostComment) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
+        let url = "https://pursuit-jaylenhu27.c9users.io/posts_comments"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()
@@ -35,7 +35,7 @@ class EngagementServices {
     }
     
     func commentOnPrinciple(principleId : String, commentId : String, comment_text : String, completion: @escaping (PrincipleComment) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
+        let url = "https://pursuit-jaylenhu27.c9users.io/principles_comments"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()
@@ -55,7 +55,7 @@ class EngagementServices {
     }
     
     func commentOnStep(stepId : String, commentId : String, comment_text : String, completion: @escaping (StepsComment) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
+        let url = "https://pursuit-jaylenhu27.c9users.io/steps_comments"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()
@@ -76,189 +76,117 @@ class EngagementServices {
     
     // MARK: - DELETE COMMENT FROM step/principle/pursuit
     
-    func deleteCommentFromPost(postId : String, commentId : String, completion: @escaping (PostComment) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
+    func deleteCommentFromPost(commentId : String, completion: @escaping (PostComment) -> ()){
+        let url = "https://pursuit-jaylenhu27.c9users.io/remove_post_comment"
         var parameters = Alamofire.Parameters()
-        parameters["postId"] = postId
         parameters["commentId"] = commentId
         
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
+            // Remove item from array
+        }
+    }
+    
+    func deleteCommentFromStep(commentId : String, completion: @escaping (StepsComment) -> ()){
+        let url = "https://pursuit-jaylenhu27.c9users.io/remove_step_comment"
+        var parameters = Alamofire.Parameters()
+        parameters["commentId"] = commentId
+        
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+            // Remove item from array
             
         }
     }
     
-    func deleteCommentFromStep(stepId : String, commentId : String, completion: @escaping (StepsComment) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
+    func deleteCommentFromPrinciple(commentId : String, completion: @escaping (PrincipleComment) -> ()){
+        let url = "https://pursuit-jaylenhu27.c9users.io/remove_principle_comment"
         var parameters = Alamofire.Parameters()
-        parameters["stepId"] = stepId
         parameters["commentId"] = commentId
         
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
-            
-        }
-    }
-    
-    func deleteCommentFromPrinciple(principleId : String, commentId : String, completion: @escaping (PrincipleComment) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
-        var parameters = Alamofire.Parameters()
-        parameters["principleId"] = principleId
-        parameters["commentId"] = commentId
-        
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
-            
-        }
-    }
-    
-    // MARK: - SELECT video at id
-    
-    func selectVideoAtId(postId : String, completion: @escaping (Post) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
-        var parameters = Alamofire.Parameters()
-        parameters["postId"] = postId
-        
-        Alamofire.request(url, method: .get, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
-            
+            // Remove item from array
         }
     }
     
     // MARK: - TOGGLE saving step
     
-    func toggleSaveStep(stepId : String, pursuitId : String, completion: @escaping (Engagements) -> ()) {
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
+    func toggleSaveStep(stepId : String, pursuitId : String, is_saved : Int) {
+        let url = "https://pursuit-jaylenhu27.c9users.io/step_saved"
         var parameters = Alamofire.Parameters()
         parameters["pursuitId"] = pursuitId
         parameters["stepId"] = stepId
+        parameters["is_saved"] = is_saved
         
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
-            
         }
     }
     
-    
-    func toggleSavePost(postId : String, pursuitId : String, completion: @escaping (Engagements) -> ()) {
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
+    func toggleSavePost(postId : String, pursuitId : String, is_saved : Int) {
+        let url = "https://pursuit-jaylenhu27.c9users.io/post_saved"
         var parameters = Alamofire.Parameters()
         parameters["pursuitId"] = pursuitId
         parameters["postId"] = postId
+        parameters["is_saved"] = is_saved
         
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
-            
         }
     }
     
-    func toggleSavePrinciple(principleId : String, pursuitId : String, completion: @escaping (Engagements) -> ()) {
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
+    func toggleSavePrinciple(principleId : String, pursuitId : String) {
+        let url = "https://pursuit-jaylenhu27.c9users.io/principle_saved"
         var parameters = Alamofire.Parameters()
         parameters["principleId"] = principleId
         parameters["pursuitId"] = pursuitId
         
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
             
         }
     }
     
     // MARK: - TOOGLE like step/principle/pursuit
     
-    func togglePostLike(postId : String, completion: @escaping (Engagements) -> ()) {
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
+    func togglePostLike(postId : String, is_liked : Int) {
+        let url = "https://pursuit-jaylenhu27.c9users.io/post_liked"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()
         parameters["postId"] = postId
         parameters["userId"] = userId
+        parameters["is_liked"] = is_liked
         
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
         }
     }
     
-    func togglePrincipleLike(principleId : String, completion: @escaping (Engagements) -> ()) {
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
+    func togglePrincipleLike(principleId : String, is_liked : Int) {
+        let url = "https://pursuit-jaylenhu27.c9users.io/principle_liked"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()
         parameters["principleId"] = principleId
         parameters["userId"] = userId
+        parameters["is_liked"] = is_liked
         
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
         }
     }
     
-    func toggleStepLike(stepId : String, completion: @escaping (Engagements) -> ()) {
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
+    func toggleStepLike(stepId : String, is_liked : Int) {
+        let url = "https://pursuit-jaylenhu27.c9users.io/step_liked"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()
         parameters["stepId"] = stepId
         parameters["userId"] = userId
+        parameters["is_liked"] = is_liked
         
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
         }
     }
     
     // MARK: - TOGGLE follow interests
     
-    func toggleFollowInterests(interestId : String, completion: @escaping (Interests) -> ()) {
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
+    func toggleFollowInterests(interestId : String, is_selected : Int, completion: @escaping (Interests) -> ()) {
+        let url = "https://pursuit-jaylenhu27.c9users.io/user-interests"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()
@@ -277,42 +205,33 @@ class EngagementServices {
     
     // MARK: - TOGGLE follow user
     
-    func toggleFollowUser(followeeId : String, completion: @escaping (User) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
+    func toggleFollowUser(followeeId : String, is_following : Int, completion: @escaping (User) -> ()){
+        let url = "https://pursuit-jaylenhu27.c9users.io/follow_user"
         guard let userId = Auth.auth().currentUser?.uid else { return }
 
         var parameters = Alamofire.Parameters()
         parameters["followerId"] = userId
         parameters["followeeId"] = followeeId
+        parameters["is_following"] = is_following
+        
         
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
-            
         }
     }
 
     // MARK: - TOGGLE follow pursuit
     
-    func toggleFollowPursuit(pursuitId : String, completion: @escaping (Pursuit) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
+    func toggleFollowPursuit(pursuitId : String, is_following : Int, completion: @escaping (Pursuit) -> ()){
+        let url = "https://pursuit-jaylenhu27.c9users.io/follow_pursuit"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()
         parameters["pursuitId"] = pursuitId
         parameters["userId"] = userId
+        parameters["is_following"] = is_following
         
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
+            
         }
     }
     

@@ -106,8 +106,10 @@ class CustomCreateView : UIViewController {
         return button
     }()
     
+    let createService = CreateServices()
+    
     @objc func handleSend(){
-        
+//        createService.createPursuit(pursuitId: <#T##String#>, contentUrl: <#T##String#>, thumbnailUrl: <#T##String#>, pursuitDescription: <#T##String#>, is_visible: 1)
     }
     
     @objc func handleDismiss(){

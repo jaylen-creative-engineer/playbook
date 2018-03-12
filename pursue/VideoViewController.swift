@@ -311,7 +311,7 @@ class VideoViewController: AssetSelectionViewController {
     // MARK: - Trim Video
     var isCrop = false
     
-    func loadVideo() {
+    @objc func loadVideo() {
         // override in subclass
         isCrop = !isCrop
         if isCrop == true {

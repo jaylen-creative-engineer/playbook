@@ -41,7 +41,6 @@ class EditProfileController : UICollectionViewController, UICollectionViewDelega
         let editProfile = EditProfileCells()
         editProfile.updateAccount()
         dismiss(animated: true, completion: nil)
-//        navigationController?.popViewController(animated: true)
     }
     
     @objc func handleCancel(){
@@ -83,27 +82,12 @@ class EditProfileController : UICollectionViewController, UICollectionViewDelega
     }
     
     var user : User?
+    var profileServices = ProfileServices()
     
     func getUser(){
-        
-        let url = "https://pursuit-jaylenhu27.c9users.io/user"
-        var parameters = Alamofire.Parameters()
-        guard let userId = Auth.auth().currentUser?.uid else { return }
-        parameters["userId"] = userId
-        
-        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                guard let dictionaries = response.result.value as? [Dictionary<String,AnyObject>] else { return }
-                for dictionary in dictionaries {
-                    let person = User(dictionary: dictionary)
-                    self.user = person
-                    self.collectionView?.reloadData()
-                }
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
-            
+        profileServices.getAccountDetails { (user) in
+            self.user = user
+            self.collectionView?.reloadData()
         }
     }
     

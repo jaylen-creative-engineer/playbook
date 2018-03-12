@@ -17,7 +17,7 @@ class HomePrinciplesCells : UICollectionViewCell {
     
     let principleLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
+        label.font = UIFont.boldSystemFont(ofSize: 14)
         label.numberOfLines = 2
         return label
     }()

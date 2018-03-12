@@ -20,6 +20,7 @@ struct Pursuit {
     var is_visible = true
     var is_liked = false
     var is_saved = false
+    var is_public = true
     
     init(user : User, dictionary : [String : Any]){
         self.user = user

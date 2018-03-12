@@ -48,7 +48,7 @@ class ExploreImageRow : UICollectionViewCell, UICollectionViewDelegate, UICollec
     }()
     
     @objc func handleShowMore(){
-        accessExploreController?.handleChangeToFeed(viewType: "isImageFeed")
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

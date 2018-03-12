@@ -14,10 +14,6 @@ import SwiftyJSON
 import Hero
 import Instructions
 
-extension UIColor {
-    static var mainPink = UIColor(red: 232/255, green: 68/255, blue: 133/255, alpha: 1)
-}
-
 class HomeController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     let cellId = "cellId"
@@ -27,21 +23,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     var isPrinciplesView = false
     var isDiscussionView = false
     var isExploreImageView = false
-    
-    lazy var homeIcon : UIButton = {
-       let iv = UIButton()
-        iv.setImage(#imageLiteral(resourceName: "Pursuit-typed").withRenderingMode(.alwaysOriginal), for: .normal)
-        iv.contentMode = .scaleAspectFill
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        return iv
-    }()
-    
-    lazy var backButton : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "back-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(goBack), for: .touchUpInside)
-        return button
-    }()
+    var isFirstLaunch = false
     
     let backgroundFill = UIView()
     
@@ -49,6 +31,23 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         let hb = HomeInterestsBar()
         hb.accessHomeController = self
         return hb
+    }()
+    
+    lazy var searchIconBackground : UIButton = {
+       let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = UIColor.rgb(red: 233, green: 233, blue: 233)
+        button.layer.cornerRadius = 12
+        button.layer.masksToBounds = true
+        return button
+    }()
+    
+    lazy var searchIcon : UIImageView = {
+       let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.image = #imageLiteral(resourceName: "search_selected").withRenderingMode(.alwaysOriginal)
+        return iv
     }()
 
     @objc func goBack(){
@@ -74,19 +73,6 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
  
     override func viewDidLoad() {
         super.viewDidLoad()
-                
-        let url = "https://www.googleapis.com/youtube/v3/videos"
-        var parameters = Alamofire.Parameters()
-        parameters["part"] = "snippet"
-        parameters["id"] = "7xUSH1QLHzk"
-        
-        Alamofire.request(url, method: .get, parameters: parameters, encoding: JSONEncoding.default).responseJSON { (response) in
-            print(response)
-            if let JSON = response.result.value {
-                print(JSON)
-                
-            }
-        }
         
         setupTopBar()
         
@@ -104,7 +90,6 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     }
     
     
-    var isFirstLaunch = false
     func setupIntro(){
         setupBottomControls()
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
@@ -121,49 +106,27 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     }
     
     func imageView(isExplore : Bool){
-        if isExplore == true {
-            isImageView = false
-            isExploreImageView = true
-            isPursuitView = false
-            isPrinciplesView = false
-            isDiscussionView = false
-            collectionView?.reloadData()
-        } else {
-            isImageView = true
-            isExploreImageView = false
-            isPursuitView = false
-            isPrinciplesView = false
-            isDiscussionView = false
-            collectionView?.reloadData()
-        }
-    }
-    
-    @objc func pursuitView(){
-        isImageView = false
-        isPursuitView = true
+        isImageView = true
+        isExploreImageView = false
+        isPursuitView = false
         isPrinciplesView = false
         isDiscussionView = false
         collectionView?.reloadData()
-    }
-    
-    func principleView(){
-        isImageView = false
-        isPursuitView = false
-        isPrinciplesView = true
-        isDiscussionView = false
-        collectionView?.reloadData()
-
     }
     
     private func setupTopBar(){
         let guide = view.safeAreaLayoutGuide
         view.addSubview(backgroundFill)
         view.addSubview(interestsBar)
-
+        view.addSubview(searchIconBackground)
+        view.addSubview(searchIcon)
         
         backgroundFill.backgroundColor = .white
         backgroundFill.anchor(top: view.topAnchor, left: guide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
-        interestsBar.anchor(top: backgroundFill.bottomAnchor, left: backgroundFill.leftAnchor, bottom: nil, right: backgroundFill.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 60)
+        interestsBar.anchor(top: backgroundFill.bottomAnchor, left: backgroundFill.leftAnchor, bottom: nil, right: backgroundFill.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 90)
+        searchIconBackground.anchor(top: interestsBar.topAnchor, left: nil, bottom: nil, right: backgroundFill.rightAnchor, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 45, height: 27)
+        searchIcon.anchor(top: nil, left: nil, bottom: nil, right: searchIconBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 15, height: 15)
+        searchIcon.centerYAnchor.constraint(equalTo: searchIconBackground.centerYAnchor).isActive = true
     }
 
 
@@ -173,31 +136,6 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     }
    
     // MARK: - Setup View
-    
-    func homeDiscussionTapped() {
-        handleChangeToDetail(viewType: "isDiscussionDetail")
-    }
-    
-    func homeDiscussionHeld() {
-        let actionController = SkypeActionController()
-        actionController.addAction(Action("Save", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Like", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Share", style: .default, handler: { action in
-            let text = "This is some text that I want to share."
-            let textToShare = [ text ]
-            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-            activityViewController.popoverPresentationController?.sourceView = self.view
-            self.present(activityViewController, animated: true, completion: nil)
-        }))
-        actionController.addAction(Action("Cancel", style: .default, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
-    }
     
     func principleTapped() {
         handleChangeToDetail(viewType: "isPrinciplesDetail")
@@ -266,19 +204,15 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         switch viewType {
         case "isPrinciplesDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-            detail.principleView()
             navigationController?.pushViewController(detail, animated: true)
         case "isPursuitDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-            detail.pursuitView()
             navigationController?.pushViewController(detail, animated: true)
         case "isImageDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-            detail.imageView()
             navigationController?.pushViewController(detail, animated: true)
         case "isDiscussionDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-            detail.discussionView()
             navigationController?.pushViewController(detail, animated: true)
         default:
             assert(false, "Not a valid view type")

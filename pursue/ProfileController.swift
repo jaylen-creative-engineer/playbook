@@ -49,14 +49,16 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     let photoImageView : UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-//        iv.image = #imageLiteral(resourceName: "music").withRenderingMode(.alwaysOriginal)
         iv.clipsToBounds = true
         return iv
     }()
     
     let backgroundFill = UIView()
     var user : User?
+    var pursuits = [Pursuit]()
+    var followers = [Follower]()
     let imageView = UIImageView()
+    let profileService = ProfileServices()
     
     private func setupTopBar(){
         view.addSubview(topBackground)
@@ -92,26 +94,11 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func getUser(){
-        
-        let url = "https://pursuit-jaylenhu27.c9users.io/user"
-        var parameters = Alamofire.Parameters()
-        guard let userId = Auth.auth().currentUser?.uid else { return }
-        parameters["userId"] = userId
-        
-        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                guard let dictionaries = response.result.value as? [Dictionary<String,AnyObject>] else { return }
-                for dictionary in dictionaries {
-                    let person = User(dictionary: dictionary)
-                    self.user = person
-                    self.collectionView?.reloadData()
-                }
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
-            
-        }
+//        profileService.getAccount { (user, follower, pursuit) in
+//            self.user = user
+//            self.followers =
+//            self.pursuits = 
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -119,38 +106,11 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         navigationController?.navigationBar.isHidden = true
     }
     
-    
-    func profileDiscussionTapped() {
-        handleChangeToDetail(viewType: "isDiscussionDetail")
-    }
-    
     func showFriendsController(){
         let layout = UICollectionViewFlowLayout()
         let friendsController = FriendsController(collectionViewLayout: layout)
         navigationController?.pushViewController(friendsController, animated: true)
     }
-    
-    func profileDiscussionHeld() {
-        let actionController = SkypeActionController()
-        actionController.addAction(Action("Save", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Like", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Share", style: .default, handler: { action in
-            let text = "This is some text that I want to share."
-            let textToShare = [ text ]
-            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-            activityViewController.popoverPresentationController?.sourceView = self.view
-            self.present(activityViewController, animated: true, completion: nil)
-        }))
-        actionController.addAction(Action("Cancel", style: .default, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
-    }
-    
     
     @objc func handleSettings() {
         let customAlert = CustomSettingsView()
@@ -167,33 +127,6 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         let notificationController = NotificationController(collectionViewLayout: layout)
         navigationController?.pushViewController(notificationController, animated: true)
     }
-
-    func pursuitClicked() {
-        handleChangeToDetail(viewType: "isPursuitDetail")
-    }
-    
-    func pursuitHeld() {
-        let actionController = SkypeActionController()
-        actionController.addAction(Action("Save", style: .default, handler: { action in
-            
-        }))
-        actionController.addAction(Action("Like", style: .default, handler: { action in
-            
-        }))
-        actionController.addAction(Action("Share", style: .default, handler: { action in
-            let text = "This is some text that I want to share."
-            let textToShare = [ text ]
-            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-            activityViewController.popoverPresentationController?.sourceView = self.view
-            self.present(activityViewController, animated: true, completion: nil)
-        }))
-        
-        actionController.addAction(Action("Cancel", style: .default, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
-    }
-    
     
     func profilePostTapped() {
         handleChangeToDetail(viewType: "isImageDetail")
@@ -222,75 +155,10 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         
     }
     
-    func profilePrincipleTapped() {
-        handleChangeToDetail(viewType: "isPrinciplesDetail")
-    }
-    
-    func profilePrincipleHeld() {
-        let actionController = SkypeActionController()
-        actionController.addAction(Action("Save", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Like", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Share", style: .default, handler: { action in
-            let text = "This is some text that I want to share."
-            let textToShare = [ text ]
-            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-            activityViewController.popoverPresentationController?.sourceView = self.view
-            self.present(activityViewController, animated: true, completion: nil)
-        }))
-        actionController.addAction(Action("Cancel", style: .default, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
-        
-    }
-    
     func handleChangeToDetail(viewType : String) {
-        switch viewType {
-        case "isPrinciplesDetail":
-            let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-            detail.principleView()
-            navigationController?.pushViewController(detail, animated: true)
-        case "isPursuitDetail":
-            let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-            detail.pursuitView()
-            navigationController?.pushViewController(detail, animated: true)
-        case "isImageDetail":
-            let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-            detail.imageView()
-            navigationController?.pushViewController(detail, animated: true)
-        case "isDiscussionDetail":
-            let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-            detail.discussionView()
-            navigationController?.pushViewController(detail, animated: true)
-        default:
-            assert(false, "Not a valid view type")
-        }
+        let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(detail, animated: true)
     }
-    
-    func handleChangeToFeed(viewType : String) {
-        switch viewType {
-        case "isPrinciplesFeed":
-            let feed = HomeController(collectionViewLayout: UICollectionViewFlowLayout())
-            feed.principleView()
-            navigationController?.pushViewController(feed, animated: true)
-        case "isPursuitFeed":
-            let feed = HomeController(collectionViewLayout: UICollectionViewFlowLayout())
-            feed.pursuitView()
-            navigationController?.pushViewController(feed, animated: true)
-        case "isImageFeed":
-            let feed = HomeController(collectionViewLayout: UICollectionViewFlowLayout())
-            feed.imageView(isExplore: true)
-            navigationController?.pushViewController(feed, animated: true)
-        default:
-            assert(false, "Not a valid view type")
-        }
-    }
-    
-    var headerHeight : CGFloat?
 }
 
 extension ProfileController {

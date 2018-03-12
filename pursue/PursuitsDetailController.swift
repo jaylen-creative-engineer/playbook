@@ -32,38 +32,44 @@ class PursuitsDetailController : UICollectionViewController {
     var isPursuitView = false
     var isPrinciplesView = false
     var isDiscussionView = false
+    
+    let homeService = HomeServices()
         
-    func imageView(){
+    func imageView(postId : String){
         isImageView = true
         isPursuitView = false
         isPrinciplesView = false
         isDiscussionView = false
         
+        homeService.getPost(postId: postId) { (post) in
+            
+        }
+        
         collectionView?.reloadData()
     }
     
-    func pursuitView(){
+    func stepView(stepId : String){
         isImageView = false
         isPursuitView = true
         isPrinciplesView = false
         isDiscussionView = false
         
+        homeService.getStep(stepId: stepId) { (step) in
+            
+        }
         collectionView?.reloadData()
     }
     
-    func principleView(){
+    func principleView(principleId : String){
         isImageView = false
         isPursuitView = false
         isPrinciplesView = true
         isDiscussionView = false
-        collectionView?.reloadData()
-    }
-    
-    func discussionView(){
-        isImageView = false
-        isPursuitView = false
-        isPrinciplesView = false
-        isDiscussionView = true
+        
+        homeService.getPrinciple(principleId: principleId) { (principle) in
+            
+        }
+        
         collectionView?.reloadData()
     }
     
@@ -176,20 +182,12 @@ class PursuitsDetailController : UICollectionViewController {
         switch viewType {
         case "isPrinciplesDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-            detail.principleView()
-            print("isPrinciple")
             navigationController?.pushViewController(detail, animated: true)
-        case "isPursuitDetail":
+        case "isStepDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-            detail.pursuitView()
             navigationController?.pushViewController(detail, animated: true)
         case "isImageDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-            detail.imageView()
-            navigationController?.pushViewController(detail, animated: true)
-        case "isDiscussionDetail":
-            let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-            detail.discussionView()
             navigationController?.pushViewController(detail, animated: true)
         default:
             assert(false, "Not a valid view type")
