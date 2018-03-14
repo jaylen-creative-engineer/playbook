@@ -59,7 +59,6 @@ class InviteController : UICollectionViewController, UICollectionViewDelegateFlo
     
     private func fetchContacts() {
         print("Attempting to fetch contacts today..")
-        
         let store = CNContactStore()
         
         store.requestAccess(for: .contacts) { (granted, err) in

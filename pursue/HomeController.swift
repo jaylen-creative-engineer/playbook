@@ -32,23 +32,6 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         hb.accessHomeController = self
         return hb
     }()
-    
-    lazy var searchIconBackground : UIButton = {
-       let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = UIColor.rgb(red: 233, green: 233, blue: 233)
-        button.layer.cornerRadius = 12
-        button.layer.masksToBounds = true
-        return button
-    }()
-    
-    lazy var searchIcon : UIImageView = {
-       let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.image = #imageLiteral(resourceName: "search_selected").withRenderingMode(.alwaysOriginal)
-        return iv
-    }()
 
     @objc func goBack(){
         navigationController?.popViewController(animated: true)
@@ -118,15 +101,10 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         let guide = view.safeAreaLayoutGuide
         view.addSubview(backgroundFill)
         view.addSubview(interestsBar)
-        view.addSubview(searchIconBackground)
-        view.addSubview(searchIcon)
         
         backgroundFill.backgroundColor = .white
         backgroundFill.anchor(top: view.topAnchor, left: guide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
         interestsBar.anchor(top: backgroundFill.bottomAnchor, left: backgroundFill.leftAnchor, bottom: nil, right: backgroundFill.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 90)
-        searchIconBackground.anchor(top: interestsBar.topAnchor, left: nil, bottom: nil, right: backgroundFill.rightAnchor, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 45, height: 27)
-        searchIcon.anchor(top: nil, left: nil, bottom: nil, right: searchIconBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 15, height: 15)
-        searchIcon.centerYAnchor.constraint(equalTo: searchIconBackground.centerYAnchor).isActive = true
     }
 
 
@@ -191,8 +169,27 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         handleChangeToDetail(viewType: "isPursuitDetail")
     }
     
+    func showPeople(){
+        let customAlert = CustomPeopleView()
+        customAlert.providesPresentationContextTransitionStyle = true
+        customAlert.definesPresentationContext = true
+        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.showDetailViewController(customAlert, sender: self)
+    }
+    
+    
     func pursuitHeld() {
         let customAlert = CustomAlertView()
+        customAlert.providesPresentationContextTransitionStyle = true
+        customAlert.definesPresentationContext = true
+        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.showDetailViewController(customAlert, sender: self)
+    }
+    
+    func showOptionClicked(){
+        let customAlert = CustomOptionView()
         customAlert.providesPresentationContextTransitionStyle = true
         customAlert.definesPresentationContext = true
         customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext

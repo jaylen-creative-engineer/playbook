@@ -53,11 +53,17 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         return iv
     }()
     
+    let imageView : UIImageView = {
+        let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "music").withRenderingMode(.alwaysOriginal)
+        iv.contentMode = .scaleAspectFill
+        return iv
+    }()
+    
     let backgroundFill = UIView()
     var user : User?
     var pursuits = [Pursuit]()
     var followers = [Follower]()
-    let imageView = UIImageView()
     let profileService = ProfileServices()
     
     private func setupTopBar(){
@@ -76,14 +82,10 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         
         tabBarController?.navigationController?.navigationBar.isHidden = true
         collectionView?.register(ProfileAboutRow.self, forCellWithReuseIdentifier: peopleId)
-
+        collectionView?.register(ProfilePursuit.self, forCellWithReuseIdentifier: pursuitsId)
         collectionView?.backgroundColor = .white
         collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
         collectionView?.showsVerticalScrollIndicator = false
- 
-        imageView.image = #imageLiteral(resourceName: "music").withRenderingMode(.alwaysOriginal)
-        imageView.contentMode = .scaleAspectFill
-        
         collectionView?.parallaxHeader.view = imageView
         collectionView?.parallaxHeader.height = view.frame.height / 2
         collectionView?.parallaxHeader.minimumHeight = 0
@@ -166,16 +168,32 @@ extension ProfileController {
     // MARK: - Setup View
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height - 32)
+        switch indexPath.item {
+        case 0:
+            return CGSize(width: view.frame.width, height: 225)
+        case 1:
+            return CGSize(width: view.frame.width, height: view.frame.height)
+        default:
+            assert(false, "Not a valid row")
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return 2
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! ProfileAboutRow
-        cell.accessProfileController = self
-        return cell
+        switch indexPath.item {
+        case 0:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! ProfileAboutRow
+            cell.accessProfileController = self
+            return cell
+        case 1:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuit
+            cell.accessProfileController = self
+            return cell
+        default:
+            assert(false, "Not a valid row")
+        }
     }
 }

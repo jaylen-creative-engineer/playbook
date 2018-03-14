@@ -126,16 +126,6 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         return tv
     }()
     
-    let pursuitCollectionView : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        collectionView.showsHorizontalScrollIndicator = false
-        return collectionView
-    }()
-    
     lazy var followingCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -152,35 +142,11 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         return collectionView
     }()
     
-    let rowLabel : UILabel = {
-        let label = UILabel()
-        label.textColor = .black
-        label.text = "Pursuits"
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(25))
-        return label
-    }()
-    
-    let viewMoreLabel : UILabel = {
-        let label = UILabel()
-        label.textColor = .black
-        label.text = "See all"
-        label.font = UIFont.boldSystemFont(ofSize: 12)
-        return label
-    }()
-    
     lazy var followingTapBackground : UIButton = {
        let view = UIButton()
         view.backgroundColor = .clear
         view.addTarget(self, action: #selector(followersSelected), for: .touchUpInside)
         return view
-    }()
-    
-    lazy var pursuitsCount : UILabel = {
-       let label = UILabel()
-        label.text = "125"
-        label.isUserInteractionEnabled = true
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(25))
-        return label
     }()
     
     lazy var additionalFollowing : UILabel = {
@@ -218,61 +184,25 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         additionalFollowing.centerYAnchor.constraint(equalTo: followingCollectionView.centerYAnchor).isActive = true
     }
     
-    func setupCollectionView(){
-        pursuitCollectionView.delegate = self
-        pursuitCollectionView.dataSource = self
-        pursuitCollectionView.register(ProfilePostCells.self, forCellWithReuseIdentifier: cellId)
-        addSubview(rowLabel)
-        addSubview(viewMoreLabel)
-        addSubview(pursuitsCount)
-        addSubview(pursuitCollectionView)
-        
-        pursuitsCount.anchor(top: userBio.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: pursuitsCount.intrinsicContentSize.width, height: pursuitsCount.intrinsicContentSize.height)
-        rowLabel.anchor(top: userBio.bottomAnchor, left: pursuitsCount.rightAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
-        viewMoreLabel.anchor(top: rowLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: viewMoreLabel.intrinsicContentSize.width, height: viewMoreLabel.intrinsicContentSize.height)
-        pursuitCollectionView.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 370)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == pursuitCollectionView {
-            return 6
-        } else {
-            return 3
-        }
+        return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        if collectionView == pursuitCollectionView {
-            return UIEdgeInsetsMake(0, 12, 0, 12)
-        } else {
-            return UIEdgeInsetsMake(0, 0, 0, 0)
-        }
+        return UIEdgeInsetsMake(0, 0, 0, 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        if collectionView == pursuitCollectionView {
-            return 5
-        } else {
-            return 1
-        }
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == pursuitCollectionView {
-            return CGSize(width: (frame.width / 2) + 60, height: 425)
-        } else {
-            return CGSize(width: (frame.width / 12) - 15, height: 50)
-        }
+        return CGSize(width: (frame.width / 12) - 15, height: 50)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == pursuitCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfilePostCells
-            return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: followId, for: indexPath) as! FollowingCells
-            return cell
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: followId, for: indexPath) as! FollowingCells
+        return cell
     }
     
     func setupFollowSystem(){
@@ -295,9 +225,8 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         addSubview(followingTapBackground)
         
         followingTapBackground.anchor(top: followingCount.topAnchor, left: leftAnchor, bottom: followingLabel.bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        userBio.anchor(top: followingCollectionView.bottomAnchor, left: leftAnchor, bottom: nil, right: notificationsBackground.rightAnchor, paddingTop: 12, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        userBio.anchor(top: followingCollectionView.bottomAnchor, left: leftAnchor, bottom: nil, right: notificationsBackground.rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         textViewDidChange(userBio)
-        setupCollectionView()
     }
     
     func setupView(){

@@ -63,11 +63,6 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTopBar()
-        
-        collectionView?.register(ExploreImageRow.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.register(PeopleRow.self, forCellWithReuseIdentifier: peopleId)
-        collectionView?.register(ExplorePrinciplesRow.self, forCellWithReuseIdentifier: principleId)
-        collectionView?.register(ExploreExerciseRow.self, forCellWithReuseIdentifier: exerciseId)
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
         getContent()
@@ -165,55 +160,6 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
 }
 
 extension ExploreController {
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.item {
-        case 0:
-            let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreImageRow
-            imageCell.exploreDelegate = self
-            imageCell.accessExploreController = self
-            return imageCell
-        case 1:
-            let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! ExploreExerciseRow
-            pursuitCell.exploreDelegate = self
-            pursuitCell.accessExploreController = self
-            return pursuitCell
-        case 2:
-            let peopleCell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! PeopleRow
-            peopleCell.peopleDelegate = self
-            return peopleCell
-        case 3:
-            let principleCell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! ExplorePrinciplesRow
-            principleCell.exploreDelegate = self
-            principleCell.accessExploreController = self
-            return principleCell
-        default:
-            assert(false, "This is not a valid cell")
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch indexPath.item {
-        case 0:
-            return CGSize(width: view.frame.width, height: 460)
-        case 1:
-            return CGSize(width: view.frame.width, height: 310)
-        case 2:
-            return CGSize(width: view.frame.width, height: 230)
-        case 3:
-            return CGSize(width: view.frame.width, height: 345)
-        default:
-            assert(false, "This is not a valid cell")
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 2
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
-    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: view.frame.width, height: 70)

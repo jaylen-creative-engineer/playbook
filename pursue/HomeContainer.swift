@@ -72,6 +72,14 @@ class HomeContainer : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
         accessHomeController?.pursuitHeld()
     }
     
+    func optionClicked(){
+        accessHomeController?.showOptionClicked()
+    }
+    
+    func showPeople(){
+        accessHomeController?.showPeople()
+    }
+    
     func handleChangeToDetail(viewType : String) {
         switch viewType {
         case "isPrinciplesDetail":
@@ -173,6 +181,7 @@ extension HomeContainer {
             return cell
         case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! HomePeople
+            cell.accessHomeController = self
             return cell
         default:
             assert(false, "Not a valid row")

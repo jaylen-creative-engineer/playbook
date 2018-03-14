@@ -39,6 +39,19 @@ class HomeRow: UICollectionViewCell {
         return ic
     }()
     
+    lazy var optionButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("•••", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        button.addTarget(self, action: #selector(showOptions), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func showOptions(){
+        accessHomeController?.optionClicked()
+    }
+    
     func handleChangeToDetail(viewType : String) {
         switch viewType {
         case "isPrinciplesDetail":
@@ -265,7 +278,9 @@ extension HomeRow : iCarouselDataSource, iCarouselDelegate {
         
         let guide = safeAreaLayoutGuide
         addSubview(subCarouselView)
+        addSubview(optionButton)
         subCarouselView.anchor(top: carouselView.bottomAnchor, left: guide.leftAnchor, bottom: nil, right: guide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 60)
+        optionButton.anchor(top: nil, left: nil, bottom: subCarouselView.bottomAnchor, right: subCarouselView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 14, paddingRight: 12, width: optionButton.intrinsicContentSize.width, height: optionButton.intrinsicContentSize.height)
     }
 }
 
