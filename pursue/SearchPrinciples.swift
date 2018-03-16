@@ -2,7 +2,7 @@
 //  SearchPrinciples.swift
 //  pursue
 //
-//  Created by Jaylen Sanders on 2/15/18.
+//  Created by Jaylen Sanders on 3/13/18.
 //  Copyright © 2018 Glory. All rights reserved.
 //
 
@@ -94,4 +94,3 @@ class SearchPrinciples : UICollectionViewCell, UICollectionViewDelegate, UIColle
         fatalError("init(coder:) has not been implemented")
     }
 }
-

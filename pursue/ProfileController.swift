@@ -53,9 +53,9 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         return iv
     }()
     
-    let imageView : UIImageView = {
-        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "music").withRenderingMode(.alwaysOriginal)
+    let imageView : CustomImageView = {
+        let iv = CustomImageView()
+        iv.clipsToBounds = true
         iv.contentMode = .scaleAspectFill
         return iv
     }()
@@ -96,11 +96,15 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func getUser(){
-//        profileService.getAccount { (user, follower, pursuit) in
-//            self.user = user
-//            self.followers =
-//            self.pursuits = 
-//        }
+        profileService.getAccount  { (user) in
+            DispatchQueue.main.async {
+                self.user = user
+                guard let photoUrl = user.photoUrl else { return }
+                self.imageView.loadImage(urlString: photoUrl)
+                self.collectionView?.reloadData()
+            }
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -170,7 +174,14 @@ extension ProfileController {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 0:
-            return CGSize(width: view.frame.width, height: 225)
+            if let bio = user?.bio {
+                let approximateWidthOfBio = view.frame.width - 20 - 8
+                let size = CGSize(width: approximateWidthOfBio, height: .infinity)
+                let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12)]
+                let estimatedFrame = NSString(string: bio).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+                return CGSize(width: view.frame.width, height: estimatedFrame.height + 30)
+            }
+            return CGSize(width: view.frame.width, height: 155)
         case 1:
             return CGSize(width: view.frame.width, height: view.frame.height)
         default:
@@ -187,6 +198,7 @@ extension ProfileController {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! ProfileAboutRow
             cell.accessProfileController = self
+            cell.user = user
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuit

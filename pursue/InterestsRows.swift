@@ -1,3 +1,4 @@
+
 //
 //  InterestsRows.swift
 //  pursue
@@ -28,14 +29,13 @@ class InterestsRows : UICollectionViewCell, SelectInterestsDelegate {
     let interestsService = InterestServices()
     let engagementService = EngagementServices()
     
-    func createInterestsList(){
-        interestsService.createInterestsList()
-    }
-    
     func getSelectedInterests(){
-        interestsService.getSelectedInterests { (interest) in
-            self.interests.append(interest)
-            self.interestsCollection.reloadData()
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        interestsService.getSelectedInterests(userId: userId) { (interest) in
+            DispatchQueue.main.async {
+                self.interests.append(interest)
+                self.interestsCollection.reloadData()
+            }
         }
     }
     
@@ -44,7 +44,6 @@ class InterestsRows : UICollectionViewCell, SelectInterestsDelegate {
         var interest = self.interests[indexPath.item]
         
         engagementService.toggleFollowInterests(interestId: interest.interestId, is_selected: (interest.isSelected == true ? 0 : 1)) { (_) in
-            
             interest.isSelected = !interest.isSelected
             self.interests[indexPath.item] = interest
             self.interestsCollection.reloadItems(at: [indexPath])

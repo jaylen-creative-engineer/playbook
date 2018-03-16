@@ -264,8 +264,6 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
                 return
             }
             
-            print("Success", user?.uid ?? "")
-            
             guard let image = self.plusPhotoButton.imageView?.image else { return }
             guard let uploadData = UIImageJPEGRepresentation(image, 0.3) else { return }
             
@@ -279,6 +277,7 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
                 guard let profileImageURL = metadata?.downloadURL()?.absoluteString else { return }
                 
                 self.profileService.createAccount(email: email, username: username, fullname: fullname, photoUrl: profileImageURL)
+                self.showInterestsController()
             })
         }
     }

@@ -40,13 +40,6 @@ class InterestServices {
                 let url = "https://pursuit-jaylenhu27.c9users.io/interests"
                 
                 Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-                    switch response.result {
-                    case .success:
-                        print("Success: \(response.result.isSuccess)")
-                    case .failure:
-                        print("Failure: \(response.result.isSuccess)")
-                    }
-                    
                 }
                 
             })
@@ -55,14 +48,13 @@ class InterestServices {
     
     // MARK: - GET interests lists
     
-    func getSelectedInterests(completion: @escaping (Interests) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/user-interests"
-        guard let userId = Auth.auth().currentUser?.uid else { return }
-        
+    func getSelectedInterests(userId : String, completion: @escaping (Interests) -> ()){
+        let url = "https://pursuit-jaylenhu27.c9users.io/get-user-interests"
         var parameters = Alamofire.Parameters()
+        print(userId)
         parameters["userId"] = userId
-        
-        Alamofire.request(url, method: .get, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
             switch response.result {
             case .success:
                 guard let dictionaries = response.result.value as? [Dictionary<String,AnyObject>] else { return }

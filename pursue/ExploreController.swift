@@ -44,7 +44,15 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         return sb
     }()
     
-    lazy var tableView : UITableView = {
+    lazy var searchTableView : UITableView = {
+        let tv = UITableView()
+        tv.translatesAutoresizingMaskIntoConstraints = false
+        tv.delegate = self
+        tv.dataSource = self
+        return tv
+    }()
+    
+    lazy var recentTableView : UITableView = {
         let tv = UITableView()
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.delegate = self
@@ -54,6 +62,7 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
     
     let searchController = UISearchController(searchResultsController: nil)
     let tableViewCellId = "tableViewCellId"
+    let recentCellId = "recentCellId"
     let exploreService = ExploreServices()
     var pursuits = [Pursuit]()
     var posts = [Post]()
@@ -91,7 +100,10 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         backgroundFill.backgroundColor = .white
         backgroundFill.anchor(top: view.topAnchor, left: guide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 95)
         searchBar.anchor(top: nil, left: view.leftAnchor, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: searchBar.intrinsicContentSize.height)
-        tableView.register(SearchReturn.self, forCellReuseIdentifier: tableViewCellId)
+        searchTableView.register(SearchReturn.self, forCellReuseIdentifier: tableViewCellId)
+        recentTableView.register(RecentSearches.self, forCellReuseIdentifier: recentCellId)
+        view.addSubview(recentTableView)
+        recentTableView.anchor(top: searchBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
     
@@ -166,7 +178,7 @@ extension ExploreController {
     }
     
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
-        tableView.reloadData()
+        searchTableView.reloadData()
     }
     
     func searchBarIsEmpty() -> Bool {
@@ -190,12 +202,13 @@ extension ExploreController : UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
-            print("Search is empty")
-            tableView.isHidden = true
+            searchTableView.isHidden = true
+            recentTableView.isHidden = false
         } else {
-            tableView.isHidden = false
-            view.addSubview(tableView)
-            tableView.anchor(top: searchBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+            searchTableView.isHidden = false
+            recentTableView.isHidden = true
+            view.addSubview(searchTableView)
+            searchTableView.anchor(top: searchBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         }
     }
     
@@ -222,8 +235,13 @@ extension ExploreController : UITableViewDataSource {
 
 extension ExploreController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: tableViewCellId, for: indexPath) as! SearchReturn
-        return cell
+        if tableView == searchTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: tableViewCellId, for: indexPath) as! SearchReturn
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: recentCellId, for: indexPath) as! RecentSearches
+            return cell
+        }
     }
 }
 

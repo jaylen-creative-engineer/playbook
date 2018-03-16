@@ -106,6 +106,7 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
     }()
     
     var socialLoginStack = UIStackView()
+    let profileService = ProfileServices()
     
     @objc func handleForgot(){
         let layout = UICollectionViewFlowLayout()
@@ -135,7 +136,6 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
                     return
                 }
                 
-                guard let uid = user?.uid else { return }
                 guard let email = user?.email else { return }
                 guard let fullname = user?.displayName else { return }
                 
@@ -156,21 +156,14 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
                         print("Failed to upload", err)
                     }
                     
-                    var parameters = Alamofire.Parameters()
+                    guard let photoUrl = user?.photoURL?.absoluteString else { return }
                     
-                    parameters["userId"] = uid
-                    parameters["fullname"] = fullname
-                    parameters["photoUrl"] = user?.photoURL?.absoluteString
-                    parameters["email"] = email
-                    
-                    let url = "https://pursuit-jaylenhu27.c9users.io/signup"
-                    
-                    Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+                    self.profileService.socialLogin(email: email, fullname: fullname, photoUrl: photoUrl, completion: { (_) in
                         let layout = UICollectionViewFlowLayout()
                         let interestsController = InterestsController(collectionViewLayout: layout)
                         interestsController.viewType = "signupInterest"
                         self.navigationController?.pushViewController(interestsController, animated: true)
-                    }
+                    })
                 })
                 
             }

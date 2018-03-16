@@ -10,13 +10,20 @@ import UIKit
 
 class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
     
+    var user : User? {
+        didSet{
+            fullnameLabel.text = user?.fullname
+            usernameLabel.text = user?.username
+            userBio.text = user?.bio
+        }
+    }
+    
     let cellId = "cellId"
     
     let fullnameLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.init(25))
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Jaylen Sanders"
         return label
     }()
     
@@ -24,7 +31,6 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "JaylenHU27"
         return label
     }()
     
@@ -119,7 +125,7 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         paragraphStyle.lineSpacing = 5
         paragraphStyle.paragraphSpacing = 5
         
-        let attrString = NSMutableAttributedString(string: "I m working on Mobile app UI Kit which will have more than 100+ screen in Adobe XD, Adobe Photoshop, and Sketch. From Multipurpose UI Kit I am sharing few Profile Screens total is 24.")
+        let attrString = NSMutableAttributedString(string: "")
         attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         
         tv.attributedText = attrString

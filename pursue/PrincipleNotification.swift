@@ -16,7 +16,7 @@ class PrincipleNotification : UICollectionViewCell {
         iv.contentMode = .scaleAspectFill
         iv.layer.masksToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.layer.cornerRadius = 20
+        iv.layer.cornerRadius = 30
         return iv
     }()
     
@@ -41,7 +41,7 @@ class PrincipleNotification : UICollectionViewCell {
         addSubview(fullnameLabel)
         addSubview(principleLabel)
         
-        userPhoto.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
+        userPhoto.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 60, height: 60)
         fullnameLabel.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: fullnameLabel.intrinsicContentSize.width, height: fullnameLabel.intrinsicContentSize.height)
         principleLabel.anchor(top: fullnameLabel.bottomAnchor, left: fullnameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: principleLabel.intrinsicContentSize.width, height: principleLabel.intrinsicContentSize.height)
     }

@@ -88,7 +88,7 @@ class ProfilePursuitCells : UICollectionViewCell {
     lazy var viewMoreOverlay : UIButton = {
         let button = UIButton()
         button.backgroundColor = UIColor.init(white: 0.6, alpha: 0.6)
-        button.setTitle("View More", for: .normal)
+        button.setTitle("View All", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 24, weight: UIFont.Weight.init(25))
         button.titleLabel?.textAlignment = .center

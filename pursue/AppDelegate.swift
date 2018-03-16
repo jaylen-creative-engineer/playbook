@@ -18,12 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     var window: UIWindow?
     var userPhoto : Data?
     var accessSignupController : SignupController?
+    let profileService = ProfileServices()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
-//        print(accessTokenString)
         FirebaseApp.configure()
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
@@ -50,7 +50,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 return
             }
             
-            guard let uid = user?.uid else { return }
             guard let email = user?.email else { return }
             guard let fullname = user?.displayName else { return }
             
@@ -71,21 +70,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                     print("Failed to upload", err)
                 }
                 
-                var parameters = Alamofire.Parameters()
-                
-                parameters["userId"] = uid
-                parameters["fullname"] = fullname
-                parameters["photoUrl"] = user?.photoURL?.absoluteString
-                parameters["email"] = email
-                
-                let url = "https://pursuit-jaylenhu27.c9users.io/signup"
-                
-                Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+                guard let photoUrl = user?.photoURL?.absoluteString else { return }
+                self.profileService.socialLogin(email: email, fullname: fullname, photoUrl: photoUrl, completion: { (_) in
                     let layout = UICollectionViewFlowLayout()
                     let interestsController = InterestsController(collectionViewLayout: layout)
                     interestsController.viewType = "signupInterest"
                     self.window?.rootViewController = interestsController
-                }
+                })
+                
             })
             
         }

@@ -192,6 +192,7 @@ class EngagementServices {
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId
         parameters["interestId"] = interestId
+        parameters["is_selected"] = is_selected
         
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
             switch response.result {

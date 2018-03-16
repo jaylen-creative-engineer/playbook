@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import Firebase
+import SwiftyJSON
 
 class ProfileServices {
     
@@ -36,6 +37,27 @@ class ProfileServices {
         }
     }
     
+    func socialLogin(email : String, fullname : String, photoUrl : String, completion: @escaping (User) -> ()){
+        let url = "https://pursuit-jaylenhu27.c9users.io/signup"
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        
+        var parameters = Alamofire.Parameters()
+        parameters["userId"] = userId
+        parameters["email"] = email
+        parameters["fullname"] = fullname
+        parameters["photoUrl"] = photoUrl
+        
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+            switch response.result {
+            case .success:
+                print("Success: \(response.result.isSuccess)")
+            case .failure:
+                print("Failure: \(response.result.isSuccess)")
+            }
+            
+        }
+    }
+    
     // MARK: - GET user account info
     func getAccountDetails(completion: @escaping (User) -> ()) {
         let url = "https://pursuit-jaylenhu27.c9users.io/user"
@@ -48,8 +70,8 @@ class ProfileServices {
             switch response.result {
             case .success:
                 guard let dictionary = response.result.value as? [String: Any] else { return }
-                let user = User(dictionary: dictionary)
-                completion(user)
+//                let user = User(dictionary: dictionary)
+//                completion(user)
             case .failure:
                 print("Failure: \(response.result.isSuccess)")
             }
@@ -58,27 +80,31 @@ class ProfileServices {
     }
     
     
-    func getAccount(completion: @escaping (User, Follower, Pursuit) -> ()) {
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
+    func getAccount(completion: @escaping (User) -> ()) {
+        let url = "https://pursuit-jaylenhu27.c9users.io/user-profile"
         guard let userId = Auth.auth().currentUser?.uid else { return }
-
+        
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId
-        parameters["followerId"] = userId
-
-        Alamofire.request(url, method: .get, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                guard let dictionary = response.result.value as? [String: Any] else { return }
-                let user = User(dictionary: dictionary)
-                // Don't use
-                let follower = Follower(userPhoto: "random")
-                let pursuit = Pursuit(user: user, dictionary: dictionary)
-                completion(user, follower, pursuit)
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
+        
+        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            guard let data = response.data else { return }
+            do {
+                var userData : User?
+                var followData : Follower?
+                var pursuitData : Pursuit?
+                
+                let userResponse = try JSONDecoder().decode([User].self, from: data)
+                userResponse.forEach({ (user) in
+                    userData = user
+                    print(userData?.userId)
+                })
+                
+                guard let userValues = userData else { return }
+                completion(userValues)
+            } catch let error {
+                print(error)
             }
-            
         }
     }
     

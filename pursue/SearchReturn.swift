@@ -58,7 +58,7 @@ class SearchReturn : UITableViewCell, UICollectionViewDelegate, UICollectionView
             let usersCell = collectionView.dequeueReusableCell(withReuseIdentifier: usersId, for: indexPath) as! SearchUsers
             return usersCell
         case 1:
-            let pursuitsCell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! SearchPursuits
+            let pursuitsCell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! SearchSteps
             return pursuitsCell
         case 2:
             let principlesCell = collectionView.dequeueReusableCell(withReuseIdentifier: principlesId, for: indexPath) as! SearchPrinciples
@@ -73,7 +73,7 @@ class SearchReturn : UITableViewCell, UICollectionViewDelegate, UICollectionView
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(SearchUsers.self, forCellWithReuseIdentifier: usersId)
-        collectionView.register(SearchPursuits.self, forCellWithReuseIdentifier: pursuitsId)
+        collectionView.register(SearchSteps.self, forCellWithReuseIdentifier: pursuitsId)
         collectionView.register(SearchPrinciples.self, forCellWithReuseIdentifier: principlesId)
         addSubview(collectionView)
         collectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
