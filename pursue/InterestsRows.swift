@@ -29,12 +29,15 @@ class InterestsRows : UICollectionViewCell, SelectInterestsDelegate {
     let interestsService = InterestServices()
     let engagementService = EngagementServices()
     
+    
     func getSelectedInterests(){
         guard let userId = Auth.auth().currentUser?.uid else { return }
         interestsService.getSelectedInterests(userId: userId) { (interest) in
             DispatchQueue.main.async {
-                self.interests.append(interest)
-                self.interestsCollection.reloadData()
+                interest.forEach({ (value) in
+                    self.interests.append(value)
+                    self.interestsCollection.reloadData()
+                })
             }
         }
     }
@@ -42,12 +45,17 @@ class InterestsRows : UICollectionViewCell, SelectInterestsDelegate {
     func didSelect(for cell: SelectInterestsList) {
         guard let indexPath = interestsCollection.indexPath(for: cell) else { return }
         var interest = self.interests[indexPath.item]
+        guard let interestId = interest.interestId else { return }
+        print(interest)
         
-        engagementService.toggleFollowInterests(interestId: interest.interestId, is_selected: (interest.isSelected == true ? 0 : 1)) { (_) in
-            interest.isSelected = !interest.isSelected
-            self.interests[indexPath.item] = interest
-            self.interestsCollection.reloadItems(at: [indexPath])
+        if interest.selected_interests == 0 {
+            interest.selected_interests = 1
+        } else if interest.selected_interests == 1 {
+            interest.selected_interests = 0
         }
+        self.interests[indexPath.item] = interest
+        self.interestsCollection.reloadItems(at: [indexPath])
+        engagementService.toggleFollowInterests(interestId: interestId, is_selected: interest.selected_interests)
     }
     
     override init(frame: CGRect) {

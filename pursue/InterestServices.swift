@@ -48,27 +48,20 @@ class InterestServices {
     
     // MARK: - GET interests lists
     
-    func getSelectedInterests(userId : String, completion: @escaping (Interests) -> ()){
+    func getSelectedInterests(userId : String, completion: @escaping ([Interests]) -> ()){
         let url = "https://pursuit-jaylenhu27.c9users.io/get-user-interests"
         var parameters = Alamofire.Parameters()
         print(userId)
         parameters["userId"] = userId
 
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                guard let dictionaries = response.result.value as? [Dictionary<String,AnyObject>] else { return }
-                for dictionary in dictionaries {
-                    var interest = Interests(dictionary: dictionary)
-                    if let value = dictionary["SelectedInterests"] as? Int, value == 1 {
-                        interest.isSelected = true
-                    } else {
-                        interest.isSelected = false
-                    }
-                    completion(interest)
-                }
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
+        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            guard let data = response.data else { return }
+            do {
+                var interestsData : Interests?
+                let interestsResponse = try JSONDecoder().decode([Interests].self, from: data)
+                completion(interestsResponse)
+            } catch let error {
+                print(error)
             }
             
         }

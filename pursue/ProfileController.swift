@@ -71,7 +71,6 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         topBackground.addSubview(optionButton)
         
         topBackground.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 30, height: 30)
-        
         optionButton.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: optionButton.intrinsicContentSize.width, height: optionButton.intrinsicContentSize.height)
         optionButton.centerXAnchor.constraint(equalTo: topBackground.centerXAnchor).isActive = true
         optionButton.centerYAnchor.constraint(equalTo: topBackground.centerYAnchor).isActive = true

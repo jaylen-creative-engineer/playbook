@@ -18,11 +18,16 @@ class SelectInterestsList : UICollectionViewCell {
     
     var interest : Interests? {
         didSet {
-            guard let imageUrl = interest?.interestPhoto else { return }
+            guard let imageUrl = interest?.interest_photo else { return }
             cellBackgroundImage.loadImageUsingCacheWithUrlString(imageUrl)
-            interestsLabel.text = interest?.interestName
-            checkMark.isHidden = (interest?.isSelected == false ? true : false)
-            checkMarkBackground.isHidden = (interest?.isSelected == false ? true : false)
+            interestsLabel.text = interest?.interest_name
+            if interest?.selected_interests == 1 {
+                checkMark.isHidden = false
+                checkMarkBackground.isHidden = false
+            } else {
+                checkMark.isHidden = true
+                checkMarkBackground.isHidden = true
+            }
         }
     }
     

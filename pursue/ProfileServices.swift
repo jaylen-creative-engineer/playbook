@@ -91,13 +91,9 @@ class ProfileServices {
             guard let data = response.data else { return }
             do {
                 var userData : User?
-                var followData : Follower?
-                var pursuitData : Pursuit?
-                
                 let userResponse = try JSONDecoder().decode([User].self, from: data)
                 userResponse.forEach({ (user) in
                     userData = user
-                    print(userData?.userId)
                 })
                 
                 guard let userValues = userData else { return }

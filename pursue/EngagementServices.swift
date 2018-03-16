@@ -185,7 +185,7 @@ class EngagementServices {
     
     // MARK: - TOGGLE follow interests
     
-    func toggleFollowInterests(interestId : String, is_selected : Int, completion: @escaping (Interests) -> ()) {
+    func toggleFollowInterests(interestId : String, is_selected : Int) {
         let url = "https://pursuit-jaylenhu27.c9users.io/user-interests"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
