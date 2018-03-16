@@ -66,19 +66,22 @@ class ProfileServices {
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId
         
-        Alamofire.request(url, method: .get, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                guard let dictionary = response.result.value as? [String: Any] else { return }
-//                let user = User(dictionary: dictionary)
-//                completion(user)
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
+        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { response in
+            guard let data = response.data else { return }
+            do {
+                var user : User?
+                let userResponse = try JSONDecoder().decode([User].self, from: data)
+                userResponse.forEach({ (userData) in
+                    user = userData
+                })
+                
+                guard let userValue = user else { return }
+                completion(userValue)
+            } catch let error {
+                print(error)
             }
-            
         }
     }
-    
     
     func getAccount(completion: @escaping (User) -> ()) {
         let url = "https://pursuit-jaylenhu27.c9users.io/user-profile"

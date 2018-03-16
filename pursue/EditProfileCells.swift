@@ -252,11 +252,9 @@ class EditProfileCells : UICollectionViewCell {
 }
 
 extension EditProfileCells : UITextViewDelegate {
+    
     func textViewDidChange(_ textView: UITextView) {
         let size = CGSize(width: frame.width - 24, height: .infinity)
-        
-        // Calculating the height
-        
         let estimatedSize = textView.sizeThatFits(size)
         
         textView.constraints.forEach { (constraint) in

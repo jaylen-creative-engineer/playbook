@@ -57,7 +57,6 @@ class InterestServices {
         Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             guard let data = response.data else { return }
             do {
-                var interestsData : Interests?
                 let interestsResponse = try JSONDecoder().decode([Interests].self, from: data)
                 completion(interestsResponse)
             } catch let error {
