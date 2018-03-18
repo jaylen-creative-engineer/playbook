@@ -95,7 +95,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func getUser(){
-        profileService.getAccount  { (user) in
+        profileService.getAccount  { (user, _) in
             DispatchQueue.main.async {
                 self.user = user
                 guard let photoUrl = user.photoUrl else { return }

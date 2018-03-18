@@ -154,6 +154,23 @@ class EditProfileCells : UICollectionViewCell {
                 }
             })
         }
+        
+        guard let username = usernameLabel.text,
+            let fullname = fullnameLabel.text,
+            let image = self.profilePicture.image,
+            let uploadData = UIImageJPEGRepresentation(image, 0.3)
+            else { return }
+        
+        let filename = NSUUID().uuidString
+        Storage.storage().reference().child("profile-images").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, err) in
+            
+            if let err = err {
+                print("Failed to upload", err)
+            }
+            
+            guard let profileImageURL = metadata?.downloadURL()?.absoluteString else { return }
+            self.profileService.updateAccount(username: username, fullname: fullname, photoUrl: profileImageURL)
+        })
     }
     
     @objc func deleteAccount(){

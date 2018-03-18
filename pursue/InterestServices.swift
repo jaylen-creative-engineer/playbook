@@ -49,7 +49,7 @@ class InterestServices {
     // MARK: - GET interests lists
     
     func getSelectedInterests(userId : String, completion: @escaping ([Interests]) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/get-user-interests"
+        let url = "http://localhost:8080/get-user-interests"
         var parameters = Alamofire.Parameters()
         print(userId)
         parameters["userId"] = userId

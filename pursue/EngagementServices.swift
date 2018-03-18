@@ -15,7 +15,7 @@ class EngagementServices {
     // MARK: - COMMENT ON step/principle/pursuit
     
     func commentOnPost(postId : String, commentId : String, comment_text : String, completion: @escaping (PostComment) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/posts_comments"
+        let url = "http://localhost:8080/posts_comments"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()
@@ -35,7 +35,7 @@ class EngagementServices {
     }
     
     func commentOnPrinciple(principleId : String, commentId : String, comment_text : String, completion: @escaping (PrincipleComment) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/principles_comments"
+        let url = "http://localhost:8080/principles_comments"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()
@@ -55,7 +55,7 @@ class EngagementServices {
     }
     
     func commentOnStep(stepId : String, commentId : String, comment_text : String, completion: @escaping (StepsComment) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/steps_comments"
+        let url = "http://localhost:8080/steps_comments"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()
@@ -77,7 +77,7 @@ class EngagementServices {
     // MARK: - DELETE COMMENT FROM step/principle/pursuit
     
     func deleteCommentFromPost(commentId : String, completion: @escaping (PostComment) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/remove_post_comment"
+        let url = "http://localhost:8080/remove_post_comment"
         var parameters = Alamofire.Parameters()
         parameters["commentId"] = commentId
         
@@ -87,7 +87,7 @@ class EngagementServices {
     }
     
     func deleteCommentFromStep(commentId : String, completion: @escaping (StepsComment) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/remove_step_comment"
+        let url = "http://localhost:8080/remove_step_comment"
         var parameters = Alamofire.Parameters()
         parameters["commentId"] = commentId
         
@@ -98,7 +98,7 @@ class EngagementServices {
     }
     
     func deleteCommentFromPrinciple(commentId : String, completion: @escaping (PrincipleComment) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/remove_principle_comment"
+        let url = "http://localhost:8080/remove_principle_comment"
         var parameters = Alamofire.Parameters()
         parameters["commentId"] = commentId
         
@@ -110,7 +110,7 @@ class EngagementServices {
     // MARK: - TOGGLE saving step
     
     func toggleSaveStep(stepId : String, pursuitId : String, is_saved : Int) {
-        let url = "https://pursuit-jaylenhu27.c9users.io/step_saved"
+        let url = "http://localhost:8080/step_saved"
         var parameters = Alamofire.Parameters()
         parameters["pursuitId"] = pursuitId
         parameters["stepId"] = stepId
@@ -121,7 +121,7 @@ class EngagementServices {
     }
     
     func toggleSavePost(postId : String, pursuitId : String, is_saved : Int) {
-        let url = "https://pursuit-jaylenhu27.c9users.io/post_saved"
+        let url = "http://localhost:8080/post_saved"
         var parameters = Alamofire.Parameters()
         parameters["pursuitId"] = pursuitId
         parameters["postId"] = postId
@@ -132,7 +132,7 @@ class EngagementServices {
     }
     
     func toggleSavePrinciple(principleId : String, pursuitId : String) {
-        let url = "https://pursuit-jaylenhu27.c9users.io/principle_saved"
+        let url = "http://localhost:8080/principle_saved"
         var parameters = Alamofire.Parameters()
         parameters["principleId"] = principleId
         parameters["pursuitId"] = pursuitId
@@ -145,7 +145,7 @@ class EngagementServices {
     // MARK: - TOOGLE like step/principle/pursuit
     
     func togglePostLike(postId : String, is_liked : Int) {
-        let url = "https://pursuit-jaylenhu27.c9users.io/post_liked"
+        let url = "http://localhost:8080/post_liked"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()
@@ -158,7 +158,7 @@ class EngagementServices {
     }
     
     func togglePrincipleLike(principleId : String, is_liked : Int) {
-        let url = "https://pursuit-jaylenhu27.c9users.io/principle_liked"
+        let url = "http://localhost:8080/principle_liked"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()
@@ -171,7 +171,7 @@ class EngagementServices {
     }
     
     func toggleStepLike(stepId : String, is_liked : Int) {
-        let url = "https://pursuit-jaylenhu27.c9users.io/step_liked"
+        let url = "http://localhost:8080/step_liked"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()
@@ -186,7 +186,7 @@ class EngagementServices {
     // MARK: - TOGGLE follow interests
     
     func toggleFollowInterests(interestId : String, is_selected : Int) {
-        let url = "https://pursuit-jaylenhu27.c9users.io/user-interests"
+        let url = "http://localhost:8080/user-interests"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()
@@ -207,7 +207,7 @@ class EngagementServices {
     // MARK: - TOGGLE follow user
     
     func toggleFollowUser(followeeId : String, is_following : Int, completion: @escaping (User) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/follow_user"
+        let url = "http://localhost:8080/follow_user"
         guard let userId = Auth.auth().currentUser?.uid else { return }
 
         var parameters = Alamofire.Parameters()
@@ -223,7 +223,7 @@ class EngagementServices {
     // MARK: - TOGGLE follow pursuit
     
     func toggleFollowPursuit(pursuitId : String, is_following : Int, completion: @escaping (Pursuit) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/follow_pursuit"
+        let url = "http://localhost:8080/follow_pursuit"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()

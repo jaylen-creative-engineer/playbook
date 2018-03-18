@@ -29,6 +29,9 @@ class InterestsRows : UICollectionViewCell, SelectInterestsDelegate {
     let interestsService = InterestServices()
     let engagementService = EngagementServices()
     
+    func createInterests(){
+        interestsService.createInterestsList()
+    }
     
     func getSelectedInterests(){
         guard let userId = Auth.auth().currentUser?.uid else { return }

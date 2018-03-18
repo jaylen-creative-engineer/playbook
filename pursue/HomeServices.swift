@@ -15,7 +15,7 @@ class HomeServices {
     // MARK: - GET pursuits by users interests
     
     func getPursuits(completion: @escaping (Pursuit, Steps, Principles) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/interest-pursuits"
+        let url = "http://localhost:8080/interest-pursuits"
         guard let userId = Auth.auth().currentUser?.uid else { return }
 
         var parameters = Alamofire.Parameters()
@@ -35,7 +35,7 @@ class HomeServices {
     // MARK: - GET users pursuits
     
     func getUserPursuits(completion: @escaping (Pursuit, Post, Steps, Principles) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/user-pursuits"
+        let url = "http://localhost:8080/user-pursuits"
         guard let userId = Auth.auth().currentUser?.uid else { return }
 
         var parameters = Alamofire.Parameters()
@@ -55,7 +55,7 @@ class HomeServices {
     // MARK: - GET post by id
     
     func getPost(postId : String, completion: @escaping (Post) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/one_post"
+        let url = "http://localhost:8080/one_post"
         var parameters = Alamofire.Parameters()
         parameters["postId"] = postId
         
@@ -71,7 +71,7 @@ class HomeServices {
     }
     
     func getStep(stepId : String, completion: @escaping (Steps) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/one_step"
+        let url = "http://localhost:8080/one_step"
         var parameters = Alamofire.Parameters()
         parameters["stepId"] = stepId
         
@@ -87,7 +87,7 @@ class HomeServices {
     }
     
     func getPrinciple(principleId : String, completion: @escaping (Principles) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/one_principle"
+        let url = "http://localhost:8080/one_principle"
         var parameters = Alamofire.Parameters()
         parameters["principleId"] = principleId
         

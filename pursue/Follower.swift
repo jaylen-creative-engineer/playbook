@@ -9,5 +9,6 @@
 import UIKit
 
 struct Follower : Decodable {
-    let userPhoto : String?
+    let photoUrl : String?
+    let userId : String?
 }

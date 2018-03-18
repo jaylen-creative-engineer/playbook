@@ -16,7 +16,7 @@ class ProfileServices {
     // MARK: - CREATE account
     
     func createAccount(email : String, username : String, fullname : String, photoUrl : String){
-        let url = "https://pursuit-jaylenhu27.c9users.io/signup"
+        let url = "http://localhost:8080/signup"
         guard let userId = Auth.auth().currentUser?.uid else { return }
 
         var parameters = Alamofire.Parameters()
@@ -38,7 +38,7 @@ class ProfileServices {
     }
     
     func socialLogin(email : String, fullname : String, photoUrl : String, completion: @escaping (User) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/signup"
+        let url = "http://localhost:8080/signup"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()
@@ -60,7 +60,7 @@ class ProfileServices {
     
     // MARK: - GET user account info
     func getAccountDetails(completion: @escaping (User) -> ()) {
-        let url = "https://pursuit-jaylenhu27.c9users.io/user"
+        let url = "http://localhost:8080/user"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()
@@ -83,8 +83,8 @@ class ProfileServices {
         }
     }
     
-    func getAccount(completion: @escaping (User) -> ()) {
-        let url = "https://pursuit-jaylenhu27.c9users.io/user-profile"
+    func getAccount(completion: @escaping (User, [Follower]) -> ()) {
+        let url = "http://localhost:8080/user-profile"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()
@@ -94,13 +94,22 @@ class ProfileServices {
             guard let data = response.data else { return }
             do {
                 var userData : User?
-                let userResponse = try JSONDecoder().decode([User].self, from: data)
-                userResponse.forEach({ (user) in
-                    userData = user
-                })
+                var followData = [Follower]()
+                var userResponse = try JSONDecoder().decode([User].self, from: data)
+ 
+                for item in userResponse {
+                    if item.userId == userId {
+                        userData = userResponse.first
+                        userResponse.remove(at: 0)
+                    } else if item.userId != userId {
+                        guard let followResponse = try? JSONDecoder().decode([Follower].self, from: data) else { return }
+                        print(followResponse)
+                        followData = followResponse
+                    }
+                }
                 
                 guard let userValues = userData else { return }
-                completion(userValues)
+                completion(userValues, followData)
             } catch let error {
                 print(error)
             }
@@ -111,7 +120,7 @@ class ProfileServices {
     // MARK: - UPDATE user account info
     
     func updateAccount(username : String, fullname : String, photoUrl : String){
-        let url = "https://pursuit-jaylenhu27.c9users.io/signup"
+        let url = "http://localhost:8080/signup"
         guard let userId = Auth.auth().currentUser?.uid else { return }
 
         var parameters = Alamofire.Parameters()
@@ -121,14 +130,13 @@ class ProfileServices {
         parameters["photoUrl"] = photoUrl
         
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-           
         }
     }
     
     // MARK: - DELETE user account
     
     func deleteAccount(){
-        let url = "https://pursuit-jaylenhu27.c9users.io/delete_account"
+        let url = "http://localhost:8080/delete_account"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()

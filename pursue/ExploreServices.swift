@@ -15,7 +15,7 @@ class ExploreServices {
     // MARK: - GET pursuits by interests
     
     func getPursuits(completion: @escaping (Pursuit, Post, Steps, User, Principles) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
+        let url = "http://localhost:8080/"
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
             switch response.result {
@@ -31,7 +31,7 @@ class ExploreServices {
     // MARK: - GET users
     
     func getUsers(completion: @escaping (User) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/"
+        let url = "http://localhost:8080/"
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
             switch response.result {
@@ -47,7 +47,7 @@ class ExploreServices {
     // MARK: - QUERY database by user input
     
     func queryDatabase(searchText : String, completion: @escaping (User, Pursuit, Steps, Principles) -> ()){
-        let url = "https://pursuit-jaylenhu27.c9users.io/search"
+        let url = "http://localhost:8080/search"
         var parameters = Alamofire.Parameters()
         parameters["searchText"] = searchText
         
