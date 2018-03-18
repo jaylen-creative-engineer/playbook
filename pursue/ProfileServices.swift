@@ -83,33 +83,31 @@ class ProfileServices {
         }
     }
     
-    func getAccount(completion: @escaping (User, [Follower]) -> ()) {
+    func getAccount(completion: @escaping (User) -> ()) {
         let url = "http://localhost:8080/user-profile"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId
+        print("userId \(userId)")
         
         Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             guard let data = response.data else { return }
+            let json = JSON(data)
+            print(json[0]["followees"])
+            let image = json[0]["followees"].stringValue
+            let follower = Follower(photoUrl: image)
+            print(follower)
+            
             do {
                 var userData : User?
-                var followData = [Follower]()
-                var userResponse = try JSONDecoder().decode([User].self, from: data)
- 
-                for item in userResponse {
-                    if item.userId == userId {
-                        userData = userResponse.first
-                        userResponse.remove(at: 0)
-                    } else if item.userId != userId {
-                        guard let followResponse = try? JSONDecoder().decode([Follower].self, from: data) else { return }
-                        print(followResponse)
-                        followData = followResponse
-                    }
-                }
+                let userResponse = try JSONDecoder().decode([User].self, from: data)
+                userResponse.forEach({ (user) in
+                    userData = user
+                })
                 
                 guard let userValues = userData else { return }
-                completion(userValues, followData)
+                completion(userValues)
             } catch let error {
                 print(error)
             }

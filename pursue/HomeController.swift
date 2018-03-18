@@ -11,8 +11,8 @@ import XLActionController
 import iCarousel
 import Alamofire
 import SwiftyJSON
-import Hero
 import Instructions
+import Firebase
 
 class HomeController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
     

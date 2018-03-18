@@ -8,7 +8,10 @@
 
 import UIKit
 
-struct Follower : Decodable {
-    let photoUrl : String?
-    let userId : String?
+struct Follower {
+    let photoUrl : String
+    
+    init(photoUrl : String) {
+        self.photoUrl = photoUrl
+    }
 }
