@@ -10,9 +10,15 @@ import UIKit
 
 class FollowingCells : UICollectionViewCell {
     
-    let imageView : UIImageView = {
-       let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
+    var follower : Follower? {
+        didSet {
+            guard let photoUrl = follower?.photoUrl else { return }
+            self.imageView.loadImage(urlString: photoUrl)
+        }
+    }
+    
+    let imageView : CustomImageView = {
+       let iv = CustomImageView()
         iv.contentMode = .scaleAspectFill
         iv.layer.masksToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false

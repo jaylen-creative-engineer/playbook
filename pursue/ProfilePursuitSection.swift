@@ -12,6 +12,12 @@ class ProfilePursuitSection : UICollectionViewCell, UICollectionViewDelegate, UI
     
     var accessProfileController : ProfileController?
     
+    var pursuit : Pursuit? {
+        didSet{
+            userAddedLabel.setTitle(pursuit?.pursuitDescription, for: .normal)
+        }
+    }
+    
     lazy var userAddedLabel : UIButton = {
         let label = UIButton()
         label.setTitle("Build a great company", for: .normal)

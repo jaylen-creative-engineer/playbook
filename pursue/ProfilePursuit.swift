@@ -10,6 +10,7 @@ import UIKit
 
 class ProfilePursuit : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    var pursuits = [Pursuit]()
     var accessProfileController : ProfileController?
     
     let pursuitCollectionView : UICollectionView = {

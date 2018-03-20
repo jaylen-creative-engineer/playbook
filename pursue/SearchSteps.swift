@@ -18,7 +18,7 @@ class SearchSteps : UICollectionViewCell, UICollectionViewDelegate, UICollection
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
-        label.text = "Pursuits"
+        label.text = "Steps"
         label.textAlignment = .left
         return label
     }()

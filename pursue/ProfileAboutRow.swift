@@ -15,10 +15,31 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
             fullnameLabel.text = user?.fullname
             usernameLabel.text = user?.username
             userBio.text = user?.bio
+            
+            guard let follow = user?.followees else { return }
+            followerArray = follow
+            
+            guard let following_count = user?.following_count else { return }
+            guard let followers_count = user?.followers_count else { return }
+            followingCount.text = String(describing: following_count)
+            followersCount.text = String(describing: followers_count)
+            
+            if (following_count + followers_count) > 3 {
+                let differenceLabel = (followers_count + following_count) - 3
+                additionalFollowing.text = String(describing: differenceLabel)
+            } else {
+                additionalFollowing.isHidden = true
+                additionalPlusFollowing.isHidden = true
+            }
+            
+            followingCollectionView.reloadData()
         }
     }
-    
+
     let cellId = "cellId"
+    
+    var followerArray = [Follower]()
+    var followImage : [String?] = []
     
     let fullnameLabel : UILabel = {
         let label = UILabel()
@@ -63,10 +84,10 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
     
     let followersCount : UILabel = {
        let label = UILabel()
-        label.text = "123"
         label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = true
+        label.textAlignment = .center
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(followersSelected))
         tap.numberOfTapsRequired = 1
@@ -89,10 +110,10 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
     
     lazy var followingCount : UILabel = {
         let label = UILabel()
-        label.text = "123"
         label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = true
+        label.textAlignment = .center
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(followersSelected))
         tap.numberOfTapsRequired = 1
@@ -156,8 +177,20 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
     }()
     
     lazy var additionalFollowing : UILabel = {
+        let label = UILabel()
+        label.text = ""
+        label.isUserInteractionEnabled = true
+        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.init(25))
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(followersSelected))
+        tap.numberOfTapsRequired = 1
+        label.addGestureRecognizer(tap)
+        return label
+    }()
+    
+    lazy var additionalPlusFollowing : UILabel = {
        let label = UILabel()
-        label.text = "5k +"
+        label.text = "+"
         label.isUserInteractionEnabled = true
         label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.init(25))
         
@@ -185,13 +218,17 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         followingCollectionView.register(FollowingCells.self, forCellWithReuseIdentifier: followId)
         addSubview(followingCollectionView)
         addSubview(additionalFollowing)
+        addSubview(additionalPlusFollowing)
+        
         followingCollectionView.anchor(top: usernameLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: 100, height: 80)
         additionalFollowing.anchor(top: nil, left: followingCollectionView.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: additionalFollowing.intrinsicContentSize.width, height: additionalFollowing.intrinsicContentSize.height)
         additionalFollowing.centerYAnchor.constraint(equalTo: followingCollectionView.centerYAnchor).isActive = true
+        additionalPlusFollowing.anchor(top: nil, left: additionalFollowing.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: additionalPlusFollowing.intrinsicContentSize.width, height: additionalPlusFollowing.intrinsicContentSize.height)
+        additionalPlusFollowing.centerYAnchor.constraint(equalTo: additionalFollowing.centerYAnchor).isActive = true
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -208,6 +245,10 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: followId, for: indexPath) as! FollowingCells
+        
+        if !followerArray.isEmpty {
+            cell.imageView.loadImage(urlString: followerArray[indexPath.item].photoUrl!)
+        }
         return cell
     }
     
@@ -240,6 +281,7 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         addSubview(usernameLabel)
         addSubview(notificationsBackground)
         addSubview(notificationImageView)
+        
         fullnameLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: fullnameLabel.intrinsicContentSize.width, height: fullnameLabel.intrinsicContentSize.height)
         usernameLabel.anchor(top: fullnameLabel.bottomAnchor, left: fullnameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
         notificationsBackground.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 40, height: 40)

@@ -209,13 +209,15 @@ extension ExploreController : UISearchBarDelegate {
             recentTableView.isHidden = true
             view.addSubview(searchTableView)
             searchTableView.anchor(top: searchBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+            getSearchContent(searchText: searchText)
         }
     }
     
     func getSearchContent(searchText : String){
-//        exploreService.queryDatabase(searchText: searchText) { (user, pursuit, steps, principles) in
-//            <#code#>
-//        }
+        let queryString = searchText + "%"
+        exploreService.queryDatabase(searchText: queryString) { (search) in
+            print(search)
+        }
     }
 }
 

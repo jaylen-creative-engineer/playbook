@@ -95,15 +95,22 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func getUser(){
-        profileService.getAccount  { (user) in
+        profileService.getAccount { (user) in
             DispatchQueue.main.async {
                 self.user = user
+                user.followees.forEach({ (follower) in
+                    self.followers.append(follower)
+                })
+                
+                user.pursuits.forEach({ (pursuit) in
+                    self.pursuits.append(pursuit)
+                })
+                
                 guard let photoUrl = user.photoUrl else { return }
                 self.imageView.loadImage(urlString: photoUrl)
                 self.collectionView?.reloadData()
             }
         }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -202,6 +209,7 @@ extension ProfileController {
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuit
             cell.accessProfileController = self
+            cell.pursuits = pursuits
             return cell
         default:
             assert(false, "Not a valid row")

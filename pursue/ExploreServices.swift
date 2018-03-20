@@ -46,19 +46,20 @@ class ExploreServices {
     
     // MARK: - QUERY database by user input
     
-    func queryDatabase(searchText : String, completion: @escaping (User, Pursuit, Steps, Principles) -> ()){
+    func queryDatabase(searchText : String, completion: @escaping (Search) -> ()){
         let url = "http://localhost:8080/search"
         var parameters = Alamofire.Parameters()
         parameters["searchText"] = searchText
         
-        Alamofire.request(url, method: .get, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
+        print(searchText)
+        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            guard let data = response.data else { return }
+            do {
+                let searchResponse = try JSONDecoder().decode(Search.self, from: data)
+                completion(searchResponse)
+            } catch let error {
+                print(error)
             }
-            
         }
     }
 }

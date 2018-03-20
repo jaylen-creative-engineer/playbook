@@ -93,12 +93,6 @@ class ProfileServices {
         
         Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             guard let data = response.data else { return }
-            let json = JSON(data)
-            print(json[0]["followees"])
-            let image = json[0]["followees"].stringValue
-            let follower = Follower(photoUrl: image)
-            print(follower)
-            
             do {
                 var userData : User?
                 let userResponse = try JSONDecoder().decode([User].self, from: data)
