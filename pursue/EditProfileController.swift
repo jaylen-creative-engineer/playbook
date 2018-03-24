@@ -45,7 +45,6 @@ class EditProfileController : UICollectionViewController, UICollectionViewDelega
     
     @objc func handleCancel(){
         dismiss(animated: true, completion: nil)
-//        navigationController?.popViewController(animated: true)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -88,7 +87,6 @@ class EditProfileController : UICollectionViewController, UICollectionViewDelega
     func getUser(){
         profileServices.getAccountDetails { (user) in
             self.user = user
-            print(user)
             self.collectionView?.reloadData()
         }
     }

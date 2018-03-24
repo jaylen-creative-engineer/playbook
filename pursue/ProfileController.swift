@@ -180,8 +180,7 @@ extension ProfileController {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 0:
-            // MARK: - Fix This
-            if let bio = user?.username {
+            if let bio = user?.bio {
                 let approximateWidthOfBio = view.frame.width - 20 - 8
                 let size = CGSize(width: approximateWidthOfBio, height: .infinity)
                 let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12)]
@@ -210,7 +209,10 @@ extension ProfileController {
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuit
             cell.accessProfileController = self
-            cell.pursuits = pursuits
+            
+            if !pursuits.isEmpty {
+                cell.pursuits = pursuits
+            }
             return cell
         default:
             assert(false, "Not a valid row")

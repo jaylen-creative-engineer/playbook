@@ -224,13 +224,13 @@ extension CustomAlertView : UICollectionViewDelegate, UICollectionViewDataSource
                 switch true {
                 case self.is_step == 1:
                     self.createService.addStepToPursuit(pursuitId: pursuitId!, interestId: interestId!, stepId: filename, contentUrl: videoUrl, thumbnailUrl: self.capturedImage, stepDescription: self.postDescription.text!, is_visible: 0, is_public: 0)
-                    
+                    self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
                 case self.is_principle == 1:
                     self.createService.addPrincipleToPursuit(pursuitId: pursuitId!, interestId: interestId!, principleId: filename, contentUrl: videoUrl, thumbnailUrl: self.capturedImage, principleDescription: self.postDescription.text!, is_visible: 0, is_public: 0)
-                    
+                    self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
                 case self.is_step == 0 && self.is_principle == 0:
                     self.createService.addPostToPursuit(pursuitId: pursuitId!, interestId: interestId!, postId: filename, contentUrl: videoUrl, thumbnailUrl: self.capturedImage, is_step: self.is_step, is_principle: self.is_principle)
-                    
+                    self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
                 default:
                     assert(false, "Not a valid post")
                 }
@@ -239,13 +239,13 @@ extension CustomAlertView : UICollectionViewDelegate, UICollectionViewDataSource
             switch true {
             case self.is_step == 1:
                 self.createService.addStepToPursuit(pursuitId: pursuitId!, interestId: interestId!, stepId: filename, contentUrl: " ", thumbnailUrl: self.capturedImage, stepDescription: self.postDescription.text!, is_visible: 0, is_public: 0)
-                
+                self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
             case self.is_principle == 1:
                 self.createService.addPrincipleToPursuit(pursuitId: pursuitId!, interestId: interestId!, principleId: filename, contentUrl: " ", thumbnailUrl: self.capturedImage, principleDescription: self.postDescription.text!, is_visible: 0, is_public: 0)
-                
+                self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
             case self.is_step == 0 && self.is_principle == 0:
                 self.createService.addPostToPursuit(pursuitId: pursuitId!, interestId: interestId!, postId: filename, contentUrl: " ", thumbnailUrl: self.capturedImage, is_step: self.is_step, is_principle: self.is_principle)
-                
+                self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
             default:
                 assert(false, "Not a valid post")
             }

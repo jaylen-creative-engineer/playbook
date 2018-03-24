@@ -14,13 +14,15 @@ class ProfilePursuitSection : UICollectionViewCell, UICollectionViewDelegate, UI
     
     var pursuit : Pursuit? {
         didSet{
+            print(pursuit)
             userAddedLabel.setTitle(pursuit?.pursuitDescription, for: .normal)
         }
     }
     
+    var image = [String]()
+    
     lazy var userAddedLabel : UIButton = {
         let label = UIButton()
-        label.setTitle("Build a great company", for: .normal)
         label.setTitleColor(.black, for: .normal)
         label.isUserInteractionEnabled = true
         label.titleLabel?.font = .boldSystemFont(ofSize: 14)
@@ -57,8 +59,13 @@ class ProfilePursuitSection : UICollectionViewCell, UICollectionViewDelegate, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfilePursuitCells
-        return cell
+        if !image.isEmpty {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfilePursuitCells
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfilePursuitCells
+            return cell
+        }
     }
     
     func setupView(){

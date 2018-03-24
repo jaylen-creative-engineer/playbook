@@ -117,22 +117,22 @@ class CustomCreateView : UIViewController {
     @objc func handleSend(){
         let pursuitId = NSUUID().uuidString
         
-        if (contentUrl != nil) {
-            Storage.storage().reference().child("pursuit-video").child(pursuitId).putFile(from: contentUrl!, metadata: nil) { (metadata, err) in
-                if let err = err {
-                    print("Failed to upload", err)
-                }
-                
-                guard let videoUrl = metadata?.downloadURL()?.absoluteString else { return }
-                self.createService.createPursuit(pursuitId: pursuitId, interestId: "29E01BE3-F2D0-413D-BF1F-4349DB1045E2", contentUrl: videoUrl, thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_visible: 0, is_public: 0)
-            }
-        }
-        
-        createService.createPursuit(pursuitId: pursuitId, interestId: "29E01BE3-F2D0-413D-BF1F-4349DB1045E2", contentUrl: "", thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_visible: 0, is_public: 0)
-        
-        guard let mainTabController = UIApplication.shared.keyWindow?.rootViewController as? MainTabController else { return }
-        mainTabController.setupViewControllers()
-        mainTabController.selectedIndex = 0
+//        if (contentUrl != nil) {
+//            Storage.storage().reference().child("pursuit-video").child(pursuitId).putFile(from: contentUrl!, metadata: nil) { (metadata, err) in
+//                if let err = err {
+//                    print("Failed to upload", err)
+//                }
+//
+//                guard let videoUrl = metadata?.downloadURL()?.absoluteString else { return }
+//                self.createService.createPursuit(pursuitId: pursuitId, interestId: "29E01BE3-F2D0-413D-BF1F-4349DB1045E2", contentUrl: videoUrl, thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_visible: 0, is_public: 0)
+//               self.navigationController?.popToRootViewController(animated: true)
+//
+//            }
+//        }
+//
+//        createService.createPursuit(pursuitId: pursuitId, interestId: "29E01BE3-F2D0-413D-BF1F-4349DB1045E2", contentUrl: "", thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_visible: 0, is_public: 0)
+//
+        self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
     }
     
     @objc func handleDismiss(){

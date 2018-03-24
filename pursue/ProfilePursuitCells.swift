@@ -96,23 +96,10 @@ class ProfilePursuitCells : UICollectionViewCell {
         return button
     }()
     
-    let exploreMainDescription : UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
-        label.textAlignment = .justified
-        label.text = "Text is here"
-        return label
-    }()
-    
     @objc func handleImageTap(){
     }
     
     @objc func handleImageHold(){
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        exploreMainDescription.sizeToFit()
     }
     
     func setupView() {
