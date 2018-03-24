@@ -197,6 +197,15 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         return button
     }()
     
+    lazy var addTextButton : UIButton = {
+       let button = UIButton()
+        button.setTitle("Ab", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
+        button.addTarget(self, action: #selector(setupEditTextField), for: .touchUpInside)
+        return button
+    }()
+    
     @objc func handlePursuit(){
         if pursuitTitle.isHidden == false {
             guard let image = backgroundImageView.image else { return }
@@ -291,9 +300,11 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     func setupTopOptions() {
         view.addSubview(cancelButton)
         view.addSubview(keyboardButton)
+        view.addSubview(addTextButton)
         
         cancelButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
         keyboardButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 22, height: 17)
+        addTextButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: keyboardButton.leftAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: addTextButton.intrinsicContentSize.width, height: addTextButton.intrinsicContentSize.height)
     }
  
     func setupView(){
