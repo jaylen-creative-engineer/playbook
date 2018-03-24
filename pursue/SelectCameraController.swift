@@ -146,18 +146,6 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
         cancelButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
     }
     
-    
-    let customAnimationPresentor = CreateCustomAnimationPresentor()
-    let customAnimationDismisser = CreateCustomAnimationDismisser()
-    
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return customAnimationDismisser
-    }
-    
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return customAnimationPresentor
-    }
-    
     @objc func cameraSwitchTapped(){
         switchCamera()
     }

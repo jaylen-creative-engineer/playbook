@@ -12,7 +12,8 @@ class BioInputTextView : UITextView {
     
     fileprivate let placeholderLabel: UILabel = {
         let label = UILabel()
-        label.text = "Create Bio"
+        label.text = "Enter bio"
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.black
         return label
     }()
@@ -27,7 +28,7 @@ class BioInputTextView : UITextView {
         NotificationCenter.default.addObserver(self, selector: #selector(handleTextChange), name: .UITextViewTextDidChange, object: nil)
         
         addSubview(placeholderLabel)
-        placeholderLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        placeholderLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 8, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
     @objc func handleTextChange() {

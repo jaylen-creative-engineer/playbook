@@ -14,7 +14,7 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         didSet{
             fullnameLabel.text = user?.fullname
             usernameLabel.text = user?.username
-            userBio.text = user?.bio
+//            userBio.text = user?.bio
             
             guard let follow = user?.followees else { return }
             followerArray = follow

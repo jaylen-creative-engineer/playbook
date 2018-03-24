@@ -140,17 +140,6 @@ class PhotoLibrary : SwiftyCamViewController, UICollectionViewDelegate, UICollec
         return fetchResult.count
     }
     
-    let customAnimationPresentor = CustomAnimationPresentor()
-    let customAnimationDismisser = CustomAnimationDismisser()
-    
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return customAnimationDismisser
-    }
-    
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return customAnimationPresentor
-    }
-    
     var imageAsset : PHAsset?
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

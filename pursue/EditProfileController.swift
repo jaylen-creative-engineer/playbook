@@ -66,6 +66,7 @@ class EditProfileController : UICollectionViewController, UICollectionViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.backgroundColor = .white
+        collectionView?.showsVerticalScrollIndicator = false
         collectionView?.register(EditProfileCells.self, forCellWithReuseIdentifier: cellId)
         setupNavBarWithUser()
         getUser()
@@ -81,7 +82,7 @@ class EditProfileController : UICollectionViewController, UICollectionViewDelega
         tabBarController?.tabBar.isHidden = false
     }
     
-    var user : User?
+    var user : UserDetails?
     var profileServices = ProfileServices()
     
     func getUser(){

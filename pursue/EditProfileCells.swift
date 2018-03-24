@@ -14,7 +14,7 @@ class EditProfileCells : UICollectionViewCell {
     
     var accessEditProfileController : EditProfileController?
     
-    var user : User? {
+    var user : UserDetails? {
         didSet {
             guard let imageUrl = user?.photoUrl else { return }
             profilePicture.loadImageUsingCacheWithUrlString(imageUrl)
@@ -53,15 +53,19 @@ class EditProfileCells : UICollectionViewCell {
         return tv
     }()
     
-    lazy var bioLabel : UITextView = {
-        let tv = UITextView()
+    lazy var bioLabel : BioInputTextView = {
+        let tv = BioInputTextView()
         tv.isScrollEnabled = false
         tv.font = UIFont.systemFont(ofSize: 14)
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.delegate = self
-        tv.text = "Enter bio"
         return tv
     }()
+    
+    func clearCommentTextField() {
+        bioLabel.text = nil
+        bioLabel.showPlaceholderLabel()
+    }
     
     lazy var currentLabel : UITextField = {
         let tv = UITextField()

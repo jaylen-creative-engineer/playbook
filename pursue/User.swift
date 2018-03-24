@@ -14,7 +14,7 @@ struct User : Decodable {
     let username : String?
     let fullname : String?
     let photoUrl : String?
-    let bio : String?
+//    let bio : String?
     let email : String?
     let followees : [Follower]
     let pursuits : [Pursuit]

@@ -180,12 +180,13 @@ extension ProfileController {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 0:
-            if let bio = user?.bio {
+            // MARK: - Fix This
+            if let bio = user?.username {
                 let approximateWidthOfBio = view.frame.width - 20 - 8
                 let size = CGSize(width: approximateWidthOfBio, height: .infinity)
                 let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12)]
                 let estimatedFrame = NSString(string: bio).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-                return CGSize(width: view.frame.width, height: estimatedFrame.height + 30)
+                return CGSize(width: view.frame.width, height: estimatedFrame.height + 120)
             }
             return CGSize(width: view.frame.width, height: 155)
         case 1:

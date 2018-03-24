@@ -59,8 +59,8 @@ class ProfileServices {
     }
     
     // MARK: - GET user account info
-    func getAccountDetails(completion: @escaping (User) -> ()) {
-        let url = "http://localhost:8080/user"
+    func getAccountDetails(completion: @escaping (UserDetails) -> ()) {
+        let url = "http://localhost:8080/user-details"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
         var parameters = Alamofire.Parameters()
@@ -69,14 +69,8 @@ class ProfileServices {
         Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { response in
             guard let data = response.data else { return }
             do {
-                var user : User?
-                let userResponse = try JSONDecoder().decode([User].self, from: data)
-                userResponse.forEach({ (userData) in
-                    user = userData
-                })
-                
-                guard let userValue = user else { return }
-                completion(userValue)
+                let userResponse = try JSONDecoder().decode(UserDetails.self, from: data)
+                completion(userResponse)
             } catch let error {
                 print(error)
             }
