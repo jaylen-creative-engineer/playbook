@@ -198,13 +198,23 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     }()
     
     @objc func handlePursuit(){
-        guard let image = backgroundImageView.image else { return }
-        let customAlert = CustomAlertView(capturedImage: image, contentUrl: nil, postDescription: pursuitTitle.text, is_principle: is_principle, is_step: is_step)
-        customAlert.providesPresentationContextTransitionStyle = true
-        customAlert.definesPresentationContext = true
-        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.present(customAlert, animated: true, completion: nil)
+        if pursuitTitle.isHidden == false {
+            guard let image = backgroundImageView.image else { return }
+            let customAlert = CustomAlertView(capturedImage: image, contentUrl: nil, postDescription: pursuitTitle.text, is_principle: is_principle, is_step: is_step)
+            customAlert.providesPresentationContextTransitionStyle = true
+            customAlert.definesPresentationContext = true
+            customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            self.present(customAlert, animated: true, completion: nil)
+        } else {
+            guard let image = backgroundImageView.image else { return }
+            let customAlert = CustomAlertView(capturedImage: image, contentUrl: nil, postDescription: "", is_principle: is_principle, is_step: is_step)
+            customAlert.providesPresentationContextTransitionStyle = true
+            customAlert.definesPresentationContext = true
+            customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            self.present(customAlert, animated: true, completion: nil)
+        }
     }
     
     @objc func handleSave(){
@@ -291,6 +301,8 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         
         principleLabel.isHidden = true
         stepLabel.isHidden = true
+        pursuitTitle.isHidden = true
+        pursuitUnderline.isHidden = true
         
         view.addSubview(backgroundImageView)
         view.addSubview(principleLabel)

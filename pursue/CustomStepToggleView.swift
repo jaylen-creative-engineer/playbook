@@ -83,7 +83,7 @@ class CustomStepToggleView : UIViewController {
         button.setTitle("Cancel", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.textAlignment = .center
-        button.titleLabel?.font = .boldSystemFont(ofSize: 14)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
         button.backgroundColor = .clear
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
@@ -191,12 +191,16 @@ class CustomStepToggleView : UIViewController {
             photoController?.is_step = 0
             photoController?.stepLabel.isHidden = true
             photoController?.principleLabel.isHidden = true
+            photoController?.pursuitUnderline.isHidden = true
+            photoController?.pursuitTitle.isHidden = true
             dismiss(animated: true, completion: nil)
         } else {
             stepCheckMark.isHidden = true
             photoController?.is_step = 1
             photoController?.stepLabel.isHidden = false
             photoController?.principleLabel.isHidden = true
+            photoController?.pursuitUnderline.isHidden = false
+            photoController?.pursuitTitle.isHidden = false
             dismiss(animated: true, completion: nil)
         }
     }
@@ -207,12 +211,16 @@ class CustomStepToggleView : UIViewController {
             photoController?.is_principle = 0
             photoController?.principleLabel.isHidden = true
             photoController?.stepLabel.isHidden = true
+            photoController?.pursuitUnderline.isHidden = true
+            photoController?.pursuitTitle.isHidden = true
             dismiss(animated: true, completion: nil)
         } else {
             principleCheckMark.isHidden = true
             photoController?.is_principle = 1
             photoController?.principleLabel.isHidden = false
             photoController?.stepLabel.isHidden = true
+            photoController?.pursuitUnderline.isHidden = false
+            photoController?.pursuitTitle.isHidden = false
             dismiss(animated: true, completion: nil)
         }
        
