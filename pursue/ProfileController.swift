@@ -130,7 +130,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         customAlert.definesPresentationContext = true
         customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.present(customAlert, animated: true, completion: nil)
+        self.showDetailViewController(customAlert, sender: self)
         
     }
     
