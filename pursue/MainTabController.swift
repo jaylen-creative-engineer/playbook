@@ -77,7 +77,6 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
         tabProfile.selectedImage = #imageLiteral(resourceName: "profile-selected").withRenderingMode(.alwaysOriginal)
         
         for item in items {
-            
             item.imageInsets = UIEdgeInsetsMake(4, 4, -4, -4)
         }
     }

@@ -27,8 +27,6 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
         setupView()
         toggleFlash()
         
-        navigationController?.isHeroEnabled = true
-
         let allPhotosOptions = PHFetchOptions()
         allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
         allPhotos = PHAsset.fetchAssets(with: allPhotosOptions)
@@ -170,7 +168,10 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
     }
     
     func swiftyCam(_ swiftyCam: SwiftyCamViewController, didTake photo: UIImage) {
-        let newVC = PhotoViewController(image: photo)
+        let newVC = PhotoViewController()
+        newVC.backgroundImageView.image = photo
+//        guard let viewAsset = imageAsset else { return }
+//        newVC.asset = viewAsset
         self.present(newVC, animated: true, completion: nil)
     }
 
@@ -191,7 +192,7 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
     }
 
     func swiftyCam(_ swiftyCam: SwiftyCamViewController, didFinishProcessVideoAt url: URL) {
-        let newVC = VideoViewController(videoURL: url)
+        let newVC = VideoViewController()
         self.present(newVC, animated: true, completion: nil)
     }
 

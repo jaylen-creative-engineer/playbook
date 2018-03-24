@@ -69,7 +69,6 @@ class VideoViewController: AssetSelectionViewController {
     
     lazy var pursuitTitle : UITextView = {
         let tv = UITextView()
-        tv.delegate = self
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.font = UIFont.boldSystemFont(ofSize: 14)
         tv.isScrollEnabled = false
@@ -155,9 +154,35 @@ class VideoViewController: AssetSelectionViewController {
     
     var playbackTimeCheckerTimer: Timer?
     var trimmerPositionChangedTimer: Timer?
+    var is_principle = 0
+    var is_step = 0
+    
+    func generateThumnail(url : URL, fromTime:Float64) -> UIImage {
+        let asset = AVAsset(url: url)
+        let assetImgGenerate = AVAssetImageGenerator(asset: asset)
+        assetImgGenerate.appliesPreferredTrackTransform = true
+        assetImgGenerate.requestedTimeToleranceAfter = kCMTimeZero;
+        assetImgGenerate.requestedTimeToleranceBefore = kCMTimeZero;
+        let time = CMTimeMakeWithSeconds(fromTime, 600)
+        
+        do {
+            
+            let img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
+            let image : UIImage = UIImage.init(cgImage: img)
+            return image
+            
+         } catch let error as NSError {
+            
+            print("Image generation failed with error \(error)")
+            return UIImage(color: .clear)!
+        }
+    }
     
     @objc func handlePursuit(){
-        let customAlert = CustomAlertView()
+        let grabTime = 0.10
+        let image = generateThumnail(url: videoURL!, fromTime: Float64(grabTime))
+        
+        let customAlert = CustomAlertView(capturedImage: image, contentUrl: videoURL, postDescription: pursuitTitle.text, is_principle: is_principle, is_step: is_step)
         customAlert.providesPresentationContextTransitionStyle = true
         customAlert.definesPresentationContext = true
         customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
@@ -168,7 +193,7 @@ class VideoViewController: AssetSelectionViewController {
     
     @objc func handleSave(){
         PHPhotoLibrary.shared().performChanges({
-            PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: self.videoURL)
+            PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: self.videoURL!)
         }) { saved, error in
             if saved {
                 let alertController = UIAlertController(title: "Your video was successfully saved", message: nil, preferredStyle: .alert)
@@ -195,22 +220,9 @@ class VideoViewController: AssetSelectionViewController {
         present(actionController, animated: true, completion: nil)
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-    
-    private var videoURL: URL
+    var videoURL: URL?
     var player: AVPlayer?
     var playerController : AVPlayerViewController?
-    
-    init(videoURL: URL) {
-        self.videoURL = videoURL
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     func setupBottomLeftOptions(){
         view.addSubview(highlightLabel)
@@ -267,7 +279,7 @@ class VideoViewController: AssetSelectionViewController {
         self.view.backgroundColor = UIColor.white
         navigationController?.isHeroEnabled = true
         
-        player = AVPlayer(url: videoURL)
+        player = AVPlayer(url: videoURL!)
         playerController = AVPlayerViewController()
         playerController?.videoGravity = AVLayerVideoGravity.resizeAspectFill.rawValue
         
@@ -315,7 +327,7 @@ class VideoViewController: AssetSelectionViewController {
         // override in subclass
         isCrop = !isCrop
         if isCrop == true {
-            let asset = AVAsset(url: videoURL)
+            let asset = AVAsset(url: videoURL!)
             trimmerView.asset = asset
             trimmerView.isHidden = false
         } else {
@@ -350,10 +362,6 @@ class VideoViewController: AssetSelectionViewController {
 
 }
 
-extension VideoViewController : UITextViewDelegate {
-    
-}
-
 extension VideoViewController: TrimmerViewDelegate {
     
     func positionBarStoppedMoving(_ playerTime: CMTime) {
@@ -366,7 +374,6 @@ extension VideoViewController: TrimmerViewDelegate {
         stopPlaybackTimeChecker()
         player?.pause()
         player?.seek(to: playerTime, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
-        let duration = (trimmerView.endTime! - trimmerView.startTime!).seconds
-        print(duration)
+        let _ = (trimmerView.endTime! - trimmerView.startTime!).seconds
     }
 }

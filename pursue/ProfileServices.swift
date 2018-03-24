@@ -89,7 +89,6 @@ class ProfileServices {
         
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId
-        print("userId \(userId)")
         
         Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             guard let data = response.data else { return }

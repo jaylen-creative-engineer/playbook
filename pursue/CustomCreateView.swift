@@ -8,11 +8,13 @@
 
 import UIKit
 import Hero
+import Firebase
 
 class CustomCreateView : UIViewController {
     
     let alertViewGrayColor = UIColor(red: 224.0/255.0, green: 224.0/255.0, blue: 224.0/255.0, alpha: 1)
     let cellId = "cellId"
+    var accessAlertController : CustomAlertView?
     
     lazy var alertView : UIView = {
         let view = UIView()
@@ -29,6 +31,11 @@ class CustomCreateView : UIViewController {
         iv.layer.masksToBounds = true
         return iv
     }()
+    
+    var contentUrl : URL?
+    
+    var is_principle = 0
+    var is_step = 0
     
     lazy var sendButton : UIButton = {
         let button = UIButton()
@@ -78,7 +85,6 @@ class CustomCreateView : UIViewController {
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.font = UIFont.boldSystemFont(ofSize: 12)
         tv.isScrollEnabled = false
-        tv.isUserInteractionEnabled = false
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 60
@@ -109,16 +115,41 @@ class CustomCreateView : UIViewController {
     let createService = CreateServices()
     
     @objc func handleSend(){
-//        createService.createPursuit(pursuitId: <#T##String#>, contentUrl: <#T##String#>, thumbnailUrl: <#T##String#>, pursuitDescription: <#T##String#>, is_visible: 1)
+        let pursuitId = NSUUID().uuidString
+        
+        if (contentUrl != nil) {
+            Storage.storage().reference().child("pursuit-video").child(pursuitId).putFile(from: contentUrl!, metadata: nil) { (metadata, err) in
+                if let err = err {
+                    print("Failed to upload", err)
+                }
+                
+                guard let videoUrl = metadata?.downloadURL()?.absoluteString else { return }
+                self.createService.createPursuit(pursuitId: pursuitId, interestId: "29E01BE3-F2D0-413D-BF1F-4349DB1045E2", contentUrl: videoUrl, thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_visible: 0, is_public: 0)
+            }
+        }
+        
+        createService.createPursuit(pursuitId: pursuitId, interestId: "29E01BE3-F2D0-413D-BF1F-4349DB1045E2", contentUrl: "", thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_visible: 0, is_public: 0)
+        
+        guard let mainTabController = UIApplication.shared.keyWindow?.rootViewController as? MainTabController else { return }
+        mainTabController.setupViewControllers()
+        mainTabController.selectedIndex = 0
     }
     
     @objc func handleDismiss(){
-        let customAlert = CustomAlertView()
-        customAlert.providesPresentationContextTransitionStyle = true
-        customAlert.definesPresentationContext = true
-        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.present(customAlert, animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
+    }
+    
+    init(capturedImage : UIImage?, contentUrl : URL?, pursuitTitle : String?, is_principle : Int, is_step : Int) {
+        super.init(nibName: nil, bundle: nil)
+        self.pursuitPhoto.image = capturedImage
+        self.contentUrl = contentUrl
+        self.pursuitTitle.text = pursuitTitle
+        self.is_principle = is_principle
+        self.is_step = is_step
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -155,10 +186,13 @@ class CustomCreateView : UIViewController {
         animateView()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        dismiss(animated: true, completion: nil)
+    }
+    
     @objc func handleCancel(){
-        navigationController?.isHeroEnabled = true
-        navigationController?.heroNavigationAnimationType =  .fade
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
     }
     
     func setupView() {

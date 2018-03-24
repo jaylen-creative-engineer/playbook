@@ -25,6 +25,7 @@ class PhotoLibrary : SwiftyCamViewController, UICollectionViewDelegate, UICollec
     fileprivate var thumbnailSize: CGSize!
     fileprivate let imageManager = PHCachingImageManager()
     fileprivate var previousPreheatRect = CGRect.zero
+    var assetCollection: PHAssetCollection!
     
     let cellId = "cellId"
     
@@ -45,14 +46,6 @@ class PhotoLibrary : SwiftyCamViewController, UICollectionViewDelegate, UICollec
         button.setImage(#imageLiteral(resourceName: "cancel").withRenderingMode(.alwaysOriginal), for: .normal)
         button.contentMode = .scaleAspectFill
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var linkButton : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "link").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFill
-        button.addTarget(self, action: #selector(handleLink), for: .touchUpInside)
         return button
     }()
     
@@ -77,31 +70,25 @@ class PhotoLibrary : SwiftyCamViewController, UICollectionViewDelegate, UICollec
     
     @objc func handleLibrary(){
         let libraryController = PhotoLibrary()
-        navigationController?.isHeroEnabled = true
-        navigationController?.heroNavigationAnimationType = .fade
         navigationController?.pushViewController(libraryController, animated: true)
     }
     
     @objc func handleCamera(){
         let selectCameraController = SelectCameraController()
-        navigationController?.isHeroEnabled = true
-        navigationController?.heroNavigationAnimationType = .fade
         navigationController?.pushViewController(selectCameraController, animated: true)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.isHeroEnabled = true
         collectionView.backgroundColor = .white
         collectionView.register(PhotoLibraryCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.isHeroEnabled = true
         setupView()
         
-        if fetchResult == nil {
+        if fetchResult != nil {
             let allPhotosOptions = PHFetchOptions()
-            allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+            allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
             fetchResult = PHAsset.fetchAssets(with: allPhotosOptions)
         }
     }
@@ -303,43 +290,40 @@ extension PhotoLibrary {
     func didSelect(for cell: PhotoLibraryCell) {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         let asset = fetchResult.object(at: indexPath.item)
-        let targetSize = CGSize(width: 200, height: 200)
-
+      
         if cell.timeLabel.text == "" {
-            imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: nil) { (image, _) in
-                guard let selectedImage = image else { return }
-                self.swiftyCam(self, didTake: selectedImage)
-            }
+            let destination = PhotoViewController()
+            destination.asset = asset
+            destination.assetCollection = assetCollection
+            present(destination, animated: true, completion: nil)
         } else {
-                let options: PHVideoRequestOptions = PHVideoRequestOptions()
-                options.version = .original
-                self.imageManager.requestAVAsset(forVideo: asset, options: options, resultHandler: {(asset: AVAsset?, audioMix: AVAudioMix?, info: [AnyHashable : Any]?) -> Void in
-                    DispatchQueue.main.sync {
-                        if let urlAsset = asset as? AVURLAsset {
-                            let localVideoUrl: URL = urlAsset.url as URL
-                            self.swiftyCam(self, didFinishProcessVideoAt: localVideoUrl)
-                        } else {
-                            print("Failed")
-                        }
+            let options = PHVideoRequestOptions()
+            options.version = .original
+            PHImageManager.default().requestAVAsset(forVideo: asset, options: options, resultHandler: { (asset, audioMix, info) in
+                if let urlAsset = asset as? AVURLAsset {
+                    DispatchQueue.main.async {
+                        let destination = VideoViewController()
+                        var videoURL : URL?
+                        videoURL = urlAsset.url
+                        destination.videoURL = videoURL
+                        self.present(destination, animated: true, completion: nil)
                     }
-                })
-                
-            }
+                } else {
+                    print("failed to return video")
+                }
+            })
+        }
     }
     
     func swiftyCam(_ swiftyCam: SwiftyCamViewController, didFinishProcessVideoAt url: URL) {
-        let newVC = VideoViewController(videoURL: url)
-        navigationController?.isHeroEnabled = true
-        navigationController?.heroNavigationAnimationType = .fade
+        let newVC = VideoViewController()
         navigationController?.pushViewController(newVC, animated: true)
     }
     
     func swiftyCam(_ swiftyCam: SwiftyCamViewController, didTake photo: UIImage) {
-        let newVC = PhotoViewController(image: photo)
+        let newVC = PhotoViewController()
         guard let viewAsset = imageAsset else { return }
         newVC.asset = viewAsset
-        navigationController?.isHeroEnabled = true
-        navigationController?.heroNavigationAnimationType =  .fade
         navigationController?.pushViewController(newVC, animated: true)
     }
 }

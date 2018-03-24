@@ -8,17 +8,47 @@
 
 import UIKit
 import Hero
+import Firebase
 
-class CustomAlertView: UIViewController{
+class CustomAlertView: UIViewController {
     
     let alertViewGrayColor = UIColor(red: 224.0/255.0, green: 224.0/255.0, blue: 224.0/255.0, alpha: 1)
     let cellId = "cellId"
+    let createId = "createId"
     
     lazy var alertView : UIView = {
        let view = UIView()
         view.backgroundColor = .white
         return view
     }()
+    
+    lazy var capturedImage : UIImage = {
+       let iv = UIImage()
+        return iv
+    }()
+    
+    var contentUrl : URL?
+    
+    lazy var postDescription : UILabel = {
+       let label = UILabel()
+        return label
+    }()
+    
+    var is_principle = 0
+    var is_step = 0
+    
+    init(capturedImage : UIImage, contentUrl : URL?, postDescription : String, is_principle : Int, is_step : Int) {
+        super.init(nibName: nil, bundle: nil)
+        self.capturedImage = capturedImage
+        self.contentUrl = contentUrl
+        self.postDescription.text = postDescription
+        self.is_principle = is_principle
+        self.is_step = is_step
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     lazy var sendLabel : UILabel = {
        let label = UILabel()
@@ -83,11 +113,12 @@ class CustomAlertView: UIViewController{
     
     func setupCollectionView(){
         collectionView.register(CustomAlertViewCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(CreateAlertViewCell.self, forCellWithReuseIdentifier: createId)
         collectionView.delegate = self
         collectionView.dataSource = self
         
         alertView.addSubview(collectionView)
-         collectionView.anchor(top: sendLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
+         collectionView.anchor(top: sendLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 200)
     }
     
     func getPursuits(){
@@ -125,19 +156,22 @@ class CustomAlertView: UIViewController{
         animateView()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        dismiss(animated: true, completion: nil)
+    }
+    
     @objc func handleCancel(){
-        navigationController?.isHeroEnabled = true
-        navigationController?.heroNavigationAnimationType =  .fade
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
     }
     
     @objc func handleCreate(){
-        let customAlert = CustomCreateView()
+        let customAlert = CustomCreateView(capturedImage: capturedImage, contentUrl: contentUrl, pursuitTitle: postDescription.text, is_principle: is_principle, is_step: is_step)
         customAlert.providesPresentationContextTransitionStyle = true
         customAlert.definesPresentationContext = true
         customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.showDetailViewController(customAlert, sender: self)
+        self.present(customAlert, animated: true, completion: nil)
     }
     
     func setupView() {
@@ -157,7 +191,11 @@ class CustomAlertView: UIViewController{
 
 extension CustomAlertView : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        if !pursuits.isEmpty {
+            return pursuits.count
+        } else {
+            return 1
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -170,11 +208,59 @@ extension CustomAlertView : UICollectionViewDelegate, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let pursuitId = pursuits[indexPath.item].pursuitId
-//        createService.addPostToPursuit(pursuitId: pursuitId, postId: <#T##String#>, contentUrl: <#T##String#>, thumbnailUrl: <#T##String#>)
+        let interestId = pursuits[indexPath.item].interestId
+        let filename = NSUUID().uuidString
+        
+        if contentUrl != nil {
+            guard let video = contentUrl else { return }
+            
+            Storage.storage().reference().child("pursuit-video").child(filename).putFile(from: video, metadata: nil) { (metadata, err) in
+                if let err = err {
+                    print("Failed to upload", err)
+                }
+                
+                guard let videoUrl = metadata?.downloadURL()?.absoluteString else { return }
+                
+                switch true {
+                case self.is_step == 1:
+                    self.createService.addStepToPursuit(pursuitId: pursuitId!, interestId: interestId!, stepId: filename, contentUrl: videoUrl, thumbnailUrl: self.capturedImage, stepDescription: self.postDescription.text!, is_visible: 0, is_public: 0)
+                    
+                case self.is_principle == 1:
+                    self.createService.addPrincipleToPursuit(pursuitId: pursuitId!, interestId: interestId!, principleId: filename, contentUrl: videoUrl, thumbnailUrl: self.capturedImage, principleDescription: self.postDescription.text!, is_visible: 0, is_public: 0)
+                    
+                case self.is_step == 0 && self.is_principle == 0:
+                    self.createService.addPostToPursuit(pursuitId: pursuitId!, interestId: interestId!, postId: filename, contentUrl: videoUrl, thumbnailUrl: self.capturedImage, is_step: self.is_step, is_principle: self.is_principle)
+                    
+                default:
+                    assert(false, "Not a valid post")
+                }
+            }
+        } else {
+            switch true {
+            case self.is_step == 1:
+                self.createService.addStepToPursuit(pursuitId: pursuitId!, interestId: interestId!, stepId: filename, contentUrl: " ", thumbnailUrl: self.capturedImage, stepDescription: self.postDescription.text!, is_visible: 0, is_public: 0)
+                
+            case self.is_principle == 1:
+                self.createService.addPrincipleToPursuit(pursuitId: pursuitId!, interestId: interestId!, principleId: filename, contentUrl: " ", thumbnailUrl: self.capturedImage, principleDescription: self.postDescription.text!, is_visible: 0, is_public: 0)
+                
+            case self.is_step == 0 && self.is_principle == 0:
+                self.createService.addPostToPursuit(pursuitId: pursuitId!, interestId: interestId!, postId: filename, contentUrl: " ", thumbnailUrl: self.capturedImage, is_step: self.is_step, is_principle: self.is_principle)
+                
+            default:
+                assert(false, "Not a valid post")
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CustomAlertViewCell
-        return cell
+        if !pursuits.isEmpty {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CustomAlertViewCell
+            cell.pursuit = pursuits[indexPath.item]
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: createId, for: indexPath) as! CreateAlertViewCell
+            return cell
+        }
+      
     }
 }

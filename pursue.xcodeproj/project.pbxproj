@@ -150,6 +150,8 @@
 		E6E0B0202060AB9500007A21 /* SearchedUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E0B01F2060AB9500007A21 /* SearchedUsers.swift */; };
 		E6E0B0222060ABD600007A21 /* SearchedPrinciples.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E0B0212060ABD600007A21 /* SearchedPrinciples.swift */; };
 		E6E0B0242060AC4000007A21 /* SearchedSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E0B0232060AC4000007A21 /* SearchedSteps.swift */; };
+		E6E0B0262061671E00007A21 /* CreateAlertViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E0B0252061671E00007A21 /* CreateAlertViewCell.swift */; };
+		E6E0B0282065ECE000007A21 /* CustomStepToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E0B0272065ECE000007A21 /* CustomStepToggleView.swift */; };
 		E6F41F492002633E002FD8D4 /* possible-ui.gif in Resources */ = {isa = PBXBuildFile; fileRef = E6F41F482002633E002FD8D4 /* possible-ui.gif */; };
 		E6FF95DF20349BAE003BDB86 /* HomeInterestsBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF95DE20349BAE003BDB86 /* HomeInterestsBar.swift */; };
 /* End PBXBuildFile section */
@@ -304,6 +306,8 @@
 		E6E0B01F2060AB9500007A21 /* SearchedUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedUsers.swift; sourceTree = "<group>"; };
 		E6E0B0212060ABD600007A21 /* SearchedPrinciples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedPrinciples.swift; sourceTree = "<group>"; };
 		E6E0B0232060AC4000007A21 /* SearchedSteps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedSteps.swift; sourceTree = "<group>"; };
+		E6E0B0252061671E00007A21 /* CreateAlertViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlertViewCell.swift; sourceTree = "<group>"; };
+		E6E0B0272065ECE000007A21 /* CustomStepToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStepToggleView.swift; sourceTree = "<group>"; };
 		E6F41F482002633E002FD8D4 /* possible-ui.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "possible-ui.gif"; sourceTree = "<group>"; };
 		E6FF95DE20349BAE003BDB86 /* HomeInterestsBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInterestsBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -589,12 +593,14 @@
 				E6DF9ECA203CF8FB005C86DB /* PhotoViewController.swift */,
 				E6D0B405203E2A5E008D4268 /* PhotoLibrary.swift */,
 				E6D0B40B203E70A7008D4268 /* PhotoLibraryCell.swift */,
-				E6D0B42C2040722F008D4268 /* CustomAlertView.swift */,
-				E659EB182040786500CA8DB5 /* CustomAlertViewCell.swift */,
-				E659EB1A2040876D00CA8DB5 /* CustomCreateView.swift */,
 				E6234E9B2044F93F00A57A2C /* AVPlayer+isPlaying.swift */,
 				E6234E9D2044F96B00A57A2C /* AssetSelectionViewController.swift */,
 				E6B658E120452F40003DD6AA /* CustomLinkView.swift */,
+				E6D0B42C2040722F008D4268 /* CustomAlertView.swift */,
+				E659EB182040786500CA8DB5 /* CustomAlertViewCell.swift */,
+				E659EB1A2040876D00CA8DB5 /* CustomCreateView.swift */,
+				E6E0B0252061671E00007A21 /* CreateAlertViewCell.swift */,
+				E6E0B0272065ECE000007A21 /* CustomStepToggleView.swift */,
 			);
 			name = Camera;
 			sourceTree = "<group>";
@@ -883,6 +889,7 @@
 				E628F2EA2035D978002FE8CF /* RecentSearchUsers.swift in Sources */,
 				E60433EF20422EB800E6D4DA /* ProfileUserImage.swift in Sources */,
 				E6DF9EBB203B8778005C86DB /* DetailSteps.swift in Sources */,
+				E6E0B0262061671E00007A21 /* CreateAlertViewCell.swift in Sources */,
 				E6D0B41F203FDEEF008D4268 /* ExploreImageRow.swift in Sources */,
 				E6D571432010FD7D008A37CC /* HomeInterestsCells.swift in Sources */,
 				E6A274001F68327F00F5B4C8 /* User.swift in Sources */,
@@ -894,6 +901,7 @@
 				E617BB151FD886D6008B2EA1 /* IntroController.swift in Sources */,
 				E6989BFD2047A5C60067A55B /* CommentNotification.swift in Sources */,
 				E6234E962044719C00A57A2C /* CustomSettingsView.swift in Sources */,
+				E6E0B0282065ECE000007A21 /* CustomStepToggleView.swift in Sources */,
 				E6398070204911D80049A71B /* InviteCell.swift in Sources */,
 				E6CB1B512058B54300B5D2ED /* ProfilePursuitSection.swift in Sources */,
 				E60EB26B204617B5006E4F1A /* FriendsCells.swift in Sources */,

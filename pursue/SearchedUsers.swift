@@ -9,7 +9,7 @@
 import UIKit
 
 struct SearchedUsers : Decodable {
-    let userId : String?
+    let usersId : String?
     let photoUrl : String?
     let username : String?
 }

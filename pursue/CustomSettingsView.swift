@@ -184,7 +184,6 @@ class CustomSettingsView : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.isHeroEnabled = true
         view.addSubview(alertView)
         alertView.addSubview(settingsLabel)
         alertView.addSubview(cancelButton)
@@ -254,7 +253,6 @@ class CustomSettingsView : UIViewController {
     }
     
     @objc func logOut(){
-        dismiss(animated: true, completion: nil)
         let customAlert = CustomLogOutView()
         customAlert.providesPresentationContextTransitionStyle = true
         customAlert.definesPresentationContext = true

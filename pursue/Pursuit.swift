@@ -13,6 +13,7 @@ struct Pursuit : Decodable {
     let pursuitId : String?
     let contentUrl : String?
     let thumbnailUrl : String?
+    let interestId : String?
     let pursuitDescription : String?
     let created_at : String?
     var is_visible : Int?

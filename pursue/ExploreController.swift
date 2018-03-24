@@ -49,6 +49,7 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.delegate = self
         tv.dataSource = self
+        tv.showsHorizontalScrollIndicator = false
         return tv
     }()
     
@@ -57,6 +58,7 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.delegate = self
         tv.dataSource = self
+        tv.showsHorizontalScrollIndicator = false
         return tv
     }()
     
@@ -120,22 +122,12 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func explorePrincipleHeld() {
-        let customAlert = CustomAlertView()
-        customAlert.providesPresentationContextTransitionStyle = true
-        customAlert.definesPresentationContext = true
-        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.showDetailViewController(customAlert, sender: self)
+        
     }
     
     
     func explorePursuitHeld() {
-        let customAlert = CustomAlertView()
-        customAlert.providesPresentationContextTransitionStyle = true
-        customAlert.definesPresentationContext = true
-        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.showDetailViewController(customAlert, sender: self)
+        
     }
     
     func explorePursuitTapped() {

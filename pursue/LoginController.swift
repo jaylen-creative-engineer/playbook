@@ -275,9 +275,9 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
             
             print("Success logged back in:", user?.uid ?? "")
             
-            let layout = UICollectionViewFlowLayout()
-            let homeController = HomeController(collectionViewLayout: layout)
-            self.navigationController?.pushViewController(homeController, animated: true)
+            guard let mainTabController = UIApplication.shared.keyWindow?.rootViewController as? MainTabController else { return }
+            mainTabController.setupViewControllers()
+            self.dismiss(animated: true, completion: nil)
         }
     }
     

@@ -8,15 +8,9 @@
 
 import UIKit
 import Photos
-import XLActionController
-import Hero
 import SnapSliderFilters
 
 class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
-    
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -24,9 +18,9 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         updateStillImage()
     }
     
-    private var backgroundImage: UIImage
-    var asset: PHAsset!
-    fileprivate var data:[SNFilter] = []
+    private var backgroundImage: UIImage?
+    var asset: PHAsset?
+    var assetCollection: PHAssetCollection?
     
     var targetSize: CGSize {
         let scale = UIScreen.main.scale
@@ -39,10 +33,8 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         return pv
     }()
     
-    init(image: UIImage) {
-        self.backgroundImage = image
-        super.init(nibName: nil, bundle: nil)
-    }
+    var is_principle = 0
+    var is_step = 0
     
     lazy var backgroundImageView : UIImageView = {
        let iv = UIImageView()
@@ -85,9 +77,19 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         return iv
     }()
     
+    lazy var backgroundOutline : UIButton = {
+       let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 1.5
+        button.layer.cornerRadius = 11.5
+        button.addTarget(self, action: #selector(handleHighlight), for: .touchUpInside)
+        return button
+    }()
+    
     lazy var highlightIcon : UIButton = {
        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "mark").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "check").withRenderingMode(.alwaysOriginal), for: .normal)
         button.contentMode = .scaleAspectFill
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(handleHighlight), for: .touchUpInside)
@@ -175,8 +177,29 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         return view
     }()
     
+    lazy var principleLabel : UIButton = {
+       let button = UIButton()
+        button.backgroundColor = .black
+        button.setTitle("Principle", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.textAlignment = .center
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        return button
+    }()
+    
+    lazy var stepLabel : UIButton = {
+       let button = UIButton()
+        button.backgroundColor = .black
+        button.setTitle("Step", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.textAlignment = .center
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        return button
+    }()
+    
     @objc func handlePursuit(){
-        let customAlert = CustomAlertView()
+        guard let image = backgroundImageView.image else { return }
+        let customAlert = CustomAlertView(capturedImage: image, contentUrl: nil, postDescription: pursuitTitle.text, is_principle: is_principle, is_step: is_step)
         customAlert.providesPresentationContextTransitionStyle = true
         customAlert.definesPresentationContext = true
         customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
@@ -185,7 +208,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     }
     
     @objc func handleSave(){
-        UIImageWriteToSavedPhotosAlbum(backgroundImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+        UIImageWriteToSavedPhotosAlbum(backgroundImage!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
@@ -201,42 +224,34 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     }
     
     @objc func handleHighlight () {
-        let actionController = SkypeActionController()
-  
-        actionController.addAction(Action("Mark as principle", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Mark as step", style: .default, handler: { action in
-            // do something useful
-        }))
-        
-        actionController.addAction(Action("Cancel", style: .default, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
+        let customAlert = CustomStepToggleView(is_step: is_step, is_principle: is_principle)
+        customAlert.photoController = self
+        customAlert.providesPresentationContextTransitionStyle = true
+        customAlert.definesPresentationContext = true
+        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.present(customAlert, animated: true, completion: nil)
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+
     func updateStillImage() {
         // Prepare the options to pass when fetching the (photo, or video preview) image.
         let options = PHImageRequestOptions()
         options.deliveryMode = .highQualityFormat
         options.isNetworkAccessAllowed = true
 
-        PHImageManager.default().requestImage(for: asset,
-                                              targetSize: targetSize,
-                                              contentMode: .aspectFit,
-                                              options: options,
-                                              resultHandler: { image, _ in
-
-            guard let image = image else { return }
-            
-            self.backgroundImageView.isHidden = false
-            self.backgroundImageView.image = image
-        })
+        if asset != nil {
+            PHImageManager.default().requestImage(for: asset!,
+                  targetSize: targetSize,
+                  contentMode: .aspectFit,
+                  options: options,
+                  resultHandler: { image, _ in
+                    
+                    guard let convertedImage = image else { return }
+                    
+                    self.backgroundImageView.isHidden = false
+                    self.backgroundImageView.image = convertedImage
+            })
+        }
     }
     
     func setupBottomLeftOptions(){
@@ -244,12 +259,16 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         view.addSubview(highlightIcon)
         view.addSubview(saveLabel)
         view.addSubview(saveIcon)
+        view.addSubview(backgroundOutline)
         view.addSubview(highlightBackground)
         view.addSubview(saveBackground)
         
         highlightLabel.anchor(top: nil, left: view.safeAreaLayoutGuide.leftAnchor, bottom: continueButton.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: highlightLabel.intrinsicContentSize.width, height: highlightLabel.intrinsicContentSize.height)
-        highlightIcon.anchor(top: nil, left: nil, bottom: highlightLabel.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 0, width: 22, height: 20)
-        highlightIcon.centerXAnchor.constraint(equalTo: highlightLabel.centerXAnchor).isActive = true
+        backgroundOutline.anchor(top: nil, left: nil, bottom: highlightLabel.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 0, width: 24, height: 22)
+        backgroundOutline.centerXAnchor.constraint(equalTo: highlightLabel.centerXAnchor).isActive = true
+        highlightIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 0, width: 12, height: 12)
+        highlightIcon.centerXAnchor.constraint(equalTo: backgroundOutline.centerXAnchor).isActive = true
+        highlightIcon.centerYAnchor.constraint(equalTo: backgroundOutline.centerYAnchor).isActive = true
         highlightBackground.anchor(top: highlightIcon.topAnchor, left: highlightLabel.leftAnchor, bottom: highlightLabel.bottomAnchor, right: highlightLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
         saveLabel.anchor(top: highlightLabel.topAnchor, left: highlightLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 28, paddingBottom: 0, paddingRight: 0, width: saveLabel.intrinsicContentSize.width, height: saveLabel.intrinsicContentSize.height)
@@ -270,13 +289,20 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     func setupView(){
         setupTopOptions()
         
+        principleLabel.isHidden = true
+        stepLabel.isHidden = true
+        
         view.addSubview(backgroundImageView)
+        view.addSubview(principleLabel)
+        view.addSubview(stepLabel)
         view.addSubview(pursuitTitle)
         view.addSubview(pursuitUnderline)
         view.addSubview(continueButton)
         view.addSubview(forwardArrow)
        
         backgroundImageView.anchor(top: cancelButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 52, paddingLeft: 42, paddingBottom: 0, paddingRight: 42, width: 0, height: view.frame.height / 2)
+        principleLabel.anchor(top: backgroundImageView.topAnchor, left: backgroundImageView.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 75, height: 24)
+        stepLabel.anchor(top: backgroundImageView.topAnchor, left: backgroundImageView.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 45, height: 24)
         pursuitTitle.anchor(top: backgroundImageView.bottomAnchor, left: backgroundImageView.leftAnchor, bottom: nil, right: backgroundImageView.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: pursuitTitle.intrinsicContentSize.height)
         pursuitUnderline.anchor(top: pursuitTitle.bottomAnchor, left: pursuitTitle.leftAnchor, bottom: nil, right: pursuitTitle.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
         
@@ -314,15 +340,12 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        navigationController?.isHeroEnabled = true
         
         pursuitTitle.selectedTextRange = pursuitTitle.textRange(from: pursuitTitle.beginningOfDocument, to: pursuitTitle.beginningOfDocument)
         setupView()
     }
     
     @objc func cancel() {
-        navigationController?.isHeroEnabled = true
-        navigationController?.heroNavigationAnimationType = .fade
         dismiss(animated: true, completion: nil)
     }
 }
@@ -360,20 +383,5 @@ extension PhotoViewController : UITextViewDelegate {
         }
     }
 
-}
-
-extension PhotoViewController : SNSliderDataSource {
-    
-    func numberOfSlides(_ slider: SNSlider) -> Int {
-        return data.count
-    }
-    
-    func slider(_ slider: SNSlider, slideAtIndex index: Int) -> SNFilter {
-        return data[index]
-    }
-    
-    func startAtIndex(_ slider: SNSlider) -> Int {
-        return 0
-    }
 }
 

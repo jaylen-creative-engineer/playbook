@@ -32,12 +32,11 @@ class InterestServices {
                 guard let interestsImageURL = metadata?.downloadURL()?.absoluteString else { return }
                 
                 var parameters = Alamofire.Parameters()
-                
                 parameters["interestId"] = filename
                 parameters["interest_name"] = self.interestsNames[i]
                 parameters["interest_photo"] = interestsImageURL
                 
-                let url = "https://pursuit-jaylenhu27.c9users.io/interests"
+                let url = "http://localhost:8080/interests"
                 
                 Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
                 }
@@ -51,7 +50,6 @@ class InterestServices {
     func getSelectedInterests(userId : String, completion: @escaping ([Interests]) -> ()){
         let url = "http://localhost:8080/get-user-interests"
         var parameters = Alamofire.Parameters()
-        print(userId)
         parameters["userId"] = userId
 
         Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in

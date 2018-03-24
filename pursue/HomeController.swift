@@ -180,12 +180,12 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     
     
     func pursuitHeld() {
-        let customAlert = CustomAlertView()
-        customAlert.providesPresentationContextTransitionStyle = true
-        customAlert.definesPresentationContext = true
-        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.showDetailViewController(customAlert, sender: self)
+//        let customAlert = CustomAlertView()
+//        customAlert.providesPresentationContextTransitionStyle = true
+//        customAlert.definesPresentationContext = true
+//        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+//        self.showDetailViewController(customAlert, sender: self)
     }
     
     func showOptionClicked(){
