@@ -18,7 +18,7 @@ private extension UICollectionView {
     }
 }
 
-class PhotoLibrary : SwiftyCamViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PhotoDelegate, SwiftyCamViewControllerDelegate {
+class PhotoLibrary : SwiftyCamViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PhotoDelegate, SwiftyCamViewControllerDelegate, UIViewControllerTransitioningDelegate {
     
     var fetchResult: PHFetchResult<PHAsset>!
     
@@ -69,13 +69,11 @@ class PhotoLibrary : SwiftyCamViewController, UICollectionViewDelegate, UICollec
     }()
     
     @objc func handleLibrary(){
-        let libraryController = PhotoLibrary()
-        navigationController?.pushViewController(libraryController, animated: true)
+        _ = PhotoLibrary()
     }
     
     @objc func handleCamera(){
-        let selectCameraController = SelectCameraController()
-        navigationController?.pushViewController(selectCameraController, animated: true)
+        dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -117,15 +115,6 @@ class PhotoLibrary : SwiftyCamViewController, UICollectionViewDelegate, UICollec
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func handleLink(){
-        let customAlert = CustomLinkView()
-        customAlert.providesPresentationContextTransitionStyle = true
-        customAlert.definesPresentationContext = true
-        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.showDetailViewController(customAlert, sender: self)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 4
     }
@@ -151,6 +140,17 @@ class PhotoLibrary : SwiftyCamViewController, UICollectionViewDelegate, UICollec
         return fetchResult.count
     }
     
+    let customAnimationPresentor = CustomAnimationPresentor()
+    let customAnimationDismisser = CustomAnimationDismisser()
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return customAnimationDismisser
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return customAnimationPresentor
+    }
+    
     var imageAsset : PHAsset?
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -163,7 +163,6 @@ class PhotoLibrary : SwiftyCamViewController, UICollectionViewDelegate, UICollec
         imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: nil) { (image, _) in
             if cell.representedAssetIdentifier == asset.localIdentifier && image != nil {
                 cell.imageView.image = image
-                self.photoLibraryButton.setImage(image, for: .normal)
                 
                 if asset.duration == 0 {
                     cell.timeLabel.text = ""

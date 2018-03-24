@@ -87,6 +87,7 @@ class EditProfileController : UICollectionViewController, UICollectionViewDelega
     func getUser(){
         profileServices.getAccountDetails { (user) in
             self.user = user
+            print(user)
             self.collectionView?.reloadData()
         }
     }

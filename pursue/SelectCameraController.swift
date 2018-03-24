@@ -11,7 +11,7 @@ import SwiftyCam
 import Photos
 import Hero
 
-class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerDelegate{
+class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerDelegate, UIViewControllerTransitioningDelegate {
    
     let libraryId = "libraryId"
     let cameraId = "cameraId"
@@ -91,9 +91,8 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
     @objc func handleLibrary(){
         let libraryController = PhotoLibrary()
         libraryController.fetchResult = allPhotos
-        navigationController?.isHeroEnabled = true
-        navigationController?.heroNavigationAnimationType = .push(direction: .right)
-        navigationController?.pushViewController(libraryController, animated: true)
+        libraryController.photoLibraryButton.setImage(photoLibraryButton.imageView?.image, for: .normal)
+        present(libraryController, animated: true, completion: nil)
     }
 
     var photos : PHFetchResult<PHAsset>!
@@ -111,8 +110,6 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
     }
     
     @objc func handleDismiss(){
-        navigationController?.isHeroEnabled = true
-        navigationController?.heroNavigationAnimationType = .fade
         dismiss(animated: true, completion: nil)
     }
     
@@ -149,6 +146,18 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
         cancelButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
     }
     
+    
+    let customAnimationPresentor = CreateCustomAnimationPresentor()
+    let customAnimationDismisser = CreateCustomAnimationDismisser()
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return customAnimationDismisser
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return customAnimationPresentor
+    }
+    
     @objc func cameraSwitchTapped(){
         switchCamera()
     }
@@ -170,8 +179,6 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
     func swiftyCam(_ swiftyCam: SwiftyCamViewController, didTake photo: UIImage) {
         let newVC = PhotoViewController()
         newVC.backgroundImageView.image = photo
-//        guard let viewAsset = imageAsset else { return }
-//        newVC.asset = viewAsset
         self.present(newVC, animated: true, completion: nil)
     }
 

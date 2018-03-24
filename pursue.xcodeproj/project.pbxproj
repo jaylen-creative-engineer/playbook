@@ -91,7 +91,6 @@
 		E6A274021F68353E00F5B4C8 /* FirebaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A274011F68353E00F5B4C8 /* FirebaseUtils.swift */; };
 		E6B49F2B1FACDCE800AEDAFD /* InterestsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B49F2A1FACDCE800AEDAFD /* InterestsController.swift */; };
 		E6B49F2F1FACDE4100AEDAFD /* SelectInterestsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B49F2E1FACDE4100AEDAFD /* SelectInterestsList.swift */; };
-		E6B658E220452F40003DD6AA /* CustomLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B658E120452F40003DD6AA /* CustomLinkView.swift */; };
 		E6CB1B472057063F00B5D2ED /* CustomPeopleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CB1B462057063F00B5D2ED /* CustomPeopleView.swift */; };
 		E6CB1B49205706C200B5D2ED /* CustomPeopleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CB1B48205706C200B5D2ED /* CustomPeopleViewCell.swift */; };
 		E6CB1B4B205789DB00B5D2ED /* ProfilePursuit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CB1B4A205789DB00B5D2ED /* ProfilePursuit.swift */; };
@@ -152,6 +151,10 @@
 		E6E0B0242060AC4000007A21 /* SearchedSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E0B0232060AC4000007A21 /* SearchedSteps.swift */; };
 		E6E0B0262061671E00007A21 /* CreateAlertViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E0B0252061671E00007A21 /* CreateAlertViewCell.swift */; };
 		E6E0B0282065ECE000007A21 /* CustomStepToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E0B0272065ECE000007A21 /* CustomStepToggleView.swift */; };
+		E6E0B02E2066C83F00007A21 /* CustomAnimationDismisser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E0B02D2066C83F00007A21 /* CustomAnimationDismisser.swift */; };
+		E6E0B0302066C87900007A21 /* CustomAnimationPresentor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E0B02F2066C87900007A21 /* CustomAnimationPresentor.swift */; };
+		E6E0B0322066CA7800007A21 /* CreateCustomAnimationPresentor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E0B0312066CA7800007A21 /* CreateCustomAnimationPresentor.swift */; };
+		E6E0B0342066CA9900007A21 /* CreateCustomAnimationDismisser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E0B0332066CA9900007A21 /* CreateCustomAnimationDismisser.swift */; };
 		E6F41F492002633E002FD8D4 /* possible-ui.gif in Resources */ = {isa = PBXBuildFile; fileRef = E6F41F482002633E002FD8D4 /* possible-ui.gif */; };
 		E6FF95DF20349BAE003BDB86 /* HomeInterestsBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF95DE20349BAE003BDB86 /* HomeInterestsBar.swift */; };
 /* End PBXBuildFile section */
@@ -244,7 +247,6 @@
 		E6A274011F68353E00F5B4C8 /* FirebaseUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseUtils.swift; sourceTree = "<group>"; };
 		E6B49F2A1FACDCE800AEDAFD /* InterestsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsController.swift; sourceTree = "<group>"; };
 		E6B49F2E1FACDE4100AEDAFD /* SelectInterestsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectInterestsList.swift; sourceTree = "<group>"; };
-		E6B658E120452F40003DD6AA /* CustomLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLinkView.swift; sourceTree = "<group>"; };
 		E6CB1B462057063F00B5D2ED /* CustomPeopleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPeopleView.swift; sourceTree = "<group>"; };
 		E6CB1B48205706C200B5D2ED /* CustomPeopleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPeopleViewCell.swift; sourceTree = "<group>"; };
 		E6CB1B4A205789DB00B5D2ED /* ProfilePursuit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePursuit.swift; sourceTree = "<group>"; };
@@ -308,6 +310,10 @@
 		E6E0B0232060AC4000007A21 /* SearchedSteps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedSteps.swift; sourceTree = "<group>"; };
 		E6E0B0252061671E00007A21 /* CreateAlertViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlertViewCell.swift; sourceTree = "<group>"; };
 		E6E0B0272065ECE000007A21 /* CustomStepToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStepToggleView.swift; sourceTree = "<group>"; };
+		E6E0B02D2066C83F00007A21 /* CustomAnimationDismisser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationDismisser.swift; sourceTree = "<group>"; };
+		E6E0B02F2066C87900007A21 /* CustomAnimationPresentor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationPresentor.swift; sourceTree = "<group>"; };
+		E6E0B0312066CA7800007A21 /* CreateCustomAnimationPresentor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCustomAnimationPresentor.swift; sourceTree = "<group>"; };
+		E6E0B0332066CA9900007A21 /* CreateCustomAnimationDismisser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCustomAnimationDismisser.swift; sourceTree = "<group>"; };
 		E6F41F482002633E002FD8D4 /* possible-ui.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "possible-ui.gif"; sourceTree = "<group>"; };
 		E6FF95DE20349BAE003BDB86 /* HomeInterestsBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInterestsBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -595,12 +601,15 @@
 				E6D0B40B203E70A7008D4268 /* PhotoLibraryCell.swift */,
 				E6234E9B2044F93F00A57A2C /* AVPlayer+isPlaying.swift */,
 				E6234E9D2044F96B00A57A2C /* AssetSelectionViewController.swift */,
-				E6B658E120452F40003DD6AA /* CustomLinkView.swift */,
 				E6D0B42C2040722F008D4268 /* CustomAlertView.swift */,
 				E659EB182040786500CA8DB5 /* CustomAlertViewCell.swift */,
 				E659EB1A2040876D00CA8DB5 /* CustomCreateView.swift */,
 				E6E0B0252061671E00007A21 /* CreateAlertViewCell.swift */,
 				E6E0B0272065ECE000007A21 /* CustomStepToggleView.swift */,
+				E6E0B02F2066C87900007A21 /* CustomAnimationPresentor.swift */,
+				E6E0B02D2066C83F00007A21 /* CustomAnimationDismisser.swift */,
+				E6E0B0312066CA7800007A21 /* CreateCustomAnimationPresentor.swift */,
+				E6E0B0332066CA9900007A21 /* CreateCustomAnimationDismisser.swift */,
 			);
 			name = Camera;
 			sourceTree = "<group>";
@@ -828,6 +837,7 @@
 				E6989BF52047797B0067A55B /* CustomHomeView.swift in Sources */,
 				E6A274021F68353E00F5B4C8 /* FirebaseUtils.swift in Sources */,
 				E6CE22771F671D10006C5755 /* SignupController.swift in Sources */,
+				E6E0B02E2066C83F00007A21 /* CustomAnimationDismisser.swift in Sources */,
 				E6DEC844201ABD6C00E02393 /* Principles.swift in Sources */,
 				E61692441FD64544008BF11D /* ForgotController.swift in Sources */,
 				E6E0B0222060ABD600007A21 /* SearchedPrinciples.swift in Sources */,
@@ -876,7 +886,6 @@
 				E6DEC846201ABF4D00E02393 /* Interests.swift in Sources */,
 				E6234E9C2044F93F00A57A2C /* AVPlayer+isPlaying.swift in Sources */,
 				E65F1E561FCCC7BF00BD850E /* ProfileController.swift in Sources */,
-				E6B658E220452F40003DD6AA /* CustomLinkView.swift in Sources */,
 				E6A273FE1F68325A00F5B4C8 /* Post.swift in Sources */,
 				E639807F204DD63D0049A71B /* HomeServices.swift in Sources */,
 				E6CB1B592058CA9200B5D2ED /* SearchSteps.swift in Sources */,
@@ -939,6 +948,8 @@
 				E62AAB1F1FD0A66B0053EAD7 /* HelpController.swift in Sources */,
 				E639808F2050D00C0049A71B /* StepsComment.swift in Sources */,
 				E6398089204DD7630049A71B /* NotificationServices.swift in Sources */,
+				E6E0B0322066CA7800007A21 /* CreateCustomAnimationPresentor.swift in Sources */,
+				E6E0B0302066C87900007A21 /* CustomAnimationPresentor.swift in Sources */,
 				E639806E20490E920049A71B /* Contacts.swift in Sources */,
 				E6D0B428203FDFFD008D4268 /* PeopleRowCells.swift in Sources */,
 				E6B49F2B1FACDCE800AEDAFD /* InterestsController.swift in Sources */,
@@ -957,6 +968,7 @@
 				E6DF9EC9203CF88D005C86DB /* VideoViewController.swift in Sources */,
 				E6DF9EBA203B8778005C86DB /* DetailStepCells.swift in Sources */,
 				E628F2F02035DAA5002FE8CF /* SearchReturn.swift in Sources */,
+				E6E0B0342066CA9900007A21 /* CreateCustomAnimationDismisser.swift in Sources */,
 				E6D2B8DB2018DB7A008D3055 /* Animator.swift in Sources */,
 				E6398085204DD6DF0049A71B /* ProfileServices.swift in Sources */,
 				E621B9941FE04925007324E2 /* PursuitPrincipleCells.swift in Sources */,

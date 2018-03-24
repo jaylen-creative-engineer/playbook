@@ -313,7 +313,7 @@ extension HomeController {
         if isFirstLaunch == true {
             return pages.count
         } else {
-            return 5
+            return 2
         }
     }
     
