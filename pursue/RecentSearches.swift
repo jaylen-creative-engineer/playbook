@@ -14,8 +14,10 @@ class RecentSearches : UITableViewCell, UICollectionViewDelegate, UICollectionVi
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = .white
-        cv.showsHorizontalScrollIndicator = false
+        cv.backgroundColor = .clear
+        cv.showsVerticalScrollIndicator = false
+        cv.delegate = self
+        cv.dataSource = self
         return cv
     }()
     
@@ -82,9 +84,6 @@ class RecentSearches : UITableViewCell, UICollectionViewDelegate, UICollectionVi
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.showsVerticalScrollIndicator = false
         collectionView.register(RecentSearchUsers.self, forCellWithReuseIdentifier: profileId)
         collectionView.register(RecentSearchPursuits.self, forCellWithReuseIdentifier: stepId)
         collectionView.register(RecentSearchPrinciples.self, forCellWithReuseIdentifier: principlesId)

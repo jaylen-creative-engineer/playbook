@@ -38,8 +38,14 @@ class PeopleRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionVi
         return collectionView
     }()
     
+    var users = [SearchedUsers]()
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        if !users.isEmpty {
+            return users.count
+        } else {
+            return 0
+        }
     }
     
     
@@ -50,9 +56,10 @@ class PeopleRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PeopleRowCells
-        cell.peopleDelegate = self
-        cell.userPhoto.image = UIImage(named: exploreImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
-        cell.usernameLabel.text = usernameText[indexPath.item]
+        print(users)
+        if !users.isEmpty {
+            cell.user = users[indexPath.item]
+        }
         rowLabel.text = "People"
         return cell
     }

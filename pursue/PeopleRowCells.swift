@@ -14,10 +14,16 @@ protocol PeopleRowCellDelegate {
 
 class PeopleRowCells : UICollectionViewCell {
     
-    var peopleDelegate : PeopleRowCellDelegate?
+    var user : SearchedUsers? {
+        didSet {
+            guard let photo = user?.photoUrl else { return }
+            userPhoto.loadImage(urlString: photo)
+            usernameLabel.text = user?.username
+        }
+    }
     
-    lazy var userPhoto : UIImageView = {
-        let iv = UIImageView()
+    lazy var userPhoto : CustomImageView = {
+        let iv = CustomImageView()
         iv.layer.cornerRadius = 40
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
@@ -37,7 +43,6 @@ class PeopleRowCells : UICollectionViewCell {
     }()
     
     @objc func handleProfileTap(){
-        peopleDelegate?.profileTapped()
     }
     
     func setupView(){

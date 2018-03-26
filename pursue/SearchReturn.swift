@@ -14,26 +14,22 @@ class SearchReturn : UITableViewCell, UICollectionViewDelegate, UICollectionView
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = .white
+        cv.backgroundColor = .clear
         cv.showsHorizontalScrollIndicator = false
+        cv.showsVerticalScrollIndicator = false
         return cv
     }()
     
     let usersId = "usersId"
     let pursuitsId = "pursuitsId"
     let principlesId = "principlesId"
+    var users = [SearchedUsers]()
+    var steps = [SearchedSteps]()
+    var principles = [SearchedPrinciples]()
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 3
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-//        return CGSize(width: frame.width, height: 20)
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsetsMake(32, 0, 0, 0)
-//    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 2
@@ -56,6 +52,9 @@ class SearchReturn : UITableViewCell, UICollectionViewDelegate, UICollectionView
         switch indexPath.item {
         case 0:
             let usersCell = collectionView.dequeueReusableCell(withReuseIdentifier: usersId, for: indexPath) as! SearchUsers
+            if !users.isEmpty {
+                usersCell.searchedUsers = users
+            }
             return usersCell
         case 1:
             let pursuitsCell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! SearchSteps

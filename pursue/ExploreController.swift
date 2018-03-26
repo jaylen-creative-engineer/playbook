@@ -20,9 +20,6 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
     let exerciseId = "exerciseId"
     let categoryId = "categoryId"
     let discussionId = "discussionId"
-    
-    var users = [User]()
-    
     let backgroundFill = UIView()
     let categoryBarBackgroundColor = UIView()
     
@@ -50,30 +47,33 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         tv.delegate = self
         tv.dataSource = self
         tv.showsHorizontalScrollIndicator = false
+        tv.showsVerticalScrollIndicator = false
         return tv
     }()
     
-    lazy var recentTableView : UITableView = {
-        let tv = UITableView()
-        tv.translatesAutoresizingMaskIntoConstraints = false
-        tv.delegate = self
-        tv.dataSource = self
-        tv.showsHorizontalScrollIndicator = false
-        return tv
+    let exploreCollection : UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        return collectionView
     }()
     
     let searchController = UISearchController(searchResultsController: nil)
     let tableViewCellId = "tableViewCellId"
     let recentCellId = "recentCellId"
     let exploreService = ExploreServices()
-    var pursuits = [Pursuit]()
-    var posts = [Post]()
-    var steps = [User]()
-    var principles = [Principles]()
+    var users = [SearchedUsers]()
+    var steps = [SearchedSteps]()
+    var principles = [SearchedPrinciples]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTopBar()
+        
+        collectionView?.register(ExploreImageRow.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(PeopleRow.self, forCellWithReuseIdentifier: peopleId)
+        collectionView?.register(ExplorePrinciplesRow.self, forCellWithReuseIdentifier: principleId)
+        collectionView?.register(ExploreExerciseRow.self, forCellWithReuseIdentifier: exerciseId)
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
         getContent()
@@ -99,13 +99,11 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         let guide = view.safeAreaLayoutGuide
         view.addSubview(backgroundFill)
         view.addSubview(searchBar)
+        collectionView?.showsVerticalScrollIndicator = false
         backgroundFill.backgroundColor = .white
         backgroundFill.anchor(top: view.topAnchor, left: guide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 95)
         searchBar.anchor(top: nil, left: view.leftAnchor, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: searchBar.intrinsicContentSize.height)
         searchTableView.register(SearchReturn.self, forCellReuseIdentifier: tableViewCellId)
-        recentTableView.register(RecentSearches.self, forCellReuseIdentifier: recentCellId)
-        view.addSubview(recentTableView)
-        recentTableView.anchor(top: searchBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
     
@@ -169,6 +167,65 @@ extension ExploreController {
         return CGSize(width: view.frame.width, height: 70)
     }
     
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 4
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        if section == 0 {
+            return UIEdgeInsetsMake(0, 0, 0, 0)
+        } else {
+            return UIEdgeInsetsMake(32, 0, 0, 0)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        switch indexPath.item {
+        case 0:
+            return CGSize(width: view.frame.width, height: 330)
+        case 1:
+            return CGSize(width: view.frame.width, height: 345)
+        case 2:
+            return CGSize(width: view.frame.width, height: 230)
+        case 3:
+            return CGSize(width: view.frame.width, height: 410)
+        default:
+            return CGSize(width: view.frame.width, height: 260)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 2
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell : UICollectionViewCell
+        switch indexPath.item {
+        case 0:
+            let pursuitCell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! ExploreExerciseRow
+            pursuitCell.exploreDelegate = self
+            pursuitCell.accessExploreController = self
+            return pursuitCell
+        case 1:
+            let principleCell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! ExplorePrinciplesRow
+            principleCell.accessExploreController = self
+            principleCell.exploreDelegate = self
+            return principleCell
+        case 2:
+            let peopleCell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! PeopleRow
+            peopleCell.peopleDelegate = self
+            return peopleCell
+        case 3:
+            let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreImageRow
+            imageCell.exploreDelegate = self
+            imageCell.accessExploreController = self
+            return imageCell
+        default:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: exerciseId, for: indexPath) as! ExploreExerciseRow
+            return cell
+        }
+    }
+    
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
         searchTableView.reloadData()
     }
@@ -195,10 +252,8 @@ extension ExploreController : UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
             searchTableView.isHidden = true
-            recentTableView.isHidden = false
         } else {
             searchTableView.isHidden = false
-            recentTableView.isHidden = true
             view.addSubview(searchTableView)
             searchTableView.anchor(top: searchBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
             getSearchContent(searchText: searchText)
@@ -208,7 +263,18 @@ extension ExploreController : UISearchBarDelegate {
     func getSearchContent(searchText : String){
         let queryString = searchText + "%"
         exploreService.queryDatabase(searchText: queryString) { (search) in
-            print(search)
+            search.users.forEach({ (user) in
+                self.users.append(user)
+            })
+            
+            search.principles.forEach({ (principle) in
+                self.principles.append(principle)
+            })
+            
+            search.steps.forEach({ (step) in
+                self.steps.append(step)
+            })
+            self.collectionView?.reloadData()
         }
     }
 }
@@ -229,13 +295,18 @@ extension ExploreController : UITableViewDataSource {
 
 extension ExploreController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView == searchTableView {
-            let cell = tableView.dequeueReusableCell(withIdentifier: tableViewCellId, for: indexPath) as! SearchReturn
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: recentCellId, for: indexPath) as! RecentSearches
-            return cell
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: tableViewCellId, for: indexPath) as! SearchReturn
+            switch true {
+            case !users.isEmpty:
+                cell.users = users
+            case !principles.isEmpty:
+                cell.principles = principles
+            case !steps.isEmpty:
+                cell.steps = steps
+            default:
+                cell.steps = []
+            }
+        return cell
     }
 }
 
