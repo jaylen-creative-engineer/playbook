@@ -18,18 +18,21 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
             
             guard let follow = user?.followees else { return }
             followerArray = follow
+
+            followingCount.text = user?.following_count
+            followersCount.text = user?.followers_count
             
-            guard let following_count = user?.following_count else { return }
-            guard let followers_count = user?.followers_count else { return }
-            followingCount.text = String(describing: following_count)
-            followersCount.text = String(describing: followers_count)
-            
-            if (following_count + followers_count) > 3 {
-                let differenceLabel = (followers_count + following_count) - 3
-                additionalFollowing.text = String(describing: differenceLabel)
-            } else {
-                additionalFollowing.isHidden = true
-                additionalPlusFollowing.isHidden = true
+            if !(followingCount.text?.isEmpty)! {
+                guard let followingInt = Int(followingCount.text!) else { return }
+                guard let followersInt = Int(followersCount.text!) else { return }
+                
+                if (followingInt + followersInt > 3) {
+                    let differenceLabel = (followingInt + followersInt) - 3
+                    additionalFollowing.text = String(describing: differenceLabel)
+                } else {
+                    additionalFollowing.isHidden = true
+                    additionalPlusFollowing.isHidden = true
+                }
             }
             
             followingCollectionView.reloadData()
@@ -247,7 +250,7 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: followId, for: indexPath) as! FollowingCells
         
         if !followerArray.isEmpty {
-            cell.imageView.loadImage(urlString: followerArray[indexPath.item].photoUrl!)
+            cell.follower = followerArray[indexPath.item]
         }
         return cell
     }

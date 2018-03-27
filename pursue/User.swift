@@ -18,6 +18,6 @@ struct User : Decodable {
     let email : String?
     let followees : [Follower]
     let pursuits : [Pursuit]
-    let following_count : Int?
-    let followers_count : Int?
+    let following_count : String?
+    let followers_count : String?
 }
