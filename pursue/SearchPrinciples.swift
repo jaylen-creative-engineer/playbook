@@ -12,10 +12,10 @@ class SearchPrinciples : UICollectionViewCell, UICollectionViewDelegate, UIColle
     
     var principlesDelegate : HomePrinciplesDelegate?
     var accessHomeController : HomeContainer?
+    var principles = [SearchedPrinciples]()
     
     let profileImageNames = ["realist", "inheritance", "value-first", "menu-numbers"]
     let profileLabelText = ["Naive Realism", "Treat others like they control your inheritance","Show value upfront", "Organize and label menu categories"]
-    
     let cellId = "cellId"
     let peopleId = "peopleId"
     
@@ -53,9 +53,10 @@ class SearchPrinciples : UICollectionViewCell, UICollectionViewDelegate, UIColle
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomePrinciplesCells
-        rowLabel.text = "Principles"
-        cell.principleLabel.text = profileLabelText[indexPath.item]
-        cell.principleImage.image = UIImage(named: profileImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
+        if !principles.isEmpty {
+            rowLabel.text = "Principles"
+            cell.principle = principles[indexPath.item]
+        }
         return cell
     }
     

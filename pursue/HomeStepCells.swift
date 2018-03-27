@@ -17,6 +17,14 @@ class HomeStepCells : UICollectionViewCell {
     
     var delegate : PursuitSelected?
     
+    var step : SearchedSteps? {
+        didSet {
+            pursuitLabel.text = step?.stepDescription
+            guard let photo = step?.thumbnailUrl else { return }
+            pursuitImage.loadImage(urlString: photo)
+        }
+    }
+    
     lazy var pursuitLabel : UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
@@ -30,8 +38,8 @@ class HomeStepCells : UICollectionViewCell {
         return label
     }()
     
-    lazy var pursuitImage : UIImageView = {
-        let iv = UIImageView()
+    lazy var pursuitImage : CustomImageView = {
+        let iv = CustomImageView()
         iv.contentMode = .scaleAspectFill
         iv.layer.masksToBounds = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))

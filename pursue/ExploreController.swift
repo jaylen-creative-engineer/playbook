@@ -62,7 +62,7 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
     let tableViewCellId = "tableViewCellId"
     let recentCellId = "recentCellId"
     let exploreService = ExploreServices()
-    var users = [SearchedUsers]()
+    var user : SearchedUsers?
     var steps = [SearchedSteps]()
     var principles = [SearchedPrinciples]()
     
@@ -263,18 +263,18 @@ extension ExploreController : UISearchBarDelegate {
     func getSearchContent(searchText : String){
         let queryString = searchText + "%"
         exploreService.queryDatabase(searchText: queryString) { (search) in
-            search.users.forEach({ (user) in
-                self.users.append(user)
-            })
+            DispatchQueue.main.async{
+                self.user = search.users
+                search.principles.forEach({ (principle) in
+                    self.principles.append(principle)
+                })
+                
+                search.steps.forEach({ (step) in
+                    self.steps.append(step)
+                })
+                self.searchTableView.reloadData()
+            }
             
-            search.principles.forEach({ (principle) in
-                self.principles.append(principle)
-            })
-            
-            search.steps.forEach({ (step) in
-                self.steps.append(step)
-            })
-            self.collectionView?.reloadData()
         }
     }
 }
@@ -289,16 +289,16 @@ extension ExploreController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return view.frame.height * 2
+        return view.frame.height
     }
 }
 
 extension ExploreController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: tableViewCellId, for: indexPath) as! SearchReturn
+            cell.user = user
+
             switch true {
-            case !users.isEmpty:
-                cell.users = users
             case !principles.isEmpty:
                 cell.principles = principles
             case !steps.isEmpty:

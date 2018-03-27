@@ -10,7 +10,7 @@ import UIKit
 
 struct Search : Decodable {
     
-    let users : [SearchedUsers]
+    let users : SearchedUsers?
     let principles : [SearchedPrinciples]
     let steps : [SearchedSteps]
 }

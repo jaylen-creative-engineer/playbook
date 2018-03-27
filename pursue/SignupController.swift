@@ -276,7 +276,7 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
                 
                 guard let profileImageURL = metadata?.downloadURL()?.absoluteString else { return }
                 
-                self.profileService.createAccount(email: email, username: username, fullname: fullname, photoUrl: profileImageURL)
+                self.profileService.createAccount(email: email, username: username, fullname: fullname, photoUrl: profileImageURL, bio: nil)
                 self.showInterestsController()
             })
         }

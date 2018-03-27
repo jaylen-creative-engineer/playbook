@@ -8,9 +8,8 @@
 
 import UIKit
 
-class SearchSteps : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PursuitSelected {
+class SearchSteps : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    var pursuitsDelegate : HomePursuitsRowDelegate?
     var accessHomeController : HomeContainer?
     let homeCellId = "homeCellId"
     
@@ -18,7 +17,6 @@ class SearchSteps : UICollectionViewCell, UICollectionViewDelegate, UICollection
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
-        label.text = "Steps"
         label.textAlignment = .left
         return label
     }()
@@ -34,20 +32,16 @@ class SearchSteps : UICollectionViewCell, UICollectionViewDelegate, UICollection
         return collectionView
     }()
     
-    func pursuitTapped() {
-        pursuitsDelegate?.pursuitClicked()
-    }
-    
-    func pursuitHeld() {
-        pursuitsDelegate?.pursuitHeld()
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: frame.width, height: 105)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        if !steps.isEmpty {
+            return 1
+        } else {
+            return 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -58,11 +52,14 @@ class SearchSteps : UICollectionViewCell, UICollectionViewDelegate, UICollection
         accessHomeController?.handleChangeToDetail(viewType: "isPursuitDetail")
     }
     
+    var steps = [SearchedSteps]()
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: homeCellId, for: indexPath) as! HomeStepCells
-        cell.pursuitImage.image = UIImage(named: homeImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
-        cell.pursuitLabel.text = homePursuitDescriptions[indexPath.item]
-        cell.delegate = self
+        if !steps.isEmpty {
+            rowLabel.text = "Steps"
+            cell.step = steps[indexPath.item]
+        }
         return cell
     }
     

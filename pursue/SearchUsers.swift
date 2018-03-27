@@ -17,7 +17,6 @@ class SearchUsers : UICollectionViewCell, UICollectionViewDelegate, UICollection
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
-        label.text = "People"
         return label
     }()
     
@@ -56,6 +55,7 @@ class SearchUsers : UICollectionViewCell, UICollectionViewDelegate, UICollection
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PeopleRowCells
         if !searchedUsers.isEmpty {
             cell.user = searchedUsers[indexPath.item]
+            rowLabel.text = "People"
         }
         return cell
     }

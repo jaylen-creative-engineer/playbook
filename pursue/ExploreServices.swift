@@ -51,7 +51,6 @@ class ExploreServices {
         var parameters = Alamofire.Parameters()
         parameters["searchText"] = searchText
         
-        print(searchText)
         Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             guard let data = response.data else { return }
             do {

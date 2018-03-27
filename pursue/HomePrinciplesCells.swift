@@ -15,6 +15,14 @@ protocol HomePrinciplesCellDelegate {
 
 class HomePrinciplesCells : UICollectionViewCell {
     
+    var principle : SearchedPrinciples? {
+        didSet {
+            principleLabel.text = principle?.principleDescription
+            guard let photo = principle?.thumbnailUrl else { return }
+            principleImage.image = UIImage(named: photo)
+        }
+    }
+    
     let principleLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 14)

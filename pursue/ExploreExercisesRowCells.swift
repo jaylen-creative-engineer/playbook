@@ -38,22 +38,6 @@ class ExploreExercisesRowCells  : UICollectionViewCell {
         return iv
     }()
     
-    let exploreProgressLabel : UILabel = {
-        let label = UILabel()
-        label.text = "30%"
-        label.textColor = UIColor.rgb(red: 0, green: 128, blue: 0)
-        label.font = UIFont.boldSystemFont(ofSize: 12)
-        return label
-    }()
-    
-    let progressBar : UIProgressView = {
-        let pv = UIProgressView()
-        pv.trackTintColor = UIColor.rgb(red: 211, green: 211, blue: 211)
-        pv.progress = 0.3
-        pv.progressTintColor = UIColor.rgb(red: 0, green: 128, blue: 0)
-        return pv
-    }()
-    
     @objc func handlePursuitTap(){
         exploreExereciseDelegate?.pursuitTapped()
     }
@@ -70,14 +54,9 @@ class ExploreExercisesRowCells  : UICollectionViewCell {
     func setupView(){
         addSubview(exploreImage)
         addSubview(exploreLabel)
-        addSubview(progressBar)
-        addSubview(exploreProgressLabel)
 
         exploreImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 250, height: 155)
-        exploreLabel.anchor(top: exploreImage.bottomAnchor, left: exploreImage.leftAnchor, bottom: nil, right: exploreImage.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 55)
-        exploreProgressLabel.anchor(top: exploreImage.bottomAnchor, left: nil, bottom: nil, right: exploreImage.rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: exploreProgressLabel.intrinsicContentSize.width, height: exploreProgressLabel.intrinsicContentSize.height)
-        progressBar.anchor(top: nil, left: exploreImage.leftAnchor, bottom: nil, right: exploreProgressLabel.leftAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 3)
-        progressBar.centerYAnchor.constraint(equalTo: exploreProgressLabel.centerYAnchor).isActive = true
+        exploreLabel.anchor(top: exploreImage.bottomAnchor, left: exploreImage.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 45)
     }
     
     override init(frame: CGRect) {

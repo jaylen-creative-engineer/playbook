@@ -15,7 +15,7 @@ class ProfileServices {
     
     // MARK: - CREATE account
     
-    func createAccount(email : String, username : String, fullname : String, photoUrl : String){
+    func createAccount(email : String, username : String, fullname : String, photoUrl : String, bio : String?){
         let url = "http://localhost:8080/signup"
         guard let userId = Auth.auth().currentUser?.uid else { return }
 
@@ -25,6 +25,7 @@ class ProfileServices {
         parameters["username"] = username
         parameters["fullname"] = fullname
         parameters["photoUrl"] = photoUrl
+        parameters["bio"] = bio
         
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
             switch response.result {
