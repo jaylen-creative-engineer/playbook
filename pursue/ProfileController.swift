@@ -124,6 +124,11 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         navigationController?.pushViewController(friendsController, animated: true)
     }
     
+    func showCamera(){
+        let cameraController = SelectCameraController()
+        present(cameraController, animated: true, completion: nil)
+    }
+    
     @objc func handleSettings() {
         let customAlert = CustomSettingsView()
         customAlert.providesPresentationContextTransitionStyle = true
@@ -189,7 +194,7 @@ extension ProfileController {
             }
             return CGSize(width: view.frame.width, height: 155)
         case 1:
-            return CGSize(width: view.frame.width, height: view.frame.height)
+            return CGSize(width: view.frame.width, height: 465)
         default:
             assert(false, "Not a valid row")
         }

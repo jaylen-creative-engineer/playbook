@@ -77,6 +77,7 @@
 		E65F1E521FCCBE5000BD850E /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F1E511FCCBE5000BD850E /* HomeController.swift */; };
 		E65F1E561FCCC7BF00BD850E /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F1E551FCCC7BF00BD850E /* ProfileController.swift */; };
 		E67FB8C2203117C70008732C /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67FB8C1203117C70008732C /* ImageProcessor.swift */; };
+		E680ECC5206ACBD60023087D /* ProfilePursuitCreateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E680ECC4206ACBD60023087D /* ProfilePursuitCreateCell.swift */; };
 		E6989BF320475CDD0067A55B /* CustomDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6989BF220475CDD0067A55B /* CustomDetailView.swift */; };
 		E6989BF52047797B0067A55B /* CustomHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6989BF42047797B0067A55B /* CustomHomeView.swift */; };
 		E6989BF72047A5350067A55B /* FollowedNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6989BF62047A5350067A55B /* FollowedNotification.swift */; };
@@ -95,7 +96,6 @@
 		E6CB1B49205706C200B5D2ED /* CustomPeopleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CB1B48205706C200B5D2ED /* CustomPeopleViewCell.swift */; };
 		E6CB1B4B205789DB00B5D2ED /* ProfilePursuit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CB1B4A205789DB00B5D2ED /* ProfilePursuit.swift */; };
 		E6CB1B4D20578A1100B5D2ED /* ProfilePursuitCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CB1B4C20578A1100B5D2ED /* ProfilePursuitCells.swift */; };
-		E6CB1B512058B54300B5D2ED /* ProfilePursuitSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CB1B502058B54300B5D2ED /* ProfilePursuitSection.swift */; };
 		E6CB1B532058C11B00B5D2ED /* RecentSearches.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CB1B522058C11B00B5D2ED /* RecentSearches.swift */; };
 		E6CB1B572058CA5800B5D2ED /* SearchUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CB1B562058CA5800B5D2ED /* SearchUsers.swift */; };
 		E6CB1B592058CA9200B5D2ED /* SearchSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CB1B582058CA9200B5D2ED /* SearchSteps.swift */; };
@@ -228,6 +228,7 @@
 		E65F1E551FCCC7BF00BD850E /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		E67FB8C0202FB18C0008732C /* pursue.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = pursue.entitlements; sourceTree = "<group>"; };
 		E67FB8C1203117C70008732C /* ImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
+		E680ECC4206ACBD60023087D /* ProfilePursuitCreateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePursuitCreateCell.swift; sourceTree = "<group>"; };
 		E6989BF220475CDD0067A55B /* CustomDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDetailView.swift; sourceTree = "<group>"; };
 		E6989BF42047797B0067A55B /* CustomHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHomeView.swift; sourceTree = "<group>"; };
 		E6989BF62047A5350067A55B /* FollowedNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedNotification.swift; sourceTree = "<group>"; };
@@ -246,7 +247,6 @@
 		E6CB1B48205706C200B5D2ED /* CustomPeopleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPeopleViewCell.swift; sourceTree = "<group>"; };
 		E6CB1B4A205789DB00B5D2ED /* ProfilePursuit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePursuit.swift; sourceTree = "<group>"; };
 		E6CB1B4C20578A1100B5D2ED /* ProfilePursuitCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePursuitCells.swift; sourceTree = "<group>"; };
-		E6CB1B502058B54300B5D2ED /* ProfilePursuitSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePursuitSection.swift; sourceTree = "<group>"; };
 		E6CB1B522058C11B00B5D2ED /* RecentSearches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearches.swift; sourceTree = "<group>"; };
 		E6CB1B562058CA5800B5D2ED /* SearchUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUsers.swift; sourceTree = "<group>"; };
 		E6CB1B582058CA9200B5D2ED /* SearchSteps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSteps.swift; sourceTree = "<group>"; };
@@ -573,8 +573,8 @@
 				E60EB268204616D8006E4F1A /* FriendsController.swift */,
 				E60EB26A204617B5006E4F1A /* FriendsCells.swift */,
 				E6CB1B4A205789DB00B5D2ED /* ProfilePursuit.swift */,
-				E6CB1B502058B54300B5D2ED /* ProfilePursuitSection.swift */,
 				E6CB1B4C20578A1100B5D2ED /* ProfilePursuitCells.swift */,
+				E680ECC4206ACBD60023087D /* ProfilePursuitCreateCell.swift */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -883,6 +883,7 @@
 				E6DF9EBB203B8778005C86DB /* DetailSteps.swift in Sources */,
 				E6E0B0262061671E00007A21 /* CreateAlertViewCell.swift in Sources */,
 				E6D0B41F203FDEEF008D4268 /* ExploreImageRow.swift in Sources */,
+				E680ECC5206ACBD60023087D /* ProfilePursuitCreateCell.swift in Sources */,
 				E6D571432010FD7D008A37CC /* HomeInterestsCells.swift in Sources */,
 				E6A274001F68327F00F5B4C8 /* User.swift in Sources */,
 				E6DEC84C201AC15B00E02393 /* Steps.swift in Sources */,
@@ -895,7 +896,6 @@
 				E6234E962044719C00A57A2C /* CustomSettingsView.swift in Sources */,
 				E6E0B0282065ECE000007A21 /* CustomStepToggleView.swift in Sources */,
 				E6398070204911D80049A71B /* InviteCell.swift in Sources */,
-				E6CB1B512058B54300B5D2ED /* ProfilePursuitSection.swift in Sources */,
 				E60EB26B204617B5006E4F1A /* FriendsCells.swift in Sources */,
 				E6D0B422203FDEEF008D4268 /* ExplorePrincipleCells.swift in Sources */,
 				E62AAB211FD1E8680053EAD7 /* CameraBar.swift in Sources */,

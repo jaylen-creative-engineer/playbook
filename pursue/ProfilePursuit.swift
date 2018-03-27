@@ -12,15 +12,15 @@ class ProfilePursuit : UICollectionViewCell, UICollectionViewDelegate, UICollect
     
     var pursuits = [Pursuit]()
     var accessProfileController : ProfileController?
+    let createId = "createId"
     
     let pursuitCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
+        layout.scrollDirection = .horizontal
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.isScrollEnabled = false
         return collectionView
     }()
     
@@ -36,39 +36,51 @@ class ProfilePursuit : UICollectionViewCell, UICollectionViewDelegate, UICollect
     let cellId = "cellId"
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width, height: 405)
+        return CGSize(width: 235, height: 335)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print(pursuits)
         if !pursuits.isEmpty {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfilePursuitSection
-            cell.pursuit = pursuits[indexPath.item]
-            return cell
+            return pursuits.count
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfilePursuitSection
-            return cell
+            return 1
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(0, 12, 0, 12)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if pursuits.count == 0 {
+            accessProfileController?.showCamera()
+        } else {
+            print("Nothing")
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if !pursuits.isEmpty {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfilePursuitCells
+            cell.pursuit = pursuits[indexPath.item]
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: createId, for: indexPath) as! ProfilePursuitCreateCell
+            return cell
+        }
+        
+    }
+    
     func setupView(){
-        pursuitCollectionView.register(ProfilePursuitSection.self, forCellWithReuseIdentifier: cellId)
+        pursuitCollectionView.register(ProfilePursuitCells.self, forCellWithReuseIdentifier: cellId)
+        pursuitCollectionView.register(ProfilePursuitCreateCell.self, forCellWithReuseIdentifier: createId)
         pursuitCollectionView.delegate = self
         pursuitCollectionView.dataSource = self
         
         addSubview(pursuitsLabel)
         addSubview(pursuitCollectionView)
-        
         pursuitsLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: pursuitsLabel.intrinsicContentSize.width, height: pursuitsLabel.intrinsicContentSize.height)
-        pursuitCollectionView.anchor(top: pursuitsLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: frame.height)
+        pursuitCollectionView.anchor(top: pursuitsLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 425)
     }
     
     override init(frame: CGRect) {

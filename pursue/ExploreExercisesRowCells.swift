@@ -18,7 +18,7 @@ class ExploreExercisesRowCells  : UICollectionViewCell {
     
     let exploreLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 25))
+        label.font = .boldSystemFont(ofSize: 14)
         label.textAlignment = .justified
         return label
     }()
