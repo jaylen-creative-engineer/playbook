@@ -14,7 +14,7 @@ class CreateServices {
     
     // MARK: - CREATE pursuit
     
-    func createPursuit(pursuitId : String, interestId : String, contentUrl : String?, thumbnailUrl : UIImage, pursuitDescription : String?, is_visible : Int, is_public : Int){
+    func createPursuit(pursuitId : String, postId : String, interestId : String, contentUrl : String?, thumbnailUrl : UIImage, pursuitDescription : String?, is_step: Int, is_principle : Int, is_visible : Int, is_public : Int){
         let url = "http://localhost:8080/create_pursuit"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
@@ -37,7 +37,77 @@ class CreateServices {
             parameters["thumbnailUrl"] = pursuitImage
             parameters["is_visible"] = is_visible
             parameters["is_public"] = is_public
+            parameters["is_step"] = is_step
+            parameters["is_principle"] = is_principle
             parameters["pursuitDescription"] = pursuitDescription
+            parameters["postId"] = postId
+            
+            Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+            }
+        })
+    }
+    
+    func createPrinciplePursuit(pursuitId : String, principleId : String, interestId : String, contentUrl : String?, thumbnailUrl : UIImage, pursuitDescription : String?, is_step: Int, is_principle : Int, is_visible : Int, is_public : Int){
+        let url = "http://localhost:8080/create_pursuit_principle"
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        
+        guard let uploadData = UIImageJPEGRepresentation(thumbnailUrl, 0.3) else { return }
+        
+        let filename = NSUUID().uuidString
+        Storage.storage().reference().child("pursuit-images").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, err) in
+            
+            if let err = err {
+                print("Failed to upload", err)
+            }
+            
+            guard let pursuitImage = metadata?.downloadURL()?.absoluteString else { return }
+            
+            var parameters = Alamofire.Parameters()
+            parameters["pursuitId"] = pursuitId
+            parameters["userId"] = userId
+            parameters["interestId"] = interestId
+            parameters["contentUrl"] = contentUrl
+            parameters["thumbnailUrl"] = pursuitImage
+            parameters["is_visible"] = is_visible
+            parameters["is_public"] = is_public
+            parameters["is_step"] = is_step
+            parameters["is_principle"] = is_principle
+            parameters["pursuitDescription"] = pursuitDescription
+            parameters["principleId"] = principleId
+            
+            Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+            }
+        })
+    }
+    
+    
+    func createStepPursuit(pursuitId : String, stepId : String, interestId : String, contentUrl : String?, thumbnailUrl : UIImage, pursuitDescription : String?, is_step: Int, is_principle : Int, is_visible : Int, is_public : Int){
+        let url = "http://localhost:8080/create_pursuit_step"
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        
+        guard let uploadData = UIImageJPEGRepresentation(thumbnailUrl, 0.3) else { return }
+        
+        let filename = NSUUID().uuidString
+        Storage.storage().reference().child("pursuit-images").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, err) in
+            
+            if let err = err {
+                print("Failed to upload", err)
+            }
+            
+            guard let pursuitImage = metadata?.downloadURL()?.absoluteString else { return }
+            
+            var parameters = Alamofire.Parameters()
+            parameters["pursuitId"] = pursuitId
+            parameters["userId"] = userId
+            parameters["interestId"] = interestId
+            parameters["contentUrl"] = contentUrl
+            parameters["thumbnailUrl"] = pursuitImage
+            parameters["is_visible"] = is_visible
+            parameters["is_public"] = is_public
+            parameters["is_step"] = is_step
+            parameters["is_principle"] = is_principle
+            parameters["pursuitDescription"] = pursuitDescription
+            parameters["stepId"] = stepId
             
             Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
             }

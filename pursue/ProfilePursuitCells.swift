@@ -32,7 +32,7 @@ class ProfilePursuitCells : UICollectionViewCell {
         return iv
     }()
     
-    let pursuitLabel : UILabel = {
+    lazy var pursuitLabel : UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 14)
         label.textAlignment = .justified

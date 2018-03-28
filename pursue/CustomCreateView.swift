@@ -10,7 +10,7 @@ import UIKit
 import Hero
 import Firebase
 
-class CustomCreateView : UIViewController {
+class CustomCreateView : UIViewController, InterestNameSelected {
     
     let alertViewGrayColor = UIColor(red: 224.0/255.0, green: 224.0/255.0, blue: 224.0/255.0, alpha: 1)
     let cellId = "cellId"
@@ -24,7 +24,6 @@ class CustomCreateView : UIViewController {
     
     lazy var pursuitPhoto : UIImageView = {
        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.layer.cornerRadius = 4
@@ -65,6 +64,15 @@ class CustomCreateView : UIViewController {
         return view
     }()
     
+    let collectionView : UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        return collectionView
+    }()
     
     lazy var cancelLabel : UILabel = {
         let label = UILabel()
@@ -76,6 +84,14 @@ class CustomCreateView : UIViewController {
         label.addGestureRecognizer(tap)
         label.textAlignment = .center
         label.isUserInteractionEnabled = true
+        return label
+    }()
+    
+    let selectInterest : UILabel = {
+       let label = UILabel()
+        label.text = "Select an interest that this pursuit is related to."
+        label.font = .boldSystemFont(ofSize: 14)
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -116,23 +132,82 @@ class CustomCreateView : UIViewController {
     
     @objc func handleSend(){
         let pursuitId = NSUUID().uuidString
+        let stepId = NSUUID().uuidString
+        let principleId = NSUUID().uuidString
+        let postId = NSUUID().uuidString
         
-//        if (contentUrl != nil) {
-//            Storage.storage().reference().child("pursuit-video").child(pursuitId).putFile(from: contentUrl!, metadata: nil) { (metadata, err) in
-//                if let err = err {
-//                    print("Failed to upload", err)
-//                }
-//
-//                guard let videoUrl = metadata?.downloadURL()?.absoluteString else { return }
-//                self.createService.createPursuit(pursuitId: pursuitId, interestId: "29E01BE3-F2D0-413D-BF1F-4349DB1045E2", contentUrl: videoUrl, thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_visible: 0, is_public: 0)
-//               self.navigationController?.popToRootViewController(animated: true)
-//
-//            }
-//        }
-//
-//        createService.createPursuit(pursuitId: pursuitId, interestId: "29E01BE3-F2D0-413D-BF1F-4349DB1045E2", contentUrl: "", thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_visible: 0, is_public: 0)
-//
-        self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+        if (contentUrl != nil) {
+            Storage.storage().reference().child("pursuit-video").child(pursuitId).putFile(from: contentUrl!, metadata: nil) { (metadata, err) in
+                if let err = err {
+                    print("Failed to upload", err)
+                }
+                guard let videoUrl = metadata?.downloadURL()?.absoluteString else { return }
+
+                if self.interestId != nil {
+                    
+                    switch true {
+                    case self.is_step == 1:
+                        self.createService.createStepPursuit(pursuitId: pursuitId, stepId: stepId, interestId: self.interestId!, contentUrl: videoUrl, thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+                        self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+                    case self.is_principle == 1:
+                        self.createService.createPrinciplePursuit(pursuitId: pursuitId, principleId: principleId, interestId: self.interestId!, contentUrl: videoUrl, thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+                        self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+                    case self.is_step == 0 && self.is_principle == 0:
+                        self.createService.createPursuit(pursuitId: pursuitId, postId: postId, interestId: self.interestId!, contentUrl: videoUrl, thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+                        self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+                    default:
+                        assert(false, "Not a valid post")
+                    }
+                    
+                } else {
+                    switch true {
+                    case self.is_step == 1:
+                        self.createService.createStepPursuit(pursuitId: pursuitId, stepId: stepId, interestId: "", contentUrl: videoUrl, thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+                        self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+                    case self.is_principle == 1:
+                        self.createService.createPrinciplePursuit(pursuitId: pursuitId, principleId: principleId, interestId: "", contentUrl: videoUrl, thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+                        self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+                    case self.is_step == 0 && self.is_principle == 0:
+                        self.createService.createPursuit(pursuitId: pursuitId, postId: postId, interestId: "", contentUrl: videoUrl, thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+                        self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+                    default:
+                        assert(false, "Not a valid post")
+                    }
+                }
+                
+            }
+        } else {
+            if self.interestId != nil {
+                switch true {
+                case self.is_step == 1:
+                    self.createService.createStepPursuit(pursuitId: pursuitId, stepId: stepId, interestId: self.interestId!, contentUrl: "", thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+                    self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+                case self.is_principle == 1:
+                    self.createService.createPrinciplePursuit(pursuitId: pursuitId, principleId: principleId, interestId: self.interestId!, contentUrl: "", thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+                    self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+                case self.is_step == 0 && self.is_principle == 0:
+                    self.createService.createPursuit(pursuitId: pursuitId, postId: postId, interestId: self.interestId!, contentUrl: "", thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+                    self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+                default:
+                    assert(false, "Not a valid post")
+                }
+                
+            } else {
+                switch true {
+                case self.is_step == 1:
+                    self.createService.createStepPursuit(pursuitId: pursuitId, stepId: stepId, interestId: "", contentUrl: "", thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+                    self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+                case self.is_principle == 1:
+                    self.createService.createPrinciplePursuit(pursuitId: pursuitId, principleId: principleId, interestId: "", contentUrl: "", thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+                    self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+                case self.is_step == 0 && self.is_principle == 0:
+                    self.createService.createPursuit(pursuitId: pursuitId, postId: postId, interestId: "", contentUrl: "", thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+                    self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+                default:
+                    assert(false, "Not a valid post")
+                }
+            }
+        }
     }
     
     @objc func handleDismiss(){
@@ -152,6 +227,17 @@ class CustomCreateView : UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setupCollectionView(){
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(CreateInterestsCells.self, forCellWithReuseIdentifier: cellId)
+        view.addSubview(collectionView)
+        view.addSubview(selectInterest)
+        
+        selectInterest.anchor(top: pursuitUnderline.bottomAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 28, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: selectInterest.intrinsicContentSize.width, height: selectInterest.intrinsicContentSize.height)
+        collectionView.anchor(top: selectInterest.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 70)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(alertView)
@@ -164,7 +250,7 @@ class CustomCreateView : UIViewController {
         alertView.addSubview(cancelBackground)
         view.addSubview(dismissBackground)
         
-        alertView.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 325)
+        alertView.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 450)
        
         sendLabel.anchor(top: alertView.topAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: sendLabel.intrinsicContentSize.width, height: sendLabel.intrinsicContentSize.height)
         pursuitPhoto.anchor(top: sendLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 105, height: 120)
@@ -178,6 +264,8 @@ class CustomCreateView : UIViewController {
         cancelBackground.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 8, paddingRight: 0, width: 100, height: 50)
         cancelBackground.centerXAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
         dismissBackground.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: alertView.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        setupCollectionView()
+        getInterestsNames()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -189,6 +277,24 @@ class CustomCreateView : UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         dismiss(animated: true, completion: nil)
+    }
+    
+    let interestService = InterestServices()
+    var interests = [CreateInterests]()
+    var interestId : String?
+    
+    func getInterestsNames(){
+        interestService.getInterestsNames { (interests) in
+            interests.forEach({ (interest) in
+                self.interests.append(interest)
+                self.collectionView.reloadData()
+            })
+        }
+    }
+    
+    func interestSelected(for cell: CreateInterestsCells) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        interestId = self.interests[indexPath.item].interestId
     }
     
     @objc func handleCancel(){
@@ -212,4 +318,30 @@ class CustomCreateView : UIViewController {
 
 extension CustomCreateView : UITextViewDelegate {
     
+}
+
+extension CustomCreateView : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return interests.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CreateInterestsCells
+        cell.interest = interests[indexPath.item]
+        cell.delegate = self
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width / 4, height: 35)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(0, 12, 0, 12)
+    }
 }

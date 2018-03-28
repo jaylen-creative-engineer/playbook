@@ -89,6 +89,8 @@
 		E6A273F91F68314F00F5B4C8 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A273F81F68314F00F5B4C8 /* CustomImageView.swift */; };
 		E6A273FE1F68325A00F5B4C8 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A273FD1F68325A00F5B4C8 /* Post.swift */; };
 		E6A274001F68327F00F5B4C8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A273FF1F68327F00F5B4C8 /* User.swift */; };
+		E6AD4BBF206AE05B00451547 /* CreateInterestsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AD4BBE206AE05B00451547 /* CreateInterestsCells.swift */; };
+		E6AD4BC1206AE60300451547 /* CreateInterests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AD4BC0206AE60300451547 /* CreateInterests.swift */; };
 		E6B49F2B1FACDCE800AEDAFD /* InterestsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B49F2A1FACDCE800AEDAFD /* InterestsController.swift */; };
 		E6B49F2F1FACDE4100AEDAFD /* SelectInterestsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B49F2E1FACDE4100AEDAFD /* SelectInterestsList.swift */; };
 		E6C99B9D2066D07700581A1E /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C99B9C2066D07700581A1E /* UserDetails.swift */; };
@@ -240,6 +242,8 @@
 		E6A273F81F68314F00F5B4C8 /* CustomImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		E6A273FD1F68325A00F5B4C8 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		E6A273FF1F68327F00F5B4C8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		E6AD4BBE206AE05B00451547 /* CreateInterestsCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateInterestsCells.swift; sourceTree = "<group>"; };
+		E6AD4BC0206AE60300451547 /* CreateInterests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateInterests.swift; sourceTree = "<group>"; };
 		E6B49F2A1FACDCE800AEDAFD /* InterestsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsController.swift; sourceTree = "<group>"; };
 		E6B49F2E1FACDE4100AEDAFD /* SelectInterestsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectInterestsList.swift; sourceTree = "<group>"; };
 		E6C99B9C2066D07700581A1E /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
@@ -449,6 +453,7 @@
 				E6E0B0212060ABD600007A21 /* SearchedPrinciples.swift */,
 				E6E0B0232060AC4000007A21 /* SearchedSteps.swift */,
 				E6C99B9C2066D07700581A1E /* UserDetails.swift */,
+				E6AD4BC0206AE60300451547 /* CreateInterests.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -595,6 +600,7 @@
 				E659EB1A2040876D00CA8DB5 /* CustomCreateView.swift */,
 				E6E0B0252061671E00007A21 /* CreateAlertViewCell.swift */,
 				E6E0B0272065ECE000007A21 /* CustomStepToggleView.swift */,
+				E6AD4BBE206AE05B00451547 /* CreateInterestsCells.swift */,
 			);
 			name = Camera;
 			sourceTree = "<group>";
@@ -880,6 +886,7 @@
 				E6C99B9D2066D07700581A1E /* UserDetails.swift in Sources */,
 				E628F2EA2035D978002FE8CF /* RecentSearchUsers.swift in Sources */,
 				E60433EF20422EB800E6D4DA /* ProfileUserImage.swift in Sources */,
+				E6AD4BC1206AE60300451547 /* CreateInterests.swift in Sources */,
 				E6DF9EBB203B8778005C86DB /* DetailSteps.swift in Sources */,
 				E6E0B0262061671E00007A21 /* CreateAlertViewCell.swift in Sources */,
 				E6D0B41F203FDEEF008D4268 /* ExploreImageRow.swift in Sources */,
@@ -917,6 +924,7 @@
 				E6398078204B392A0049A71B /* PrinciplesPageCell.swift in Sources */,
 				E60433ED2042189F00E6D4DA /* ProfileAboutRow.swift in Sources */,
 				E647D27B2007CD3C00656DEF /* EditProfileCells.swift in Sources */,
+				E6AD4BBF206AE05B00451547 /* CreateInterestsCells.swift in Sources */,
 				E6D2B8D72017D603008D3055 /* InterestsRows.swift in Sources */,
 				E63980682048523D0049A71B /* CustomSearchView.swift in Sources */,
 				E617BB211FD8A3BF008B2EA1 /* HomePrinciples.swift in Sources */,

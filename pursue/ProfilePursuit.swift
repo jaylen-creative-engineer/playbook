@@ -9,6 +9,25 @@
 import UIKit
 
 class ProfilePursuit : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    var pursuit : Pursuit? {
+        didSet {
+            guard let photo = pursuit?.thumbnailUrl else { return }
+            pursuitImage.image = UIImage(named: photo)?.withRenderingMode(.alwaysOriginal)
+            pursuitLabel.text = pursuit?.pursuitDescription
+        }
+    }
+    
+    lazy var pursuitImage : UIImageView = {
+       let iv = UIImageView()
+        return iv
+    }()
+    
+    lazy var pursuitLabel : UILabel = {
+       let label = UILabel()
+        return label
+    }()
+    
+    var count : Int = 0
     
     var pursuits = [Pursuit]()
     var accessProfileController : ProfileController?
@@ -40,8 +59,8 @@ class ProfilePursuit : UICollectionViewCell, UICollectionViewDelegate, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if !pursuits.isEmpty {
-            return pursuits.count
+        if pursuits.count != 0 {
+            return count
         } else {
             return 1
         }
@@ -52,7 +71,7 @@ class ProfilePursuit : UICollectionViewCell, UICollectionViewDelegate, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if pursuits.count == 0 {
+        if pursuits.count != 0 {
             accessProfileController?.showCamera()
         } else {
             print("Nothing")
@@ -60,7 +79,8 @@ class ProfilePursuit : UICollectionViewCell, UICollectionViewDelegate, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if !pursuits.isEmpty {
+        print(pursuits)
+        if pursuits.count != 0 {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfilePursuitCells
             cell.pursuit = pursuits[indexPath.item]
             return cell
@@ -86,6 +106,7 @@ class ProfilePursuit : UICollectionViewCell, UICollectionViewDelegate, UICollect
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+        pursuitCollectionView.reloadData()
     }
     
     required init?(coder aDecoder: NSCoder) {

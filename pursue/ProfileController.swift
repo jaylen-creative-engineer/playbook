@@ -94,6 +94,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         getUser()
     }
     
+    var pursuit : Pursuit?
     func getUser(){
         profileService.getAccount { (user) in
             DispatchQueue.main.async {
@@ -103,6 +104,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
                 })
                 
                 user.pursuits.forEach({ (pursuit) in
+                    self.pursuit = pursuit
                     self.pursuits.append(pursuit)
                 })
                 
@@ -214,9 +216,9 @@ extension ProfileController {
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuit
             cell.accessProfileController = self
-            
             if !pursuits.isEmpty {
-                cell.pursuits = pursuits
+                cell.pursuits.append(pursuit!)
+                print(pursuits.count)
             }
             return cell
         default:

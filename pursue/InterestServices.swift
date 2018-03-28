@@ -63,4 +63,19 @@ class InterestServices {
             
         }
     }
+    
+    func getInterestsNames(completion: @escaping ([CreateInterests]) -> ()){
+        let url = "http://localhost:8080/get-user-interests-names"
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            guard let data = response.data else { return }
+            do {
+                let interestsResponse = try JSONDecoder().decode([CreateInterests].self, from: data)
+                completion(interestsResponse)
+            } catch let error {
+                print(error)
+            }
+            
+        }
+    }
 }
