@@ -63,8 +63,8 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
     let recentCellId = "recentCellId"
     let exploreService = ExploreServices()
     var user : SearchedUsers?
-    var steps = [SearchedSteps]()
-    var principles = [SearchedPrinciples]()
+    var steps : [SearchedSteps]?
+    var principles : [SearchedPrinciples]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -265,13 +265,8 @@ extension ExploreController : UISearchBarDelegate {
         exploreService.queryDatabase(searchText: queryString) { (search) in
             DispatchQueue.main.async{
                 self.user = search.users
-                search.principles.forEach({ (principle) in
-                    self.principles.append(principle)
-                })
-                
-                search.steps.forEach({ (step) in
-                    self.steps.append(step)
-                })
+                self.principles = search.principles
+                self.steps = search.steps
                 self.searchTableView.reloadData()
             }
             
@@ -296,16 +291,9 @@ extension ExploreController : UITableViewDataSource {
 extension ExploreController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: tableViewCellId, for: indexPath) as! SearchReturn
-            cell.user = user
-
-            switch true {
-            case !principles.isEmpty:
-                cell.principles = principles
-            case !steps.isEmpty:
-                cell.steps = steps
-            default:
-                cell.steps = []
-            }
+        cell.user = user
+        cell.principle = principles?[indexPath.item]
+        cell.step = steps?[indexPath.item]
         return cell
     }
 }

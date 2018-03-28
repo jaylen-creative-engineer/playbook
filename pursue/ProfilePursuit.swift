@@ -11,9 +11,9 @@ import UIKit
 class ProfilePursuit : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     var pursuit : Pursuit? {
         didSet {
-            guard let photo = pursuit?.thumbnailUrl else { return }
-            pursuitImage.image = UIImage(named: photo)?.withRenderingMode(.alwaysOriginal)
-            pursuitLabel.text = pursuit?.pursuitDescription
+            print(pursuit)
+            
+            pursuitCollectionView.reloadData()
         }
     }
     
@@ -79,10 +79,9 @@ class ProfilePursuit : UICollectionViewCell, UICollectionViewDelegate, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print(pursuits)
         if pursuits.count != 0 {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfilePursuitCells
-            cell.pursuit = pursuits[indexPath.item]
+            cell.pursuit = pursuit
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: createId, for: indexPath) as! ProfilePursuitCreateCell

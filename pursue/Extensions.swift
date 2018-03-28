@@ -143,6 +143,12 @@ extension PHAsset {
     }
 }
 
+extension Collection where Indices.Iterator.Element == Index {
+    subscript (safe index: Index) -> Iterator.Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}
+
 extension Sequence {
     public func toDictionary<Key: Hashable>(with selectKey: (Iterator.Element) -> Key) -> [Key:Iterator.Element] {
         var dict: [Key:Iterator.Element] = [:]

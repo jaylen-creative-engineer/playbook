@@ -62,8 +62,8 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     
     let backgroundFill = UIView()
     var user : User?
-    var pursuits = [Pursuit]()
-    var followers = [Follower]()
+    var pursuits : [Pursuit]?
+    var followers : [Follower]?
     let profileService = ProfileServices()
     
     private func setupTopBar(){
@@ -98,16 +98,10 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     func getUser(){
         profileService.getAccount { (user) in
             DispatchQueue.main.async {
+                self.followers = user.followees
+                self.pursuits = user.pursuits
+                
                 self.user = user
-                user.followees.forEach({ (follower) in
-                    self.followers.append(follower)
-                })
-                
-                user.pursuits.forEach({ (pursuit) in
-                    self.pursuit = pursuit
-                    self.pursuits.append(pursuit)
-                })
-                
                 guard let photoUrl = user.photoUrl else { return }
                 self.imageView.loadImage(urlString: photoUrl)
                 self.collectionView?.reloadData()
@@ -216,10 +210,11 @@ extension ProfileController {
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuit
             cell.accessProfileController = self
-            if !pursuits.isEmpty {
-                cell.pursuits.append(pursuit!)
-                print(pursuits.count)
-            }
+            guard let value = pursuits?[safe: indexPath.item] else { return cell }
+            cell.pursuit = value
+//            if !(pursuits?.isEmpty) {
+//                cell.pursuit = pursuits?[indexPath.item]
+//            }
             return cell
         default:
             assert(false, "Not a valid row")

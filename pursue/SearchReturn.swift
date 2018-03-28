@@ -23,6 +23,18 @@ class SearchReturn : UITableViewCell, UICollectionViewDelegate, UICollectionView
         }
     }
     
+    var step : SearchedSteps? {
+        didSet {
+            stepCollectionView.reloadData()
+        }
+    }
+    
+    var principle : SearchedPrinciples? {
+        didSet {
+            principleCollectionView.reloadData()
+        }
+    }
+    
     let peopleRowLabel : UILabel = {
         let label = UILabel()
         label.textColor = .black
@@ -142,15 +154,11 @@ class SearchReturn : UITableViewCell, UICollectionViewDelegate, UICollectionView
         switch collectionView {
         case stepCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! HomeStepCells
-            if !steps.isEmpty {
-                cell.step = steps[indexPath.item]
-            }
+            cell.step = step
             return cell
         case principleCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciplesCells
-            if !principles.isEmpty {
-                cell.principle = principles[indexPath.item]
-            }
+            cell.principle = principle
             return cell
         default:
             assert(false, "Not a valid collection")
