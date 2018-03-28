@@ -210,11 +210,7 @@ extension ProfileController {
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuit
             cell.accessProfileController = self
-            guard let value = pursuits?[safe: indexPath.item] else { return cell }
-            cell.pursuit = value
-//            if !(pursuits?.isEmpty) {
-//                cell.pursuit = pursuits?[indexPath.item]
-//            }
+            cell.user = user
             return cell
         default:
             assert(false, "Not a valid row")

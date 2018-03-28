@@ -13,13 +13,13 @@ class ProfilePursuitCells : UICollectionViewCell {
     var pursuit : Pursuit? {
         didSet {
             guard let photo = pursuit?.thumbnailUrl else { return }
-            pursuitImage.image = UIImage(named: photo)?.withRenderingMode(.alwaysOriginal)
+            pursuitImage.loadImage(urlString: photo)
             pursuitLabel.text = pursuit?.pursuitDescription
         }
     }
     
-    lazy var pursuitImage : UIImageView = {
-        let iv = UIImageView()
+    lazy var pursuitImage : CustomImageView = {
+        let iv = CustomImageView()
         iv.layer.masksToBounds = true
         iv.contentMode = .scaleAspectFill
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleImageTap))

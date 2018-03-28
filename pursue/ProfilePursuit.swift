@@ -9,25 +9,15 @@
 import UIKit
 
 class ProfilePursuit : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    var pursuit : Pursuit? {
+    
+    var user : User? {
         didSet {
-            print(pursuit)
             
+            guard let inpursuit = user?.pursuits else { return }
+            self.pursuits = inpursuit
             pursuitCollectionView.reloadData()
         }
     }
-    
-    lazy var pursuitImage : UIImageView = {
-       let iv = UIImageView()
-        return iv
-    }()
-    
-    lazy var pursuitLabel : UILabel = {
-       let label = UILabel()
-        return label
-    }()
-    
-    var count : Int = 0
     
     var pursuits = [Pursuit]()
     var accessProfileController : ProfileController?
@@ -60,7 +50,7 @@ class ProfilePursuit : UICollectionViewCell, UICollectionViewDelegate, UICollect
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if pursuits.count != 0 {
-            return count
+            return pursuits.count
         } else {
             return 1
         }
@@ -81,7 +71,7 @@ class ProfilePursuit : UICollectionViewCell, UICollectionViewDelegate, UICollect
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if pursuits.count != 0 {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfilePursuitCells
-            cell.pursuit = pursuit
+            cell.pursuit = pursuits[indexPath.item]
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: createId, for: indexPath) as! ProfilePursuitCreateCell
