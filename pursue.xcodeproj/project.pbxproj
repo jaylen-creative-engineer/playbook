@@ -51,6 +51,8 @@
 		E636E7762056493A00BCA756 /* HomePeople.swift in Sources */ = {isa = PBXBuildFile; fileRef = E636E7752056493A00BCA756 /* HomePeople.swift */; };
 		E636E7782056497400BCA756 /* HomePeopleCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E636E7772056497400BCA756 /* HomePeopleCells.swift */; };
 		E636E77A2056F61200BCA756 /* CustomOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E636E7792056F61200BCA756 /* CustomOptionView.swift */; };
+		E6389A00206C1A7E007055A4 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63899FF206C1A7E007055A4 /* Home.swift */; };
+		E6389A02206C1AD9007055A4 /* HomePostContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6389A01206C1AD9007055A4 /* HomePostContent.swift */; };
 		E63980682048523D0049A71B /* CustomSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63980672048523D0049A71B /* CustomSearchView.swift */; };
 		E639806C20490B550049A71B /* InviteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E639806B20490B550049A71B /* InviteController.swift */; };
 		E639806E20490E920049A71B /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E639806D20490E920049A71B /* Contacts.swift */; };
@@ -203,6 +205,8 @@
 		E636E7752056493A00BCA756 /* HomePeople.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePeople.swift; sourceTree = "<group>"; };
 		E636E7772056497400BCA756 /* HomePeopleCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePeopleCells.swift; sourceTree = "<group>"; };
 		E636E7792056F61200BCA756 /* CustomOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomOptionView.swift; sourceTree = "<group>"; };
+		E63899FF206C1A7E007055A4 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		E6389A01206C1AD9007055A4 /* HomePostContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostContent.swift; sourceTree = "<group>"; };
 		E63980672048523D0049A71B /* CustomSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchView.swift; sourceTree = "<group>"; };
 		E639806B20490B550049A71B /* InviteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteController.swift; sourceTree = "<group>"; };
 		E639806D20490E920049A71B /* Contacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contacts.swift; sourceTree = "<group>"; };
@@ -454,6 +458,8 @@
 				E6E0B0232060AC4000007A21 /* SearchedSteps.swift */,
 				E6C99B9C2066D07700581A1E /* UserDetails.swift */,
 				E6AD4BC0206AE60300451547 /* CreateInterests.swift */,
+				E63899FF206C1A7E007055A4 /* Home.swift */,
+				E6389A01206C1AD9007055A4 /* HomePostContent.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -837,12 +843,14 @@
 				E65F1E521FCCBE5000BD850E /* HomeController.swift in Sources */,
 				E6398083204DD6B60049A71B /* CreateServices.swift in Sources */,
 				E628F2EE2035D98A002FE8CF /* RecentSearchPrinciples.swift in Sources */,
+				E6389A02206C1AD9007055A4 /* HomePostContent.swift in Sources */,
 				E60EB26F20462DFA006E4F1A /* FollowPursuitCells.swift in Sources */,
 				E6989C012047A61C0067A55B /* PrincipleNotification.swift in Sources */,
 				E617BB1D1FD8A350008B2EA1 /* HomeSteps.swift in Sources */,
 				E6D0B420203FDEEF008D4268 /* ExploreController.swift in Sources */,
 				E6D0B42B203FE249008D4268 /* ExerciseImageCells.swift in Sources */,
 				E63980912050D11F0049A71B /* PrincipleComment.swift in Sources */,
+				E6389A00206C1A7E007055A4 /* Home.swift in Sources */,
 				E62AAB1B1FD0A54D0053EAD7 /* TermsController.swift in Sources */,
 				E60EB26D20462DF0006E4F1A /* FollowPursuit.swift in Sources */,
 				E6234E9E2044F96B00A57A2C /* AssetSelectionViewController.swift in Sources */,

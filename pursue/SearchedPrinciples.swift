@@ -13,4 +13,6 @@ struct SearchedPrinciples : Decodable{
     let principleId : String?
     let thumbnailUrl : String?
     let principleDescription : String?
+    let principleThumbnail : String?
+    let contentUrl : String?
 }

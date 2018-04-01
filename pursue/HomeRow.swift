@@ -15,6 +15,17 @@ protocol HomeRowImageEngagements {
 
 class HomeRow: UICollectionViewCell {
     
+    var home : Home? {
+        didSet {
+            guard let data = self.home?.returned_content else { return }
+            self.postContent = data
+            self.subCarouselView.reloadData()
+            self.carouselView.reloadData()
+        }
+    }
+    
+    var postContent = [HomePostContent]()
+    
     var accessHomeController : HomeContainer?
     var homeDelegate : HomeRowImageEngagements?
     let pursuitId = "pursuitId"
@@ -27,15 +38,15 @@ class HomeRow: UICollectionViewCell {
     
     let imageNames = ["ferrari", "pagani", "travel", "contacts", "3d-touch"]
     let profileNames = ["profile-1", "profile-2", "profile-3", "profile-4", "profile-5"]
-    let homeDescriptions = ["iChat App", "New York Exchange", "Travel App", "Contact Page", "Settings 3d touch"]
+    let homeDescriptions = ["iChat App","New York Exchange", "Travel App", "Contact Page", "Settings 3d touch"]
     
     lazy var carouselView : iCarousel = {
-       let ic = iCarousel()
+        let ic = iCarousel()
         return ic
     }()
     
     lazy var subCarouselView : iCarousel = {
-      let ic = iCarousel()
+        let ic = iCarousel()
         return ic
     }()
     
@@ -71,11 +82,6 @@ class HomeRow: UICollectionViewCell {
         accessHomeController?.imageView()
     }
     
-    @objc func toggleLike(label : UILabel, index : Int){
-        label.backgroundColor = .clear
-        label.text = homeDescriptions[index]
-    }
-    
     @objc func showDetail(){
         accessHomeController?.handleChangeToDetail(viewType: "isImageDetail")
     }
@@ -96,121 +102,109 @@ class HomeRow: UICollectionViewCell {
 extension HomeRow : iCarouselDataSource, iCarouselDelegate {
     
     func numberOfItems(in carousel: iCarousel) -> Int {
-        switch carousel {
-        case carouselView:
-            return imageNames.count
-        case subCarouselView:
-            return homeDescriptions.count
-        default:
-            assert(false, "Not a valid cell")
-        }
+        return postContent.count
     }
     
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
-        var carouselImage = UIImageView()
+        var carouselView = UIView()
+        carouselView = UIView(frame: CGRect(x: 0, y: 0, width: 400, height: 500))
+        carouselView.isUserInteractionEnabled = true
         
-        switch carousel {
-        case subCarouselView:
-            carouselImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 400, height: 100))
-            
-            let postLabel = UILabel()
-            postLabel.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight(25))
-            postLabel.textAlignment = .justified
-            postLabel.numberOfLines = 1
-            postLabel.sizeToFit()
-            
-            let usernameLabel = UILabel()
-            usernameLabel.font = UIFont.boldSystemFont(ofSize: 12)
-            usernameLabel.textAlignment = .justified
-            usernameLabel.numberOfLines = 1
-            usernameLabel.text = imageNames[index]
-            usernameLabel.sizeToFit()
-            
-            let profilePicture = UIImageView()
-            profilePicture.contentMode = .scaleAspectFill
-            profilePicture.translatesAutoresizingMaskIntoConstraints = false
-            profilePicture.layer.cornerRadius = 25
-            profilePicture.layer.masksToBounds = true
-            profilePicture.image = UIImage(named: profileNames[index])?.withRenderingMode(.alwaysOriginal)
-            
-            carouselImage.addSubview(postLabel)
-            carouselImage.addSubview(usernameLabel)
-            carouselImage.addSubview(profilePicture)
-            
-            profilePicture.anchor(top: carouselImage.topAnchor, left: carouselImage.leftAnchor, bottom: nil, right: nil, paddingTop: 46, paddingLeft: 25, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
-            postLabel.anchor(top: profilePicture.topAnchor, left: profilePicture.rightAnchor, bottom: nil, right: carouselImage.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 24, width: 0, height: postLabel.intrinsicContentSize.height)
-            usernameLabel.anchor(top: postLabel.bottomAnchor, left: postLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
-            
-            toggleLike(label: postLabel, index: index)
-            
-            return carouselImage
-        case carouselView:
-            carouselImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 325, height: 400))
-            
-            carouselImage.image = UIImage(named: imageNames[index])?.withRenderingMode(.alwaysOriginal)
-            carouselImage.contentMode = .scaleAspectFill
-            carouselImage.layer.cornerRadius = 4
-            carouselImage.layer.masksToBounds = true
-            carouselImage.isUserInteractionEnabled = true
-            
-            carouselView.isUserInteractionEnabled = true
-            
-            let leftButton = UIButton()
-            leftButton.translatesAutoresizingMaskIntoConstraints = false
-            leftButton.isUserInteractionEnabled = true
-            leftButton.addTarget(self, action: #selector(handleLeftTap), for: .touchUpInside)
-            
-            let rightButton = UIButton()
-            rightButton.translatesAutoresizingMaskIntoConstraints = false
-            rightButton.isUserInteractionEnabled = true
-            rightButton.addTarget(self, action: #selector(handleRightTap), for: .touchUpInside)
-            
-            let playBackground = PlayView()
-            playBackground.layer.cornerRadius = 15
-            playBackground.translatesAutoresizingMaskIntoConstraints = false
-            playBackground.backgroundColor = .white
-            playBackground.layer.masksToBounds = true
-            
-            let playIcon = UIImageView()
-            playIcon.image = #imageLiteral(resourceName: "view-more").withRenderingMode(.alwaysOriginal)
-            playIcon.contentMode = .scaleAspectFill
-            playIcon.translatesAutoresizingMaskIntoConstraints = false
-            
-            let backgroundButton = UIButton()
-            backgroundButton.backgroundColor = .white
-            backgroundButton.translatesAutoresizingMaskIntoConstraints = false
-            backgroundButton.layer.cornerRadius = 2
-            backgroundButton.clipsToBounds = true
-            backgroundButton.addTarget(self, action: #selector(showDetail), for: .touchUpInside)
-            
-            let fullscreenLabel = UILabel()
-            fullscreenLabel.text = "Full Screen"
-            fullscreenLabel.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight(25))
-            fullscreenLabel.translatesAutoresizingMaskIntoConstraints = false
-            
-            carouselImage.addSubview(leftButton)
-            carouselImage.addSubview(rightButton)
-            carouselImage.addSubview(backgroundButton)
-            carouselImage.addSubview(fullscreenLabel)
-            carouselImage.addSubview(playBackground)
-            carouselImage.addSubview(playIcon)
-            
-            leftButton.anchor(top: carouselImage.topAnchor, left: carouselImage.leftAnchor, bottom: carouselImage.bottomAnchor, right: carouselImage.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-            rightButton.anchor(top: carouselImage.topAnchor, left: carouselImage.centerXAnchor, bottom: carouselImage.bottomAnchor, right: carouselImage.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-            
-            backgroundButton.anchor(top: nil, left: leftButton.leftAnchor, bottom: leftButton.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 12, paddingRight: 0, width: 100, height: 30)
-            fullscreenLabel.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: fullscreenLabel.intrinsicContentSize.width, height: fullscreenLabel.intrinsicContentSize.height)
-            fullscreenLabel.centerXAnchor.constraint(equalTo: backgroundButton.centerXAnchor).isActive = true
-            fullscreenLabel.centerYAnchor.constraint(equalTo: backgroundButton.centerYAnchor).isActive = true
-            playBackground.anchor(top: nil, left: nil, bottom: rightButton.bottomAnchor, right: rightButton.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 12, width: 30, height: 30)
-            playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 10, height: 10)
-            playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true
-            playIcon.centerYAnchor.constraint(equalTo: playBackground.centerYAnchor).isActive = true
-            return carouselImage
-        default:
-            return carouselImage
+        let postLabel = UILabel()
+        postLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        postLabel.textAlignment = .justified
+        postLabel.numberOfLines = 1
+        postLabel.sizeToFit()
+        
+        let usernameLabel = UILabel()
+        usernameLabel.font = UIFont.boldSystemFont(ofSize: 12)
+        usernameLabel.textAlignment = .justified
+        usernameLabel.numberOfLines = 1
+        usernameLabel.sizeToFit()
+        
+        let profilePicture = UIImageView()
+        profilePicture.contentMode = .scaleAspectFill
+        profilePicture.translatesAutoresizingMaskIntoConstraints = false
+        profilePicture.layer.cornerRadius = 25
+        profilePicture.layer.masksToBounds = true
+        
+        let carouselImage = UIImageView()
+        carouselImage.contentMode = .scaleAspectFill
+        carouselImage.layer.cornerRadius = 4
+        carouselImage.layer.masksToBounds = true
+        carouselImage.isUserInteractionEnabled = true
+        carouselImage.backgroundColor = .red
+        
+        let leftButton = UIButton()
+        leftButton.translatesAutoresizingMaskIntoConstraints = false
+        leftButton.isUserInteractionEnabled = true
+        leftButton.addTarget(self, action: #selector(handleLeftTap), for: .touchUpInside)
+        
+        let rightButton = UIButton()
+        rightButton.translatesAutoresizingMaskIntoConstraints = false
+        rightButton.isUserInteractionEnabled = true
+        rightButton.addTarget(self, action: #selector(handleRightTap), for: .touchUpInside)
+        
+        let playBackground = PlayView()
+        playBackground.layer.cornerRadius = 15
+        playBackground.translatesAutoresizingMaskIntoConstraints = false
+        playBackground.backgroundColor = .white
+        playBackground.layer.masksToBounds = true
+        
+        let playIcon = UIImageView()
+        playIcon.image = #imageLiteral(resourceName: "view-more").withRenderingMode(.alwaysOriginal)
+        playIcon.contentMode = .scaleAspectFill
+        playIcon.translatesAutoresizingMaskIntoConstraints = false
+        
+        let backgroundButton = UIButton()
+        backgroundButton.backgroundColor = .white
+        backgroundButton.translatesAutoresizingMaskIntoConstraints = false
+        backgroundButton.layer.cornerRadius = 2
+        backgroundButton.clipsToBounds = true
+        backgroundButton.addTarget(self, action: #selector(showDetail), for: .touchUpInside)
+        
+        let fullscreenLabel = UILabel()
+        fullscreenLabel.text = "Full Screen"
+        fullscreenLabel.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight(25))
+        fullscreenLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        carouselView.addSubview(carouselImage)
+        carouselView.addSubview(leftButton)
+        carouselView.addSubview(rightButton)
+        carouselView.addSubview(backgroundButton)
+        carouselView.addSubview(fullscreenLabel)
+        carouselView.addSubview(playBackground)
+        carouselView.addSubview(playIcon)
+        carouselView.addSubview(postLabel)
+        carouselView.addSubview(usernameLabel)
+        carouselView.addSubview(profilePicture)
+        
+        if !postContent.isEmpty {
+            guard let photo = postContent[index].postThumbnail else { return carouselView }
+            carouselImage.loadImageUsingCacheWithUrlString(photo)
+            guard let profileImage = postContent[index].photoUrl else { return carouselView }
+            profilePicture.loadImageUsingCacheWithUrlString(profileImage)
+            postLabel.text = postContent[index].pursuitDescription
+            usernameLabel.text = postContent[index].username
         }
         
+        carouselImage.anchor(top: carouselView.topAnchor, left: carouselView.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 28, paddingBottom: 0, paddingRight: 0, width: 325, height: 405)
+        leftButton.anchor(top: carouselImage.topAnchor, left: carouselImage.leftAnchor, bottom: carouselImage.bottomAnchor, right: carouselImage.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        rightButton.anchor(top: carouselImage.topAnchor, left: carouselImage.centerXAnchor, bottom: carouselImage.bottomAnchor, right: carouselImage.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        backgroundButton.anchor(top: nil, left: leftButton.leftAnchor, bottom: leftButton.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 12, paddingRight: 0, width: 100, height: 30)
+        fullscreenLabel.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: fullscreenLabel.intrinsicContentSize.width, height: fullscreenLabel.intrinsicContentSize.height)
+        fullscreenLabel.centerXAnchor.constraint(equalTo: backgroundButton.centerXAnchor).isActive = true
+        fullscreenLabel.centerYAnchor.constraint(equalTo: backgroundButton.centerYAnchor).isActive = true
+        playBackground.anchor(top: nil, left: nil, bottom: rightButton.bottomAnchor, right: rightButton.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 12, width: 30, height: 30)
+        playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 10, height: 10)
+        playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true
+        playIcon.centerYAnchor.constraint(equalTo: playBackground.centerYAnchor).isActive = true
+        
+        profilePicture.anchor(top: carouselImage.bottomAnchor, left: carouselImage.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
+        postLabel.anchor(top: profilePicture.topAnchor, left: profilePicture.rightAnchor, bottom: nil, right: carouselImage.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 24, width: 0, height: postLabel.intrinsicContentSize.height)
+        usernameLabel.anchor(top: postLabel.bottomAnchor, left: postLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
+        return carouselView
     }
     
     func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
@@ -250,7 +244,6 @@ extension HomeRow : iCarouselDataSource, iCarouselDelegate {
     
     func setupCarousels(){
         setupStandardCarousel()
-        labelSubCarousel()
     }
     
     func carouselCurrentItemIndexDidChange(_ carousel: iCarousel) {
@@ -263,9 +256,10 @@ extension HomeRow : iCarouselDataSource, iCarouselDelegate {
         carouselView.delegate = self
         carouselView.type = .invertedTimeMachine
         
-        let guide = safeAreaLayoutGuide
         addSubview(carouselView)
-        carouselView.anchor(top: topAnchor, left: guide.leftAnchor, bottom: nil, right: guide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 28, width: 0, height: 412)
+        addSubview(optionButton)
+        carouselView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 475)
+        optionButton.anchor(top: nil, left: nil, bottom: carouselView.bottomAnchor, right: carouselView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 28, paddingRight: 12, width: optionButton.intrinsicContentSize.width, height: optionButton.intrinsicContentSize.height)
     }
     
     func labelSubCarousel(){
@@ -278,9 +272,8 @@ extension HomeRow : iCarouselDataSource, iCarouselDelegate {
         
         let guide = safeAreaLayoutGuide
         addSubview(subCarouselView)
-        addSubview(optionButton)
         subCarouselView.anchor(top: carouselView.bottomAnchor, left: guide.leftAnchor, bottom: nil, right: guide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 60)
-        optionButton.anchor(top: nil, left: nil, bottom: subCarouselView.bottomAnchor, right: subCarouselView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 14, paddingRight: 12, width: optionButton.intrinsicContentSize.width, height: optionButton.intrinsicContentSize.height)
+        
     }
 }
 

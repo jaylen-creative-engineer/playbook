@@ -13,4 +13,6 @@ struct SearchedSteps : Decodable {
     let stepId : String?
     let thumbnailUrl : String?
     let stepDescription : String?
+    let stepThumbnail : String?
+    let contentUrl : String?
 }

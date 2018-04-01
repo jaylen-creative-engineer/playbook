@@ -99,10 +99,15 @@ class HomeContainer : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
         accessHomeController?.imageView(isExplore: false)
     }
     
+    var home : Home?
+    
     func getContent(){
-//        homeServices.getPursuits { (pursuit, steps, principles) in
-//            <#code#>
-//        }
+        homeServices.getPursuits { (home) in
+            DispatchQueue.main.async {
+                self.home = home
+                self.homeCollection.reloadData()
+            }
+        }
     }
     
     func getUserPursuits(){
@@ -134,6 +139,7 @@ class HomeContainer : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
         homeCollection.delegate = self
         homeCollection.dataSource = self
         setupCollectionView()
+        getContent()
     }
     
     
@@ -168,6 +174,7 @@ extension HomeContainer {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeRow
             cell.homeDelegate = self
             cell.accessHomeController = self
+            cell.home = home
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! HomeSteps
