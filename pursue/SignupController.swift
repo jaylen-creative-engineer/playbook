@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import Firebase
 
-class SignupController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class SignupController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // MARK: - Manage User Photo
     
@@ -307,5 +307,99 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
 
     }
     
+    private let pageControl: UIProgressView = {
+        let pv = UIProgressView()
+        pv.progressTintColor = .black
+        pv.translatesAutoresizingMaskIntoConstraints = false
+        return pv
+    }()
+    
+    func setupIntro(){
+        setupTopControls()
+        if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.scrollDirection = .horizontal
+            flowLayout.minimumLineSpacing = 0
+        }
+        
+        collectionView?.register(EmailCell.self, forCellWithReuseIdentifier: "cellId")
+        collectionView?.register(NameCell.self, forCellWithReuseIdentifier: "nameId")
+        collectionView?.register(UsernameCell.self, forCellWithReuseIdentifier: "usernameId")
+        collectionView?.register(PasswordCell.self, forCellWithReuseIdentifier: "passwordId")
+        collectionView?.register(ProfilePictureCell.self, forCellWithReuseIdentifier: "pictureId")
+        collectionView?.isPagingEnabled = true
+        collectionView?.backgroundColor = .white
+        collectionView?.showsHorizontalScrollIndicator = false
+    }
+    
+    func setupTopControls(){
+        
+    }
+    
+}
+
+extension SignupController {
+    
+    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        
+        let x = targetContentOffset.pointee.x
+        pageControl.progress = Float(x / view.frame.width)
+        
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        
+        coordinator.animate(alongsideTransition: { (_) in
+            self.collectionViewLayout.invalidateLayout()
+            
+            if self.pageControl.progress == 0 {
+                self.collectionView?.contentOffset = .zero
+            } else {
+                let indexPath = IndexPath(item: Int(self.pageControl.progress), section: 0)
+                self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+            }
+            
+        }) { (_) in
+            
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 5
+    }
+    
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        switch indexPath.item {
+        case 0:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! EmailCell
+            return cell
+        case 1:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "nameId", for: indexPath) as! NameCell
+            return cell
+        case 2:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "usernameId", for: indexPath) as! UsernameCell
+            return cell
+        case 3:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "passwordId", for: indexPath) as! PasswordCell
+            return cell
+        case 4:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "pictureId", for: indexPath) as! ProfilePictureCell
+            return cell
+        default:
+            assert(false, "Not a valid cell")
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: view.frame.height)
+    }
 }
 

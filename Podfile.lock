@@ -1,8 +1,5 @@
 PODS:
   - Alamofire (4.5.1)
-  - AWSCore (2.6.7)
-  - AWSS3 (2.6.7):
-    - AWSCore (= 2.6.7)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
@@ -93,7 +90,6 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
-  - AWSS3
   - BWWalkthrough
   - FBSDKCoreKit
   - FBSDKLoginKit
@@ -116,8 +112,6 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
-  AWSCore: a5ff5fb202342b922eb9036af9ecc3bc28a032eb
-  AWSS3: cd4aec32f51fc202431e36596d2f535f821788e1
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   BWWalkthrough: 6b18dc688ff6b7168383fee07fe199ccaad7e9f7
   FBSDKCoreKit: ca961e279113f691fd83dc634c0bbad9d4e3f370
@@ -147,6 +141,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   XLActionController: 7e88fece1799e61357cb00b1cc67104d66ec4d2c
 
-PODFILE CHECKSUM: 119c30ac6df00be47e6ee9e6050893c479ec1800
+PODFILE CHECKSUM: 9dde0e95bfbdc93268fa9bf2a99750a10ab46515
 
 COCOAPODS: 1.3.1

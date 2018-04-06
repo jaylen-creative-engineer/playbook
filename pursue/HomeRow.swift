@@ -109,6 +109,7 @@ extension HomeRow : iCarouselDataSource, iCarouselDelegate {
         var carouselView = UIView()
         carouselView = UIView(frame: CGRect(x: 0, y: 0, width: 400, height: 500))
         carouselView.isUserInteractionEnabled = true
+        carouselView.backgroundColor = .red
         
         let postLabel = UILabel()
         postLabel.font = UIFont.boldSystemFont(ofSize: 14)
@@ -209,9 +210,7 @@ extension HomeRow : iCarouselDataSource, iCarouselDelegate {
     
     func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
         if (option == .spacing) {
-            return value * 0.6
-        } else if carousel == subCarouselView {
-            return value * 0.6
+            return value * 0.8
         }
         
         return value

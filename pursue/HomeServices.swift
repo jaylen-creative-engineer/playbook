@@ -25,6 +25,7 @@ class HomeServices {
             guard let data = response.data else { return }
             do {
                 let homeResponse = try JSONDecoder().decode(Home.self, from: data)
+                print(homeResponse)
                 completion(homeResponse)
             } catch let error {
                 print(error)
