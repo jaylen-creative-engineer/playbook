@@ -301,7 +301,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
     private let pageControl: UIPageControl = {
         let pc = UIPageControl()
         pc.currentPage = 0
-        pc.numberOfPages = 3
+        pc.numberOfPages = 4
         pc.currentPageIndicatorTintColor = .black
         pc.pageIndicatorTintColor = .lightGray
         return pc
@@ -320,7 +320,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         button.setTitle("Next", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
         return button
     }()
     
@@ -333,6 +333,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         button.setTitleColor(.white, for: .normal)
         button.layer.borderColor = UIColor.gray.cgColor
         button.layer.borderWidth = 1
+        button.isEnabled = false
         return button
     }()
     
@@ -350,9 +351,28 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         collectionView?.register(ProfilePictureCell.self, forCellWithReuseIdentifier: pictureId)
         collectionView?.isPagingEnabled = true
         collectionView?.backgroundColor = .white
+        collectionView?.isScrollEnabled = false
         collectionView?.showsHorizontalScrollIndicator = false
     }
     
+    @objc private func handleNext() {
+        let nextIndex = Int(pageControl.currentPage + 1)
+        let indexPath = IndexPath(item: nextIndex, section: 0)
+        pageControl.currentPage = nextIndex
+        
+        if pageControl.currentPage == 3 && nextIndex == 4 {
+            loginButton.backgroundColor = .black
+            loginButton.layer.borderColor = UIColor.black.cgColor
+            loginButton.isEnabled = true
+            nextButton.isHidden = true
+        } else {
+            loginButton.backgroundColor = .gray
+            loginButton.layer.borderColor = UIColor.gray.cgColor
+            loginButton.isEnabled = false
+            nextButton.isHidden = false
+        }
+        collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    }
     
     @objc func handleDismiss(){
         dismiss(animated: true, completion: nil)
@@ -367,7 +387,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         cancelButton.anchor(top: progressControl.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
         nextButton.anchor(top: nil, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: nextButton.intrinsicContentSize.width, height: nextButton.intrinsicContentSize.height)
         nextButton.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor).isActive = true
-        loginButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, width: 0, height: 60)
+        loginButton.anchor(top: nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, width: 0, height: 60)
     }
     
     let cellId = "cellId"
