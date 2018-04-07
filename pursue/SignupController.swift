@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import Firebase
 
-class SignupController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class SignupController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // MARK: - Manage User Photo
     
@@ -120,15 +120,9 @@ class SignupController: UICollectionViewController, UIImagePickerControllerDeleg
         return label
     }()
     
-    let loginButton : UIButton = {
-       let button = UIButton()
-        button.setTitle("Log In", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        button.setTitleColor(.black, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(handleAlreadyHaveAccount), for: .touchUpInside)
-        return button
-    }()
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
     
     private func setupInputFields() {
         view.addSubview(fullnameTextField)
@@ -292,76 +286,95 @@ class SignupController: UICollectionViewController, UIImagePickerControllerDeleg
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let guide = view.safeAreaLayoutGuide
-        
-        // Do any additional setup after loading the view, typically from a nib.
-        view.backgroundColor = .white
-        view.addSubview(plusPhotoButton)
-        navigationController?.navigationBar.isHidden = true
-        
-        plusPhotoButton.anchor(top: guide.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 40, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 100, height: 100)
-        plusPhotoButton.centerXAnchor.constraint(lessThanOrEqualTo: view.centerXAnchor).isActive = true
-        
-        setupInputFields()
+        setupIntro()
 
     }
     
-    private let pageControl: UIProgressView = {
+    private let progressControl: UIProgressView = {
         let pv = UIProgressView()
         pv.progressTintColor = .black
         pv.translatesAutoresizingMaskIntoConstraints = false
+        pv.trackTintColor = .black
         return pv
     }()
     
+    private let pageControl: UIPageControl = {
+        let pc = UIPageControl()
+        pc.currentPage = 0
+        pc.numberOfPages = 3
+        pc.currentPageIndicatorTintColor = .black
+        pc.pageIndicatorTintColor = .lightGray
+        return pc
+    }()
+    
+    lazy var cancelButton : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "cancel").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var nextButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("Next", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var loginButton : UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("LOGIN", for: .normal)
+        button.backgroundColor = UIColor.gray
+        button.layer.cornerRadius = 28
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.setTitleColor(.white, for: .normal)
+        button.layer.borderColor = UIColor.gray.cgColor
+        button.layer.borderWidth = 1
+        return button
+    }()
+    
     func setupIntro(){
-        setupTopControls()
+        setupControls()
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .horizontal
             flowLayout.minimumLineSpacing = 0
         }
         
-        collectionView?.register(EmailCell.self, forCellWithReuseIdentifier: "cellId")
-        collectionView?.register(NameCell.self, forCellWithReuseIdentifier: "nameId")
-        collectionView?.register(UsernameCell.self, forCellWithReuseIdentifier: "usernameId")
-        collectionView?.register(PasswordCell.self, forCellWithReuseIdentifier: "passwordId")
-        collectionView?.register(ProfilePictureCell.self, forCellWithReuseIdentifier: "pictureId")
+        collectionView?.register(EmailCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(NameCell.self, forCellWithReuseIdentifier: nameId)
+        collectionView?.register(UsernameCell.self, forCellWithReuseIdentifier: usernameId)
+        collectionView?.register(PasswordCell.self, forCellWithReuseIdentifier: passwordId)
+        collectionView?.register(ProfilePictureCell.self, forCellWithReuseIdentifier: pictureId)
         collectionView?.isPagingEnabled = true
         collectionView?.backgroundColor = .white
         collectionView?.showsHorizontalScrollIndicator = false
     }
     
-    func setupTopControls(){
-        
+    
+    @objc func handleDismiss(){
+        dismiss(animated: true, completion: nil)
     }
     
-}
-
-extension SignupController {
-    
-    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        
-        let x = targetContentOffset.pointee.x
-        pageControl.progress = Float(x / view.frame.width)
-        
+    func setupControls(){
+        view.addSubview(progressControl)
+        view.addSubview(cancelButton)
+        view.addSubview(nextButton)
+        view.addSubview(loginButton)
+        progressControl.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: view.frame.width, height: 15)
+        cancelButton.anchor(top: progressControl.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
+        nextButton.anchor(top: nil, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: nextButton.intrinsicContentSize.width, height: nextButton.intrinsicContentSize.height)
+        nextButton.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor).isActive = true
+        loginButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, width: 0, height: 60)
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        
-        coordinator.animate(alongsideTransition: { (_) in
-            self.collectionViewLayout.invalidateLayout()
-            
-            if self.pageControl.progress == 0 {
-                self.collectionView?.contentOffset = .zero
-            } else {
-                let indexPath = IndexPath(item: Int(self.pageControl.progress), section: 0)
-                self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-            }
-            
-        }) { (_) in
-            
-        }
-    }
+    let cellId = "cellId"
+    let nameId = "nameId"
+    let usernameId = "usernameId"
+    let passwordId = "passwordId"
+    let pictureId = "pictureId"
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
@@ -371,27 +384,22 @@ extension SignupController {
         return 5
     }
     
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 5
-    }
-    
-    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.item {
         case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! EmailCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! EmailCell
             return cell
         case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "nameId", for: indexPath) as! NameCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: nameId, for: indexPath) as! NameCell
             return cell
         case 2:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "usernameId", for: indexPath) as! UsernameCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: usernameId, for: indexPath) as! UsernameCell
             return cell
         case 3:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "passwordId", for: indexPath) as! PasswordCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: passwordId, for: indexPath) as! PasswordCell
             return cell
         case 4:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "pictureId", for: indexPath) as! ProfilePictureCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pictureId, for: indexPath) as! ProfilePictureCell
             return cell
         default:
             assert(false, "Not a valid cell")
@@ -400,6 +408,35 @@ extension SignupController {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: view.frame.height)
+    }
+    
+}
+
+extension SignupController {
+    
+    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        
+        let x = targetContentOffset.pointee.x
+        
+        pageControl.currentPage = Int(x / view.frame.width)
+        
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        
+        coordinator.animate(alongsideTransition: { (_) in
+            self.collectionViewLayout.invalidateLayout()
+            
+            if self.pageControl.currentPage == 0 {
+                self.collectionView?.contentOffset = .zero
+            } else {
+                let indexPath = IndexPath(item: self.pageControl.currentPage, section: 0)
+                self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+            }
+            
+        }) { (_) in
+            
+        }
     }
 }
 

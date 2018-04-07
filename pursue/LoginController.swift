@@ -44,22 +44,22 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
     
     let emailLabel : UILabel = {
        let label = UILabel()
-        label.text = "EMAIL"
-        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.text = "Email"
+        label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
     
     let passwordLabel : UILabel = {
         let label = UILabel()
-        label.text = "PASSWORD"
-        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.text = "Password"
+        label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
     
     let orLoginLabel : UILabel = {
        let label = UILabel()
-        label.text = "OR LOGIN WITH"
-        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.text = "Or Login With"
+        label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
     
@@ -97,9 +97,9 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
     lazy var forgotButton : UIButton = {
        let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("FORGOT PASSWORD?", for: .normal)
+        button.setTitle("Forgot Password?", for: .normal)
         button.setTitleColor(UIColor.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.addTarget(self, action: #selector(handleForgot), for: .touchUpInside)
         return button
     }()
@@ -323,7 +323,6 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
         button.layer.borderColor = UIColor.black.cgColor
         button.layer.borderWidth = 1
         button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
-        button.isEnabled = false
         return button
     }()
     
@@ -360,7 +359,9 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
     // MARK: Handle Doesn't Have Account
     
     @objc func handleShowSignUp() {
-        let signupController = UINavigationController(rootViewController: SignupController())
+        
+        let layout = UICollectionViewFlowLayout()
+        let signupController = SignupController(collectionViewLayout: layout)
         present(signupController, animated: true, completion: nil)
     }
     
