@@ -294,7 +294,8 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         let pv = UIProgressView()
         pv.progressTintColor = .black
         pv.translatesAutoresizingMaskIntoConstraints = false
-        pv.trackTintColor = .black
+        pv.trackTintColor = .clear
+        pv.progress = 0.20
         return pv
     }()
     
@@ -355,10 +356,22 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         collectionView?.showsHorizontalScrollIndicator = false
     }
     
+    var current: Int = 2
+    
     @objc private func handleNext() {
         let nextIndex = Int(pageControl.currentPage + 1)
         let indexPath = IndexPath(item: nextIndex, section: 0)
         pageControl.currentPage = nextIndex
+        progressControl.progress = Float(nextIndex / pageControl.numberOfPages)
+        
+        let i = current
+        let max = 5
+        
+        if i <= max {
+            let ratio = Float(i) / Float(max)
+            progressControl.progress = Float(ratio)
+            current = current + 1
+        }
         
         if pageControl.currentPage == 3 && nextIndex == 4 {
             loginButton.backgroundColor = .black
@@ -383,7 +396,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         view.addSubview(cancelButton)
         view.addSubview(nextButton)
         view.addSubview(loginButton)
-        progressControl.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: view.frame.width, height: 15)
+        progressControl.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: view.frame.width, height: 10)
         cancelButton.anchor(top: progressControl.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
         nextButton.anchor(top: nil, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: nextButton.intrinsicContentSize.width, height: nextButton.intrinsicContentSize.height)
         nextButton.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor).isActive = true
