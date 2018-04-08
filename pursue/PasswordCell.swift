@@ -10,6 +10,8 @@ import UIKit
 
 class PasswordCell : UICollectionViewCell {
     
+    var accessSignupController : SignupController?
+    
     let passwordBigLabel : UILabel = {
         let label = UILabel()
         label.text = "Password."
@@ -31,7 +33,7 @@ class PasswordCell : UICollectionViewCell {
         return label
     }()
     
-    let passwordTextField : UITextField = {
+    lazy var passwordTextField : UITextField = {
         let tf = UITextField()
         tf.font = UIFont.systemFont(ofSize: 14)
         tf.textColor = .black
@@ -42,8 +44,13 @@ class PasswordCell : UICollectionViewCell {
                            NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)]
         tf.attributedPlaceholder = NSAttributedString(string: "your password", attributes:attributes)
         tf.isSecureTextEntry = true
+        tf.addTarget(self, action: #selector(setPassword), for: .editingChanged)
         return tf
     }()
+    
+    @objc func setPassword(){
+        accessSignupController?.passwordTextField.text = passwordTextField.text
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

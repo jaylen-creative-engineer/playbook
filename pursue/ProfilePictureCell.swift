@@ -10,6 +10,8 @@ import UIKit
 
 class ProfilePictureCell : UICollectionViewCell {
     
+    var accessSignupController : SignupController?
+    
     let pictureBigLabel : UILabel = {
         let label = UILabel()
         label.text = "Upload Picture."
@@ -24,26 +26,31 @@ class ProfilePictureCell : UICollectionViewCell {
         return label
     }()
     
-    lazy var profilePicture : UIImageView = {
-        let iv = UIImageView()
+    lazy var profilePicture : UIButton = {
+        let iv = UIButton()
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 60
         iv.layer.masksToBounds = true
         iv.layer.borderColor = UIColor.black.cgColor
         iv.layer.borderWidth = 2
         iv.translatesAutoresizingMaskIntoConstraints = false
-        
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(changeProfilePicture))
-//        tap.numberOfTapsRequired = 1
-//        iv.addGestureRecognizer(tap)
+        iv.addTarget(self, action: #selector(changeProfilePicture), for: .touchUpInside)
         return iv
     }()
     
     lazy var addIcon : UIImageView = {
        let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "add").withRenderingMode(.alwaysOriginal)
+        iv.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(changeProfilePicture))
+        tap.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tap)
         return iv
     }()
+    
+    @objc func changeProfilePicture(){
+        accessSignupController?.handlePlusPhoto()
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

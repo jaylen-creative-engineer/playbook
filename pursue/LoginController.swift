@@ -318,7 +318,7 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
         button.setTitle("LOGIN", for: .normal)
         button.backgroundColor = UIColor.black
         button.layer.cornerRadius = 28
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
         button.setTitleColor(.white, for: .normal)
         button.layer.borderColor = UIColor.black.cgColor
         button.layer.borderWidth = 1
@@ -371,6 +371,7 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
         return .lightContent
     }
     
+    let interestService = InterestServices()
     
     override func viewDidLoad() {
         super.viewDidLoad()

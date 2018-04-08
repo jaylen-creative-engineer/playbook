@@ -10,6 +10,8 @@ import UIKit
 
 class NameCell : UICollectionViewCell {
     
+    var accessSignupController : SignupController?
+    
     let enterNamePrompt : UILabel = {
         let label = UILabel()
         label.text = "Please enter your full name."
@@ -24,7 +26,14 @@ class NameCell : UICollectionViewCell {
         return label
     }()
     
-    let fullnameTextField : UITextField = {
+    let nameBigLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Full Name."
+        label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.init(25))
+        return label
+    }()
+    
+    lazy var fullnameTextField : UITextField = {
         let tf = UITextField()
         tf.font = UIFont.systemFont(ofSize: 14)
         tf.textColor = .black
@@ -34,15 +43,13 @@ class NameCell : UICollectionViewCell {
         let attributes = [ NSAttributedStringKey.foregroundColor: UIColor.gray,
                            NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)]
         tf.attributedPlaceholder = NSAttributedString(string: "your full name", attributes:attributes)
+        tf.addTarget(self, action: #selector(setFullname), for: .editingChanged)
         return tf
     }()
     
-    let nameBigLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Full Name."
-        label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.init(25))
-        return label
-    }()
+    @objc func setFullname(){
+        accessSignupController?.fullnameTextField.text = fullnameTextField.text
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

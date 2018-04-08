@@ -10,6 +10,8 @@ import UIKit
 
 class UsernameCell : UICollectionViewCell {
     
+    var accessSignupController : SignupController?
+    
     let enterUserNamePrompt : UILabel = {
         let label = UILabel()
         label.text = "Please enter a username that you would like."
@@ -31,7 +33,7 @@ class UsernameCell : UICollectionViewCell {
         return label
     }()
     
-    let usernameTextField : UITextField = {
+    lazy var usernameTextField : UITextField = {
         let tf = UITextField()
         tf.font = UIFont.systemFont(ofSize: 14)
         tf.textColor = .black
@@ -41,8 +43,13 @@ class UsernameCell : UICollectionViewCell {
         let attributes = [ NSAttributedStringKey.foregroundColor: UIColor.gray,
                            NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)]
         tf.attributedPlaceholder = NSAttributedString(string: "your username", attributes:attributes)
+        tf.addTarget(self, action: #selector(setUsername), for: .editingChanged)
         return tf
     }()
+    
+    @objc func setUsername(){
+        accessSignupController?.usernameTextField.text = usernameTextField.text
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

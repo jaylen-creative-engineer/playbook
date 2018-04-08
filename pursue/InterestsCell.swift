@@ -1,49 +1,32 @@
-
 //
-//  InterestsRows.swift
+//  InterestsCell.swift
 //  pursue
 //
-//  Created by Jaylen Sanders on 1/23/18.
+//  Created by Jaylen Sanders on 4/8/18.
 //  Copyright © 2018 Glory. All rights reserved.
 //
 
 import UIKit
-import Alamofire
 import Firebase
-import SwiftyJSON
 
-class InterestsRows : UICollectionViewCell, SelectInterestsDelegate {
-    
+class InterestsCell : UICollectionViewCell, SelectInterestsDelegate {
+
+    var accessSignupController : SignupController?
     let listId = "listId"
+    let headerId = "headerId"
     
     let interestsCollection : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
-        collectionView.isScrollEnabled = false
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.isScrollEnabled = true
         return collectionView
     }()
     
-    var interests = [Interests]()
-    var isVisible = [Bool]()
     let interestsService = InterestServices()
     let engagementService = EngagementServices()
-    
-    func createInterests(){
-        interestsService.createInterestsList()
-    }
-    
-    func getSelectedInterests(){
-        guard let userId = Auth.auth().currentUser?.uid else { return }
-        interestsService.getSelectedInterests(userId: userId) { (interest) in
-            DispatchQueue.main.async {
-                interest.forEach({ (value) in
-                    self.interests.append(value)
-                    self.interestsCollection.reloadData()
-                })
-            }
-        }
-    }
+    var interests = [Interests]()
     
     func didSelect(for cell: SelectInterestsList) {
         guard let indexPath = interestsCollection.indexPath(for: cell) else { return }
@@ -60,14 +43,40 @@ class InterestsRows : UICollectionViewCell, SelectInterestsDelegate {
         engagementService.toggleFollowInterests(interestId: interestId, is_selected: interest.selected_interests)
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        interestsCollection.register(SelectInterestsList.self, forCellWithReuseIdentifier: listId)
+    var userId : String? {
+        didSet {
+            userId = (Auth.auth().currentUser?.uid)!
+            getSelectedInterests()
+        }
+    }
+    
+    func getSelectedInterests(){
+        if userId != nil {
+            interestsService.getSelectedInterests(userId: userId!) { (interest) in
+                DispatchQueue.main.async {
+                    interest.forEach({ (value) in
+                        self.interests.append(value)
+                        self.interestsCollection.reloadData()
+                    })
+                }
+            }
+        }
+    }
+    
+    func setupView(){
+        addSubview(interestsCollection)
+        
         interestsCollection.delegate = self
         interestsCollection.dataSource = self
-        addSubview(interestsCollection)
-        interestsCollection.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        getSelectedInterests()
+        interestsCollection.register(SelectInterestsList.self, forCellWithReuseIdentifier: listId)
+        interestsCollection.register(SignupInterestsHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+        
+        interestsCollection.anchor(top: topAnchor, left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 84, paddingRight: 0, width: 0, height: 0)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -75,7 +84,8 @@ class InterestsRows : UICollectionViewCell, SelectInterestsDelegate {
     }
 }
 
-extension InterestsRows : UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
+
+extension InterestsCell : UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return interests.count
@@ -96,6 +106,15 @@ extension InterestsRows : UICollectionViewDelegateFlowLayout, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(0, 12, 0, 12)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! SignupInterestsHeader
+        return header
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: frame.width, height: 185)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
