@@ -104,7 +104,7 @@ class EditProfileController : UICollectionViewController, UICollectionViewDelega
         backgroundView.addSubview(backButton)
         backgroundView.addSubview(saveButton)
         
-        backgroundView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 90)
+        backgroundView.anchor(top: view.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 70)
         backButton.anchor(top: nil, left: backgroundView.leftAnchor, bottom: backgroundView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 16, paddingRight: 0, width: 20, height: 20)
         saveButton.anchor(top: nil, left: nil, bottom: nil, right: backgroundView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: saveButton.intrinsicContentSize.width, height: saveButton.intrinsicContentSize.height)
         saveButton.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
