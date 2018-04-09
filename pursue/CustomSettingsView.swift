@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import Firebase
+import FBSDKCoreKit
+import GoogleSignIn
 
 class CustomSettingsView : UIViewController {
     
     let alertViewGrayColor = UIColor(red: 224.0/255.0, green: 224.0/255.0, blue: 224.0/255.0, alpha: 1)
     let cellId = "cellId"
+    var accessLoginController : LoginController?
     
     lazy var alertView : UIView = {
         let view = UIView()
@@ -208,9 +212,8 @@ class CustomSettingsView : UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         tabBarController?.tabBar.isHidden = false
-//        dismiss(animated: true, completion: nil)
     }
-    
+
     @objc func handleCancel(){
         dismiss(animated: true, completion: nil)
     }
@@ -255,12 +258,32 @@ class CustomSettingsView : UIViewController {
     }
     
     @objc func logOut(){
-        let customAlert = CustomLogOutView()
-        customAlert.providesPresentationContextTransitionStyle = true
-        customAlert.definesPresentationContext = true
-        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.showDetailViewController(customAlert, sender: self)
+        let alert = UIAlertController(title: "Log Out", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.cancel, handler: dismissAlertView))
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: signOut))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func signOut(action: UIAlertAction){
+        do {
+            try Auth.auth().signOut()
+            accessLoginController?.facebookSignOut()
+            GIDSignIn.sharedInstance().signOut()
+            
+            let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+            appDelegate.window = UIWindow()
+            appDelegate.window?.rootViewController = LoginController()
+            appDelegate.window?.makeKeyAndVisible()
+            self.dismiss(animated: true, completion: nil)
+
+        } catch let signOutErr {
+            
+            print("Failed to sign out", signOutErr)
+        }
+    }
+    
+    func dismissAlertView(action : UIAlertAction) {
+        self.dismiss(animated: true, completion: nil)
     }
     
 }

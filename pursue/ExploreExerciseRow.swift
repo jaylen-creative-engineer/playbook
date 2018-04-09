@@ -10,7 +10,6 @@ import UIKit
 
 protocol ExploreExerciseDelegate {
     func explorePursuitTapped()
-    func explorePursuitHeld()
 }
 
 class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ExploreExerciseCellsDelegate {
@@ -74,10 +73,6 @@ class ExploreExerciseRow : UICollectionViewCell, UICollectionViewDelegate, UICol
     
     func pursuitTapped() {
         exploreDelegate?.explorePursuitTapped()
-    }
-    
-    func pursuitHeld() {
-        exploreDelegate?.explorePursuitHeld()
     }
     
     func setupView(){

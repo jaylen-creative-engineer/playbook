@@ -279,10 +279,10 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
         handleFacebookLogin()
     }
     
-    var customLogOutView = CustomLogOutView()
+    var customSettingsView = CustomSettingsView()
     
     func facebookSignOut(){
-        customLogOutView.accessLoginController = self
+        customSettingsView.accessLoginController = self
         loginButtonDidLogOut(customFacebookLogin as! FBSDKLoginButton)
     }
     
@@ -339,8 +339,11 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
             
             print("Success logged back in:", user?.uid ?? "")
             
-            guard let mainTabController = UIApplication.shared.keyWindow?.rootViewController as? MainTabController else { return }
-            mainTabController.setupViewControllers()
+            let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+            appDelegate.window = UIWindow()
+            appDelegate.window?.rootViewController = MainTabController()
+            appDelegate.window?.makeKeyAndVisible()
+            
             self.dismiss(animated: true, completion: nil)
         }
     }

@@ -52,7 +52,6 @@ class InviteCell : UICollectionViewCell {
     
     lazy var inviteButton : UIButton = {
        let button = UIButton()
-        button.setTitle("Invite", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
         button.layer.borderColor = UIColor.black.cgColor
         button.layer.masksToBounds = true
@@ -71,8 +70,10 @@ class InviteCell : UICollectionViewCell {
         
         if isInvited == true {
             inviteButton.setTitleColor(.white, for: .normal)
+            inviteButton.setTitle("Invited", for: .normal)
             inviteButton.backgroundColor = .black
         } else {
+            inviteButton.setTitle("Invite", for: .normal)
             inviteButton.setTitleColor(.black, for: .normal)
             inviteButton.backgroundColor = .white
         }

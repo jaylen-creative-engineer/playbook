@@ -8,7 +8,6 @@
 
 import UIKit
 import Firebase
-import Hero
 import FBSDKCoreKit
 import GoogleSignIn
 

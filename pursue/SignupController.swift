@@ -239,9 +239,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         } else {
             countTracker = countTracker + 1
         }
-        
-        print(countTracker)
-        
+                
         switch countTracker {
         case 5:
             addUserToFirebase()

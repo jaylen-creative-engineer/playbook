@@ -32,7 +32,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         hb.accessHomeController = self
         return hb
     }()
-
+    
     @objc func goBack(){
         navigationController?.popViewController(animated: true)
     }
@@ -53,7 +53,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
         collectionView?.isScrollEnabled = false
     }
- 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -103,16 +103,16 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         view.addSubview(interestsBar)
         
         backgroundFill.backgroundColor = .white
-        backgroundFill.anchor(top: view.topAnchor, left: guide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
-        interestsBar.anchor(top: backgroundFill.bottomAnchor, left: backgroundFill.leftAnchor, bottom: nil, right: backgroundFill.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 90)
+        backgroundFill.anchor(top: view.topAnchor, left: guide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 70)
+        interestsBar.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 90)
     }
-
-
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
     }
-   
+    
     // MARK: - Setup View
     
     func principleTapped() {
@@ -164,7 +164,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         }))
         present(actionController, animated: true, completion: nil)
     }
- 
+    
     func pursuitClicked() {
         handleChangeToDetail(viewType: "isPursuitDetail")
     }
@@ -180,12 +180,12 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     
     
     func pursuitHeld() {
-//        let customAlert = CustomAlertView()
-//        customAlert.providesPresentationContextTransitionStyle = true
-//        customAlert.definesPresentationContext = true
-//        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-//        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-//        self.showDetailViewController(customAlert, sender: self)
+        //        let customAlert = CustomAlertView()
+        //        customAlert.providesPresentationContextTransitionStyle = true
+        //        customAlert.definesPresentationContext = true
+        //        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        //        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        //        self.showDetailViewController(customAlert, sender: self)
     }
     
     func showOptionClicked(){
@@ -217,7 +217,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     }
     
     // MARK: - Setup First Load Screen
- 
+    
     private let previousButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Prev", for: .normal)
@@ -261,7 +261,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         Page(imageName: "person-on-phone", headerText: "Post your daily pursuits", bodyText: "Are you ready for loads and loads of fun? Don't wait any longer! We hope to see you in our stores soon."),
         Page(imageName: "heart_second", headerText: "Subscribe and get coupons on our daily events", bodyText: ""),
         Page(imageName: "leaf_third", headerText: "VIP members special services", bodyText: ""),
-    ]
+        ]
     
     @objc private func handlePrev() {
         let nextIndex = max(pageControl.currentPage - 1, 0)

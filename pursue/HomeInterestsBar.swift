@@ -56,7 +56,7 @@ class HomeInterestsBar : UIView, UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 0, 0, 12)
+        return UIEdgeInsetsMake(10, 0, 0, 12)
     }
     
     override init(frame: CGRect) {
@@ -66,10 +66,11 @@ class HomeInterestsBar : UIView, UICollectionViewDataSource, UICollectionViewDel
         collectionView.dataSource = self
         
         addSubview(collectionView)
-        collectionView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 35)
+        collectionView.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 45)
         
         let selectedIndexPath = IndexPath(item: 0, section: 0)
         collectionView.selectItem(at: selectedIndexPath, animated: false, scrollPosition: [])
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

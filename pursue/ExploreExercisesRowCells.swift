@@ -10,7 +10,6 @@ import UIKit
 
 protocol ExploreExerciseCellsDelegate {
     func pursuitTapped()
-    func pursuitHeld()
 }
 class ExploreExercisesRowCells  : UICollectionViewCell {
     
@@ -29,10 +28,8 @@ class ExploreExercisesRowCells  : UICollectionViewCell {
         iv.layer.masksToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handlePursuitTap))
-        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handlePursuitHold))
         tapGesture.numberOfTapsRequired = 1
         iv.addGestureRecognizer(tapGesture)
-        iv.addGestureRecognizer(longGesture)
         iv.isUserInteractionEnabled = true
         iv.layer.cornerRadius = 4
         return iv
@@ -40,10 +37,6 @@ class ExploreExercisesRowCells  : UICollectionViewCell {
     
     @objc func handlePursuitTap(){
         exploreExereciseDelegate?.pursuitTapped()
-    }
-    
-    @objc func handlePursuitHold(){
-        exploreExereciseDelegate?.pursuitHeld()
     }
     
     override func layoutSubviews() {
