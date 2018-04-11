@@ -52,6 +52,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         collectionView?.backgroundColor = UIColor.white
         collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
         collectionView?.isScrollEnabled = false
+        setupIntroView()
     }
     
     override func viewDidLoad() {
@@ -61,31 +62,12 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         
         let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
         if launchedBefore {
-            print("Not first launch.")
             setupCollectionView()
         } else {
-            print("First launch, setting UserDefault.")
             isFirstLaunch = !isFirstLaunch
-            setupIntro()
             UserDefaults.standard.set(true, forKey: "launchedBefore")
         }
         
-    }
-    
-    
-    func setupIntro(){
-        setupBottomControls()
-        if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.scrollDirection = .horizontal
-            flowLayout.minimumLineSpacing = 0
-        }
-        interestsBar.isUserInteractionEnabled = false
-        collectionView?.register(PageCell.self, forCellWithReuseIdentifier: "cellId")
-        collectionView?.register(StepsPage.self, forCellWithReuseIdentifier: "stepsId")
-        collectionView?.register(PrinciplesPage.self, forCellWithReuseIdentifier: "principleId")
-        collectionView?.isPagingEnabled = true
-        collectionView?.backgroundColor = .white
-        collectionView?.showsHorizontalScrollIndicator = false
     }
     
     func imageView(isExplore : Bool){
@@ -111,6 +93,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
+        setupIntroView()
     }
     
     // MARK: - Setup View
@@ -216,137 +199,126 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         }
     }
     
-    // MARK: - Setup First Load Screen
     
-    private let previousButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Prev", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
-        button.setTitleColor(.gray, for: .normal)
-        button.addTarget(self, action: #selector(handlePrev), for: .touchUpInside)
-        return button
-    }()
+    // MARK: - Show first load popover
     
-    private let nextButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Next", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
-        return button
-    }()
-    
-    private let pageControl: UIPageControl = {
-        let pc = UIPageControl()
-        pc.currentPage = 0
-        pc.numberOfPages = 3
-        pc.currentPageIndicatorTintColor = .black
-        pc.pageIndicatorTintColor = .lightGray
-        return pc
-    }()
-    
-    private func setupBottomControls(){
-        let bottomControlsStackView = UIStackView(arrangedSubviews: [previousButton, pageControl, nextButton])
-        bottomControlsStackView.translatesAutoresizingMaskIntoConstraints = false
-        bottomControlsStackView.distribution = .fillEqually
+    lazy var alertView : UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.isUserInteractionEnabled = true
         
-        view.addSubview(bottomControlsStackView)
-        bottomControlsStackView.anchor(top: nil, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissHomePopover))
+        tap.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tap)
+        return view
+    }()
+    
+    lazy var backgroundView : UIView = {
+       let view = UIView()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissHomePopover))
+        tap.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tap)
+        return view
+    }()
+    
+    lazy var homeIntroLabel : UILabel = {
+       let label = UILabel()
+        label.text = "View Pursuits"
+        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
+        return label
+    }()
+    
+    lazy var pursuitsDescription : UILabel = {
+       let label = UILabel()
+        let attributedString = NSMutableAttributedString(string: "Stay inspired and learn steps and principles that can help you on your journey.")
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 2
+        attributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+        label.attributedText = attributedString
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.numberOfLines = 2
+        return label
+    }()
+    
+    lazy var gotItButton : UIButton = {
+       let button = UIButton()
+        button.setTitle("Got It", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.titleLabel?.textAlignment = .justified
+        button.isUserInteractionEnabled = true
+        button.addTarget(self, action: #selector(dismissHomePopover), for: .touchUpInside)
+        return button
+    }()
+    
+    let underlineView = UIView()
+    
+    @objc func dismissHomePopover(){
+        backgroundView.isHidden = true
+        alertView.isHidden = true
+        homeIntroLabel.isHidden = true
+        pursuitsDescription.isHidden = true
+        underlineView.isHidden = true
+        gotItButton.isHidden = true
+        
+        self.tabBarController?.tabBar.layer.zPosition = 0
+        self.tabBarController?.tabBar.isHidden = false
     }
     
-    
-    let pages = [
-        Page(imageName: "person-on-phone", headerText: "Post your daily pursuits", bodyText: "Are you ready for loads and loads of fun? Don't wait any longer! We hope to see you in our stores soon."),
-        Page(imageName: "heart_second", headerText: "Subscribe and get coupons on our daily events", bodyText: ""),
-        Page(imageName: "leaf_third", headerText: "VIP members special services", bodyText: ""),
-        ]
-    
-    @objc private func handlePrev() {
-        let nextIndex = max(pageControl.currentPage - 1, 0)
-        let indexPath = IndexPath(item: nextIndex, section: 0)
-        pageControl.currentPage = nextIndex
-        collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    func setupIntroView() {
+        self.tabBarController?.tabBar.layer.zPosition = -1
+        self.tabBarController?.tabBar.isHidden = true
+        alertView.layer.cornerRadius = 15
+        setupIntroConstraints()
+        animateView()
     }
     
-    @objc private func handleNext() {
-        let nextIndex = min(pageControl.currentPage + 1, pages.count - 1)
-        let indexPath = IndexPath(item: nextIndex, section: 0)
-        pageControl.currentPage = nextIndex
-        collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    func setupIntroConstraints(){
+        underlineView.backgroundColor = .lightGray
+        
+        view.addSubview(backgroundView)
+        view.addSubview(alertView)
+        view.addSubview(homeIntroLabel)
+        view.addSubview(pursuitsDescription)
+        view.addSubview(underlineView)
+        alertView.addSubview(gotItButton)
+        
+        backgroundView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 50).isActive = true
+        alertView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 250)
+        alertView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 50).isActive = true
+        homeIntroLabel.anchor(top: alertView.topAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: homeIntroLabel.intrinsicContentSize.width, height: homeIntroLabel.intrinsicContentSize.height)
+        pursuitsDescription.anchor(top: homeIntroLabel.bottomAnchor, left: homeIntroLabel.leftAnchor, bottom: nil, right: alertView.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 80)
+        underlineView.anchor(top: pursuitsDescription.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: alertView.rightAnchor, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0.5)
+        gotItButton.anchor(top: underlineView.bottomAnchor, left: underlineView.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: gotItButton.intrinsicContentSize.width, height: gotItButton.intrinsicContentSize.height)
     }
     
+    func animateView() {
+        alertView.alpha = 0;
+        self.alertView.frame.origin.y = self.alertView.frame.origin.y + 50
+        UIView.animate(withDuration: 0.4, animations: { () -> Void in
+            self.alertView.alpha = 1.0;
+            self.alertView.frame.origin.y = self.alertView.frame.origin.y - 50
+        })
+    }
 }
 
 extension HomeController {
-    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        
-        let x = targetContentOffset.pointee.x
-        
-        pageControl.currentPage = Int(x / view.frame.width)
-        
-    }
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        
-        coordinator.animate(alongsideTransition: { (_) in
-            self.collectionViewLayout.invalidateLayout()
-            
-            if self.pageControl.currentPage == 0 {
-                self.collectionView?.contentOffset = .zero
-            } else {
-                let indexPath = IndexPath(item: self.pageControl.currentPage, section: 0)
-                self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-            }
-            
-        }) { (_) in
-            
-        }
-    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if isFirstLaunch == true {
-            return pages.count
-        } else {
-            return 2
-        }
+       return 2
     }
-    
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if isFirstLaunch == false {
-            return 5
-        } else {
-            return 1
-        }
-    }
-    
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if isFirstLaunch == true {
-            switch indexPath.item {
-            case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! PageCell
-                cell.page = pages[indexPath.item]
-                return cell
-            case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "stepsId", for: indexPath) as! StepsPage
-                return cell
-            case 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "principleId", for: indexPath) as! PrinciplesPage
-                return cell
-            default:
-                assert(false, "Not a valid cell")
-            }
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeContainer
-            cell.accessHomeController = self
-            return cell
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeContainer
+        cell.accessHomeController = self
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

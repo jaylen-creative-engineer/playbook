@@ -20,7 +20,6 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
             
             let photoSelectorController = SelectCameraController()
             let navController = UINavigationController(rootViewController: photoSelectorController)
-            
             present(navController, animated: true, completion: nil)
             
             return false

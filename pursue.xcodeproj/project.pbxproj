@@ -162,6 +162,7 @@
 		E6E1FA34207A5A19008F4280 /* InterestsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E1FA33207A5A19008F4280 /* InterestsCell.swift */; };
 		E6E1FA36207A88C8008F4280 /* SignupInterestsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E1FA35207A88C8008F4280 /* SignupInterestsHeader.swift */; };
 		E6F41F492002633E002FD8D4 /* possible-ui.gif in Resources */ = {isa = PBXBuildFile; fileRef = E6F41F482002633E002FD8D4 /* possible-ui.gif */; };
+		E6F9D961207E680A00640950 /* CustomHomeIntro.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F9D960207E680A00640950 /* CustomHomeIntro.swift */; };
 		E6FF95DF20349BAE003BDB86 /* HomeInterestsBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF95DE20349BAE003BDB86 /* HomeInterestsBar.swift */; };
 /* End PBXBuildFile section */
 
@@ -327,6 +328,7 @@
 		E6E1FA33207A5A19008F4280 /* InterestsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsCell.swift; sourceTree = "<group>"; };
 		E6E1FA35207A88C8008F4280 /* SignupInterestsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupInterestsHeader.swift; sourceTree = "<group>"; };
 		E6F41F482002633E002FD8D4 /* possible-ui.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "possible-ui.gif"; sourceTree = "<group>"; };
+		E6F9D960207E680A00640950 /* CustomHomeIntro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHomeIntro.swift; sourceTree = "<group>"; };
 		E6FF95DE20349BAE003BDB86 /* HomeInterestsBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInterestsBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -589,6 +591,7 @@
 				E636E7792056F61200BCA756 /* CustomOptionView.swift */,
 				E6CB1B462057063F00B5D2ED /* CustomPeopleView.swift */,
 				E6CB1B48205706C200B5D2ED /* CustomPeopleViewCell.swift */,
+				E6F9D960207E680A00640950 /* CustomHomeIntro.swift */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -946,6 +949,7 @@
 				E6234E98204478E700A57A2C /* CustomLogOutView.swift in Sources */,
 				E62AAB191FD0A49A0053EAD7 /* NotificationSettingsController.swift in Sources */,
 				E67FB8C2203117C70008732C /* ImageProcessor.swift in Sources */,
+				E6F9D961207E680A00640950 /* CustomHomeIntro.swift in Sources */,
 				E639807C204B6A350049A71B /* PrinciplesPage.swift in Sources */,
 				E6299BA32077143500B59061 /* UsernameCell.swift in Sources */,
 				E636E77A2056F61200BCA756 /* CustomOptionView.swift in Sources */,

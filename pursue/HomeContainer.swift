@@ -155,7 +155,7 @@ extension HomeContainer {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 0:
-            return CGSize(width: frame.width, height: 510)
+            return CGSize(width: frame.width, height: 475)
         case 1:
             return CGSize(width: frame.width, height: 430)
         case 2:

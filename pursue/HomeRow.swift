@@ -181,7 +181,7 @@ extension HomeRow : iCarouselDataSource, iCarouselDelegate {
         carouselView.addSubview(usernameLabel)
         carouselView.addSubview(profilePicture)
         
-        carouselImage.anchor(top: carouselView.topAnchor, left: carouselView.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 28, paddingBottom: 0, paddingRight: 0, width: 325, height: 405)
+        carouselImage.anchor(top: carouselView.topAnchor, left: carouselView.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 28, paddingBottom: 0, paddingRight: 0, width: 325, height: 405)
         leftButton.anchor(top: carouselImage.topAnchor, left: carouselImage.leftAnchor, bottom: carouselImage.bottomAnchor, right: carouselImage.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         rightButton.anchor(top: carouselImage.topAnchor, left: carouselImage.centerXAnchor, bottom: carouselImage.bottomAnchor, right: carouselImage.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         backgroundButton.anchor(top: nil, left: leftButton.leftAnchor, bottom: leftButton.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 12, paddingRight: 0, width: 100, height: 30)
@@ -259,7 +259,7 @@ extension HomeRow : iCarouselDataSource, iCarouselDelegate {
         addSubview(carouselView)
         addSubview(optionButton)
         carouselView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 475)
-        optionButton.anchor(top: nil, left: nil, bottom: carouselView.bottomAnchor, right: carouselView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 28, paddingRight: 12, width: optionButton.intrinsicContentSize.width, height: optionButton.intrinsicContentSize.height)
+        optionButton.anchor(top: nil, left: nil, bottom: carouselView.bottomAnchor, right: carouselView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 42, paddingRight: 12, width: optionButton.intrinsicContentSize.width, height: optionButton.intrinsicContentSize.height)
     }
     
     func labelSubCarousel(){
