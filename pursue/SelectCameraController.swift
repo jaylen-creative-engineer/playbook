@@ -134,7 +134,7 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
         photoLibraryButton.anchor(top: nil, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 24, paddingBottom: 0, paddingRight: 0, width: 28, height: 28)
         photoLibraryButton.centerYAnchor.constraint(equalTo: captureButton.centerYAnchor).isActive = true
         setupTopOptions()
-        
+        setupIntroView()
     }
     
     func setupTopOptions(){
@@ -220,6 +220,110 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
+    }
+    
+    // MARK: - Show first load popover
+    
+    lazy var alertView : UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissHomePopover))
+        tap.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tap)
+        return view
+    }()
+    
+    lazy var backgroundView : UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissHomePopover))
+        tap.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tap)
+        return view
+    }()
+    
+    lazy var homeIntroLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Record Pursuits"
+        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
+        return label
+    }()
+    
+    lazy var pursuitsDescription : UILabel = {
+        let label = UILabel()
+        let attributedString = NSMutableAttributedString(string: "Stay inspired and learn steps and principles that can help you on your journey.")
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 5
+        attributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+        label.attributedText = attributedString
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.numberOfLines = 2
+        return label
+    }()
+    
+    lazy var gotItButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("Got It", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.titleLabel?.textAlignment = .justified
+        button.isUserInteractionEnabled = true
+        button.addTarget(self, action: #selector(dismissHomePopover), for: .touchUpInside)
+        return button
+    }()
+    
+    let underlineView = UIView()
+    
+    @objc func dismissHomePopover(){
+        backgroundView.isHidden = true
+        alertView.isHidden = true
+        homeIntroLabel.isHidden = true
+        pursuitsDescription.isHidden = true
+        underlineView.isHidden = true
+        gotItButton.isHidden = true
+        
+        self.tabBarController?.tabBar.layer.zPosition = 0
+        self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    func setupIntroView() {
+        self.tabBarController?.tabBar.layer.zPosition = -1
+        self.tabBarController?.tabBar.isHidden = true
+        alertView.layer.cornerRadius = 15
+        setupIntroConstraints()
+        animateView()
+    }
+    
+    func setupIntroConstraints(){
+        underlineView.backgroundColor = .lightGray
+        
+        view.addSubview(backgroundView)
+        view.addSubview(alertView)
+        view.addSubview(homeIntroLabel)
+        view.addSubview(pursuitsDescription)
+        view.addSubview(underlineView)
+        alertView.addSubview(gotItButton)
+        
+        backgroundView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 50).isActive = true
+        alertView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 250)
+        alertView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 50).isActive = true
+        homeIntroLabel.anchor(top: alertView.topAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: homeIntroLabel.intrinsicContentSize.width, height: homeIntroLabel.intrinsicContentSize.height)
+        pursuitsDescription.anchor(top: homeIntroLabel.bottomAnchor, left: homeIntroLabel.leftAnchor, bottom: nil, right: alertView.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 80)
+        underlineView.anchor(top: pursuitsDescription.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: alertView.rightAnchor, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0.5)
+        gotItButton.anchor(top: underlineView.bottomAnchor, left: underlineView.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: gotItButton.intrinsicContentSize.width, height: gotItButton.intrinsicContentSize.height)
+    }
+    
+    func animateView() {
+        alertView.alpha = 0;
+        self.alertView.frame.origin.y = self.alertView.frame.origin.y + 50
+        UIView.animate(withDuration: 0.4, animations: { () -> Void in
+            self.alertView.alpha = 1.0;
+            self.alertView.frame.origin.y = self.alertView.frame.origin.y - 50
+        })
     }
 }
 

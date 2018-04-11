@@ -73,10 +73,13 @@ class HomeSteps : UICollectionViewCell, UICollectionViewDelegate, UICollectionVi
     
      func setupView() {
         addSubview(rowLabel)
+        
+        setupIntroView()
+        
         addSubview(homePursuitsCollection)
         
         rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 20)
-        homePursuitsCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 355)
+        homePursuitsCollection.anchor(top: grayBox.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 355)
     }
     
     override init(frame: CGRect) {
@@ -90,6 +93,55 @@ class HomeSteps : UICollectionViewCell, UICollectionViewDelegate, UICollectionVi
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Setup Step Intro
+    
+    let grayBox : UIView = {
+       let view = UIView()
+        view.backgroundColor = UIColor.rgb(red: 244, green: 244, blue: 244)
+        return view
+    }()
+    
+    let stepDescriptionLabel : UILabel = {
+       let label = UILabel()
+        let attributedString = NSMutableAttributedString(string: "Save the steps that you could you to your pursuits.")
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 5
+        attributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+        label.attributedText = attributedString
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.numberOfLines = 2
+        return label
+    }()
+    
+    let gotItButton : UIButton = {
+       let button = UIButton()
+        button.setTitle("Got It", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        return button
+    }()
+    
+    let underlineView : UIView = {
+       let view = UIView()
+        view.backgroundColor = .lightGray
+        return view
+    }()
+    
+    func setupIntroView(){
+        addSubview(grayBox)
+        addSubview(stepDescriptionLabel)
+        addSubview(underlineView)
+        addSubview(gotItButton)
+        
+        grayBox.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 150)
+        stepDescriptionLabel.anchor(top: grayBox.topAnchor, left: grayBox.leftAnchor, bottom: nil, right: grayBox.rightAnchor, paddingTop: 10, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 80)
+        underlineView.anchor(top: stepDescriptionLabel.bottomAnchor, left: grayBox.leftAnchor, bottom: nil, right: grayBox.rightAnchor, paddingTop: 4, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0.5)
+        gotItButton.anchor(top: nil, left: nil, bottom: grayBox.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 10, paddingRight: 0, width: gotItButton.intrinsicContentSize.width, height: gotItButton.intrinsicContentSize.height)
+        gotItButton.centerXAnchor.constraint(equalTo: grayBox.centerXAnchor).isActive = true
+        
     }
     
 }

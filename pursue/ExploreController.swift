@@ -156,6 +156,7 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
     
     var listOfNames = ["random", "person", "name"]
     var detailList = ["random", "detail", "list"]
+    
 }
 
 extension ExploreController {

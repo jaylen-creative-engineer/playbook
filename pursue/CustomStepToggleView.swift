@@ -105,7 +105,7 @@ class CustomStepToggleView : UIViewController {
         alertView.addSubview(principleCheckMark)
         alertView.addSubview(cancelLabel)
         
-        alertView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 225)
+        alertView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 235)
         alertView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 10).isActive = true
         typeLabel.anchor(top: alertView.topAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: typeLabel.intrinsicContentSize.width, height: typeLabel.intrinsicContentSize.height)
         stepBackground.anchor(top: typeLabel.bottomAnchor, left: typeLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 20)
@@ -173,6 +173,7 @@ class CustomStepToggleView : UIViewController {
     func setupView() {
         alertView.layer.cornerRadius = 15
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+        setupIntroView()
     }
     
     func animateView() {
@@ -225,6 +226,101 @@ class CustomStepToggleView : UIViewController {
             dismiss(animated: true, completion: nil)
         }
        
+    }
+    
+    // MARK: - Show first load popover
+    
+    lazy var alertExplanationView : UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissHomePopover))
+        tap.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tap)
+        return view
+    }()
+    
+    lazy var backgroundView : UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.clear
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissHomePopover))
+        tap.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tap)
+        return view
+    }()
+    
+    lazy var homeIntroLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Set Post As a Type"
+        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
+        return label
+    }()
+    
+    lazy var pursuitsDescription : UILabel = {
+        let label = UILabel()
+        let attributedString = NSMutableAttributedString(string: "This allows you to mark videos that stand out in your pursuit.")
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 2
+        attributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+        label.attributedText = attributedString
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.numberOfLines = 2
+        return label
+    }()
+    
+    lazy var gotItButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("Got It", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.titleLabel?.textAlignment = .justified
+        button.isUserInteractionEnabled = true
+        button.addTarget(self, action: #selector(dismissHomePopover), for: .touchUpInside)
+        return button
+    }()
+    
+    let underlineView = UIView()
+    
+    @objc func dismissHomePopover(){
+        backgroundView.isHidden = true
+        alertExplanationView.isHidden = true
+        homeIntroLabel.isHidden = true
+        pursuitsDescription.isHidden = true
+        underlineView.isHidden = true
+        gotItButton.isHidden = true
+        
+        self.tabBarController?.tabBar.layer.zPosition = 0
+        self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    func setupIntroView() {
+        self.tabBarController?.tabBar.layer.zPosition = -1
+        self.tabBarController?.tabBar.isHidden = true
+        alertExplanationView.layer.cornerRadius = 15
+        setupIntroConstraints()
+        animateView()
+    }
+    
+    func setupIntroConstraints(){
+        underlineView.backgroundColor = .lightGray
+        
+        view.addSubview(backgroundView)
+        view.addSubview(alertExplanationView)
+        view.addSubview(homeIntroLabel)
+        view.addSubview(pursuitsDescription)
+        view.addSubview(underlineView)
+        alertExplanationView.addSubview(gotItButton)
+        
+        backgroundView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 50).isActive = true
+        alertExplanationView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 250)
+        alertExplanationView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 50).isActive = true
+        homeIntroLabel.anchor(top: alertExplanationView.topAnchor, left: alertExplanationView.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: homeIntroLabel.intrinsicContentSize.width, height: homeIntroLabel.intrinsicContentSize.height)
+        pursuitsDescription.anchor(top: homeIntroLabel.bottomAnchor, left: homeIntroLabel.leftAnchor, bottom: nil, right: alertExplanationView.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 80)
+        underlineView.anchor(top: pursuitsDescription.bottomAnchor, left: alertExplanationView.leftAnchor, bottom: nil, right: alertExplanationView.rightAnchor, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0.5)
+        gotItButton.anchor(top: underlineView.bottomAnchor, left: underlineView.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: gotItButton.intrinsicContentSize.width, height: gotItButton.intrinsicContentSize.height)
     }
     
 }

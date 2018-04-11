@@ -261,19 +261,5 @@ extension HomeRow : iCarouselDataSource, iCarouselDelegate {
         carouselView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 475)
         optionButton.anchor(top: nil, left: nil, bottom: carouselView.bottomAnchor, right: carouselView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 42, paddingRight: 12, width: optionButton.intrinsicContentSize.width, height: optionButton.intrinsicContentSize.height)
     }
-    
-    func labelSubCarousel(){
-        subCarouselView.dataSource = self
-        subCarouselView.delegate = self
-        subCarouselView.isScrollEnabled = false
-        subCarouselView.type = .invertedCylinder
-        subCarouselView.backgroundColor = .clear
-        subCarouselView.isVertical = true
-        
-        let guide = safeAreaLayoutGuide
-        addSubview(subCarouselView)
-        subCarouselView.anchor(top: carouselView.bottomAnchor, left: guide.leftAnchor, bottom: nil, right: guide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 60)
-        
-    }
 }
 

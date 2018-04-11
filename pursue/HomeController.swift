@@ -52,7 +52,6 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         collectionView?.backgroundColor = UIColor.white
         collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
         collectionView?.isScrollEnabled = false
-        setupIntroView()
     }
     
     override func viewDidLoad() {
@@ -68,6 +67,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
             UserDefaults.standard.set(true, forKey: "launchedBefore")
         }
         
+        setupIntroView()
     }
     
     func imageView(isExplore : Bool){
@@ -93,7 +93,6 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
-        setupIntroView()
     }
     
     // MARK: - Setup View
@@ -234,7 +233,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         let attributedString = NSMutableAttributedString(string: "Stay inspired and learn steps and principles that can help you on your journey.")
         
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 2
+        paragraphStyle.lineSpacing = 5
         attributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
         label.attributedText = attributedString
         label.font = UIFont.boldSystemFont(ofSize: 14)
