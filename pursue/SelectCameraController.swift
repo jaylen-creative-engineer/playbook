@@ -150,10 +150,6 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
         switchCamera()
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         captureButton.delegate = self
@@ -220,6 +216,10 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
 
     func swiftyCam(_ swiftyCam: SwiftyCamViewController, didFailToRecordVideo error: Error) {
         print(error)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
     }
 }
 

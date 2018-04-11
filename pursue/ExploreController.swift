@@ -100,6 +100,7 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         view.addSubview(backgroundFill)
         view.addSubview(searchBar)
         collectionView?.showsVerticalScrollIndicator = false
+        backgroundFill.backgroundColor = .white
         backgroundFill.anchor(top: view.topAnchor, left: guide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 85)
         searchBar.anchor(top: nil, left: view.leftAnchor, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: searchBar.intrinsicContentSize.height)
         searchTableView.register(SearchReturn.self, forCellReuseIdentifier: tableViewCellId)
@@ -160,7 +161,7 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
 extension ExploreController {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 70)
+        return CGSize(width: view.frame.width, height: 30)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -186,7 +186,7 @@ class CustomSettingsView : UIViewController {
         termsLabel.anchor(top: inviteLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 26, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: termsLabel.intrinsicContentSize.width, height: termsLabel.intrinsicContentSize.height)
         privacyLabel.anchor(top: termsLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 26, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: privacyLabel.intrinsicContentSize.width, height: privacyLabel.intrinsicContentSize.height)
         logOutLabel.anchor(top: privacyLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 26, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: logOutLabel.intrinsicContentSize.width, height: logOutLabel.intrinsicContentSize.height)
-        cancelBottomButton.anchor(top: nil, left: nil, bottom: alertView.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 8, paddingRight: 0, width: cancelBottomButton.intrinsicContentSize.width, height: cancelBottomButton.intrinsicContentSize.height)
+        cancelBottomButton.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 14, paddingRight: 0, width: cancelBottomButton.intrinsicContentSize.width, height: cancelBottomButton.intrinsicContentSize.height)
         cancelBottomButton.centerXAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
         addRowsBehindLabel()
     }
@@ -197,7 +197,8 @@ class CustomSettingsView : UIViewController {
         alertView.addSubview(settingsLabel)
         view.addSubview(dismissBackground)
         
-        alertView.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 370)
+        alertView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 370)
+        alertView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 10).isActive = true
         settingsLabel.anchor(top: alertView.topAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: settingsLabel.intrinsicContentSize.width, height: settingsLabel.intrinsicContentSize.height)
         dismissBackground.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: alertView.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         setupLabels()

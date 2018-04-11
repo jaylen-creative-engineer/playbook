@@ -105,7 +105,8 @@ class CustomStepToggleView : UIViewController {
         alertView.addSubview(principleCheckMark)
         alertView.addSubview(cancelLabel)
         
-        alertView.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 225)
+        alertView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 225)
+        alertView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 10).isActive = true
         typeLabel.anchor(top: alertView.topAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: typeLabel.intrinsicContentSize.width, height: typeLabel.intrinsicContentSize.height)
         stepBackground.anchor(top: typeLabel.bottomAnchor, left: typeLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 20)
         stepLabel.anchor(top: stepBackground.topAnchor, left: stepBackground.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: stepLabel.intrinsicContentSize.width, height: stepLabel.intrinsicContentSize.height)
@@ -114,7 +115,7 @@ class CustomStepToggleView : UIViewController {
         
         stepCheckMark.anchor(top: stepBackground.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 15, height: 15)
         principleCheckMark.anchor(top: principleBackground.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 15, height: 15)
-        cancelLabel.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 8, paddingRight: 0, width: cancelLabel.intrinsicContentSize.width, height: cancelLabel.intrinsicContentSize.height)
+        cancelLabel.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 14, paddingRight: 0, width: cancelLabel.intrinsicContentSize.width, height: cancelLabel.intrinsicContentSize.height)
         cancelLabel.centerXAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
     }
     

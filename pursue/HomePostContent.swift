@@ -14,6 +14,7 @@ struct HomePostContent : Decodable {
     let userId : String?
     let photoUrl : String?
     let username : String?
+    let profilePicture : String?
     let principleId : String?
     let postThumbnail : String?
     let stepThumbnail : String?

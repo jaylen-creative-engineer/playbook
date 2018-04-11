@@ -144,16 +144,17 @@ class CustomOptionView : UIViewController {
         view.addSubview(cancelBackground)
         view.addSubview(dismissBackground)
         
-        alertView.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 395)
+        alertView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 405)
+        alertView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 10).isActive = true
         linkLabel.anchor(top: alertView.topAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: linkLabel.intrinsicContentSize.width, height: linkLabel.intrinsicContentSize.height)
-        likeTitle.anchor(top: linkLabel.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: likeTitle.intrinsicContentSize.width, height: likeTitle.intrinsicContentSize.height)
+        likeTitle.anchor(top: linkLabel.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 26, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: likeTitle.intrinsicContentSize.width, height: likeTitle.intrinsicContentSize.height)
         shareTitle.anchor(top: likeTitle.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 26, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: shareTitle.intrinsicContentSize.width, height: shareTitle.intrinsicContentSize.height)
         saveTitle.anchor(top: shareTitle.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 26, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: saveTitle.intrinsicContentSize.width, height: saveTitle.intrinsicContentSize.height)
         saveStepTitle.anchor(top: saveTitle.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 26, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: saveStepTitle.intrinsicContentSize.width, height: saveStepTitle.intrinsicContentSize.height)
         savePrincipleTitle.anchor(top: saveStepTitle.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 26, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: savePrincipleTitle.intrinsicContentSize.width, height: savePrincipleTitle.intrinsicContentSize.height)
-        cancelLabel.anchor(top: nil, left: nil, bottom: alertView.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 8, paddingRight: 0, width: cancelLabel.intrinsicContentSize.width, height: cancelLabel.intrinsicContentSize.height)
+        cancelLabel.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 14, paddingRight: 0, width: cancelLabel.intrinsicContentSize.width, height: cancelLabel.intrinsicContentSize.height)
         cancelLabel.centerXAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
-        cancelBackground.anchor(top: nil, left: nil, bottom: alertView.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 8, paddingRight: 0, width: 100, height: 50)
+        cancelBackground.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 14, paddingRight: 0, width: 100, height: 50)
         cancelBackground.centerXAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
         dismissBackground.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: alertView.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }

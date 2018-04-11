@@ -239,7 +239,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         } else {
             countTracker = countTracker + 1
         }
-                
+        
         switch countTracker {
         case 5:
             addUserToFirebase()
@@ -274,7 +274,9 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         view.addSubview(cancelButton)
         view.addSubview(nextButton)
         view.addSubview(loginButton)
+        
         progressControl.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: view.frame.width, height: 10)
+        progressControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -5).isActive = true
         cancelButton.anchor(top: progressControl.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
         nextButton.anchor(top: nil, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: nextButton.intrinsicContentSize.width, height: nextButton.intrinsicContentSize.height)
         nextButton.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor).isActive = true

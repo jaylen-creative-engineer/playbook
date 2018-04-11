@@ -112,7 +112,7 @@ class PhotoLibrary : SwiftyCamViewController, UICollectionViewDelegate, UICollec
     }
     
     @objc func handleDismiss(){
-        dismiss(animated: true, completion: nil)
+        self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

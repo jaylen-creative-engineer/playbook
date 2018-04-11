@@ -109,7 +109,7 @@ extension HomeRow : iCarouselDataSource, iCarouselDelegate {
         var carouselView = UIView()
         carouselView = UIView(frame: CGRect(x: 0, y: 0, width: 400, height: 500))
         carouselView.isUserInteractionEnabled = true
-        carouselView.backgroundColor = .red
+        carouselView.backgroundColor = .clear
         
         let postLabel = UILabel()
         postLabel.font = UIFont.boldSystemFont(ofSize: 14)
@@ -128,6 +128,7 @@ extension HomeRow : iCarouselDataSource, iCarouselDelegate {
         profilePicture.translatesAutoresizingMaskIntoConstraints = false
         profilePicture.layer.cornerRadius = 25
         profilePicture.layer.masksToBounds = true
+        profilePicture.backgroundColor = .red
         
         let carouselImage = UIImageView()
         carouselImage.contentMode = .scaleAspectFill
@@ -169,7 +170,6 @@ extension HomeRow : iCarouselDataSource, iCarouselDelegate {
         fullscreenLabel.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight(25))
         fullscreenLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        
         carouselView.addSubview(carouselImage)
         carouselView.addSubview(leftButton)
         carouselView.addSubview(rightButton)
@@ -180,15 +180,6 @@ extension HomeRow : iCarouselDataSource, iCarouselDelegate {
         carouselView.addSubview(postLabel)
         carouselView.addSubview(usernameLabel)
         carouselView.addSubview(profilePicture)
-        
-        if !postContent.isEmpty {
-            guard let photo = postContent[index].postThumbnail else { return carouselView }
-            carouselImage.loadImageUsingCacheWithUrlString(photo)
-            guard let profileImage = postContent[index].photoUrl else { return carouselView }
-            profilePicture.loadImageUsingCacheWithUrlString(profileImage)
-            postLabel.text = postContent[index].pursuitDescription
-            usernameLabel.text = postContent[index].username
-        }
         
         carouselImage.anchor(top: carouselView.topAnchor, left: carouselView.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 28, paddingBottom: 0, paddingRight: 0, width: 325, height: 405)
         leftButton.anchor(top: carouselImage.topAnchor, left: carouselImage.leftAnchor, bottom: carouselImage.bottomAnchor, right: carouselImage.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
@@ -201,10 +192,20 @@ extension HomeRow : iCarouselDataSource, iCarouselDelegate {
         playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 10, height: 10)
         playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true
         playIcon.centerYAnchor.constraint(equalTo: playBackground.centerYAnchor).isActive = true
-        
         profilePicture.anchor(top: carouselImage.bottomAnchor, left: carouselImage.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
         postLabel.anchor(top: profilePicture.topAnchor, left: profilePicture.rightAnchor, bottom: nil, right: carouselImage.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 24, width: 0, height: postLabel.intrinsicContentSize.height)
         usernameLabel.anchor(top: postLabel.bottomAnchor, left: postLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
+        
+        if !postContent.isEmpty {
+            guard let photo = postContent[index].postThumbnail else { return carouselView }
+            carouselImage.loadImageUsingCacheWithUrlString(photo)
+            postLabel.text = postContent[index].pursuitDescription
+            usernameLabel.text = postContent[index].username
+            guard let profileImage = postContent[index].profilePicture else { return carouselView }
+            profilePicture.loadImageUsingCacheWithUrlString(profileImage)
+            
+        }
+        
         return carouselView
     }
     
