@@ -9,7 +9,7 @@
 import UIKit
 import XLActionController
 
-class HomeContainer : UICollectionViewCell, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource, HomeRowImageEngagements, HomePursuitsRowDelegate, HomePrinciplesDelegate {
+class HomeContainer : UICollectionViewCell, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource, HomeRowImageEngagements  {
     
     let secondaryId = "secondaryId"
     let customRowId = "customRowId"
@@ -20,6 +20,7 @@ class HomeContainer : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
     let principleCarouselId = "principleCarouselId"
     let discussionCarouselId = "discussionCarouselId"
     let imageDetailViewId = "imageDetailViewId"
+    let detailId = "detailId"
     let cellId = "cellId"
     let peopleId = "peopleId"
     var accessHomeController : HomeController?
@@ -126,9 +127,7 @@ class HomeContainer : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
         addSubview(homeCollection)
         homeCollection.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         homeCollection.register(HomeRow.self, forCellWithReuseIdentifier: cellId)
-        homeCollection.register(HomeSteps.self, forCellWithReuseIdentifier: pursuitId)
-        homeCollection.register(HomePrinciples.self, forCellWithReuseIdentifier: principleId)
-        homeCollection.register(HomePeople.self, forCellWithReuseIdentifier: peopleId)
+        homeCollection.register(HomeDetails.self, forCellWithReuseIdentifier: detailId)
     }
     
     func homeRowScrolled(for cell: HomeRow) {
@@ -157,15 +156,10 @@ extension HomeContainer {
         case 0:
             return CGSize(width: frame.width, height: 475)
         case 1:
-            return CGSize(width: frame.width, height: 430)
-        case 2:
-            return CGSize(width: frame.width, height: 390)
-        case 3:
-            return CGSize(width: frame.width, height: 390)
+            return CGSize(width: frame.width, height: frame.height * 2)
         default:
             assert(false, "Not a valid row")
         }
-
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -177,18 +171,7 @@ extension HomeContainer {
             cell.home = home
             return cell
         case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! HomeSteps
-            cell.pursuitsDelegate = self
-            cell.accessHomeController = self
-            return cell
-        case 2:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciples
-            cell.principlesDelegate = self
-            cell.accessHomeController = self
-            return cell
-        case 3:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! HomePeople
-            cell.accessHomeController = self
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: detailId, for: indexPath) as! HomeDetails
             return cell
         default:
             assert(false, "Not a valid row")
@@ -200,7 +183,7 @@ extension HomeContainer {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

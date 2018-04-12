@@ -100,6 +100,7 @@
 		E6AD4BC1206AE60300451547 /* CreateInterests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AD4BC0206AE60300451547 /* CreateInterests.swift */; };
 		E6B49F2B1FACDCE800AEDAFD /* InterestsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B49F2A1FACDCE800AEDAFD /* InterestsController.swift */; };
 		E6B49F2F1FACDE4100AEDAFD /* SelectInterestsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B49F2E1FACDE4100AEDAFD /* SelectInterestsList.swift */; };
+		E6C93127207ED568000DEF87 /* HomeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C93126207ED568000DEF87 /* HomeDetails.swift */; };
 		E6C99B9D2066D07700581A1E /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C99B9C2066D07700581A1E /* UserDetails.swift */; };
 		E6CB1B472057063F00B5D2ED /* CustomPeopleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CB1B462057063F00B5D2ED /* CustomPeopleView.swift */; };
 		E6CB1B49205706C200B5D2ED /* CustomPeopleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CB1B48205706C200B5D2ED /* CustomPeopleViewCell.swift */; };
@@ -263,6 +264,7 @@
 		E6AD4BC0206AE60300451547 /* CreateInterests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateInterests.swift; sourceTree = "<group>"; };
 		E6B49F2A1FACDCE800AEDAFD /* InterestsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsController.swift; sourceTree = "<group>"; };
 		E6B49F2E1FACDE4100AEDAFD /* SelectInterestsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectInterestsList.swift; sourceTree = "<group>"; };
+		E6C93126207ED568000DEF87 /* HomeDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDetails.swift; sourceTree = "<group>"; };
 		E6C99B9C2066D07700581A1E /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
 		E6CB1B462057063F00B5D2ED /* CustomPeopleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPeopleView.swift; sourceTree = "<group>"; };
 		E6CB1B48205706C200B5D2ED /* CustomPeopleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPeopleViewCell.swift; sourceTree = "<group>"; };
@@ -592,6 +594,7 @@
 				E6CB1B462057063F00B5D2ED /* CustomPeopleView.swift */,
 				E6CB1B48205706C200B5D2ED /* CustomPeopleViewCell.swift */,
 				E6F9D960207E680A00640950 /* CustomHomeIntro.swift */,
+				E6C93126207ED568000DEF87 /* HomeDetails.swift */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -945,6 +948,7 @@
 				E62C1C06205113AA00781FF1 /* Follower.swift in Sources */,
 				E621B9921FE048FE007324E2 /* PursuitPrinciple.swift in Sources */,
 				E6DF9EC5203CA9F3005C86DB /* HomeContainer.swift in Sources */,
+				E6C93127207ED568000DEF87 /* HomeDetails.swift in Sources */,
 				E6CB1B4B205789DB00B5D2ED /* ProfilePursuit.swift in Sources */,
 				E6234E98204478E700A57A2C /* CustomLogOutView.swift in Sources */,
 				E62AAB191FD0A49A0053EAD7 /* NotificationSettingsController.swift in Sources */,

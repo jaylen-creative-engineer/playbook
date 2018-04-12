@@ -19,7 +19,7 @@ class HomePeopleCells : UICollectionViewCell {
     
     let fullnameLabel : UILabel = {
        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
+        label.font = UIFont.boldSystemFont(ofSize: 14)
         label.text = "Jaylen Sanders"
         return label
     }()
@@ -34,7 +34,7 @@ class HomePeopleCells : UICollectionViewCell {
         iv.addGestureRecognizer(tapGesture)
         iv.addGestureRecognizer(longGesture)
         iv.isUserInteractionEnabled = true
-        iv.layer.cornerRadius = 30
+        iv.layer.cornerRadius = 40
         return iv
     }()
     
@@ -45,12 +45,11 @@ class HomePeopleCells : UICollectionViewCell {
     }
     
     func setupView(){
-        
         addSubview(profileImage)
         addSubview(fullnameLabel)
         addSubview(usernameLabel)
         
-        profileImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 60, height: 60)
+        profileImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 80, height: 80)
         fullnameLabel.anchor(top: topAnchor, left: profileImage.rightAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 12, width: fullnameLabel.intrinsicContentSize.width, height: fullnameLabel.intrinsicContentSize.height)
         usernameLabel.anchor(top: fullnameLabel.bottomAnchor, left: fullnameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
     }
