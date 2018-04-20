@@ -10,8 +10,9 @@ import UIKit
 
 struct Home : Decodable {
     
-    let returned_content : [HomePostContent]?
+    let pursuit_array : [HomePostContent]?
     let steps : [SearchedSteps]?
     let principles : [SearchedPrinciples]?
     let searched_users : [SearchedUsers]?
+    let user : User?
 }

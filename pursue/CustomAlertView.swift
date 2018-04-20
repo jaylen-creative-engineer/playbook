@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Hero
 import Firebase
 
 class CustomAlertView: UIViewController {
@@ -130,7 +129,6 @@ class CustomAlertView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.isHeroEnabled = true
         view.addSubview(alertView)
         alertView.addSubview(sendLabel)
         alertView.addSubview(createButton)
@@ -208,48 +206,57 @@ extension CustomAlertView : UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let pursuitId = pursuits[indexPath.item].pursuitId
-        let interestId = pursuits[indexPath.item].interestId
-        let filename = NSUUID().uuidString
-        
-        if contentUrl != nil {
-            guard let video = contentUrl else { return }
+        if !pursuits.isEmpty {
+            let pursuitId = pursuits[indexPath.item].pursuitId
+            let interestId = pursuits[indexPath.item].interestId
+            let filename = NSUUID().uuidString
             
-            Storage.storage().reference().child("pursuit-video").child(filename).putFile(from: video, metadata: nil) { (metadata, err) in
-                if let err = err {
-                    print("Failed to upload", err)
+            if contentUrl != nil {
+                guard let video = contentUrl else { return }
+                
+                Storage.storage().reference().child("pursuit-video").child(filename).putFile(from: video, metadata: nil) { (metadata, err) in
+                    if let err = err {
+                        print("Failed to upload", err)
+                    }
+                    
+                    guard let videoUrl = metadata?.downloadURL()?.absoluteString else { return }
+                    
+                    switch true {
+                    case self.is_step == 1:
+                        self.createService.addStepToPursuit(pursuitId: pursuitId!, interestId: interestId!, stepId: filename, contentUrl: videoUrl, thumbnailUrl: self.capturedImage, stepDescription: self.postDescription.text!, is_visible: 0, is_public: 0)
+                        self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+                    case self.is_principle == 1:
+                        self.createService.addPrincipleToPursuit(pursuitId: pursuitId!, interestId: interestId!, principleId: filename, contentUrl: videoUrl, thumbnailUrl: self.capturedImage, principleDescription: self.postDescription.text!, is_visible: 0, is_public: 0)
+                        self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+                    case self.is_step == 0 && self.is_principle == 0:
+                        self.createService.addPostToPursuit(pursuitId: pursuitId!, interestId: interestId!, postId: filename, contentUrl: videoUrl, thumbnailUrl: self.capturedImage, is_step: self.is_step, is_principle: self.is_principle)
+                        self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+                    default:
+                        assert(false, "Not a valid post")
+                    }
                 }
-                
-                guard let videoUrl = metadata?.downloadURL()?.absoluteString else { return }
-                
+            } else {
                 switch true {
                 case self.is_step == 1:
-                    self.createService.addStepToPursuit(pursuitId: pursuitId!, interestId: interestId!, stepId: filename, contentUrl: videoUrl, thumbnailUrl: self.capturedImage, stepDescription: self.postDescription.text!, is_visible: 0, is_public: 0)
+                    self.createService.addStepToPursuit(pursuitId: pursuitId!, interestId: interestId!, stepId: filename, contentUrl: " ", thumbnailUrl: self.capturedImage, stepDescription: self.postDescription.text!, is_visible: 0, is_public: 0)
                     self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
                 case self.is_principle == 1:
-                    self.createService.addPrincipleToPursuit(pursuitId: pursuitId!, interestId: interestId!, principleId: filename, contentUrl: videoUrl, thumbnailUrl: self.capturedImage, principleDescription: self.postDescription.text!, is_visible: 0, is_public: 0)
+                    self.createService.addPrincipleToPursuit(pursuitId: pursuitId!, interestId: interestId!, principleId: filename, contentUrl: " ", thumbnailUrl: self.capturedImage, principleDescription: self.postDescription.text!, is_visible: 0, is_public: 0)
                     self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
                 case self.is_step == 0 && self.is_principle == 0:
-                    self.createService.addPostToPursuit(pursuitId: pursuitId!, interestId: interestId!, postId: filename, contentUrl: videoUrl, thumbnailUrl: self.capturedImage, is_step: self.is_step, is_principle: self.is_principle)
+                    self.createService.addPostToPursuit(pursuitId: pursuitId!, interestId: interestId!, postId: filename, contentUrl: " ", thumbnailUrl: self.capturedImage, is_step: self.is_step, is_principle: self.is_principle)
                     self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
                 default:
                     assert(false, "Not a valid post")
                 }
             }
         } else {
-            switch true {
-            case self.is_step == 1:
-                self.createService.addStepToPursuit(pursuitId: pursuitId!, interestId: interestId!, stepId: filename, contentUrl: " ", thumbnailUrl: self.capturedImage, stepDescription: self.postDescription.text!, is_visible: 0, is_public: 0)
-                self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
-            case self.is_principle == 1:
-                self.createService.addPrincipleToPursuit(pursuitId: pursuitId!, interestId: interestId!, principleId: filename, contentUrl: " ", thumbnailUrl: self.capturedImage, principleDescription: self.postDescription.text!, is_visible: 0, is_public: 0)
-                self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
-            case self.is_step == 0 && self.is_principle == 0:
-                self.createService.addPostToPursuit(pursuitId: pursuitId!, interestId: interestId!, postId: filename, contentUrl: " ", thumbnailUrl: self.capturedImage, is_step: self.is_step, is_principle: self.is_principle)
-                self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
-            default:
-                assert(false, "Not a valid post")
-            }
+            let customAlert = CustomCreateView(capturedImage: capturedImage, contentUrl: contentUrl, pursuitTitle: postDescription.text, is_principle: is_principle, is_step: is_step)
+            customAlert.providesPresentationContextTransitionStyle = true
+            customAlert.definesPresentationContext = true
+            customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            self.present(customAlert, animated: true, completion: nil)
         }
     }
     

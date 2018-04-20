@@ -69,8 +69,10 @@ class CustomOptionView : UIViewController {
         let button = UIButton()
         button.setTitle("Like", for: .normal)
         button.setTitleColor(.black, for: .normal)
+        button.contentHorizontalAlignment = .left
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(toggleLike), for: .touchUpInside)
         return button
     }()
     
@@ -78,8 +80,10 @@ class CustomOptionView : UIViewController {
         let button = UIButton()
         button.setTitle("Save Current Post", for: .normal)
         button.setTitleColor(.black, for: .normal)
+        button.contentHorizontalAlignment = .left
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(toggleSavePost), for: .touchUpInside)
         return button
     }()
     
@@ -88,8 +92,10 @@ class CustomOptionView : UIViewController {
         let button = UIButton()
         button.setTitle("Save Current Post as a Step", for: .normal)
         button.setTitleColor(.black, for: .normal)
+        button.contentHorizontalAlignment = .left
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(toggleStepSave), for: .touchUpInside)
         return button
     }()
     
@@ -97,8 +103,10 @@ class CustomOptionView : UIViewController {
         let button = UIButton()
         button.setTitle("Save Current Post as a Principle", for: .normal)
         button.setTitleColor(.black, for: .normal)
+        button.contentHorizontalAlignment = .left
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(togglePrincipleSave), for: .touchUpInside)
         return button
     }()
     
@@ -119,6 +127,81 @@ class CustomOptionView : UIViewController {
         button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
         return button
     }()
+    
+    var isLiked = false
+    var isSavedImage = false
+    var isStepSaved = false
+    var isPrincipleSaved = false
+    
+    @objc func toggleLike(){
+        isLiked = !isLiked
+        
+        if isLiked == true {
+            likeTitle.setTitle("Unliked", for: .normal)
+        } else {
+            likeTitle.setTitle("Like", for: .normal)
+        }
+    }
+    
+    @objc func toggleSavePost(){
+//        let grabTime = 0.10
+//        let image = generateThumnail(url: videoURL!, fromTime: Float64(grabTime))
+//
+//        let customAlert = CustomAlertView(capturedImage: image, contentUrl: videoURL, postDescription: pursuitTitle.text, is_principle: 0, is_step: 0)
+//        customAlert.providesPresentationContextTransitionStyle = true
+//        customAlert.definesPresentationContext = true
+//        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+//        self.present(customAlert, animated: true, completion: nil)
+        
+        isSavedImage = !isSavedImage
+        
+        if isSavedImage == true {
+            saveTitle.setTitle("Post Saved", for: .normal)
+        } else {
+            saveTitle.setTitle("Save Current Post", for: .normal)
+        }
+    }
+    
+    @objc func toggleStepSave(){
+//        let grabTime = 0.10
+//        let image = generateThumnail(url: videoURL!, fromTime: Float64(grabTime))
+//
+//        let customAlert = CustomAlertView(capturedImage: image, contentUrl: videoURL, postDescription: pursuitTitle.text, is_principle: 0, is_step: 0)
+//        customAlert.providesPresentationContextTransitionStyle = true
+//        customAlert.definesPresentationContext = true
+//        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+//        self.present(customAlert, animated: true, completion: nil)
+        
+        isStepSaved = !isStepSaved
+        
+        if isStepSaved == true {
+            saveStepTitle.setTitle("Step Saved", for: .normal)
+        } else {
+            saveStepTitle.setTitle("Save Current Post as a Step", for: .normal)
+        }
+    }
+    
+    @objc func togglePrincipleSave(){
+//        let grabTime = 0.10
+//        let image = generateThumnail(url: videoURL!, fromTime: Float64(grabTime))
+//        
+//        let customAlert = CustomAlertView(capturedImage: image, contentUrl: videoURL, postDescription: pursuitTitle.text, is_principle: 0, is_step: 0)
+//        customAlert.providesPresentationContextTransitionStyle = true
+//        customAlert.definesPresentationContext = true
+//        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+//        self.present(customAlert, animated: true, completion: nil)
+        
+        isPrincipleSaved = !isPrincipleSaved
+        
+        if isPrincipleSaved == true {
+            savePrincipleTitle.setTitle("Principle Saved", for: .normal)
+        } else {
+            savePrincipleTitle.setTitle("Save Current Post as a Principle", for: .normal)
+        }
+    }
     
     @objc func handleSend(){
         
@@ -147,7 +230,7 @@ class CustomOptionView : UIViewController {
         alertView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 385)
         alertView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 10).isActive = true
         linkLabel.anchor(top: alertView.topAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: linkLabel.intrinsicContentSize.width, height: linkLabel.intrinsicContentSize.height)
-        likeTitle.anchor(top: linkLabel.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: likeTitle.intrinsicContentSize.width, height: likeTitle.intrinsicContentSize.height)
+        likeTitle.anchor(top: linkLabel.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: likeTitle.intrinsicContentSize.width * 2, height: likeTitle.intrinsicContentSize.height)
         shareTitle.anchor(top: likeTitle.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: shareTitle.intrinsicContentSize.width, height: shareTitle.intrinsicContentSize.height)
         saveTitle.anchor(top: shareTitle.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: saveTitle.intrinsicContentSize.width, height: saveTitle.intrinsicContentSize.height)
         saveStepTitle.anchor(top: saveTitle.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: saveStepTitle.intrinsicContentSize.width, height: saveStepTitle.intrinsicContentSize.height)

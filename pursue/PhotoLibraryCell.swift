@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Hero
 
 protocol PhotoDelegate {
     func didSelect(for cell : PhotoLibraryCell)

@@ -14,7 +14,7 @@ class HomeServices {
     
     // MARK: - GET pursuits by users interests
     
-    func getPursuits(completion: @escaping (Home) -> ()){
+    func getPursuits(completion: @escaping ([Home]) -> ()){
         let url = "http://localhost:8080/interest-pursuits"
         guard let userId = Auth.auth().currentUser?.uid else { return }
 
@@ -25,7 +25,7 @@ class HomeServices {
             
             guard let data = response.data else { return }
             do {
-                let homeResponse = try JSONDecoder().decode(Home.self, from: data)
+                let homeResponse = try JSONDecoder().decode([Home].self, from: data)
                 completion(homeResponse)
             } catch let error {
                 print(error)

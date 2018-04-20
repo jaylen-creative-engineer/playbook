@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Hero
 import Photos
 import SwiftyCam
 

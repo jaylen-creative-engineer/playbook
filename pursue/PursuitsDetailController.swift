@@ -7,9 +7,6 @@
 //
 
 import UIKit
-import XLActionController
-import JHTAlertController
-import Hero
 import ParallaxHeader
 
 class PursuitsDetailController : UICollectionViewController {
@@ -123,18 +120,7 @@ class PursuitsDetailController : UICollectionViewController {
     }()
     
     @objc func addSteps(){
-        let actionController = SkypeActionController()
-        
-        actionController.addAction(Action("Start a Discussion", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Share", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Cancel", style: .default, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
+     
     }
     
     func setupBackButton(){

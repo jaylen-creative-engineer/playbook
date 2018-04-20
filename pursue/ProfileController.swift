@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import XLActionController
 import Alamofire
 import Firebase
 import ParallaxHeader
@@ -147,25 +146,6 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func profilePostHeld() {
-        let actionController = SkypeActionController()
-        actionController.addAction(Action("Save", style: .default, handler: { action in
-            
-        }))
-        actionController.addAction(Action("Like", style: .default, handler: { action in
-            
-        }))
-        actionController.addAction(Action("Share", style: .default, handler: { action in
-            let text = "This is some text that I want to share."
-            let textToShare = [ text ]
-            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-            activityViewController.popoverPresentationController?.sourceView = self.view
-            self.present(activityViewController, animated: true, completion: nil)
-        }))
-        
-        actionController.addAction(Action("Cancel", style: .default, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
         
     }
     
@@ -183,7 +163,7 @@ extension ProfileController {
         switch indexPath.item {
         case 0:
             if let bio = user?.bio {
-                let approximateWidthOfBio = view.frame.width - 20 - 8
+                let approximateWidthOfBio = view.frame.width - 28
                 let size = CGSize(width: approximateWidthOfBio, height: .infinity)
                 let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12)]
                 let estimatedFrame = NSString(string: bio).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
@@ -195,6 +175,10 @@ extension ProfileController {
         default:
             assert(false, "Not a valid row")
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

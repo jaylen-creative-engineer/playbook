@@ -7,11 +7,9 @@
 //
 
 import UIKit
-import XLActionController
 import iCarousel
 import Alamofire
 import SwiftyJSON
-import Instructions
 import Firebase
 
 class HomeController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
@@ -26,6 +24,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     var isFirstLaunch = false
     
     let backgroundFill = UIView()
+    let homeServices = HomeServices()
     
     lazy var interestsBar : HomeInterestsBar = {
         let hb = HomeInterestsBar()
@@ -102,24 +101,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     }
     
     func principleHeld() {
-        let actionController = SkypeActionController()
-        actionController.addAction(Action("Save", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Like", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Share", style: .default, handler: { action in
-            let text = "This is some text that I want to share."
-            let textToShare = [ text ]
-            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-            activityViewController.popoverPresentationController?.sourceView = self.view
-            self.present(activityViewController, animated: true, completion: nil)
-        }))
-        actionController.addAction(Action("Cancel", style: .default, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
+        
     }
     
     func homeRowImageTapped() {
@@ -127,24 +109,7 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     }
     
     func homeRowImageHeld() {
-        let actionController = SkypeActionController()
-        actionController.addAction(Action("Save", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Like", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Share", style: .default, handler: { action in
-            let text = "This is some text that I want to share."
-            let textToShare = [ text ]
-            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-            activityViewController.popoverPresentationController?.sourceView = self.view
-            self.present(activityViewController, animated: true, completion: nil)
-        }))
-        actionController.addAction(Action("Cancel", style: .default, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
+        
     }
     
     func pursuitClicked() {

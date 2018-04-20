@@ -6,7 +6,6 @@ PODS:
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
-  - BWWalkthrough (2.1.2)
   - FBSDKCoreKit (4.28.0):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.28.0):
@@ -67,30 +66,24 @@ PODS:
   - GTMSessionFetcher/Core (1.1.12)
   - GTMSessionFetcher/Full (1.1.12):
     - GTMSessionFetcher/Core (= 1.1.12)
-  - Hero (1.0.1)
   - iCarousel (1.8.3)
-  - Instructions (1.1.0)
-  - JHTAlertController (0.2.4)
   - leveldb-library (1.20)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - NVActivityIndicatorView (4.0.1):
+    - NVActivityIndicatorView/Presenter (= 4.0.1)
+  - NVActivityIndicatorView/Presenter (4.0.1)
   - ParallaxHeader (2.0.0)
   - PryntTrimmerView (2.0.0)
   - SnapSliderFilters (2.0)
   - SwiftyCam (2.6.0)
   - SwiftyJSON (4.0.0)
-  - XLActionController (4.0.0):
-    - XLActionController/Core (= 4.0.0)
-  - XLActionController/Core (4.0.0)
-  - XLActionController/Skype (4.0.0):
-    - XLActionController/Core
 
 DEPENDENCIES:
   - Alamofire
-  - BWWalkthrough
   - FBSDKCoreKit
   - FBSDKLoginKit
   - FBSDKShareKit
@@ -98,22 +91,17 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Storage
   - GoogleSignIn
-  - Hero
   - iCarousel (~> 1.8)
-  - Instructions
-  - JHTAlertController (~> 0.2)
+  - NVActivityIndicatorView
   - ParallaxHeader
   - PryntTrimmerView
   - SnapSliderFilters
   - SwiftyCam
   - SwiftyJSON
-  - XLActionController
-  - XLActionController/Skype
 
 SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  BWWalkthrough: 6b18dc688ff6b7168383fee07fe199ccaad7e9f7
   FBSDKCoreKit: ca961e279113f691fd83dc634c0bbad9d4e3f370
   FBSDKLoginKit: b077381c27d800f21661757e8140cf2c80a91e4a
   FBSDKShareKit: 4f525556e0df4cf0f574cb3f01c675434f29d477
@@ -128,19 +116,16 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   GTMOAuth2: be83fd28d63ae3087e7d351b1f39c1a7e24ab6e7
   GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
-  Hero: cee286821578e170d8c0c9c9cda7897357401112
   iCarousel: d782f635afac190c49bb8ee455882284cff8b85f
-  Instructions: ff5738d6a637a46d1638a77d77261649f4da36a7
-  JHTAlertController: 8999fdf41c60a3d6698a3415ff1448f4ce4680e5
   leveldb-library: 4f9eedf84ab46b4fa3b7893bf30714b2a1a74022
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  NVActivityIndicatorView: 77ed6d7b571643e24899e7858bf9ae2ee4c21f31
   ParallaxHeader: fb6ee97915626454f3c029a97b424f79a777c642
   PryntTrimmerView: 3af9f84875d347b9a131501b3695abf94b02a7bb
   SnapSliderFilters: 7f571683b05cf70b8d398e4a0e45691bd9f03a33
   SwiftyCam: 86c114177a1b1f5dc2c82384577d0c20b922a31b
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
-  XLActionController: 7e88fece1799e61357cb00b1cc67104d66ec4d2c
 
-PODFILE CHECKSUM: 9dde0e95bfbdc93268fa9bf2a99750a10ab46515
+PODFILE CHECKSUM: c7e1cfb2b722e71742189e8858f05fef03cf0f04
 
 COCOAPODS: 1.3.1

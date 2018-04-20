@@ -9,7 +9,6 @@
 import UIKit
 import FirebaseAuth
 import FBSDKCoreKit
-import XLActionController
 
 class SettingsController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
@@ -219,40 +218,9 @@ class SettingsController : UICollectionViewController, UICollectionViewDelegateF
     }
     
     @objc func deleteAccount(){
-        let actionController = SkypeActionController()
-        actionController.addAction(Action("DELETE ACCOUNT", style: .default, handler: { action in
-        }))
-        
-        actionController.addAction(Action("CANCEL", style: .cancel, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
     }
     
     @objc func logOut(){
-        let actionController = SkypeActionController()
-        actionController.addAction(Action("LOG OUT", style: .default, handler: { action in
-            do {
-                try Auth.auth().signOut()
-                
-                FBSDKAccessToken.setCurrent(nil)
-                
-                let loginController = LoginController()
-                let navController = UINavigationController(rootViewController: loginController)
-                self.present(navController, animated: true, completion: nil)
-                self.dismiss(animated: true, completion: nil)
-                
-            } catch let signOutErr {
-                
-                print("Failed to sign out", signOutErr)
-            }
-        }))
-
-        actionController.addAction(Action("CANCEL", style: .cancel, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
-
     }
     
     func setupAccountSection(){

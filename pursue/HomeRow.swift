@@ -17,15 +17,15 @@ class HomeRow: UICollectionViewCell {
     
     var home : Home? {
         didSet {
-            guard let data = self.home?.returned_content else { return }
+            guard let data = self.home?.pursuit_array else { return }
             self.postContent = data
-            self.subCarouselView.reloadData()
+            self.user = home?.user
             self.carouselView.reloadData()
         }
     }
     
     var postContent = [HomePostContent]()
-    
+    var user : User?
     var accessHomeController : HomeContainer?
     var homeDelegate : HomeRowImageEngagements?
     let pursuitId = "pursuitId"
@@ -34,6 +34,7 @@ class HomeRow: UICollectionViewCell {
     var isLeft = true
     var isRight = true
     var cellIndex : Int = 0
+    var count : Int = 0
     var isLiked = false
     
     let imageNames = ["ferrari", "pagani", "travel", "contacts", "3d-touch"]
@@ -41,11 +42,6 @@ class HomeRow: UICollectionViewCell {
     let homeDescriptions = ["iChat App","New York Exchange", "Travel App", "Contact Page", "Settings 3d touch"]
     
     lazy var carouselView : iCarousel = {
-        let ic = iCarousel()
-        return ic
-    }()
-    
-    lazy var subCarouselView : iCarousel = {
         let ic = iCarousel()
         return ic
     }()
@@ -197,11 +193,11 @@ extension HomeRow : iCarouselDataSource, iCarouselDelegate {
         usernameLabel.anchor(top: postLabel.bottomAnchor, left: postLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
         
         if !postContent.isEmpty {
-            guard let photo = postContent[index].postThumbnail else { return carouselView }
+            guard let photo = postContent[index].thumbnailUrl else { return carouselView }
             carouselImage.loadImageUsingCacheWithUrlString(photo)
-            postLabel.text = postContent[index].pursuitDescription
-            usernameLabel.text = postContent[index].username
-            guard let profileImage = postContent[index].profilePicture else { return carouselView }
+            postLabel.text = postContent[index].description
+            usernameLabel.text = user?.username
+            guard let profileImage = user?.photoUrl else { return carouselView }
             profilePicture.loadImageUsingCacheWithUrlString(profileImage)
             
         }
@@ -220,7 +216,6 @@ extension HomeRow : iCarouselDataSource, iCarouselDelegate {
     func carouselDidScroll(_ carousel: iCarousel) {
         if carousel == carouselView {
             homeDelegate?.homeRowScrolled(for: self)
-            subCarouselView.scrollOffset = carouselView.scrollOffset
         }
     }
     
@@ -262,4 +257,3 @@ extension HomeRow : iCarouselDataSource, iCarouselDelegate {
         optionButton.anchor(top: nil, left: nil, bottom: carouselView.bottomAnchor, right: carouselView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 42, paddingRight: 12, width: optionButton.intrinsicContentSize.width, height: optionButton.intrinsicContentSize.height)
     }
 }
-

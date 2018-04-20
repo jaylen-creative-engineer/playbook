@@ -18,7 +18,6 @@
 		E60EB26F20462DFA006E4F1A /* FollowPursuitCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60EB26E20462DFA006E4F1A /* FollowPursuitCells.swift */; };
 		E6136EA31F968EAB00E29101 /* PursuitsDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6136EA21F968EAB00E29101 /* PursuitsDetailController.swift */; };
 		E6136EA61F968FC800E29101 /* PursuitsDetailHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6136EA51F968FC800E29101 /* PursuitsDetailHeader.swift */; };
-		E616632B1F745F0D00EC254C /* HomeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E616632A1F745F0D00EC254C /* HomeRow.swift */; };
 		E61692441FD64544008BF11D /* ForgotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61692431FD64544008BF11D /* ForgotController.swift */; };
 		E617BB151FD886D6008B2EA1 /* IntroController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E617BB141FD886D6008B2EA1 /* IntroController.swift */; };
 		E617BB171FD8874B008B2EA1 /* SwipingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E617BB161FD8874B008B2EA1 /* SwipingController.swift */; };
@@ -96,6 +95,7 @@
 		E6A273F91F68314F00F5B4C8 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A273F81F68314F00F5B4C8 /* CustomImageView.swift */; };
 		E6A273FE1F68325A00F5B4C8 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A273FD1F68325A00F5B4C8 /* Post.swift */; };
 		E6A274001F68327F00F5B4C8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A273FF1F68327F00F5B4C8 /* User.swift */; };
+		E6A7A32A2083E59400AA5F3A /* HomeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A7A3292083E59300AA5F3A /* HomeRow.swift */; };
 		E6AD4BBF206AE05B00451547 /* CreateInterestsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AD4BBE206AE05B00451547 /* CreateInterestsCells.swift */; };
 		E6AD4BC1206AE60300451547 /* CreateInterests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AD4BC0206AE60300451547 /* CreateInterests.swift */; };
 		E6B49F2B1FACDCE800AEDAFD /* InterestsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B49F2A1FACDCE800AEDAFD /* InterestsController.swift */; };
@@ -181,7 +181,6 @@
 		E60EB26E20462DFA006E4F1A /* FollowPursuitCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowPursuitCells.swift; sourceTree = "<group>"; };
 		E6136EA21F968EAB00E29101 /* PursuitsDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PursuitsDetailController.swift; sourceTree = "<group>"; };
 		E6136EA51F968FC800E29101 /* PursuitsDetailHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PursuitsDetailHeader.swift; sourceTree = "<group>"; };
-		E616632A1F745F0D00EC254C /* HomeRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRow.swift; sourceTree = "<group>"; };
 		E61692431FD64544008BF11D /* ForgotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotController.swift; sourceTree = "<group>"; };
 		E617BB141FD886D6008B2EA1 /* IntroController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroController.swift; sourceTree = "<group>"; };
 		E617BB161FD8874B008B2EA1 /* SwipingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingController.swift; sourceTree = "<group>"; };
@@ -260,6 +259,7 @@
 		E6A273F81F68314F00F5B4C8 /* CustomImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		E6A273FD1F68325A00F5B4C8 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		E6A273FF1F68327F00F5B4C8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		E6A7A3292083E59300AA5F3A /* HomeRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRow.swift; sourceTree = "<group>"; };
 		E6AD4BBE206AE05B00451547 /* CreateInterestsCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateInterestsCells.swift; sourceTree = "<group>"; };
 		E6AD4BC0206AE60300451547 /* CreateInterests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateInterests.swift; sourceTree = "<group>"; };
 		E6B49F2A1FACDCE800AEDAFD /* InterestsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsController.swift; sourceTree = "<group>"; };
@@ -580,11 +580,11 @@
 				E65F1E511FCCBE5000BD850E /* HomeController.swift */,
 				E6DF9EC4203CA9F2005C86DB /* HomeContainer.swift */,
 				E6D571422010FD7D008A37CC /* HomeInterestsCells.swift */,
-				E616632A1F745F0D00EC254C /* HomeRow.swift */,
 				E617BB1C1FD8A350008B2EA1 /* HomeSteps.swift */,
 				E617BB1E1FD8A396008B2EA1 /* HomeStepCells.swift */,
 				E617BB201FD8A3BF008B2EA1 /* HomePrinciples.swift */,
 				E617BB221FD8A3F3008B2EA1 /* HomePrinciplesCells.swift */,
+				E6A7A3292083E59300AA5F3A /* HomeRow.swift */,
 				E6D5714F2012AC44008A37CC /* HomeUserImage.swift */,
 				E6FF95DE20349BAE003BDB86 /* HomeInterestsBar.swift */,
 				E6989BF42047797B0067A55B /* CustomHomeView.swift */,
@@ -775,7 +775,6 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-pursue/Pods-pursue-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/BWWalkthrough/BWWalkthrough.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
@@ -783,15 +782,12 @@
 				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
-				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
-				"${BUILT_PRODUCTS_DIR}/Instructions/Instructions.framework",
-				"${BUILT_PRODUCTS_DIR}/JHTAlertController/JHTAlertController.framework",
+				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/ParallaxHeader/ParallaxHeader.framework",
 				"${BUILT_PRODUCTS_DIR}/PryntTrimmerView/PryntTrimmerView.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapSliderFilters/SnapSliderFilters.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyCam/SwiftyCam.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-				"${BUILT_PRODUCTS_DIR}/XLActionController/XLActionController.framework",
 				"${BUILT_PRODUCTS_DIR}/iCarousel/iCarousel.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -799,7 +795,6 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BWWalkthrough.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
@@ -807,15 +802,12 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Instructions.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JHTAlertController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ParallaxHeader.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PryntTrimmerView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapSliderFilters.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyCam.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLActionController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iCarousel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -891,7 +883,6 @@
 				E6DF9ECB203CF8FB005C86DB /* PhotoViewController.swift in Sources */,
 				E6FF95DF20349BAE003BDB86 /* HomeInterestsBar.swift in Sources */,
 				E6E1FA36207A88C8008F4280 /* SignupInterestsHeader.swift in Sources */,
-				E616632B1F745F0D00EC254C /* HomeRow.swift in Sources */,
 				E60EB26720460DB8006E4F1A /* FollowingCells.swift in Sources */,
 				E6DEC840201ABA1100E02393 /* PostComment.swift in Sources */,
 				E659EB1B2040876D00CA8DB5 /* CustomCreateView.swift in Sources */,
@@ -954,6 +945,7 @@
 				E62AAB191FD0A49A0053EAD7 /* NotificationSettingsController.swift in Sources */,
 				E67FB8C2203117C70008732C /* ImageProcessor.swift in Sources */,
 				E6F9D961207E680A00640950 /* CustomHomeIntro.swift in Sources */,
+				E6A7A32A2083E59400AA5F3A /* HomeRow.swift in Sources */,
 				E639807C204B6A350049A71B /* PrinciplesPage.swift in Sources */,
 				E6299BA32077143500B59061 /* UsernameCell.swift in Sources */,
 				E636E77A2056F61200BCA756 /* CustomOptionView.swift in Sources */,

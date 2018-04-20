@@ -8,18 +8,10 @@
 
 import UIKit
 
-struct HomePostContent : Decodable {    
+struct HomePostContent : Decodable {
+    
     let postId : String?
-    let stepId : String?
-    let userId : String?
-    let photoUrl : String?
-    let username : String?
-    let profilePicture : String?
-    let principleId : String?
-    let postThumbnail : String?
-    let stepThumbnail : String?
-    let stepDescription : String?
-    let principleThumbnail : String?
-    let pursuitDescription : String?
-    let principleDescription : String?
+    let contentUrl : String?
+    let description : String?
+    let thumbnailUrl : String?
 }

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import JHTAlertController
 
 class CustomDetailView : UIViewController {
     
@@ -99,28 +98,7 @@ class CustomDetailView : UIViewController {
     }
     
     @objc func handleYes(){
-        let alertController = JHTAlertController(title: "Report Post", message: "Are you sure you want to report this post?", preferredStyle: .alert)
-        let cancelAction = JHTAlertAction(title: "Cancel", style: .cancel, bgColor: .white, handler: nil)
-        let yesAction = JHTAlertAction(title: "Yes", style: .default, bgColor: .white) { _ in
-            print("Do something here!")
-        }
-        
-        alertController.addAction(yesAction)
-        alertController.addAction(cancelAction)
-        alertController.alertBackgroundColor = .white
-        alertController.hasRoundedCorners = true
-        
-        alertController.titleTextColor = .black
-        alertController.titleFont = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.init(25))
-        alertController.titleViewBackgroundColor = .white
-        
-        alertController.messageFont = .boldSystemFont(ofSize: 16)
-        alertController.messageTextColor = .black
-        
-        alertController.dividerColor = .clear
-        alertController.setButtonTextColorFor(.default, to: .black)
-        alertController.setButtonTextColorFor(.cancel, to: .black)
-        self.present(alertController, animated: true, completion: nil)
+
     }
     
     @objc func handleCancel(){

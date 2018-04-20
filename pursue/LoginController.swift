@@ -362,7 +362,6 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
     // MARK: Handle Doesn't Have Account
     
     @objc func handleShowSignUp() {
-        
         let layout = UICollectionViewFlowLayout()
         let signupController = SignupController(collectionViewLayout: layout)
         present(signupController, animated: true, completion: nil)

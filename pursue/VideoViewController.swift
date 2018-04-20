@@ -9,7 +9,6 @@
 import UIKit
 import AVFoundation
 import AVKit
-import XLActionController
 import Photos
 import PryntTrimmerView
 
@@ -205,19 +204,6 @@ class VideoViewController: AssetSelectionViewController {
     }
     
     @objc func handleHighlight () {
-        let actionController = SkypeActionController()
-        
-        actionController.addAction(Action("Mark as principle", style: .default, handler: { action in
-            // do something useful
-        }))
-        actionController.addAction(Action("Mark as step", style: .default, handler: { action in
-            // do something useful
-        }))
-        
-        actionController.addAction(Action("Cancel", style: .default, handler: {action in
-            
-        }))
-        present(actionController, animated: true, completion: nil)
     }
     
     var videoURL: URL?
@@ -277,7 +263,6 @@ class VideoViewController: AssetSelectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
-        navigationController?.isHeroEnabled = true
         
         player = AVPlayer(url: videoURL!)
         playerController = AVPlayerViewController()
@@ -306,8 +291,6 @@ class VideoViewController: AssetSelectionViewController {
     }
     
     @objc func cancel() {
-        navigationController?.isHeroEnabled = true
-        navigationController?.heroNavigationAnimationType = .fade
         dismiss(animated: true, completion: nil)
     }
     

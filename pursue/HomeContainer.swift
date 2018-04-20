@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import XLActionController
+import NVActivityIndicatorView
 
-class HomeContainer : UICollectionViewCell, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource, HomeRowImageEngagements  {
+class HomeContainer : UICollectionViewCell, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource, HomeRowImageEngagements, NVActivityIndicatorViewable {
     
     let secondaryId = "secondaryId"
     let customRowId = "customRowId"
@@ -25,6 +25,7 @@ class HomeContainer : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
     let peopleId = "peopleId"
     var accessHomeController : HomeController?
     let homeServices = HomeServices()
+    var homePostContent = [Home]()
     
     let homeCollection : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -103,10 +104,23 @@ class HomeContainer : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
     var home : Home?
     
     func getContent(){
+        let indicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
+        indicator.type = .ballClipRotatePulse
+        indicator.color = .black
+        indicator.padding = 20
+        
+        addSubview(indicator)
+        indicator.anchor(top: topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 124, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        indicator.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        indicator.startAnimating()
+        
         homeServices.getPursuits { (home) in
             DispatchQueue.main.async {
-                self.home = home
-                self.homeCollection.reloadData()
+                home.forEach({ (value) in
+                    indicator.isHidden = true
+                    self.homePostContent.append(value)
+                    self.homeCollection.reloadData()
+                })
             }
         }
     }
@@ -168,7 +182,9 @@ extension HomeContainer {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeRow
             cell.homeDelegate = self
             cell.accessHomeController = self
-            cell.home = home
+            if !homePostContent.isEmpty {
+                cell.home = homePostContent[indexPath.item]
+            }
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: detailId, for: indexPath) as! HomeDetails
@@ -183,8 +199,31 @@ extension HomeContainer {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            if !homePostContent.isEmpty {
+                print(homePostContent.count)
+                return homePostContent.count
+            }
+        case 1:
+            return 2
+        default:
+             return 2
+        }
         return 2
     }
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        switch section {
+//        case 0:
+//            if !homePostContent.isEmpty {
+//                return homePostContent.count
+//            }
+//        case 1:
+//            return 2
+//        default:
+//            return 2
+//        }
+//    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0

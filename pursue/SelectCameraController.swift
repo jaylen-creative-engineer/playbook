@@ -9,7 +9,6 @@
 import UIKit
 import SwiftyCam
 import Photos
-import Hero
 
 class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerDelegate, UIViewControllerTransitioningDelegate {
    

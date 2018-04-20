@@ -83,7 +83,6 @@ class CustomLogOutView : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.isHeroEnabled = true
         view.addSubview(alertView)
         alertView.isUserInteractionEnabled = false
         alertView.addSubview(confirmLabel)

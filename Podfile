@@ -9,10 +9,7 @@ target 'pursue' do
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
-  pod 'XLActionController'
-  pod 'XLActionController/Skype'
   pod 'SwiftyCam'
-  pod 'JHTAlertController', '~> 0.2'
   pod 'iCarousel', '~> 1.8'
   pod 'Alamofire'
   pod 'GoogleSignIn'
@@ -20,11 +17,9 @@ target 'pursue' do
   pod 'FBSDKCoreKit'
   pod 'FBSDKShareKit'
   pod 'FBSDKLoginKit'
-  pod 'Hero'
   pod 'ParallaxHeader'
   pod 'PryntTrimmerView'
   pod 'SnapSliderFilters'
-  pod 'Instructions'
-  pod 'BWWalkthrough'
+  pod 'NVActivityIndicatorView'
 
 end

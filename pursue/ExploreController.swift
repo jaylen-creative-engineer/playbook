@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import XLActionController
 import Alamofire
 
 class ExploreController : UICollectionViewController, UICollectionViewDelegateFlowLayout, ExploreExerciseDelegate, ExplorePrincipleDelegate, ExploreImageDelegate, PeopleRowDelegate  {

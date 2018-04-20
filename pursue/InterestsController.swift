@@ -116,6 +116,7 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
         collectionView?.delegate = self
         collectionView?.dataSource = self
         collectionView?.showsVerticalScrollIndicator = false
+        
         setupTopBar()
         interestViewType()
     }
