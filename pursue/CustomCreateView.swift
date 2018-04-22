@@ -95,12 +95,13 @@ class CustomCreateView : UIViewController, InterestNameSelected, NVActivityIndic
         return label
     }()
     
-    lazy var pursuitTitle : UITextView = {
-        let tv = UITextView()
+    lazy var pursuitTitle : UITextViewFixed = {
+        let tv = UITextViewFixed()
         tv.delegate = self
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.font = UIFont.boldSystemFont(ofSize: 12)
         tv.isScrollEnabled = false
+        tv.textContainerInset = UIEdgeInsetsMake(0, 4, 0, -4)
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 60
@@ -126,6 +127,21 @@ class CustomCreateView : UIViewController, InterestNameSelected, NVActivityIndic
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
         return button
+    }()
+    
+    let maxNumber : UILabel = {
+       let label = UILabel()
+        label.text = "/  35"
+        label.font = .boldSystemFont(ofSize: 12)
+        return label
+    }()
+    
+    let currentNumber : UILabel = {
+        let label = UILabel()
+        label.text = "0"
+        label.font = .boldSystemFont(ofSize: 12)
+        label.textColor = .gray
+        return label
     }()
     
     let createService = CreateServices()
@@ -304,7 +320,7 @@ class CustomCreateView : UIViewController, InterestNameSelected, NVActivityIndic
         view.addSubview(collectionView)
         view.addSubview(selectInterest)
         
-        selectInterest.anchor(top: pursuitUnderline.bottomAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 28, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: selectInterest.intrinsicContentSize.width, height: selectInterest.intrinsicContentSize.height)
+        selectInterest.anchor(top: currentNumber.bottomAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 28, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: selectInterest.intrinsicContentSize.width, height: selectInterest.intrinsicContentSize.height)
         collectionView.anchor(top: selectInterest.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 70)
     }
     
@@ -319,16 +335,21 @@ class CustomCreateView : UIViewController, InterestNameSelected, NVActivityIndic
         alertView.addSubview(sendButton)
         alertView.addSubview(cancelBackground)
         view.addSubview(dismissBackground)
+        view.addSubview(currentNumber)
+        view.addSubview(maxNumber)
         
-        alertView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 450)
+        alertView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 460)
         alertView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 10).isActive = true
         
         sendLabel.anchor(top: alertView.topAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: sendLabel.intrinsicContentSize.width, height: sendLabel.intrinsicContentSize.height)
         pursuitPhoto.anchor(top: sendLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 105, height: 120)
         pursuitPhoto.centerXAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
-        pursuitTitle.anchor(top: pursuitPhoto.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 205, height: pursuitTitle.intrinsicContentSize.height)
+        pursuitTitle.anchor(top: pursuitPhoto.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 205, height: 30)
         pursuitTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         pursuitUnderline.anchor(top: pursuitTitle.bottomAnchor, left: pursuitTitle.leftAnchor, bottom: nil, right: pursuitTitle.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+        maxNumber.anchor(top: pursuitUnderline.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: maxNumber.intrinsicContentSize.width, height: maxNumber.intrinsicContentSize.height)
+        maxNumber.centerXAnchor.constraint(equalTo: pursuitUnderline.centerXAnchor).isActive = true
+        currentNumber.anchor(top: maxNumber.topAnchor, left: nil, bottom: nil, right: maxNumber.leftAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 4, width: 20, height: currentNumber.intrinsicContentSize.height)
         sendButton.anchor(top: alertView.topAnchor, left: nil, bottom: nil, right: alertView.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 18, height: 18)
         
         cancelLabel.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 14, paddingRight: 0, width: cancelLabel.intrinsicContentSize.width, height: cancelLabel.intrinsicContentSize.height)
@@ -391,14 +412,15 @@ class CustomCreateView : UIViewController, InterestNameSelected, NVActivityIndic
 
 extension CustomCreateView : UITextViewDelegate {
     
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+        let numberOfChars = newText.count
+        return numberOfChars < 36
+    }
+    
     func textViewDidChange(_ textView: UITextView) {
-        let size = CGSize(width: 205, height: 32)
-
-        let estimatedSize = textView.sizeThatFits(size)
-        textView.widthAnchor.constraint(equalToConstant: estimatedSize.width).isActive = true
-//        textView.constraints.forEach { (constraint) in
-//            constraint.constant = estimatedSize.width
-//        }
+        let count = textView.text.count
+        currentNumber.text = String(count)
     }
 }
 
