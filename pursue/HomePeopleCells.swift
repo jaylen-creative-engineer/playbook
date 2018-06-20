@@ -10,6 +10,15 @@ import UIKit
 
 class HomePeopleCells : UICollectionViewCell {
     
+    var user : SearchedUsers? {
+        didSet {
+            usernameLabel.text = user?.username
+            fullnameLabel.text = user?.fullname
+            guard let photo = user?.photoUrl else { return }
+            profileImage.loadImageUsingCacheWithUrlString(photo)
+        }
+    }
+    
     let usernameLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 12)
@@ -20,7 +29,6 @@ class HomePeopleCells : UICollectionViewCell {
     let fullnameLabel : UILabel = {
        let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.text = "Jaylen Sanders"
         return label
     }()
     

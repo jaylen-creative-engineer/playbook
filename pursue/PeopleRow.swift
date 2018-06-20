@@ -16,13 +16,14 @@ class PeopleRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionVi
     
     var peopleDelegate : PeopleRowDelegate?
     
-    let exploreImageNames = ["profile-1", "profile-2", "profile-3", "profile-4", "profile-5"]
     let usernameText = ["Vice", "Jubilee", "boldceo", "Soulection", "GQ"]
+    let userImageArray = [#imageLiteral(resourceName: "profile-1"), #imageLiteral(resourceName: "profile-2"), #imageLiteral(resourceName: "profile-3"), #imageLiteral(resourceName: "profile-4"), #imageLiteral(resourceName: "profile-5")]
     
     let rowLabel : UILabel = {
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
+        label.text = "People"
         return label
     }()
     
@@ -44,7 +45,7 @@ class PeopleRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionVi
         if !users.isEmpty {
             return users.count
         } else {
-            return 0
+            return 5
         }
     }
     
@@ -56,11 +57,11 @@ class PeopleRow : UICollectionViewCell, UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PeopleRowCells
-        print(users)
-        if !users.isEmpty {
-            cell.user = users[indexPath.item]
-        }
-        rowLabel.text = "People"
+        cell.userPhoto.image = userImageArray[indexPath.item]
+        cell.usernameLabel.text = usernameText[indexPath.item]
+//        if !users.isEmpty {
+//            cell.user = users[indexPath.item]
+//        }
         return cell
     }
     

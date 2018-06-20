@@ -23,6 +23,15 @@ class SearchReturn : UITableViewCell, UICollectionViewDelegate, UICollectionView
         }
     }
     
+    var stepSampleImagesNames = ["fire", "flights", "currency", "map"]
+    var stepSampleImagesText = ["Start a fire", "How to find cheaper flights?", "Converting your money", "How to read a map?"]
+    
+    var principleSampleImagesNames = ["mel-robbins", "menu-numbers", "go-back", "change-location"]
+    var principleSampleImagesText = ["Show value upfront", "Organize and label menu categories", "Allow users to go back easily in one step.", "Make it easy to manually change location."]
+    
+    var usernameText = ["Vice", "Jubilee", "boldceo", "Soulection", "GQ"]
+    var userImageArray = [#imageLiteral(resourceName: "profile-1"), #imageLiteral(resourceName: "profile-2"), #imageLiteral(resourceName: "profile-3"), #imageLiteral(resourceName: "profile-4"), #imageLiteral(resourceName: "profile-5")]
+    
     var step : SearchedSteps? {
         didSet {
             stepCollectionView.reloadData()
@@ -64,6 +73,8 @@ class SearchReturn : UITableViewCell, UICollectionViewDelegate, UICollectionView
         iv.layer.cornerRadius = 40
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
+        iv.image = #imageLiteral(resourceName: "profile-1").withRenderingMode(.alwaysOriginal)
+        
 //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleProfileTap))
 //        tapGesture.numberOfTapsRequired = 1
 //        iv.addGestureRecognizer(tapGesture)
@@ -76,6 +87,7 @@ class SearchReturn : UITableViewCell, UICollectionViewDelegate, UICollectionView
         label.font = UIFont.boldSystemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
+        label.text = "Tom"
         return label
     }()
     
@@ -113,22 +125,23 @@ class SearchReturn : UITableViewCell, UICollectionViewDelegate, UICollectionView
     var principles = [SearchedPrinciples]()
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch collectionView {
-        case stepCollectionView:
-            if !steps.isEmpty {
-                return 3
-            } else {
-                return 0
-            }
-        case principleCollectionView:
-            if !principles.isEmpty {
-                return 3
-            } else {
-                return 0
-            }
-        default:
-            assert(false, "Not a valid collection")
-        }
+//        switch collectionView {
+//        case stepCollectionView:
+//            if !steps.isEmpty {
+//                return 3
+//            } else {
+//                return 0
+//            }
+//        case principleCollectionView:
+//            if !principles.isEmpty {
+//                return 3
+//            } else {
+//                return 0
+//            }
+//        default:
+//            return 3
+//        }
+        return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -142,7 +155,7 @@ class SearchReturn : UITableViewCell, UICollectionViewDelegate, UICollectionView
         case principleCollectionView:
             return CGSize(width: frame.width, height: 105)
         default:
-            assert(false, "Not a valid collection")
+           return CGSize(width: frame.width, height: 105)
         }
     }
     
@@ -154,15 +167,47 @@ class SearchReturn : UITableViewCell, UICollectionViewDelegate, UICollectionView
         switch collectionView {
         case stepCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! HomeStepCells
-            cell.step = step
+            cell.pursuitLabel.text = stepSampleImagesText[indexPath.item]
+            cell.pursuitImage.image = UIImage(named: stepSampleImagesNames[indexPath.item])
+//            cell.step = step
             return cell
         case principleCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciplesCells
-            cell.principle = principle
+            cell.principleLabel.text = principleSampleImagesText[indexPath.item]
+            cell.principleImage.image = UIImage(named: principleSampleImagesNames[indexPath.item])
+//            cell.principle = principle
             return cell
         default:
-            assert(false, "Not a valid collection")
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciplesCells
+            return cell
         }
+    }
+    
+    func setupSampleView(){
+        addSubview(peopleRowLabel)
+        addSubview(userPhoto)
+        addSubview(usernameLabel)
+        addSubview(stepRowLabel)
+        addSubview(stepCollectionView)
+        addSubview(principleRowLabel)
+        addSubview(principleCollectionView)
+        
+        stepCollectionView.delegate = self
+        stepCollectionView.dataSource = self
+        stepCollectionView.register(HomeStepCells.self, forCellWithReuseIdentifier: stepId)
+        
+        principleCollectionView.delegate = self
+        principleCollectionView.dataSource = self
+        principleCollectionView.register(HomePrinciplesCells.self, forCellWithReuseIdentifier: principleId)
+        
+        peopleRowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: peopleRowLabel.intrinsicContentSize.width, height: peopleRowLabel.intrinsicContentSize.height)
+        userPhoto.anchor(top: peopleRowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 16, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 80, height: 80)
+        usernameLabel.anchor(top: userPhoto.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
+        usernameLabel.centerXAnchor.constraint(equalTo: userPhoto.centerXAnchor).isActive = true
+        stepRowLabel.anchor(top: usernameLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: stepRowLabel.intrinsicContentSize.width, height: stepRowLabel.intrinsicContentSize.height)
+        stepCollectionView.anchor(top: stepRowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 320)
+        principleRowLabel.anchor(top: stepCollectionView.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: principleRowLabel.intrinsicContentSize.width, height: principleRowLabel.intrinsicContentSize.height)
+        principleCollectionView.anchor(top: principleRowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 320)
     }
     
     func setupUserPhoto(){
@@ -248,8 +293,9 @@ class SearchReturn : UITableViewCell, UICollectionViewDelegate, UICollectionView
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupStepCollection()
-        setupPrincipleCollection()
+//        setupStepCollection()
+//        setupPrincipleCollection()
+        setupSampleView()
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -56,6 +56,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         let iv = CustomImageView()
         iv.clipsToBounds = true
         iv.contentMode = .scaleAspectFill
+        iv.image = #imageLiteral(resourceName: "animals").withRenderingMode(.alwaysOriginal)
         return iv
     }()
     
@@ -169,11 +170,11 @@ extension ProfileController {
                 let estimatedFrame = NSString(string: bio).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
                 return CGSize(width: view.frame.width, height: estimatedFrame.height + 120)
             }
-            return CGSize(width: view.frame.width, height: 155)
+            return CGSize(width: view.frame.width, height: 225)
         case 1:
             return CGSize(width: view.frame.width, height: 465)
         default:
-            assert(false, "Not a valid row")
+            return CGSize(width: view.frame.width, height: 465)
         }
     }
     
@@ -190,15 +191,18 @@ extension ProfileController {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! ProfileAboutRow
             cell.accessProfileController = self
-            cell.user = user
+//            cell.user = user
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuit
             cell.accessProfileController = self
-            cell.user = user
+//            cell.user = user
             return cell
         default:
-            assert(false, "Not a valid row")
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuit
+            cell.accessProfileController = self
+//            cell.user = user
+            return cell
         }
     }
 }

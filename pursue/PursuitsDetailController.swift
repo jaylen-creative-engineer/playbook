@@ -302,7 +302,7 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
         case isImageView:
             return 1
         default:
-            assert(false, "Not a valid view")
+             return 1
         }
     }
     
@@ -353,8 +353,9 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
         case isImageView:
             return CGSize(width: view.frame.width, height: view.frame.height * 1.5)
         default:
-            assert(false, "Not a valid view")
+            return CGSize(width: view.frame.width, height: view.frame.height * 1.5)
         }
+        return CGSize(width: view.frame.width, height: view.frame.height * 1.5)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -404,8 +405,13 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
             cell.pursuitsDetailController = self
             return cell
         default:
-            assert(false, "Not a valid view type")
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: headerId, for: indexPath) as! PursuitsDetailHeader
+            cell.pursuitsDetailController = self
+            return cell
         }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: headerId, for: indexPath) as! PursuitsDetailHeader
+        cell.pursuitsDetailController = self
+        return cell
     }
     
 }

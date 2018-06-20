@@ -12,4 +12,5 @@ struct SearchedUsers : Decodable {
     let usersId : String?
     let photoUrl : String?
     let username : String?
+    let fullname : String?
 }

@@ -38,7 +38,7 @@ class CustomSettingsView : UIViewController {
         label.textAlignment = .left
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleEditClick))
         label.addGestureRecognizer(tap)
-        label.isUserInteractionEnabled = true
+        label.isUserInteractionEnabled = false
         return label
     }()
     
@@ -49,7 +49,7 @@ class CustomSettingsView : UIViewController {
         label.textAlignment = .left
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleChangeToInterests))
         label.addGestureRecognizer(tap)
-        label.isUserInteractionEnabled = true
+        label.isUserInteractionEnabled = false
         return label
     }()
     
@@ -103,6 +103,7 @@ class CustomSettingsView : UIViewController {
         let button = UIButton()
         button.backgroundColor = .clear
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.isUserInteractionEnabled = false
         button.addTarget(self, action: #selector(handleEditClick), for: .touchUpInside)
         return button
     }()
@@ -111,6 +112,7 @@ class CustomSettingsView : UIViewController {
         let button = UIButton()
         button.backgroundColor = .clear
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.isUserInteractionEnabled = false
         button.addTarget(self, action: #selector(handleChangeToInterests), for: .touchUpInside)
         return button
     }()

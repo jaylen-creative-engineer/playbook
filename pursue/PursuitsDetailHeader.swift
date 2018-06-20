@@ -249,7 +249,11 @@ class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UIC
             let estimatedFrame = NSString(string: postDescription.text).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
             return CGSize(width: frame.width, height: estimatedFrame.height + 80)
         default:
-            assert(false, "Not a valid cell")
+            let approximateWidthOfCell = frame.width
+            let size = CGSize(width: approximateWidthOfCell, height: .infinity)
+            let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)]
+            let estimatedFrame = NSString(string: postDescription.text).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+            return CGSize(width: frame.width, height: estimatedFrame.height + 80)
         }
     }
     
@@ -268,7 +272,8 @@ class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UIC
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentsId, for: indexPath) as! PostComments
             return cell
         default:
-            assert(false, "Not a valid cell")
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentsId, for: indexPath) as! PostComments
+            return cell
         }
     }
     

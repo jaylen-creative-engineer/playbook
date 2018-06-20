@@ -22,6 +22,8 @@ class ProfilePursuit : UICollectionViewCell, UICollectionViewDelegate, UICollect
     var pursuits = [Pursuit]()
     var accessProfileController : ProfileController?
     let createId = "createId"
+    let exploreImageNames = ["fire", "flights", "currency", "map"]
+    let exerciseLabelText = ["Start a fire", "How to find cheaper flights?", "Converting your money", "How to read a map?"]
     
     let pursuitCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -52,7 +54,7 @@ class ProfilePursuit : UICollectionViewCell, UICollectionViewDelegate, UICollect
         if pursuits.count != 0 {
             return pursuits.count
         } else {
-            return 1
+            return 4
         }
     }
     
@@ -74,8 +76,12 @@ class ProfilePursuit : UICollectionViewCell, UICollectionViewDelegate, UICollect
             cell.pursuit = pursuits[indexPath.item]
             return cell
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: createId, for: indexPath) as! ProfilePursuitCreateCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfilePursuitCells
+            cell.pursuitImage.image = UIImage(named: exploreImageNames[indexPath.item])
+            cell.pursuitLabel.text = exerciseLabelText[indexPath.item]
             return cell
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: createId, for: indexPath) as! ProfilePursuitCreateCell
+//            return cell
         }
         
     }

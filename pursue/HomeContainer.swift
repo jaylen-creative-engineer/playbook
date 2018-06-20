@@ -104,20 +104,20 @@ class HomeContainer : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
     var home : Home?
     
     func getContent(){
-        let indicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
-        indicator.type = .ballClipRotatePulse
-        indicator.color = .black
-        indicator.padding = 20
-        
-        addSubview(indicator)
-        indicator.anchor(top: topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 124, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        indicator.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        indicator.startAnimating()
+//        let indicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
+//        indicator.type = .ballClipRotatePulse
+//        indicator.color = .black
+//        indicator.padding = 20
+//
+//        addSubview(indicator)
+//        indicator.anchor(top: topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 124, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+//        indicator.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+//        indicator.startAnimating()
         
         homeServices.getPursuits { (home) in
             DispatchQueue.main.async {
                 home.forEach({ (value) in
-                    indicator.isHidden = true
+//                    indicator.isHidden = true
                     self.homePostContent.append(value)
                     self.homeCollection.reloadData()
                 })
@@ -141,7 +141,6 @@ class HomeContainer : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
         addSubview(homeCollection)
         homeCollection.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         homeCollection.register(HomeRow.self, forCellWithReuseIdentifier: cellId)
-        homeCollection.register(HomeDetails.self, forCellWithReuseIdentifier: detailId)
     }
     
     func homeRowScrolled(for cell: HomeRow) {
@@ -166,32 +165,19 @@ class HomeContainer : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
 extension HomeContainer {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch indexPath.item {
-        case 0:
-            return CGSize(width: frame.width, height: 475)
-        case 1:
-            return CGSize(width: frame.width, height: frame.height * 2)
-        default:
-            assert(false, "Not a valid row")
-        }
+        return CGSize(width: frame.width, height: frame.height * 2)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.item {
-        case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeRow
-            cell.homeDelegate = self
-            cell.accessHomeController = self
-            if !homePostContent.isEmpty {
-                cell.home = homePostContent[indexPath.item]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeRow
+        cell.homeDelegate = self
+        cell.accessHomeController = self
+        if !homePostContent.isEmpty {
+            homePostContent.forEach { (value) in
+                cell.home = value
             }
-            return cell
-        case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: detailId, for: indexPath) as! HomeDetails
-            return cell
-        default:
-            assert(false, "Not a valid row")
         }
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -199,31 +185,8 @@ extension HomeContainer {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            if !homePostContent.isEmpty {
-                print(homePostContent.count)
-                return homePostContent.count
-            }
-        case 1:
-            return 2
-        default:
-             return 2
-        }
-        return 2
+        return 1
     }
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        switch section {
-//        case 0:
-//            if !homePostContent.isEmpty {
-//                return homePostContent.count
-//            }
-//        case 1:
-//            return 2
-//        default:
-//            return 2
-//        }
-//    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0

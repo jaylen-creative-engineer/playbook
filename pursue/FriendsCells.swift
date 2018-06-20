@@ -23,13 +23,13 @@ class FriendsCells : UICollectionViewCell {
     let usernameLabel : UILabel = {
        let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 12)
-        label.text = "JaylenHU27"
+        label.text = "TomDoe01"
         return label
     }()
     
     let fullnameLabel : UILabel = {
        let label = UILabel()
-        label.text = "Jaylen Sanders"
+        label.text = "Tom Doe"
         label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
         return label
     }()

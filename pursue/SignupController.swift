@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 import Firebase
 
 class SignupController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -20,6 +19,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
     let passwordId = "passwordId"
     let pictureId = "pictureId"
     let interestId = "interestId"
+    let principleId = "principleId"
     
     @objc func handlePlusPhoto(){
         
@@ -141,8 +141,8 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
                     print("Failed to upload", err)
                 }
                 
-                guard let profileImageURL = metadata?.downloadURL()?.absoluteString else { return }
-                self.profileService.createAccount(email: email, username: username, fullname: fullname, photoUrl: profileImageURL, bio: nil)
+//                guard let profileImageURL = metadata?.downloadURL()?.absoluteString else { return }
+//                self.profileService.createAccount(email: email, username: username, fullname: fullname, photoUrl: profileImageURL, bio: nil)
             })
         }
     }
@@ -164,7 +164,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
     private let pageControl: UIPageControl = {
         let pc = UIPageControl()
         pc.currentPage = 1
-        pc.numberOfPages = 5
+        pc.numberOfPages = 4
         pc.currentPageIndicatorTintColor = .black
         pc.pageIndicatorTintColor = .lightGray
         return pc
@@ -229,7 +229,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         progressControl.progress = Float(nextIndex / pageControl.numberOfPages)
         
         let i = current
-        let max = 6
+        let max = 5
         
         if i <= max {
             let ratio = Float(i) / Float(max)
@@ -241,15 +241,15 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         }
         
         switch countTracker {
-        case 5:
+        case 4:
             addUserToFirebase()
-        case 6:
+        case 5:
             loginButton.backgroundColor = .black
             loginButton.layer.borderColor = UIColor.black.cgColor
             loginButton.isEnabled = true
             collectionView?.isScrollEnabled = true
             handleSignup()
-        case 7:
+        case 6:
             let appDelegate = UIApplication.shared.delegate! as! AppDelegate
             appDelegate.window = UIWindow()
             appDelegate.window?.rootViewController = MainTabController()
@@ -288,7 +288,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return 5
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -318,14 +318,15 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
                 cell.addIcon.isHidden = true
             }
             return cell
-        case 5:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: interestId, for: indexPath) as! InterestsCell
-            if loggedinUserId != nil {
-                cell.userId = loggedinUserId
-            }
-            return cell
+//        case 5:
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: interestId, for: indexPath) as! InterestsCell
+//            if loggedinUserId != nil {
+//                cell.userId = loggedinUserId
+//            }
+//            return cell
         default:
-            assert(false, "Not a valid cell")
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! PrincipleNotification
+            return cell
         }
     }
     

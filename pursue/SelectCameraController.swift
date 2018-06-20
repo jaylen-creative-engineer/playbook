@@ -133,7 +133,12 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
         photoLibraryButton.anchor(top: nil, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 24, paddingBottom: 0, paddingRight: 0, width: 28, height: 28)
         photoLibraryButton.centerYAnchor.constraint(equalTo: captureButton.centerYAnchor).isActive = true
         setupTopOptions()
-        setupIntroView()
+        
+        if UserDefaults.standard.value(forKey: "cameraIntroPopover") == nil {
+            setupIntroView()
+        } else {
+            dismissHomePopover()
+        }
     }
     
     func setupTopOptions(){
@@ -277,6 +282,8 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
     let underlineView = UIView()
     
     @objc func dismissHomePopover(){
+        UserDefaults.standard.set("true", forKey: "cameraIntroPopover")
+
         backgroundView.isHidden = true
         alertView.isHidden = true
         homeIntroLabel.isHidden = true

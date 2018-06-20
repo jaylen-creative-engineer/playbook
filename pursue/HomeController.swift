@@ -12,10 +12,11 @@ import Alamofire
 import SwiftyJSON
 import Firebase
 
-class HomeController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class HomeController : UICollectionViewController {
     
     let cellId = "cellId"
     let labelId = "labelId"
+    let pursuitsId = "pursuitsId"
     var isImageView = true
     var isPursuitView = false
     var isPrinciplesView = false
@@ -32,6 +33,27 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
         return hb
     }()
     
+    let homeLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Home"
+        label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.init(25))
+        return label
+    }()
+    
+    let searchBackground : UIButton = {
+       let button = UIButton()
+        button.backgroundColor = UIColor.rgb(red: 200, green: 200, blue: 200)
+        button.layer.cornerRadius = 12
+        return button
+    }()
+    
+    let searchIcon : UIImageView = {
+       let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "search_selected").withRenderingMode(.alwaysOriginal)
+        iv.contentMode = .scaleAspectFill
+        return iv
+    }()
+    
     @objc func goBack(){
         navigationController?.popViewController(animated: true)
     }
@@ -42,31 +64,21 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     }
     
     func setupCollectionView(){
-        if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.scrollDirection = .horizontal
-            flowLayout.minimumLineSpacing = 0
-        }
-        
-        collectionView?.register(HomeContainer.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(HomePursuitsRow.self, forCellWithReuseIdentifier: pursuitsId)
         collectionView?.backgroundColor = UIColor.white
-        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
-        collectionView?.isScrollEnabled = false
+        collectionView?.isScrollEnabled = true
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupTopBar()
-        
-        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
-        if launchedBefore {
-            setupCollectionView()
+        setupCollectionView()
+        if UserDefaults.standard.value(forKey: "homeIntroPopover") == nil {
+            setupIntroView()
         } else {
-            isFirstLaunch = !isFirstLaunch
-            UserDefaults.standard.set(true, forKey: "launchedBefore")
+            dismissHomePopover()
         }
-        
-        setupIntroView()
     }
     
     func imageView(isExplore : Bool){
@@ -81,11 +93,17 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     private func setupTopBar(){
         let guide = view.safeAreaLayoutGuide
         view.addSubview(backgroundFill)
-        view.addSubview(interestsBar)
+        view.addSubview(homeLabel)
+        view.addSubview(searchBackground)
+        view.addSubview(searchIcon)
         
         backgroundFill.backgroundColor = .white
-        backgroundFill.anchor(top: view.topAnchor, left: guide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 70)
-        interestsBar.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 90)
+        backgroundFill.anchor(top: view.topAnchor, left: guide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 75)
+        homeLabel.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 5, paddingRight: 0, width: homeLabel.intrinsicContentSize.width, height: homeLabel.intrinsicContentSize.height)
+        searchBackground.anchor(top: nil, left: nil, bottom: nil, right: backgroundFill.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 55, height: 25)
+        searchBackground.centerYAnchor.constraint(equalTo: homeLabel.centerYAnchor).isActive = true
+        searchIcon.anchor(top: nil, left: nil, bottom: nil, right: searchBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 13.36, height: 14)
+        searchIcon.centerYAnchor.constraint(equalTo: searchBackground.centerYAnchor).isActive = true
     }
     
     
@@ -220,6 +238,8 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     let underlineView = UIView()
     
     @objc func dismissHomePopover(){
+        UserDefaults.standard.set("true", forKey: "homeIntroPopover")
+
         backgroundView.isHidden = true
         alertView.isHidden = true
         homeIntroLabel.isHidden = true
@@ -269,23 +289,26 @@ class HomeController : UICollectionViewController, UICollectionViewDelegateFlowL
     }
 }
 
-extension HomeController {
+extension HomeController : UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.width, height: 50)
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-       return 2
+       return 5
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeContainer
-        cell.accessHomeController = self
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! HomePursuitsRow
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height)
+        return CGSize(width: view.frame.width, height: 300)
     }
 }

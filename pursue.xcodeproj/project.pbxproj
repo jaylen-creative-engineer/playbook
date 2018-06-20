@@ -84,6 +84,8 @@
 		E65F1E561FCCC7BF00BD850E /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F1E551FCCC7BF00BD850E /* ProfileController.swift */; };
 		E67FB8C2203117C70008732C /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67FB8C1203117C70008732C /* ImageProcessor.swift */; };
 		E680ECC5206ACBD60023087D /* ProfilePursuitCreateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E680ECC4206ACBD60023087D /* ProfilePursuitCreateCell.swift */; };
+		E68D70B020D9DEE2004398D1 /* HomePursuitsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68D70AF20D9DEE2004398D1 /* HomePursuitsRow.swift */; };
+		E68D70B220D9E07C004398D1 /* HomePursuitsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68D70B120D9E07C004398D1 /* HomePursuitsCells.swift */; };
 		E6989BF320475CDD0067A55B /* CustomDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6989BF220475CDD0067A55B /* CustomDetailView.swift */; };
 		E6989BF52047797B0067A55B /* CustomHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6989BF42047797B0067A55B /* CustomHomeView.swift */; };
 		E6989BF72047A5350067A55B /* FollowedNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6989BF62047A5350067A55B /* FollowedNotification.swift */; };
@@ -100,7 +102,6 @@
 		E6AD4BC1206AE60300451547 /* CreateInterests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AD4BC0206AE60300451547 /* CreateInterests.swift */; };
 		E6B49F2B1FACDCE800AEDAFD /* InterestsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B49F2A1FACDCE800AEDAFD /* InterestsController.swift */; };
 		E6B49F2F1FACDE4100AEDAFD /* SelectInterestsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B49F2E1FACDE4100AEDAFD /* SelectInterestsList.swift */; };
-		E6C93127207ED568000DEF87 /* HomeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C93126207ED568000DEF87 /* HomeDetails.swift */; };
 		E6C99B9D2066D07700581A1E /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C99B9C2066D07700581A1E /* UserDetails.swift */; };
 		E6CB1B472057063F00B5D2ED /* CustomPeopleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CB1B462057063F00B5D2ED /* CustomPeopleView.swift */; };
 		E6CB1B49205706C200B5D2ED /* CustomPeopleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CB1B48205706C200B5D2ED /* CustomPeopleViewCell.swift */; };
@@ -248,6 +249,8 @@
 		E67FB8C0202FB18C0008732C /* pursue.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = pursue.entitlements; sourceTree = "<group>"; };
 		E67FB8C1203117C70008732C /* ImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
 		E680ECC4206ACBD60023087D /* ProfilePursuitCreateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePursuitCreateCell.swift; sourceTree = "<group>"; };
+		E68D70AF20D9DEE2004398D1 /* HomePursuitsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePursuitsRow.swift; sourceTree = "<group>"; };
+		E68D70B120D9E07C004398D1 /* HomePursuitsCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePursuitsCells.swift; sourceTree = "<group>"; };
 		E6989BF220475CDD0067A55B /* CustomDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDetailView.swift; sourceTree = "<group>"; };
 		E6989BF42047797B0067A55B /* CustomHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHomeView.swift; sourceTree = "<group>"; };
 		E6989BF62047A5350067A55B /* FollowedNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedNotification.swift; sourceTree = "<group>"; };
@@ -264,7 +267,6 @@
 		E6AD4BC0206AE60300451547 /* CreateInterests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateInterests.swift; sourceTree = "<group>"; };
 		E6B49F2A1FACDCE800AEDAFD /* InterestsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsController.swift; sourceTree = "<group>"; };
 		E6B49F2E1FACDE4100AEDAFD /* SelectInterestsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectInterestsList.swift; sourceTree = "<group>"; };
-		E6C93126207ED568000DEF87 /* HomeDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDetails.swift; sourceTree = "<group>"; };
 		E6C99B9C2066D07700581A1E /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
 		E6CB1B462057063F00B5D2ED /* CustomPeopleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPeopleView.swift; sourceTree = "<group>"; };
 		E6CB1B48205706C200B5D2ED /* CustomPeopleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPeopleViewCell.swift; sourceTree = "<group>"; };
@@ -594,7 +596,8 @@
 				E6CB1B462057063F00B5D2ED /* CustomPeopleView.swift */,
 				E6CB1B48205706C200B5D2ED /* CustomPeopleViewCell.swift */,
 				E6F9D960207E680A00640950 /* CustomHomeIntro.swift */,
-				E6C93126207ED568000DEF87 /* HomeDetails.swift */,
+				E68D70AF20D9DEE2004398D1 /* HomePursuitsRow.swift */,
+				E68D70B120D9E07C004398D1 /* HomePursuitsCells.swift */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -704,7 +707,7 @@
 				TargetAttributes = {
 					E6CE22701F671D10006C5755 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 572R6985EK;
+						DevelopmentTeam = JXXM3HC66M;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -909,6 +912,7 @@
 				E6DF9EBD203BAAB1005C86DB /* CommentInputAccessoryView.swift in Sources */,
 				E6D0B423203FDEEF008D4268 /* ExploreExerciseRow.swift in Sources */,
 				E6DEC850201AC31100E02393 /* Pursuit.swift in Sources */,
+				E68D70B020D9DEE2004398D1 /* HomePursuitsRow.swift in Sources */,
 				E6C99B9D2066D07700581A1E /* UserDetails.swift in Sources */,
 				E628F2EA2035D978002FE8CF /* RecentSearchUsers.swift in Sources */,
 				E60433EF20422EB800E6D4DA /* ProfileUserImage.swift in Sources */,
@@ -934,12 +938,12 @@
 				E62AAB211FD1E8680053EAD7 /* CameraBar.swift in Sources */,
 				E639806C20490B550049A71B /* InviteController.swift in Sources */,
 				E6CE22881F671E3D006C5755 /* Extensions.swift in Sources */,
+				E68D70B220D9E07C004398D1 /* HomePursuitsCells.swift in Sources */,
 				E6299BA1207713EC00B59061 /* NameCell.swift in Sources */,
 				E639807A204B624A0049A71B /* StepsPage.swift in Sources */,
 				E62C1C06205113AA00781FF1 /* Follower.swift in Sources */,
 				E621B9921FE048FE007324E2 /* PursuitPrinciple.swift in Sources */,
 				E6DF9EC5203CA9F3005C86DB /* HomeContainer.swift in Sources */,
-				E6C93127207ED568000DEF87 /* HomeDetails.swift in Sources */,
 				E6CB1B4B205789DB00B5D2ED /* ProfilePursuit.swift in Sources */,
 				E6234E98204478E700A57A2C /* CustomLogOutView.swift in Sources */,
 				E62AAB191FD0A49A0053EAD7 /* NotificationSettingsController.swift in Sources */,
@@ -1129,7 +1133,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = pursue/pursue.entitlements;
-				DEVELOPMENT_TEAM = 572R6985EK;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = JXXM3HC66M;
 				INFOPLIST_FILE = pursue/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.glory.pursue;
@@ -1145,7 +1150,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = pursue/pursue.entitlements;
-				DEVELOPMENT_TEAM = 572R6985EK;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = JXXM3HC66M;
 				INFOPLIST_FILE = pursue/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.glory.pursue;

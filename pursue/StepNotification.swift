@@ -28,7 +28,7 @@ class StepNotification : UICollectionViewCell {
     
     let fullnameLabel : UILabel = {
         let label = UILabel()
-        label.text = "Jaylen Sanders"
+        label.text = "Tom Doe"
         label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
         return label
     }()

@@ -14,6 +14,8 @@ class CustomAlertView: UIViewController {
     let alertViewGrayColor = UIColor(red: 224.0/255.0, green: 224.0/255.0, blue: 224.0/255.0, alpha: 1)
     let cellId = "cellId"
     let createId = "createId"
+    let exploreImageNames = ["fire", "flights", "currency", "map"]
+    let exerciseLabelText = ["Start a fire", "How to find cheaper flights?", "Converting your money", "How to read a map?"]
     
     lazy var alertView : UIView = {
        let view = UIView()
@@ -193,7 +195,8 @@ extension CustomAlertView : UICollectionViewDelegate, UICollectionViewDataSource
         if !pursuits.isEmpty {
             return pursuits.count
         } else {
-            return 1
+            return 4
+//            return 1
         }
     }
     
@@ -251,12 +254,14 @@ extension CustomAlertView : UICollectionViewDelegate, UICollectionViewDataSource
                 }
             }
         } else {
-            let customAlert = CustomCreateView(capturedImage: capturedImage, contentUrl: contentUrl, pursuitTitle: postDescription.text, is_principle: is_principle, is_step: is_step)
-            customAlert.providesPresentationContextTransitionStyle = true
-            customAlert.definesPresentationContext = true
-            customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-            customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-            self.present(customAlert, animated: true, completion: nil)
+            self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+//
+//            let customAlert = CustomCreateView(capturedImage: capturedImage, contentUrl: contentUrl, pursuitTitle: postDescription.text, is_principle: is_principle, is_step: is_step)
+//            customAlert.providesPresentationContextTransitionStyle = true
+//            customAlert.definesPresentationContext = true
+//            customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//            customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+//            self.present(customAlert, animated: true, completion: nil)
         }
     }
     
@@ -266,7 +271,9 @@ extension CustomAlertView : UICollectionViewDelegate, UICollectionViewDataSource
             cell.pursuit = pursuits[indexPath.item]
             return cell
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: createId, for: indexPath) as! CreateAlertViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CustomAlertViewCell
+            cell.pursuitImageView.image = UIImage(named: exploreImageNames[indexPath.item])
+            cell.pursuitLabel.text = exerciseLabelText[indexPath.item]
             return cell
         }
       

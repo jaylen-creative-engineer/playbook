@@ -74,7 +74,9 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         collectionView?.register(ExplorePrinciplesRow.self, forCellWithReuseIdentifier: principleId)
         collectionView?.register(ExploreExerciseRow.self, forCellWithReuseIdentifier: exerciseId)
         collectionView?.backgroundColor = .white
+        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
         collectionView?.showsVerticalScrollIndicator = false
+        
         getContent()
     }
     
@@ -281,7 +283,7 @@ extension ExploreController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return view.frame.height
+        return view.frame.height + 120
     }
 }
 

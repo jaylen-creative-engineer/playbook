@@ -161,139 +161,140 @@ class CustomCreateView : UIViewController, InterestNameSelected, NVActivityIndic
         indicator.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 14, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         indicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         indicator.startAnimating()
-        
-        if (contentUrl != nil) {
-            Storage.storage().reference().child("pursuit-video").child(pursuitId).putFile(from: contentUrl!, metadata: nil) { (metadata, err) in
-                if let err = err {
-                    print("Failed to upload", err)
-                }
-                guard let videoUrl = metadata?.downloadURL()?.absoluteString else { return }
+        self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
 
-                if self.interestId != nil {
-                    
-                    switch true {
-                    case self.is_step == 1:
-                        self.createService.createStepPursuit(pursuitId: pursuitId, stepId: stepId, interestId: self.interestId!, contentUrl: videoUrl, thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
-                        indicator.isHidden = true
-                        
-                        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
-                        appDelegate.window = UIWindow()
-                        appDelegate.window?.rootViewController = MainTabController()
-                        appDelegate.window?.makeKeyAndVisible()
-                    case self.is_principle == 1:
-                        self.createService.createPrinciplePursuit(pursuitId: pursuitId, principleId: principleId, interestId: self.interestId!, contentUrl: videoUrl, thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
-                        indicator.isHidden = true
-                      
-                        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
-                        appDelegate.window = UIWindow()
-                        appDelegate.window?.rootViewController = MainTabController()
-                        appDelegate.window?.makeKeyAndVisible()
-                    case self.is_step == 0 && self.is_principle == 0:
-                        self.createService.createPursuit(pursuitId: pursuitId, postId: postId, interestId: self.interestId!, contentUrl: videoUrl, thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
-                        indicator.isHidden = true
-                        
-                        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
-                        appDelegate.window = UIWindow()
-                        appDelegate.window?.rootViewController = MainTabController()
-                        appDelegate.window?.makeKeyAndVisible()
-                    default:
-                        assert(false, "Not a valid post")
-                    }
-                    
-                } else {
-                    switch true {
-                    case self.is_step == 1:
-                        self.createService.createStepPursuit(pursuitId: pursuitId, stepId: stepId, interestId: "", contentUrl: videoUrl, thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
-                        indicator.isHidden = true
-                        
-                        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
-                        appDelegate.window = UIWindow()
-                        appDelegate.window?.rootViewController = MainTabController()
-                        appDelegate.window?.makeKeyAndVisible()
-                    case self.is_principle == 1:
-                        self.createService.createPrinciplePursuit(pursuitId: pursuitId, principleId: principleId, interestId: "", contentUrl: videoUrl, thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
-                        indicator.isHidden = true
-                        
-                        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
-                        appDelegate.window = UIWindow()
-                        appDelegate.window?.rootViewController = MainTabController()
-                        appDelegate.window?.makeKeyAndVisible()
-                    case self.is_step == 0 && self.is_principle == 0:
-                        self.createService.createPursuit(pursuitId: pursuitId, postId: postId, interestId: "", contentUrl: videoUrl, thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
-                        indicator.isHidden = true
-                        
-                        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
-                        appDelegate.window = UIWindow()
-                        appDelegate.window?.rootViewController = MainTabController()
-                        appDelegate.window?.makeKeyAndVisible()
-                    default:
-                        assert(false, "Not a valid post")
-                    }
-                }
-                
-            }
-        } else {
-            if self.interestId != nil {
-                switch true {
-                case self.is_step == 1:
-                    self.createService.createStepPursuit(pursuitId: pursuitId, stepId: stepId, interestId: self.interestId!, contentUrl: "", thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
-                    indicator.isHidden = true
-                   
-                    let appDelegate = UIApplication.shared.delegate! as! AppDelegate
-                    appDelegate.window = UIWindow()
-                    appDelegate.window?.rootViewController = MainTabController()
-                    appDelegate.window?.makeKeyAndVisible()
-                case self.is_principle == 1:
-                    self.createService.createPrinciplePursuit(pursuitId: pursuitId, principleId: principleId, interestId: self.interestId!, contentUrl: "", thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
-                    indicator.isHidden = true
-                   
-                    let appDelegate = UIApplication.shared.delegate! as! AppDelegate
-                    appDelegate.window = UIWindow()
-                    appDelegate.window?.rootViewController = MainTabController()
-                    appDelegate.window?.makeKeyAndVisible()
-                case self.is_step == 0 && self.is_principle == 0:
-                    self.createService.createPursuit(pursuitId: pursuitId, postId: postId, interestId: self.interestId!, contentUrl: "", thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
-                    indicator.isHidden = true
-                    
-                    let appDelegate = UIApplication.shared.delegate! as! AppDelegate
-                    appDelegate.window = UIWindow()
-                    appDelegate.window?.rootViewController = MainTabController()
-                    appDelegate.window?.makeKeyAndVisible()
-                default:
-                    assert(false, "Not a valid post")
-                }
-                
-            } else {
-                switch true {
-                case self.is_step == 1:
-                    self.createService.createStepPursuit(pursuitId: pursuitId, stepId: stepId, interestId: "", contentUrl: "", thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
-                    indicator.isHidden = true
-                    
-                    let appDelegate = UIApplication.shared.delegate! as! AppDelegate
-                    appDelegate.window = UIWindow()
-                    appDelegate.window?.rootViewController = MainTabController()
-                    appDelegate.window?.makeKeyAndVisible()
-                case self.is_principle == 1:
-                    self.createService.createPrinciplePursuit(pursuitId: pursuitId, principleId: principleId, interestId: "", contentUrl: "", thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
-                    indicator.isHidden = true
-                    
-                    let appDelegate = UIApplication.shared.delegate! as! AppDelegate
-                    appDelegate.window = UIWindow()
-                    appDelegate.window?.rootViewController = MainTabController()
-                    appDelegate.window?.makeKeyAndVisible()
-                case self.is_step == 0 && self.is_principle == 0:
-                    self.createService.createPursuit(pursuitId: pursuitId, postId: postId, interestId: "", contentUrl: "", thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
-                    indicator.isHidden = true
-                    
-                    let appDelegate = UIApplication.shared.delegate! as! AppDelegate
-                    appDelegate.window = UIWindow()
-                    appDelegate.window?.rootViewController = MainTabController()
-                    appDelegate.window?.makeKeyAndVisible()
-                default:
-                    assert(false, "Not a valid post")
-                }
-            }
-        }
+//        if (contentUrl != nil) {
+//            Storage.storage().reference().child("pursuit-video").child(pursuitId).putFile(from: contentUrl!, metadata: nil) { (metadata, err) in
+//                if let err = err {
+//                    print("Failed to upload", err)
+//                }
+//                guard let videoUrl = metadata?.downloadURL()?.absoluteString else { return }
+//
+//                if self.interestId != nil {
+//
+//                    switch true {
+//                    case self.is_step == 1:
+//                        self.createService.createStepPursuit(pursuitId: pursuitId, stepId: stepId, interestId: self.interestId!, contentUrl: videoUrl, thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+//                        indicator.isHidden = true
+//
+//                        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+//                        appDelegate.window = UIWindow()
+//                        appDelegate.window?.rootViewController = MainTabController()
+//                        appDelegate.window?.makeKeyAndVisible()
+//                    case self.is_principle == 1:
+//                        self.createService.createPrinciplePursuit(pursuitId: pursuitId, principleId: principleId, interestId: self.interestId!, contentUrl: videoUrl, thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+//                        indicator.isHidden = true
+//
+//                        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+//                        appDelegate.window = UIWindow()
+//                        appDelegate.window?.rootViewController = MainTabController()
+//                        appDelegate.window?.makeKeyAndVisible()
+//                    case self.is_step == 0 && self.is_principle == 0:
+//                        self.createService.createPursuit(pursuitId: pursuitId, postId: postId, interestId: self.interestId!, contentUrl: videoUrl, thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+//                        indicator.isHidden = true
+//
+//                        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+//                        appDelegate.window = UIWindow()
+//                        appDelegate.window?.rootViewController = MainTabController()
+//                        appDelegate.window?.makeKeyAndVisible()
+//                    default:
+//                        assert(false, "Not a valid post")
+//                    }
+//
+//                } else {
+//                    switch true {
+//                    case self.is_step == 1:
+//                        self.createService.createStepPursuit(pursuitId: pursuitId, stepId: stepId, interestId: "", contentUrl: videoUrl, thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+//                        indicator.isHidden = true
+//
+//                        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+//                        appDelegate.window = UIWindow()
+//                        appDelegate.window?.rootViewController = MainTabController()
+//                        appDelegate.window?.makeKeyAndVisible()
+//                    case self.is_principle == 1:
+//                        self.createService.createPrinciplePursuit(pursuitId: pursuitId, principleId: principleId, interestId: "", contentUrl: videoUrl, thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+//                        indicator.isHidden = true
+//
+//                        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+//                        appDelegate.window = UIWindow()
+//                        appDelegate.window?.rootViewController = MainTabController()
+//                        appDelegate.window?.makeKeyAndVisible()
+//                    case self.is_step == 0 && self.is_principle == 0:
+//                        self.createService.createPursuit(pursuitId: pursuitId, postId: postId, interestId: "", contentUrl: videoUrl, thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+//                        indicator.isHidden = true
+//
+//                        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+//                        appDelegate.window = UIWindow()
+//                        appDelegate.window?.rootViewController = MainTabController()
+//                        appDelegate.window?.makeKeyAndVisible()
+//                    default:
+//                        assert(false, "Not a valid post")
+//                    }
+//                }
+//
+//            }
+//        } else {
+//            if self.interestId != nil {
+//                switch true {
+//                case self.is_step == 1:
+//                    self.createService.createStepPursuit(pursuitId: pursuitId, stepId: stepId, interestId: self.interestId!, contentUrl: "", thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+//                    indicator.isHidden = true
+//
+//                    let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+//                    appDelegate.window = UIWindow()
+//                    appDelegate.window?.rootViewController = MainTabController()
+//                    appDelegate.window?.makeKeyAndVisible()
+//                case self.is_principle == 1:
+//                    self.createService.createPrinciplePursuit(pursuitId: pursuitId, principleId: principleId, interestId: self.interestId!, contentUrl: "", thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+//                    indicator.isHidden = true
+//
+//                    let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+//                    appDelegate.window = UIWindow()
+//                    appDelegate.window?.rootViewController = MainTabController()
+//                    appDelegate.window?.makeKeyAndVisible()
+//                case self.is_step == 0 && self.is_principle == 0:
+//                    self.createService.createPursuit(pursuitId: pursuitId, postId: postId, interestId: self.interestId!, contentUrl: "", thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+//                    indicator.isHidden = true
+//
+//                    let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+//                    appDelegate.window = UIWindow()
+//                    appDelegate.window?.rootViewController = MainTabController()
+//                    appDelegate.window?.makeKeyAndVisible()
+//                default:
+//                    assert(false, "Not a valid post")
+//                }
+//
+//            } else {
+//                switch true {
+//                case self.is_step == 1:
+//                    self.createService.createStepPursuit(pursuitId: pursuitId, stepId: stepId, interestId: "", contentUrl: "", thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+//                    indicator.isHidden = true
+//
+//                    let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+//                    appDelegate.window = UIWindow()
+//                    appDelegate.window?.rootViewController = MainTabController()
+//                    appDelegate.window?.makeKeyAndVisible()
+//                case self.is_principle == 1:
+//                    self.createService.createPrinciplePursuit(pursuitId: pursuitId, principleId: principleId, interestId: "", contentUrl: "", thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+//                    indicator.isHidden = true
+//
+//                    let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+//                    appDelegate.window = UIWindow()
+//                    appDelegate.window?.rootViewController = MainTabController()
+//                    appDelegate.window?.makeKeyAndVisible()
+//                case self.is_step == 0 && self.is_principle == 0:
+//                    self.createService.createPursuit(pursuitId: pursuitId, postId: postId, interestId: "", contentUrl: "", thumbnailUrl: self.pursuitPhoto.image!, pursuitDescription: self.pursuitTitle.text, is_step: self.is_step, is_principle: self.is_principle, is_visible: 0, is_public: 0)
+//                    indicator.isHidden = true
+//
+//                    let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+//                    appDelegate.window = UIWindow()
+//                    appDelegate.window?.rootViewController = MainTabController()
+//                    appDelegate.window?.makeKeyAndVisible()
+//                default:
+//                    assert(false, "Not a valid post")
+//                }
+//            }
+//        }
     }
     
     @objc func handleDismiss(){
@@ -338,7 +339,7 @@ class CustomCreateView : UIViewController, InterestNameSelected, NVActivityIndic
         view.addSubview(currentNumber)
         view.addSubview(maxNumber)
         
-        alertView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 460)
+        alertView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 360)
         alertView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 10).isActive = true
         
         sendLabel.anchor(top: alertView.topAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: sendLabel.intrinsicContentSize.width, height: sendLabel.intrinsicContentSize.height)
@@ -357,7 +358,7 @@ class CustomCreateView : UIViewController, InterestNameSelected, NVActivityIndic
         cancelBackground.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 14, paddingRight: 0, width: 100, height: 50)
         cancelBackground.centerXAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
         dismissBackground.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: alertView.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        setupCollectionView()
+//        setupCollectionView()
         getInterestsNames()
         textViewDidChange(pursuitTitle)
     }

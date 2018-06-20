@@ -42,12 +42,14 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
     let cellId = "cellId"
     
     var followerArray = [Follower]()
+    var fakeFollowerArray = [#imageLiteral(resourceName: "samuel-l"), #imageLiteral(resourceName: "comment-4"), #imageLiteral(resourceName: "comment-5")]
     var followImage : [String?] = []
     
     let fullnameLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.init(25))
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Test"
         return label
     }()
     
@@ -55,6 +57,7 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Test"
         return label
     }()
     
@@ -91,6 +94,7 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = true
         label.textAlignment = .center
+        label.text = "5"
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(followersSelected))
         tap.numberOfTapsRequired = 1
@@ -117,6 +121,7 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = true
         label.textAlignment = .center
+        label.text = "5"
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(followersSelected))
         tap.numberOfTapsRequired = 1
@@ -149,7 +154,7 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         paragraphStyle.lineSpacing = 5
         paragraphStyle.paragraphSpacing = 5
         
-        let attrString = NSMutableAttributedString(string: "")
+        let attrString = NSMutableAttributedString(string: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent non neque nibh. Maecenas accumsan, neque vel sodales mollis, risus lorem iaculis justo, et convallis metus risus ac turpis.")
         attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         
         tv.attributedText = attrString
@@ -181,7 +186,7 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
     
     lazy var additionalFollowing : UILabel = {
         let label = UILabel()
-        label.text = ""
+        label.text = "2"
         label.isUserInteractionEnabled = true
         label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.init(25))
         
@@ -234,7 +239,7 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         if !followerArray.isEmpty {
             return followerArray.count
         } else {
-            return 1
+            return 3
         }
     }
     
@@ -252,6 +257,7 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: followId, for: indexPath) as! FollowingCells
+        cell.imageView.image = fakeFollowerArray[indexPath.item]
         
         if !followerArray.isEmpty {
             cell.follower = followerArray[indexPath.item]
