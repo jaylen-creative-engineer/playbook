@@ -48,9 +48,9 @@ class TopCardView: UIView {
     }
 }
 
-class HomeCellRectangleView : UIImageView {
+class HomeCellRectangleView : UIView {
     
-    var cornerRadius : CGFloat = 4
+    var cornerRadius : CGFloat = 8
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 5
     var shadowColor = UIColor.black

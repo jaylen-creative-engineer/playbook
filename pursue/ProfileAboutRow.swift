@@ -76,7 +76,6 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
     
     lazy var notificationImageView : UIImageView = {
        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "notification-bell").withRenderingMode(.alwaysTemplate)
         iv.tintColor = .white
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
