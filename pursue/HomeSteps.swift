@@ -65,9 +65,8 @@ class HomeSteps : UICollectionViewCell, UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: homeCellId, for: indexPath) as! HomeStepCells
-        cell.pursuitImage.image = UIImage(named: homeImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
-        cell.pursuitLabel.text = homePursuitDescriptions[indexPath.item]
-        cell.delegate = self
+//        cell.pursuitImage.image = UIImage(named: homeImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
+//        cell.pursuitLabel.text = homePursuitDescriptions[indexPath.item]
         return cell
     }
     

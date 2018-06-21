@@ -676,7 +676,7 @@ extension HomeRow : UICollectionViewDelegate, UICollectionViewDataSource {
         switch collectionView {
         case stepsCollection:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! HomeStepCells
-            cell.step = steps[indexPath.item]
+//            cell.step = steps[indexPath.item]
             return cell
         case principleCollection:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciplesCells

@@ -26,8 +26,44 @@ class HomePrinciplesCells : UICollectionViewCell {
     let principleLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.numberOfLines = 2
+        label.text = "Principle"
         return label
+    }()
+    
+    let principleDescription : UILabel = {
+       let label = UILabel()
+        label.text = "Have a vision to work towards"
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
+    }()
+    
+    let usernameLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Test"
+        label.font = UIFont.systemFont(ofSize: 10)
+        return label
+    }()
+    
+    let circleView : UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        view.layer.cornerRadius = 2
+        return view
+    }()
+    
+    let timeLabel : UILabel = {
+       let label = UILabel()
+        label.text = "00:24"
+        label.font = UIFont.systemFont(ofSize: 10)
+        return label
+    }()
+    
+    let photoBackground : HomeCellRectangleView = {
+        let iv = HomeCellRectangleView()
+        iv.layer.cornerRadius = 8
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.contentMode = .scaleAspectFill
+        return iv
     }()
     
     lazy var principleImage : UIImageView = {
@@ -40,8 +76,16 @@ class HomePrinciplesCells : UICollectionViewCell {
         iv.addGestureRecognizer(tapGesture)
         iv.addGestureRecognizer(longGesture)
         iv.isUserInteractionEnabled = true
-        iv.layer.cornerRadius = 4
+        iv.layer.cornerRadius = 8
         return iv
+    }()
+    
+    let optionButton : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "options").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.tintColor = .gray
+        return button
     }()
     
     @objc func handleHomeTap(){
@@ -50,18 +94,25 @@ class HomePrinciplesCells : UICollectionViewCell {
     @objc func handleHomeHold(){
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        principleLabel.sizeToFit()
-    }
-    
     func setupCardDetails(){
-        
+        addSubview(photoBackground)
         addSubview(principleImage)
         addSubview(principleLabel)
+        addSubview(principleDescription)
+        addSubview(usernameLabel)
+        addSubview(circleView)
+        addSubview(timeLabel)
+        addSubview(optionButton)
         
-        principleImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 90, height: 90)
-        principleLabel.anchor(top: topAnchor, left: principleImage.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 12, width: 0, height: 55)
+        photoBackground.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 30, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 150, height: 150)
+        principleImage.anchor(top: photoBackground.topAnchor, left: photoBackground.leftAnchor, bottom: photoBackground.bottomAnchor, right: photoBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        principleLabel.anchor(top: principleImage.bottomAnchor, left: principleImage.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: principleLabel.intrinsicContentSize.width, height: principleLabel.intrinsicContentSize.height)
+        principleDescription.anchor(top: principleLabel.bottomAnchor, left: principleLabel.leftAnchor, bottom: nil, right: photoBackground.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        usernameLabel.anchor(top: principleDescription.bottomAnchor, left: principleDescription.leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
+        circleView.anchor(top: nil, left: usernameLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 4, height: 4)
+        circleView.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
+        timeLabel.anchor(top: usernameLabel.topAnchor, left: circleView.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: timeLabel.intrinsicContentSize.width, height: timeLabel.intrinsicContentSize.height)
+        optionButton.anchor(top: principleImage.bottomAnchor, left: nil, bottom: nil, right: principleImage.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 4, width: 8, height: 16)
     }
     
     override init(frame: CGRect) {

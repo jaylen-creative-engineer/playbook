@@ -167,8 +167,8 @@ class SearchReturn : UITableViewCell, UICollectionViewDelegate, UICollectionView
         switch collectionView {
         case stepCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! HomeStepCells
-            cell.pursuitLabel.text = stepSampleImagesText[indexPath.item]
-            cell.pursuitImage.image = UIImage(named: stepSampleImagesNames[indexPath.item])
+//            cell.pursuitLabel.text = stepSampleImagesText[indexPath.item]
+//            cell.pursuitImage.image = UIImage(named: stepSampleImagesNames[indexPath.item])
 //            cell.step = step
             return cell
         case principleCollectionView:

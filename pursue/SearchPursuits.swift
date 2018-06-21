@@ -8,79 +8,60 @@
 
 import UIKit
 
-class SearchPursuits : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PursuitSelected {
+class SearchPursuits : UICollectionViewCell {
     
     var pursuitsDelegate : HomePursuitsRowDelegate?
     var accessHomeController : HomeContainer?
-    let homeCellId = "homeCellId"
-    
-    let rowLabel : UILabel = {
+
+    lazy var pursuitLabel : UILabel = {
         let label = UILabel()
-        label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
-        label.text = "Steps"
-        label.textAlignment = .left
+        label.numberOfLines = 2
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))
+        tapGesture.numberOfTapsRequired = 1
+        label.addGestureRecognizer(tapGesture)
+        label.textAlignment = .justified
         return label
     }()
     
-    let homeImageNames = ["movie-app", "messenger-app", "workout", "wim-hof", "meditation"]
-    let homePursuitDescriptions = ["Movie App", "Messenger App", "Gain 15 Pounds", "Wim Hof Breathing", "Guided Meditation"]
-    
-    let homePursuitsCollection : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        collectionView.isScrollEnabled = false
-        return collectionView
+    lazy var pursuitImage : UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.masksToBounds = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))
+        tapGesture.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tapGesture)
+        iv.isUserInteractionEnabled = true
+        iv.layer.cornerRadius = 4
+        return iv
     }()
     
-    func pursuitTapped() {
-        pursuitsDelegate?.pursuitClicked()
-    }
+    let cancelButton : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "cancel").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.contentMode = .scaleAspectFill
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     
-    func pursuitHeld() {
-        pursuitsDelegate?.pursuitHeld()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width, height: 105)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 12, 0, 12)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessHomeController?.handleChangeToDetail(viewType: "isPursuitDetail")
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: homeCellId, for: indexPath) as! HomeStepCells
-        cell.pursuitImage.image = UIImage(named: homeImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
-        cell.pursuitLabel.text = homePursuitDescriptions[indexPath.item]
-        cell.delegate = self
-        return cell
+    @objc func handleHomeTap(){
+        
     }
     
     func setupView() {
-        addSubview(rowLabel)
-        addSubview(homePursuitsCollection)
+        addSubview(pursuitImage)
+        addSubview(pursuitLabel)
+        addSubview(cancelButton)
         
-        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 20)
-        homePursuitsCollection.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 355)
+        pursuitImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 140, height: 90)
+        pursuitLabel.anchor(top: topAnchor, left: pursuitImage.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 8, paddingBottom: 0, paddingRight: 12, width: 0, height: 55)
+        cancelButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 15, height: 15)
+        cancelButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
-        
-        homePursuitsCollection.register(HomeStepCells.self, forCellWithReuseIdentifier: homeCellId)
-        homePursuitsCollection.delegate = self
-        homePursuitsCollection.dataSource = self
     }
     
     required init?(coder aDecoder: NSCoder) {

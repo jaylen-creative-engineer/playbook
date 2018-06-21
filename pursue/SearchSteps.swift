@@ -58,7 +58,6 @@ class SearchSteps : UICollectionViewCell, UICollectionViewDelegate, UICollection
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: homeCellId, for: indexPath) as! HomeStepCells
         if !steps.isEmpty {
             rowLabel.text = "Steps"
-            cell.step = steps[indexPath.item]
         }
         return cell
     }

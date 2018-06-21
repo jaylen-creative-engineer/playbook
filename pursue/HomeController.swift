@@ -17,6 +17,7 @@ class HomeController : UICollectionViewController {
     let cellId = "cellId"
     let labelId = "labelId"
     let pursuitsId = "pursuitsId"
+    let picksId = "picksId"
     var isImageView = true
     var isPursuitView = false
     var isPrinciplesView = false
@@ -42,7 +43,7 @@ class HomeController : UICollectionViewController {
     
     let searchBackground : UIButton = {
        let button = UIButton()
-        button.backgroundColor = UIColor.rgb(red: 200, green: 200, blue: 200)
+        button.backgroundColor = UIColor.rgb(red: 211, green: 211, blue: 211)
         button.layer.cornerRadius = 12
         return button
     }()
@@ -65,6 +66,7 @@ class HomeController : UICollectionViewController {
     
     func setupCollectionView(){
         collectionView?.register(HomePursuitsRow.self, forCellWithReuseIdentifier: pursuitsId)
+        collectionView?.register(HomePicksRow.self, forCellWithReuseIdentifier: picksId)
         collectionView?.backgroundColor = UIColor.white
         collectionView?.isScrollEnabled = true
     }
@@ -304,11 +306,29 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! HomePursuitsRow
-        return cell
+        
+        switch indexPath.item {
+        case 0:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! HomePursuitsRow
+            return cell
+        case 1:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: picksId, for: indexPath) as! HomePicksRow
+            return cell
+        default:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! HomePursuitsRow
+            return cell
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 370)
+        switch indexPath.item {
+        case 0:
+            return CGSize(width: view.frame.width, height: 370)
+        case 1:
+            return CGSize(width: view.frame.width, height: 430)
+        default:
+            return CGSize(width: view.frame.width, height: 370)
+        }
     }
 }

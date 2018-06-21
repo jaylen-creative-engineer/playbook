@@ -15,7 +15,6 @@ class HomePursuitsCells : UICollectionViewCell {
         let iv = HomeCellRectangleView()
         iv.layer.cornerRadius = 8
         iv.translatesAutoresizingMaskIntoConstraints = false
-//        iv.layer.masksToBounds = true
         iv.contentMode = .scaleAspectFill
         return iv
     }()

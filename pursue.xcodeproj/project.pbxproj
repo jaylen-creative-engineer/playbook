@@ -34,6 +34,7 @@
 		E6234E9C2044F93F00A57A2C /* AVPlayer+isPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6234E9B2044F93F00A57A2C /* AVPlayer+isPlaying.swift */; };
 		E6234E9E2044F96B00A57A2C /* AssetSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6234E9D2044F96B00A57A2C /* AssetSelectionViewController.swift */; };
 		E6235EA81F94208F00BF1FDE /* PostComments.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6235EA71F94208F00BF1FDE /* PostComments.swift */; };
+		E627283720DC453E00860707 /* HomePicksRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E627283620DC453E00860707 /* HomePicksRow.swift */; };
 		E628F2EA2035D978002FE8CF /* RecentSearchUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E628F2E92035D978002FE8CF /* RecentSearchUsers.swift */; };
 		E628F2EC2035D980002FE8CF /* RecentSearchPursuits.swift in Sources */ = {isa = PBXBuildFile; fileRef = E628F2EB2035D980002FE8CF /* RecentSearchPursuits.swift */; };
 		E628F2EE2035D98A002FE8CF /* RecentSearchPrinciples.swift in Sources */ = {isa = PBXBuildFile; fileRef = E628F2ED2035D98A002FE8CF /* RecentSearchPrinciples.swift */; };
@@ -198,6 +199,7 @@
 		E6234E9B2044F93F00A57A2C /* AVPlayer+isPlaying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayer+isPlaying.swift"; sourceTree = "<group>"; };
 		E6234E9D2044F96B00A57A2C /* AssetSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetSelectionViewController.swift; sourceTree = "<group>"; };
 		E6235EA71F94208F00BF1FDE /* PostComments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostComments.swift; sourceTree = "<group>"; };
+		E627283620DC453E00860707 /* HomePicksRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePicksRow.swift; sourceTree = "<group>"; };
 		E628F2E92035D978002FE8CF /* RecentSearchUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchUsers.swift; sourceTree = "<group>"; };
 		E628F2EB2035D980002FE8CF /* RecentSearchPursuits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchPursuits.swift; sourceTree = "<group>"; };
 		E628F2ED2035D98A002FE8CF /* RecentSearchPrinciples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchPrinciples.swift; sourceTree = "<group>"; };
@@ -580,6 +582,7 @@
 			isa = PBXGroup;
 			children = (
 				E65F1E511FCCBE5000BD850E /* HomeController.swift */,
+				E627283620DC453E00860707 /* HomePicksRow.swift */,
 				E6DF9EC4203CA9F2005C86DB /* HomeContainer.swift */,
 				E6D571422010FD7D008A37CC /* HomeInterestsCells.swift */,
 				E617BB1C1FD8A350008B2EA1 /* HomeSteps.swift */,
@@ -942,6 +945,7 @@
 				E6299BA1207713EC00B59061 /* NameCell.swift in Sources */,
 				E639807A204B624A0049A71B /* StepsPage.swift in Sources */,
 				E62C1C06205113AA00781FF1 /* Follower.swift in Sources */,
+				E627283720DC453E00860707 /* HomePicksRow.swift in Sources */,
 				E621B9921FE048FE007324E2 /* PursuitPrinciple.swift in Sources */,
 				E6DF9EC5203CA9F3005C86DB /* HomeContainer.swift in Sources */,
 				E6CB1B4B205789DB00B5D2ED /* ProfilePursuit.swift in Sources */,
