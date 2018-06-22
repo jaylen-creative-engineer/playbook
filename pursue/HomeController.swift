@@ -15,8 +15,10 @@ import Firebase
 class HomeController : UICollectionViewController {
     
     let cellId = "cellId"
-    let labelId = "labelId"
     let pursuitsId = "pursuitsId"
+    let recommendId = "recommendId"
+    let peopleId = "peopleId"
+    let interestId = "interestId"
     let picksId = "picksId"
     var isImageView = true
     var isPursuitView = false
@@ -67,6 +69,9 @@ class HomeController : UICollectionViewController {
     func setupCollectionView(){
         collectionView?.register(HomePursuitsRow.self, forCellWithReuseIdentifier: pursuitsId)
         collectionView?.register(HomePicksRow.self, forCellWithReuseIdentifier: picksId)
+        collectionView?.register(HomePursuitsLists.self, forCellWithReuseIdentifier: recommendId)
+        collectionView?.register(HomePeople.self, forCellWithReuseIdentifier: peopleId)
+        collectionView?.register(HomeInterestRow.self, forCellWithReuseIdentifier: interestId)
         collectionView?.backgroundColor = UIColor.white
         collectionView?.isScrollEnabled = true
     }
@@ -314,6 +319,15 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: picksId, for: indexPath) as! HomePicksRow
             return cell
+        case 2:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: recommendId, for: indexPath) as! HomePursuitsLists
+            return cell
+        case 3:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! HomePeople
+            return cell
+        case 4:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: interestId, for: indexPath) as! HomeInterestRow
+            return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! HomePursuitsRow
             return cell
@@ -326,6 +340,12 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
         case 0:
             return CGSize(width: view.frame.width, height: 370)
         case 1:
+            return CGSize(width: view.frame.width, height: 430)
+        case 2:
+            return CGSize(width: view.frame.width, height: 630)
+        case 3:
+            return CGSize(width: view.frame.width, height: 240)
+        case 4:
             return CGSize(width: view.frame.width, height: 430)
         default:
             return CGSize(width: view.frame.width, height: 370)
