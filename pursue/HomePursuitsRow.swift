@@ -13,7 +13,7 @@ class HomePursuitsRow : UICollectionViewCell {
     let rowLabel : UILabel = {
        let label = UILabel()
         label.text = "My Pursuits."
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
     

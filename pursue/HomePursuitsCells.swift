@@ -37,6 +37,7 @@ class HomePursuitsCells : UICollectionViewCell {
        let label = UILabel()
         label.text = "Test"
         label.font = UIFont.systemFont(ofSize: 10)
+        label.textColor = .gray
         return label
     }()
     
@@ -51,6 +52,7 @@ class HomePursuitsCells : UICollectionViewCell {
        let label = UILabel()
         label.text = "2 Days"
         label.font = UIFont.systemFont(ofSize: 10)
+        label.textColor = .gray
         return label
     }()
     

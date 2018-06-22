@@ -17,6 +17,7 @@ class HomeController : UICollectionViewController {
     let cellId = "cellId"
     let pursuitsId = "pursuitsId"
     let recommendId = "recommendId"
+    let challengeId = "challengeId"
     let peopleId = "peopleId"
     let interestId = "interestId"
     let picksId = "picksId"
@@ -72,6 +73,7 @@ class HomeController : UICollectionViewController {
         collectionView?.register(HomePursuitsLists.self, forCellWithReuseIdentifier: recommendId)
         collectionView?.register(HomePeople.self, forCellWithReuseIdentifier: peopleId)
         collectionView?.register(HomeInterestRow.self, forCellWithReuseIdentifier: interestId)
+        collectionView?.register(HomeChallengeRow.self, forCellWithReuseIdentifier: challengeId)
         collectionView?.backgroundColor = UIColor.white
         collectionView?.isScrollEnabled = true
     }
@@ -307,7 +309,7 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-       return 5
+       return 6
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -328,6 +330,9 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
         case 4:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: interestId, for: indexPath) as! HomeInterestRow
             return cell
+        case 5:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! HomeChallengeRow
+            return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! HomePursuitsRow
             return cell
@@ -347,6 +352,8 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
             return CGSize(width: view.frame.width, height: 240)
         case 4:
             return CGSize(width: view.frame.width, height: 430)
+        case 5:
+            return CGSize(width: view.frame.width, height: 370)
         default:
             return CGSize(width: view.frame.width, height: 370)
         }

@@ -13,7 +13,7 @@ class HomePursuitsLists : UICollectionViewCell {
     let rowLabel : UILabel = {
         let label = UILabel()
         label.text = "Pursuits You May Like."
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
     

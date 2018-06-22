@@ -17,7 +17,7 @@ class HomeStepCells : UICollectionViewCell {
     
     let stepLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont.boldSystemFont(ofSize: 12)
         label.text = "Step"
         return label
     }()
@@ -34,6 +34,7 @@ class HomeStepCells : UICollectionViewCell {
         let label = UILabel()
         label.text = "Test"
         label.font = UIFont.systemFont(ofSize: 10)
+        label.textColor = .lightGray
         return label
     }()
     
@@ -47,6 +48,7 @@ class HomeStepCells : UICollectionViewCell {
     let timeLabel : UILabel = {
         let label = UILabel()
         label.text = "00:24"
+        label.textColor = .lightGray
         label.font = UIFont.systemFont(ofSize: 10)
         return label
     }()

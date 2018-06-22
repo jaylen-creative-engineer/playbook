@@ -1,5 +1,5 @@
 //
-//  HomePursuitsListCells.swift
+//  HomeChallengesCell.swift
 //  pursue
 //
 //  Created by Jaylen Sanders on 6/21/18.
@@ -8,13 +8,13 @@
 
 import UIKit
 
-class HomePursuitsListCells : UICollectionViewCell {
+
+class HomeChallengesCell : UICollectionViewCell {
     
     let photoBackground : HomeCellRectangleView = {
         let iv = HomeCellRectangleView()
         iv.layer.cornerRadius = 8
         iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.contentMode = .scaleAspectFill
         return iv
     }()
     
@@ -28,15 +28,15 @@ class HomePursuitsListCells : UICollectionViewCell {
     
     let detailLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 18)
-        label.numberOfLines = 2
+        label.text = "Have a vision to work towards"
+        label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
     
     let usernameLabel : UILabel = {
         let label = UILabel()
         label.text = "Test"
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont.systemFont(ofSize: 10)
         label.textColor = .gray
         return label
     }()
@@ -50,17 +50,9 @@ class HomePursuitsListCells : UICollectionViewCell {
     
     let daysLabel : UILabel = {
         let label = UILabel()
-        label.text = "24 Days"
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.text = "2 Days"
+        label.font = UIFont.systemFont(ofSize: 10)
         label.textColor = .gray
-        return label
-    }()
-    
-    let costLabel : UILabel = {
-       let label = UILabel()
-        label.text = "$50.00"
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = .blue
         return label
     }()
     
@@ -72,6 +64,13 @@ class HomePursuitsListCells : UICollectionViewCell {
         return button
     }()
     
+    let seperatorLine : UIView = {
+       let view = UIView()
+        view.backgroundColor = .white
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     func setupView(){
         addSubview(photoBackground)
         addSubview(photo)
@@ -79,18 +78,20 @@ class HomePursuitsListCells : UICollectionViewCell {
         addSubview(usernameLabel)
         addSubview(circleView)
         addSubview(daysLabel)
-        addSubview(costLabel)
         addSubview(optionButton)
+        addSubview(seperatorLine)
         
-        photoBackground.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 210, height: 130)
+        photoBackground.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 210, height: 130)
         photo.anchor(top: photoBackground.topAnchor, left: photoBackground.leftAnchor, bottom: photoBackground.bottomAnchor, right: photoBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        detailLabel.anchor(top: photo.topAnchor, left: photo.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 90, height: 50)
-        usernameLabel.anchor(top: detailLabel.bottomAnchor, left: detailLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
+        detailLabel.anchor(top: photo.bottomAnchor, left: photo.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: detailLabel.intrinsicContentSize.width, height: detailLabel.intrinsicContentSize.height)
+        usernameLabel.anchor(top: detailLabel.bottomAnchor, left: detailLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
         circleView.anchor(top: nil, left: usernameLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 4, height: 4)
         circleView.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
         daysLabel.anchor(top: usernameLabel.topAnchor, left: circleView.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: daysLabel.intrinsicContentSize.width, height: daysLabel.intrinsicContentSize.height)
-        costLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: costLabel.intrinsicContentSize.width, height: costLabel.intrinsicContentSize.height)
-         optionButton.anchor(top: photo.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 8, height: 16)
+        optionButton.anchor(top: photo.bottomAnchor, left: nil, bottom: nil, right: photo.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 4, width: 8, height: 16)
+        seperatorLine.anchor(top: photo.topAnchor, left: nil, bottom: photo.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 2.5, height: 0)
+        seperatorLine.centerXAnchor.constraint(equalTo: photo.centerXAnchor).isActive = true
+        
     }
     
     override init(frame: CGRect) {
@@ -102,3 +103,4 @@ class HomePursuitsListCells : UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+

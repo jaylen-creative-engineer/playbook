@@ -25,7 +25,7 @@ class HomePrinciplesCells : UICollectionViewCell {
     
     let principleLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont.boldSystemFont(ofSize: 12)
         label.text = "Principle"
         return label
     }()
@@ -41,6 +41,7 @@ class HomePrinciplesCells : UICollectionViewCell {
         let label = UILabel()
         label.text = "Test"
         label.font = UIFont.systemFont(ofSize: 10)
+        label.textColor = .lightGray
         return label
     }()
     
@@ -55,6 +56,7 @@ class HomePrinciplesCells : UICollectionViewCell {
        let label = UILabel()
         label.text = "00:24"
         label.font = UIFont.systemFont(ofSize: 10)
+        label.textColor = .lightGray
         return label
     }()
     
