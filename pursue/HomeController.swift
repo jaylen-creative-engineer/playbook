@@ -76,6 +76,7 @@ class HomeController : UICollectionViewController {
         collectionView?.register(HomeChallengeRow.self, forCellWithReuseIdentifier: challengeId)
         collectionView?.backgroundColor = UIColor.white
         collectionView?.isScrollEnabled = true
+        collectionView?.showsVerticalScrollIndicator = false
     }
     
     override func viewDidLoad() {

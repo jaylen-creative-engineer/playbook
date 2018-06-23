@@ -1,18 +1,18 @@
 //
-//  ProfilePursuit.swift
+//  ProfilePrinciples.swift
 //  pursue
 //
-//  Created by Jaylen Sanders on 3/13/18.
+//  Created by Jaylen Sanders on 6/22/18.
 //  Copyright © 2018 Glory. All rights reserved.
 //
 
 import UIKit
 
-class ProfilePursuit : UICollectionViewCell {
+class ProfilePrinciples : UICollectionViewCell {
     
     let rowLabel : UILabel = {
         let label = UILabel()
-        label.text = "Pursuits."
+        label.text = "Principles."
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
@@ -28,7 +28,7 @@ class ProfilePursuit : UICollectionViewCell {
     
     let cellId = "cellId"
     
-    let imageName = [#imageLiteral(resourceName: "health")]
+    let imageName = "788572ee949285fae33dca5d846a4664"
     
     let collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -52,11 +52,11 @@ class ProfilePursuit : UICollectionViewCell {
         rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
         underlineView.anchor(top: nil, left: nil, bottom: rowLabel.bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 48, height: 2)
         showAllButton.anchor(top: nil, left: underlineView.leftAnchor, bottom: underlineView.topAnchor, right: underlineView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
-        collectionView.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 280)
+        collectionView.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 320)
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(ProfilePursuitCells.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(ProfilePrincipleCells.self, forCellWithReuseIdentifier: cellId)
     }
     
     override init(frame: CGRect) {
@@ -70,11 +70,11 @@ class ProfilePursuit : UICollectionViewCell {
     
 }
 
-extension ProfilePursuit : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ProfilePrinciples : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfilePursuitCells
-        cell.photo.image = #imageLiteral(resourceName: "health")
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfilePrincipleCells
+        cell.principleImage.image = UIImage(named: imageName)
         return cell
     }
     
@@ -87,6 +87,6 @@ extension ProfilePursuit : UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 230, height: 255)
+        return CGSize(width: 160, height: 300)
     }
 }

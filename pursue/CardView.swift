@@ -14,7 +14,7 @@ class CardView: UIView {
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 2.5
     var shadowColor = UIColor.black
-    var shadowOpacity : CGFloat = 0.2
+    var shadowOpacity : CGFloat = 0.4
     
     override func layoutSubviews() {
         super.layoutSubviews()

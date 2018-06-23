@@ -12,20 +12,12 @@ import Firebase
 import ParallaxHeader
 
 class ProfileController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
-        
-    let cellId = "cellId"
-    let secondaryId = "secondaryId"
-    let customRowId = "customRowId"
+    
     let peopleId = "peopleId"
-    let principleId = "principleId"
-    let exerciseId = "exerciseId"
-    let categoryId = "categoryId"
     let pursuitsId = "pursuitsId"
-    let postId = "postId"
-    let addedId = "addedId"
+    let principleId = "principleId"
     let headerId = "headerId"
-    let discussionId = "discussionId"
-    let parallaxId = "parallaxId"
+    let stepId = "stepId"
     
     lazy var optionButton : UIButton = {
         let button = UIButton()
@@ -52,13 +44,6 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         return iv
     }()
     
-    let imageView : CustomImageView = {
-        let iv = CustomImageView()
-        iv.clipsToBounds = true
-        iv.contentMode = .scaleAspectFill
-        iv.image = #imageLiteral(resourceName: "animals").withRenderingMode(.alwaysOriginal)
-        return iv
-    }()
     
     let backgroundFill = UIView()
     var user : User?
@@ -66,31 +51,19 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     var followers : [Follower]?
     let profileService = ProfileServices()
     
-    private func setupTopBar(){
-        view.addSubview(topBackground)
-        topBackground.addSubview(optionButton)
-        
-        topBackground.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 30, height: 30)
-        optionButton.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: optionButton.intrinsicContentSize.width, height: optionButton.intrinsicContentSize.height)
-        optionButton.centerXAnchor.constraint(equalTo: topBackground.centerXAnchor).isActive = true
-        optionButton.centerYAnchor.constraint(equalTo: topBackground.centerYAnchor).isActive = true
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tabBarController?.navigationController?.navigationBar.isHidden = true
         collectionView?.register(ProfileAboutRow.self, forCellWithReuseIdentifier: peopleId)
+        collectionView?.register(ProfilePrinciples.self, forCellWithReuseIdentifier: principleId)
+        collectionView?.register(ProfileSteps.self, forCellWithReuseIdentifier: stepId)
+        collectionView?.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(ProfilePursuit.self, forCellWithReuseIdentifier: pursuitsId)
         collectionView?.backgroundColor = .white
-        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
+        collectionView?.contentInset = UIEdgeInsetsMake(-44, 0, 105, 0)
         collectionView?.showsVerticalScrollIndicator = false
-        collectionView?.parallaxHeader.view = imageView
-        collectionView?.parallaxHeader.height = view.frame.height / 2
-        collectionView?.parallaxHeader.minimumHeight = 0
-        collectionView?.parallaxHeader.mode = .topFill
-        
-        setupTopBar()
         getUser()
     }
     
@@ -101,9 +74,9 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
                 self.followers = user.followees
                 self.pursuits = user.pursuits
                 
-                self.user = user
-                guard let photoUrl = user.photoUrl else { return }
-                self.imageView.loadImage(urlString: photoUrl)
+//                self.user = user
+//                guard let photoUrl = user.photoUrl else { return }
+//                self.imageView.loadImage(urlString: photoUrl)
                 self.collectionView?.reloadData()
             }
         }
@@ -160,19 +133,23 @@ extension ProfileController {
     
     // MARK: - Setup View
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.width, height: view.frame.height - 20)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! ProfileHeader
+        return cell
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 0:
-            if let bio = user?.bio {
-                let approximateWidthOfBio = view.frame.width - 28
-                let size = CGSize(width: approximateWidthOfBio, height: .infinity)
-                let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12)]
-                let estimatedFrame = NSString(string: bio).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-                return CGSize(width: view.frame.width, height: estimatedFrame.height + 120)
-            }
-            return CGSize(width: view.frame.width, height: 225)
+            return CGSize(width: view.frame.width, height: 280)
         case 1:
-            return CGSize(width: view.frame.width, height: 465)
+            return CGSize(width: view.frame.width, height: 405)
+        case 2:
+            return CGSize(width: view.frame.width, height: 365)
         default:
             return CGSize(width: view.frame.width, height: 465)
         }
@@ -183,24 +160,22 @@ extension ProfileController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return 3
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.item {
         case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! ProfileAboutRow
-            cell.accessProfileController = self
-//            cell.user = user
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuit
             return cell
         case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuit
-            cell.accessProfileController = self
-//            cell.user = user
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! ProfileSteps
+            return cell
+        case 2:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! ProfilePrinciples
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuit
-            cell.accessProfileController = self
 //            cell.user = user
             return cell
         }
