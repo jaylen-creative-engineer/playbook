@@ -41,6 +41,8 @@ class HomePicksRow : UICollectionViewCell {
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
+    
+    var accessHomeController : HomeController?
 
     func setupView(){
         let underlineView = UIView()
@@ -93,6 +95,17 @@ extension HomePicksRow : UICollectionViewDelegate, UICollectionViewDataSource, U
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.item {
+        case 0, 2, 4:
+            accessHomeController?.handleChangeToDetail(viewType: "isPrinciplesDetail")
+        case 1, 3:
+            accessHomeController?.handleChangeToDetail(viewType: "isStepDetail")
+        default:
+            accessHomeController?.handleChangeToDetail(viewType: "isStepDetail")
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

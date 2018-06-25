@@ -42,6 +42,8 @@ class HomeInterestRow : UICollectionViewCell {
         return collectionView
     }()
     
+    var accessHomeController : HomeController?
+    
     func setupView(){
         let underlineView = UIView()
         underlineView.backgroundColor = .black
@@ -88,6 +90,17 @@ extension HomeInterestRow : UICollectionViewDelegate, UICollectionViewDataSource
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciplesCells
             return cell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.item {
+        case 0, 2, 4:
+            accessHomeController?.handleChangeToDetail(viewType: "isPrinciplesDetail")
+        case 1, 3:
+            accessHomeController?.handleChangeToDetail(viewType: "isStepDetail")
+        default:
+            accessHomeController?.handleChangeToDetail(viewType: "isStepDetail")
         }
     }
     

@@ -25,6 +25,7 @@ class HomePursuitsRow : UICollectionViewCell {
         return button
     }()
     
+    var accessHomeController : HomeController?
     
     let cellId = "cellId"
     
@@ -76,6 +77,10 @@ extension HomePursuitsRow : UICollectionViewDelegate, UICollectionViewDataSource
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomePursuitsCells
         cell.photo.image = #imageLiteral(resourceName: "health")
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessHomeController?.handleChangeToDetail(viewType: "isPursuitDetail")
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

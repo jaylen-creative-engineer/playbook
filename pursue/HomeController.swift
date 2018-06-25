@@ -128,20 +128,20 @@ class HomeController : UICollectionViewController {
         handleChangeToDetail(viewType: "isPrinciplesDetail")
     }
     
+    func stepTapped(){
+        handleChangeToDetail(viewType: "isStepDetail")
+    }
+    
+    func pursuitTapped() {
+        handleChangeToDetail(viewType: "isPursuitDetail")
+    }
+    
     func principleHeld() {
         
     }
     
-    func homeRowImageTapped() {
-        handleChangeToDetail(viewType: "isImageDetail")
-    }
-    
     func homeRowImageHeld() {
         
-    }
-    
-    func pursuitClicked() {
-        handleChangeToDetail(viewType: "isPursuitDetail")
     }
     
     func showPeople(){
@@ -180,10 +180,10 @@ class HomeController : UICollectionViewController {
         case "isPursuitDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
             navigationController?.pushViewController(detail, animated: true)
-        case "isImageDetail":
+        case "isStepDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
             navigationController?.pushViewController(detail, animated: true)
-        case "isDiscussionDetail":
+        case "isChallengeDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
             navigationController?.pushViewController(detail, animated: true)
         default:
@@ -318,9 +318,11 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
         switch indexPath.item {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! HomePursuitsRow
+            cell.accessHomeController = self
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: picksId, for: indexPath) as! HomePicksRow
+            cell.accessHomeController = self
             return cell
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: recommendId, for: indexPath) as! HomePursuitsLists
@@ -330,9 +332,11 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
             return cell
         case 4:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: interestId, for: indexPath) as! HomeInterestRow
+            cell.accessHomeController = self
             return cell
         case 5:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! HomeChallengeRow
+            cell.accessHomeController = self
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! HomePursuitsRow

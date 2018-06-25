@@ -40,6 +40,8 @@ class HomeChallengeRow : UICollectionViewCell {
         return collectionView
     }()
     
+    var accessHomeController : HomeController?
+    
     func setupView(){
         let underlineView = UIView()
         underlineView.backgroundColor = .black
@@ -76,6 +78,10 @@ extension HomeChallengeRow : UICollectionViewDelegate, UICollectionViewDataSourc
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeChallengesCell
         cell.photo.image = #imageLiteral(resourceName: "health")
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessHomeController?.handleChangeToDetail(viewType: "isChallengeDetail")
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

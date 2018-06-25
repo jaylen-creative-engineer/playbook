@@ -111,6 +111,31 @@ class PursuitsDetailController : UICollectionViewController {
         return button
     }()
     
+    
+    lazy var backBackground : PlayView = {
+       let view = PlayView()
+        view.backgroundColor = .white
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(goBack))
+        tap.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tap)
+        return view
+    }()
+    
+    lazy var backIcon : UIImageView = {
+       let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "back-button").withRenderingMode(.alwaysOriginal)
+        iv.contentMode = .scaleAspectFill
+        iv.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(goBack))
+        tap.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tap)
+        return iv
+    }()
+    
     let topBackground : UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.init(white: 0.8, alpha: 0.3)
@@ -124,13 +149,13 @@ class PursuitsDetailController : UICollectionViewController {
     }
     
     func setupBackButton(){
-        view.addSubview(topBackground)
-        topBackground.addSubview(backButton)
-        
-        topBackground.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
-        backButton.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 25, height: 25)
-        backButton.centerXAnchor.constraint(equalTo: topBackground.centerXAnchor).isActive = true
-        backButton.centerYAnchor.constraint(equalTo: topBackground.centerYAnchor).isActive = true
+        view.addSubview(backBackground)
+        backBackground.addSubview(backIcon)
+
+        backBackground.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
+        backIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 18, height: 18)
+        backIcon.centerXAnchor.constraint(equalTo: backBackground.centerXAnchor).isActive = true
+        backIcon.centerYAnchor.constraint(equalTo: backBackground.centerYAnchor).isActive = true
         
     }
     
@@ -234,23 +259,23 @@ class PursuitsDetailController : UICollectionViewController {
         rightTapView.translatesAutoresizingMaskIntoConstraints = false
         
         let label = UILabel()
-        label.text = "Label"
+        label.text = "Travel through amazing heights"
+        label.numberOfLines = 2
         label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 32, weight: UIFont.Weight.init(25))
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         
         let subLabel = UILabel()
-        subLabel.text = "Simple way to add parallax header to UIScrollView or it's subclasses."
-        subLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        subLabel.text = "Building a tech company"
+        subLabel.font = UIFont.systemFont(ofSize: 12)
         subLabel.numberOfLines = 2
         subLabel.textColor = .white
         
-        let viewMoreLabel = UILabel()
-        viewMoreLabel.text = "Scroll Down For Details"
-        viewMoreLabel.textColor = .white
-        viewMoreLabel.font = UIFont.systemFont(ofSize: 16)
-        
-        let playBackground = CardView()
-        playBackground.layer.cornerRadius = 20
+        let timeLabel = UILabel()
+        timeLabel.text = "Day 3"
+        timeLabel.font = UIFont.systemFont(ofSize: 12)
+        timeLabel.textColor = .white
+
+        let playBackground = PlayView()
         playBackground.translatesAutoresizingMaskIntoConstraints = false
         playBackground.backgroundColor = .white
         playBackground.layer.masksToBounds = true
@@ -265,20 +290,20 @@ class PursuitsDetailController : UICollectionViewController {
         imageView.addSubview(rightTapView)
         imageView.addSubview(label)
         imageView.addSubview(subLabel)
+        imageView.addSubview(timeLabel)
         imageView.addSubview(playBackground)
         imageView.addSubview(playIcon)
-        imageView.addSubview(viewMoreLabel)
         
         leftTapView.anchor(top: imageView.topAnchor, left: imageView.leftAnchor, bottom: imageView.bottomAnchor, right: imageView.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         rightTapView.anchor(top: imageView.topAnchor, left: imageView.centerXAnchor, bottom: imageView.bottomAnchor, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        label.anchor(top: leftTapView.centerYAnchor, left: leftTapView.leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: label.intrinsicContentSize.width, height: label.intrinsicContentSize.height)
-        subLabel.anchor(top: label.bottomAnchor, left: label.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 0, height: 40)
-        playBackground.anchor(top: subLabel.bottomAnchor, left: subLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
-        playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
+        label.anchor(top: leftTapView.centerYAnchor, left: leftTapView.leftAnchor, bottom: nil, right: imageView.centerXAnchor, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+        subLabel.anchor(top: label.bottomAnchor, left: label.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 0, height: subLabel.intrinsicContentSize.height)
+        timeLabel.anchor(top: subLabel.bottomAnchor, left: subLabel.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: timeLabel.intrinsicContentSize.height)
+        playBackground.anchor(top: timeLabel.bottomAnchor, left: timeLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
+        playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 12, height: 12)
         playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true
         playIcon.centerYAnchor.constraint(equalTo: playBackground.centerYAnchor).isActive = true
-        viewMoreLabel.anchor(top: playBackground.bottomAnchor, left: playBackground.leftAnchor, bottom: nil, right: nil, paddingTop: 84, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: viewMoreLabel.intrinsicContentSize.width, height: viewMoreLabel.intrinsicContentSize.height)
-        
+       
         
         collectionView?.parallaxHeader.view = imageView
         collectionView?.parallaxHeader.height = view.frame.height
