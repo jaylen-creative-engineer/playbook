@@ -13,140 +13,12 @@ protocol MessageDelegate {
     func goBack()
 }
 
-class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    var isAboutView = true
-    var isSavedView = false
-    var isToolsView = false
-    var isTeamView = false
-    var isNextView = false
-    var isStepsView = false
-    var isChallenge = false
-    
-    var pursuitsDetailController : PursuitsDetailController?
-    var messageDelegate : MessageDelegate?
-    
-    let headerId = "headerId"
-    let followId = "followId"
-    let bottomDividerView = UIView()
-    
-    let aboutLabelUnderline : UIView = {
-        let view = UIView()
-        view.backgroundColor = .black
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.masksToBounds = true
-        return view
-    }()
-    
-    let stepsLabelUnderline : UIView = {
-        let view = UIView()
-        view.backgroundColor = .black
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.masksToBounds = true
-        return view
-    }()
-    
-    let discusionLabelUnderline : UIView = {
-        let view = UIView()
-        view.backgroundColor = .black
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.masksToBounds = true
-        return view
-    }()
-    
-    let savedLabelUnderline : UIView = {
-        let view = UIView()
-        view.backgroundColor = .black
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.masksToBounds = true
-        return view
-    }()
-    
-    let principleLabelUnderline : UIView = {
-        let view = UIView()
-        view.backgroundColor = .black
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.masksToBounds = true
-        return view
-    }()
-    
-    lazy var likeIcon : UIButton = {
-        let button = UIButton()
-        button.contentMode = .scaleAspectFill
-        button.setImage(#imageLiteral(resourceName: "like_selected").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(toggleLike), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var commentIcon : UIButton = {
-        let button = UIButton()
-        button.contentMode = .scaleAspectFill
-        button.setImage(#imageLiteral(resourceName: "comment").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.tintColor = .gray
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(toggleComment), for: .touchUpInside)
-        return button
-    }()
-    
-    let likeCounter : UILabel = {
-        let label = UILabel()
-        label.text = "132"
-        label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    lazy var saveIcon : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "add").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.contentMode = .scaleAspectFill
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(toggleSave), for: .touchUpInside)
-        return button
-    }()
-    
-    let postLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Wonder Woman"
-        label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight(rawValue: 25))
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    lazy var optionButton : UIButton = {
-        let button = UIButton()
-        button.setTitle("•••", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        button.addTarget(self, action: #selector(handleOptions), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var postDescription : UITextView = {
-        let tv = UITextView()
-        tv.delegate = self
-        tv.translatesAutoresizingMaskIntoConstraints = false
-        tv.font = UIFont.systemFont(ofSize: 14)
-        tv.isScrollEnabled = false
-        tv.isUserInteractionEnabled = false
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 5
-        let label = UILabel()
-        label.numberOfLines = 0
-        
-        let attrString = NSMutableAttributedString(string: "")
-        attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
-        
-        tv.attributedText = attrString
-        return tv
-    }()
+class PursuitsDetailHeader : UICollectionViewCell {
     
     let usernameLabel : UILabel = {
         let label = UILabel()
-        label.text = "Jubilee"
-        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight(rawValue: 25))
+        label.text = "Versace"
+        label.font = UIFont.boldSystemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -154,192 +26,145 @@ class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UIC
     lazy var userPhoto : UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "samuel-l")
-        iv.layer.cornerRadius = 25
+        iv.layer.cornerRadius = 20
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         return iv
     }()
     
-    let collectionView : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.isScrollEnabled = false
-        return collectionView
+    let fullnameLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Versace"
+        label.font = UIFont.systemFont(ofSize: 10)
+        return label
     }()
     
-    let scrollView = UIScrollView()
-
-    @objc func dismissView(){
-        messageDelegate?.goBack()
-    }
+    let likeButton : UIButton = {
+       let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "thumbs-up").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.tintColor = .gray
+        return button
+    }()
     
-    @objc func handleOptions(){
-        pursuitsDetailController?.showStepOptions()
-    }
+    let likeLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Like"
+        label.textColor = .gray
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
+    }()
     
-    @objc func handleChat() {
-        messageDelegate?.handleMessage(for: self)
-    }
-
+    let saveButton : UIButton = {
+       let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "bookmark").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.tintColor = .gray
+        return button
+    }()
     
-    var isSaved = false
-    var isLiked = false
-    var isComment = true
+    let saveLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Save"
+        label.textColor = .gray
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
+    }()
     
-    @objc func toggleSave(){
-        isSaved = !isSaved
-        
-        if isSaved == true {
-            saveIcon.tintColor = .black
-        } else {
-            saveIcon.tintColor = .gray
-        }
-    }
+    let addButton : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "add").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.tintColor = .gray
+        return button
+    }()
     
-    @objc func toggleComment(){
-        isComment = !isComment
-        
-        if isComment == true {
-            pursuitsDetailController?.containerView.isHidden = false
-            commentIcon.tintColor = .black
-            let indexPath = IndexPath(item: 2, section: 0)
-            collectionView.scrollToItem(at: indexPath, at: [], animated: true)
-        } else {
-            pursuitsDetailController?.containerView.isHidden = true
-            commentIcon.tintColor = .gray
-        }
-    }
+    let contributeLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Contribute"
+        label.textColor = .gray
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
+    }()
     
-    @objc func toggleLike(){
-        isLiked = !isLiked
-        if isLiked == true {
-            likeIcon.tintColor = .black
-            likeCounter.textColor = .black
-        } else {
-            likeIcon.tintColor = .gray
-            likeCounter.textColor = .gray
-        }
-    }
+    let commentButton : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "highlight").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.tintColor = .gray
+        return button
+    }()
     
-    let cellId = "cellId"
-    let stepsId = "stepsId"
-    let principleId = "principleId"
-    let commentsId = "commentsId"
+    let commentLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Comment"
+        label.textColor = .gray
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
+    }()
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
-    }
+    let shareButton : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "share").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.tintColor = .gray
+        return button
+    }()
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch indexPath.item {
-        case 0:
-            return CGSize(width: frame.width, height: 390)
-        case 1:
-            return CGSize(width: frame.width, height: 220)
-        case 2:
-            return CGSize(width: frame.width, height: 330)
-        case 3:
-            let approximateWidthOfCell = frame.width
-            let size = CGSize(width: approximateWidthOfCell, height: .infinity)
-            let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)]
-            let estimatedFrame = NSString(string: postDescription.text).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-            return CGSize(width: frame.width, height: estimatedFrame.height + 80)
-        default:
-            let approximateWidthOfCell = frame.width
-            let size = CGSize(width: approximateWidthOfCell, height: .infinity)
-            let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)]
-            let estimatedFrame = NSString(string: postDescription.text).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-            return CGSize(width: frame.width, height: estimatedFrame.height + 80)
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.item {
-        case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepsId, for: indexPath) as! DetailSteps
-            return cell
-        case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: followId, for: indexPath) as! FollowPursuit
-            return cell
-        case 2:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! PursuitPrinciple
-            return cell
-        case 3:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentsId, for: indexPath) as! PostComments
-            return cell
-        default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentsId, for: indexPath) as! PostComments
-            return cell
-        }
-    }
-    
-    let underlineView = UIView()
-
-    
-    func setupCollectionView(){
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        
-        collectionView.register(DetailSteps.self, forCellWithReuseIdentifier: stepsId)
-        collectionView.register(PursuitPrinciple.self, forCellWithReuseIdentifier: principleId)
-        collectionView.register(PostComments.self, forCellWithReuseIdentifier: commentsId)
-        collectionView.register(FollowPursuit.self, forCellWithReuseIdentifier: followId)
-        
-        addSubview(collectionView)
-        collectionView.anchor(top: underlineView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: frame.height)
-    }
-    
-    func setupPostDescription(){
-        addSubview(userPhoto)
-        addSubview(usernameLabel)
-        addSubview(postDescription)
-        
-        userPhoto.anchor(top: optionButton.bottomAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 50, height: 50)
-        
-        underlineView.backgroundColor = .clear
-        addSubview(underlineView)
-        
-        usernameLabel.anchor(top: userPhoto.topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
-        if !postDescription.text.isEmpty {
-            postDescription.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: userPhoto.leftAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 14, width: postDescription.intrinsicContentSize.width, height: postDescription.intrinsicContentSize.height)
-        }
-        if postDescription.text.isEmpty {
-            underlineView.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: userPhoto.rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.75)
-        } else {
-            underlineView.anchor(top: postDescription.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: userPhoto.rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.75)
-        }
-        
-        setupCollectionView()
-    }
+    let shareLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Share"
+        label.textColor = .gray
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
+    }()
     
     func setupEngagements(){
-        addSubview(likeIcon)
-        addSubview(commentIcon)
-        addSubview(likeCounter)
-        addSubview(saveIcon)
-
-        likeIcon.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 25, height: 20)
-        likeCounter.anchor(top: likeIcon.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: likeCounter.intrinsicContentSize.width, height: likeCounter.intrinsicContentSize.height)
-        likeCounter.centerXAnchor.constraint(equalTo: likeIcon.centerXAnchor).isActive = true
-        commentIcon.anchor(top: likeIcon.topAnchor, left: likeIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 32, paddingBottom: 0, paddingRight: 0, width: 24, height: 20)
-        saveIcon.anchor(top: topAnchor, left: commentIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 22, paddingLeft: 32, paddingBottom: 0, paddingRight: 0, width: 22, height: 21)
-        toggleLike()
-        toggleSave()
-        toggleComment()
-
-        addSubview(optionButton)
-        optionButton.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 44, height: optionButton.intrinsicContentSize.height)
-        setupPostDescription()
+        addSubview(likeButton)
+        addSubview(likeLabel)
+        addSubview(saveButton)
+        addSubview(saveLabel)
+        addSubview(addButton)
+        addSubview(contributeLabel)
+        addSubview(commentButton)
+        addSubview(commentLabel)
+        addSubview(shareButton)
+        addSubview(shareLabel)
+        
+        likeButton.anchor(top: userPhoto.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 28, paddingBottom: 0, paddingRight: 0, width: 24, height: 24)
+        likeLabel.anchor(top: likeButton.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: likeLabel.intrinsicContentSize.width, height: likeLabel.intrinsicContentSize.height)
+        likeLabel.centerXAnchor.constraint(equalTo: likeButton.centerXAnchor).isActive = true
+        
+        saveButton.anchor(top: userPhoto.bottomAnchor, left: likeButton.rightAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 48, paddingBottom: 0, paddingRight: 0, width: 16, height: 24)
+        saveLabel.anchor(top: saveButton.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: saveLabel.intrinsicContentSize.width, height: saveLabel.intrinsicContentSize.height)
+        saveLabel.centerXAnchor.constraint(equalTo: saveButton.centerXAnchor).isActive = true
+        
+        addButton.anchor(top: userPhoto.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 24, height: 24)
+        addButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        contributeLabel.anchor(top: saveLabel.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: contributeLabel.intrinsicContentSize.width, height: contributeLabel.intrinsicContentSize.height)
+        contributeLabel.centerXAnchor.constraint(equalTo: addButton.centerXAnchor).isActive = true
+        
+        commentButton.anchor(top: userPhoto.bottomAnchor, left: addButton.rightAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 58, paddingBottom: 0, paddingRight: 0, width: 22, height: 24)
+        commentLabel.anchor(top: saveLabel.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: commentLabel.intrinsicContentSize.width, height: commentLabel.intrinsicContentSize.height)
+        commentLabel.centerXAnchor.constraint(equalTo: commentButton.centerXAnchor).isActive = true
+        shareButton.anchor(top: userPhoto.bottomAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 28, height: 24)
+        shareLabel.anchor(top: saveLabel.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: shareLabel.intrinsicContentSize.width, height: shareLabel.intrinsicContentSize.height)
+        shareLabel.centerXAnchor.constraint(equalTo: shareButton.centerXAnchor).isActive = true
     }
     
+    func setupView(){
+        addSubview(userPhoto)
+        addSubview(usernameLabel)
+        addSubview(fullnameLabel)
+        
+        userPhoto.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
+        usernameLabel.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
+        fullnameLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: fullnameLabel.intrinsicContentSize.width, height: fullnameLabel.intrinsicContentSize.height)
+        setupEngagements()
+    }
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupEngagements()
-        textViewDidChange(postDescription)
+        setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -348,19 +173,3 @@ class PursuitsDetailHeader : UICollectionViewCell, UICollectionViewDelegate, UIC
     
 }
 
-extension PursuitsDetailHeader : UITextViewDelegate {
-    
-    func textViewDidChange(_ textView: UITextView) {
-        let size = CGSize(width: frame.width - 24, height: .infinity)
-        
-        // Calculating the height
-        
-        let estimatedSize = textView.sizeThatFits(size)
-        
-        textView.constraints.forEach { (constraint) in
-            if constraint.firstAttribute == .height {
-                constraint.constant = estimatedSize.height
-            }
-        }
-    }
-}

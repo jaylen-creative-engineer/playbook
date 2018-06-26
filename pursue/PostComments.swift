@@ -19,15 +19,19 @@ class PostComments: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     
     let postComments : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.isScrollEnabled = false
         return collectionView
     }()
     
     let commentsLabel : UILabel = {
         let label = UILabel()
-        label.text = "Comments"
-        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight(rawValue: 25))
+        label.text = "3 Comments."
+        label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
     
@@ -39,12 +43,11 @@ class PostComments: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     }()
     
     func setupView(){        
-        addSubview(downArrow)
         addSubview(commentsLabel)
         addSubview(postComments)
-        
+        postComments.backgroundColor = .blue
         commentsLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: commentsLabel.intrinsicContentSize.width, height: commentsLabel.intrinsicContentSize.height)
-        postComments.anchor(top: commentsLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 70)
+        postComments.anchor(top: commentsLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 300)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -56,28 +59,24 @@ class PostComments: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let approximateWidthOfCell = frame.width
-        let size = CGSize(width: approximateWidthOfCell, height: .infinity)
-        let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)]
-        let estimatedFrame = NSString(string: comments[indexPath.item]).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-        return CGSize(width: frame.width, height: estimatedFrame.height + 10)
+        return CGSize(width: frame.width, height: 275)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(12, 42, 0, 0)
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        return UIEdgeInsetsMake(12, 42, 0, 0)
+//    }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//        return 0
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+//        return 1
+//    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //        accessDetailController?.showUserProfile()

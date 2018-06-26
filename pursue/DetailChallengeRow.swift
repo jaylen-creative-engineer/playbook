@@ -1,18 +1,18 @@
 //
-//  DiscussionPursuitsView.swift
+//  DetailChallengeRow.swift
 //  pursue
 //
-//  Created by Jaylen Sanders on 12/9/17.
-//  Copyright © 2017 Glory. All rights reserved.
+//  Created by Jaylen Sanders on 6/25/18.
+//  Copyright © 2018 Glory. All rights reserved.
 //
 
 import UIKit
 
-class DetailSteps : UICollectionViewCell {
+class DetailChallengeRow : UICollectionViewCell {
     
     let rowLabel : UILabel = {
         let label = UILabel()
-        label.text = "Steps."
+        label.text = "Challenges."
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
@@ -28,7 +28,7 @@ class DetailSteps : UICollectionViewCell {
     
     let cellId = "cellId"
     
-    let imageName = "690dae66bfe860df34fc7a756b53c15d"
+    let imageName = [#imageLiteral(resourceName: "health")]
     
     let collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -39,6 +39,8 @@ class DetailSteps : UICollectionViewCell {
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
+    
+    var accessHomeController : HomeController?
     
     func setupView(){
         let underlineView = UIView()
@@ -52,11 +54,11 @@ class DetailSteps : UICollectionViewCell {
         rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
         underlineView.anchor(top: nil, left: nil, bottom: rowLabel.bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 48, height: 2)
         showAllButton.anchor(top: nil, left: underlineView.leftAnchor, bottom: underlineView.topAnchor, right: underlineView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
-        collectionView.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 320)
+        collectionView.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 300)
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(DetailStepCells.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(DetailChallengeCells.self, forCellWithReuseIdentifier: cellId)
     }
     
     override init(frame: CGRect) {
@@ -70,16 +72,20 @@ class DetailSteps : UICollectionViewCell {
     
 }
 
-extension DetailSteps : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension DetailChallengeRow : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! DetailStepCells
-        cell.stepImage.image = UIImage(named: imageName)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! DetailChallengeCells
+        cell.photo.image = #imageLiteral(resourceName: "health")
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessHomeController?.handleChangeToDetail(viewType: "isChallengeDetail")
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 12)
+        return UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -87,6 +93,6 @@ extension DetailSteps : UICollectionViewDelegate, UICollectionViewDataSource, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 160, height: 300)
+        return CGSize(width: 230, height: 255)
     }
 }

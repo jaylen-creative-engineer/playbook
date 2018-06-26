@@ -1,62 +1,58 @@
 //
-//  DiscussionPursuitsView.swift
+//  DetailSolutions.swift
 //  pursue
 //
-//  Created by Jaylen Sanders on 12/9/17.
-//  Copyright © 2017 Glory. All rights reserved.
+//  Created by Jaylen Sanders on 6/26/18.
+//  Copyright © 2018 Glory. All rights reserved.
 //
 
 import UIKit
 
-class DetailSteps : UICollectionViewCell {
+class DetailSolutions : UICollectionViewCell {
     
     let rowLabel : UILabel = {
         let label = UILabel()
-        label.text = "Steps."
+        label.text = "Responses."
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
     
-    let showAllButton : UIButton = {
+    let showMoreButton : UIButton = {
         let button = UIButton()
-        button.setTitle("Show All", for: .normal)
+        button.setTitle("SHOW 5+ MORE", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: UIFont.Weight.init(25))
         return button
     }()
     
-    
     let cellId = "cellId"
+    var accessHomeController : HomeController?
     
-    let imageName = "690dae66bfe860df34fc7a756b53c15d"
+    let pursuitImage = ["tumblr_nd45sgtlLa1r46py4o1_1280", "tumblr_mggs0iBUBz1r46py4o1_1280", "tumblr_mly4nqx7dF1r46py4o1_1280"]
+    let pursuitText = ["Learn to use Adobe", "From zero to director", "Graphic Design"]
     
     let collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
+        layout.scrollDirection = .vertical
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
-        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.isScrollEnabled = false
         return collectionView
     }()
     
     func setupView(){
-        let underlineView = UIView()
-        underlineView.backgroundColor = .black
-        
         addSubview(rowLabel)
-        addSubview(underlineView)
-        addSubview(showAllButton)
         addSubview(collectionView)
+        addSubview(showMoreButton)
         
         rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
-        underlineView.anchor(top: nil, left: nil, bottom: rowLabel.bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 48, height: 2)
-        showAllButton.anchor(top: nil, left: underlineView.leftAnchor, bottom: underlineView.topAnchor, right: underlineView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
-        collectionView.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 320)
-        
+        collectionView.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 340)
+    
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(DetailStepCells.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(DetailSolutionCells.self, forCellWithReuseIdentifier: cellId)
     }
     
     override init(frame: CGRect) {
@@ -70,23 +66,27 @@ class DetailSteps : UICollectionViewCell {
     
 }
 
-extension DetailSteps : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension DetailSolutions : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! DetailStepCells
-        cell.stepImage.image = UIImage(named: imageName)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! DetailSolutionCells
+        cell.photo.image = UIImage(named: pursuitImage[indexPath.item])
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 12)
+        return UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessHomeController?.handleChangeToDetail(viewType: "isPursuitDetail")
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 160, height: 300)
+        return CGSize(width: frame.width, height: 155)
     }
 }

@@ -30,6 +30,7 @@ class HomeController : UICollectionViewController {
     
     let backgroundFill = UIView()
     let homeServices = HomeServices()
+    let detailController = PursuitsDetailController()
     
     lazy var interestsBar : HomeInterestsBar = {
         let hb = HomeInterestsBar()
@@ -125,15 +126,22 @@ class HomeController : UICollectionViewController {
     // MARK: - Setup View
     
     func principleTapped() {
-        handleChangeToDetail(viewType: "isPrinciplesDetail")
+//        handleChangeToDetail(viewType: "isPrinciplesDetail")
+        detailController.standardView()
     }
     
     func stepTapped(){
-        handleChangeToDetail(viewType: "isStepDetail")
+//        handleChangeToDetail(viewType: "isStepDetail")
+        detailController.standardView()
     }
     
     func pursuitTapped() {
-        handleChangeToDetail(viewType: "isPursuitDetail")
+//        handleChangeToDetail(viewType: "isPursuitDetail")
+        detailController.standardView()
+    }
+    
+    func challengeTapped(){
+        detailController.challengeView()
     }
     
     func principleHeld() {
@@ -176,15 +184,19 @@ class HomeController : UICollectionViewController {
         switch viewType {
         case "isPrinciplesDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+            detail.standardView()
             navigationController?.pushViewController(detail, animated: true)
         case "isPursuitDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+            detail.standardView()
             navigationController?.pushViewController(detail, animated: true)
         case "isStepDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+            detail.standardView()
             navigationController?.pushViewController(detail, animated: true)
         case "isChallengeDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+            detail.challengeView()
             navigationController?.pushViewController(detail, animated: true)
         default:
             assert(false, "Not a valid view type")

@@ -10,39 +10,74 @@ import UIKit
 
 class DetailStepCells : UICollectionViewCell {
     
-    let nextButton : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = UIColor.init(white: 0.4, alpha: 0.05)
-        return button
-    }()
-    
-    let exerciseLabel : UILabel = {
+    let stepDescription : UILabel = {
         let label = UILabel()
-        label.text = "Design"
-        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight(rawValue: 25))
+        label.text = "Pushing through the tough terrain"
+        label.numberOfLines = 2
+        label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
     
-    let nextImage : UIImageView = {
-        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "trees")
+    let dayLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Day 5"
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
+    }()
+    
+    let timeLabel : UILabel = {
+        let label = UILabel()
+        label.text = "00:24"
+        label.textColor = .lightGray
+        label.font = UIFont.systemFont(ofSize: 10)
+        return label
+    }()
+    
+    let photoBackground : HomeCellRectangleView = {
+        let iv = HomeCellRectangleView()
+        iv.layer.cornerRadius = 8
+        iv.translatesAutoresizingMaskIntoConstraints = false
         iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        iv.layer.cornerRadius = 4
         return iv
     }()
     
-    func setupView(){
-        addSubview(nextImage)
-        addSubview(exerciseLabel)
-       
-        nextImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
-        exerciseLabel.anchor(top: nextImage.bottomAnchor, left: nextImage.leftAnchor, bottom: nil, right: nextImage.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: exerciseLabel.intrinsicContentSize.width, height: exerciseLabel.intrinsicContentSize.height)
+    lazy var stepImage : UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleHomeHold))
+        tapGesture.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tapGesture)
+        iv.addGestureRecognizer(longGesture)
+        iv.isUserInteractionEnabled = true
+        iv.layer.cornerRadius = 8
+        return iv
+    }()
+    
+    @objc func handleHomeTap(){
+    }
+    
+    @objc func handleHomeHold(){
+    }
+    
+    func setupCardDetails(){
+        addSubview(dayLabel)
+        addSubview(photoBackground)
+        addSubview(stepImage)
+        addSubview(stepDescription)
+        addSubview(timeLabel)
+        
+        dayLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: dayLabel.intrinsicContentSize.width, height: dayLabel.intrinsicContentSize.height)
+        photoBackground.anchor(top: dayLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 145, height: 210)
+        stepImage.anchor(top: photoBackground.topAnchor, left: photoBackground.leftAnchor, bottom: photoBackground.bottomAnchor, right: photoBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        stepDescription.anchor(top: photoBackground.bottomAnchor, left: photoBackground.leftAnchor, bottom: nil, right: photoBackground.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (stepDescription.intrinsicContentSize.height * 2) + 5)
+        timeLabel.anchor(top: stepDescription.bottomAnchor, left: stepDescription.leftAnchor, bottom: nil, right: nil, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: timeLabel.intrinsicContentSize.width, height: timeLabel.intrinsicContentSize.height)
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
+        setupCardDetails()
     }
     
     required init?(coder aDecoder: NSCoder) {

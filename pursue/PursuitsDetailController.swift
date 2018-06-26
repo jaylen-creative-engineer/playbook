@@ -16,59 +16,35 @@ class PursuitsDetailController : UICollectionViewController {
     let commentId = "commentId"
     let principleId = "principleId"
     let postId = "postId"
-    let relatedId = "relatedId"
-    let discussionId = "discussionId"
+    let teamId = "teamId"
     let pursuitId = "discussionPursuitId"
+    let solutionId = "solutionId"
     let cellId = "cellId"
-    let nextId = "nextId"
     let stepId = "stepId"
     let challengeId = "challengeId"
-    let followId = "followId"
     
-    var isImageView = false
-    var isPursuitView = false
-    var isPrinciplesView = false
-    var isDiscussionView = false
+    var isStandardView = false
+    var isChallengeView = false
     
     let homeService = HomeServices()
+    
+    func standardView(){
+        isStandardView = true
+        isChallengeView = false
         
-    func imageView(postId : String){
-        isImageView = true
-        isPursuitView = false
-        isPrinciplesView = false
-        isDiscussionView = false
-        
-        homeService.getPost(postId: postId) { (post) in
-            
-        }
-        
+//        homeService.getStep(stepId: stepId) { (step) in
+//
+//        }
         collectionView?.reloadData()
     }
     
-    func stepView(stepId : String){
-        isImageView = false
-        isPursuitView = true
-        isPrinciplesView = false
-        isDiscussionView = false
-        
-        homeService.getStep(stepId: stepId) { (step) in
-            
-        }
+    func challengeView(){
+        isStandardView = false
+        isChallengeView = true
         collectionView?.reloadData()
     }
     
-    func principleView(principleId : String){
-        isImageView = false
-        isPursuitView = false
-        isPrinciplesView = true
-        isDiscussionView = false
-        
-        homeService.getPrinciple(principleId: principleId) { (principle) in
-            
-        }
-        
-        collectionView?.reloadData()
-    }
+    
     
     @objc func goBack() {
         navigationController?.popViewController(animated: true)
@@ -234,10 +210,13 @@ class PursuitsDetailController : UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        collectionView?.register(TeamRow.self, forCellWithReuseIdentifier: teamId)
         collectionView?.register(PursuitPrinciple.self, forCellWithReuseIdentifier: principleId)
         collectionView?.register(PostComments.self, forCellWithReuseIdentifier: commentId)
-        collectionView?.register(DetailSteps.self, forCellWithReuseIdentifier: pursuitId)
+        collectionView?.register(DetailSteps.self, forCellWithReuseIdentifier: stepId)
         collectionView?.register(PursuitsDetailHeader.self, forCellWithReuseIdentifier: headerId)
+        collectionView?.register(DetailChallengeRow.self, forCellWithReuseIdentifier: challengeId)
+        collectionView?.register(DetailSolutions.self, forCellWithReuseIdentifier: solutionId)
         
         collectionView?.backgroundColor = .white
         collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
@@ -320,67 +299,57 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch true {
-        case isPrinciplesView:
-            return 4
-        case isPursuitView:
-            return 4
-        case isImageView:
-            return 1
+        case isStandardView:
+            return 6
+        case isChallengeView:
+            return 7
         default:
-             return 1
+             return 6
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch true {
-        case isPursuitView:
+        case isStandardView:
             switch indexPath.item {
             case 0:
-                let approximateWidthOfCell = view.frame.width
-                let size = CGSize(width: approximateWidthOfCell, height: .infinity)
-                let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)]
-                let estimatedFrame = NSString(string: postDescription).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-                return CGSize(width: view.frame.width, height: estimatedFrame.height + 80)
+                return CGSize(width: view.frame.width, height: 145)
             case 1:
                 return CGSize(width: view.frame.width, height: 390)
             case 2:
                 return CGSize(width: view.frame.width, height: 330)
             case 3:
-                let approximateWidthOfCell = view.frame.width
-                let size = CGSize(width: approximateWidthOfCell, height: .infinity)
-                let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)]
-                let estimatedFrame = NSString(string: postDescription).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-                return CGSize(width: view.frame.width, height: estimatedFrame.height + 80)
+                return CGSize(width: view.frame.width, height: 180)
+            case 4:
+                return CGSize(width: view.frame.width, height: 330)
+            case 5:
+                return CGSize(width: view.frame.width, height: 400)
             default:
                 assert(false, "Not a valid cell")
             }
-        case isPrinciplesView:
+        case isChallengeView:
             switch indexPath.item {
             case 0:
-                let approximateWidthOfCell = view.frame.width
-                let size = CGSize(width: approximateWidthOfCell, height: .infinity)
-                let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)]
-                let estimatedFrame = NSString(string: postDescription).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-                return CGSize(width: view.frame.width, height: estimatedFrame.height + 80)
+                return CGSize(width: view.frame.width, height: 145)
             case 1:
-                return CGSize(width: view.frame.width, height: 390)
+                return CGSize(width: view.frame.width, height: 420)
             case 2:
-                return CGSize(width: view.frame.width, height: 330)
+                return CGSize(width: view.frame.width, height: 390)
             case 3:
-                let approximateWidthOfCell = view.frame.width
-                let size = CGSize(width: approximateWidthOfCell, height: .infinity)
-                let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)]
-                let estimatedFrame = NSString(string: postDescription).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-                return CGSize(width: view.frame.width, height: estimatedFrame.height + 80)
+                return CGSize(width: view.frame.width, height: 330)
+            case 4:
+                return CGSize(width: view.frame.width, height: 180)
+            case 5:
+                return CGSize(width: view.frame.width, height: 330)
+            case 6:
+                return CGSize(width: view.frame.width, height: 400)
             default:
                 assert(false, "Not a valid cell")
             }
-        case isImageView:
-            return CGSize(width: view.frame.width, height: view.frame.height * 1.5)
         default:
-            return CGSize(width: view.frame.width, height: view.frame.height * 1.5)
+            assert(false, "Not a valid cell")
         }
-        return CGSize(width: view.frame.width, height: view.frame.height * 1.5)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -389,54 +358,60 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch true {
-        case isPrinciplesView:
+        case isStandardView:
             switch indexPath.item {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: headerId, for: indexPath) as! PursuitsDetailHeader
-                cell.pursuitsDetailController = self
                 return cell
             case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! DetailSteps
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! DetailSteps
                 return cell
             case 2:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! PursuitPrinciple
                 return cell
             case 3:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamRow
+                return cell
+            case 4:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! DetailChallengeRow
+                return cell
+            case 5:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
                 return cell
             default:
-                assert(false, "Not a valid cell")
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! DetailSteps
+                return cell
             }
-        case isPursuitView:
+        case isChallengeView:
             switch indexPath.item {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: headerId, for: indexPath) as! PursuitsDetailHeader
-                cell.pursuitsDetailController = self
                 return cell
             case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! DetailSteps
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: solutionId, for: indexPath) as! DetailSolutions
                 return cell
             case 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! PursuitPrinciple
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! DetailSteps
                 return cell
             case 3:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! PursuitPrinciple
+                return cell
+            case 4:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamRow
+                return cell
+            case 5:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! DetailChallengeRow
+                return cell
+            case 6:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
                 return cell
             default:
-                assert(false, "Not a valid cell")
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! DetailSteps
+                return cell
             }
-        case isImageView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: headerId, for: indexPath) as! PursuitsDetailHeader
-            cell.pursuitsDetailController = self
-            return cell
         default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: headerId, for: indexPath) as! PursuitsDetailHeader
-            cell.pursuitsDetailController = self
-            return cell
+            assert(false, "Not a valid type")
         }
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: headerId, for: indexPath) as! PursuitsDetailHeader
-        cell.pursuitsDetailController = self
-        return cell
     }
     
 }
