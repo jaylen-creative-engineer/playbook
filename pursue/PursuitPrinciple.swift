@@ -8,62 +8,85 @@
 
 import UIKit
 
-class PursuitPrinciple : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class PursuitPrinciple : UICollectionViewCell {
     
-    let pursuitPrincipleId = "pursuitPrincipleId"
+    let rowLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Principles."
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
+    }()
     
-    let principleDetailCollection : UICollectionView = {
+    let showAllButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("Show All", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: UIFont.Weight.init(25))
+        return button
+    }()
+    
+    
+    let cellId = "cellId"
+    
+    let imageName = "690dae66bfe860df34fc7a756b53c15d"
+    
+    let collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+    func setupView(){
+        let underlineView = UIView()
+        underlineView.backgroundColor = .black
+        
+        addSubview(rowLabel)
+        addSubview(underlineView)
+        addSubview(showAllButton)
+        addSubview(collectionView)
+        
+        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
+        underlineView.anchor(top: nil, left: nil, bottom: rowLabel.bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 48, height: 2)
+        showAllButton.anchor(top: nil, left: underlineView.leftAnchor, bottom: underlineView.topAnchor, right: underlineView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
+        collectionView.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 320)
+        
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(PursuitPrincipleCells.self, forCellWithReuseIdentifier: cellId)
     }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitPrincipleId, for: indexPath) as! PursuitPrincipleCells
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: ((frame.width - 2) / 2), height: ((frame.width - 2) / 3) + 10)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 12, 0, 12)
-    }
-    
-    let principlesLabel : UILabel = {
-       let label = UILabel()
-        label.text = "Principles"
-        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight(rawValue: 25))
-        return label
-    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        principleDetailCollection.register(PursuitPrincipleCells.self, forCellWithReuseIdentifier: pursuitPrincipleId)
-        principleDetailCollection.delegate = self
-        principleDetailCollection.dataSource = self
-        principleDetailCollection.showsHorizontalScrollIndicator = false
         setupView()
-    }
-    
-    func setupView() {
-        addSubview(principlesLabel)
-        addSubview(principleDetailCollection)
-        
-        principlesLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: principlesLabel.intrinsicContentSize.width, height: 18)
-        principleDetailCollection.anchor(top: principlesLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 230)
-
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+extension PursuitPrinciple : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PursuitPrincipleCells
+        cell.principleImage.image = UIImage(named: imageName)
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 160, height: 300)
     }
 }

@@ -17,9 +17,10 @@ class HomePursuitsRow : UICollectionViewCell {
         return label
     }()
     
-    let showAllButton : UIButton = {
+    lazy var showAllButton : UIButton = {
        let button = UIButton()
         button.setTitle("Show All", for: .normal)
+        button.addTarget(self, action: #selector(goToFeed), for: .touchUpInside)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: UIFont.Weight.init(25))
         return button
@@ -40,6 +41,10 @@ class HomePursuitsRow : UICollectionViewCell {
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
+    
+    @objc func goToFeed(){
+        accessHomeController?.goToFeedView()
+    }
     
     func setupView(){
         let underlineView = UIView()

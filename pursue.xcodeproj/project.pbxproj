@@ -103,6 +103,8 @@
 		E680ECC5206ACBD60023087D /* ProfilePursuitCreateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E680ECC4206ACBD60023087D /* ProfilePursuitCreateCell.swift */; };
 		E68D70B020D9DEE2004398D1 /* HomePursuitsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68D70AF20D9DEE2004398D1 /* HomePursuitsRow.swift */; };
 		E68D70B220D9E07C004398D1 /* HomePursuitsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68D70B120D9E07C004398D1 /* HomePursuitsCells.swift */; };
+		E693108A20E2EDEA000D9FC4 /* FeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E693108920E2EDEA000D9FC4 /* FeedController.swift */; };
+		E693108C20E2F798000D9FC4 /* FeedCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E693108B20E2F798000D9FC4 /* FeedCells.swift */; };
 		E6989BF320475CDD0067A55B /* CustomDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6989BF220475CDD0067A55B /* CustomDetailView.swift */; };
 		E6989BF52047797B0067A55B /* CustomHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6989BF42047797B0067A55B /* CustomHomeView.swift */; };
 		E6989BF72047A5350067A55B /* FollowedNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6989BF62047A5350067A55B /* FollowedNotification.swift */; };
@@ -285,6 +287,8 @@
 		E680ECC4206ACBD60023087D /* ProfilePursuitCreateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePursuitCreateCell.swift; sourceTree = "<group>"; };
 		E68D70AF20D9DEE2004398D1 /* HomePursuitsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePursuitsRow.swift; sourceTree = "<group>"; };
 		E68D70B120D9E07C004398D1 /* HomePursuitsCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePursuitsCells.swift; sourceTree = "<group>"; };
+		E693108920E2EDEA000D9FC4 /* FeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedController.swift; sourceTree = "<group>"; };
+		E693108B20E2F798000D9FC4 /* FeedCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCells.swift; sourceTree = "<group>"; };
 		E6989BF220475CDD0067A55B /* CustomDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDetailView.swift; sourceTree = "<group>"; };
 		E6989BF42047797B0067A55B /* CustomHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHomeView.swift; sourceTree = "<group>"; };
 		E6989BF62047A5350067A55B /* FollowedNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedNotification.swift; sourceTree = "<group>"; };
@@ -414,6 +418,15 @@
 				E639807B204B6A350049A71B /* PrinciplesPage.swift */,
 			);
 			name = Intro;
+			sourceTree = "<group>";
+		};
+		E61A70ED20E2ED8100EB69D8 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				E693108920E2EDEA000D9FC4 /* FeedController.swift */,
+				E693108B20E2F798000D9FC4 /* FeedCells.swift */,
+			);
+			name = Feed;
 			sourceTree = "<group>";
 		};
 		E62530A61FFD611000E41794 /* Interests */ = {
@@ -554,6 +567,7 @@
 		E6CE22731F671D10006C5755 /* pursue */ = {
 			isa = PBXGroup;
 			children = (
+				E61A70ED20E2ED8100EB69D8 /* Feed */,
 				E67FB8C0202FB18C0008732C /* pursue.entitlements */,
 				E6CE229C1F67615E006C5755 /* Camera */,
 				E64324A61F79559D0090075F /* Detail */,
@@ -943,6 +957,7 @@
 				E61A70E420E1832900EB69D8 /* TeamRowCells.swift in Sources */,
 				E6E1FA36207A88C8008F4280 /* SignupInterestsHeader.swift in Sources */,
 				E60EB26720460DB8006E4F1A /* FollowingCells.swift in Sources */,
+				E693108A20E2EDEA000D9FC4 /* FeedController.swift in Sources */,
 				E6DEC840201ABA1100E02393 /* PostComment.swift in Sources */,
 				E659EB1B2040876D00CA8DB5 /* CustomCreateView.swift in Sources */,
 				E6CB1B4D20578A1100B5D2ED /* ProfilePursuitCells.swift in Sources */,
@@ -963,6 +978,7 @@
 				E65F1E561FCCC7BF00BD850E /* ProfileController.swift in Sources */,
 				E6A273FE1F68325A00F5B4C8 /* Post.swift in Sources */,
 				E639807F204DD63D0049A71B /* HomeServices.swift in Sources */,
+				E693108C20E2F798000D9FC4 /* FeedCells.swift in Sources */,
 				E6CB1B592058CA9200B5D2ED /* SearchSteps.swift in Sources */,
 				E60EB269204616D8006E4F1A /* FriendsController.swift in Sources */,
 				E6989BF92047A55C0067A55B /* PursuitNotification.swift in Sources */,

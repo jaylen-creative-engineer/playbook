@@ -125,6 +125,11 @@ class HomeController : UICollectionViewController {
     
     // MARK: - Setup View
     
+    func goToFeedView(){
+        let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(feed, animated: true)
+    }
+    
     func principleTapped() {
 //        handleChangeToDetail(viewType: "isPrinciplesDetail")
         detailController.standardView()

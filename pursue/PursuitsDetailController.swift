@@ -219,7 +219,6 @@ class PursuitsDetailController : UICollectionViewController {
         collectionView?.register(DetailSolutions.self, forCellWithReuseIdentifier: solutionId)
         
         collectionView?.backgroundColor = .white
-        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
         collectionView?.showsVerticalScrollIndicator = false
         containerView.isHidden = true
         

@@ -17,10 +17,11 @@ class HomeChallengeRow : UICollectionViewCell {
         return label
     }()
     
-    let showAllButton : UIButton = {
+    lazy var showAllButton : UIButton = {
         let button = UIButton()
         button.setTitle("Show All", for: .normal)
         button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(goToFeed), for: .touchUpInside)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: UIFont.Weight.init(25))
         return button
     }()
@@ -41,6 +42,10 @@ class HomeChallengeRow : UICollectionViewCell {
     }()
     
     var accessHomeController : HomeController?
+    
+    @objc func goToFeed(){
+        accessHomeController?.goToFeedView()
+    }
     
     func setupView(){
         let underlineView = UIView()
