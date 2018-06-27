@@ -10,44 +10,64 @@ import UIKit
 
 class LikedNotification : UICollectionViewCell {
     
+    let peopleBackground : CardView = {
+        let view = CardView()
+        view.layer.cornerRadius = 25
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     let userPhoto : UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         iv.layer.masksToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.layer.cornerRadius = 30
+        iv.layer.cornerRadius = 25
         return iv
     }()
     
-    let likedLabel : UILabel = {
+    
+    let likeLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 12)
-        label.text = "Liked your pursuit chasing glory"
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.text = "Liked your pursuit: Changing the world"
+        label.numberOfLines = 2
         return label
     }()
     
-    let fullnameLabel : UILabel = {
+    let usernameLabel : UILabel = {
         let label = UILabel()
-        label.text = "Tom Doe"
-        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
+        label.text = "TomDoe"
+        label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
+    
+    let timeLabel : UILabel = {
+        let label = UILabel()
+        label.text = "21 hours ago"
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
+    }()
+    
+    func setupView(){
+        addSubview(userPhoto)
+        addSubview(usernameLabel)
+        addSubview(likeLabel)
+        addSubview(timeLabel)
+        
+        userPhoto.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
+        usernameLabel.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
+        likeLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: safeAreaLayoutGuide.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 10, width: likeLabel.intrinsicContentSize.width, height: likeLabel.intrinsicContentSize.height)
+        timeLabel.anchor(top: likeLabel.bottomAnchor, left: likeLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: timeLabel.intrinsicContentSize.width, height: timeLabel.intrinsicContentSize.height)
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        addSubview(userPhoto)
-        addSubview(fullnameLabel)
-        addSubview(likedLabel)
-        
-        userPhoto.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 60, height: 60)
-        fullnameLabel.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: fullnameLabel.intrinsicContentSize.width, height: fullnameLabel.intrinsicContentSize.height)
-        likedLabel.anchor(top: fullnameLabel.bottomAnchor, left: fullnameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: likedLabel.intrinsicContentSize.width, height: likedLabel.intrinsicContentSize.height)
+        setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
