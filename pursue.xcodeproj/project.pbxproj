@@ -89,6 +89,8 @@
 		E639808F2050D00C0049A71B /* StepsComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E639808E2050D00C0049A71B /* StepsComment.swift */; };
 		E63980912050D11F0049A71B /* PrincipleComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63980902050D11F0049A71B /* PrincipleComment.swift */; };
 		E64324B51F79A47F0090075F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64324B41F79A47F0090075F /* CardView.swift */; };
+		E643EF8920E5685E00EE411B /* NotificationsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E643EF8820E5685E00EE411B /* NotificationsContainer.swift */; };
+		E643EF8C20E5698200EE411B /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E643EF8B20E5698200EE411B /* ChatController.swift */; };
 		E647D27B2007CD3C00656DEF /* EditProfileCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E647D27A2007CD3C00656DEF /* EditProfileCells.swift */; };
 		E659EB192040786500CA8DB5 /* CustomAlertViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E659EB182040786500CA8DB5 /* CustomAlertViewCell.swift */; };
 		E659EB1B2040876D00CA8DB5 /* CustomCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E659EB1A2040876D00CA8DB5 /* CustomCreateView.swift */; };
@@ -121,6 +123,12 @@
 		E6AD4BC1206AE60300451547 /* CreateInterests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AD4BC0206AE60300451547 /* CreateInterests.swift */; };
 		E6B49F2B1FACDCE800AEDAFD /* InterestsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B49F2A1FACDCE800AEDAFD /* InterestsController.swift */; };
 		E6B49F2F1FACDE4100AEDAFD /* SelectInterestsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B49F2E1FACDE4100AEDAFD /* SelectInterestsList.swift */; };
+		E6BCBA6920E58B7900D681E9 /* TwoChatCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BCBA6820E58B7900D681E9 /* TwoChatCells.swift */; };
+		E6BCBA6B20E58BB000D681E9 /* GroupChatCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BCBA6A20E58BB000D681E9 /* GroupChatCells.swift */; };
+		E6C7387320E5721700D352D6 /* NotificationsBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C7387220E5721700D352D6 /* NotificationsBar.swift */; };
+		E6C7387520E5726200D352D6 /* NotificationBarCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C7387420E5726200D352D6 /* NotificationBarCells.swift */; };
+		E6C7387720E57B1900D352D6 /* ChatCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C7387620E57B1900D352D6 /* ChatCells.swift */; };
+		E6C7387920E5804800D352D6 /* ChatPeopleCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C7387820E5804800D352D6 /* ChatPeopleCells.swift */; };
 		E6C99B9D2066D07700581A1E /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C99B9C2066D07700581A1E /* UserDetails.swift */; };
 		E6CB1B472057063F00B5D2ED /* CustomPeopleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CB1B462057063F00B5D2ED /* CustomPeopleView.swift */; };
 		E6CB1B49205706C200B5D2ED /* CustomPeopleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CB1B48205706C200B5D2ED /* CustomPeopleViewCell.swift */; };
@@ -272,6 +280,8 @@
 		E639808E2050D00C0049A71B /* StepsComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsComment.swift; sourceTree = "<group>"; };
 		E63980902050D11F0049A71B /* PrincipleComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrincipleComment.swift; sourceTree = "<group>"; };
 		E64324B41F79A47F0090075F /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		E643EF8820E5685E00EE411B /* NotificationsContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsContainer.swift; sourceTree = "<group>"; };
+		E643EF8B20E5698200EE411B /* ChatController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
 		E647D27A2007CD3C00656DEF /* EditProfileCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileCells.swift; sourceTree = "<group>"; };
 		E659EB182040786500CA8DB5 /* CustomAlertViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertViewCell.swift; sourceTree = "<group>"; };
 		E659EB1A2040876D00CA8DB5 /* CustomCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCreateView.swift; sourceTree = "<group>"; };
@@ -305,6 +315,12 @@
 		E6AD4BC0206AE60300451547 /* CreateInterests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateInterests.swift; sourceTree = "<group>"; };
 		E6B49F2A1FACDCE800AEDAFD /* InterestsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsController.swift; sourceTree = "<group>"; };
 		E6B49F2E1FACDE4100AEDAFD /* SelectInterestsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectInterestsList.swift; sourceTree = "<group>"; };
+		E6BCBA6820E58B7900D681E9 /* TwoChatCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoChatCells.swift; sourceTree = "<group>"; };
+		E6BCBA6A20E58BB000D681E9 /* GroupChatCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChatCells.swift; sourceTree = "<group>"; };
+		E6C7387220E5721700D352D6 /* NotificationsBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsBar.swift; sourceTree = "<group>"; };
+		E6C7387420E5726200D352D6 /* NotificationBarCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationBarCells.swift; sourceTree = "<group>"; };
+		E6C7387620E57B1900D352D6 /* ChatCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCells.swift; sourceTree = "<group>"; };
+		E6C7387820E5804800D352D6 /* ChatPeopleCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPeopleCells.swift; sourceTree = "<group>"; };
 		E6C99B9C2066D07700581A1E /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
 		E6CB1B462057063F00B5D2ED /* CustomPeopleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPeopleView.swift; sourceTree = "<group>"; };
 		E6CB1B48205706C200B5D2ED /* CustomPeopleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPeopleViewCell.swift; sourceTree = "<group>"; };
@@ -510,6 +526,18 @@
 			name = Detail;
 			sourceTree = "<group>";
 		};
+		E643EF8A20E5697B00EE411B /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				E643EF8B20E5698200EE411B /* ChatController.swift */,
+				E6BCBA6820E58B7900D681E9 /* TwoChatCells.swift */,
+				E6BCBA6A20E58BB000D681E9 /* GroupChatCells.swift */,
+				E6C7387620E57B1900D352D6 /* ChatCells.swift */,
+				E6C7387820E5804800D352D6 /* ChatPeopleCells.swift */,
+			);
+			name = Chat;
+			sourceTree = "<group>";
+		};
 		E6A273FC1F68323F00F5B4C8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -567,6 +595,7 @@
 		E6CE22731F671D10006C5755 /* pursue */ = {
 			isa = PBXGroup;
 			children = (
+				E643EF8A20E5697B00EE411B /* Chat */,
 				E67FB8C0202FB18C0008732C /* pursue.entitlements */,
 				E6CE229C1F67615E006C5755 /* Camera */,
 				E64324A61F79559D0090075F /* Detail */,
@@ -726,6 +755,7 @@
 		E6D2B8DC20194AE6008D3055 /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
+				E643EF8820E5685E00EE411B /* NotificationsContainer.swift */,
 				E6D2B8DD20194AFB008D3055 /* NotificationController.swift */,
 				E6989BF62047A5350067A55B /* FollowedNotification.swift */,
 				E6989BF82047A55C0067A55B /* PursuitNotification.swift */,
@@ -733,6 +763,8 @@
 				E6989BFC2047A5C60067A55B /* CommentNotification.swift */,
 				E6989BFE2047A5FD0067A55B /* StepNotification.swift */,
 				E6989C002047A61C0067A55B /* PrincipleNotification.swift */,
+				E6C7387220E5721700D352D6 /* NotificationsBar.swift */,
+				E6C7387420E5726200D352D6 /* NotificationBarCells.swift */,
 			);
 			name = Notifications;
 			sourceTree = "<group>";
@@ -921,6 +953,7 @@
 				E6989BF72047A5350067A55B /* FollowedNotification.swift in Sources */,
 				E6DF9EBF203BAB1B005C86DB /* CommentInputTextView.swift in Sources */,
 				E6398081204DD6780049A71B /* ExploreServices.swift in Sources */,
+				E643EF8C20E5698200EE411B /* ChatController.swift in Sources */,
 				E639808B204DD9B00049A71B /* EngagementServices.swift in Sources */,
 				E636E7762056493A00BCA756 /* HomePeople.swift in Sources */,
 				E65F1E521FCCBE5000BD850E /* HomeController.swift in Sources */,
@@ -954,6 +987,7 @@
 				E6D0B406203E2A5E008D4268 /* PhotoLibrary.swift in Sources */,
 				E6DF9ECB203CF8FB005C86DB /* PhotoViewController.swift in Sources */,
 				E6FF95DF20349BAE003BDB86 /* HomeInterestsBar.swift in Sources */,
+				E6C7387720E57B1900D352D6 /* ChatCells.swift in Sources */,
 				E61A70E420E1832900EB69D8 /* TeamRowCells.swift in Sources */,
 				E6E1FA36207A88C8008F4280 /* SignupInterestsHeader.swift in Sources */,
 				E60EB26720460DB8006E4F1A /* FollowingCells.swift in Sources */,
@@ -1030,6 +1064,7 @@
 				E6A7A32A2083E59400AA5F3A /* HomeRow.swift in Sources */,
 				E639807C204B6A350049A71B /* PrinciplesPage.swift in Sources */,
 				E6299BA32077143500B59061 /* UsernameCell.swift in Sources */,
+				E6BCBA6B20E58BB000D681E9 /* GroupChatCells.swift in Sources */,
 				E636E77A2056F61200BCA756 /* CustomOptionView.swift in Sources */,
 				E659EB192040786500CA8DB5 /* CustomAlertViewCell.swift in Sources */,
 				E6DEC85C201ACDD300E02393 /* Page.swift in Sources */,
@@ -1038,7 +1073,9 @@
 				E627283D20DC5C3B00860707 /* HomePursuitsLists.swift in Sources */,
 				E60433ED2042189F00E6D4DA /* ProfileAboutRow.swift in Sources */,
 				E61A70E620E18D5900EB69D8 /* DetailChallengeRow.swift in Sources */,
+				E643EF8920E5685E00EE411B /* NotificationsContainer.swift in Sources */,
 				E647D27B2007CD3C00656DEF /* EditProfileCells.swift in Sources */,
+				E6C7387920E5804800D352D6 /* ChatPeopleCells.swift in Sources */,
 				E6AD4BBF206AE05B00451547 /* CreateInterestsCells.swift in Sources */,
 				E6D2B8D72017D603008D3055 /* InterestsRows.swift in Sources */,
 				E63980682048523D0049A71B /* CustomSearchView.swift in Sources */,
@@ -1046,6 +1083,7 @@
 				E617BB1F1FD8A396008B2EA1 /* HomeStepCells.swift in Sources */,
 				E628F2EC2035D980002FE8CF /* RecentSearchPursuits.swift in Sources */,
 				E617BB191FD88775008B2EA1 /* PageCell.swift in Sources */,
+				E6BCBA6920E58B7900D681E9 /* TwoChatCells.swift in Sources */,
 				E6989BF320475CDD0067A55B /* CustomDetailView.swift in Sources */,
 				E639807220491EBC0049A71B /* MessageComposer.swift in Sources */,
 				E6CB1B572058CA5800B5D2ED /* SearchUsers.swift in Sources */,
@@ -1058,6 +1096,7 @@
 				E6D0B428203FDFFD008D4268 /* PeopleRowCells.swift in Sources */,
 				E6B49F2B1FACDCE800AEDAFD /* InterestsController.swift in Sources */,
 				E6E0B01E2060720800007A21 /* Search.swift in Sources */,
+				E6C7387320E5721700D352D6 /* NotificationsBar.swift in Sources */,
 				E6CB1B532058C11B00B5D2ED /* RecentSearches.swift in Sources */,
 				E6CB1B49205706C200B5D2ED /* CustomPeopleViewCell.swift in Sources */,
 				E66AEB1B20DD91DE000018B5 /* ProfileSteps.swift in Sources */,
@@ -1071,6 +1110,7 @@
 				E617BB171FD8874B008B2EA1 /* SwipingController.swift in Sources */,
 				E61A41B01F952C0D002F4045 /* PostCommentsCell.swift in Sources */,
 				E62AAB1D1FD0A5D30053EAD7 /* PolicyController.swift in Sources */,
+				E6C7387520E5726200D352D6 /* NotificationBarCells.swift in Sources */,
 				E66AEB1F20DD9552000018B5 /* ProfilePrinciples.swift in Sources */,
 				E6DF9EC9203CF88D005C86DB /* VideoViewController.swift in Sources */,
 				E6DF9EBA203B8778005C86DB /* DetailStepCells.swift in Sources */,

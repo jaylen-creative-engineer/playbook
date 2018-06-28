@@ -109,12 +109,6 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         
     }
     
-    func showNotifications() {
-        let layout = UICollectionViewFlowLayout()
-        let notificationController = NotificationController(collectionViewLayout: layout)
-        navigationController?.pushViewController(notificationController, animated: true)
-    }
-    
     func profilePostTapped() {
         handleChangeToDetail(viewType: "isImageDetail")
     }

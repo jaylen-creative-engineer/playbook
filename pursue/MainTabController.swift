@@ -49,7 +49,7 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
     func setupViewControllers() {
         
         let homeNavController = UINavigationController(rootViewController: HomeController(collectionViewLayout: UICollectionViewFlowLayout()))
-        let notificationsNavController = UINavigationController(rootViewController: NotificationController(collectionViewLayout: UICollectionViewFlowLayout()))
+        let notificationsNavController = UINavigationController(rootViewController: NotificationsContainer(collectionViewLayout: UICollectionViewFlowLayout()))
         let plusNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "create_unselected"), selectedImage: #imageLiteral(resourceName: "create_unselected"))
         let userProfileNavController = UINavigationController(rootViewController: ProfileController(collectionViewLayout: UICollectionViewFlowLayout()))
         

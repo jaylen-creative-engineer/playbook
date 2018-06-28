@@ -67,10 +67,6 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         view.layer.cornerRadius = 20
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isUserInteractionEnabled = true
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleNotification))
-        tap.numberOfTapsRequired = 1
-        view.addGestureRecognizer(tap)
         return view
     }()
     
@@ -80,10 +76,6 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.isUserInteractionEnabled = true
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleNotification))
-        tap.numberOfTapsRequired = 1
-        iv.addGestureRecognizer(tap)
         return iv
     }()
     
@@ -213,10 +205,6 @@ class ProfileAboutRow : UICollectionViewCell, UICollectionViewDelegateFlowLayout
     
     @objc func followersSelected(){
         accessProfileController?.showFriendsController()
-    }
-    
-    @objc func handleNotification(){
-        accessProfileController?.showNotifications()
     }
     
     func setupFollowingView(){
