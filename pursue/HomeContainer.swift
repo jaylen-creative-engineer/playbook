@@ -98,7 +98,6 @@ class HomeContainer : UICollectionViewCell, UICollectionViewDelegateFlowLayout, 
     }
     
     func imageView(){
-        accessHomeController?.imageView(isExplore: false)
     }
     
     var home : Home?

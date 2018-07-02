@@ -72,6 +72,20 @@ class HomePursuitsListCells : UICollectionViewCell {
         return button
     }()
     
+    let playBackground : GroupChatView = {
+        let view = GroupChatView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    let playIcon : UIImageView = {
+        let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "view-more").withRenderingMode(.alwaysOriginal)
+        iv.contentMode = .scaleAspectFill
+        return iv
+    }()
+    
     func setupView(){
         addSubview(photoBackground)
         addSubview(photo)
@@ -79,18 +93,18 @@ class HomePursuitsListCells : UICollectionViewCell {
         addSubview(usernameLabel)
         addSubview(circleView)
         addSubview(daysLabel)
-        addSubview(costLabel)
-        addSubview(optionButton)
+        addSubview(playBackground)
+        addSubview(playIcon)
         
-        photoBackground.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 210, height: 130)
+        photoBackground.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 210, height: 230)
         photo.anchor(top: photoBackground.topAnchor, left: photoBackground.leftAnchor, bottom: photoBackground.bottomAnchor, right: photoBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         detailLabel.anchor(top: photo.topAnchor, left: photo.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 90, height: 50)
         usernameLabel.anchor(top: detailLabel.bottomAnchor, left: detailLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
-        circleView.anchor(top: nil, left: usernameLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 4, height: 4)
-        circleView.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
-        daysLabel.anchor(top: usernameLabel.topAnchor, left: circleView.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: daysLabel.intrinsicContentSize.width, height: daysLabel.intrinsicContentSize.height)
-        costLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: costLabel.intrinsicContentSize.width, height: costLabel.intrinsicContentSize.height)
-         optionButton.anchor(top: photo.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 8, height: 16)
+        daysLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: daysLabel.intrinsicContentSize.width, height: daysLabel.intrinsicContentSize.height)
+        playBackground.anchor(top: nil, left: nil, bottom: photo.bottomAnchor, right: photo.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 8, paddingRight: 8, width: 24, height: 24)
+        playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 10, height: 10)
+        playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true
+        playIcon.centerYAnchor.constraint(equalTo: playBackground.centerYAnchor).isActive = true
     }
     
     override init(frame: CGRect) {

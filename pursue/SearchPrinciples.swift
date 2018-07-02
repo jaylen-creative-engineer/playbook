@@ -55,7 +55,7 @@ class SearchPrinciples : UICollectionViewCell, UICollectionViewDelegate, UIColle
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomePrinciplesCells
         if !principles.isEmpty {
             rowLabel.text = "Principles"
-            cell.principle = principles[indexPath.item]
+//            cell.principle = principles[indexPath.item]
         }
         return cell
     }

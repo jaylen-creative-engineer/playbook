@@ -59,8 +59,8 @@ class HomePrinciples : UICollectionViewCell, UICollectionViewDelegate, UICollect
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomePrinciplesCells
         rowLabel.text = "Principles"
-        cell.principleLabel.text = profileLabelText[indexPath.item]
-        cell.principleImage.image = UIImage(named: profileImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
+//        cell.principleLabel.text = profileLabelText[indexPath.item]
+//        cell.principleImage.image = UIImage(named: profileImageNames[indexPath.item])?.withRenderingMode(.alwaysOriginal)
         return cell
     }
     

@@ -19,6 +19,7 @@ class HomeController : UICollectionViewController {
     let recommendId = "recommendId"
     let challengeId = "challengeId"
     let peopleId = "peopleId"
+    let headerId = "headerId"
     let interestId = "interestId"
     let picksId = "picksId"
     var isImageView = true
@@ -38,35 +39,6 @@ class HomeController : UICollectionViewController {
         return hb
     }()
     
-    let homeLabel : UILabel = {
-       let label = UILabel()
-        label.text = "Home"
-        label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.init(25))
-        return label
-    }()
-    
-    let searchBackground : UIButton = {
-       let button = UIButton()
-        button.backgroundColor = UIColor.rgb(red: 211, green: 211, blue: 211)
-        button.layer.cornerRadius = 12
-        return button
-    }()
-    
-    let searchIcon : UIImageView = {
-       let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "search_selected").withRenderingMode(.alwaysOriginal)
-        iv.contentMode = .scaleAspectFill
-        return iv
-    }()
-    
-    @objc func goBack(){
-        navigationController?.popViewController(animated: true)
-    }
-    
-    func scrollToMenuIndex(menuIndex: Int) {
-        let indexPath = IndexPath(item: menuIndex, section: 0)
-        collectionView?.scrollToItem(at: indexPath, at: [], animated: true)
-    }
     
     func setupCollectionView(){
         collectionView?.register(HomePursuitsRow.self, forCellWithReuseIdentifier: pursuitsId)
@@ -75,6 +47,7 @@ class HomeController : UICollectionViewController {
         collectionView?.register(HomePeople.self, forCellWithReuseIdentifier: peopleId)
         collectionView?.register(HomeInterestRow.self, forCellWithReuseIdentifier: interestId)
         collectionView?.register(HomeChallengeRow.self, forCellWithReuseIdentifier: challengeId)
+        collectionView?.register(HomeHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.backgroundColor = UIColor.white
         collectionView?.isScrollEnabled = true
         collectionView?.showsVerticalScrollIndicator = false
@@ -83,7 +56,6 @@ class HomeController : UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupTopBar()
         setupCollectionView()
         if UserDefaults.standard.value(forKey: "homeIntroPopover") == nil {
             setupIntroView()
@@ -91,32 +63,6 @@ class HomeController : UICollectionViewController {
             dismissHomePopover()
         }
     }
-    
-    func imageView(isExplore : Bool){
-        isImageView = true
-        isExploreImageView = false
-        isPursuitView = false
-        isPrinciplesView = false
-        isDiscussionView = false
-        collectionView?.reloadData()
-    }
-    
-    private func setupTopBar(){
-        let guide = view.safeAreaLayoutGuide
-        view.addSubview(backgroundFill)
-        view.addSubview(homeLabel)
-        view.addSubview(searchBackground)
-        view.addSubview(searchIcon)
-        
-        backgroundFill.backgroundColor = .white
-        backgroundFill.anchor(top: view.topAnchor, left: guide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 75)
-        homeLabel.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 5, paddingRight: 0, width: homeLabel.intrinsicContentSize.width, height: homeLabel.intrinsicContentSize.height)
-        searchBackground.anchor(top: nil, left: nil, bottom: nil, right: backgroundFill.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 55, height: 25)
-        searchBackground.centerYAnchor.constraint(equalTo: homeLabel.centerYAnchor).isActive = true
-        searchIcon.anchor(top: nil, left: nil, bottom: nil, right: searchBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 13.36, height: 14)
-        searchIcon.centerYAnchor.constraint(equalTo: searchBackground.centerYAnchor).isActive = true
-    }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -322,6 +268,11 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
         return 0
     }
     
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! HomeHeader
+        return cell
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: view.frame.width, height: 50)
     }
@@ -365,17 +316,13 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 0:
-            return CGSize(width: view.frame.width, height: 370)
-        case 1:
-            return CGSize(width: view.frame.width, height: 430)
+            return CGSize(width: view.frame.width, height: 520)
+        case 1, 4, 5:
+            return CGSize(width: view.frame.width, height: 460)
         case 2:
-            return CGSize(width: view.frame.width, height: 630)
+            return CGSize(width: view.frame.width, height: 930)
         case 3:
             return CGSize(width: view.frame.width, height: 240)
-        case 4:
-            return CGSize(width: view.frame.width, height: 430)
-        case 5:
-            return CGSize(width: view.frame.width, height: 370)
         default:
             return CGSize(width: view.frame.width, height: 370)
         }

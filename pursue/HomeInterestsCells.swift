@@ -10,33 +10,119 @@ import UIKit
 
 class HomeInterestsCells : UICollectionViewCell {
     
-    lazy var selectInterests : UILabel = {
+    let photo : UIImageView = {
+        let iv = UIImageView()
+        iv.layer.cornerRadius = 8
+        iv.layer.masksToBounds = true
+        iv.contentMode = .scaleAspectFill
+        return iv
+    }()
+    
+    let detailLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight(rawValue: 25))
-        label.textColor = .gray
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Have a vision to work towards"
+        label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
     
-    override var isHighlighted: Bool {
-        didSet {
-            selectInterests.font = isHighlighted ?  UIFont.systemFont(ofSize: 18, weight: UIFont.Weight(rawValue: 25)) : UIFont.systemFont(ofSize: 18, weight: UIFont.Weight(rawValue: 25))
-            selectInterests.textColor = isHighlighted ? .black : .gray
-        }
-    }
+    let usernameLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Test"
+        label.font = UIFont.systemFont(ofSize: 10)
+        return label
+    }()
     
-    override var isSelected: Bool {
-        didSet {
-            selectInterests.font = isSelected ? UIFont.systemFont(ofSize: 18, weight: UIFont.Weight(rawValue: 25)) : UIFont.systemFont(ofSize: 18, weight: UIFont.Weight(rawValue: 25))
-            selectInterests.textColor = isSelected ? .black : .gray
-        }
-    }
+    let daysLabel : UILabel = {
+        let label = UILabel()
+        label.text = "2 Days"
+        label.font = UIFont.systemFont(ofSize: 10)
+        return label
+    }()
+    
+    let saveButtonBackground : GroupChatView = {
+        let gcv = GroupChatView()
+        gcv.translatesAutoresizingMaskIntoConstraints = false
+        gcv.backgroundColor = .white
+        return gcv
+    }()
+    
+    let saveButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("Save", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.titleLabel?.textAlignment = .center
+        return button
+    }()
+    
+    let userPhoto : UIImageView = {
+        let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 20
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    
+    let cardUsername : UILabel = {
+        let label = UILabel()
+        label.text = "Test02"
+        label.font = UIFont.boldSystemFont(ofSize: 10)
+        return label
+    }()
+    
+    let cardFullname : UILabel = {
+        let label = UILabel()
+        label.text = "Test"
+        label.font = UIFont.systemFont(ofSize: 10)
+        return label
+    }()
+    
+    let postTypeLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Principle"
+        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.init(25))
+        return label
+    }()
+    
+    let playBackground : GroupChatView = {
+        let view = GroupChatView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    let playIcon : UIImageView = {
+        let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "view-more").withRenderingMode(.alwaysOriginal)
+        iv.contentMode = .scaleAspectFill
+        return iv
+    }()
     
     func setupView(){
-        addSubview(selectInterests)
+        addSubview(photo)
+        addSubview(detailLabel)
+        addSubview(postTypeLabel)
+        addSubview(usernameLabel)
+        addSubview(daysLabel)
+        addSubview(userPhoto)
+        addSubview(playBackground)
+        addSubview(playIcon)
+        addSubview(saveButtonBackground)
+        addSubview(saveButton)
         
-        selectInterests.anchor(top: topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: selectInterests.intrinsicContentSize.width, height: selectInterests.intrinsicContentSize.height)
-        selectInterests.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        photo.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 210, height: 230)
+        userPhoto.anchor(top: photo.bottomAnchor, left: photo.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
+        postTypeLabel.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: postTypeLabel.intrinsicContentSize.width, height: 14)
+        detailLabel.anchor(top: postTypeLabel.bottomAnchor, left: postTypeLabel.leftAnchor, bottom: nil, right: photo.rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
+        usernameLabel.anchor(top: detailLabel.bottomAnchor, left: detailLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: 12)
+        daysLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: daysLabel.intrinsicContentSize.width, height: daysLabel.intrinsicContentSize.height)
+        playBackground.anchor(top: nil, left: nil, bottom: photo.bottomAnchor, right: photo.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 8, paddingRight: 8, width: 24, height: 24)
+        playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 10, height: 10)
+        playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true
+        playIcon.centerYAnchor.constraint(equalTo: playBackground.centerYAnchor).isActive = true
+        saveButtonBackground.anchor(top: photo.topAnchor, left: nil, bottom: nil, right: photo.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 70, height: 25)
+        saveButton.anchor(top: saveButtonBackground.topAnchor, left: saveButtonBackground.leftAnchor, bottom: saveButtonBackground.bottomAnchor, right: saveButtonBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
     }
     
@@ -49,3 +135,4 @@ class HomeInterestsCells : UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+

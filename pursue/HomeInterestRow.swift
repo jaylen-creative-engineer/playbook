@@ -27,10 +27,9 @@ class HomeInterestRow : UICollectionViewCell {
     }()
     
     
-    let principleId = "principleId"
-    let stepId = "stepId"
+    let cellId = "cellId"
     
-    let principleImage = ["business", "comment-5", "cars", "fashion-design", "690dae66bfe860df34fc7a756b53c15d"]
+    let images = ["business", "comment-5", "cars", "fashion-design", "690dae66bfe860df34fc7a756b53c15d"]
     let stepImage = ["cars", "comment-5", "comment-5", "clean-2", "academics"]
     
     let collectionView : UICollectionView = {
@@ -61,12 +60,11 @@ class HomeInterestRow : UICollectionViewCell {
         rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
         underlineView.anchor(top: nil, left: nil, bottom: rowLabel.bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 48, height: 2)
         showAllButton.anchor(top: nil, left: underlineView.leftAnchor, bottom: underlineView.topAnchor, right: underlineView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
-        collectionView.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 350)
+        collectionView.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 370)
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(HomePrinciplesCells.self, forCellWithReuseIdentifier: principleId)
-        collectionView.register(HomeStepCells.self, forCellWithReuseIdentifier: stepId)
+        collectionView.register(HomeInterestsCells.self, forCellWithReuseIdentifier: cellId)
     }
     
     override init(frame: CGRect) {
@@ -83,30 +81,13 @@ class HomeInterestRow : UICollectionViewCell {
 extension HomeInterestRow : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.item {
-        case 0, 2, 4:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciplesCells
-            cell.principleImage.image = UIImage(named: principleImage[indexPath.item])
-            return cell
-        case 1, 3:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! HomeStepCells
-            cell.stepImage.image = UIImage(named: stepImage[indexPath.item])
-            return cell
-        default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciplesCells
-            return cell
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeInterestsCells
+        cell.photo.image = UIImage(named: images[indexPath.item])
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        switch indexPath.item {
-        case 0, 2, 4:
-            accessHomeController?.handleChangeToDetail(viewType: "isPrinciplesDetail")
-        case 1, 3:
-            accessHomeController?.handleChangeToDetail(viewType: "isStepDetail")
-        default:
-            accessHomeController?.handleChangeToDetail(viewType: "isStepDetail")
-        }
+        accessHomeController?.handleChangeToDetail(viewType: "isStepDetail")
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -118,6 +99,6 @@ extension HomeInterestRow : UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (frame.width / 2) - 30, height: 350)
+        return CGSize(width: frame.width - 155, height: 360)
     }
 }

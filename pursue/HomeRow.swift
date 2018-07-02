@@ -680,7 +680,7 @@ extension HomeRow : UICollectionViewDelegate, UICollectionViewDataSource {
             return cell
         case principleCollection:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciplesCells
-            cell.principle = principles[indexPath.item]
+//            cell.principle = principles[indexPath.item]
             return cell
         case addedCollection:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! HomePeopleCells

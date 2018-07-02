@@ -173,8 +173,8 @@ class SearchReturn : UITableViewCell, UICollectionViewDelegate, UICollectionView
             return cell
         case principleCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! HomePrinciplesCells
-            cell.principleLabel.text = principleSampleImagesText[indexPath.item]
-            cell.principleImage.image = UIImage(named: principleSampleImagesNames[indexPath.item])
+//            cell.principleLabel.text = principleSampleImagesText[indexPath.item]
+//            cell.principleImage.image = UIImage(named: principleSampleImagesNames[indexPath.item])
 //            cell.principle = principle
             return cell
         default:
