@@ -17,7 +17,7 @@ class HomePeopleCells : UICollectionViewCell {
             guard let photo = user?.photoUrl else { return }
             profileImage.loadImageUsingCacheWithUrlString(photo)
         }
-    }
+    }   
     
     let usernameLabel : UILabel = {
         let label = UILabel()

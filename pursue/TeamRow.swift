@@ -29,8 +29,8 @@ class TeamRow : UICollectionViewCell {
         return button
     }()
     
-    let buttonBackground : FollowRectangleView = {
-       let view = FollowRectangleView()
+    let buttonBackground : GroupChatView = {
+       let view = GroupChatView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

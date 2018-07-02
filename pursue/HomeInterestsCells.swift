@@ -50,7 +50,7 @@ class HomeInterestsCells : UICollectionViewCell {
         let button = UIButton()
         button.setTitle("Save", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 10)
         button.titleLabel?.textAlignment = .center
         return button
     }()

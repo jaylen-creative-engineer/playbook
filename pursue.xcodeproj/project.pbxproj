@@ -88,6 +88,9 @@
 		E639808D204DF3D40049A71B /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = E639808C204DF3D40049A71B /* Notifications.swift */; };
 		E639808F2050D00C0049A71B /* StepsComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E639808E2050D00C0049A71B /* StepsComment.swift */; };
 		E63980912050D11F0049A71B /* PrincipleComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63980902050D11F0049A71B /* PrincipleComment.swift */; };
+		E63CEB4E20EACAC000FFDEF3 /* PursuitDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CEB4D20EACAC000FFDEF3 /* PursuitDay.swift */; };
+		E63CEB5020EACEC100FFDEF3 /* DayLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CEB4F20EACEC100FFDEF3 /* DayLabelCell.swift */; };
+		E63CEB5220EAD52C00FFDEF3 /* PursuitDayCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CEB5120EAD52C00FFDEF3 /* PursuitDayCells.swift */; };
 		E64324B51F79A47F0090075F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64324B41F79A47F0090075F /* CardView.swift */; };
 		E643EF8920E5685E00EE411B /* NotificationsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E643EF8820E5685E00EE411B /* NotificationsContainer.swift */; };
 		E643EF8C20E5698200EE411B /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E643EF8B20E5698200EE411B /* ChatController.swift */; };
@@ -281,6 +284,9 @@
 		E639808C204DF3D40049A71B /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		E639808E2050D00C0049A71B /* StepsComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsComment.swift; sourceTree = "<group>"; };
 		E63980902050D11F0049A71B /* PrincipleComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrincipleComment.swift; sourceTree = "<group>"; };
+		E63CEB4D20EACAC000FFDEF3 /* PursuitDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PursuitDay.swift; sourceTree = "<group>"; };
+		E63CEB4F20EACEC100FFDEF3 /* DayLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayLabelCell.swift; sourceTree = "<group>"; };
+		E63CEB5120EAD52C00FFDEF3 /* PursuitDayCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PursuitDayCells.swift; sourceTree = "<group>"; };
 		E64324B41F79A47F0090075F /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		E643EF8820E5685E00EE411B /* NotificationsContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsContainer.swift; sourceTree = "<group>"; };
 		E643EF8B20E5698200EE411B /* ChatController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
@@ -510,6 +516,9 @@
 			isa = PBXGroup;
 			children = (
 				E6136EA21F968EAB00E29101 /* PursuitsDetailController.swift */,
+				E63CEB4F20EACEC100FFDEF3 /* DayLabelCell.swift */,
+				E63CEB4D20EACAC000FFDEF3 /* PursuitDay.swift */,
+				E63CEB5120EAD52C00FFDEF3 /* PursuitDayCells.swift */,
 				E6136EA51F968FC800E29101 /* PursuitsDetailHeader.swift */,
 				E6235EA71F94208F00BF1FDE /* PostComments.swift */,
 				E61A41AF1F952C0D002F4045 /* PostCommentsCell.swift */,
@@ -991,6 +1000,7 @@
 				E6299B9F2077139900B59061 /* EmailCell.swift in Sources */,
 				E62AAB171FD0A2D10053EAD7 /* EditProfileController.swift in Sources */,
 				E6D0B406203E2A5E008D4268 /* PhotoLibrary.swift in Sources */,
+				E63CEB4E20EACAC000FFDEF3 /* PursuitDay.swift in Sources */,
 				E6DF9ECB203CF8FB005C86DB /* PhotoViewController.swift in Sources */,
 				E6FF95DF20349BAE003BDB86 /* HomeInterestsBar.swift in Sources */,
 				E6C7387720E57B1900D352D6 /* ChatCells.swift in Sources */,
@@ -1038,6 +1048,7 @@
 				E6D0B41F203FDEEF008D4268 /* ExploreImageRow.swift in Sources */,
 				E680ECC5206ACBD60023087D /* ProfilePursuitCreateCell.swift in Sources */,
 				E66AEB2120DD95E7000018B5 /* ProfilePrincipleCells.swift in Sources */,
+				E63CEB5020EACEC100FFDEF3 /* DayLabelCell.swift in Sources */,
 				E6D571432010FD7D008A37CC /* HomeInterestsCells.swift in Sources */,
 				E6A274001F68327F00F5B4C8 /* User.swift in Sources */,
 				E6DEC84C201AC15B00E02393 /* Steps.swift in Sources */,
@@ -1127,6 +1138,7 @@
 				E6D2B8DB2018DB7A008D3055 /* Animator.swift in Sources */,
 				E6398085204DD6DF0049A71B /* ProfileServices.swift in Sources */,
 				E621B9941FE04925007324E2 /* PursuitPrincipleCells.swift in Sources */,
+				E63CEB5220EAD52C00FFDEF3 /* PursuitDayCells.swift in Sources */,
 				E6DF9ECD203CF985005C86DB /* SelectCameraController.swift in Sources */,
 				E627284120DC7D4100860707 /* HomeInterestRow.swift in Sources */,
 			);

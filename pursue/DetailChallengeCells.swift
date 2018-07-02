@@ -10,27 +10,12 @@ import UIKit
 
 class DetailChallengeCells : UICollectionViewCell {
     
-    let photoBackground : HomeCellRectangleView = {
-        let iv = HomeCellRectangleView()
-        iv.layer.cornerRadius = 8
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        return iv
-    }()
-    
     let photo : UIImageView = {
         let iv = UIImageView()
         iv.layer.cornerRadius = 8
         iv.layer.masksToBounds = true
         iv.contentMode = .scaleAspectFill
         return iv
-    }()
-    
-    let resolvedLabel : UILabel = {
-       let label = UILabel()
-        label.text = "Resolved"
-        label.textColor = .green
-        label.font = UIFont.systemFont(ofSize: 10)
-        return label
     }()
     
     let detailLabel : UILabel = {
@@ -40,46 +25,80 @@ class DetailChallengeCells : UICollectionViewCell {
         return label
     }()
     
+    let usernameLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Test"
+        label.font = UIFont.systemFont(ofSize: 10)
+        return label
+    }()
+    
     let daysLabel : UILabel = {
         let label = UILabel()
         label.text = "2 Days"
         label.font = UIFont.systemFont(ofSize: 10)
-        label.textColor = .gray
         return label
     }()
     
-    let circleView : UIView = {
-       let view = UIView()
-        view.layer.cornerRadius = 2
-        view.layer.masksToBounds = true
-        view.backgroundColor = .lightGray
+    let contributeButtonBackground : GroupChatView = {
+        let gcv = GroupChatView()
+        gcv.translatesAutoresizingMaskIntoConstraints = false
+        gcv.backgroundColor = .white
+        return gcv
+    }()
+    
+    let contributeButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("Contribute", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+        button.titleLabel?.textAlignment = .center
+        return button
+    }()
+    
+    let cardUsername : UILabel = {
+        let label = UILabel()
+        label.text = "Test02"
+        label.font = UIFont.boldSystemFont(ofSize: 10)
+        return label
+    }()
+    
+    let cardFullname : UILabel = {
+        let label = UILabel()
+        label.text = "Test"
+        label.font = UIFont.systemFont(ofSize: 10)
+        return label
+    }()
+    
+    let playBackground : GroupChatView = {
+        let view = GroupChatView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
         return view
     }()
     
-    let seperatorLine : UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+    let playIcon : UIImageView = {
+        let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "view-more").withRenderingMode(.alwaysOriginal)
+        iv.contentMode = .scaleAspectFill
+        return iv
     }()
     
     func setupView(){
-        addSubview(photoBackground)
         addSubview(photo)
         addSubview(detailLabel)
-        addSubview(daysLabel)
-        addSubview(circleView)
-        addSubview(resolvedLabel)
-        addSubview(seperatorLine)
+        addSubview(playBackground)
+        addSubview(playIcon)
+        addSubview(contributeButtonBackground)
+        addSubview(contributeButton)
         
-        photoBackground.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 210, height: 130)
-        photo.anchor(top: photoBackground.topAnchor, left: photoBackground.leftAnchor, bottom: photoBackground.bottomAnchor, right: photoBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        detailLabel.anchor(top: photo.bottomAnchor, left: photo.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: detailLabel.intrinsicContentSize.width, height: detailLabel.intrinsicContentSize.height)
-        daysLabel.anchor(top: detailLabel.bottomAnchor, left: photo.leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: daysLabel.intrinsicContentSize.width, height: daysLabel.intrinsicContentSize.height)
-        circleView.anchor(top: daysLabel.topAnchor, left: daysLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 6, paddingBottom: 0, paddingRight: 0, width: 4, height: 4)
-        resolvedLabel.anchor(top: daysLabel.topAnchor, left: circleView.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 6, paddingBottom: 0, paddingRight: 0, width: resolvedLabel.intrinsicContentSize.width, height: resolvedLabel.intrinsicContentSize.height)
-        seperatorLine.anchor(top: photo.topAnchor, left: nil, bottom: photo.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 2.5, height: 0)
-        seperatorLine.centerXAnchor.constraint(equalTo: photo.centerXAnchor).isActive = true
+        photo.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 210, height: 230)
+        detailLabel.anchor(top: photo.bottomAnchor, left: photo.leftAnchor, bottom: nil, right: photo.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
+        playBackground.anchor(top: nil, left: nil, bottom: photo.bottomAnchor, right: photo.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 8, paddingRight: 8, width: 24, height: 24)
+        playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 10, height: 10)
+        playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true
+        playIcon.centerYAnchor.constraint(equalTo: playBackground.centerYAnchor).isActive = true
+        contributeButtonBackground.anchor(top: photo.topAnchor, left: nil, bottom: nil, right: photo.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 90, height: 25)
+        contributeButton.anchor(top: contributeButtonBackground.topAnchor, left: contributeButtonBackground.leftAnchor, bottom: contributeButtonBackground.bottomAnchor, right: contributeButtonBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
     }
     

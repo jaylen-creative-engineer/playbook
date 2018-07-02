@@ -14,13 +14,12 @@ class PursuitsDetailController : UICollectionViewController {
     
     let headerId = "headerId"
     let commentId = "commentId"
-    let principleId = "principleId"
     let postId = "postId"
     let teamId = "teamId"
+    let dayId = "dayId"
     let pursuitId = "discussionPursuitId"
     let solutionId = "solutionId"
     let cellId = "cellId"
-    let stepId = "stepId"
     let challengeId = "challengeId"
     
     var isStandardView = false
@@ -197,23 +196,12 @@ class PursuitsDetailController : UICollectionViewController {
         return true
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        tabBarController?.tabBar.isHidden = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        tabBarController?.tabBar.isHidden = false
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         collectionView?.register(TeamRow.self, forCellWithReuseIdentifier: teamId)
-        collectionView?.register(PursuitPrinciple.self, forCellWithReuseIdentifier: principleId)
+        collectionView?.register(PursuitDay.self, forCellWithReuseIdentifier: dayId)
         collectionView?.register(PostComments.self, forCellWithReuseIdentifier: commentId)
-        collectionView?.register(DetailSteps.self, forCellWithReuseIdentifier: stepId)
         collectionView?.register(PursuitsDetailHeader.self, forCellWithReuseIdentifier: headerId)
         collectionView?.register(DetailChallengeRow.self, forCellWithReuseIdentifier: challengeId)
         collectionView?.register(DetailSolutions.self, forCellWithReuseIdentifier: solutionId)
@@ -299,11 +287,11 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch true {
         case isStandardView:
-            return 6
+            return 5
         case isChallengeView:
-            return 7
+            return 6
         default:
-             return 6
+             return 5
         }
     }
     
@@ -314,11 +302,11 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
             case 0:
                 return CGSize(width: view.frame.width, height: 145)
             case 1:
-                return CGSize(width: view.frame.width, height: 390)
+                return CGSize(width: view.frame.width, height: 550)
             case 2:
-                return CGSize(width: view.frame.width, height: 330)
+                return CGSize(width: view.frame.width, height: 200)
             case 3:
-                return CGSize(width: view.frame.width, height: 180)
+                return CGSize(width: view.frame.width, height: 380)
             case 4:
                 return CGSize(width: view.frame.width, height: 330)
             case 5:
@@ -333,14 +321,12 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
             case 1:
                 return CGSize(width: view.frame.width, height: 420)
             case 2:
-                return CGSize(width: view.frame.width, height: 390)
+                return CGSize(width: view.frame.width, height: 490)
             case 3:
                 return CGSize(width: view.frame.width, height: 330)
             case 4:
-                return CGSize(width: view.frame.width, height: 180)
-            case 5:
                 return CGSize(width: view.frame.width, height: 330)
-            case 6:
+            case 5:
                 return CGSize(width: view.frame.width, height: 400)
             default:
                 assert(false, "Not a valid cell")
@@ -363,22 +349,19 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: headerId, for: indexPath) as! PursuitsDetailHeader
                 return cell
             case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! DetailSteps
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay
                 return cell
             case 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! PursuitPrinciple
-                return cell
-            case 3:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamRow
                 return cell
-            case 4:
+            case 3:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! DetailChallengeRow
                 return cell
-            case 5:
+            case 4:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
                 return cell
             default:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! DetailSteps
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! DetailChallengeRow
                 return cell
             }
         case isChallengeView:
@@ -390,22 +373,19 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: solutionId, for: indexPath) as! DetailSolutions
                 return cell
             case 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! DetailSteps
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay
                 return cell
             case 3:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! PursuitPrinciple
-                return cell
-            case 4:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamRow
                 return cell
-            case 5:
+            case 4:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! DetailChallengeRow
                 return cell
-            case 6:
+            case 5:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
                 return cell
             default:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! DetailSteps
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay
                 return cell
             }
         default:

@@ -10,13 +10,6 @@ import UIKit
 
 class TeamRowCells : UICollectionViewCell {
     
-    let peopleBackground : CardView = {
-        let view = CardView()
-        view.layer.cornerRadius = 25
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     let usernameLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 12)
@@ -50,13 +43,11 @@ class TeamRowCells : UICollectionViewCell {
     }
     
     func setupView(){
-        addSubview(peopleBackground)
         addSubview(profileImage)
         addSubview(fullnameLabel)
         addSubview(usernameLabel)
         
-        peopleBackground.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
-        profileImage.anchor(top: peopleBackground.topAnchor, left: peopleBackground.leftAnchor, bottom: peopleBackground.bottomAnchor, right: peopleBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        profileImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
         usernameLabel.anchor(top: profileImage.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
         usernameLabel.centerXAnchor.constraint(equalTo: profileImage.centerXAnchor).isActive = true
         fullnameLabel.anchor(top: usernameLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: fullnameLabel.intrinsicContentSize.width, height: fullnameLabel.intrinsicContentSize.height)
