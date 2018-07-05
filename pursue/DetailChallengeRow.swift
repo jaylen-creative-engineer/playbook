@@ -13,7 +13,7 @@ class DetailChallengeRow : UICollectionViewCell {
     let rowLabel : UILabel = {
         let label = UILabel()
         label.text = "Challenges."
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont(name: "Lato-Bold", size: 14)
         return label
     }()
     
@@ -21,7 +21,7 @@ class DetailChallengeRow : UICollectionViewCell {
         let button = UIButton()
         button.setTitle("Show All", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: UIFont.Weight.init(25))
+        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 12)
         return button
     }()
     

@@ -13,15 +13,15 @@ class HomePursuitsLists : UICollectionViewCell {
     let rowLabel : UILabel = {
         let label = UILabel()
         label.text = "Pursuits You May Like."
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont(name: "Lato-Bold", size: 14)
         return label
     }()
     
     let showMoreButton : UIButton = {
        let button = UIButton()
-        button.setTitle("SHOW 5+ MORE", for: .normal)
+        button.setTitle("Show 5+ More", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: UIFont.Weight.init(25))
+        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 12)
         return button
     }()
     

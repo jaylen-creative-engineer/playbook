@@ -29,7 +29,7 @@ class FollowedNotification : UICollectionViewCell {
     
     let followedLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont(name: "Lato-Semibold", size: 12)
         label.text = "Sent you a follow request."
         return label
     }()
@@ -44,7 +44,7 @@ class FollowedNotification : UICollectionViewCell {
     let usernameLabel : UILabel = {
         let label = UILabel()
         label.text = "TomDoe"
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont(name: "Lato-Bold", size: 14)
         return label
     }()
     
@@ -52,7 +52,7 @@ class FollowedNotification : UICollectionViewCell {
         let button = UIButton()
         button.setTitle("Follow", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 10)
         button.backgroundColor = .white
         button.layer.cornerRadius = 12
         button.layer.masksToBounds = true

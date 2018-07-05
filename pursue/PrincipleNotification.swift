@@ -30,7 +30,7 @@ class PrincipleNotification : UICollectionViewCell {
     
     let principleLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont(name: "Lato-Semibold", size: 12)
         label.text = "Saved your principle: Build a lattice of mental models"
         return label
     }()
@@ -38,7 +38,7 @@ class PrincipleNotification : UICollectionViewCell {
     let usernameLabel : UILabel = {
         let label = UILabel()
         label.text = "TomDoe"
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont(name: "Lato-Bold", size: 14)
         return label
     }()
     

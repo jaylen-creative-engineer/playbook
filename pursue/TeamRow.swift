@@ -14,7 +14,7 @@ class TeamRow : UICollectionViewCell {
     let rowLabel : UILabel = {
         let label = UILabel()
         label.text = "People."
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont(name: "Lato-Bold", size: 14)
         return label
     }()
     
@@ -22,7 +22,7 @@ class TeamRow : UICollectionViewCell {
        let button = UIButton()
         button.setTitle("Follow", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 10)
         button.backgroundColor = .white
         button.layer.cornerRadius = 12
         button.layer.masksToBounds = true

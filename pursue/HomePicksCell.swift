@@ -21,7 +21,7 @@ class HomePicksCell : UICollectionViewCell {
     let detailLabel : UILabel = {
         let label = UILabel()
         label.text = "Have a vision to work towards"
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont(name: "Lato-Semibold", size: 12)
         return label
     }()
     
@@ -50,7 +50,7 @@ class HomePicksCell : UICollectionViewCell {
         let button = UIButton()
         button.setTitle("Save", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 12)
         button.titleLabel?.textAlignment = .center
         return button
     }()
@@ -64,24 +64,10 @@ class HomePicksCell : UICollectionViewCell {
         return iv
     }()
     
-    let cardUsername : UILabel = {
-        let label = UILabel()
-        label.text = "Test02"
-        label.font = UIFont.boldSystemFont(ofSize: 10)
-        return label
-    }()
-    
-    let cardFullname : UILabel = {
-        let label = UILabel()
-        label.text = "Test"
-        label.font = UIFont.systemFont(ofSize: 10)
-        return label
-    }()
-    
     let postTypeLabel : UILabel = {
        let label = UILabel()
         label.text = "Principle"
-        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.init(25))
+        label.font = UIFont(name: "Lato-Bold", size: 12)
         return label
     }()
     
@@ -99,11 +85,19 @@ class HomePicksCell : UICollectionViewCell {
         return iv
     }()
     
+    let circleView : UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.layer.cornerRadius = 2
+        return view
+    }()
+    
     func setupView(){
         addSubview(photo)
         addSubview(detailLabel)
         addSubview(postTypeLabel)
         addSubview(usernameLabel)
+        addSubview(circleView)
         addSubview(daysLabel)
         addSubview(userPhoto)
         addSubview(playBackground)
@@ -115,8 +109,10 @@ class HomePicksCell : UICollectionViewCell {
         userPhoto.anchor(top: photo.bottomAnchor, left: photo.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
         postTypeLabel.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: postTypeLabel.intrinsicContentSize.width, height: 14)
         detailLabel.anchor(top: postTypeLabel.bottomAnchor, left: postTypeLabel.leftAnchor, bottom: nil, right: photo.rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
-        usernameLabel.anchor(top: detailLabel.bottomAnchor, left: detailLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: 12)
-        daysLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: daysLabel.intrinsicContentSize.width, height: daysLabel.intrinsicContentSize.height)
+        usernameLabel.anchor(top: detailLabel.bottomAnchor, left: detailLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
+        circleView.anchor(top: nil, left: usernameLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 4, height: 4)
+        circleView.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
+        daysLabel.anchor(top: usernameLabel.topAnchor, left: circleView.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: daysLabel.intrinsicContentSize.width, height: daysLabel.intrinsicContentSize.height)
         playBackground.anchor(top: nil, left: nil, bottom: photo.bottomAnchor, right: photo.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 8, paddingRight: 8, width: 24, height: 24)
         playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 10, height: 10)
         playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true

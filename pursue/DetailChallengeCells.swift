@@ -21,20 +21,13 @@ class DetailChallengeCells : UICollectionViewCell {
     let detailLabel : UILabel = {
         let label = UILabel()
         label.text = "Have a vision to work towards"
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont(name: "Lato-Semibold", size: 12)
         return label
     }()
     
     let usernameLabel : UILabel = {
         let label = UILabel()
         label.text = "Test"
-        label.font = UIFont.systemFont(ofSize: 10)
-        return label
-    }()
-    
-    let daysLabel : UILabel = {
-        let label = UILabel()
-        label.text = "2 Days"
         label.font = UIFont.systemFont(ofSize: 10)
         return label
     }()
@@ -50,23 +43,9 @@ class DetailChallengeCells : UICollectionViewCell {
         let button = UIButton()
         button.setTitle("Contribute", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 10)
         button.titleLabel?.textAlignment = .center
         return button
-    }()
-    
-    let cardUsername : UILabel = {
-        let label = UILabel()
-        label.text = "Test02"
-        label.font = UIFont.boldSystemFont(ofSize: 10)
-        return label
-    }()
-    
-    let cardFullname : UILabel = {
-        let label = UILabel()
-        label.text = "Test"
-        label.font = UIFont.systemFont(ofSize: 10)
-        return label
     }()
     
     let playBackground : GroupChatView = {

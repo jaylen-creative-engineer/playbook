@@ -13,7 +13,7 @@ class DetailSolutions : UICollectionViewCell {
     let rowLabel : UILabel = {
         let label = UILabel()
         label.text = "Responses."
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont(name: "Lato-Bold", size: 14)
         return label
     }()
     

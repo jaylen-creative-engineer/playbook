@@ -28,7 +28,7 @@ class PursuitDayCells : UICollectionViewCell {
     
     let postLabel : UILabel = {
        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.font = UIFont(name: "Lato-Semibold", size: 12)
         label.text = "Working at this thing here."
         return label
     }()
@@ -37,7 +37,7 @@ class PursuitDayCells : UICollectionViewCell {
        let label = UILabel()
         label.text = "Principle"
         label.textColor = .gray
-        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.font = UIFont(name: "Lato-Bold", size: 12)
         return label
     }()
     

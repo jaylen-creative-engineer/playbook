@@ -18,7 +18,7 @@ class PursuitsDetailHeader : UICollectionViewCell {
     let usernameLabel : UILabel = {
         let label = UILabel()
         label.text = "Versace"
-        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.font = UIFont(name: "Lato-Bold", size: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

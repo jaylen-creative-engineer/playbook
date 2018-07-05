@@ -12,7 +12,7 @@ class TeamRowCells : UICollectionViewCell {
     
     let usernameLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.font = UIFont(name: "Lato-Semibold", size: 12)
         return label
     }()
     

@@ -20,83 +20,27 @@ class ProfileHeader : UICollectionViewCell {
         return iv
     }()
     
-    let statsBackground : HomeCellRectangleView = {
-       let view = HomeCellRectangleView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+    let expand : UIImageView = {
+       let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "expand_arrow1600").withRenderingMode(.alwaysOriginal)
+        iv.contentMode = .scaleAspectFill
+        return iv
     }()
     
-    let statsContainer : UIView = {
-       let view = UIView()
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 8
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    let daysCount : UILabel = {
+    let statsLabel : UILabel = {
        let label = UILabel()
-        label.text = "120"
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
+        label.text = "Stats"
+        label.font = UIFont(name: "Lato-Bold", size: 14)
         return label
     }()
     
-    let daysLabel : UILabel = {
-       let label = UILabel()
-        label.text = "Days \nIn Pursuit"
-        label.font = UIFont.systemFont(ofSize: 10)
-        label.numberOfLines = 2
-        label.textAlignment = .center
-        return label
-    }()
-    
-    let daysSeperator : UIView = {
-        let view = UIView()
-        view.backgroundColor = .lightGray
-        view.layer.cornerRadius = 4
-        return view
-    }()
-    
-    let pursuitCount : UILabel = {
-       let label = UILabel()
-        label.text = "2"
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
-        return label
-    }()
-    
-    let pursuitLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Pursuits Completed"
-        label.font = UIFont.systemFont(ofSize: 10)
-        label.textAlignment = .center
-        label.numberOfLines = 2
-        return label
-    }()
-    
-    let pursuitSeperator : UIView = {
-        let view = UIView()
-        view.backgroundColor = .lightGray
-        view.layer.cornerRadius = 4
-        return view
-    }()
-    
-    let stepsCount : UILabel = {
-        let label = UILabel()
-        label.text = "12"
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
-        return label
-    }()
-    
-    let stepsLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Steps Completed"
-        label.font = UIFont.systemFont(ofSize: 10)
-        label.numberOfLines = 2
-        label.textAlignment = .center
-        return label
+    let dropdownButton : UIButton = {
+       let button = UIButton()
+        button.setTitle("20", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 12)
+        button.titleLabel?.textAlignment = .left
+        return button
     }()
     
     let usernameLabel : UILabel = {
@@ -111,7 +55,7 @@ class ProfileHeader : UICollectionViewCell {
        let label = UILabel()
         label.text = "Jaylen Sanders"
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.init(25))
+        label.font = UIFont(name: "Lato-Black", size: 18)
         return label
     }()
     
@@ -148,7 +92,7 @@ class ProfileHeader : UICollectionViewCell {
         button.backgroundColor = .black
         button.setTitle("Message", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 14)
         button.layer.cornerRadius = 20
         button.layer.masksToBounds = true
         return button
@@ -157,15 +101,15 @@ class ProfileHeader : UICollectionViewCell {
     lazy var followButton : UIButton = {
        let button = UIButton()
         button.backgroundColor = .white
-        button.setTitle("Follow", for: .normal)
+        button.setTitle("Add", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 14)
         button.layer.cornerRadius = 20
         button.layer.masksToBounds = true
         return button
     }()
     
-    lazy var followingCollectionView : UICollectionView = {
+    lazy var addedCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         
@@ -177,58 +121,36 @@ class ProfileHeader : UICollectionViewCell {
         return collectionView
     }()
     
-    lazy var followersCollectionView : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.isScrollEnabled = false
-        collectionView.isUserInteractionEnabled = true
-        return collectionView
-    }()
-    
-    let followersCountLabel : UILabel = {
+    let addedCountLabel : UILabel = {
         let label = UILabel()
-        label.text = "120 Followers"
-        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.init(25))
+        label.text = "120 Added."
+        label.font = UIFont(name: "Lato-Bold", size: 14)
         return label
     }()
     
-    let followingCountLabel : UILabel = {
-        let label = UILabel()
-        label.text = "120 Following"
-        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.init(25))
+    let pursuitsRowLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Pursuits."
+        label.font = UIFont(name: "Lato-Bold", size: 14)
         return label
     }()
     
-    var fakeFollowerArray = [#imageLiteral(resourceName: "samuel-l"), #imageLiteral(resourceName: "comment-4"), #imageLiteral(resourceName: "comment-5")]
+    var fakeFollowerArray = [#imageLiteral(resourceName: "samuel-l"), #imageLiteral(resourceName: "comment-4"), #imageLiteral(resourceName: "comment-5"), #imageLiteral(resourceName: "comment-4"), #imageLiteral(resourceName: "comment-7")]
     
     func setupFollowersCollectionView(){
-        addSubview(followersCollectionView)
-        addSubview(followersCountLabel)
+        addSubview(addedCollectionView)
+        addSubview(addedCountLabel)
+        addSubview(pursuitsRowLabel)
         
-        followersCollectionView.delegate = self
-        followersCollectionView.dataSource = self
-        followersCollectionView.register(FollowingCells.self, forCellWithReuseIdentifier: followId)
+        addedCollectionView.delegate = self
+        addedCollectionView.dataSource = self
+        addedCollectionView.register(FollowingCells.self, forCellWithReuseIdentifier: followId)
         
-        followersCollectionView.anchor(top: bioText.bottomAnchor, left: statsContainer.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 48, paddingBottom: 0, paddingRight: 0, width: 100, height: 60)
-        followersCountLabel.anchor(top: nil, left: followersCollectionView.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: followersCountLabel.intrinsicContentSize.width, height: followersCountLabel.intrinsicContentSize.height)
-        followersCountLabel.centerYAnchor.constraint(equalTo: followersCollectionView.centerYAnchor).isActive = true
+        addedCountLabel.anchor(top: messageButton.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 42, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: addedCountLabel.intrinsicContentSize.width, height: addedCountLabel.intrinsicContentSize.height)
+        addedCollectionView.anchor(top: addedCountLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 100, height: 60)
+        pursuitsRowLabel.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: pursuitsRowLabel.intrinsicContentSize.width, height: pursuitsRowLabel.intrinsicContentSize.height)
     }
     
-    func setupFollowingCollectionView(){
-        addSubview(followingCollectionView)
-        addSubview(followingCountLabel)
-        
-        followingCollectionView.delegate = self
-        followingCollectionView.dataSource = self
-        followingCollectionView.register(FollowingCells.self, forCellWithReuseIdentifier: followId)
-        followingCollectionView.anchor(top: followersCollectionView.bottomAnchor, left: followersCollectionView.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 100, height: 60)
-        followingCountLabel.anchor(top: nil, left: followingCollectionView.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: followingCountLabel.intrinsicContentSize.width, height: followingCountLabel.intrinsicContentSize.height)
-        followingCountLabel.centerYAnchor.constraint(equalTo: followingCollectionView.centerYAnchor).isActive = true
-    }
     
     func setupProfileDetails(){
         addSubview(usernameLabel)
@@ -239,48 +161,42 @@ class ProfileHeader : UICollectionViewCell {
         addSubview(messageButton)
         addSubview(followButton)
         
-        usernameLabel.anchor(top: statsContainer.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
-        usernameLabel.centerXAnchor.constraint(equalTo: statsContainer.centerXAnchor).isActive = true
-        fullnameLabel.anchor(top: usernameLabel.bottomAnchor, left: statsContainer.leftAnchor, bottom: nil, right: statsContainer.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: fullnameLabel.intrinsicContentSize.width, height: fullnameLabel.intrinsicContentSize.height)
-        bioText.anchor(top: fullnameLabel.bottomAnchor, left: statsContainer.leftAnchor, bottom: nil, right: statsContainer.rightAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 70)
-        setupFollowersCollectionView()
-        setupFollowingCollectionView()
-        messageBackground.anchor(top: followingCollectionView.bottomAnchor, left: statsContainer.leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 24, paddingBottom: 0, paddingRight: 0, width: 130, height: 40)
+        usernameLabel.anchor(top: backgroundFill.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
+        usernameLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        fullnameLabel.anchor(top: usernameLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: fullnameLabel.intrinsicContentSize.width, height: fullnameLabel.intrinsicContentSize.height)
+        fullnameLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        bioText.anchor(top: fullnameLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 24, paddingBottom: 0, paddingRight: 24, width: 0, height: 70)
+        messageBackground.anchor(top: bioText.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 48, paddingBottom: 0, paddingRight: 0, width: 130, height: 40)
         messageButton.anchor(top: messageBackground.topAnchor, left: messageBackground.leftAnchor, bottom: messageBackground.bottomAnchor, right: messageBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        followBackground.anchor(top: followingCollectionView.bottomAnchor, left: nil, bottom: nil, right: statsContainer.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 24, width: 130, height: 40)
+        followBackground.anchor(top: bioText.bottomAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 48, width: 130, height: 40)
         followButton.anchor(top: followBackground.topAnchor, left: followBackground.leftAnchor, bottom: followBackground.bottomAnchor, right: followBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        setupFollowersCollectionView()
         
+    }
+    
+    let backgroundFill = RectangleView()
+    
+    func setupStatsLabel(){
+        backgroundFill.backgroundColor = .white
+        
+        addSubview(backgroundFill)
+        addSubview(statsLabel)
+        addSubview(dropdownButton)
+        addSubview(expand)
+        
+        backgroundFill.anchor(top: imageView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+        statsLabel.anchor(top: nil, left: leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: statsLabel.intrinsicContentSize.width, height: statsLabel.intrinsicContentSize.height)
+        statsLabel.centerYAnchor.constraint(equalTo: backgroundFill.centerYAnchor).isActive = true
+        dropdownButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 32, width: 20, height: 24)
+        dropdownButton.centerYAnchor.constraint(equalTo: statsLabel.centerYAnchor).isActive = true
+        expand.anchor(top: nil, left: dropdownButton.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 6, paddingBottom: 0, paddingRight: 0, width: 10, height: 10)
+        expand.centerYAnchor.constraint(equalTo: dropdownButton.centerYAnchor).isActive = true
     }
     
     func setupView(){
         addSubview(imageView)
-        addSubview(statsBackground)
-        addSubview(statsContainer)
-        addSubview(daysCount)
-        addSubview(daysLabel)
-        addSubview(daysSeperator)
-        addSubview(pursuitCount)
-        addSubview(pursuitLabel)
-        addSubview(pursuitSeperator)
-        addSubview(stepsCount)
-        addSubview(stepsLabel)
-        
         imageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 350)
-        statsBackground.anchor(top: nil, left: imageView.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 18, width: 0, height: 80)
-        statsBackground.centerYAnchor.constraint(equalTo: imageView.bottomAnchor).isActive = true
-        statsContainer.anchor(top: statsBackground.topAnchor, left: statsBackground.leftAnchor, bottom: statsBackground.bottomAnchor, right: statsBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        daysCount.anchor(top: statsContainer.topAnchor, left: statsContainer.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 24, paddingBottom: 0, paddingRight: 0, width: daysCount.intrinsicContentSize.width, height: daysCount.intrinsicContentSize.height)
-        daysLabel.anchor(top: daysCount.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 60, height: 24)
-        daysLabel.centerXAnchor.constraint(equalTo: daysCount.centerXAnchor).isActive = true
-        daysSeperator.anchor(top: daysLabel.topAnchor, left: daysLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 32, paddingBottom: 0, paddingRight: 0, width: 8, height: 8)
-        pursuitCount.anchor(top: daysCount.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: pursuitCount.intrinsicContentSize.width, height: pursuitCount.intrinsicContentSize.height)
-        pursuitCount.centerXAnchor.constraint(equalTo: statsContainer.centerXAnchor).isActive = true
-        pursuitLabel.anchor(top: pursuitCount.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 80, height: 24)
-        pursuitLabel.centerXAnchor.constraint(equalTo: pursuitCount.centerXAnchor).isActive = true
-        pursuitSeperator.anchor(top: pursuitLabel.topAnchor, left: pursuitLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 32, paddingBottom: 0, paddingRight: 0, width: 8, height: 8)
-        stepsCount.anchor(top: pursuitCount.topAnchor, left: nil, bottom: nil, right: statsContainer.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 24, width: stepsCount.intrinsicContentSize.width, height: stepsCount.intrinsicContentSize.height)
-        stepsLabel.anchor(top: stepsCount.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 80, height: 24)
-        stepsLabel.centerXAnchor.constraint(equalTo: stepsCount.centerXAnchor).isActive = true
+        setupStatsLabel()
         setupProfileDetails()
     }
     
@@ -296,7 +212,7 @@ class ProfileHeader : UICollectionViewCell {
 
 extension ProfileHeader :  UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -305,11 +221,7 @@ extension ProfileHeader :  UICollectionViewDelegate, UICollectionViewDataSource,
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (frame.width / 12) - 15, height: 50)
+        return CGSize(width: (frame.width / 7) - 15, height: 50)
     }
 }

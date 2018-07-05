@@ -22,7 +22,7 @@ class HomePursuitsCells : UICollectionViewCell {
     let detailLabel : UILabel = {
        let label = UILabel()
         label.text = "Have a vision to work towards"
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont(name: "Lato-Semibold", size: 12)
         return label
     }()
     
@@ -35,7 +35,7 @@ class HomePursuitsCells : UICollectionViewCell {
     
     let circleView : UIView = {
        let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .black
         view.layer.cornerRadius = 2
         return view
     }()
@@ -58,7 +58,7 @@ class HomePursuitsCells : UICollectionViewCell {
        let button = UIButton()
         button.setTitle("Save", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 12)
         button.titleLabel?.textAlignment = .center
         return button
     }()
@@ -70,20 +70,6 @@ class HomePursuitsCells : UICollectionViewCell {
         iv.layer.cornerRadius = 20
         iv.layer.masksToBounds = true
         return iv
-    }()
-    
-    let cardUsername : UILabel = {
-       let label = UILabel()
-        label.text = "Test02"
-        label.font = UIFont.boldSystemFont(ofSize: 10)
-        return label
-    }()
-    
-    let cardFullname : UILabel = {
-        let label = UILabel()
-        label.text = "Test"
-        label.font = UIFont.systemFont(ofSize: 10)
-        return label
     }()
     
     let playBackground : PlayView = {
@@ -104,6 +90,7 @@ class HomePursuitsCells : UICollectionViewCell {
         addSubview(photo)
         addSubview(detailLabel)
         addSubview(usernameLabel)
+        addSubview(circleView)
         addSubview(daysLabel)
         addSubview(userPhoto)
         addSubview(playBackground)
@@ -115,7 +102,9 @@ class HomePursuitsCells : UICollectionViewCell {
         userPhoto.anchor(top: photo.bottomAnchor, left: photo.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
         detailLabel.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: photo.rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: detailLabel.intrinsicContentSize.height)
         usernameLabel.anchor(top: detailLabel.bottomAnchor, left: detailLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
-        daysLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: daysLabel.intrinsicContentSize.width, height: daysLabel.intrinsicContentSize.height)
+        circleView.anchor(top: nil, left: usernameLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 4, height: 4)
+        circleView.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
+        daysLabel.anchor(top: usernameLabel.topAnchor, left: circleView.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: daysLabel.intrinsicContentSize.width, height: daysLabel.intrinsicContentSize.height)
         playBackground.anchor(top: nil, left: nil, bottom: photo.bottomAnchor, right: photo.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 8, paddingRight: 8, width: 30, height: 30)
         playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 12, height: 12)
         playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true

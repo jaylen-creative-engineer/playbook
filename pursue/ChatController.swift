@@ -39,7 +39,7 @@ class ChatController : UICollectionViewCell {
     let messagesLabel : UILabel = {
         let label = UILabel()
         label.text = "Messages."
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont(name: "Lato-Bold", size: 14)
         return label
     }()
     

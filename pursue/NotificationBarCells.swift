@@ -12,7 +12,7 @@ class NotificationBarCells : UICollectionViewCell {
     
     lazy var selectNotification : UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight(rawValue: 25))
+        label.font = UIFont(name: "Lato-Black", size: 24)
         label.textColor = .gray
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -20,14 +20,12 @@ class NotificationBarCells : UICollectionViewCell {
     
     override var isHighlighted: Bool {
         didSet {
-            selectNotification.font = isHighlighted ?  UIFont.systemFont(ofSize: 18, weight: UIFont.Weight(rawValue: 25)) : UIFont.systemFont(ofSize: 18, weight: UIFont.Weight(rawValue: 25))
             selectNotification.textColor = isHighlighted ? .black : .gray
         }
     }
     
     override var isSelected: Bool {
         didSet {
-            selectNotification.font = isSelected ? UIFont.systemFont(ofSize: 18, weight: UIFont.Weight(rawValue: 25)) : UIFont.systemFont(ofSize: 18, weight: UIFont.Weight(rawValue: 25))
             selectNotification.textColor = isSelected ? .black : .gray
         }
     }

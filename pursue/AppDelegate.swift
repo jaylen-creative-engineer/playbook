@@ -30,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         window = UIWindow()
         window?.rootViewController = MainTabController()
         window?.makeKeyAndVisible()
+        UILabel.appearance().font = UIFont(name: "Montserrat", size: 24)
         
         return true
     }

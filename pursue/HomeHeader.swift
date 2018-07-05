@@ -13,7 +13,7 @@ class HomeHeader : UICollectionViewCell {
     let homeLabel : UILabel = {
         let label = UILabel()
         label.text = "Home"
-        label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.init(25))
+        label.font = UIFont(name: "Lato-Black", size: 24)
         return label
     }()
     

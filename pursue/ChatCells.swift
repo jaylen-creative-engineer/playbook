@@ -38,7 +38,7 @@ class ChatCells : UICollectionViewCell {
     
     let commentLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont(name: "Lato-Semibold", size: 12)
         label.text = "Commented on your pursuit: I worked on this also. Good luck and keep working"
         label.numberOfLines = 2
         return label
@@ -47,14 +47,14 @@ class ChatCells : UICollectionViewCell {
     let usernameLabel : UILabel = {
         let label = UILabel()
         label.text = "TomDoe"
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont(name: "Lato-Bold", size: 14)
         return label
     }()
     
     let timeLabel : UILabel = {
         let label = UILabel()
         label.text = "21 hours ago"
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont.systemFont(ofSize: 10)
         return label
     }()
     

@@ -30,7 +30,7 @@ class LikedNotification : UICollectionViewCell {
     
     let likeLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont(name: "Lato-Semibold", size: 12)
         label.text = "Liked your pursuit: Changing the world"
         label.numberOfLines = 2
         return label
@@ -39,7 +39,7 @@ class LikedNotification : UICollectionViewCell {
     let usernameLabel : UILabel = {
         let label = UILabel()
         label.text = "TomDoe"
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont(name: "Lato-Bold", size: 14)
         return label
     }()
     

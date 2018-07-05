@@ -30,7 +30,7 @@ class PursuitNotification : UICollectionViewCell {
     
     let contributionLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont(name: "Lato-Semibold", size: 12)
         label.text = "Contributed to your pursuit: Try to do it this way"
         return label
     }()
@@ -38,7 +38,7 @@ class PursuitNotification : UICollectionViewCell {
     let usernameLabel : UILabel = {
         let label = UILabel()
         label.text = "TomDoe"
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont(name: "Lato-Bold", size: 14)
         return label
     }()
     
@@ -83,7 +83,7 @@ class PursuitNotification : UICollectionViewCell {
     
     let solutionLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.font = UIFont(name: "Lato-Semibold", size: 12)
         label.text = "Hold your breath for four, release for four and breath in for four"
         label.numberOfLines = 2
         return label
@@ -107,7 +107,7 @@ class PursuitNotification : UICollectionViewCell {
         let label = UILabel()
         label.text = "Accept"
         label.textColor = .green
-        label.font = UIFont.boldSystemFont(ofSize: 10)
+        label.font = UIFont(name: "Lato-Semibold", size: 10)
         return label
     }()
     
@@ -115,7 +115,7 @@ class PursuitNotification : UICollectionViewCell {
         let label = UILabel()
         label.text = "Decline"
         label.textColor = .red
-        label.font = UIFont.boldSystemFont(ofSize: 10)
+        label.font = UIFont(name: "Lato-Semibold", size: 10)
         return label
     }()
     

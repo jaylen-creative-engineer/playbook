@@ -359,3 +359,4 @@ extension UIView {
         self.layer.rasterizationScale = scale ? UIScreen.main.scale : 1
     }
 }
+

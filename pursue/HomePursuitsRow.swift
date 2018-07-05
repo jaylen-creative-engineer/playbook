@@ -13,7 +13,7 @@ class HomePursuitsRow : UICollectionViewCell {
     let rowLabel : UILabel = {
        let label = UILabel()
         label.text = "My Pursuits."
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont(name: "Lato-Bold", size: 14)
         return label
     }()
     
@@ -22,7 +22,7 @@ class HomePursuitsRow : UICollectionViewCell {
         button.setTitle("Show All", for: .normal)
         button.addTarget(self, action: #selector(goToFeed), for: .touchUpInside)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: UIFont.Weight.init(25))
+        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 12)
         return button
     }()
     

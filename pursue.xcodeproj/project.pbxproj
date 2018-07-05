@@ -91,6 +91,7 @@
 		E63CEB4E20EACAC000FFDEF3 /* PursuitDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CEB4D20EACAC000FFDEF3 /* PursuitDay.swift */; };
 		E63CEB5020EACEC100FFDEF3 /* DayLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CEB4F20EACEC100FFDEF3 /* DayLabelCell.swift */; };
 		E63CEB5220EAD52C00FFDEF3 /* PursuitDayCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CEB5120EAD52C00FFDEF3 /* PursuitDayCells.swift */; };
+		E63CEB6220ED60D500FFDEF3 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CEB6120ED60D500FFDEF3 /* Utility.swift */; };
 		E64324B51F79A47F0090075F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64324B41F79A47F0090075F /* CardView.swift */; };
 		E643EF8920E5685E00EE411B /* NotificationsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E643EF8820E5685E00EE411B /* NotificationsContainer.swift */; };
 		E643EF8C20E5698200EE411B /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E643EF8B20E5698200EE411B /* ChatController.swift */; };
@@ -99,6 +100,12 @@
 		E659EB1B2040876D00CA8DB5 /* CustomCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E659EB1A2040876D00CA8DB5 /* CustomCreateView.swift */; };
 		E65F1E521FCCBE5000BD850E /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F1E511FCCBE5000BD850E /* HomeController.swift */; };
 		E65F1E561FCCC7BF00BD850E /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F1E551FCCC7BF00BD850E /* ProfileController.swift */; };
+		E667067720ED6D9B001A8E8E /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E667066C20ED6D9B001A8E8E /* Lato-Bold.ttf */; };
+		E667067820ED6D9B001A8E8E /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E667066D20ED6D9B001A8E8E /* Lato-Black.ttf */; };
+		E667067D20ED6D9B001A8E8E /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = E667067220ED6D9B001A8E8E /* OFL.txt */; };
+		E667068120ED6F04001A8E8E /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E667068020ED6EBE001A8E8E /* Lato-Thin.ttf */; };
+		E667068320ED6F79001A8E8E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E6CE22801F671D11006C5755 /* Info.plist */; };
+		E667068620EDA0BA001A8E8E /* Lato-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E667068520EDA0A1001A8E8E /* Lato-Semibold.ttf */; };
 		E66AEB1920DD6ECC000018B5 /* ProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66AEB1820DD6ECC000018B5 /* ProfileHeader.swift */; };
 		E66AEB1B20DD91DE000018B5 /* ProfileSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66AEB1A20DD91DE000018B5 /* ProfileSteps.swift */; };
 		E66AEB1D20DD9229000018B5 /* ProfileStepsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66AEB1C20DD9229000018B5 /* ProfileStepsCells.swift */; };
@@ -287,6 +294,7 @@
 		E63CEB4D20EACAC000FFDEF3 /* PursuitDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PursuitDay.swift; sourceTree = "<group>"; };
 		E63CEB4F20EACEC100FFDEF3 /* DayLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayLabelCell.swift; sourceTree = "<group>"; };
 		E63CEB5120EAD52C00FFDEF3 /* PursuitDayCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PursuitDayCells.swift; sourceTree = "<group>"; };
+		E63CEB6120ED60D500FFDEF3 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		E64324B41F79A47F0090075F /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		E643EF8820E5685E00EE411B /* NotificationsContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsContainer.swift; sourceTree = "<group>"; };
 		E643EF8B20E5698200EE411B /* ChatController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
@@ -295,6 +303,12 @@
 		E659EB1A2040876D00CA8DB5 /* CustomCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCreateView.swift; sourceTree = "<group>"; };
 		E65F1E511FCCBE5000BD850E /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		E65F1E551FCCC7BF00BD850E /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
+		E667066C20ED6D9B001A8E8E /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
+		E667066D20ED6D9B001A8E8E /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Black.ttf"; sourceTree = "<group>"; };
+		E667067220ED6D9B001A8E8E /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
+		E667068020ED6EBE001A8E8E /* Lato-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Thin.ttf"; sourceTree = "<group>"; };
+		E667068420EDA08E001A8E8E /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-Regular.ttf"; path = "../../../../../.Trash/lato/Lato-Regular.ttf"; sourceTree = "<group>"; };
+		E667068520EDA0A1001A8E8E /* Lato-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Semibold.ttf"; sourceTree = "<group>"; };
 		E66AEB1820DD6ECC000018B5 /* ProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeader.swift; sourceTree = "<group>"; };
 		E66AEB1A20DD91DE000018B5 /* ProfileSteps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSteps.swift; sourceTree = "<group>"; };
 		E66AEB1C20DD9229000018B5 /* ProfileStepsCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStepsCells.swift; sourceTree = "<group>"; };
@@ -551,6 +565,19 @@
 			name = Chat;
 			sourceTree = "<group>";
 		};
+		E667066920ED6D9B001A8E8E /* Lato */ = {
+			isa = PBXGroup;
+			children = (
+				E667066C20ED6D9B001A8E8E /* Lato-Bold.ttf */,
+				E667066D20ED6D9B001A8E8E /* Lato-Black.ttf */,
+				E667068520EDA0A1001A8E8E /* Lato-Semibold.ttf */,
+				E667068420EDA08E001A8E8E /* Lato-Regular.ttf */,
+				E667068020ED6EBE001A8E8E /* Lato-Thin.ttf */,
+				E667067220ED6D9B001A8E8E /* OFL.txt */,
+			);
+			path = Lato;
+			sourceTree = "<group>";
+		};
 		E6A273FC1F68323F00F5B4C8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -631,6 +658,7 @@
 				E6D5714420110B2A008A37CC /* pursue-bridging-header.h */,
 				E6F41F482002633E002FD8D4 /* possible-ui.gif */,
 				E6CE22781F671D10006C5755 /* Main.storyboard */,
+				E667066920ED6D9B001A8E8E /* Lato */,
 				E6CE227B1F671D11006C5755 /* Assets.xcassets */,
 				E6CE227D1F671D11006C5755 /* LaunchScreen.storyboard */,
 				E6CE22801F671D11006C5755 /* Info.plist */,
@@ -651,6 +679,7 @@
 				E6DF9EBC203BAAB1005C86DB /* CommentInputAccessoryView.swift */,
 				E6DF9EBE203BAB1B005C86DB /* CommentInputTextView.swift */,
 				E6D0B401203E13D2008D4268 /* ViewWithDiagonalLine.swift */,
+				E63CEB6120ED60D500FFDEF3 /* Utility.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -853,11 +882,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E667067D20ED6D9B001A8E8E /* OFL.txt in Resources */,
 				E6CE227F1F671D11006C5755 /* LaunchScreen.storyboard in Resources */,
+				E667068620EDA0BA001A8E8E /* Lato-Semibold.ttf in Resources */,
+				E667067820ED6D9B001A8E8E /* Lato-Black.ttf in Resources */,
 				E6F41F492002633E002FD8D4 /* possible-ui.gif in Resources */,
 				E6CE227C1F671D11006C5755 /* Assets.xcassets in Resources */,
 				E6CE228D1F6721C7006C5755 /* GoogleService-Info.plist in Resources */,
 				E6CE227A1F671D10006C5755 /* Main.storyboard in Resources */,
+				E667068120ED6F04001A8E8E /* Lato-Thin.ttf in Resources */,
+				E667068320ED6F79001A8E8E /* Info.plist in Resources */,
+				E667067720ED6D9B001A8E8E /* Lato-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1047,6 +1082,7 @@
 				E6E0B0262061671E00007A21 /* CreateAlertViewCell.swift in Sources */,
 				E6D0B41F203FDEEF008D4268 /* ExploreImageRow.swift in Sources */,
 				E680ECC5206ACBD60023087D /* ProfilePursuitCreateCell.swift in Sources */,
+				E63CEB6220ED60D500FFDEF3 /* Utility.swift in Sources */,
 				E66AEB2120DD95E7000018B5 /* ProfilePrincipleCells.swift in Sources */,
 				E63CEB5020EACEC100FFDEF3 /* DayLabelCell.swift in Sources */,
 				E6D571432010FD7D008A37CC /* HomeInterestsCells.swift in Sources */,

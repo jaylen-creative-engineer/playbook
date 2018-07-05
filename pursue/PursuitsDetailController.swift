@@ -228,7 +228,7 @@ class PursuitsDetailController : UICollectionViewController {
         label.text = "Travel through amazing heights"
         label.numberOfLines = 2
         label.textColor = .white
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont(name: "Lato-Bold", size: 18)
         
         let subLabel = UILabel()
         subLabel.text = "Building a tech company"
