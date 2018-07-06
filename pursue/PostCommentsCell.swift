@@ -10,49 +10,49 @@ import UIKit
 
 class PostCommentsCell : UICollectionViewCell {
     
-    let usernameLabel : UILabel = {
-        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 12)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Test"
-        return label
-    }()
-    
-    let commentText : UITextView = {
-        let label = UITextView()
-        label.isScrollEnabled = false
-        label.font = UIFont.systemFont(ofSize: 10)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let peopleBackground : PlayView = {
-        let view = PlayView()
-        view.backgroundColor = .black
-        view.layer.masksToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     let userPhoto : UIImageView = {
         let iv = UIImageView()
-        iv.layer.cornerRadius = 25
+        iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
+        iv.layer.masksToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.layer.cornerRadius = 25
         return iv
-        
+    }()
+    
+    
+    let commentLabel : UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Lato-Semibold", size: 12)
+        label.text = "Commented on your pursuit: I worked on this also. Good luck and keep working"
+        label.numberOfLines = 2
+        return label
+    }()
+    
+    let usernameLabel : UILabel = {
+        let label = UILabel()
+        label.text = "TomDoe"
+        label.font = UIFont(name: "Lato-Bold", size: 14)
+        return label
+    }()
+    
+    let timeLabel : UILabel = {
+        let label = UILabel()
+        label.text = "21 hours ago"
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
     }()
     
     func setupView(){
-        addSubview(peopleBackground)
-//        addSubview(userPhoto)
+        addSubview(userPhoto)
         addSubview(usernameLabel)
-        addSubview(commentText)
+        addSubview(commentLabel)
+        addSubview(timeLabel)
         
-        peopleBackground.anchor(top: safeAreaLayoutGuide.topAnchor, left: safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
-//        userPhoto.anchor(top: peopleBackground.topAnchor, left: peopleBackground.leftAnchor, bottom: peopleBackground.bottomAnchor, right: peopleBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        usernameLabel.anchor(top: peopleBackground.topAnchor, left: peopleBackground.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
-        commentText.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: commentText.intrinsicContentSize.width, height: 70)
+        userPhoto.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
+        usernameLabel.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
+        commentLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: safeAreaLayoutGuide.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 10, width: commentLabel.intrinsicContentSize.width, height: (commentLabel.intrinsicContentSize.height * 2) + 5)
+        timeLabel.anchor(top: commentLabel.bottomAnchor, left: commentLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: timeLabel.intrinsicContentSize.width, height: timeLabel.intrinsicContentSize.height)
     }
     
     override init(frame: CGRect) {

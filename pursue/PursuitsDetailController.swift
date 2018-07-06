@@ -310,7 +310,7 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
             case 4:
                 return CGSize(width: view.frame.width, height: 330)
             case 5:
-                return CGSize(width: view.frame.width, height: 400)
+                return CGSize(width: view.frame.width, height: 550)
             default:
                 assert(false, "Not a valid cell")
             }
@@ -321,13 +321,13 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
             case 1:
                 return CGSize(width: view.frame.width, height: 420)
             case 2:
-                return CGSize(width: view.frame.width, height: 490)
+                return CGSize(width: view.frame.width, height: 550)
             case 3:
-                return CGSize(width: view.frame.width, height: 330)
+                return CGSize(width: view.frame.width, height: 200)
             case 4:
-                return CGSize(width: view.frame.width, height: 330)
+                return CGSize(width: view.frame.width, height: 380)
             case 5:
-                return CGSize(width: view.frame.width, height: 400)
+                return CGSize(width: view.frame.width, height: 550)
             default:
                 assert(false, "Not a valid cell")
             }

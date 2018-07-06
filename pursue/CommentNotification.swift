@@ -9,14 +9,7 @@
 import UIKit
 
 class CommentNotification : UICollectionViewCell {
-    
-    let peopleBackground : CardView = {
-        let view = CardView()
-        view.layer.cornerRadius = 25
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
+
     let userPhoto : UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
