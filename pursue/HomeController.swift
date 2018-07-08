@@ -8,9 +8,6 @@
 
 import UIKit
 import iCarousel
-import Alamofire
-import SwiftyJSON
-import Firebase
 
 class HomeController : UICollectionViewController {
     
@@ -112,6 +109,14 @@ class HomeController : UICollectionViewController {
         self.showDetailViewController(customAlert, sender: self)
     }
     
+    func openSearchModal(){
+        let searchView = SearchView()
+        searchView.providesPresentationContextTransitionStyle = true
+        searchView.definesPresentationContext = true
+        searchView.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        searchView.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.showDetailViewController(searchView, sender: self)
+    }
     
     func pursuitHeld() {
         //        let customAlert = CustomAlertView()
@@ -270,6 +275,7 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! HomeHeader
+        cell.accessHomeController = self
         return cell
     }
     

@@ -10,6 +10,8 @@ import UIKit
 
 class HomeHeader : UICollectionViewCell {
     
+    var accessHomeController : HomeController?
+    
     let homeLabel : UILabel = {
         let label = UILabel()
         label.text = "Home"
@@ -17,12 +19,17 @@ class HomeHeader : UICollectionViewCell {
         return label
     }()
     
-    let searchIcon : UIImageView = {
-        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "search_selected").withRenderingMode(.alwaysOriginal)
-        iv.contentMode = .scaleAspectFill
-        return iv
+    lazy var searchIcon : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "search_selected").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(openSearchModal), for: .touchUpInside)
+        return button
     }()
+    
+    @objc func openSearchModal(){
+        accessHomeController?.openSearchModal()
+    }
     
     private func setupView(){
         addSubview(homeLabel)
