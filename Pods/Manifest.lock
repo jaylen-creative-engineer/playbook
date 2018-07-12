@@ -6,6 +6,7 @@ PODS:
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
+  - DropDown (2.0.1)
   - FBSDKCoreKit (4.28.0):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.28.0):
@@ -84,6 +85,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - DropDown
   - FBSDKCoreKit
   - FBSDKLoginKit
   - FBSDKShareKit
@@ -102,6 +104,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  DropDown: 7da559c37b5515156cc21289945189921f500498
   FBSDKCoreKit: ca961e279113f691fd83dc634c0bbad9d4e3f370
   FBSDKLoginKit: b077381c27d800f21661757e8140cf2c80a91e4a
   FBSDKShareKit: 4f525556e0df4cf0f574cb3f01c675434f29d477
@@ -126,6 +129,6 @@ SPEC CHECKSUMS:
   SwiftyCam: 86c114177a1b1f5dc2c82384577d0c20b922a31b
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
 
-PODFILE CHECKSUM: c7e1cfb2b722e71742189e8858f05fef03cf0f04
+PODFILE CHECKSUM: ba79439ba2fdbdcd864da2beb7326768e6c6b89f
 
 COCOAPODS: 1.3.1

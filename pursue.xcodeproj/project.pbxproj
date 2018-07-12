@@ -96,6 +96,7 @@
 		E643EF8920E5685E00EE411B /* NotificationsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E643EF8820E5685E00EE411B /* NotificationsContainer.swift */; };
 		E643EF8C20E5698200EE411B /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E643EF8B20E5698200EE411B /* ChatController.swift */; };
 		E647D27B2007CD3C00656DEF /* EditProfileCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E647D27A2007CD3C00656DEF /* EditProfileCells.swift */; };
+		E657084E20F6BDB8004487B6 /* PinterestLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E657084D20F6BDB8004487B6 /* PinterestLayoutAttributes.swift */; };
 		E659EB192040786500CA8DB5 /* CustomAlertViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E659EB182040786500CA8DB5 /* CustomAlertViewCell.swift */; };
 		E659EB1B2040876D00CA8DB5 /* CustomCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E659EB1A2040876D00CA8DB5 /* CustomCreateView.swift */; };
 		E65F1E521FCCBE5000BD850E /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F1E511FCCBE5000BD850E /* HomeController.swift */; };
@@ -302,6 +303,7 @@
 		E643EF8820E5685E00EE411B /* NotificationsContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsContainer.swift; sourceTree = "<group>"; };
 		E643EF8B20E5698200EE411B /* ChatController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
 		E647D27A2007CD3C00656DEF /* EditProfileCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileCells.swift; sourceTree = "<group>"; };
+		E657084D20F6BDB8004487B6 /* PinterestLayoutAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestLayoutAttributes.swift; sourceTree = "<group>"; };
 		E659EB182040786500CA8DB5 /* CustomAlertViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertViewCell.swift; sourceTree = "<group>"; };
 		E659EB1A2040876D00CA8DB5 /* CustomCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCreateView.swift; sourceTree = "<group>"; };
 		E65F1E511FCCBE5000BD850E /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -623,6 +625,14 @@
 			name = Menu;
 			sourceTree = "<group>";
 		};
+		E6ADDC0A20F6BD8200C5BCAD /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				E657084D20F6BDB8004487B6 /* PinterestLayoutAttributes.swift */,
+			);
+			name = Layout;
+			sourceTree = "<group>";
+		};
 		E6CE22681F671D10006C5755 = {
 			isa = PBXGroup;
 			children = (
@@ -644,6 +654,7 @@
 		E6CE22731F671D10006C5755 /* pursue */ = {
 			isa = PBXGroup;
 			children = (
+				E6ADDC0A20F6BD8200C5BCAD /* Layout */,
 				E643EF8A20E5697B00EE411B /* Chat */,
 				E67FB8C0202FB18C0008732C /* pursue.entitlements */,
 				E6CE229C1F67615E006C5755 /* Camera */,
@@ -935,6 +946,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-pursue/Pods-pursue-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/DropDown/DropDown.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
@@ -955,6 +967,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DropDown.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
@@ -1131,6 +1144,7 @@
 				E6BCBA6B20E58BB000D681E9 /* GroupChatCells.swift in Sources */,
 				E636E77A2056F61200BCA756 /* CustomOptionView.swift in Sources */,
 				E659EB192040786500CA8DB5 /* CustomAlertViewCell.swift in Sources */,
+				E657084E20F6BDB8004487B6 /* PinterestLayoutAttributes.swift in Sources */,
 				E6DEC85C201ACDD300E02393 /* Page.swift in Sources */,
 				E6CE22751F671D10006C5755 /* AppDelegate.swift in Sources */,
 				E6398078204B392A0049A71B /* PrinciplesPageCell.swift in Sources */,

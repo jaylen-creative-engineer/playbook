@@ -21,5 +21,6 @@ target 'pursue' do
   pod 'PryntTrimmerView'
   pod 'SnapSliderFilters'
   pod 'NVActivityIndicatorView'
+  pod 'DropDown'
 
 end

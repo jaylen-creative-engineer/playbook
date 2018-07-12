@@ -88,29 +88,9 @@ class HomePursuitsCells : UICollectionViewCell {
     
     func setupView(){
         addSubview(photo)
-        addSubview(detailLabel)
-        addSubview(usernameLabel)
-        addSubview(circleView)
-        addSubview(daysLabel)
-        addSubview(userPhoto)
-        addSubview(playBackground)
-        addSubview(playIcon)
-        addSubview(saveButtonBackground)
-        addSubview(saveButton)
         
-        photo.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 290, height: 335)
-        userPhoto.anchor(top: photo.bottomAnchor, left: photo.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
-        detailLabel.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: photo.rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: detailLabel.intrinsicContentSize.height)
-        usernameLabel.anchor(top: detailLabel.bottomAnchor, left: detailLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
-        circleView.anchor(top: nil, left: usernameLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 4, height: 4)
-        circleView.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
-        daysLabel.anchor(top: usernameLabel.topAnchor, left: circleView.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: daysLabel.intrinsicContentSize.width, height: daysLabel.intrinsicContentSize.height)
-        playBackground.anchor(top: nil, left: nil, bottom: photo.bottomAnchor, right: photo.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 8, paddingRight: 8, width: 30, height: 30)
-        playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 12, height: 12)
-        playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true
-        playIcon.centerYAnchor.constraint(equalTo: playBackground.centerYAnchor).isActive = true
-        saveButtonBackground.anchor(top: photo.topAnchor, left: nil, bottom: nil, right: photo.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 70, height: 25)
-        saveButton.anchor(top: saveButtonBackground.topAnchor, left: saveButtonBackground.leftAnchor, bottom: saveButtonBackground.bottomAnchor, right: saveButtonBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        photo.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        
         
     }
     

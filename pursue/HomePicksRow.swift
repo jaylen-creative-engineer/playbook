@@ -29,7 +29,7 @@ class HomePicksRow : UICollectionViewCell {
 
     let cellId = "cellId"
 
-    let images = ["788572ee949285fae33dca5d846a4664", "clean-2", "academics", "fashion-design", "690dae66bfe860df34fc7a756b53c15d"]
+    var images = [#imageLiteral(resourceName: "clean-2"), #imageLiteral(resourceName: "clean-3"), #imageLiteral(resourceName: "samuel-l"), #imageLiteral(resourceName: "steph"), #imageLiteral(resourceName: "cars")]
 
     let collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -81,7 +81,7 @@ extension HomePicksRow : UICollectionViewDelegate, UICollectionViewDataSource, U
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomePicksCell
-        cell.photo.image = UIImage(named: images[indexPath.item])
+        cell.photo.image = images[indexPath.item]
         return cell
     }
     
