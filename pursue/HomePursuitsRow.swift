@@ -59,10 +59,8 @@ class HomePursuitsRow : UICollectionViewCell {
         underlineView.anchor(top: nil, left: nil, bottom: rowLabel.bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 48, height: 2)
         showAllButton.anchor(top: nil, left: underlineView.leftAnchor, bottom: underlineView.topAnchor, right: underlineView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
         collectionView.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-//        collectionView.delegate = self
         collectionView.dataSource = self
-//        UIEdgeInsetsMake(<#T##top: CGFloat##CGFloat#>, <#T##left: CGFloat##CGFloat#>, <#T##bottom: CGFloat##CGFloat#>, <#T##right: CGFloat##CGFloat#>)
-//        collectionView.contentInset = UIEdgeInsetsMake(10, 0, 10, 0)
+        collectionView.contentInset = UIEdgeInsetsMake(10, 0, 10, 0)
         collectionView.register(HomePursuitsCells.self, forCellWithReuseIdentifier: cellId)
         if let layout = collectionView.collectionViewLayout as? PinterestLayout {
             layout.delegate = self
