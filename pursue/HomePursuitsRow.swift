@@ -14,7 +14,7 @@ class HomePursuitsRow : UICollectionViewCell, HomePursuitsDelegate {
     
     let rowLabel : UILabel = {
        let label = UILabel()
-        label.text = "My Pursuits."
+        label.text = "Sample Label."
         label.font = UIFont(name: "Lato-Bold", size: 14)
         return label
     }()
