@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PinterestSegment
 
 class PursuitDay : UICollectionViewCell {
     
@@ -46,6 +47,7 @@ class PursuitDay : UICollectionViewCell {
         
         postCollectionView.anchor(top: labelCollectionView.bottomAnchor, left: labelCollectionView.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 480)
     }
+    
     
     func setupLabelCollection(){
         addSubview(labelCollectionView)

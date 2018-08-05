@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import iCarousel
+import Hero
 
 class HomeController : UICollectionViewController {
     
@@ -48,11 +48,12 @@ class HomeController : UICollectionViewController {
         collectionView?.backgroundColor = UIColor.white
         collectionView?.isScrollEnabled = true
         collectionView?.showsVerticalScrollIndicator = false
+        isHeroEnabled = true
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupCollectionView()
         if UserDefaults.standard.value(forKey: "homeIntroPopover") == nil {
             setupIntroView()
@@ -68,10 +69,7 @@ class HomeController : UICollectionViewController {
     
     // MARK: - Setup View
     
-    func goToFeedView(){
-        let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
-        navigationController?.pushViewController(feed, animated: true)
-    }
+    func goToFeedView(){}
     
     func principleTapped() {
 //        handleChangeToDetail(viewType: "isPrinciplesDetail")
@@ -101,7 +99,7 @@ class HomeController : UICollectionViewController {
     }
     
     func showPeople(){
-        let customAlert = CustomPeopleView()
+        let customAlert = CustomEngagementView()
         customAlert.providesPresentationContextTransitionStyle = true
         customAlert.definesPresentationContext = true
         customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
@@ -110,25 +108,16 @@ class HomeController : UICollectionViewController {
     }
     
     func openSearchModal(){
-        let searchView = SearchView()
-        searchView.providesPresentationContextTransitionStyle = true
-        searchView.definesPresentationContext = true
-        searchView.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        searchView.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.showDetailViewController(searchView, sender: self)
+//        let searchView = SearchView()
+//        searchView.providesPresentationContextTransitionStyle = true
+//        searchView.definesPresentationContext = true
+//        searchView.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//        searchView.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+//        self.showDetailViewController(searchView, sender: self)
     }
     
-    func pursuitHeld() {
-        //        let customAlert = CustomAlertView()
-        //        customAlert.providesPresentationContextTransitionStyle = true
-        //        customAlert.definesPresentationContext = true
-        //        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        //        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        //        self.showDetailViewController(customAlert, sender: self)
-    }
-    
-    func showOptionClicked(){
-        let customAlert = CustomOptionView()
+    func postHeld(transitionId : String) {
+        let customAlert = CustomEngagementView()
         customAlert.providesPresentationContextTransitionStyle = true
         customAlert.definesPresentationContext = true
         customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
@@ -136,24 +125,23 @@ class HomeController : UICollectionViewController {
         self.showDetailViewController(customAlert, sender: self)
     }
     
-    func handleChangeToDetail(viewType : String) {
+    func showOptionClicked(){
+    }
+    
+    func handleChangeToDetail(viewType : String, transitionId : String) {
         switch viewType {
-        case "isPrinciplesDetail":
-            let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-            detail.standardView()
-            navigationController?.pushViewController(detail, animated: true)
         case "isPursuitDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+            detail.imageView.heroID = transitionId
             detail.standardView()
             navigationController?.pushViewController(detail, animated: true)
-        case "isStepDetail":
-            let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-            detail.standardView()
-            navigationController?.pushViewController(detail, animated: true)
+//            navigationController?.present(detail, animated: true, completion: nil)
         case "isChallengeDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+            detail.imageView.heroID = transitionId
             detail.challengeView()
             navigationController?.pushViewController(detail, animated: true)
+//            navigationController?.present(detail, animated: true, completion: nil)
         default:
             assert(false, "Not a valid view type")
         }
@@ -269,10 +257,6 @@ class HomeController : UICollectionViewController {
 
 extension HomeController : UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! HomeHeader
         cell.accessHomeController = self
@@ -284,7 +268,7 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-       return 6
+       return 5
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -295,20 +279,16 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
             cell.accessHomeController = self
             return cell
         case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: picksId, for: indexPath) as! HomePicksRow
-            cell.accessHomeController = self
-            return cell
-        case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: recommendId, for: indexPath) as! HomePursuitsLists
             return cell
-        case 3:
+        case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! HomePeople
             return cell
-        case 4:
+        case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: interestId, for: indexPath) as! HomeInterestRow
             cell.accessHomeController = self
             return cell
-        case 5:
+        case 4:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! HomeChallengeRow
             cell.accessHomeController = self
             return cell
@@ -322,13 +302,13 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 0:
-            return CGSize(width: view.frame.width, height: 520)
-        case 1, 4, 5:
-            return CGSize(width: view.frame.width, height: 460)
-        case 2:
+            return CGSize(width: view.frame.width, height: 590)
+        case 1:
             return CGSize(width: view.frame.width, height: 930)
-        case 3:
-            return CGSize(width: view.frame.width, height: 240)
+        case 2:
+            return CGSize(width: view.frame.width, height: 220)
+        case 3, 4:
+            return CGSize(width: view.frame.width, height: view.frame.height - 10)
         default:
             return CGSize(width: view.frame.width, height: 370)
         }

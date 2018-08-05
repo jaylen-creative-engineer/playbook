@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class HomePeople : UICollectionViewCell {
     
@@ -63,6 +64,10 @@ extension HomePeople : UICollectionViewDelegate, UICollectionViewDataSource, UIC
         cell.usernameLabel.text = peopleUsernames[indexPath.item]
         cell.fullnameLabel.text = peopleFullname[indexPath.item]
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        Analytics.logEvent("Change to detail for \(String(describing: rowLabel.text))", parameters: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

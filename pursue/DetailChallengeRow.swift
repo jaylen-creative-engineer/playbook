@@ -81,7 +81,7 @@ extension DetailChallengeRow : UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessHomeController?.handleChangeToDetail(viewType: "isChallengeDetail")
+//        accessHomeController?.handleChangeToDetail(viewType: "isChallengeDetail")
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

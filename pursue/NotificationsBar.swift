@@ -34,7 +34,7 @@ class NotificationsBar : UIView, UICollectionViewDataSource, UICollectionViewDel
         let size = CGSize(width: approximateWidthOfCell, height: .infinity)
         let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)]
         let estimatedFrame = NSString(string: interestsNames[indexPath.item]).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-        return CGSize(width: estimatedFrame.width + 54, height: frame.height - 12)
+        return CGSize(width: estimatedFrame.width + 34, height: frame.height - 12)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -52,7 +52,7 @@ class NotificationsBar : UIView, UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(10, 4, 0, 0)
+        return UIEdgeInsetsMake(10, 12, 0, 0)
     }
     
     override init(frame: CGRect) {

@@ -7,96 +7,90 @@
 //
 
 import UIKit
+import Hero
 
+protocol HomePursuitsDelegate {
+    func handleHold(for cell : HomePursuitsCells)
+}
 
 class HomePursuitsCells : UICollectionViewCell {
     
-    let photo : UIImageView = {
+    var accessHomePursuitsRow : HomePursuitsRow?
+    var delegate : HomePursuitsDelegate?
+    
+    lazy var photo : UIImageView = {
        let iv = UIImageView()
         iv.layer.cornerRadius = 8
         iv.layer.masksToBounds = true
         iv.contentMode = .scaleAspectFill
+        iv.heroID = "photoId-1"
         return iv
+    }()
+    
+    let photoBackground : HomeCellRectangleView = {
+       let view = HomeCellRectangleView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     let detailLabel : UILabel = {
        let label = UILabel()
         label.text = "Have a vision to work towards"
-        label.font = UIFont(name: "Lato-Semibold", size: 12)
+        label.textColor = .white
+        label.font = UIFont(name: "Lato-Black", size: 12)
         return label
     }()
     
     let usernameLabel : UILabel = {
        let label = UILabel()
         label.text = "Test"
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont(name: "Lato-Bold", size: 10)
+        label.textColor = .white
         return label
-    }()
-    
-    let circleView : UIView = {
-       let view = UIView()
-        view.backgroundColor = .black
-        view.layer.cornerRadius = 2
-        return view
-    }()
-    
-    let daysLabel : UILabel = {
-       let label = UILabel()
-        label.text = "2 Days"
-        label.font = UIFont.systemFont(ofSize: 10)
-        return label
-    }()
-    
-    let saveButtonBackground : GroupChatView = {
-        let gcv = GroupChatView()
-        gcv.translatesAutoresizingMaskIntoConstraints = false
-        gcv.backgroundColor = .white
-        return gcv
-    }()
-    
-    let saveButton : UIButton = {
-       let button = UIButton()
-        button.setTitle("Save", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 12)
-        button.titleLabel?.textAlignment = .center
-        return button
     }()
     
     let userPhoto : UIImageView = {
        let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
-        iv.layer.cornerRadius = 20
+        iv.layer.cornerRadius = 15
         iv.layer.masksToBounds = true
         return iv
     }()
     
-    let playBackground : PlayView = {
-       let view = PlayView()
+    let gradientView : GradientView = {
+       let view = GradientView()
+        view.colors = [.gray, .lightGray]
+        view.locations = [0.8, 1.0]
+        view.direction = .vertical
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
         return view
     }()
     
-    let playIcon : UIImageView = {
-       let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "view-more").withRenderingMode(.alwaysOriginal)
-        iv.contentMode = .scaleAspectFill
-        return iv
-    }()
-    
-    func setupView(){
-        addSubview(photo)
-        
-        photo.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        
-        
+    @objc func handleHeld(){
+        delegate?.handleHold(for: self)
     }
     
+    func setupView(){
+        addSubview(photoBackground)
+        addSubview(photo)
+        addSubview(userPhoto)
+        addSubview(usernameLabel)
+        addSubview(detailLabel)
+        
+        photoBackground.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        photo.anchor(top: photoBackground.topAnchor, left: photoBackground.leftAnchor, bottom: photoBackground.bottomAnchor, right: photoBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        userPhoto.anchor(top: photo.topAnchor, left: photo.leftAnchor, bottom: nil, right: nil, paddingTop: 6, paddingLeft: 6, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
+        usernameLabel.anchor(top: nil, left: photo.leftAnchor, bottom: photo.bottomAnchor, right: photo.rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 12, paddingRight: 8, width: 0, height: 14)
+        detailLabel.anchor(top: nil, left: photo.leftAnchor, bottom: usernameLabel.topAnchor, right: photo.rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 6, paddingRight: 8, width: 0, height: 14)
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+        
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleHeld))
+        addGestureRecognizer(longGesture)
     }
     
     required init?(coder aDecoder: NSCoder) {

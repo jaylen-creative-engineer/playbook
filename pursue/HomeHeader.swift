@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class HomeHeader : UICollectionViewCell {
     
@@ -29,6 +30,7 @@ class HomeHeader : UICollectionViewCell {
     
     @objc func openSearchModal(){
         accessHomeController?.openSearchModal()
+        Analytics.logEvent("Change to search screen", parameters: nil)
     }
     
     private func setupView(){

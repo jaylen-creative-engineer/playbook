@@ -43,7 +43,7 @@ class PinterestLayout: UICollectionViewLayout {
     var delegate: PinterestLayoutDelegate!
     
     var numberOfColumns = 2
-    var cellPadding: CGFloat = 12.0
+    var cellPadding: CGFloat = 9.0
     
     fileprivate var cache = [PinterestLayoutAttributes]()
     
@@ -77,7 +77,7 @@ class PinterestLayout: UICollectionViewLayout {
                 let photoHeight = delegate.collectionView(collectionView!, heightForPhotoAtIndexPath: indexPath, withWidth: width)
                 let annotationHeight = delegate.collectionView(collectionView!, heightForAnnotationAtIndexPath: indexPath, withWidth: width)
                 let height = cellPadding + photoHeight + annotationHeight + cellPadding
-                let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnWidth, height: height)
+                let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnWidth + 2, height: height)
                 let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
                 
                 // cache attributes for each item

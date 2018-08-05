@@ -63,29 +63,14 @@ class RecentSearches : UITableViewCell, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch true {
-        case isStepView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! RecentSearchPursuits
-            return cell
-        case isProfileView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: profileId, for: indexPath) as! RecentSearchUsers
-            return cell
-        case isPrincipleView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principlesId, for: indexPath) as! RecentSearchPrinciples
-            return cell
-        default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! RecentSearchPursuits
-            cell.cancelButton.isHidden = true
-            cell.pursuitImage.isHidden = true
-            cell.pursuitLabel.isHidden = true
-            return cell
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: profileId, for: indexPath) as! RecentSearchUsers
+        return cell
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         collectionView.register(RecentSearchUsers.self, forCellWithReuseIdentifier: profileId)
-        collectionView.register(RecentSearchPursuits.self, forCellWithReuseIdentifier: stepId)
+//        collectionView.register(RecentSearchPursuits.self, forCellWithReuseIdentifier: stepId)
         collectionView.register(RecentSearchPrinciples.self, forCellWithReuseIdentifier: principlesId)
         addSubview(collectionView)
         collectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)

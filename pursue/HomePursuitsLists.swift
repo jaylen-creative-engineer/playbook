@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class HomePursuitsLists : UICollectionViewCell {
     
@@ -18,13 +19,12 @@ class HomePursuitsLists : UICollectionViewCell {
     }()
     
     let showMoreButton : UIButton = {
-       let button = UIButton()
-        button.setTitle("Show 5+ More", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 12)
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "expand_arrow1600").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
         return button
     }()
-    
+
     let cellId = "cellId"
     var accessHomeController : HomeController?
     
@@ -49,7 +49,7 @@ class HomePursuitsLists : UICollectionViewCell {
         
         rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
         collectionView.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 790)
-        showMoreButton.anchor(top: collectionView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: showMoreButton.intrinsicContentSize.width, height: showMoreButton.intrinsicContentSize.height)
+        showMoreButton.anchor(top: collectionView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 18, height: 24)
         showMoreButton.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor).isActive = true
         
         collectionView.delegate = self
@@ -82,7 +82,8 @@ extension HomePursuitsLists : UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessHomeController?.handleChangeToDetail(viewType: "isPursuitDetail")
+//        accessHomeController?.handleChangeToDetail(viewType: "isPursuitDetail")
+        Analytics.logEvent("Change to detail for \(String(describing: rowLabel.text))", parameters: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

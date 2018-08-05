@@ -52,7 +52,7 @@ class HomeCellRectangleView : UIView {
     
     var cornerRadius : CGFloat = 8
     var shadowOffSetWidth : CGFloat = 0
-    var shadowOffSetHeight : CGFloat = 5
+    var shadowOffSetHeight : CGFloat = 3
     var shadowColor = UIColor.black
     var shadowOpacity : CGFloat = 0.2
     
@@ -357,6 +357,17 @@ extension UIView {
         self.layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
         self.layer.shouldRasterize = true
         self.layer.rasterizationScale = scale ? UIScreen.main.scale : 1
+    }
+    
+    func setGradient(colorOne : UIColor, colorTwo : UIColor) {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = bounds
+        gradientLayer.colors = [colorOne.cgColor, colorTwo.cgColor]
+        gradientLayer.locations = [0.0, 1.0]
+        gradientLayer.startPoint = CGPoint(x: 1.0, y: 1.0)
+        gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
+        
+        layer.insertSublayer(gradientLayer, at: 0)
     }
 }
 

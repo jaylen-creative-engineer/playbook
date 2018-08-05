@@ -7,13 +7,17 @@
 //
 
 import UIKit
+import Firebase
 
-protocol MessageDelegate {
-    func handleMessage(for cell : PursuitsDetailHeader)
-    func goBack()
+protocol DetailDelegate {
+    func handleShare(for cell : PursuitsDetailHeader)
+    func handleSave(for cell : PursuitsDetailHeader)
+    func handleLike(for cell : PursuitsDetailHeader)
 }
 
 class PursuitsDetailHeader : UICollectionViewCell {
+    
+    var delegate : DetailDelegate?
     
     let usernameLabel : UILabel = {
         let label = UILabel()
@@ -44,6 +48,7 @@ class PursuitsDetailHeader : UICollectionViewCell {
         button.setImage(#imageLiteral(resourceName: "thumbs-up").withRenderingMode(.alwaysTemplate), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         button.tintColor = .gray
+        button.addTarget(self, action: #selector(handleLike), for: .touchUpInside)
         return button
     }()
     
@@ -55,11 +60,12 @@ class PursuitsDetailHeader : UICollectionViewCell {
         return label
     }()
     
-    let saveButton : UIButton = {
+    lazy var saveButton : UIButton = {
        let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "bookmark").withRenderingMode(.alwaysTemplate), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         button.tintColor = .gray
+        button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
         return button
     }()
     
@@ -71,11 +77,12 @@ class PursuitsDetailHeader : UICollectionViewCell {
         return label
     }()
     
-    let addButton : UIButton = {
+    lazy var addButton : UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "add").withRenderingMode(.alwaysTemplate), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         button.tintColor = .gray
+        button.addTarget(self, action: #selector(handleContribute), for: .touchUpInside)
         return button
     }()
     
@@ -87,11 +94,12 @@ class PursuitsDetailHeader : UICollectionViewCell {
         return label
     }()
     
-    let commentButton : UIButton = {
+    lazy var commentButton : UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "highlight").withRenderingMode(.alwaysTemplate), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         button.tintColor = .gray
+        button.addTarget(self, action: #selector(handleComment), for: .touchUpInside)
         return button
     }()
     
@@ -103,21 +111,50 @@ class PursuitsDetailHeader : UICollectionViewCell {
         return label
     }()
     
-    let shareButton : UIButton = {
+    lazy var shareButton : UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "share").withRenderingMode(.alwaysTemplate), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         button.tintColor = .gray
+        button.addTarget(self, action: #selector(shareSelected), for: .touchUpInside)
         return button
     }()
     
-    let shareLabel : UILabel = {
+    lazy var shareLabel : UILabel = {
         let label = UILabel()
         label.text = "Share"
         label.textColor = .gray
         label.font = UIFont.systemFont(ofSize: 12)
+        label.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(shareSelected))
+        tap.numberOfTapsRequired = 1
+        label.addGestureRecognizer(tap)
         return label
     }()
+    
+    @objc func handleLike(){
+        Analytics.logEvent("Like pressed", parameters: nil)
+        delegate?.handleLike(for: self)
+    }
+    
+    @objc func shareSelected(){
+        Analytics.logEvent("App has been shared", parameters: nil)
+        delegate?.handleShare(for: self)
+    }
+    
+    @objc func handleComment(){
+        Analytics.logEvent("Post has been commented on", parameters: nil)
+    }
+    
+    @objc func handleSave(){
+        Analytics.logEvent("Post has been saved", parameters: nil)
+        delegate?.handleSave(for: self)
+    }
+    
+    @objc func handleContribute(){
+        Analytics.logEvent("Post has been contributed to", parameters: nil)
+    }
     
     func setupEngagements(){
         addSubview(likeButton)

@@ -18,60 +18,77 @@ class ProfilePursuitCells : UICollectionViewCell {
         return iv
     }()
     
-    let detailLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Have a vision to work towards"
-        label.font = UIFont(name: "Lato-Semibold", size: 12)
-        return label
-    }()
-    
-    let saveButtonBackground : GroupChatView = {
-        let gcv = GroupChatView()
-        gcv.translatesAutoresizingMaskIntoConstraints = false
-        gcv.backgroundColor = .white
-        return gcv
-    }()
-    
-    let saveButton : UIButton = {
-        let button = UIButton()
-        button.setTitle("Save", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 12)
-        button.titleLabel?.textAlignment = .center
-        return button
-    }()
-    
-    let playBackground : GroupChatView = {
-        let view = GroupChatView()
+    let photoBackground : HomeCellRectangleView = {
+        let view = HomeCellRectangleView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
         return view
     }()
     
-    let playIcon : UIImageView = {
+    let detailLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Have a vision to work towards"
+        label.textColor = .white
+        label.font = UIFont(name: "Lato-Black", size: 12)
+        return label
+    }()
+    
+    let usernameLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Test"
+        label.font = UIFont(name: "Lato-Bold", size: 10)
+        label.textColor = .white
+        return label
+    }()
+    
+    let userPhoto : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "view-more").withRenderingMode(.alwaysOriginal)
+        iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 15
+        iv.layer.masksToBounds = true
         return iv
     }()
     
+    let gradientView : GradientView = {
+        let view = GradientView()
+        view.colors = [.gray, .lightGray]
+        view.locations = [0.8, 1.0]
+        view.direction = .vertical
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let collectionView : UICollectionView = {
+        let layout = PinterestLayout()
+        layout.numberOfColumns = 2
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.isScrollEnabled = false
+        return collectionView
+    }()
+    
+//    func setupView(){
+//        addSubview(photoBackground)
+//        addSubview(photo)
+//        addSubview(userPhoto)
+//        addSubview(usernameLabel)
+//        addSubview(detailLabel)
+//
+//        photoBackground.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+//        photo.anchor(top: photoBackground.topAnchor, left: photoBackground.leftAnchor, bottom: photoBackground.bottomAnchor, right: photoBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+//        userPhoto.anchor(top: photo.topAnchor, left: photo.leftAnchor, bottom: nil, right: nil, paddingTop: 6, paddingLeft: 6, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
+//        usernameLabel.anchor(top: nil, left: photo.leftAnchor, bottom: photo.bottomAnchor, right: photo.rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 12, paddingRight: 8, width: 0, height: 14)
+//        detailLabel.anchor(top: nil, left: photo.leftAnchor, bottom: usernameLabel.topAnchor, right: photo.rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 6, paddingRight: 8, width: 0, height: 14)
+//    }
+    
     func setupView(){
-        addSubview(photo)
-        addSubview(detailLabel)
-        addSubview(playBackground)
-        addSubview(playIcon)
-        addSubview(saveButtonBackground)
-        addSubview(saveButton)
-        
-        photo.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 210, height: 230)
-        detailLabel.anchor(top: photo.bottomAnchor, left: photo.leftAnchor, bottom: nil, right: photo.rightAnchor, paddingTop: 12, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
-        playBackground.anchor(top: nil, left: nil, bottom: photo.bottomAnchor, right: photo.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 8, paddingRight: 8, width: 24, height: 24)
-        playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 10, height: 10)
-        playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true
-        playIcon.centerYAnchor.constraint(equalTo: playBackground.centerYAnchor).isActive = true
-        saveButtonBackground.anchor(top: photo.topAnchor, left: nil, bottom: nil, right: photo.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 70, height: 25)
-        saveButton.anchor(top: saveButtonBackground.topAnchor, left: saveButtonBackground.leftAnchor, bottom: saveButtonBackground.bottomAnchor, right: saveButtonBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        
+        backgroundColor = .red
+        if let layout = collectionView.collectionViewLayout as? PinterestLayout {
+            layout.delegate = self
+        }
     }
     
     override init(frame: CGRect) {
@@ -81,5 +98,23 @@ class ProfilePursuitCells : UICollectionViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension ProfilePursuitCells : PinterestLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath, withWidth: CGFloat) -> CGFloat {
+        if indexPath.item % 2 != 0 {
+            return 105
+        } else {
+            return 100
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, heightForAnnotationAtIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat {
+        if indexPath.item % 2 != 0 {
+            return 105
+        } else {
+            return 100
+        }
     }
 }

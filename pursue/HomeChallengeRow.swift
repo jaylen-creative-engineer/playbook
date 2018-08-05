@@ -32,13 +32,23 @@ class HomeChallengeRow : UICollectionViewCell {
     let imageName = [#imageLiteral(resourceName: "health")]
     
     let collectionView : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
+        let layout = PinterestLayout()
+        layout.numberOfColumns = 2
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
-        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.isScrollEnabled = false
         return collectionView
+    }()
+    
+    let showMoreButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("Show More", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.textAlignment = .center
+        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 12)
+        return button
     }()
     
     var accessHomeController : HomeController?
@@ -48,22 +58,20 @@ class HomeChallengeRow : UICollectionViewCell {
     }
     
     func setupView(){
-        let underlineView = UIView()
-        underlineView.backgroundColor = .black
-        
         addSubview(rowLabel)
-        addSubview(underlineView)
-        addSubview(showAllButton)
         addSubview(collectionView)
+        addSubview(showMoreButton)
         
         rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
-        underlineView.anchor(top: nil, left: nil, bottom: rowLabel.bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 48, height: 2)
-        showAllButton.anchor(top: nil, left: underlineView.leftAnchor, bottom: underlineView.topAnchor, right: underlineView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
-        collectionView.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 370)
+        collectionView.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 485)
+        showMoreButton.anchor(top: collectionView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: showMoreButton.intrinsicContentSize.height)
         
-        collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.contentInset = UIEdgeInsetsMake(10, 0, 10, 0)
         collectionView.register(HomeChallengesCell.self, forCellWithReuseIdentifier: cellId)
+        if let layout = collectionView.collectionViewLayout as? PinterestLayout {
+            layout.delegate = self
+        }
     }
     
     override init(frame: CGRect) {
@@ -77,7 +85,7 @@ class HomeChallengeRow : UICollectionViewCell {
     
 }
 
-extension HomeChallengeRow : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension HomeChallengeRow : UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeChallengesCell
@@ -86,18 +94,28 @@ extension HomeChallengeRow : UICollectionViewDelegate, UICollectionViewDataSourc
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessHomeController?.handleChangeToDetail(viewType: "isChallengeDetail")
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+        accessHomeController?.handleChangeToDetail(viewType: "isChallengeDetail", transitionId: "1")
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
     }
+}
+
+extension HomeChallengeRow : PinterestLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath, withWidth: CGFloat) -> CGFloat {
+        if indexPath.item % 2 != 0 {
+            return 105
+        } else {
+            return 100
+        }
+    }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width - 155, height: 360)
+    func collectionView(_ collectionView: UICollectionView, heightForAnnotationAtIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat {
+        if indexPath.item % 2 != 0 {
+            return 105
+        } else {
+            return 100
+        }
     }
 }

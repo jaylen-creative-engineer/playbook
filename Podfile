@@ -10,10 +10,9 @@ target 'pursue' do
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
   pod 'SwiftyCam'
-  pod 'iCarousel', '~> 1.8'
   pod 'Alamofire'
   pod 'GoogleSignIn'
-  pod 'SwiftyJSON'
+  pod 'PinterestSegment'
   pod 'FBSDKCoreKit'
   pod 'FBSDKShareKit'
   pod 'FBSDKLoginKit'
@@ -22,5 +21,6 @@ target 'pursue' do
   pod 'SnapSliderFilters'
   pod 'NVActivityIndicatorView'
   pod 'DropDown'
+  pod 'Hero'
 
 end

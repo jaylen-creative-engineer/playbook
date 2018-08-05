@@ -10,7 +10,6 @@
 import UIKit
 import Alamofire
 import Firebase
-import SwiftyJSON
 
 class InterestsRows : UICollectionViewCell, SelectInterestsDelegate {
     

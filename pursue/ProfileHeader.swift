@@ -20,29 +20,6 @@ class ProfileHeader : UICollectionViewCell {
         return iv
     }()
     
-    let expand : UIImageView = {
-       let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "expand_arrow1600").withRenderingMode(.alwaysOriginal)
-        iv.contentMode = .scaleAspectFill
-        return iv
-    }()
-    
-    let statsLabel : UILabel = {
-       let label = UILabel()
-        label.text = "Stats"
-        label.font = UIFont(name: "Lato-Bold", size: 14)
-        return label
-    }()
-    
-    let dropdownButton : UIButton = {
-       let button = UIButton()
-        button.setTitle("20", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 12)
-        button.titleLabel?.textAlignment = .left
-        return button
-    }()
-    
     let usernameLabel : UILabel = {
        let label = UILabel()
         label.text = "jaylenhu27"
@@ -161,7 +138,7 @@ class ProfileHeader : UICollectionViewCell {
         addSubview(messageButton)
         addSubview(followButton)
         
-        usernameLabel.anchor(top: backgroundFill.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
+        usernameLabel.anchor(top: imageView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
         usernameLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         fullnameLabel.anchor(top: usernameLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: fullnameLabel.intrinsicContentSize.width, height: fullnameLabel.intrinsicContentSize.height)
         fullnameLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
@@ -174,29 +151,9 @@ class ProfileHeader : UICollectionViewCell {
         
     }
     
-    let backgroundFill = RectangleView()
-    
-    func setupStatsLabel(){
-        backgroundFill.backgroundColor = .white
-        
-        addSubview(backgroundFill)
-        addSubview(statsLabel)
-        addSubview(dropdownButton)
-        addSubview(expand)
-        
-        backgroundFill.anchor(top: imageView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
-        statsLabel.anchor(top: nil, left: leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: statsLabel.intrinsicContentSize.width, height: statsLabel.intrinsicContentSize.height)
-        statsLabel.centerYAnchor.constraint(equalTo: backgroundFill.centerYAnchor).isActive = true
-        dropdownButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 32, width: 20, height: 24)
-        dropdownButton.centerYAnchor.constraint(equalTo: statsLabel.centerYAnchor).isActive = true
-        expand.anchor(top: nil, left: dropdownButton.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 6, paddingBottom: 0, paddingRight: 0, width: 10, height: 10)
-        expand.centerYAnchor.constraint(equalTo: dropdownButton.centerYAnchor).isActive = true
-    }
-    
     func setupView(){
         addSubview(imageView)
         imageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 350)
-        setupStatsLabel()
         setupProfileDetails()
     }
     

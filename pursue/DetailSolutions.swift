@@ -79,7 +79,7 @@ extension DetailSolutions : UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessHomeController?.handleChangeToDetail(viewType: "isPursuitDetail")
+//        accessHomeController?.handleChangeToDetail(viewType: "isPursuitDetail")
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

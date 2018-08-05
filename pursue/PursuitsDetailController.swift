@@ -8,9 +8,10 @@
 
 import UIKit
 import ParallaxHeader
+import Hero
+import Firebase
 
 class PursuitsDetailController : UICollectionViewController {
-    
     
     let headerId = "headerId"
     let commentId = "commentId"
@@ -209,15 +210,44 @@ class PursuitsDetailController : UICollectionViewController {
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
         containerView.isHidden = true
-        
+        isHeroEnabled = true
         setupCollectionViewHeader()
     }
     
-    func setupCollectionViewHeader(){
+    lazy var imageView : UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "music").withRenderingMode(.alwaysOriginal)
+        imageView.image = #imageLiteral(resourceName: "health").withRenderingMode(.alwaysOriginal)
         imageView.contentMode = .scaleAspectFill
+//        imageView.isUserInteractionEnabled = true
+//        
+//        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+//        imageView.addGestureRecognizer(pan)
+        return imageView
+    }()
+    
+    @objc func handlePan(panGesture : UIPanGestureRecognizer){
+        let translation = panGesture.translation(in: nil)
+        let progress = translation.y / 2 / view.bounds.height
         
+        switch panGesture.state {
+        case .began:
+            hero_dismissViewController()
+        case .changed:
+            Hero.shared.update(progress)
+            
+            let currentPos = CGPoint(x: translation.x + imageView.center.x, y: translation.y + imageView.center.y)
+            Hero.shared.apply(modifiers: [.position(currentPos)], to: imageView)
+        default:
+            if progress + panGesture.velocity(in: nil).y / view.bounds.height > 0.2 {
+                Hero.shared.finish()
+            } else {
+                Hero.shared.cancel()
+            }
+        }
+    }
+    
+    func setupCollectionViewHeader(){
+
         let leftTapView = UIImageView()
         leftTapView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -287,9 +317,9 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch true {
         case isStandardView:
-            return 5
+            return 4
         case isChallengeView:
-            return 6
+            return 5
         default:
              return 5
         }
@@ -306,10 +336,6 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
             case 2:
                 return CGSize(width: view.frame.width, height: 200)
             case 3:
-                return CGSize(width: view.frame.width, height: 380)
-            case 4:
-                return CGSize(width: view.frame.width, height: 330)
-            case 5:
                 return CGSize(width: view.frame.width, height: 550)
             default:
                 assert(false, "Not a valid cell")
@@ -325,8 +351,6 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
             case 3:
                 return CGSize(width: view.frame.width, height: 200)
             case 4:
-                return CGSize(width: view.frame.width, height: 380)
-            case 5:
                 return CGSize(width: view.frame.width, height: 550)
             default:
                 assert(false, "Not a valid cell")
@@ -347,6 +371,7 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
             switch indexPath.item {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: headerId, for: indexPath) as! PursuitsDetailHeader
+                cell.delegate = self
                 return cell
             case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay
@@ -355,9 +380,6 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamRow
                 return cell
             case 3:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! DetailChallengeRow
-                return cell
-            case 4:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
                 return cell
             default:
@@ -379,9 +401,6 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamRow
                 return cell
             case 4:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! DetailChallengeRow
-                return cell
-            case 5:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
                 return cell
             default:
@@ -393,4 +412,32 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
         }
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.item {
+        case 2:
+            Analytics.logEvent("Day switch", parameters: nil)
+        default:
+            assert(false, "Not a vaild selection")
+        }
+    }
+    
+}
+
+extension PursuitsDetailController : DetailDelegate {
+    func handleSave(for cell: PursuitsDetailHeader) {
+        
+    }
+    
+    func handleLike(for cell: PursuitsDetailHeader) {
+        
+    }
+    
+    func handleShare(for cell: PursuitsDetailHeader) {
+        let customAlert = CustomShareView()
+        customAlert.providesPresentationContextTransitionStyle = true
+        customAlert.definesPresentationContext = true
+        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.showDetailViewController(customAlert, sender: self)
+    }
 }

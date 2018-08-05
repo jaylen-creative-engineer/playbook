@@ -8,15 +8,9 @@
 
 import UIKit
 
-struct Interests {
-    let interestId : String
-    let interestName : String
-    let interestPhoto : String
-    var isSelected = false
-    
-    init(dictionary : [String : Any]) {
-        self.interestId = dictionary["interestId"] as? String ?? ""
-        self.interestName = dictionary["interest_name"] as? String ?? ""
-        self.interestPhoto = dictionary["interest_photo"] as? String ?? ""
-    }
+struct Interests : Decodable {
+    let interestId : String?
+    let interest_name : String?
+    let interest_photo : String?
+    var selected_interests = 0
 }
