@@ -8,6 +8,7 @@
 
 import UIKit
 import Hero
+import KWTransition
 
 class HomeController : UICollectionViewController {
     
@@ -35,6 +36,8 @@ class HomeController : UICollectionViewController {
         hb.accessHomeController = self
         return hb
     }()
+    
+    let transition = KWTransition.manager()
     
     
     func setupCollectionView(){
@@ -108,12 +111,12 @@ class HomeController : UICollectionViewController {
     }
     
     func openSearchModal(){
-//        let searchView = SearchView()
-//        searchView.providesPresentationContextTransitionStyle = true
-//        searchView.definesPresentationContext = true
-//        searchView.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-//        searchView.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-//        self.showDetailViewController(searchView, sender: self)
+        let searchView = CustomSearchView()
+        searchView.providesPresentationContextTransitionStyle = true
+        searchView.definesPresentationContext = true
+        searchView.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        searchView.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.showDetailViewController(searchView, sender: self)
     }
     
     func postHeld(transitionId : String) {
@@ -313,4 +316,8 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
             return CGSize(width: view.frame.width, height: 370)
         }
     }
+}
+
+extension HomeController : UIViewControllerTransitioningDelegate{
+    
 }

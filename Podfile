@@ -22,5 +22,5 @@ target 'pursue' do
   pod 'NVActivityIndicatorView'
   pod 'DropDown'
   pod 'Hero'
-
+  pod 'KWTransition'
 end

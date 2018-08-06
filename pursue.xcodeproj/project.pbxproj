@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		446C359921181F80005BDE71 /* PursuitDayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446C359821181F80005BDE71 /* PursuitDayTableViewCell.swift */; };
 		77792961994B0D733CE1F3C7 /* Pods_pursue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDC2EBDE7548534CF7FD043E /* Pods_pursue.framework */; };
 		E60433ED2042189F00E6D4DA /* ProfileAboutRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60433EC2042189F00E6D4DA /* ProfileAboutRow.swift */; };
 		E60433EF20422EB800E6D4DA /* ProfileUserImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60433EE20422EB800E6D4DA /* ProfileUserImage.swift */; };
@@ -195,6 +196,7 @@
 /* Begin PBXFileReference section */
 		02A7F80E5F7C67810AD206FC /* Pods-pursue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pursue.debug.xcconfig"; path = "Pods/Target Support Files/Pods-pursue/Pods-pursue.debug.xcconfig"; sourceTree = "<group>"; };
 		3FD5AFA4CDF2AE98B24955C0 /* Pods-pursue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pursue.release.xcconfig"; path = "Pods/Target Support Files/Pods-pursue/Pods-pursue.release.xcconfig"; sourceTree = "<group>"; };
+		446C359821181F80005BDE71 /* PursuitDayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PursuitDayTableViewCell.swift; sourceTree = "<group>"; };
 		CDC2EBDE7548534CF7FD043E /* Pods_pursue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pursue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E60433EC2042189F00E6D4DA /* ProfileAboutRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAboutRow.swift; sourceTree = "<group>"; };
 		E60433EE20422EB800E6D4DA /* ProfileUserImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserImage.swift; sourceTree = "<group>"; };
@@ -488,6 +490,7 @@
 			isa = PBXGroup;
 			children = (
 				E6136EA21F968EAB00E29101 /* PursuitsDetailController.swift */,
+				446C359821181F80005BDE71 /* PursuitDayTableViewCell.swift */,
 				E63CEB4F20EACEC100FFDEF3 /* DayLabelCell.swift */,
 				E63CEB4D20EACAC000FFDEF3 /* PursuitDay.swift */,
 				E63CEB5120EAD52C00FFDEF3 /* PursuitDayCells.swift */,
@@ -873,7 +876,7 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -897,6 +900,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
+				"${BUILT_PRODUCTS_DIR}/KWTransition/KWTransition.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/ParallaxHeader/ParallaxHeader.framework",
 				"${BUILT_PRODUCTS_DIR}/PinterestSegment/PinterestSegment.framework",
@@ -918,6 +922,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KWTransition.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ParallaxHeader.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PinterestSegment.framework",
@@ -985,6 +990,7 @@
 				E61A70EA20E2917C00EB69D8 /* DetailSolutions.swift in Sources */,
 				E60EB26D20462DF0006E4F1A /* FollowPursuit.swift in Sources */,
 				E6234E9E2044F96B00A57A2C /* AssetSelectionViewController.swift in Sources */,
+				446C359921181F80005BDE71 /* PursuitDayTableViewCell.swift in Sources */,
 				E6CB1B472057063F00B5D2ED /* CustomPeopleView.swift in Sources */,
 				E627283F20DC5DE200860707 /* HomePursuitsListCells.swift in Sources */,
 				E6A273F91F68314F00F5B4C8 /* CustomImageView.swift in Sources */,

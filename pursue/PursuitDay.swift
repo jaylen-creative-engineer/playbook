@@ -25,12 +25,15 @@ class PursuitDay : UICollectionViewCell {
     
     let postCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
+        layout.scrollDirection = .horizontal
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.isScrollEnabled = false
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.isScrollEnabled = true
+        collectionView.isPagingEnabled = true
+        
         return collectionView
     }()
     
@@ -44,8 +47,7 @@ class PursuitDay : UICollectionViewCell {
         postCollectionView.delegate = self
         postCollectionView.dataSource = self
         postCollectionView.register(PursuitDayCells.self, forCellWithReuseIdentifier: cellId)
-        
-        postCollectionView.anchor(top: labelCollectionView.bottomAnchor, left: labelCollectionView.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 480)
+        postCollectionView.anchor(top: labelCollectionView.bottomAnchor, left: labelCollectionView.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 480)
     }
     
     
@@ -87,7 +89,8 @@ extension PursuitDay : UICollectionViewDelegate, UICollectionViewDataSource, UIC
             return cell
         case postCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PursuitDayCells
-            cell.photo.image = UIImage(named: images[indexPath.item])
+            cell.postTableView.reloadData()
+//            cell.photo.image = UIImage(named: images[indexPath.item])
             return cell
         default:
             assert(false, "Not a valid collection")
@@ -102,15 +105,28 @@ extension PursuitDay : UICollectionViewDelegate, UICollectionViewDataSource, UIC
             return UIEdgeInsetsMake(0, 0, 0, 0)
         }
     }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch collectionView {
         case labelCollectionView:
             return CGSize(width: 60, height: 24)
         case postCollectionView:
-            return CGSize(width: frame.width, height: 105)
+            return CGSize(width: frame.width, height: 420)
         default:
             assert(false, "Not a valid collection")
         }
     }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView == postCollectionView{
+            let currentpage = Int(scrollView.contentOffset.x / scrollView.bounds.width)
+            let selIndexPath = IndexPath(row: currentpage, section: 0)
+            labelCollectionView.selectItem(at: selIndexPath, animated: true, scrollPosition: .centeredVertically)
+        }
+    }
 }
+
+

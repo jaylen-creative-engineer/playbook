@@ -10,57 +10,51 @@ import UIKit
 
 class PursuitDayCells : UICollectionViewCell {
     
-    let incompleteCircle : UIView = {
-       let view = UIView()
-        view.backgroundColor = .blue
-        view.layer.cornerRadius = 3
-        view.layer.masksToBounds = true
-        return view
-    }()
     
-    let photo : UIImageView = {
-       let iv = UIImageView()
-        iv.layer.cornerRadius = 8
-        iv.layer.masksToBounds = true
-        iv.contentMode = .scaleAspectFill
-        return iv
+    let postTableView : UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.isScrollEnabled = false
+        tableView.separatorStyle = .none
+        
+//        collectionView.backgroundColor = .clear
+//        collectionView.showsHorizontalScrollIndicator = false
+        return tableView
     }()
-    
-    let postLabel : UILabel = {
-       let label = UILabel()
-        label.font = UIFont(name: "Lato-Semibold", size: 12)
-        label.text = "Working at this thing here."
-        return label
-    }()
-    
-    let postTypeLabel : UILabel = {
-       let label = UILabel()
-        label.text = "Principle"
-        label.textColor = .gray
-        label.font = UIFont(name: "Lato-Bold", size: 12)
-        return label
-    }()
+
     
     func setupView(){
-        addSubview(incompleteCircle)
-        addSubview(photo)
-        addSubview(postLabel)
-        addSubview(postTypeLabel)
-        
-        incompleteCircle.anchor(top: nil, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 10, paddingRight: 0, width: 6, height: 6)
-        incompleteCircle.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        photo.anchor(top: topAnchor, left: incompleteCircle.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 90, height: 100)
-        postLabel.anchor(top: photo.topAnchor, left: photo.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
-        postTypeLabel.anchor(top: postLabel.bottomAnchor, left: postLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: postTypeLabel.intrinsicContentSize.width, height: 14)
-        
+        addSubview(postTableView)
+        postTableView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: self.frame.size.width, height: 480)
+        postTableView.delegate = self
+        postTableView.dataSource = self
+        postTableView.register(PursuitDayTableViewCell.self, forCellReuseIdentifier: "Cell")
+        postTableView.reloadData()
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+}
+
+extension PursuitDayCells : UITableViewDataSource,UITableViewDelegate{
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! PursuitDayTableViewCell
+        cell.setupView(index: indexPath.row)
+//        cell.imageView?.image =  UIImage(named: images[indexPath.row])
+        return cell
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 4
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 115
     }
 }

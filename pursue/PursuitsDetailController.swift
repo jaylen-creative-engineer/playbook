@@ -10,6 +10,9 @@ import UIKit
 import ParallaxHeader
 import Hero
 import Firebase
+import AVFoundation
+import AVKit
+import MediaPlayer
 
 class PursuitsDetailController : UICollectionViewController {
     
@@ -122,6 +125,16 @@ class PursuitsDetailController : UICollectionViewController {
     
     @objc func addSteps(){
      
+    }
+    
+    @objc func playVideo(){
+        let videoURL = URL(string: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
+        let player = AVPlayer(url: videoURL!)
+        let playerViewController = AVPlayerViewController()
+        playerViewController.player = player
+        self.present(playerViewController, animated: true) {
+            playerViewController.player!.play()
+        }
     }
     
     func setupBackButton(){
@@ -281,6 +294,9 @@ class PursuitsDetailController : UICollectionViewController {
         playIcon.contentMode = .scaleAspectFill
         playIcon.translatesAutoresizingMaskIntoConstraints = false
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(playVideo))
+        playIcon.addGestureRecognizer(tap)
+        
         view.addSubview(imageView)
         imageView.addSubview(leftTapView)
         imageView.addSubview(rightTapView)
@@ -299,7 +315,6 @@ class PursuitsDetailController : UICollectionViewController {
         playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 12, height: 12)
         playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true
         playIcon.centerYAnchor.constraint(equalTo: playBackground.centerYAnchor).isActive = true
-       
         
         collectionView?.parallaxHeader.view = imageView
         collectionView?.parallaxHeader.height = view.frame.height
