@@ -739,8 +739,8 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 0EADC98135BDFF218FA8EEA855120208;
-			remoteInfo = ParallaxHeader;
+			remoteGlobalIDString = 88E9EC28B8B46C3631E6B242B50F4442;
+			remoteInfo = Alamofire;
 		};
 		6C84616EFF5262A8C6371F5EE8812B29 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -753,8 +753,8 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = BEF7E6E85DB5CDE5D7A18F4F2EB8494B;
-			remoteInfo = FBSDKCoreKit;
+			remoteGlobalIDString = B8D8C363B343A0778AE6633D70E11749;
+			remoteInfo = iCarousel;
 		};
 		88DC694DD655F268F135FB17224D2C9A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -774,8 +774,8 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 88E9EC28B8B46C3631E6B242B50F4442;
-			remoteInfo = Alamofire;
+			remoteGlobalIDString = 0EADC98135BDFF218FA8EEA855120208;
+			remoteInfo = ParallaxHeader;
 		};
 		9F6E9621C6955D7EF1483415D4B839FA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1616,6 +1616,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0322809DF3BA52B61017684E0A382882 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A24F930D8C069EF846875F343A1DF34E /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1A33B61DAB8FE653FAFA1ECF363E44D2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1650,6 +1658,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2D6979A28B9292B6343B1AF1477081A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D07B698A19511CDE72FAAE5C2FA75A9B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		33B8695FF47426B6964ADC56B26FA239 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1674,6 +1690,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+<<<<<<< Updated upstream
+=======
+		4BEAA8E60967314123E892966FD77A6F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0ED70CB7BE1A40481FA60187D815DBCE /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+>>>>>>> Stashed changes
 		5CBF451DCA26730C976CC026ED37822C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1694,11 +1721,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		85211E7BC2181B8A1DAE1BF2BDD5EABF /* Frameworks */ = {
+<<<<<<< Updated upstream
+=======
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				7029717B8FC64138FEC0B0A2E543D193 /* Foundation.framework in Frameworks */,
 				E93DCCCE78D990BBA222C32F30E30D90 /* Security.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		93C9484420E218720071AFFEB844F090 /* Frameworks */ = {
+>>>>>>> Stashed changes
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93325C08EC89C6768D4C1510DBEF0D5A /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1770,18 +1808,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+<<<<<<< Updated upstream
 		E6110E61589C0F15A3D77A2505884FB6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				53882E613DA7185E0F29F050B7178E89 /* Bolts.framework in Frameworks */,
 				7FF81D2998E77985B091B19E525B6008 /* Foundation.framework in Frameworks */,
+=======
+		EFC77C679BC0DA842ED5E44C9F5F4309 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				37EB7E333F8520F8C5D6834CD70FD317 /* Foundation.framework in Frameworks */,
+				ABECA3A16E15560F553173ABDECBC912 /* QuartzCore.framework in Frameworks */,
+>>>>>>> Stashed changes
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+<<<<<<< Updated upstream
 		00C988962BADDDD92D94C4F6D5EC5666 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1865,6 +1913,137 @@
 			);
 			name = FirebaseAuth;
 			path = FirebaseAuth;
+=======
+		00A51D98BEA46837A1486CBADBF66AC2 /* encode */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = encode;
+			sourceTree = "<group>";
+		};
+		08B6B59E7106A18817E09EF860130C68 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				447D8FEE72CBDD4540A93F1A349C708E /* Info.plist */,
+				B842E7DEF1A53DE12FCD76B555DF6943 /* SnapSliderFilters.modulemap */,
+				79D14CDEDF1434BE55028427FD8696A7 /* SnapSliderFilters.xcconfig */,
+				03E17C6FDCA9FEBC398B3EA18B91F5ED /* SnapSliderFilters-dummy.m */,
+				7D5F5AC0B6E485910FA90C3CC46D1524 /* SnapSliderFilters-prefix.pch */,
+				64C1271E4AAC77C3EFB738E6F1419E57 /* SnapSliderFilters-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/SnapSliderFilters";
+			sourceTree = "<group>";
+		};
+		0F6DBE1E20D9775FC1342BE81E74BAE9 /* FirebaseStorage */ = {
+			isa = PBXGroup;
+			children = (
+				C1DE58A15AEB828B39B0B0C2C96ABF8A /* Frameworks */,
+			);
+			name = FirebaseStorage;
+			path = FirebaseStorage;
+			sourceTree = "<group>";
+		};
+		1322514FAA512821E7B90864F05D9E9B /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				A8CAE22F46A0DE85E39815FBF270885A /* NVActivityIndicatorAnimationAudioEqualizer.swift */,
+				AA04B58B5D921DC6ACF5D971F2106C99 /* NVActivityIndicatorAnimationBallBeat.swift */,
+				6B7FDFEE5431930A412B068D5491AAF1 /* NVActivityIndicatorAnimationBallClipRotate.swift */,
+				18E9704609D8557AE8D3E60F8CEF4116 /* NVActivityIndicatorAnimationBallClipRotateMultiple.swift */,
+				9091FB828B0ABFF6FE3D2180BC792BB7 /* NVActivityIndicatorAnimationBallClipRotatePulse.swift */,
+				7F5A5BD78F716FA20D246B72EF14BB76 /* NVActivityIndicatorAnimationBallGridBeat.swift */,
+				605E8B7F323D75C747672821ECE21C98 /* NVActivityIndicatorAnimationBallGridPulse.swift */,
+				51B673EB84AFEB6F8E5FADA2483B2905 /* NVActivityIndicatorAnimationBallPulse.swift */,
+				E12FD45134CEBC2B278C54A4195E593A /* NVActivityIndicatorAnimationBallPulseRise.swift */,
+				4E5D7675D6E5C36706A968EC4ABF6F01 /* NVActivityIndicatorAnimationBallPulseSync.swift */,
+				3B0E643E148C8CABB0103C00EB702554 /* NVActivityIndicatorAnimationBallRotate.swift */,
+				1D4444B689D1C7E44C503DE9445E8914 /* NVActivityIndicatorAnimationBallRotateChase.swift */,
+				6E765657D7EF7C4CA65912163CAF9567 /* NVActivityIndicatorAnimationBallScale.swift */,
+				9B3CC70D0926425391753AFC6481D8F3 /* NVActivityIndicatorAnimationBallScaleMultiple.swift */,
+				E3F3B8BE2F7BB304B1C62ECB0761CA60 /* NVActivityIndicatorAnimationBallScaleRipple.swift */,
+				D3049AB76EF47BAF472686FBCE641160 /* NVActivityIndicatorAnimationBallScaleRippleMultiple.swift */,
+				11A2001D43FB0B5E42F7DBFFFB305D47 /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift */,
+				C9D35EE1690C835FA5FFB152A19BF225 /* NVActivityIndicatorAnimationBallTrianglePath.swift */,
+				C35634DBADC38024DFA6E4B75AC81B0D /* NVActivityIndicatorAnimationBallZigZag.swift */,
+				6993E7132436CFF9910A039F7BAD60E5 /* NVActivityIndicatorAnimationBallZigZagDeflect.swift */,
+				10EF06A3073203F99B0C862B5CA3D4BE /* NVActivityIndicatorAnimationBlank.swift */,
+				77CDA969C806E1990FB4075617163523 /* NVActivityIndicatorAnimationCubeTransition.swift */,
+				64E90FCA3F0FCEE910F54C9C5C833BD1 /* NVActivityIndicatorAnimationDelegate.swift */,
+				E3376C62BAB531A09DDEF5244EB7B337 /* NVActivityIndicatorAnimationLineScale.swift */,
+				4A4AB489C3C2809AB07E21873ECDCBD7 /* NVActivityIndicatorAnimationLineScaleParty.swift */,
+				71FE65E103A28829A13B52C62B3BA43B /* NVActivityIndicatorAnimationLineScalePulseOut.swift */,
+				8B9585E49F5E84AA58E7BDD3044C9B52 /* NVActivityIndicatorAnimationLineScalePulseOutRapid.swift */,
+				E5BCFB20606714C11FC5AC5CA4BF8C5E /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift */,
+				6F19E1E46C689CC38DD45E4F23D16EFE /* NVActivityIndicatorAnimationOrbit.swift */,
+				4213DBDEE69E7690C23968F395977694 /* NVActivityIndicatorAnimationPacman.swift */,
+				694635CC0BC7ABE455913157ACD149F2 /* NVActivityIndicatorAnimationSemiCircleSpin.swift */,
+				134781867637FF2C456DCB895D8516F1 /* NVActivityIndicatorAnimationSquareSpin.swift */,
+				3F1E90998B574431B7E45EAA6339311A /* NVActivityIndicatorAnimationTriangleSkewSpin.swift */,
+				86212D4AA22150BE4756EE422E40BF10 /* NVActivityIndicatorPresenter.swift */,
+				A16FEE96BF7D9042355051260A5E825C /* NVActivityIndicatorShape.swift */,
+				34D98AD1DD04F5D71D5540EC51755147 /* NVActivityIndicatorView.swift */,
+				552556C913785493A174A7A9909EACD9 /* NVActivityIndicatorViewable.swift */,
+			);
+			name = Presenter;
+			sourceTree = "<group>";
+		};
+		163DDF66876313FAEC72D5FFE61A04BC /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				03970B106F22217A6AE32E71731F6316 /* Info.plist */,
+				8E58AF21B26CE2491AF25A9DB17D875B /* PryntTrimmerView.modulemap */,
+				132A3E9A35C7C510967EC345D714F8C8 /* PryntTrimmerView.xcconfig */,
+				C2DBD6B7ECFEB8A744F03C4B19B8FF38 /* PryntTrimmerView-dummy.m */,
+				399647F822F45637D9F8E4C9FB6808AB /* PryntTrimmerView-prefix.pch */,
+				EBE68BA20A60C193FB377D6E1A71523B /* PryntTrimmerView-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/PryntTrimmerView";
+			sourceTree = "<group>";
+		};
+		18FC63DE29867850626109D6E42D91EC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E50ACC88FD61021C3012D1FEC4BB8623 /* Alamofire */,
+				8B1B51043E38DB6AE88ADEA3BA0B8C68 /* Bolts */,
+				21B8440E1CD12CAAB214BAABEA58DF87 /* DropDown */,
+				4DB0A2DF710BEE04F257576375FC2EB5 /* FBSDKCoreKit */,
+				814D4D00AF5C85F67701FB897CEFBB80 /* FBSDKLoginKit */,
+				24D5E623847560C4B619D097B74304E4 /* FBSDKShareKit */,
+				4F48E034D70C8E162E24248C96155C81 /* Firebase */,
+				BF987A54CB9479AE6BA43F7F87F9C2B4 /* FirebaseAnalytics */,
+				5D1BA02933CA44A560DCF0112F7DBB15 /* FirebaseAuth */,
+				3074BFCFA05788860A358FEEEBA76D5E /* FirebaseCore */,
+				EDD2288B9F7C4A22528DB593C978DCFB /* FirebaseDatabase */,
+				E7A860E69C8FF61105914CD51F0066E2 /* FirebaseInstanceID */,
+				0F6DBE1E20D9775FC1342BE81E74BAE9 /* FirebaseStorage */,
+				93F7347F1BC74D6BBAAEFCEA20188329 /* GoogleSignIn */,
+				2939496334C65EA34276A634702126CA /* GoogleToolboxForMac */,
+				FF209F2D34FE95EAC9497E014DCA055D /* GTMOAuth2 */,
+				5E50C5CB3603AEE78A67D5A370405683 /* GTMSessionFetcher */,
+				E943FB6A8F3D0BB8E68DCFD897055B4D /* Hero */,
+				9C042984EBCC825D4DDCDA312A0882D1 /* iCarousel */,
+				DA58120DFCC98C54E182CE2B55F216A1 /* leveldb-library */,
+				3DA5ACA65AFF6B21C26C6BA28BA78177 /* nanopb */,
+				D2BE5DD75BD4194FA741022A4B1A3820 /* NVActivityIndicatorView */,
+				2DB785158E58C3AF8AC40923F4E1C2B6 /* ParallaxHeader */,
+				62B32101F87E0B411C2E3127588FE462 /* PinterestSegment */,
+				6976765DE46948E99232CDEC6229C9EE /* PryntTrimmerView */,
+				58893C37938B2E45F792F203BFAD1ED5 /* SnapSliderFilters */,
+				35B87EE08F0EC07476D8CDDF31787334 /* SwiftyCam */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		1902872DA212876AD904D2583DD2E1D5 /* NSString+URLArguments */ = {
+			isa = PBXGroup;
+			children = (
+				FB624481695EE1938D2126A484D155D1 /* GTMNSString+URLArguments.h */,
+				ED84A0AEB0FE369D86E28538B25D76C2 /* GTMNSString+URLArguments.m */,
+			);
+			name = "NSString+URLArguments";
+>>>>>>> Stashed changes
 			sourceTree = "<group>";
 		};
 		1B85AA25D1AA433951FB9C5BD0848308 /* Pods-pursue */ = {
@@ -1885,6 +2064,7 @@
 			path = "Target Support Files/Pods-pursue";
 			sourceTree = "<group>";
 		};
+<<<<<<< Updated upstream
 		1D5B339371651ABB798C277A39FB89B3 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -1935,11 +2115,183 @@
 				11CC667C93B9CB11E9BA1C51747A5843 /* Hero-prefix.pch */,
 				14DCAFF5091B3F875227CF40647074AC /* Hero-umbrella.h */,
 				78C99ACFEC83BCE1009CF731AB308064 /* Info.plist */,
+=======
+		1C2DDB11F7EC45108E48A9641146B9C9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3DC2CF5743AB10D4D9AA298244EF323C /* FirebaseDatabase.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		21B54D7B2804E6C56FA45A3BFB6BB4E9 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				5BF58AAE27B5ED9D6BCE8509CA92C7CB /* Info.plist */,
+				489104943C4C5B98A0F3061CCCFF0112 /* NVActivityIndicatorView.modulemap */,
+				D67799D8FBD0C6A0A6016DC42086C653 /* NVActivityIndicatorView.xcconfig */,
+				F96FE34943787C8F10243CC740728918 /* NVActivityIndicatorView-dummy.m */,
+				BE84A0B85C349293FB754628DF7B6782 /* NVActivityIndicatorView-prefix.pch */,
+				3996D3F435069A577612C003F3F64957 /* NVActivityIndicatorView-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/NVActivityIndicatorView";
+			sourceTree = "<group>";
+		};
+		21B8440E1CD12CAAB214BAABEA58DF87 /* DropDown */ = {
+			isa = PBXGroup;
+			children = (
+				29B192F63BF92F99BAADBE7BA592FF9A /* DPDConstants.swift */,
+				514B0575D8001264C6BC8DEEE3835AD7 /* DPDKeyboardListener.swift */,
+				A95254C2FBC38BC7695D664B8166A220 /* DPDUIView+Extension.swift */,
+				D4F66C3C50835240062107391EACF848 /* DropDown.swift */,
+				9D047582C6ECDD9874FD147D6FA5118F /* DropDown+Appearance.swift */,
+				9E0EEEAA578ACF39B48246D4992B3197 /* DropDownCell.swift */,
+				8FCF58D71CAC04F3E9AE5E51B6EC29FE /* Resources */,
+				DB10A0E59B5BD2781D49FE6987B524D4 /* Support Files */,
+			);
+			name = DropDown;
+			path = DropDown;
+			sourceTree = "<group>";
+		};
+		24D5E623847560C4B619D097B74304E4 /* FBSDKShareKit */ = {
+			isa = PBXGroup;
+			children = (
+				417A222BE4D881C38DE2E8D6E4E74EC0 /* FBSDKAppGroupAddDialog.h */,
+				D8B86F4D42FEAE5E42B60629D218DCD6 /* FBSDKAppGroupAddDialog.m */,
+				2BA4D13C6F42B61089E9D61768068BE8 /* FBSDKAppGroupContent.h */,
+				5198025CA914607E8FFADCBFA6CC030B /* FBSDKAppGroupContent.m */,
+				787416FB0416CA662AA3E4DAFA7B4F6D /* FBSDKAppGroupJoinDialog.h */,
+				19B9F644F759A4CDD8E5A11A6B9C0506 /* FBSDKAppGroupJoinDialog.m */,
+				952E831ED1431AFF842EB406BDB3DF7C /* FBSDKAppInviteContent.h */,
+				3FF6BA8031B37927139D038619285A52 /* FBSDKAppInviteContent.m */,
+				21126263B83035DEEF8C304EDD4C9A5E /* FBSDKAppInviteDialog.h */,
+				E5D1FFF8463D49174F0DA6BB3D9DABAC /* FBSDKAppInviteDialog.m */,
+				5894C0C956D337801068B58ACE8E2E28 /* FBSDKCameraEffectArguments.h */,
+				03C01FF577E40DB66E9A29B2A12B5BB5 /* FBSDKCameraEffectArguments.m */,
+				8A86E4775414648C28D904C6A52BBECC /* FBSDKCameraEffectArguments+Internal.h */,
+				9F6757C53F7AC8FACE95A02444A1AE6A /* FBSDKCameraEffectTextures.h */,
+				2D71648507727231B71CDEDF4415D184 /* FBSDKCameraEffectTextures.m */,
+				E1763B808B8CE3CA09E101E207E74E5E /* FBSDKCameraEffectTextures+Internal.h */,
+				A5E72640C772A8394509BCCBDF747D14 /* FBSDKCheckmarkIcon.h */,
+				B26E5100561832EF6989C4EA262F2A9A /* FBSDKCheckmarkIcon.m */,
+				391653479666CD4C1A95B1E36B2D4C11 /* FBSDKGameRequestContent.h */,
+				44545AE551B40822901FE7804DED9FBA /* FBSDKGameRequestContent.m */,
+				7D2B5C5EF5419444E5491FEBDE576457 /* FBSDKGameRequestDialog.h */,
+				E00363644839E82A7AD7CDDFFE7ECFD0 /* FBSDKGameRequestDialog.m */,
+				7E8A648AB13BA982D5AAF6A99454A278 /* FBSDKGameRequestFrictionlessRecipientCache.h */,
+				0627B73FAAA2A3242EA5DDEE65F22CB5 /* FBSDKGameRequestFrictionlessRecipientCache.m */,
+				B7ACE74C7E17F8C24A296E0F7E04E72E /* FBSDKHashtag.h */,
+				8014763978828A8CF88571CA7EE15192 /* FBSDKHashtag.m */,
+				AF80708226BC7FBB057615CAF9F6AAEB /* FBSDKLikeActionController.h */,
+				27FAACD1752EEF9685E9E5F18CFDA1AA /* FBSDKLikeActionController.m */,
+				5EAFCDCF2D4192E4457FEC21FC27584D /* FBSDKLikeActionControllerCache.h */,
+				955126525AF7DAE2615C7C2B51349558 /* FBSDKLikeActionControllerCache.m */,
+				2FB90F96F8CBB8FE395A4BFF0D8BAA63 /* FBSDKLikeBoxBorderView.h */,
+				6945258B00CC1EAB54827A47DD0205F0 /* FBSDKLikeBoxBorderView.m */,
+				D572C0E43FC6243D0C2223C34180A9DE /* FBSDKLikeBoxView.h */,
+				075652F4C0176D72A9FE12A5E7F40CCD /* FBSDKLikeBoxView.m */,
+				3644E011459978E4948609B653B535DC /* FBSDKLikeButton.h */,
+				9DFF1B082369B6D1656F31B7DFD70BAD /* FBSDKLikeButton.m */,
+				45F41D7B1B6D139453773AB7595F2A54 /* FBSDKLikeButton+Internal.h */,
+				FA84C15657822E05CE1F245988A7F80A /* FBSDKLikeButtonPopWAV.h */,
+				E0FD5314571D647684831CCEF66FDCB8 /* FBSDKLikeButtonPopWAV.m */,
+				D1C79FA320B9A340CEAF78C5E3010EE0 /* FBSDKLikeControl.h */,
+				C2CD3B076955C54DA30A8487C4E7936D /* FBSDKLikeControl.m */,
+				EFA7B22912CD433D47096A146B2C472F /* FBSDKLikeControl+Internal.h */,
+				F0E84CA43514BCB96FF9877055D15923 /* FBSDKLikeDialog.h */,
+				9F7F45469477DCC4863AD25E0469E2B2 /* FBSDKLikeDialog.m */,
+				0DF4535EA2B6FC104BABCEA93F7295D7 /* FBSDKLikeObjectType.h */,
+				5D623F6E17F7597BFF37C921F7E662C0 /* FBSDKLikeObjectType.m */,
+				FE775E362D3370E85E2C6FF7730D54B1 /* FBSDKLiking.h */,
+				FE9F2A3328261AC78F5715AA8193EE24 /* FBSDKMessageDialog.h */,
+				DAFDEABA1851780A08E17F869F686F14 /* FBSDKMessageDialog.m */,
+				FBDB091D47064A4FE7D4E7F40FB16942 /* FBSDKMessengerIcon.h */,
+				378BAD7612D4B4A1E775B2A1C4BBC504 /* FBSDKMessengerIcon.m */,
+				D212540F2D42E1807F86D3D02E13CBE8 /* FBSDKSendButton.h */,
+				754CA34A140DD75AACD0ACD031BAC6BD /* FBSDKSendButton.m */,
+				E2638CF100517AD3D91A04371D68F02E /* FBSDKShareAPI.h */,
+				0E8F4CD536CD27E0AFCC45D6D7E38D83 /* FBSDKShareAPI.m */,
+				EFF0AFFA4A7AF9D43329EA01AF2C8957 /* FBSDKShareButton.h */,
+				F906E973736A75A42F970C433B758734 /* FBSDKShareButton.m */,
+				FE6F3EB5B8B61BF10E699861123C2904 /* FBSDKShareCameraEffectContent.h */,
+				B87582993745EEF454C986E82AFFF8F5 /* FBSDKShareCameraEffectContent.m */,
+				85B6992ACE2EEE3E202D8523C47EDEF9 /* FBSDKShareConstants.h */,
+				6039BCE4D9BD62C3F7A5BB578A049BA3 /* FBSDKShareConstants.m */,
+				9993BE9F5F33C21F35EA450FD94A6EDC /* FBSDKShareDefines.h */,
+				3C2FCAF1348A699D8205C639012CE047 /* FBSDKShareDialog.h */,
+				645E3D31AEA3311A58D90EFA805FE5EF /* FBSDKShareDialog.m */,
+				CB4948B0A6B5895D50003B1C36643737 /* FBSDKShareDialogMode.h */,
+				42E45AB859D6B72F37A0F971466864A5 /* FBSDKShareDialogMode.m */,
+				4DB809A1679CAA37FF4AD5A49100A410 /* FBSDKShareError.h */,
+				F9E1B39FCA0E5838D8A9F228B3CF96FD /* FBSDKShareError.m */,
+				719643ED43A079ED54CC9BB048009F79 /* FBSDKShareKit.h */,
+				3B35D0C7D36D35DEEC7C789CC6C545B7 /* FBSDKShareKit+Internal.h */,
+				879E3D61439A9A31849F3A923A835A74 /* FBSDKShareLinkContent.h */,
+				773DB2340D51E2B638D93B99FA0E90B0 /* FBSDKShareLinkContent.m */,
+				CEDCE13663704149342950D3B68279D4 /* FBSDKShareLinkContent+Internal.h */,
+				B7B641A80DB6578AC4E7A4BC6AAD7D9B /* FBSDKShareMediaContent.h */,
+				69DF1295051F50F4704A063DBCD4D9A4 /* FBSDKShareMediaContent.m */,
+				F989C97268B3B8F90C0F93B7D55D304A /* FBSDKShareOpenGraphAction.h */,
+				BF1C3722F71A6CEE8885E36B52310BE0 /* FBSDKShareOpenGraphAction.m */,
+				519845D82ADD45ADC1CFD133D7EF5173 /* FBSDKShareOpenGraphContent.h */,
+				44B2161167B4ED5EBF66896DF6D4AF37 /* FBSDKShareOpenGraphContent.m */,
+				DBD6F76740DE81F0FF661F288D5CC8DB /* FBSDKShareOpenGraphObject.h */,
+				B644E3DF75110B9BD51F588FAC2DB060 /* FBSDKShareOpenGraphObject.m */,
+				BC991A18BB4806B2576BC9D805E27BFF /* FBSDKShareOpenGraphValueContainer.h */,
+				342EC11B3E56D1BCD32E82F568124930 /* FBSDKShareOpenGraphValueContainer.m */,
+				AC55A3A1E599A8600C9DB1B3EB4AAB95 /* FBSDKShareOpenGraphValueContainer+Internal.h */,
+				29DB35F6B62DEC1B3E5923B643612FCA /* FBSDKSharePhoto.h */,
+				405672743666C7F7C672E18F084111F9 /* FBSDKSharePhoto.m */,
+				AEA79D0DBFBB5B1FEE85BDC039AA665E /* FBSDKSharePhotoContent.h */,
+				66EA63608C17FCEE14F483069B0971F7 /* FBSDKSharePhotoContent.m */,
+				466B66DDBEC950A00CFCC172DF520531 /* FBSDKShareUtility.h */,
+				C3467ECFA5BA4B43037DA89967F334A7 /* FBSDKShareUtility.m */,
+				6B5BF2F0A480DCD37C80F4A7CF6DEE6D /* FBSDKShareVideo.h */,
+				DF059FC46ACFFF89BBE5031E49E80213 /* FBSDKShareVideo.m */,
+				CB60CBB6A764FCEFF2875080D7D39495 /* FBSDKShareVideoContent.h */,
+				892BC121AF13EEAA6039BFD55201CFFF /* FBSDKShareVideoContent.m */,
+				7F05538AE945AB1C9A01D7228609CDDD /* FBSDKSharing.h */,
+				56CAF6E1EDBCCBE202A63AA24A279814 /* FBSDKSharingButton.h */,
+				3088C85A54387CAE813A27FDFEEBD8D5 /* FBSDKSharingContent.h */,
+				D1B6AE51AF81157BC1C37E872BB167EF /* FBSDKVideoUploader.h */,
+				790932C7A9DFF10E2958D26F46623845 /* FBSDKVideoUploader.m */,
+				E5F49C11DA0073CF3AB95FD4BDDF08A1 /* Support Files */,
+			);
+			name = FBSDKShareKit;
+			path = FBSDKShareKit;
+			sourceTree = "<group>";
+		};
+		2939496334C65EA34276A634702126CA /* GoogleToolboxForMac */ = {
+			isa = PBXGroup;
+			children = (
+				4F4323C21328259ADEB401F01B586F1C /* DebugUtils */,
+				B67845850ED11B465152D521C62CA597 /* Defines */,
+				751955E9EE7175C066E5AA93829CB75A /* NSData+zlib */,
+				E443B3AFB325FC314521A9C6E9478C9B /* NSDictionary+URLArguments */,
+				1902872DA212876AD904D2583DD2E1D5 /* NSString+URLArguments */,
+				E952E846B7F9E784E27131377B92CC31 /* Support Files */,
+			);
+			name = GoogleToolboxForMac;
+			path = GoogleToolboxForMac;
+			sourceTree = "<group>";
+		};
+		2BE941BA1F86DA08D28BDE768710264E /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				DAFBA1E63DF1270A8A4F32582DD39CD8 /* Hero.modulemap */,
+				B5C67A97622C02B07F80636C888547EC /* Hero.xcconfig */,
+				0D93BA85AC50B9BCAA074681CC986962 /* Hero-dummy.m */,
+				02DF82A00646B011F677A601F4BF47C8 /* Hero-prefix.pch */,
+				A2817B1D43EB772A64823541E737BC86 /* Hero-umbrella.h */,
+				45D9EA891EEB283C6C555890F7E95428 /* Info.plist */,
+>>>>>>> Stashed changes
 			);
 			name = "Support Files";
 			path = "../Target Support Files/Hero";
 			sourceTree = "<group>";
 		};
+<<<<<<< Updated upstream
 		230D7D8AD64400DF6C29E19FB0ED78D9 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -2254,6 +2606,317 @@
 			);
 			name = nanopb;
 			path = nanopb;
+=======
+		2DB785158E58C3AF8AC40923F4E1C2B6 /* ParallaxHeader */ = {
+			isa = PBXGroup;
+			children = (
+				F36195C85F7645E9D61FCFC05CFE5AA4 /* ParallaxHeader.swift */,
+				93E93DAC342A0E8FC3C90FDD95CA8F58 /* ParallaxHeaderMode.swift */,
+				A927FD6D365B397EAF426B62DAAE7109 /* UIScrollView+ParallaxHeader.swift */,
+				B98C0E6D2E7F790CDF713A938B9547A0 /* Support Files */,
+			);
+			name = ParallaxHeader;
+			path = ParallaxHeader;
+			sourceTree = "<group>";
+		};
+		3074BFCFA05788860A358FEEEBA76D5E /* FirebaseCore */ = {
+			isa = PBXGroup;
+			children = (
+				5E4DCAEC52414F0C1527E0485435387C /* Frameworks */,
+			);
+			name = FirebaseCore;
+			path = FirebaseCore;
+			sourceTree = "<group>";
+		};
+		35B87EE08F0EC07476D8CDDF31787334 /* SwiftyCam */ = {
+			isa = PBXGroup;
+			children = (
+				6F86B033C90E552393F54209A3030BCD /* PreviewView.swift */,
+				24EBF480ABEFB3CAE39E9289FCBD7CAD /* SwiftyCamButton.swift */,
+				1F64393E18942EE0BF6FDFA4B6F0ECBC /* SwiftyCamViewController.swift */,
+				6290D185D2641B9FAFFA7752E1B9AB60 /* SwiftyCamViewControllerDelegate.swift */,
+				B36658AAF8F9B0A6D4B324A5807E4BF3 /* Support Files */,
+			);
+			name = SwiftyCam;
+			path = SwiftyCam;
+			sourceTree = "<group>";
+		};
+		3DA5ACA65AFF6B21C26C6BA28BA78177 /* nanopb */ = {
+			isa = PBXGroup;
+			children = (
+				E21874DC8DDA75593A66322143D9510F /* pb.h */,
+				9A0D6DF65AEB1729F8DB2F0DB4334E64 /* pb_common.c */,
+				2DC8A87B775B680E834740BADC7947D2 /* pb_common.h */,
+				6A8CEA366C307D4C672A379149768BF8 /* pb_decode.c */,
+				19AA498A9BC535C9F7449685F2DE30EB /* pb_decode.h */,
+				A119707D28F7A3C7A2FDC53AFF350FFE /* pb_encode.c */,
+				E210890E295031FEB9BE2481A675541A /* pb_encode.h */,
+				8F53602B1650B48ADF8906ABDA759AC9 /* decode */,
+				00A51D98BEA46837A1486CBADBF66AC2 /* encode */,
+				BDD2CB1EB81CE30FD889D15C5F04AB12 /* Support Files */,
+			);
+			name = nanopb;
+			path = nanopb;
+			sourceTree = "<group>";
+		};
+		473F1AA0AEB7D08C8EFC9AB3DA97D158 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				442D11D5F829AD668E49989D1FD1A069 /* GoogleSignIn.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		496EF550FB437BE026E301F0636B66F0 /* AppLinks */ = {
+			isa = PBXGroup;
+			children = (
+				1CEB91D5083072B38CFF4EB47D415725 /* BFAppLink.h */,
+				9A7896E60147E54D03ED1EB267E075A1 /* BFAppLink.m */,
+				C516FDA01D4C8C5C046A2AADB7F8D630 /* BFAppLink_Internal.h */,
+				789618FC6BD16BF63A5456025D593642 /* BFAppLinkNavigation.h */,
+				E257E582120CF9407961E1A02C0FE0A7 /* BFAppLinkNavigation.m */,
+				33A65E06487B2956DFE86BAB97FA2196 /* BFAppLinkResolving.h */,
+				B1046E475939B2E20E65AE4783EFABD6 /* BFAppLinkReturnToRefererController.h */,
+				1CE7324F48D939DDFABF22A82BFE308C /* BFAppLinkReturnToRefererController.m */,
+				B9E5929408CD13CCDE18B1CED039DFD1 /* BFAppLinkReturnToRefererView.h */,
+				A7742123AA45CB46C81CE4FC8C2C82C9 /* BFAppLinkReturnToRefererView.m */,
+				96D2AD3160FAC57C9DAF84F2A2431B54 /* BFAppLinkReturnToRefererView_Internal.h */,
+				4135DB867D5596F47812384D359783DB /* BFAppLinkTarget.h */,
+				BFAD8051BC02DC3BAC206D613A11D4D0 /* BFAppLinkTarget.m */,
+				914454A61A55E8EB27B29D1E57F44D48 /* BFMeasurementEvent.h */,
+				F90839F83B0A583F2509A1E9CC41175A /* BFMeasurementEvent.m */,
+				460E275A2F59D8B9077814646E53F0A7 /* BFMeasurementEvent_Internal.h */,
+				316F587165FBEE717EE32480646FA7D8 /* BFURL.h */,
+				17F6E03CE6B98B6663A3E2D539B8934B /* BFURL.m */,
+				38629A1849425C1E06937F4BA21352A2 /* BFURL_Internal.h */,
+				C515E6FF8C6ACD237695D8945273A198 /* BFWebViewAppLinkResolver.h */,
+				607ACF507324F81EEDD23B1A6B2AC6C3 /* BFWebViewAppLinkResolver.m */,
+			);
+			name = AppLinks;
+			sourceTree = "<group>";
+		};
+		4AA6896F871FA9A0AC0AE17A0D3A1118 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				143EB2206AD821507BE2456AC3EDF8AD /* FirebaseAnalytics.framework */,
+				4DB39381F63EE90914677539447032C5 /* FirebaseCoreDiagnostics.framework */,
+				6F87EB45482B612D1FA42222E86AEB12 /* FirebaseNanoPB.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4B438BE9DEB9F73D96D9CD02F76E81F5 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				92DE3499E6228E7E3E79B98E2C69E466 /* Firebase.h */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		4DB0A2DF710BEE04F257576375FC2EB5 /* FBSDKCoreKit */ = {
+			isa = PBXGroup;
+			children = (
+				E5EE423509199D5CD96B0F717477A546 /* _FBSDKTemporaryErrorRecoveryAttempter.h */,
+				AB265A43CF12DEC4BD4B64F25AB34932 /* _FBSDKTemporaryErrorRecoveryAttempter.m */,
+				7FAA650FA21B68FB10188E61A498DD40 /* FBSDKAccessToken.h */,
+				3360BCED9FE0740057127B6EACB57D7E /* FBSDKAccessToken.m */,
+				682EC0BD87B335E6AE37867CE17C17BC /* FBSDKAccessTokenCache.h */,
+				1797144EB0C4A52B526F79BAD568C4EA /* FBSDKAccessTokenCache.m */,
+				56F54B32C20BE1920BDDA4EE09A431FC /* FBSDKAccessTokenCacheV3.h */,
+				9EBB482465BEA2E2233802F5264F31C5 /* FBSDKAccessTokenCacheV3.m */,
+				090CE79F25A5E3DC12289CFFD9EB4B50 /* FBSDKAccessTokenCacheV3_17.h */,
+				5C318564F7AC58B7B2CA01CE21C959A0 /* FBSDKAccessTokenCacheV3_17.m */,
+				993C7B4E4ACBEEED62FF323689BD5553 /* FBSDKAccessTokenCacheV3_21.h */,
+				7A6A34B59750E6EBCCCCDEB368805595 /* FBSDKAccessTokenCacheV3_21.m */,
+				AC182845DF01C2F7015F39E7274E7E6A /* FBSDKAccessTokenCacheV4.h */,
+				ED63A8D238C32E654B49A83E4526D02B /* FBSDKAccessTokenCacheV4.m */,
+				DD5FC22CA467AB8E8EC2DD0A07486083 /* FBSDKAccessTokenCaching.h */,
+				7A0D647AB1470CF752B96CEFF31D9FB0 /* FBSDKAppEvents.h */,
+				8F370B4D9915607A60DD822A39E31A49 /* FBSDKAppEvents.m */,
+				7A1005BD2548202A80A77E4AFAC7C281 /* FBSDKAppEvents+Internal.h */,
+				39B945631B1E236D16C7907CD28925D9 /* FBSDKAppEventsDeviceInfo.h */,
+				0D6DA98D8E9378DF30224316035F0973 /* FBSDKAppEventsDeviceInfo.m */,
+				53E8A7092350CE9FFE03BD35F4C60F8A /* FBSDKAppEventsState.h */,
+				C5563B38C7F5C1A2525983A0E538C94C /* FBSDKAppEventsState.m */,
+				7EC4D8EDEB6277F259C88715F6950D08 /* FBSDKAppEventsStateManager.h */,
+				78D7E1B800A9C8DF600C3FAC0CCCCC26 /* FBSDKAppEventsStateManager.m */,
+				3BF855B0B09FE0696A7C478A1B43EF5A /* FBSDKAppEventsUtility.h */,
+				5BFB32BD182BBCAF9801173CE4172618 /* FBSDKAppEventsUtility.m */,
+				C193039BF6AF92C0D4B42972165FAC5C /* FBSDKApplicationDelegate.h */,
+				DCB427DB4F19928721DDC6ED2B5706B2 /* FBSDKApplicationDelegate.m */,
+				EED98BB8619CD468A9821A9C1F8AB400 /* FBSDKApplicationDelegate+Internal.h */,
+				F4424ED0631BB843E5511903A0B408AB /* FBSDKAppLinkResolver.h */,
+				9A2D049A63EE6517BE630B997E06AFCB /* FBSDKAppLinkResolver.m */,
+				9D3C9DA425572E9A3FA9E87C012E2D64 /* FBSDKAppLinkUtility.h */,
+				8349F5A1F5FCBC5086DA49484AB0E061 /* FBSDKAppLinkUtility.m */,
+				87B5D08E1B214CF18AE1874AF9DAD5C4 /* FBSDKAudioResourceLoader.h */,
+				0F284E01D4F566D3CD343EA5D8EB5218 /* FBSDKAudioResourceLoader.m */,
+				2FD291C475DF03AE6BA0069E44911948 /* FBSDKBase64.h */,
+				A8733E4212F69AAB1DE65417A1FB4EA2 /* FBSDKBase64.m */,
+				06427C267CCCAA9442E8E15B83914E77 /* FBSDKBoltsMeasurementEventListener.h */,
+				A6F20FA5288747AD0C7EC98BC55A96D4 /* FBSDKBoltsMeasurementEventListener.m */,
+				8996E3F2B818470A71AD038E4037BA54 /* FBSDKBridgeAPICrypto.h */,
+				BBE311AB1BE5617A3841AFF1F7C008B2 /* FBSDKBridgeAPICrypto.m */,
+				CA11C30810C03698FD052C7CDE49CBF4 /* FBSDKBridgeAPIProtocol.h */,
+				2A5380A17202B32139DB462BC433E481 /* FBSDKBridgeAPIProtocolNativeV1.h */,
+				B218E8CCC4CE56A4AE1077C9902CEC17 /* FBSDKBridgeAPIProtocolNativeV1.m */,
+				2D67E5C1EDEDE2E2D490AE2E99B8DD6D /* FBSDKBridgeAPIProtocolType.h */,
+				2B7E8262A7697C0031BB3D8A53513E0F /* FBSDKBridgeAPIProtocolWebV1.h */,
+				2B4F0E39159476E90F40F725476F2F6B /* FBSDKBridgeAPIProtocolWebV1.m */,
+				00A80D7459356623E5C542AD4428F24C /* FBSDKBridgeAPIProtocolWebV2.h */,
+				8D8557E00AF9FBFE906076EC6B33B3D5 /* FBSDKBridgeAPIProtocolWebV2.m */,
+				D3A26904F50713B58BEC08144A9D825D /* FBSDKBridgeAPIRequest.h */,
+				F63CAD5103CE4C653A93F757821B10D0 /* FBSDKBridgeAPIRequest.m */,
+				395F3D09D8749A623C797CB7722E31B2 /* FBSDKBridgeAPIRequest+Private.h */,
+				76DC694E42ADF016FBD21F1F7F0A5D17 /* FBSDKBridgeAPIResponse.h */,
+				CD9E82112D2D43FCAE70655028B78C23 /* FBSDKBridgeAPIResponse.m */,
+				30E19696EDCA22C5F7AE6D69F2935FD8 /* FBSDKButton.h */,
+				EA244FE457252B5C14103036CAA1A563 /* FBSDKButton.m */,
+				854CE5EDD5A861ACBF7C3F64E65F5497 /* FBSDKButton+Subclass.h */,
+				F623D2393B3EBC226170E999417D1463 /* FBSDKCloseIcon.h */,
+				405926AAB8368A594CF1E2F8B8E0C042 /* FBSDKCloseIcon.m */,
+				A3CF1F335AE286BC4E95AD115915B963 /* FBSDKColor.h */,
+				4E9A53BA4732D27B27C18A531E778F4D /* FBSDKColor.m */,
+				82B6C19DC30BC36BA174F6D8EA04B370 /* FBSDKConstants.h */,
+				9052F636DD5931AD278A1A7E9FB4ED95 /* FBSDKConstants.m */,
+				B8998F88BD255FCDFFB5F530548D72F5 /* FBSDKContainerViewController.h */,
+				085D001D0107B907D78C65D2CA29BD20 /* FBSDKContainerViewController.m */,
+				DCCBA0B3D29C75B613E47700B69B9523 /* FBSDKCopying.h */,
+				46882B228EC4C5130885663CC35E56CA /* FBSDKCoreKit.h */,
+				AB1182EA96739C3C28624218678691BE /* FBSDKCoreKit+Internal.h */,
+				262923CD26CBDBE01B35439660897A83 /* FBSDKCrypto.h */,
+				A5223EAE410120A01A23B3EDBC77860D /* FBSDKCrypto.m */,
+				E50636D64347253DF60E5466DE1EAD95 /* FBSDKDeviceRequestsHelper.h */,
+				8A7DAFD0BA3AC0992E6E2B92A3755C5C /* FBSDKDeviceRequestsHelper.m */,
+				94FF9BE3D3FAB4F9E031A147007B9B2C /* FBSDKDialogConfiguration.h */,
+				F61DF61F81A1987F159B942EF95D0A7C /* FBSDKDialogConfiguration.m */,
+				7C2BF18874290D0A04B1F074F02A5A54 /* FBSDKDynamicFrameworkLoader.h */,
+				B529F12E81FC2D177A7217A1C99D230A /* FBSDKDynamicFrameworkLoader.m */,
+				AD387E829A9E9416E32210EA3270E527 /* FBSDKError.h */,
+				0CE87C7584519B6788AEEB13ACEAF7A9 /* FBSDKError.m */,
+				0017B0592A43EF34474EB9521E2B7DE9 /* FBSDKErrorConfiguration.h */,
+				63336FC61FCBFD990812DB1308B001C7 /* FBSDKErrorConfiguration.m */,
+				48CEC886876588E03B9AA223CFC39606 /* FBSDKErrorRecoveryAttempter.h */,
+				B6F1A8F6748453AF2D76523B367CF174 /* FBSDKErrorRecoveryAttempter.m */,
+				7314DDBF510A6F1D849BE2F1208504F1 /* FBSDKErrorRecoveryConfiguration.h */,
+				AB201674C1572D3AEA5FEC286FFAEC5B /* FBSDKErrorRecoveryConfiguration.m */,
+				8CA48EDDA0278BD95CA576AAF59A1DC0 /* FBSDKGraphErrorRecoveryProcessor.h */,
+				77702237F8303589B44FDB087933AC9E /* FBSDKGraphErrorRecoveryProcessor.m */,
+				56F39B22224941D2C311455AC525A604 /* FBSDKGraphRequest.h */,
+				C56378BDFE1865D9B8FE07A5A0733211 /* FBSDKGraphRequest.m */,
+				CA0813B1231312C01A7E0CCF82EE0F71 /* FBSDKGraphRequest+Internal.h */,
+				8D610DA7594B3BF57ADC0A2EE4393B06 /* FBSDKGraphRequestBody.h */,
+				41B186404568497AF2EDBDCE27D6E5A7 /* FBSDKGraphRequestBody.m */,
+				2D355B5CDF950E27D36033B889E94630 /* FBSDKGraphRequestConnection.h */,
+				229C78A703A83AB3560FB0F405B95E34 /* FBSDKGraphRequestConnection.m */,
+				C7C4AFD3355560A06CFEE14FBA731500 /* FBSDKGraphRequestConnection+Internal.h */,
+				A6D4F0D269A39BD3DDFFCF704772B37C /* FBSDKGraphRequestDataAttachment.h */,
+				75BD18D8BCF33FEECEA480210DB053C5 /* FBSDKGraphRequestDataAttachment.m */,
+				67715F22DC44DC815ECDA15134C58EA7 /* FBSDKGraphRequestMetadata.h */,
+				6F432E1974977FC65F53876EE38C789E /* FBSDKGraphRequestMetadata.m */,
+				BCECFC5D67A0BD0471DE53E9C42AB4E9 /* FBSDKGraphRequestPiggybackManager.h */,
+				6E4399E2B91CD87D543FE16E0A3F563C /* FBSDKGraphRequestPiggybackManager.m */,
+				E81A05E6A364ED459CD890F38602B657 /* FBSDKIcon.h */,
+				1F47D959F0E9E63C08658B0147753CA9 /* FBSDKIcon.m */,
+				08D21D2D32FE5EC3BBE5D21845F14D4D /* FBSDKImageDownloader.h */,
+				330C2791D12B89E507D35626C1DC7C37 /* FBSDKImageDownloader.m */,
+				54E9780FFAEF9DD71FF3A81662CCDCB1 /* FBSDKInternalUtility.h */,
+				BA972C4B16F3666269CD60A9989308D5 /* FBSDKInternalUtility.m */,
+				8EB98A8308F9AFBC766D2DFB4F8F9090 /* FBSDKKeychainStore.h */,
+				81A0C8CA23B5F098BE43F53A8068A8BC /* FBSDKKeychainStore.m */,
+				33BCE11CFA84A6ED3BF59C1F271030C7 /* FBSDKKeychainStoreViaBundleID.h */,
+				C733AC812274424F2359E3ACF1286798 /* FBSDKKeychainStoreViaBundleID.m */,
+				0C6A48B8ECC865917E9F53144575A8C9 /* FBSDKLogger.h */,
+				C8BA5C88419EC5F416F7FFCCC3C702DC /* FBSDKLogger.m */,
+				EA44372C41DA1CF110C5601CE01AAE87 /* FBSDKLogo.h */,
+				9F5B9D171A08C7B2C1ED1629E89A1E9E /* FBSDKLogo.m */,
+				5FA087BA6070E7FC89BC3F9BD7F150E4 /* FBSDKMacros.h */,
+				D999EB71A4C28002078820E3D21926BE /* FBSDKMaleSilhouetteIcon.h */,
+				3D3F5487B0BA4A4762CD68FEF8409B36 /* FBSDKMaleSilhouetteIcon.m */,
+				8AB6AB6880CA5705FBA8735130FC3F43 /* FBSDKMath.h */,
+				704B54D5E91B9A918A74E9450471711A /* FBSDKMath.m */,
+				03606FFF5B4CA8CEB8795196570CAC68 /* FBSDKMonotonicTime.h */,
+				DC5ED1B7911E0F68C0AD2DC336A5886A /* FBSDKMonotonicTime.m */,
+				E2E37DBEBCB08C1D5B3F8664EE149385 /* FBSDKMutableCopying.h */,
+				95DDA091852F7BCCD568944A9D733B69 /* FBSDKPaymentObserver.h */,
+				9A8AAC4D3A4BC8D6CC8E5CFB47464D78 /* FBSDKPaymentObserver.m */,
+				A24A3EB66E14F70705F3D75C26519054 /* FBSDKProfile.h */,
+				519BEBB25AE40DFBBFC9C2D33DE5AD3A /* FBSDKProfile.m */,
+				1AEE75E38599886B0934CD8C5C1C2372 /* FBSDKProfile+Internal.h */,
+				58931C4A1D9845EEA52D7A5436AA2CD1 /* FBSDKProfilePictureView.h */,
+				8C8B5D4996D898135B8BFB93F58C2E66 /* FBSDKProfilePictureView.m */,
+				F98FBAE7EDBEB1E13D6FD6DBC6651882 /* FBSDKServerConfiguration.h */,
+				EC97BC95BEE32F0E8F8331F93DDC7D50 /* FBSDKServerConfiguration.m */,
+				D9F6EF06DC39742283664BA41F254BD4 /* FBSDKServerConfiguration+Internal.h */,
+				C7944506E8D198C496216B28FB7D01F0 /* FBSDKServerConfigurationManager.h */,
+				DF2DA9A4F7B7C6602E8099B3119F2363 /* FBSDKServerConfigurationManager.m */,
+				073D5A7DB1308170D075A53A94B631F7 /* FBSDKServerConfigurationManager+Internal.h */,
+				4B6B3036CF9307134AF7BF5A5DAB10CB /* FBSDKSettings.h */,
+				D55119BE3F0E5E84CAAB0DB393EEFA45 /* FBSDKSettings.m */,
+				FB2100A5016ADB4DCCA0EEBB3361F20E /* FBSDKSettings+Internal.h */,
+				DAD6C1CE80907732A85E4AB8A7E1CE8A /* FBSDKSystemAccountStoreAdapter.h */,
+				14572D61D6932AB2FB3CB3AD3F61A476 /* FBSDKSystemAccountStoreAdapter.m */,
+				8A6875ADBB18BA7C12726EA60E6B9D92 /* FBSDKTestUsersManager.h */,
+				7C992738B4BD2EEDE5F0AE6A4C287300 /* FBSDKTestUsersManager.m */,
+				CA818384E899DAC82196401AC8349F62 /* FBSDKTimeSpentData.h */,
+				F349A2990AB04FA3EF116CC568945127 /* FBSDKTimeSpentData.m */,
+				637E546FBD141166C3BB62384384F49C /* FBSDKTriStateBOOL.h */,
+				F9938E1465AC2D5EB39CF873415E4EBA /* FBSDKTriStateBOOL.m */,
+				9BFA6043D3A4CA84106AF9118A5B18FA /* FBSDKTypeUtility.h */,
+				DEBF62CAF09299F6956DC0FF57388A95 /* FBSDKTypeUtility.m */,
+				751FFE9D7200BD353909FD5BE6697802 /* FBSDKUIUtility.h */,
+				CA5CDF323AC35B2DDC8B0ACCA6F291F1 /* FBSDKURLConnection.h */,
+				E85507B82A923AF3A08AC1E275247380 /* FBSDKURLConnection.m */,
+				60CC3019039BD61D3225E3416DCA8C53 /* FBSDKURLOpening.h */,
+				6F3DFEEA00C90E3A9CE6A1DE4028F5F2 /* FBSDKURLSessionTask.h */,
+				2E371D787FEB75B2FE01363E15FB0B26 /* FBSDKURLSessionTask.m */,
+				B3879DB31DB5E2D90F6ACBA1400929DF /* FBSDKUtility.h */,
+				4E5389D930FEE4CE1DEF2169C4F4098D /* FBSDKUtility.m */,
+				C5F01E1F4DCFF048775B8258D362566B /* FBSDKViewImpressionTracker.h */,
+				861A1277D91F1FA0A3BBF3369383E8A0 /* FBSDKViewImpressionTracker.m */,
+				FD949E9650071D0FE1B55F32AC1FA148 /* FBSDKWebDialog.h */,
+				69C12CDB4D21A52248B57133094687FD /* FBSDKWebDialog.m */,
+				5AA02858CA8A46ED64DFE73ECE9CB591 /* FBSDKWebDialogView.h */,
+				DC87D59357028B797371410E665DCBBA /* FBSDKWebDialogView.m */,
+				7C5EDF3A313E314544AAE4674CE20A25 /* Resources */,
+				5331AF9C21D4ED1CBC169B47346DEFE9 /* Support Files */,
+			);
+			name = FBSDKCoreKit;
+			path = FBSDKCoreKit;
+			sourceTree = "<group>";
+		};
+		4F4323C21328259ADEB401F01B586F1C /* DebugUtils */ = {
+			isa = PBXGroup;
+			children = (
+				4FBEB48D5D8B504DAD18216BFBEE883B /* GTMDebugSelectorValidation.h */,
+				67640923956A0530C63DEEB8B105D2C1 /* GTMDebugThreadValidation.h */,
+				03D5488F2D623EAD015237800D3515D2 /* GTMMethodCheck.h */,
+			);
+			name = DebugUtils;
+			sourceTree = "<group>";
+		};
+		4F48E034D70C8E162E24248C96155C81 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				4B438BE9DEB9F73D96D9CD02F76E81F5 /* Core */,
+			);
+			name = Firebase;
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		5080110C75F64FD172FAA512028B2018 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				1FA22B4774E1295C87A3D740D7D7EF86 /* Bolts.modulemap */,
+				476F55C338DFD6DA10F869BD49078B31 /* Bolts.xcconfig */,
+				6F3E0E4166BD5B459C611C62201BD9B5 /* Bolts-dummy.m */,
+				26689CA9E5B674CE35660F57C7EEB34F /* Bolts-prefix.pch */,
+				9D5475EC874147D9FB27CFCDAF2F5C08 /* Bolts-umbrella.h */,
+				27869303BF5CDA8F41304F6F15A31353 /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/Bolts";
+>>>>>>> Stashed changes
 			sourceTree = "<group>";
 		};
 		52F5F4F0FA7F7EC70E8917586D33235D /* iOS */ = {
@@ -2268,6 +2931,7 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
+<<<<<<< Updated upstream
 		549456F5B19BE259A56C3F00FE0CC8A5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -2610,10 +3274,169 @@
 			isa = PBXGroup;
 			children = (
 				EDD5E2D252EAE33C0DB56E817159EA9B /* FacebookSDKStrings.bundle */,
+=======
+		5331AF9C21D4ED1CBC169B47346DEFE9 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				B096CD4BD9FFE889328E04CC3ED94DC6 /* FBSDKCoreKit.modulemap */,
+				E4DB4F759A413C7926A0BAE847AA1273 /* FBSDKCoreKit.xcconfig */,
+				CB13DFC086F02CE1759EB0BB2A459D18 /* FBSDKCoreKit-dummy.m */,
+				825DFAA3073D19289D12E235A34B4BE9 /* FBSDKCoreKit-prefix.pch */,
+				C52340CE2D2964A525D789E0A34D03A3 /* FBSDKCoreKit-umbrella.h */,
+				6603CD34DE52D63C8E5F0C6D89CDD66B /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/FBSDKCoreKit";
+			sourceTree = "<group>";
+		};
+		53ECDCE86B2FB123CC5D330F5C6C86EB /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				C056210BF428CD900B36CE0E06C46E27 /* GTMSessionFetcher.modulemap */,
+				CDE5DA6535437E428D77166A95FFC433 /* GTMSessionFetcher.xcconfig */,
+				FD605CD7CDB67136775F8B2E1E721EF9 /* GTMSessionFetcher-dummy.m */,
+				64A641F5F947C0234AE2C6A1D4E00DDC /* GTMSessionFetcher-prefix.pch */,
+				26DD1C1E9F63F0844FE4E7B4C1575E03 /* GTMSessionFetcher-umbrella.h */,
+				12291F257C2F2BE12D37235C8260E7CA /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/GTMSessionFetcher";
+			sourceTree = "<group>";
+		};
+		58893C37938B2E45F792F203BFAD1ED5 /* SnapSliderFilters */ = {
+			isa = PBXGroup;
+			children = (
+				AFB3F01DB2E9D8F317BE8F4D9382FCDB /* SNButton.swift */,
+				CB079DC20C82561504AFD5E74D0DD32C /* SNFilter.swift */,
+				D6AE073495698A84415F54D4C4EE76CD /* SNSlider.swift */,
+				90FBF3108924D79F0B2592395299FC76 /* SNSliderDataSource.swift */,
+				4244C72C98A6013A03A6AC2E5DA10391 /* SNSticker.swift */,
+				EAC01B52485B234283FFFDADFEF70EAF /* SNTextField.swift */,
+				F005F86EB911B56135D79A47F74D7175 /* SNUtils.swift */,
+				6D9414AB24861C82648D4C2D89425FF0 /* UIImageExtension.swift */,
+				08B6B59E7106A18817E09EF860130C68 /* Support Files */,
+			);
+			name = SnapSliderFilters;
+			path = SnapSliderFilters;
+			sourceTree = "<group>";
+		};
+		5D1BA02933CA44A560DCF0112F7DBB15 /* FirebaseAuth */ = {
+			isa = PBXGroup;
+			children = (
+				89EECC2D61D306E571359D3601F0361F /* Frameworks */,
+			);
+			name = FirebaseAuth;
+			path = FirebaseAuth;
+			sourceTree = "<group>";
+		};
+		5E4DCAEC52414F0C1527E0485435387C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9F4FFBD41105B3E2B730DBA30FA396A3 /* FirebaseCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5E50C5CB3603AEE78A67D5A370405683 /* GTMSessionFetcher */ = {
+			isa = PBXGroup;
+			children = (
+				70463A999E775131D4A0521841F891F7 /* Core */,
+				7FD2E6516A73BE92967E47E5330EC6D9 /* Full */,
+				53ECDCE86B2FB123CC5D330F5C6C86EB /* Support Files */,
+			);
+			name = GTMSessionFetcher;
+			path = GTMSessionFetcher;
+			sourceTree = "<group>";
+		};
+		6245B3D461241FAA7D6EAC9C0DC26822 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				BBB14EF544F6FE1E01BB862C70D1B430 /* FBSDKLoginKit.modulemap */,
+				3C84648C4C78967BA54190012164D512 /* FBSDKLoginKit.xcconfig */,
+				A2625E1976D54E21E0E14BC10EE39ECC /* FBSDKLoginKit-dummy.m */,
+				A40F96338602E5338FDEDCAA4CBD322B /* FBSDKLoginKit-prefix.pch */,
+				F45FAEEE8717B1C04F93E6BFED3FA875 /* FBSDKLoginKit-umbrella.h */,
+				39C207AC04783003A5BFD26C5118C607 /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/FBSDKLoginKit";
+			sourceTree = "<group>";
+		};
+		62AF70550B44F9F4CC8A5BBF3493346E /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				CA2E159F1B7B6D59E9AE7BDEF57B319A /* Info.plist */,
+				C2AB90506F6069C9AB940F93AA4BBAAA /* leveldb-library.modulemap */,
+				310613561824F6F8F4A8DC6AEE05E439 /* leveldb-library.xcconfig */,
+				ABD32A7E6469352CFC5B494AE52650D7 /* leveldb-library-dummy.m */,
+				608916E21D0D649BFA07C5DAE0B70766 /* leveldb-library-prefix.pch */,
+				1DA5F76E4073DD3710A5E10C2073DA54 /* leveldb-library-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/leveldb-library";
+			sourceTree = "<group>";
+		};
+		62B32101F87E0B411C2E3127588FE462 /* PinterestSegment */ = {
+			isa = PBXGroup;
+			children = (
+				8951668A4040BE65BBA9863E8C7F1CDD /* PinterestSegment.swift */,
+				CE40BABC1A147880B22308C317201D2D /* Support Files */,
+			);
+			name = PinterestSegment;
+			path = PinterestSegment;
+			sourceTree = "<group>";
+		};
+		6976765DE46948E99232CDEC6229C9EE /* PryntTrimmerView */ = {
+			isa = PBXGroup;
+			children = (
+				EF3AE695DBD9A1D444595C36734F8E30 /* AssetVideoScrollView.swift */,
+				53D1FBA8FC66EDA4932519B49CD24194 /* AVAssetTimeSelector.swift */,
+				78102683000E06EE2D8B799E62219909 /* CropMaskView.swift */,
+				C0172019C86789FDC04AE056F913D0C3 /* HandlerView.swift */,
+				AC13737F3FF60681ACDF5B4A7C7BE3B4 /* PryntTrimmerView.swift */,
+				2229375AE16B3F982C65F5EA44D1A902 /* ThumbSelectorView.swift */,
+				57273077E37450C415C5AAEF98628F30 /* VideoCropView.swift */,
+				7660F87978387EF1A324504DD961BB3D /* VideoScrollView.swift */,
+				163DDF66876313FAEC72D5FFE61A04BC /* Support Files */,
+			);
+			name = PryntTrimmerView;
+			path = PryntTrimmerView;
+			sourceTree = "<group>";
+		};
+		70463A999E775131D4A0521841F891F7 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				921BD37500F75C094165E97D2D10103A /* GTMSessionFetcher.h */,
+				ACF65B1131D46C3239376A005187897B /* GTMSessionFetcher.m */,
+				846FF8CA04E751B893DAE523BF05410E /* GTMSessionFetcherLogging.h */,
+				A6297E291F8AE225D9586C3F03957A2A /* GTMSessionFetcherLogging.m */,
+				9BB1B99CD33AA1DF13466BD1CF57E87D /* GTMSessionFetcherService.h */,
+				B3635DBFE1BD6E6FCF28FE341FA0A6B7 /* GTMSessionFetcherService.m */,
+				F299A6B081B36E4A3DD8CE3AF0754340 /* GTMSessionUploadFetcher.h */,
+				EC0CD0F592C4E2DD9F85FB1C4ED75A7E /* GTMSessionUploadFetcher.m */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		751955E9EE7175C066E5AA93829CB75A /* NSData+zlib */ = {
+			isa = PBXGroup;
+			children = (
+				08B0B0D808D22D290F47746278309608 /* GTMNSData+zlib.h */,
+				A08DF0B267E8AC5D44035630B14EF359 /* GTMNSData+zlib.m */,
+			);
+			name = "NSData+zlib";
+			sourceTree = "<group>";
+		};
+		7C5EDF3A313E314544AAE4674CE20A25 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CD54A6F994C9A240B4D84FA9086BCF32 /* FacebookSDKStrings.bundle */,
+>>>>>>> Stashed changes
 			);
 			name = Resources;
 			sourceTree = "<group>";
 		};
+<<<<<<< Updated upstream
 		7B99FBCFF50F523FAD892154AF8351C7 /* GoogleToolboxForMac */ = {
 			isa = PBXGroup;
 			children = (
@@ -2780,10 +3603,162 @@
 			isa = PBXGroup;
 			children = (
 				9CF8B5BD696774053C85334DD34A380B /* FirebaseDatabase.framework */,
+=======
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				B6F68872338CDFB6771660E4A9AF44B2 /* Frameworks */,
+				18FC63DE29867850626109D6E42D91EC /* Pods */,
+				CB46766149A09AA8E4F7A8F58F2F99EB /* Products */,
+				934244A032A15FF19E8FB81A71121062 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		7FD2E6516A73BE92967E47E5330EC6D9 /* Full */ = {
+			isa = PBXGroup;
+			children = (
+				DC639B7A07AFC7D5AE869472E51AC438 /* GTMGatherInputStream.h */,
+				BF8AE6EA64DDFD65F16EAB09AC4CCCD5 /* GTMGatherInputStream.m */,
+				730E317224BCB799DCC55D606C64021C /* GTMMIMEDocument.h */,
+				D75C654B51C0DB6DBF6FDA80101FE1BF /* GTMMIMEDocument.m */,
+				F31CDF9DF7732307E2046177C472FDBC /* GTMReadMonitorInputStream.h */,
+				28B0971D548941D171582BAE91FAE239 /* GTMReadMonitorInputStream.m */,
+			);
+			name = Full;
+			sourceTree = "<group>";
+		};
+		814D4D00AF5C85F67701FB897CEFBB80 /* FBSDKLoginKit */ = {
+			isa = PBXGroup;
+			children = (
+				E76F60EBC47775A1B79CBF84B40C848A /* _FBSDKLoginRecoveryAttempter.h */,
+				156811F5040A3FB8104C0BD96C2DEDB9 /* _FBSDKLoginRecoveryAttempter.m */,
+				19C6F6E8316C6A824DF56214DD04D464 /* FBSDKLoginButton.h */,
+				A18F7C45B5A74CAE7BFA3F69DE99C739 /* FBSDKLoginButton.m */,
+				31827CD918F3408C2B46A8CB6AD385A1 /* FBSDKLoginCompletion.h */,
+				31AEA713C78B407836C4A33A28B5D345 /* FBSDKLoginCompletion.m */,
+				043A82F23F18573A6B93511C6717C50E /* FBSDKLoginCompletion+Internal.h */,
+				4D3E8F29EE7A7036A86D347E5CBA3DD7 /* FBSDKLoginConstants.h */,
+				99B9C8DD45C7CE506DAA1AF2D02FD6C7 /* FBSDKLoginConstants.m */,
+				DD528975A5B2713452E3173D996D2A6B /* FBSDKLoginError.h */,
+				5BFA2A286F7004851BD89382CD544F29 /* FBSDKLoginError.m */,
+				C3A6DD309195C8331D3A1396B1F2D664 /* FBSDKLoginKit.h */,
+				3D28B2C9D495F18C207182D7A8B71755 /* FBSDKLoginKit+Internal.h */,
+				EBC35B69F047B55FB9F24EF4E6857766 /* FBSDKLoginManager.h */,
+				066188ABC1CF07D865F2F6441E872B8B /* FBSDKLoginManager.m */,
+				52E3116D8D9B6A1A1112A930A3595652 /* FBSDKLoginManager+Internal.h */,
+				1E1B28B94B83407E4C0CF97F153A2700 /* FBSDKLoginManagerLogger.h */,
+				A8D759DD2553D78A4E35B6B92FA309F8 /* FBSDKLoginManagerLogger.m */,
+				9C4AE67700294964711B0581BFBBC0E2 /* FBSDKLoginManagerLoginResult.h */,
+				20EBD4390DD788620BB7AAB0E65FB921 /* FBSDKLoginManagerLoginResult.m */,
+				741FB824742E84CD3432D9443E8D7661 /* FBSDKLoginManagerLoginResult+Internal.h */,
+				17869EB17CD07BBE6A013B4A48857D3D /* FBSDKLoginTooltipView.h */,
+				F578651B2B24975D9CD3D9A25433F491 /* FBSDKLoginTooltipView.m */,
+				CC1826A44C23FFA438D07B37BDABB597 /* FBSDKLoginUtility.h */,
+				21E1200996F48F5D564C0089316BB86F /* FBSDKLoginUtility.m */,
+				DCC7F540E16363D16BECB82DCB1FA8FA /* FBSDKTooltipView.h */,
+				C41DEB08DA26593F2054C133A04580CE /* FBSDKTooltipView.m */,
+				6245B3D461241FAA7D6EAC9C0DC26822 /* Support Files */,
+			);
+			name = FBSDKLoginKit;
+			path = FBSDKLoginKit;
+			sourceTree = "<group>";
+		};
+		86AA4AF5ABD4B1393CC95A42B3BB5CAA /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				7404C12B58DDAA62BD288FA1B97CA6A5 /* GTMOAuth2.modulemap */,
+				B0C6457D464B71B2AB0CF11DA8CDF92A /* GTMOAuth2.xcconfig */,
+				FB5614DE4AB3E8B76321DEB7F1FFA7EB /* GTMOAuth2-dummy.m */,
+				3B6F8F89B9623FEE12C54F8D4B23A3AC /* GTMOAuth2-prefix.pch */,
+				C1695D1104F26651415846E56938212A /* GTMOAuth2-umbrella.h */,
+				83E16C611313771F2A9A24095D332552 /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/GTMOAuth2";
+			sourceTree = "<group>";
+		};
+		89EECC2D61D306E571359D3601F0361F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3F506C42E52AF4245B6CE83E547AF573 /* FirebaseAuth.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8B1B51043E38DB6AE88ADEA3BA0B8C68 /* Bolts */ = {
+			isa = PBXGroup;
+			children = (
+				496EF550FB437BE026E301F0636B66F0 /* AppLinks */,
+				5080110C75F64FD172FAA512028B2018 /* Support Files */,
+				DEFE36B4E9F72033CA98C097D611DE80 /* Tasks */,
+			);
+			name = Bolts;
+			path = Bolts;
+			sourceTree = "<group>";
+		};
+		8F53602B1650B48ADF8906ABDA759AC9 /* decode */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = decode;
+			sourceTree = "<group>";
+		};
+		8FCF58D71CAC04F3E9AE5E51B6EC29FE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B2C02068AE2D43A80225FF29C5E18746 /* DropDownCell.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		934244A032A15FF19E8FB81A71121062 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				1B85AA25D1AA433951FB9C5BD0848308 /* Pods-pursue */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		93F7347F1BC74D6BBAAEFCEA20188329 /* GoogleSignIn */ = {
+			isa = PBXGroup;
+			children = (
+				473F1AA0AEB7D08C8EFC9AB3DA97D158 /* Frameworks */,
+				D33D01C5205DBBF9A3B997090653935E /* Resources */,
+			);
+			name = GoogleSignIn;
+			path = GoogleSignIn;
+			sourceTree = "<group>";
+		};
+		98B4B5D1FF24F78DB5E8AC45234009C3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BD7ADD8DE3CCCC967DE8A7F31ACE49E2 /* GTMOAuth2ViewTouch.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		9C042984EBCC825D4DDCDA312A0882D1 /* iCarousel */ = {
+			isa = PBXGroup;
+			children = (
+				9805992B37BB0BC4ED9C988262600633 /* iCarousel.h */,
+				6B917D039C52D12D56DDBA028211F277 /* iCarousel.m */,
+				C018D29DBA7045DEF0CDCF5CC92FCB0E /* Support Files */,
+			);
+			name = iCarousel;
+			path = iCarousel;
+			sourceTree = "<group>";
+		};
+		AB715D51FDEBDB1F8691A35A0C4AD35C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5C7669456E801C0C48FAE8079DBBAB21 /* FirebaseInstanceID.framework */,
+>>>>>>> Stashed changes
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+<<<<<<< Updated upstream
 		B6098AF17DA3ED3648BB9A7FECCFA317 /* Tasks */ = {
 			isa = PBXGroup;
 			children = (
@@ -2805,6 +3780,28 @@
 				CEB50D6D1AFB6E334814190EB34BE6AE /* Bolts.m */,
 			);
 			name = Tasks;
+=======
+		B36658AAF8F9B0A6D4B324A5807E4BF3 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				4C17D70C39057C39645C43891A42DC01 /* Info.plist */,
+				89B51E73DF83E83AE1503C7DA9112CA6 /* SwiftyCam.modulemap */,
+				8E302EEFB2A93CE75FD4A1BE9812943E /* SwiftyCam.xcconfig */,
+				0DA8B497E6BB24A0900B9B3609A533BD /* SwiftyCam-dummy.m */,
+				AF0D06A97AE40B150ACA39BC13639B57 /* SwiftyCam-prefix.pch */,
+				814FB8526D6212A1072F523F91E9E2E9 /* SwiftyCam-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/SwiftyCam";
+			sourceTree = "<group>";
+		};
+		B67845850ED11B465152D521C62CA597 /* Defines */ = {
+			isa = PBXGroup;
+			children = (
+				FF12EA38032284300D85682EECAB0CE0 /* GTMDefines.h */,
+			);
+			name = Defines;
+>>>>>>> Stashed changes
 			sourceTree = "<group>";
 		};
 		B6F68872338CDFB6771660E4A9AF44B2 /* Frameworks */ = {
@@ -2818,6 +3815,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+<<<<<<< Updated upstream
 		BCEB2ABA2F783C3C5D527413135111E7 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -2880,10 +3878,68 @@
 			isa = PBXGroup;
 			children = (
 				C811B4DA6AFF05D1BF035EA85E47CD10 /* FirebaseStorage.framework */,
+=======
+		B98C0E6D2E7F790CDF713A938B9547A0 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				BDFA922BF2F304AA2D98400500BEBEED /* Info.plist */,
+				EAD536E2DAFFC6EEFBB871DFFBB46D53 /* ParallaxHeader.modulemap */,
+				DF5E93DA511C480B0B5E99898B27A7C3 /* ParallaxHeader.xcconfig */,
+				4C6D07D972E75CE8F8E822E70F14DC3F /* ParallaxHeader-dummy.m */,
+				107BDF43E6F3976FC5F9435D199DAA5C /* ParallaxHeader-prefix.pch */,
+				5850F4EE36FD2219755D61C1F58FAA0F /* ParallaxHeader-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/ParallaxHeader";
+			sourceTree = "<group>";
+		};
+		BDD2CB1EB81CE30FD889D15C5F04AB12 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				95BDE6FF0CBC2BD00E6462CCDAF92698 /* Info.plist */,
+				3713A220EC613E0E1E36C5AA73DF45F7 /* nanopb.modulemap */,
+				543CCD00C2C2AEF044DB677D415EA3E9 /* nanopb.xcconfig */,
+				357EFAB448B33E14F6944DE37F4D628E /* nanopb-dummy.m */,
+				E50D358E857201F01672E07909C8DA40 /* nanopb-prefix.pch */,
+				800D0FE233F59E71BF83B2E0346CF653 /* nanopb-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/nanopb";
+			sourceTree = "<group>";
+		};
+		BF987A54CB9479AE6BA43F7F87F9C2B4 /* FirebaseAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				4AA6896F871FA9A0AC0AE17A0D3A1118 /* Frameworks */,
+			);
+			name = FirebaseAnalytics;
+			path = FirebaseAnalytics;
+			sourceTree = "<group>";
+		};
+		C018D29DBA7045DEF0CDCF5CC92FCB0E /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				45612930AECA2B53C50474CD52BB78DA /* iCarousel.modulemap */,
+				A71AE7C89CD7C3E9B98DBC402BE96DBE /* iCarousel.xcconfig */,
+				C2CDD8DCAEFC8C42A4977137BC71BDF9 /* iCarousel-dummy.m */,
+				14A9BE8949BDC5CB56E99E3216E75E9C /* iCarousel-prefix.pch */,
+				0B7247FA29C994C8312436EBC6ADF850 /* iCarousel-umbrella.h */,
+				D40152BACF94F0EBCB37090914297626 /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/iCarousel";
+			sourceTree = "<group>";
+		};
+		C1DE58A15AEB828B39B0B0C2C96ABF8A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F1B6D37DE1F5DC034EBD1E6F9E674C0F /* FirebaseStorage.framework */,
+>>>>>>> Stashed changes
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+<<<<<<< Updated upstream
 		C1EC1CE2C627AB1E1834B0F79CF0175E /* Defines */ = {
 			isa = PBXGroup;
 			children = (
@@ -2933,11 +3989,172 @@
 				CAEF3FB2B30DC4A9BF60A00F6DBAB9DF /* ParallaxHeaderMode.swift */,
 				1E2D205D0013EF8FD30EF639AB0A1DAF /* UIScrollView+ParallaxHeader.swift */,
 				FBC1AF7E3C81E5AF009924A33D80207F /* Support Files */,
+=======
+		CB46766149A09AA8E4F7A8F58F2F99EB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F4DA4BCEE19CAEBED8D9C8F4CB4A44D1 /* Alamofire.framework */,
+				6D9BD2745425465C422221F722C14A91 /* Bolts.framework */,
+				FF64C7BB6963E0976DD9FAC6561A6FD6 /* DropDown.framework */,
+				21AD78EDF437E17899C7F496932E7FD2 /* FBSDKCoreKit.framework */,
+				5E80278DE9881FC8F12E0E264152FDC9 /* FBSDKLoginKit.framework */,
+				FC93095821CB4D285A1A856DC2F64A85 /* FBSDKShareKit.framework */,
+				B4994B237B856A1BB2A9F8688354A397 /* GoogleToolboxForMac.framework */,
+				58BB551325CBD8B26DD23B20C74FFBC0 /* GTMOAuth2.framework */,
+				161C9F3D99729D4FF904CBA04653C6FE /* GTMSessionFetcher.framework */,
+				CC327C5464F5E73FF0B752400F1B192A /* Hero.framework */,
+				359B896EB6F742F61511A4A42139D2CE /* iCarousel.framework */,
+				D733253B020CBB899F30EFD578385698 /* leveldb.framework */,
+				4C3FD2C61CDC80F85BFBDE79D1B9C3CF /* nanopb.framework */,
+				3426F4779AC6DFB8EDA90CBDD7211406 /* NVActivityIndicatorView.framework */,
+				C91EE7EA5FCB6392513DE27C21FAAF42 /* ParallaxHeader.framework */,
+				0E8A0FE52C1D7A3D3A6697BC593C85B6 /* PinterestSegment.framework */,
+				8882F725B9B8783C43FEFA24B0FFBF77 /* Pods_pursue.framework */,
+				2B6C398A1FD6E6918283E0265FEE9106 /* PryntTrimmerView.framework */,
+				680AF80408BA6B89D18C4BDA4A8684A6 /* SnapSliderFilters.framework */,
+				836A0D9499279AB1479850CF10AF3023 /* SwiftyCam.framework */,
 			);
-			name = ParallaxHeader;
-			path = ParallaxHeader;
+			name = Products;
 			sourceTree = "<group>";
 		};
+		CE40BABC1A147880B22308C317201D2D /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				F1FB185E2D9A39F3614ACC1AC1B18972 /* Info.plist */,
+				4E6E8C2D56EF568CFE33045B621D81AB /* PinterestSegment.modulemap */,
+				AF8086CE3730F2407F063F68E76C4455 /* PinterestSegment.xcconfig */,
+				5DFDF35F043D7025369B25F2CC95DC6F /* PinterestSegment-dummy.m */,
+				53772B69F442CC259287AFABF090D321 /* PinterestSegment-prefix.pch */,
+				3462BE559BF6950A8AB684BF17A975AB /* PinterestSegment-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/PinterestSegment";
+			sourceTree = "<group>";
+		};
+		D2BE5DD75BD4194FA741022A4B1A3820 /* NVActivityIndicatorView */ = {
+			isa = PBXGroup;
+			children = (
+				1322514FAA512821E7B90864F05D9E9B /* Presenter */,
+				21B54D7B2804E6C56FA45A3BFB6BB4E9 /* Support Files */,
+			);
+			name = NVActivityIndicatorView;
+			path = NVActivityIndicatorView;
+			sourceTree = "<group>";
+		};
+		D33D01C5205DBBF9A3B997090653935E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3E7A6194AD0C7DCF867AC796C2987D81 /* GoogleSignIn.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		DA58120DFCC98C54E182CE2B55F216A1 /* leveldb-library */ = {
+			isa = PBXGroup;
+			children = (
+				F6795F4D1DC7F0C6E7A180E72B8471A2 /* arena.cc */,
+				830AEB1B4A1B2EAC0CFE1B3698D12DCE /* arena.h */,
+				05799D36426062DFE00F86FD85F5E465 /* atomic_pointer.h */,
+				27D1981A76C8A17225ABD57EE4C6353C /* block.cc */,
+				F388B33394038D2DE4A71DEF3479A9C3 /* block.h */,
+				ABC2741519C568B320167A7D4110A05B /* block_builder.cc */,
+				084A41ECAE312CF814FE4C96658070A5 /* block_builder.h */,
+				DB22612D3AADCE2FA6DCD7BB97D22AAB /* bloom.cc */,
+				D13176EE61D87C06E1F0BCDE037D5ED3 /* builder.cc */,
+				38FD7F376F4DECD789BDCDCE5F625C82 /* builder.h */,
+				E0FAFCA6BE7FAA15211460F59A880F55 /* c.cc */,
+				16E434DB71773EC9FFAEAEF82667740B /* c.h */,
+				7B148853726AA9664C6649C2CB997D26 /* cache.cc */,
+				7E431D85CBAB383C3A374DFFE35E011D /* cache.h */,
+				7AAD1D888665FF44F3B8446F762E29A5 /* coding.cc */,
+				FE3D85CB99F6EEA52BADA8F65EEA62D4 /* coding.h */,
+				A689B7724BDA3317C498D9996C2F436B /* comparator.cc */,
+				19F02D981E5AABD38D083D00C4B990C1 /* comparator.h */,
+				C6F4FCAF6ACEE5E003B19E3734898D51 /* crc32c.cc */,
+				2028837A9BBFC26AD0D068E198CA13A9 /* crc32c.h */,
+				A4A1470F7E11D683E7890A7E90759640 /* db.h */,
+				55287214D46F23621667A225D12BCD93 /* db_impl.cc */,
+				77F6E9BEAE27C3143F799C4AFAA554EC /* db_impl.h */,
+				75DAC5B747A1602C4F5CC3203C18E11B /* db_iter.cc */,
+				3CDEFDCBEED35C12341254D7FB48189E /* db_iter.h */,
+				502E056953D328A01B399BF9312F2EFC /* dbformat.cc */,
+				92ED5DFC7AC9A7509B4C2CA10F1A27B6 /* dbformat.h */,
+				21E139B4E5A00584D1F824D06685A37F /* dumpfile.cc */,
+				D2CF07488E81352F775B5B404EF20DAE /* dumpfile.h */,
+				E3AA3AEBD81A0A568779A1E62190DA64 /* env.cc */,
+				16D23C0B5005512796C012C0F4AA246C /* env.h */,
+				63BCB0BE010A2EA993D99A0D1D5299C1 /* env_posix.cc */,
+				33C2E0405CDCDFB234CC4FA5A194FF6C /* env_posix_test_helper.h */,
+				2DF3FCC66C02186E9DB42B7D01474AA4 /* filename.cc */,
+				BC69886DAA53ADCF0EF82CCBA11772AF /* filename.h */,
+				ED7DB5AC1BD26866DAAED3328F0ED789 /* filter_block.cc */,
+				190E05A08D95251B2E0D971577AD697A /* filter_block.h */,
+				52A372EEC0870C1E1234657C35030EF5 /* filter_policy.cc */,
+				1EC705B48C0D5048F984517B17E3084A /* filter_policy.h */,
+				C44F845D9CB8497AD4C62E5D7300E8EB /* format.cc */,
+				2841E82C885167EAEB0A1CD3A01ABDBC /* format.h */,
+				9B60620CACD49D7C662DB09ACBEC494F /* hash.cc */,
+				E11CE986BFAEFECA7ACE4E1D23027BC7 /* hash.h */,
+				AAD24AD1CFCC677555ED8D1282AED704 /* histogram.cc */,
+				BC01D15D5F3EB0A56800B0F007074A6D /* histogram.h */,
+				C9662AB612C7D1D29858BFAF7F4E5BD0 /* iterator.cc */,
+				4EA6D3A7AA0E600BCA7863EEB274EF7C /* iterator.h */,
+				02CD08F17E0832925210B8B82B7438DB /* iterator_wrapper.h */,
+				6AB4835BAE624CD14CBD2A50FBD18D15 /* log_format.h */,
+				723E0890F3811D5DDEF7BEEC7B6F6111 /* log_reader.cc */,
+				92C8C4396A3449BD1E6150726F5881DB /* log_reader.h */,
+				691F6A8225DC405839F7E9F4D6F29A92 /* log_writer.cc */,
+				414B8A0284ECC3436D9A887EC68FADEB /* log_writer.h */,
+				561CDD1E6FA3F956C68513827805B146 /* logging.cc */,
+				F5F2E05C0158DBBE53DAC58EF3E60E5F /* logging.h */,
+				A7E42362CC6F4E9A35E74B7A1E9255CA /* memtable.cc */,
+				4BBCF93C0D44E86F22420762DDC59457 /* memtable.h */,
+				5B32116A4C3E08A95C8F1EE1AEC81911 /* merger.cc */,
+				31BF82D41C416898F47E8E47902C791C /* merger.h */,
+				F4A54ADA2B7F2FA2F6DA8DD0E6A1C15E /* mutexlock.h */,
+				AD6E633CF0D820BC57C90AEAD6099CAA /* options.cc */,
+				1020D67DA2F6E8EDF4C0B6F7682F6EB7 /* options.h */,
+				C5FB7BDDA8319D1A1FEC1B63D9CA3334 /* port.h */,
+				C9F8B9C936A9045626FBBDFA3E126457 /* port_example.h */,
+				BAE89A21BD46955053CE78ADE5CA49E5 /* port_posix.cc */,
+				C3E2281CC3CC73CF58DFA0E02CE3CBDD /* port_posix.h */,
+				06D50B6AC168DA5FBF8BB9C3A414AB6A /* port_posix_sse.cc */,
+				45CEE096844744AAA1B9A45DBB251F7A /* posix_logger.h */,
+				84027D8819D57C3DDDC90B92F83C4DE8 /* random.h */,
+				7413EEE46F79DEACECAB7BC91A61867D /* repair.cc */,
+				A3AFC895F17977D55FD7AEB651ED5586 /* skiplist.h */,
+				B5138D0498C09F5D7409BA03A170A5C5 /* slice.h */,
+				78CAF8C091281FD8356055B045DB6A81 /* snapshot.h */,
+				A9E5735F0B1B49FFDCFA3EFCF2F50729 /* status.cc */,
+				293B46E96AF625761D2895ED3F5BE05F /* status.h */,
+				57FF4C58241F7AE9236ED9F34DE42FCD /* table.cc */,
+				143078C7E93B7940B2E40CA5E7748805 /* table.h */,
+				54181DD29A756710B97F7CDDCD6C6C1D /* table_builder.cc */,
+				9753A516970BA68D12DC31A6741915AC /* table_builder.h */,
+				580AD34EA50395C09E02199506A3339F /* table_cache.cc */,
+				993C48518535F80AA2ABE7F2A8A49040 /* table_cache.h */,
+				4F6786CEBABF432AB40E7CA348447106 /* testharness.cc */,
+				CCA5F8B19BA41440BF3E6A1947D95011 /* testharness.h */,
+				3A4060A33CAB756F8256FA43BBBA1018 /* testutil.cc */,
+				0FCF799919CD18FAE993B9180D2CA57F /* testutil.h */,
+				B32902D9CE3DCAA080FCF2719BC5DC2C /* thread_annotations.h */,
+				D55FEB21C3FB852FA5AC9A9B7DE5E7BF /* two_level_iterator.cc */,
+				85C73AEF526847ECC56E7093EAA38EDB /* two_level_iterator.h */,
+				85730D5926B66FEC8F910DCE3AA2A40B /* version_edit.cc */,
+				A3546E8FD877A0CE24F733B1FD058925 /* version_edit.h */,
+				028FF9E826C9AB8F1180E8D45DC981B4 /* version_set.cc */,
+				53A35F875419ED1AD9916E81CF813902 /* version_set.h */,
+				BCD893E1ABAC7132530BAE615C4227D3 /* write_batch.cc */,
+				93839F3C8B8C5638A65D621735A60314 /* write_batch.h */,
+				B37DD66A46548F57958AC3F0E8DA1A4A /* write_batch_internal.h */,
+				62AF70550B44F9F4CC8A5BBF3493346E /* Support Files */,
+>>>>>>> Stashed changes
+			);
+			name = "leveldb-library";
+			path = "leveldb-library";
+			sourceTree = "<group>";
+		};
+<<<<<<< Updated upstream
 		D33B0280071191F335E9A59B4744EA5F /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -3012,10 +4229,95 @@
 				F7A68D5C6A2944FD7A7C3B4B9AD39073 /* GTMMIMEDocument.m */,
 				A24F4D53B119B80D62262F4F1163DE54 /* GTMReadMonitorInputStream.h */,
 				13D20C007C631AD9DEE36FDCA14C9DE0 /* GTMReadMonitorInputStream.m */,
+=======
+		DB10A0E59B5BD2781D49FE6987B524D4 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				1E571940D2D59394F46D6768C8A71A7B /* DropDown.modulemap */,
+				C2C8241B6039B10D2FFCBD02494F3D6F /* DropDown.xcconfig */,
+				197802D6EF59D77DF04E47ECADFDD7D7 /* DropDown-dummy.m */,
+				57F4A7592FC66BA9EF0BC457E9163B06 /* DropDown-prefix.pch */,
+				DBC59938342375EEF59913D0525F5B90 /* DropDown-umbrella.h */,
+				CC7F37686BAD0797E37712B2F8C10129 /* Info.plist */,
 			);
-			name = Full;
+			name = "Support Files";
+			path = "../Target Support Files/DropDown";
 			sourceTree = "<group>";
 		};
+		DEFE36B4E9F72033CA98C097D611DE80 /* Tasks */ = {
+			isa = PBXGroup;
+			children = (
+				4B32C689F3885773FF8993AE4823ED35 /* BFCancellationToken.h */,
+				6205A189CF7731C38ADCAF104BEB94ED /* BFCancellationToken.m */,
+				3B5043D3FC1FC8828AF34BAEAD185D12 /* BFCancellationTokenRegistration.h */,
+				6C725CB60A3DFC35CE01D4044CD3B6D4 /* BFCancellationTokenRegistration.m */,
+				E2A6312F07889AF799204050F4226B9A /* BFCancellationTokenSource.h */,
+				91232C061D3356C2637C39FDA47602A2 /* BFCancellationTokenSource.m */,
+				06657D6FD73E5348C8C06CA0C8F63928 /* BFExecutor.h */,
+				AFDC6A7D6422546E3D70DF497DD14D5A /* BFExecutor.m */,
+				67C216BBA1DA5F2DD6A0BAEDE582F5BC /* BFTask.h */,
+				3DCBBE485F4D0D77A11CBE49A4EAE2DD /* BFTask.m */,
+				97EEE501BE4290DBDC29ED7C094977A0 /* BFTask+Exceptions.h */,
+				999DF5190D39AE34231A31A59661B7AD /* BFTask+Exceptions.m */,
+				872D55AB6109A557D95867334B871EDD /* BFTaskCompletionSource.h */,
+				B6CB0EC9E59A89FFEFCB08878A9C902C /* BFTaskCompletionSource.m */,
+				EE1FE1B53835C6CD13F34BEF4F8572E4 /* Bolts.h */,
+				6C7A83100973FAD57AA7528534C710FD /* Bolts.m */,
+			);
+			name = Tasks;
+			sourceTree = "<group>";
+		};
+		E1468064E5E01CC980DF5A905D9F8D38 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				680FEDB25F3587BE29427EE851139433 /* Alamofire.modulemap */,
+				D1040B97C3068915C75ADECCB1313BE1 /* Alamofire.xcconfig */,
+				5CB529FF0D03DEEF375CC876374FA418 /* Alamofire-dummy.m */,
+				81CFED0CC036BE8D7532995A48AF7585 /* Alamofire-prefix.pch */,
+				244570BF93F6C40D7AAB45A38ADC6559 /* Alamofire-umbrella.h */,
+				BA3061D7D629EDE097B9B47DC74498FE /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/Alamofire";
+			sourceTree = "<group>";
+		};
+		E443B3AFB325FC314521A9C6E9478C9B /* NSDictionary+URLArguments */ = {
+			isa = PBXGroup;
+			children = (
+				F948BA40DD1C39AA7FE81E10006F817E /* GTMNSDictionary+URLArguments.h */,
+				B387B22FAC2906CC7AA59F2AF109337B /* GTMNSDictionary+URLArguments.m */,
+			);
+			name = "NSDictionary+URLArguments";
+			sourceTree = "<group>";
+		};
+		E50ACC88FD61021C3012D1FEC4BB8623 /* Alamofire */ = {
+			isa = PBXGroup;
+			children = (
+				E0B0E74FCEF01A6CD28A4580A4531E61 /* AFError.swift */,
+				49F55B4D00AAB416C2DDF283DFF98C5B /* Alamofire.swift */,
+				9EE1563420E6EE210F5718C5F1E7BC2E /* DispatchQueue+Alamofire.swift */,
+				57A40ECF8A8C76164F56A82DF42568DA /* MultipartFormData.swift */,
+				C8DB85D2B74C0F6D3149E05EEE785F80 /* NetworkReachabilityManager.swift */,
+				959F8AA402612FBB155D74A7B88959B8 /* Notifications.swift */,
+				E0EC6AC96C0E74C2A969D91440243399 /* ParameterEncoding.swift */,
+				089AAD87576A0648E94E871437AA4BC1 /* Request.swift */,
+				877AB36E6733ED33C3F02E6589932B0E /* Response.swift */,
+				738EE3A0B1908C2F08F626F3EECFDB8D /* ResponseSerialization.swift */,
+				C3EB814B642C535D00C1BD2DA0A82AD9 /* Result.swift */,
+				CA244AA5FA09493A25EB1B0D4336F2F1 /* ServerTrustPolicy.swift */,
+				521C76880B1EFCC1B21C99530A94662C /* SessionDelegate.swift */,
+				88444BEE8B6C6C8DDC642BC3047E7F81 /* SessionManager.swift */,
+				D51080EB1A2DDD80790CDC16CB1DDCF6 /* TaskDelegate.swift */,
+				0F0E357E93D5E917A89F3AF4F7F943CC /* Timeline.swift */,
+				580381EB351BAB75B9281ABFDC6FDC2F /* Validation.swift */,
+				E1468064E5E01CC980DF5A905D9F8D38 /* Support Files */,
+>>>>>>> Stashed changes
+			);
+			name = Alamofire;
+			path = Alamofire;
+			sourceTree = "<group>";
+		};
+<<<<<<< Updated upstream
 		DEBD41071EC0C35263DEF9A6D324B026 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -3091,11 +4393,32 @@
 				372D8C778087F8A388FF29160147378D /* UIView+Hero.swift */,
 				7BA54EF60F110102E7CF701C94BA19EC /* UIViewController+Hero.swift */,
 				220E5F9496E69B853340FA5CC60389C9 /* Support Files */,
+=======
+		E5F49C11DA0073CF3AB95FD4BDDF08A1 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				A3CAD25308A3F3CA91A75EA13885F19F /* FBSDKShareKit.modulemap */,
+				030EC5ACEF1C1A99CC00B2D3AFA35908 /* FBSDKShareKit.xcconfig */,
+				294BDA51D5B70B0DAABEDB05E20956E3 /* FBSDKShareKit-dummy.m */,
+				49B7720E36BFC6A8A6ED7595C4CD63AA /* FBSDKShareKit-prefix.pch */,
+				165F9860A09AD592AE0F9532E2D0F949 /* FBSDKShareKit-umbrella.h */,
+				25C6633EA7B96F1FB7EE2A605BBDB64E /* Info.plist */,
 			);
-			name = Hero;
-			path = Hero;
+			name = "Support Files";
+			path = "../Target Support Files/FBSDKShareKit";
 			sourceTree = "<group>";
 		};
+		E7A860E69C8FF61105914CD51F0066E2 /* FirebaseInstanceID */ = {
+			isa = PBXGroup;
+			children = (
+				AB715D51FDEBDB1F8691A35A0C4AD35C /* Frameworks */,
+>>>>>>> Stashed changes
+			);
+			name = FirebaseInstanceID;
+			path = FirebaseInstanceID;
+			sourceTree = "<group>";
+		};
+<<<<<<< Updated upstream
 		E364134AE45D21C67BBB7F12449C92CE /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -3115,11 +4438,62 @@
 			children = (
 				549456F5B19BE259A56C3F00FE0CC8A5 /* Frameworks */,
 				82678B818E8F9917F7EF88C9A0BF169E /* Resources */,
+=======
+		E943FB6A8F3D0BB8E68DCFD897055B4D /* Hero */ = {
+			isa = PBXGroup;
+			children = (
+				41B64B402510D27E43206D64541EE5DE /* Array+HeroModifier.swift */,
+				BC5C85B323BF4B4ABCFED1087563B5DB /* BasePreprocessor.swift */,
+				46629A46E963A15AAA875EFAC8D13993 /* CALayer+Hero.swift */,
+				6C62534BDDF7CE17DB4B9FF0B4F6C5F0 /* CAMediaTimingFunction+Hero.swift */,
+				B02AFC52276805D28163B41CF02A033D /* CascadePreprocessor.swift */,
+				B15D1E56A6FEAA442B7D13E7E1D657E4 /* CG+Hero.swift */,
+				B0E17CC3897C15892E2969B044AD2640 /* ConditionalPreprocessor.swift */,
+				A392D521437AD83BB684D7BC89DEDE93 /* DefaultAnimationPreprocessor.swift */,
+				6F41633C612E4B1B724AD0E27B5F22FF /* DispatchQueue+Hero.swift */,
+				34B6FB2966E3AEF8C80DC6EE01608D5F /* HeroAnimatorViewContext.swift */,
+				FADF5D90863A56ED6A41BCA41BBB3C1B /* HeroContext.swift */,
+				8F59A5B2E8F19159AC864555EB5922B9 /* HeroCoreAnimationViewContext.swift */,
+				BA1A99009A9D3398BDB6608994969AEE /* HeroDebugPlugin.swift */,
+				C862D21CCB1B156AA5883E2A121415D2 /* HeroDebugView.swift */,
+				1FF5A860E9941428A4CD54EED56C58BB /* HeroDefaultAnimator.swift */,
+				3AD760FFFF24EB7805D8519FC3963D3B /* HeroModifier.swift */,
+				817FF153F4589E6A27E22D1E8B795EAA /* HeroModifier+HeroStringConvertible.swift */,
+				03A07B2377B6F3C21B3B471A64950290 /* HeroPlugin.swift */,
+				EC6214EFB15FFD9A09BED4FDF700F405 /* HeroProgressRunner.swift */,
+				57A7BE2A9839FC597AF627A3AFFAB764 /* HeroStringConvertible.swift */,
+				A11BA77F92F9AD0BCD4D5AD6EF51035D /* HeroTargetState.swift */,
+				3EDA2A99E65056E538C2D90BAB4F78B9 /* HeroTransition.swift */,
+				C6F3BB158EF931767D0B45BDB1233E3C /* HeroTransition+Animate.swift */,
+				7E5E0862173754B5E6BB9D0EE0210AA9 /* HeroTransition+Complete.swift */,
+				68059424D11F31D28CC422D5C42D4442 /* HeroTransition+CustomTransition.swift */,
+				753DF9C55418AEAE4E04800D5665C052 /* HeroTransition+Interactive.swift */,
+				9419B6936A4791DC0C081F49B0164C89 /* HeroTransition+Start.swift */,
+				4304FD52685522C760E62135ACCBDFE5 /* HeroTransition+UINavigationControllerDelegate.swift */,
+				8C53D31E0E2AD3B57B44E14D30B28A72 /* HeroTransition+UITabBarControllerDelegate.swift */,
+				5CB3BE7E990505EC6682DF6454B75F16 /* HeroTransition+UIViewControllerTransitioningDelegate.swift */,
+				40946218463DEC85878B7D1FDDA0C960 /* HeroTransitionState.swift */,
+				4B605488EEC966C656109D6292090DDE /* HeroTypes.swift */,
+				FBDF515A1D2991A356D6C0C9999005DB /* HeroViewControllerDelegate.swift */,
+				B07EC964DC0925D4BD7E658B8A8196C4 /* HeroViewPropertyViewContext.swift */,
+				EA0FFAC7D2748AC6F9E97D638643A560 /* IgnoreSubviewModifiersPreprocessor.swift */,
+				06F503B6922097B05237E158640D4CA0 /* Lexer.swift */,
+				1B1DA9065162183FB7DCC39ABE02FDDC /* MatchPreprocessor.swift */,
+				083C423F47BCF028E6A2F5350DBB373E /* Nodes.swift */,
+				048A91DE9E0984E71EE336536D33D2D8 /* Parser.swift */,
+				A186D80E8B7BE588DE6429001044889E /* Regex.swift */,
+				53135A6ED0D178F57112F8D5229EB054 /* SourcePreprocessor.swift */,
+				A6C52817FE3FD3ED5DC82303941AB912 /* UIKit+Hero.swift */,
+				7103DAF5023071C503A7F68A1BDEB8F7 /* UIView+Hero.swift */,
+				13749F53ECAFC7189C5A1B00EAF7CF21 /* UIViewController+Hero.swift */,
+				2BE941BA1F86DA08D28BDE768710264E /* Support Files */,
+>>>>>>> Stashed changes
 			);
-			name = GoogleSignIn;
-			path = GoogleSignIn;
+			name = Hero;
+			path = Hero;
 			sourceTree = "<group>";
 		};
+<<<<<<< Updated upstream
 		E922F3A3C540EC559662C1892379C293 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -3129,20 +4503,39 @@
 				8B6B294DF207340172D35E8E1D5AC490 /* Alamofire-prefix.pch */,
 				38EF50FF084B78FF09B36EA1A799CB32 /* Alamofire-umbrella.h */,
 				F49A9CEA22CC3C1904CC10A713E834F4 /* Info.plist */,
+=======
+		E952E846B7F9E784E27131377B92CC31 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				C2C08A1DFA6419A75A534412FDFEE3E5 /* GoogleToolboxForMac.modulemap */,
+				73B9D15EBC825B2807384AB503D5D465 /* GoogleToolboxForMac.xcconfig */,
+				605D2E1C1C4B8BDDED649CC4BA027917 /* GoogleToolboxForMac-dummy.m */,
+				FAA85BC134C56DA1AE1A90E151FC5D64 /* GoogleToolboxForMac-prefix.pch */,
+				5B6562FB0B18F59A40199958E956C4E9 /* GoogleToolboxForMac-umbrella.h */,
+				7B3FDF07F6999F2CBC41665B8989E3B0 /* Info.plist */,
+>>>>>>> Stashed changes
 			);
 			name = "Support Files";
-			path = "../Target Support Files/Alamofire";
+			path = "../Target Support Files/GoogleToolboxForMac";
 			sourceTree = "<group>";
 		};
+<<<<<<< Updated upstream
 		F94E51E396218B0C61419857572B24C7 /* FirebaseAnalytics */ = {
 			isa = PBXGroup;
 			children = (
 				BDB1554A24731F5C3C7941C61768F9B7 /* Frameworks */,
+=======
+		EDD2288B9F7C4A22528DB593C978DCFB /* FirebaseDatabase */ = {
+			isa = PBXGroup;
+			children = (
+				1C2DDB11F7EC45108E48A9641146B9C9 /* Frameworks */,
+>>>>>>> Stashed changes
 			);
 			name = FirebaseAnalytics;
 			path = FirebaseAnalytics;
 			sourceTree = "<group>";
 		};
+<<<<<<< Updated upstream
 		FBC1AF7E3C81E5AF009924A33D80207F /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -3195,11 +4588,35 @@
 				8E310201CD846526F0A13EEC4A2CB6EC /* GTMSessionUploadFetcher.m */,
 			);
 			name = Core;
+=======
+		FF209F2D34FE95EAC9497E014DCA055D /* GTMOAuth2 */ = {
+			isa = PBXGroup;
+			children = (
+				1D6E5A94DAD859BB00342723E0C824BA /* GTMOAuth2Authentication.h */,
+				9C061BABDF60B5AAB1E3DD9F3BFF9E1B /* GTMOAuth2Authentication.m */,
+				018EE16A569D4AB7E37847E04368C13F /* GTMOAuth2SignIn.h */,
+				F532C556136CA0E8F032C148A5E1EFED /* GTMOAuth2SignIn.m */,
+				2A9DD701B33A89AA9B2BEE2A32D24ED7 /* GTMOAuth2ViewControllerTouch.h */,
+				E7F4E5475E8D786BF8C591B13582BFB4 /* GTMOAuth2ViewControllerTouch.m */,
+				98B4B5D1FF24F78DB5E8AC45234009C3 /* Resources */,
+				86AA4AF5ABD4B1393CC95A42B3BB5CAA /* Support Files */,
+			);
+			name = GTMOAuth2;
+			path = GTMOAuth2;
+>>>>>>> Stashed changes
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		05FA9EE4C304A44F67A235E55A59319E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D3AC94734C988207E91FEECD69ACCAA /* PryntTrimmerView-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0739C5796C7E0354469039BB1E4A01F3 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -3227,6 +4644,33 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+<<<<<<< Updated upstream
+		4547B9AF8085A499AA35614798F8F9E4 /* Headers */ = {
+=======
+		20692683E6A0E187291C6F6EDACF32A1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D30F552F0D58BB6DF273D2B43B5CD9C /* Pods-pursue-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		346BA253DD67211CE71C064F0B5187BA /* Headers */ = {
+>>>>>>> Stashed changes
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0C82AA1F2078DC6B5936A7CF7D00EB61 /* SnapSliderFilters-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+<<<<<<< Updated upstream
+		65E003BD10A77418063951725D76AB30 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A057028C88CDA62800D817FD801126CE /* SwiftyCam-umbrella.h in Headers */,
+=======
 		4547B9AF8085A499AA35614798F8F9E4 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -3236,14 +4680,7 @@
 				806BAA4E00218D70995697C4400BE7A0 /* pb_common.h in Headers */,
 				29FEADDF2086FDEA7D5BA87DD23B08C6 /* pb_decode.h in Headers */,
 				E181395E73163EB702FCE9A21403D67B /* pb_encode.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		65E003BD10A77418063951725D76AB30 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A057028C88CDA62800D817FD801126CE /* SwiftyCam-umbrella.h in Headers */,
+>>>>>>> Stashed changes
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3331,11 +4768,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+<<<<<<< Updated upstream
 		7FCD7D05B7AEB55C138EE74BCA846E0F /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				89A01274B869144BFDEA5CBAF6E0A7B4 /* Pods-pursue-umbrella.h in Headers */,
+=======
+		8337EBAB27E6D68330EBB38E73BE7863 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				21D73299581075FB7368DA9FDAD8DAA6 /* iCarousel-umbrella.h in Headers */,
+				6C4986A33EE0D75E3B19E605E185E998 /* iCarousel.h in Headers */,
+>>>>>>> Stashed changes
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3408,12 +4854,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+<<<<<<< Updated upstream
 		AAD6B89CE71D565753208B8B74503D27 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				19204597A9DD38A34B7D9D5C38299174 /* KWTransition-umbrella.h in Headers */,
 				8CAFE6828095DB53AAD82A462623C796 /* KWTransition.h in Headers */,
+=======
+		B3180DF68E993366C5B43AE02870C8E5 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFC43DF29A74D0184C714E946740E2AA /* SwiftyCam-umbrella.h in Headers */,
+>>>>>>> Stashed changes
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3670,7 +5124,11 @@
 			);
 			name = ParallaxHeader;
 			productName = ParallaxHeader;
+<<<<<<< Updated upstream
 			productReference = 919F72C94042B814D296DB1EE94E45D3 /* ParallaxHeader.framework */;
+=======
+			productReference = C91EE7EA5FCB6392513DE27C21FAAF42 /* ParallaxHeader.framework */;
+>>>>>>> Stashed changes
 			productType = "com.apple.product-type.framework";
 		};
 		107A9565F9DF88517DFD3E28C05B2B96 /* GoogleToolboxForMac */ = {
@@ -3687,6 +5145,7 @@
 			);
 			name = GoogleToolboxForMac;
 			productName = GoogleToolboxForMac;
+<<<<<<< Updated upstream
 			productReference = 92355552E153684C40ACA8D46766D467 /* GoogleToolboxForMac.framework */;
 			productType = "com.apple.product-type.framework";
 		};
@@ -3722,6 +5181,9 @@
 			name = SnapSliderFilters;
 			productName = SnapSliderFilters;
 			productReference = C145D36A08365D693402BB181EBEA509 /* SnapSliderFilters.framework */;
+=======
+			productReference = B4994B237B856A1BB2A9F8688354A397 /* GoogleToolboxForMac.framework */;
+>>>>>>> Stashed changes
 			productType = "com.apple.product-type.framework";
 		};
 		3B08C49A396BAA0D9DCAD4460CC52F95 /* leveldb-library */ = {
@@ -3738,7 +5200,11 @@
 			);
 			name = "leveldb-library";
 			productName = "leveldb-library";
+<<<<<<< Updated upstream
 			productReference = 1970BE3FB18E705C335719120B5A0B0F /* leveldb.framework */;
+=======
+			productReference = D733253B020CBB899F30EFD578385698 /* leveldb.framework */;
+>>>>>>> Stashed changes
 			productType = "com.apple.product-type.framework";
 		};
 		3EDFE4052B5DE7D509935AC0774CB135 /* NVActivityIndicatorView */ = {
@@ -3755,7 +5221,11 @@
 			);
 			name = NVActivityIndicatorView;
 			productName = NVActivityIndicatorView;
+<<<<<<< Updated upstream
 			productReference = C25FEB4CB0A478BE56526B5337B733EC /* NVActivityIndicatorView.framework */;
+=======
+			productReference = 3426F4779AC6DFB8EDA90CBDD7211406 /* NVActivityIndicatorView.framework */;
+>>>>>>> Stashed changes
 			productType = "com.apple.product-type.framework";
 		};
 		44CAD6CE523055ED339E87154473A254 /* Bolts */ = {
@@ -3772,7 +5242,10 @@
 			);
 			name = Bolts;
 			productName = Bolts;
+<<<<<<< Updated upstream
 			productReference = 8FF38D233BB7D7262A371E5BA112AD4B /* Bolts.framework */;
+=======
+			productReference = 6D9BD2745425465C422221F722C14A91 /* Bolts.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		5168099F2EBFC99A707C03C9EADE01A5 /* DropDown */ = {
@@ -3790,6 +5263,25 @@
 			);
 			name = DropDown;
 			productName = DropDown;
+			productReference = FF64C7BB6963E0976DD9FAC6561A6FD6 /* DropDown.framework */;
+>>>>>>> Stashed changes
+			productType = "com.apple.product-type.framework";
+		};
+		681BE6E3D02A43F9BA63777AC435C8FD /* GTMSessionFetcher */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EFC6FDF0A36E8D94AB02E27F123E1E33 /* Build configuration list for PBXNativeTarget "GTMSessionFetcher" */;
+			buildPhases = (
+				401A903882CA74E40FBF62890EBDB0AA /* Sources */,
+				85211E7BC2181B8A1DAE1BF2BDD5EABF /* Frameworks */,
+				6E61B23507FCA76D65AEB691166AA317 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+<<<<<<< Updated upstream
+			name = DropDown;
+			productName = DropDown;
 			productReference = 4C9E412F2813CA352BA16A6A3E7AF1C9 /* DropDown.framework */;
 			productType = "com.apple.product-type.framework";
 		};
@@ -3800,6 +5292,20 @@
 				71B51F34F998A2B86651CC4DD04D64A3 /* Sources */,
 				9A72579EA3CB34121FC0ECAEB12E87E3 /* Frameworks */,
 				7FCD7D05B7AEB55C138EE74BCA846E0F /* Headers */,
+=======
+			name = GTMSessionFetcher;
+			productName = GTMSessionFetcher;
+			productReference = 161C9F3D99729D4FF904CBA04653C6FE /* GTMSessionFetcher.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		74625573829E096575934F2BC30EC7E9 /* PryntTrimmerView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 71EA79B05709CCEE89DB61434AB2E3F2 /* Build configuration list for PBXNativeTarget "PryntTrimmerView" */;
+			buildPhases = (
+				CB3BE1476F362F0D89BB64582F420232 /* Sources */,
+				93C9484420E218720071AFFEB844F090 /* Frameworks */,
+				05FA9EE4C304A44F67A235E55A59319E /* Headers */,
+>>>>>>> Stashed changes
 			);
 			buildRules = (
 			);
@@ -3824,26 +5330,38 @@
 				5A1AFE1B11F21B497DB37259BFEEFED6 /* PBXTargetDependency */,
 				4C0FF76FD43AD026FA53423E8810E27B /* PBXTargetDependency */,
 			);
+<<<<<<< Updated upstream
 			name = "Pods-pursue";
 			productName = "Pods-pursue";
 			productReference = 1E02F680A442DA877787EAD199A41B71 /* Pods_pursue.framework */;
+=======
+			name = PryntTrimmerView;
+			productName = PryntTrimmerView;
+			productReference = 2B6C398A1FD6E6918283E0265FEE9106 /* PryntTrimmerView.framework */;
+>>>>>>> Stashed changes
 			productType = "com.apple.product-type.framework";
 		};
-		681BE6E3D02A43F9BA63777AC435C8FD /* GTMSessionFetcher */ = {
+		7CE513074286B773FD025293D83FB47C /* SnapSliderFilters */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EFC6FDF0A36E8D94AB02E27F123E1E33 /* Build configuration list for PBXNativeTarget "GTMSessionFetcher" */;
+			buildConfigurationList = A03950A3ED2E99DA43C235AC06EAA917 /* Build configuration list for PBXNativeTarget "SnapSliderFilters" */;
 			buildPhases = (
-				401A903882CA74E40FBF62890EBDB0AA /* Sources */,
-				85211E7BC2181B8A1DAE1BF2BDD5EABF /* Frameworks */,
-				6E61B23507FCA76D65AEB691166AA317 /* Headers */,
+				E56112342F8EE9EBD7C79B1B821995A9 /* Sources */,
+				2D6979A28B9292B6343B1AF1477081A4 /* Frameworks */,
+				346BA253DD67211CE71C064F0B5187BA /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
+<<<<<<< Updated upstream
 			name = GTMSessionFetcher;
 			productName = GTMSessionFetcher;
 			productReference = 4CBA73C802A69C19CFB926F3FEAB7D8A /* GTMSessionFetcher.framework */;
+=======
+			name = SnapSliderFilters;
+			productName = SnapSliderFilters;
+			productReference = 680AF80408BA6B89D18C4BDA4A8684A6 /* SnapSliderFilters.framework */;
+>>>>>>> Stashed changes
 			productType = "com.apple.product-type.framework";
 		};
 		83C26A1A65032AB1408D01604F119111 /* Hero */ = {
@@ -3860,7 +5378,52 @@
 			);
 			name = Hero;
 			productName = Hero;
+<<<<<<< Updated upstream
 			productReference = CC96A11E932FC7779F67C7EA4738B035 /* Hero.framework */;
+=======
+			productReference = CC327C5464F5E73FF0B752400F1B192A /* Hero.framework */;
+>>>>>>> Stashed changes
+			productType = "com.apple.product-type.framework";
+		};
+		84F4612C83BE7033ACBE3D110C223E6B /* Pods-pursue */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 996B846AFEAB60EA07A57F0416E40E9D /* Build configuration list for PBXNativeTarget "Pods-pursue" */;
+			buildPhases = (
+				D309FDE83A9912F3442A22B9CDA86B92 /* Sources */,
+				4BEAA8E60967314123E892966FD77A6F /* Frameworks */,
+				20692683E6A0E187291C6F6EDACF32A1 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6B878A2E72CB894E4113A80F00E0AC3A /* PBXTargetDependency */,
+				2DBC675609C21A07F240D06A6E394586 /* PBXTargetDependency */,
+				3B1B832A049E74930ED81359AE32C8F4 /* PBXTargetDependency */,
+				46C71FFB2CDB7C7515009E0726BA466C /* PBXTargetDependency */,
+				EF2D58A8FCA092A5C66DFBB7B950325E /* PBXTargetDependency */,
+				0F8C829B52CC9C7B379842D9994CFE0C /* PBXTargetDependency */,
+				91CDD3696346ECD30E801A3D0F36423F /* PBXTargetDependency */,
+				583C6D83EA55CD99F693424D28B6B716 /* PBXTargetDependency */,
+				AFC13372B05C647F48CD004243EFCC71 /* PBXTargetDependency */,
+				7212C06F69CFF6F2691BB5EE4866CFBB /* PBXTargetDependency */,
+				8FE48B489C1450E7F0E00C58B37D7EF3 /* PBXTargetDependency */,
+				662AFCD2E585DD24D5092B4E50048CC9 /* PBXTargetDependency */,
+				23706E9DA56DCC44C42BD1F730FBDDBD /* PBXTargetDependency */,
+				B442E0CB2DED15A3F8088E0344CC59FF /* PBXTargetDependency */,
+				FC41A42C30480C94033885E6249CDE4E /* PBXTargetDependency */,
+				8F28FACC500901675AABB6FF597AD26D /* PBXTargetDependency */,
+				7A3BC0FEE3D17B51890092952FB327BB /* PBXTargetDependency */,
+				D64F0902396D0F2795022C86CE439C12 /* PBXTargetDependency */,
+				C7958421E100A9806F682D6667D9EBD5 /* PBXTargetDependency */,
+			);
+<<<<<<< Updated upstream
+			name = Alamofire;
+			productName = Alamofire;
+			productReference = CC73150D75598539A8534213043F99F4 /* Alamofire.framework */;
+=======
+			name = "Pods-pursue";
+			productName = "Pods-pursue";
+			productReference = 8882F725B9B8783C43FEFA24B0FFBF77 /* Pods_pursue.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		88E9EC28B8B46C3631E6B242B50F4442 /* Alamofire */ = {
@@ -3877,7 +5440,8 @@
 			);
 			name = Alamofire;
 			productName = Alamofire;
-			productReference = CC73150D75598539A8534213043F99F4 /* Alamofire.framework */;
+			productReference = F4DA4BCEE19CAEBED8D9C8F4CB4A44D1 /* Alamofire.framework */;
+>>>>>>> Stashed changes
 			productType = "com.apple.product-type.framework";
 		};
 		B1C4AAFAF49036C7007633DAA3C806AD /* GTMOAuth2 */ = {
@@ -3896,7 +5460,28 @@
 			);
 			name = GTMOAuth2;
 			productName = GTMOAuth2;
+<<<<<<< Updated upstream
 			productReference = 0CC3A5B8CAEBDAE38E819E2CF6924DF3 /* GTMOAuth2.framework */;
+=======
+			productReference = 58BB551325CBD8B26DD23B20C74FFBC0 /* GTMOAuth2.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		B8D8C363B343A0778AE6633D70E11749 /* iCarousel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAC0E4E27715C58E6999DD991FAE23F5 /* Build configuration list for PBXNativeTarget "iCarousel" */;
+			buildPhases = (
+				53D5F91CD7B3A622448775A99188C684 /* Sources */,
+				EFC77C679BC0DA842ED5E44C9F5F4309 /* Frameworks */,
+				8337EBAB27E6D68330EBB38E73BE7863 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iCarousel;
+			productName = iCarousel;
+			productReference = 359B896EB6F742F61511A4A42139D2CE /* iCarousel.framework */;
+>>>>>>> Stashed changes
 			productType = "com.apple.product-type.framework";
 		};
 		BC5000D645EEAF961C85907CDC796FE1 /* FBSDKLoginKit */ = {
@@ -3915,7 +5500,11 @@
 			);
 			name = FBSDKLoginKit;
 			productName = FBSDKLoginKit;
+<<<<<<< Updated upstream
 			productReference = 3D4200F7A447734C833BAB4D4D498212 /* FBSDKLoginKit.framework */;
+=======
+			productReference = 5E80278DE9881FC8F12E0E264152FDC9 /* FBSDKLoginKit.framework */;
+>>>>>>> Stashed changes
 			productType = "com.apple.product-type.framework";
 		};
 		BEF7E6E85DB5CDE5D7A18F4F2EB8494B /* FBSDKCoreKit */ = {
@@ -3934,7 +5523,28 @@
 			);
 			name = FBSDKCoreKit;
 			productName = FBSDKCoreKit;
+<<<<<<< Updated upstream
 			productReference = F81D3AA611AE4316FB4DFDBE7969FD68 /* FBSDKCoreKit.framework */;
+=======
+			productReference = 21AD78EDF437E17899C7F496932E7FD2 /* FBSDKCoreKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		D6A8037D41375A319E293AFDA8ADA248 /* SwiftyCam */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 53830B1A90D341BB10D63561AE1CC73C /* Build configuration list for PBXNativeTarget "SwiftyCam" */;
+			buildPhases = (
+				44E2AC23E68E52EC23EC0FB0102A5987 /* Sources */,
+				0322809DF3BA52B61017684E0A382882 /* Frameworks */,
+				B3180DF68E993366C5B43AE02870C8E5 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SwiftyCam;
+			productName = SwiftyCam;
+			productReference = 836A0D9499279AB1479850CF10AF3023 /* SwiftyCam.framework */;
+>>>>>>> Stashed changes
 			productType = "com.apple.product-type.framework";
 		};
 		DD1F15A05F62E2C20BC860F6DA62FC5E /* FBSDKShareKit */ = {
@@ -3953,7 +5563,11 @@
 			);
 			name = FBSDKShareKit;
 			productName = FBSDKShareKit;
+<<<<<<< Updated upstream
 			productReference = E4A9EDA92D6C1E282E327E714647C2A4 /* FBSDKShareKit.framework */;
+=======
+			productReference = FC93095821CB4D285A1A856DC2F64A85 /* FBSDKShareKit.framework */;
+>>>>>>> Stashed changes
 			productType = "com.apple.product-type.framework";
 		};
 		E4DD95323C54A78F879DAB0F1508B8E7 /* nanopb */ = {
@@ -3970,7 +5584,11 @@
 			);
 			name = nanopb;
 			productName = nanopb;
+<<<<<<< Updated upstream
 			productReference = 6348744281E8CC3AA98B8EB6EF0FAF1E /* nanopb.framework */;
+=======
+			productReference = 4C3FD2C61CDC80F85BFBDE79D1B9C3CF /* nanopb.framework */;
+>>>>>>> Stashed changes
 			productType = "com.apple.product-type.framework";
 		};
 		FECEE591A990DD0D724958FD9AFEF5C4 /* PinterestSegment */ = {
@@ -3987,7 +5605,11 @@
 			);
 			name = PinterestSegment;
 			productName = PinterestSegment;
+<<<<<<< Updated upstream
 			productReference = DE0C35EC3B10A5A581845D7D0449D5FA /* PinterestSegment.framework */;
+=======
+			productReference = 0E8A0FE52C1D7A3D3A6697BC593C85B6 /* PinterestSegment.framework */;
+>>>>>>> Stashed changes
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -4007,7 +5629,11 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+<<<<<<< Updated upstream
 			productRefGroup = DEBD41071EC0C35263DEF9A6D324B026 /* Products */;
+=======
+			productRefGroup = CB46766149A09AA8E4F7A8F58F2F99EB /* Products */;
+>>>>>>> Stashed changes
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -4021,16 +5647,27 @@
 				B1C4AAFAF49036C7007633DAA3C806AD /* GTMOAuth2 */,
 				681BE6E3D02A43F9BA63777AC435C8FD /* GTMSessionFetcher */,
 				83C26A1A65032AB1408D01604F119111 /* Hero */,
+<<<<<<< Updated upstream
 				091E378872A50153F1A09808B7B29C95 /* KWTransition */,
+=======
+				B8D8C363B343A0778AE6633D70E11749 /* iCarousel */,
+>>>>>>> Stashed changes
 				3B08C49A396BAA0D9DCAD4460CC52F95 /* leveldb-library */,
 				E4DD95323C54A78F879DAB0F1508B8E7 /* nanopb */,
 				3EDFE4052B5DE7D509935AC0774CB135 /* NVActivityIndicatorView */,
 				0EADC98135BDFF218FA8EEA855120208 /* ParallaxHeader */,
 				FECEE591A990DD0D724958FD9AFEF5C4 /* PinterestSegment */,
+<<<<<<< Updated upstream
 				60EF8E5B6B635F09D4DF77DCDA9D1B82 /* Pods-pursue */,
 				004F5013B84FDDB24D72A24B347C3FC7 /* PryntTrimmerView */,
 				382F17B95D5B94A1AD99CE60B546E139 /* SnapSliderFilters */,
 				18052FCBBE008D8700BEE4B2CC7A4763 /* SwiftyCam */,
+=======
+				84F4612C83BE7033ACBE3D110C223E6B /* Pods-pursue */,
+				74625573829E096575934F2BC30EC7E9 /* PryntTrimmerView */,
+				7CE513074286B773FD025293D83FB47C /* SnapSliderFilters */,
+				D6A8037D41375A319E293AFDA8ADA248 /* SwiftyCam */,
+>>>>>>> Stashed changes
 			);
 		};
 /* End PBXProject section */
@@ -5314,11 +6951,10 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Release;
+			name = Debug;
 		};
 		83CCB0F5DA3234B2F513D5BAE1487F3C /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -6156,6 +7792,24 @@
 			buildConfigurations = (
 				45BA0716B5FBE30D9886D11F496BBEA9 /* Debug */,
 				94F80603668B48EF8F644B28E64D6552 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		996B846AFEAB60EA07A57F0416E40E9D /* Build configuration list for PBXNativeTarget "Pods-pursue" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3B2BDC8B9AAC392DA1E2893E494B77E6 /* Debug */,
+				A7F1022D09066DFBD5D234C3D7275EED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A03950A3ED2E99DA43C235AC06EAA917 /* Build configuration list for PBXNativeTarget "SnapSliderFilters" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83F47A44705E1BB50EBD3A59B77B5717 /* Debug */,
+				0F34FB026BA9D3487D3BB6B5D0F5B590 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

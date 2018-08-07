@@ -119,6 +119,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/PryntTrimmerView/PryntTrimmerView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SnapSliderFilters/SnapSliderFilters.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyCam/SwiftyCam.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/iCarousel/iCarousel.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework"
 fi
@@ -140,6 +141,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/PryntTrimmerView/PryntTrimmerView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SnapSliderFilters/SnapSliderFilters.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyCam/SwiftyCam.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/iCarousel/iCarousel.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework"
 fi

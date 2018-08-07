@@ -10,6 +10,7 @@ target 'pursue' do
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
+  pod 'iCarousel'
   pod 'SwiftyCam'
   pod 'Alamofire'
   pod 'GoogleSignIn'

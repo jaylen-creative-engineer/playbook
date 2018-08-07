@@ -14,7 +14,11 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
+<<<<<<< Updated upstream
                BlueprintIdentifier = '382F17B95D5B94A1AD99CE60B546E139'
+=======
+               BlueprintIdentifier = '7CE513074286B773FD025293D83FB47C'
+>>>>>>> Stashed changes
                BlueprintName = 'SnapSliderFilters'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'SnapSliderFilters.framework'>
