@@ -112,10 +112,17 @@ class HomeController : UICollectionViewController {
     
     func openSearchModal(){
         let searchView = CustomSearchView()
-        searchView.providesPresentationContextTransitionStyle = true
-        searchView.definesPresentationContext = true
-        searchView.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        searchView.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromTop
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        
+//        searchView.providesPresentationContextTransitionStyle = true
+//        searchView.definesPresentationContext = true
+//        searchView.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//        searchView.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         self.showDetailViewController(searchView, sender: self)
     }
     

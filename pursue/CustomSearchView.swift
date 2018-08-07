@@ -101,6 +101,11 @@ class CustomSearchView : UIViewController {
     }
     
     @objc func handleCancel(){
+        let transition = CATransition()
+        transition.duration = 0.25
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromBottom
+        self.view.window!.layer.add(transition, forKey: kCATransition)
         dismiss(animated: true, completion: nil)
     }
     
