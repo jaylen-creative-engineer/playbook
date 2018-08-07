@@ -227,6 +227,11 @@ class PursuitsDetailController : UICollectionViewController {
         setupCollectionViewHeader()
     }
     
+    lazy var headerView : UIView = {
+        let view  = UIView()
+        return view
+    }()
+    
     lazy var imageView : UIImageView = {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "health").withRenderingMode(.alwaysOriginal)
@@ -295,17 +300,20 @@ class PursuitsDetailController : UICollectionViewController {
         playIcon.translatesAutoresizingMaskIntoConstraints = false
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(playVideo))
-        playIcon.addGestureRecognizer(tap)
+        tap.numberOfTapsRequired = 1
+        playBackground.addGestureRecognizer(tap)
         
-        view.addSubview(imageView)
-        imageView.addSubview(leftTapView)
-        imageView.addSubview(rightTapView)
-        imageView.addSubview(label)
-        imageView.addSubview(subLabel)
-        imageView.addSubview(timeLabel)
-        imageView.addSubview(playBackground)
-        imageView.addSubview(playIcon)
+        headerView.addSubview(imageView)
+        headerView.addSubview(leftTapView)
+        headerView.addSubview(rightTapView)
+        headerView.addSubview(label)
+        headerView.addSubview(subLabel)
+        headerView.addSubview(timeLabel)
+        headerView.addSubview(playBackground)
+        headerView.addSubview(playIcon)
+        headerView.bringSubview(toFront: playIcon)
         
+        imageView.anchor(top: headerView.topAnchor, left: headerView.leftAnchor, bottom: headerView.bottomAnchor, right: headerView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         leftTapView.anchor(top: imageView.topAnchor, left: imageView.leftAnchor, bottom: imageView.bottomAnchor, right: imageView.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         rightTapView.anchor(top: imageView.topAnchor, left: imageView.centerXAnchor, bottom: imageView.bottomAnchor, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         label.anchor(top: leftTapView.centerYAnchor, left: leftTapView.leftAnchor, bottom: nil, right: imageView.centerXAnchor, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
@@ -316,7 +324,7 @@ class PursuitsDetailController : UICollectionViewController {
         playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true
         playIcon.centerYAnchor.constraint(equalTo: playBackground.centerYAnchor).isActive = true
         
-        collectionView?.parallaxHeader.view = imageView
+        collectionView?.parallaxHeader.view = headerView
         collectionView?.parallaxHeader.height = view.frame.height
         collectionView?.parallaxHeader.minimumHeight = 0
         collectionView?.parallaxHeader.mode = .topFill
