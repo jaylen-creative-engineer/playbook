@@ -18,18 +18,12 @@ open class SNSlider: UIView {
     open weak var dataSource:SNSliderDataSource?
     
     public override init(frame: CGRect) {
-        print(frame)
+        
         numberOfPages = 3
         startingIndex = 0
-        self.slider = UIScrollView()
+        slider = UIScrollView(frame: frame)
         
         super.init(frame: frame)
-        self.addSubview(self.slider)
-        self.slider.translatesAutoresizingMaskIntoConstraints = false
-        self.slider.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        self.slider.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        self.slider.rightAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        self.slider.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         self.slider.delegate = self
         self.slider.isPagingEnabled = true
@@ -37,6 +31,7 @@ open class SNSlider: UIView {
         self.slider.showsHorizontalScrollIndicator = false
         self.slider.showsVerticalScrollIndicator = false
         self.slider.layer.zPosition = 1
+        self.addSubview(self.slider)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -109,7 +104,7 @@ open class SNSlider: UIView {
     }
     
     fileprivate func positionOfPageAtIndex(_ index: Int) -> CGFloat {
-        return self.frame.size.width*CGFloat(index) + self.frame.size.width - 32
+        return self.frame.size.width*CGFloat(index) + self.frame.size.width
     }
 }
 

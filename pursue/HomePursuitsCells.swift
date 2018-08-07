@@ -58,15 +58,6 @@ class HomePursuitsCells : UICollectionViewCell {
         return iv
     }()
     
-    let gradientView : GradientView = {
-       let view = GradientView()
-        view.colors = [.gray, .lightGray]
-        view.locations = [0.8, 1.0]
-        view.direction = .vertical
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     @objc func handleHeld(){
         delegate?.handleHold(for: self)
     }

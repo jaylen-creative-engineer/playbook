@@ -14,12 +14,12 @@ open class SNTextField: UITextField {
     var panGesture:UIPanGestureRecognizer = UIPanGestureRecognizer()
     var heightOfScreen:CGFloat
     
-    public init(x: CGFloat,y: CGFloat, width: CGFloat, heightOfScreen height: CGFloat) {
+    public init(y: CGFloat, width: CGFloat, heightOfScreen height: CGFloat) {
         
         self.location = CGPoint(x: 0, y: y)
         self.heightOfScreen = height
         
-        super.init(frame: CGRect(x: x, y: y, width: width, height: 40))
+        super.init(frame: CGRect(x: 0, y: y, width: width, height: 40))
         self.layer.zPosition = 100
         self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.45)
         self.tintColor = UIColor.white
@@ -35,6 +35,7 @@ open class SNTextField: UITextField {
         self.textAlignment = .center
         self.contentHorizontalAlignment = .center
         self.delegate = self
+        self.isHidden = true
         
         panGesture = UIPanGestureRecognizer(target:self, action: #selector(SNTextField.handlePan(_:)))
         panGesture.delegate = self
@@ -43,10 +44,6 @@ open class SNTextField: UITextField {
     
     fileprivate func show() {
         self.isHidden = false
-    }
-    
-    fileprivate func hide(){
-        self.isHidden = true
     }
     
     fileprivate func hideKeyboard() {
@@ -91,7 +88,7 @@ extension SNTextField: UITextFieldDelegate {
     // Limit the text size to the screen width
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let text:NSString = (self.text! as NSString).replacingCharacters(in: range, with: string) as NSString
-        let contentWidth = text.size(withAttributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16.0)]).width
+        let contentWidth = text.size(attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 16.0)]).width
         return contentWidth <= (self.frame.width - 20)
     }
     
@@ -112,12 +109,11 @@ extension SNTextField: UIGestureRecognizerDelegate {
             self.showKeyboard()
         }
         else {
-            self.hide()
             self.hideKeyboard()
         }
     }
     
-    @objc func handlePan(_ recognizer:UIPanGestureRecognizer) {
+    func handlePan(_ recognizer:UIPanGestureRecognizer) {
         
         if self.isFirstResponder == true { return }
         
@@ -143,15 +139,15 @@ extension SNTextField: UIGestureRecognizerDelegate {
 
 public extension SNTextField {
     
-    @objc func keyboardWillShow(_ notification: Notification) {
+    func keyboardWillShow(_ notification: Notification) {
         updatePosition(notification)
     }
     
-    @objc func keyboardTypeChanged(_ notification: Notification) {
+    func keyboardTypeChanged(_ notification: Notification) {
         updatePosition(notification)
     }
     
-    @objc func keyboardWillHide(_ notification: Notification) {
+    func keyboardWillHide(_ notification: Notification) {
         self.frame.origin.y = self.location.y
     }
     

@@ -10,45 +10,25 @@ import UIKit
 
 class ProfilePursuit : UICollectionViewCell {
     
-    let rowLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Have a vision to work towards"
-        label.font = UIFont(name: "Lato-Bold", size: 14)
-        return label
-    }()
-    
     let cellId = "cellId"
-    let imageName = [#imageLiteral(resourceName: "health")]
-    let labelId = "labelId"
-
+    let photos = [#imageLiteral(resourceName: "steph"), #imageLiteral(resourceName: "cars"), #imageLiteral(resourceName: "samuel-l"), #imageLiteral(resourceName: "scarlett"), #imageLiteral(resourceName: "ferrari"), #imageLiteral(resourceName: "beauty")]
+    
     let collectionView : UICollectionView = {
-        let scrollLayout = UICollectionViewFlowLayout()
-        scrollLayout.scrollDirection = .horizontal
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
         
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: scrollLayout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
-        
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.isScrollEnabled = false
+        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
-    
-    let showMoreButton : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "expand_arrow1600").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFill
-        return button
-    }()
-    
+
     func setupView(){
-        addSubview(rowLabel)
         addSubview(collectionView)
-        
-        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: 14)
-        collectionView.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 110)
-        
+        collectionView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: frame.height / 1.33)
+        collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.contentInset = UIEdgeInsetsMake(10, 12, 10, 0)
+        collectionView.contentInset = UIEdgeInsetsMake(0, 12, 0, -12)
         collectionView.register(ProfilePursuitCells.self.self, forCellWithReuseIdentifier: cellId)
     }
     
@@ -62,11 +42,10 @@ class ProfilePursuit : UICollectionViewCell {
     }
 }
 
-extension ProfilePursuit :  UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ProfilePursuit :  UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfilePursuitCells
-        cell.photo.image = #imageLiteral(resourceName: "health")
         return cell
     }
     
@@ -75,7 +54,8 @@ extension ProfilePursuit :  UICollectionViewDataSource, UICollectionViewDelegate
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width, height: 250)
+        return CGSize(width: frame.width - 50, height: 500)
     }
 }
+
 

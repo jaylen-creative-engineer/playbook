@@ -19,6 +19,7 @@
 		E60EB26F20462DFA006E4F1A /* FollowPursuitCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60EB26E20462DFA006E4F1A /* FollowPursuitCells.swift */; };
 		E6136EA31F968EAB00E29101 /* PursuitsDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6136EA21F968EAB00E29101 /* PursuitsDetailController.swift */; };
 		E6136EA61F968FC800E29101 /* PursuitsDetailHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6136EA51F968FC800E29101 /* PursuitsDetailHeader.swift */; };
+		E615003C21176F0300F35663 /* ImageCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E615003B21176F0300F35663 /* ImageCells.swift */; };
 		E61692441FD64544008BF11D /* ForgotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61692431FD64544008BF11D /* ForgotController.swift */; };
 		E617BB151FD886D6008B2EA1 /* IntroController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E617BB141FD886D6008B2EA1 /* IntroController.swift */; };
 		E617BB171FD8874B008B2EA1 /* SwipingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E617BB161FD8874B008B2EA1 /* SwipingController.swift */; };
@@ -208,6 +209,7 @@
 		E60EB26E20462DFA006E4F1A /* FollowPursuitCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowPursuitCells.swift; sourceTree = "<group>"; };
 		E6136EA21F968EAB00E29101 /* PursuitsDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PursuitsDetailController.swift; sourceTree = "<group>"; };
 		E6136EA51F968FC800E29101 /* PursuitsDetailHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PursuitsDetailHeader.swift; sourceTree = "<group>"; };
+		E615003B21176F0300F35663 /* ImageCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCells.swift; sourceTree = "<group>"; };
 		E61692431FD64544008BF11D /* ForgotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotController.swift; sourceTree = "<group>"; };
 		E617BB141FD886D6008B2EA1 /* IntroController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroController.swift; sourceTree = "<group>"; };
 		E617BB161FD8874B008B2EA1 /* SwipingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingController.swift; sourceTree = "<group>"; };
@@ -723,6 +725,7 @@
 				E60EB26A204617B5006E4F1A /* FriendsCells.swift */,
 				E6CB1B4A205789DB00B5D2ED /* ProfilePursuit.swift */,
 				E6CB1B4C20578A1100B5D2ED /* ProfilePursuitCells.swift */,
+				E615003B21176F0300F35663 /* ImageCells.swift */,
 				E680ECC4206ACBD60023087D /* ProfilePursuitCreateCell.swift */,
 				E66AEB1820DD6ECC000018B5 /* ProfileHeader.swift */,
 				E66AEB1E20DD9552000018B5 /* ProfilePrinciples.swift */,
@@ -876,7 +879,7 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1121,6 +1124,7 @@
 				E617BB171FD8874B008B2EA1 /* SwipingController.swift in Sources */,
 				E61A41B01F952C0D002F4045 /* PostCommentsCell.swift in Sources */,
 				E6BCBA6F20EA8F2C00D681E9 /* HomePicksCell.swift in Sources */,
+				E615003C21176F0300F35663 /* ImageCells.swift in Sources */,
 				E62AAB1D1FD0A5D30053EAD7 /* PolicyController.swift in Sources */,
 				E6C7387520E5726200D352D6 /* NotificationBarCells.swift in Sources */,
 				E66AEB1F20DD9552000018B5 /* ProfilePrinciples.swift in Sources */,
