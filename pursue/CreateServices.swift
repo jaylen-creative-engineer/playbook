@@ -21,13 +21,22 @@ class CreateServices {
         guard let uploadData = UIImageJPEGRepresentation(thumbnailUrl, 0.3) else { return }
         
         let filename = NSUUID().uuidString
-        Storage.storage().reference().child("pursuit-images").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, err) in
+        let ref = Storage.storage().reference().child("pursuit-images").child(filename)
+        ref.putData(uploadData, metadata: nil, completion: { (metadata, err) in
             
             if let err = err {
                 print("Failed to upload", err)
             }
             
-            guard let pursuitImage = metadata?.downloadURL()?.absoluteString else { return }
+            var pursuitImage : URL?
+            
+            ref.downloadURL(completion: { (url, error) in
+                if let error = error {
+                    print(error)
+                } else {
+                    pursuitImage = url
+                }
+            })
         
             var parameters = Alamofire.Parameters()
             parameters["pursuitId"] = pursuitId
@@ -54,13 +63,22 @@ class CreateServices {
         guard let uploadData = UIImageJPEGRepresentation(thumbnailUrl, 0.3) else { return }
         
         let filename = NSUUID().uuidString
-        Storage.storage().reference().child("pursuit-images").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, err) in
+        let ref = Storage.storage().reference().child("pursuit-images").child(filename)
+        ref.putData(uploadData, metadata: nil, completion: { (metadata, err) in
             
             if let err = err {
                 print("Failed to upload", err)
             }
             
-            guard let pursuitImage = metadata?.downloadURL()?.absoluteString else { return }
+            var pursuitImage : URL?
+            
+            ref.downloadURL(completion: { (url, error) in
+                if let error = error {
+                    print(error)
+                } else {
+                    pursuitImage = url
+                }
+            })
             
             var parameters = Alamofire.Parameters()
             parameters["pursuitId"] = pursuitId
@@ -88,13 +106,22 @@ class CreateServices {
         guard let uploadData = UIImageJPEGRepresentation(thumbnailUrl, 0.3) else { return }
         
         let filename = NSUUID().uuidString
-        Storage.storage().reference().child("pursuit-images").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, err) in
+        let ref = Storage.storage().reference().child("pursuit-images").child(filename)
+        ref.putData(uploadData, metadata: nil, completion: { (metadata, err) in
             
             if let err = err {
                 print("Failed to upload", err)
             }
             
-            guard let pursuitImage = metadata?.downloadURL()?.absoluteString else { return }
+            var pursuitImage : URL?
+            
+            ref.downloadURL(completion: { (url, error) in
+                if let error = error {
+                    print(error)
+                } else {
+                    pursuitImage = url
+                }
+            })
             
             var parameters = Alamofire.Parameters()
             parameters["pursuitId"] = pursuitId
@@ -148,13 +175,23 @@ class CreateServices {
         guard let uploadData = UIImageJPEGRepresentation(thumbnailUrl, 0.3) else { return }
         
         let filename = NSUUID().uuidString
-        Storage.storage().reference().child("pursuit-images").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, err) in
+        let ref = Storage.storage().reference().child("pursuit-images").child(filename)
+        ref.putData(uploadData, metadata: nil, completion: { (metadata, err) in
             
             if let err = err {
                 print("Failed to upload", err)
             }
             
-            guard let postImageUrl = metadata?.downloadURL()?.absoluteString else { return }
+            var postImageUrl : URL?
+            
+            ref.downloadURL(completion: { (url, error) in
+                if let error = error {
+                    print(error)
+                } else {
+                    postImageUrl = url
+                }
+            })
+            
             guard let userId = Auth.auth().currentUser?.uid else { return }
             
             var parameters = Alamofire.Parameters()
@@ -184,13 +221,22 @@ class CreateServices {
         guard let uploadData = UIImageJPEGRepresentation(thumbnailUrl, 0.3) else { return }
         
         let filename = NSUUID().uuidString
-        Storage.storage().reference().child("pursuit-images").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, err) in
+        let ref = Storage.storage().reference().child("pursuit-images").child(filename)
+        ref.putData(uploadData, metadata: nil, completion: { (metadata, err) in
             
             if let err = err {
                 print("Failed to upload", err)
             }
             
-            guard let postImageUrl = metadata?.downloadURL()?.absoluteString else { return }
+            var postImageUrl : URL?
+            
+            ref.downloadURL(completion: { (url, error) in
+                if let error = error {
+                    print(error)
+                } else {
+                    postImageUrl = url
+                }
+            })
 
             var parameters = Alamofire.Parameters()
             parameters["pursuitId"] = pursuitId
@@ -213,14 +259,23 @@ class CreateServices {
         guard let uploadData = UIImageJPEGRepresentation(thumbnailUrl, 0.3) else { return }
         
         let filename = NSUUID().uuidString
-        Storage.storage().reference().child("pursuit-images").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, err) in
+        let ref = Storage.storage().reference().child("pursuit-images").child(filename)
+        ref.putData(uploadData, metadata: nil, completion: { (metadata, err) in
             
             if let err = err {
                 print("Failed to upload", err)
             }
             
             guard let userId = Auth.auth().currentUser?.uid else { return }
-            guard let postImageUrl = metadata?.downloadURL()?.absoluteString else { return }
+            var postImageUrl : URL?
+            
+            ref.downloadURL(completion: { (url, error) in
+                if let error = error {
+                    print(error)
+                } else {
+                    postImageUrl = url
+                }
+            })
 
             var parameters = Alamofire.Parameters()
             parameters["pursuitId"] = pursuitId

@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol ProfileHeaderDelegate {
+    func handleMessage(for cell : ProfileHeader)
+}
+
 class ProfileHeader : UICollectionViewCell {
     
     let followId = "followId"
+    var delegate : ProfileHeaderDelegate?
+    var accessProfileController : ProfileController?
     
     let imageView : CustomImageView = {
         let iv = CustomImageView()
@@ -67,11 +73,12 @@ class ProfileHeader : UICollectionViewCell {
     lazy var messageButton : UIButton = {
        let button = UIButton()
         button.backgroundColor = .black
-        button.setTitle("Message", for: .normal)
+        button.setTitle("Interests", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 14)
         button.layer.cornerRadius = 20
         button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(handleMessageTap), for: .touchUpInside)
         return button
     }()
     
@@ -113,6 +120,10 @@ class ProfileHeader : UICollectionViewCell {
     }()
     
     var fakeFollowerArray = [#imageLiteral(resourceName: "samuel-l"), #imageLiteral(resourceName: "comment-4"), #imageLiteral(resourceName: "comment-5"), #imageLiteral(resourceName: "comment-4"), #imageLiteral(resourceName: "comment-7")]
+    
+    @objc func handleMessageTap(){
+        accessProfileController?.changeToInterests()
+    }
     
     func setupFollowersCollectionView(){
         addSubview(addedCollectionView)

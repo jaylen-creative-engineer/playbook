@@ -119,7 +119,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
                     return
                 }
                 
-                self.loggedinUserId = user?.uid
+                self.loggedinUserId = user?.user.uid
             }
         }
     }

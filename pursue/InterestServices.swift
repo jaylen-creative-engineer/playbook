@@ -23,13 +23,22 @@ class InterestServices {
             guard let uploadData = UIImageJPEGRepresentation(image, 0.3) else { return }
             
             let filename = NSUUID().uuidString
-            Storage.storage().reference().child("interests-images").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, err) in
+            let ref = Storage.storage().reference().child("interests-images").child(filename)
+            ref.putData(uploadData, metadata: nil, completion: { (metadata, err) in
                 
                 if let err = err {
                     print("Failed to upload", err)
                 }
                 
-                guard let interestsImageURL = metadata?.downloadURL()?.absoluteString else { return }
+                var interestsImageURL = ""
+                ref.downloadURL(completion: { (url, error) in
+                    if let error = error {
+                        print(error)
+                    } else {
+                        let stringUrl = url?.absoluteString
+                        interestsImageURL = stringUrl!
+                    }
+                })
                 
                 var parameters = Alamofire.Parameters()
                 parameters["interestId"] = filename

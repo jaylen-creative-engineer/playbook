@@ -51,7 +51,7 @@ class HomeController : UICollectionViewController {
         collectionView?.backgroundColor = UIColor.white
         collectionView?.isScrollEnabled = true
         collectionView?.showsVerticalScrollIndicator = false
-        isHeroEnabled = true
+        hero.isEnabled = true
     }
     
     override func viewDidLoad() {
@@ -142,13 +142,13 @@ class HomeController : UICollectionViewController {
         switch viewType {
         case "isPursuitDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-            detail.imageView.heroID = transitionId
+//            detail.imageView.heroID = transitionId
             detail.standardView()
             navigationController?.pushViewController(detail, animated: true)
 //            navigationController?.present(detail, animated: true, completion: nil)
         case "isChallengeDetail":
             let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-            detail.imageView.heroID = transitionId
+//            detail.imageView.heroID = transitionId
             detail.challengeView()
             navigationController?.pushViewController(detail, animated: true)
 //            navigationController?.present(detail, animated: true, completion: nil)

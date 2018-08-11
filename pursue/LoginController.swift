@@ -335,10 +335,7 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
             if let err = err {
                 print("Failed to sign in", err)
                 return
-            }
-            
-            print("Success logged back in:", user?.uid ?? "")
-            
+            }            
             let appDelegate = UIApplication.shared.delegate! as! AppDelegate
             appDelegate.window = UIWindow()
             appDelegate.window?.rootViewController = MainTabController()

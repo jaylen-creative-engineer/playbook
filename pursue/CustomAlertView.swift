@@ -216,13 +216,22 @@ extension CustomAlertView : UICollectionViewDelegate, UICollectionViewDataSource
             
             if contentUrl != nil {
                 guard let video = contentUrl else { return }
-                
-                Storage.storage().reference().child("pursuit-video").child(filename).putFile(from: video, metadata: nil) { (metadata, err) in
+                let ref = Storage.storage().reference().child("pursuit-video").child(filename)
+                ref.putFile(from: video, metadata: nil) { (metadata, err) in
                     if let err = err {
                         print("Failed to upload", err)
                     }
                     
-                    guard let videoUrl = metadata?.downloadURL()?.absoluteString else { return }
+                    var videoUrl = ""
+                    
+                    ref.downloadURL(completion: { (url, error) in
+                        if let error = error {
+                            print(error)
+                        } else {
+                            let stringUrl = url?.absoluteString
+                            videoUrl = stringUrl!
+                        }
+                    })
                     
                     switch true {
                     case self.is_step == 1:

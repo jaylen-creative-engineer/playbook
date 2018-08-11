@@ -23,35 +23,35 @@ open class SNButton: UIButton {
             // The button is pressed : starting the animation to make it big
             if buttonState == .smallButton && newValue == .bigButton {
                 UIView.animate(withDuration: 0.15,
-                                           animations: {
-                                            self.transform = ButtonAnimations.animationButtonPressed
-                                            self._buttonState = .animating
-                    },
-                                           completion: { _ in
-                                            // Now it is big :
-                                            // Button already released : make it small
-                                            if self._buttonState == .smallButton {
-                                                self.buttonState = .smallButton
-                                            }
-                                                // Button still pressed : bounce effect
-                                            else {
-                                                UIView.animate(withDuration: 0.09,
-                                                    animations: {
-                                                        self.transform = ButtonAnimations.animationButtonPressedSmallBounce
-                                                    },
-                                                    completion: { _ in
-                                                        // Boune effect completed : if button not released : stay big
-                                                        if self._buttonState == .animating {
-                                                            self._buttonState = .bigButton
-                                                        }
-                                                            // If released : make it small
-                                                        else if self._buttonState == .smallButton {
-                                                            self.buttonState = .smallButton
-                                                        }
+                               animations: {
+                                self.transform = ButtonAnimations.animationButtonPressed
+                                self._buttonState = .animating
+                },
+                               completion: { _ in
+                                // Now it is big :
+                                // Button already released : make it small
+                                if self._buttonState == .smallButton {
+                                    self.buttonState = .smallButton
+                                }
+                                    // Button still pressed : bounce effect
+                                else {
+                                    UIView.animate(withDuration: 0.09,
+                                                   animations: {
+                                                    self.transform = ButtonAnimations.animationButtonPressedSmallBounce
+                                    },
+                                                   completion: { _ in
+                                                    // Boune effect completed : if button not released : stay big
+                                                    if self._buttonState == .animating {
+                                                        self._buttonState = .bigButton
                                                     }
-                                                )
-                                            }
-                    }
+                                                        // If released : make it small
+                                                    else if self._buttonState == .smallButton {
+                                                        self.buttonState = .smallButton
+                                                    }
+                                    }
+                                    )
+                                }
+                }
                 )
             }
                 // The button is released when it was big || during the animation : make it small again
@@ -61,13 +61,13 @@ open class SNButton: UIButton {
                     self.action()
                 }
                 UIView.animate(withDuration: 0.15,
-                                           animations: {
-                                            self.transform = ButtonAnimations.animationButtonReleased
-                                            self._buttonState = .animating
-                    },
-                                           completion: { _ in
-                                            self._buttonState = .smallButton
-                    }
+                               animations: {
+                                self.transform = ButtonAnimations.animationButtonReleased
+                                self._buttonState = .animating
+                },
+                               completion: { _ in
+                                self._buttonState = .smallButton
+                }
                 )
             }
                 // The button is released during the animation : make it small
@@ -114,16 +114,16 @@ open class SNButton: UIButton {
         self.action = actionClosure
     }
     
-    func buttonTouchUpInside() {
+    @objc func buttonTouchUpInside() {
         shouldRunAction=true
         buttonReleased()
     }
     
-    func buttonPressed() {
+    @objc func buttonPressed() {
         buttonState = .bigButton
     }
     
-    func buttonReleased() {
+    @objc func buttonReleased() {
         buttonState = .smallButton
     }
 }

@@ -39,7 +39,7 @@ class PursuitDay : UICollectionViewCell {
     
     let cellId = "cellId"
     
-    var days = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"]
+    var days = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7", "Day 8"]
     let images = ["788572ee949285fae33dca5d846a4664", "clean-2", "academics", "fashion-design", "690dae66bfe860df34fc7a756b53c15d"]
     
     func setupPostCollection(){
@@ -78,7 +78,7 @@ class PursuitDay : UICollectionViewCell {
 extension PursuitDay : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return 9
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

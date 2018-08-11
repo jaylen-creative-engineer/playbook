@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+# platform :ios, '10.3'
 
 target 'pursue' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
@@ -8,10 +8,12 @@ target 'pursue' do
   # Pods for pursue
 
   pod 'Firebase/Auth'
+  pod 'Firebase/Core'
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
   pod 'iCarousel'
   pod 'SwiftyCam'
+  pod 'SnapSliderFilters'
   pod 'Alamofire'
   pod 'GoogleSignIn'
   pod 'PinterestSegment'
@@ -20,7 +22,6 @@ target 'pursue' do
   pod 'FBSDKLoginKit'
   pod 'ParallaxHeader'
   pod 'PryntTrimmerView'
-  pod 'SnapSliderFilters'
   pod 'NVActivityIndicatorView'
   pod 'DropDown'
   pod 'Hero'

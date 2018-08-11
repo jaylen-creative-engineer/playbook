@@ -51,14 +51,15 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     var followers : [Follower]?
     let profileService = ProfileServices()
     
+    func changeToInterests(){
+        let interest = InterestsController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(interest, animated: true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tabBarController?.navigationController?.navigationBar.isHidden = true
-        collectionView?.register(ProfileAboutRow.self, forCellWithReuseIdentifier: peopleId)
-        collectionView?.register(ProfilePrinciples.self, forCellWithReuseIdentifier: principleId)
-        collectionView?.register(ProfileSteps.self, forCellWithReuseIdentifier: stepId)
         collectionView?.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(ProfilePursuit.self, forCellWithReuseIdentifier: pursuitsId)
         collectionView?.backgroundColor = .white
@@ -133,6 +134,7 @@ extension ProfileController {
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! ProfileHeader
+        cell.accessProfileController = self
         return cell
     }
     

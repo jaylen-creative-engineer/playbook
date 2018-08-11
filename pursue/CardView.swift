@@ -88,6 +88,26 @@ class PlayView: UIView {
     }
 }
 
+class LargePlayView: UIView {
+    
+    var cornerRadius : CGFloat = 30
+    var shadowOffSetWidth : CGFloat = 0
+    var shadowOffSetHeight : CGFloat = 5
+    var shadowColor = UIColor.black
+    var shadowOpacity : CGFloat = 0.2
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = cornerRadius
+        layer.shadowColor = shadowColor.cgColor
+        layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
+        
+        let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
+        layer.shadowPath = shadowPath.cgPath
+        layer.shadowOpacity = Float(shadowOpacity)
+    }
+}
+
 class FollowRectangleView: UIView {
     
     var cornerRadius : CGFloat = 12

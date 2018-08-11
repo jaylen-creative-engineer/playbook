@@ -18,6 +18,7 @@ class PursuitsDetailController : UICollectionViewController {
     
     let headerId = "headerId"
     let commentId = "commentId"
+    let videoId = "videoId"
     let postId = "postId"
     let teamId = "teamId"
     let dayId = "dayId"
@@ -83,16 +84,16 @@ class PursuitsDetailController : UICollectionViewController {
         return iv
     }()
     
-    lazy var backButton : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "back-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(goBack), for: .touchUpInside)
-        return button
+    let topBackground : UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.init(white: 0.8, alpha: 0.3)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 15
+        return view
     }()
     
-    
     lazy var backBackground : PlayView = {
-       let view = PlayView()
+        let view = PlayView()
         view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isUserInteractionEnabled = true
@@ -104,7 +105,7 @@ class PursuitsDetailController : UICollectionViewController {
     }()
     
     lazy var backIcon : UIImageView = {
-       let iv = UIImageView()
+        let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "back-button").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         iv.isUserInteractionEnabled = true
@@ -115,37 +116,8 @@ class PursuitsDetailController : UICollectionViewController {
         return iv
     }()
     
-    let topBackground : UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.init(white: 0.8, alpha: 0.3)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 15
-        return view
-    }()
-    
     @objc func addSteps(){
      
-    }
-    
-    @objc func playVideo(){
-        let videoURL = URL(string: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
-        let player = AVPlayer(url: videoURL!)
-        let playerViewController = AVPlayerViewController()
-        playerViewController.player = player
-        self.present(playerViewController, animated: true) {
-            playerViewController.player!.play()
-        }
-    }
-    
-    func setupBackButton(){
-        view.addSubview(backBackground)
-        backBackground.addSubview(backIcon)
-
-        backBackground.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
-        backIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 18, height: 18)
-        backIcon.centerXAnchor.constraint(equalTo: backBackground.centerXAnchor).isActive = true
-        backIcon.centerYAnchor.constraint(equalTo: backBackground.centerYAnchor).isActive = true
-        
     }
     
     private func setupFloatingCamera(){
@@ -158,7 +130,6 @@ class PursuitsDetailController : UICollectionViewController {
         stepIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
         stepIcon.centerXAnchor.constraint(equalTo: floatingCamera.centerXAnchor).isActive = true
         stepIcon.centerYAnchor.constraint(equalTo: floatingCamera.centerYAnchor).isActive = true
-        setupBackButton()
     }
     
     func showPursuitsDetail(){
@@ -210,38 +181,34 @@ class PursuitsDetailController : UICollectionViewController {
         return true
     }
     
+    func setupBackButton(){
+        view.addSubview(backBackground)
+        backBackground.addSubview(backIcon)
+        
+        backBackground.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
+        backIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 18, height: 18)
+        backIcon.centerXAnchor.constraint(equalTo: backBackground.centerXAnchor).isActive = true
+        backIcon.centerYAnchor.constraint(equalTo: backBackground.centerYAnchor).isActive = true
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         collectionView?.register(TeamRow.self, forCellWithReuseIdentifier: teamId)
         collectionView?.register(PursuitDay.self, forCellWithReuseIdentifier: dayId)
         collectionView?.register(PostComments.self, forCellWithReuseIdentifier: commentId)
+        collectionView?.register(DetailHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: videoId)
         collectionView?.register(PursuitsDetailHeader.self, forCellWithReuseIdentifier: headerId)
         collectionView?.register(DetailChallengeRow.self, forCellWithReuseIdentifier: challengeId)
         collectionView?.register(DetailSolutions.self, forCellWithReuseIdentifier: solutionId)
-        
+        collectionView?.contentInset = UIEdgeInsetsMake(-50, 0, 0, 0)
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
         containerView.isHidden = true
-        isHeroEnabled = true
-        setupCollectionViewHeader()
+        hero.isEnabled = true
+        setupBackButton()
     }
-    
-    lazy var headerView : UIView = {
-        let view  = UIView()
-        return view
-    }()
-    
-    lazy var imageView : UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "health").withRenderingMode(.alwaysOriginal)
-        imageView.contentMode = .scaleAspectFill
-//        imageView.isUserInteractionEnabled = true
-//        
-//        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-//        imageView.addGestureRecognizer(pan)
-        return imageView
-    }()
     
     @objc func handlePan(panGesture : UIPanGestureRecognizer){
         let translation = panGesture.translation(in: nil)
@@ -249,12 +216,12 @@ class PursuitsDetailController : UICollectionViewController {
         
         switch panGesture.state {
         case .began:
-            hero_dismissViewController()
+            hero.dismissViewController()
         case .changed:
             Hero.shared.update(progress)
             
-            let currentPos = CGPoint(x: translation.x + imageView.center.x, y: translation.y + imageView.center.y)
-            Hero.shared.apply(modifiers: [.position(currentPos)], to: imageView)
+//            let currentPos = CGPoint(x: translation.x + imageView.center.x, y: translation.y + imageView.center.y)
+//            Hero.shared.apply(modifiers: [.position(currentPos)], to: imageView)
         default:
             if progress + panGesture.velocity(in: nil).y / view.bounds.height > 0.2 {
                 Hero.shared.finish()
@@ -264,83 +231,24 @@ class PursuitsDetailController : UICollectionViewController {
         }
     }
     
-    func setupCollectionViewHeader(){
-
-        let leftTapView = UIImageView()
-        leftTapView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let rightTapView = UIImageView()
-        rightTapView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let label = UILabel()
-        label.text = "Travel through amazing heights"
-        label.numberOfLines = 2
-        label.textColor = .white
-        label.font = UIFont(name: "Lato-Bold", size: 18)
-        
-        let subLabel = UILabel()
-        subLabel.text = "Building a tech company"
-        subLabel.font = UIFont.systemFont(ofSize: 12)
-        subLabel.numberOfLines = 2
-        subLabel.textColor = .white
-        
-        let timeLabel = UILabel()
-        timeLabel.text = "Day 3"
-        timeLabel.font = UIFont.systemFont(ofSize: 12)
-        timeLabel.textColor = .white
-
-        let playBackground = PlayView()
-        playBackground.translatesAutoresizingMaskIntoConstraints = false
-        playBackground.backgroundColor = .white
-        playBackground.layer.masksToBounds = true
-        
-        let playIcon = UIImageView()
-        playIcon.image = #imageLiteral(resourceName: "view-more").withRenderingMode(.alwaysOriginal)
-        playIcon.contentMode = .scaleAspectFill
-        playIcon.translatesAutoresizingMaskIntoConstraints = false
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(playVideo))
-        tap.numberOfTapsRequired = 1
-        playBackground.addGestureRecognizer(tap)
-        
-        headerView.addSubview(imageView)
-        headerView.addSubview(leftTapView)
-        headerView.addSubview(rightTapView)
-        headerView.addSubview(label)
-        headerView.addSubview(subLabel)
-        headerView.addSubview(timeLabel)
-        headerView.addSubview(playBackground)
-        headerView.addSubview(playIcon)
-        headerView.bringSubview(toFront: playIcon)
-        
-        imageView.anchor(top: headerView.topAnchor, left: headerView.leftAnchor, bottom: headerView.bottomAnchor, right: headerView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        leftTapView.anchor(top: imageView.topAnchor, left: imageView.leftAnchor, bottom: imageView.bottomAnchor, right: imageView.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        rightTapView.anchor(top: imageView.topAnchor, left: imageView.centerXAnchor, bottom: imageView.bottomAnchor, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        label.anchor(top: leftTapView.centerYAnchor, left: leftTapView.leftAnchor, bottom: nil, right: imageView.centerXAnchor, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
-        subLabel.anchor(top: label.bottomAnchor, left: label.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 0, height: subLabel.intrinsicContentSize.height)
-        timeLabel.anchor(top: subLabel.bottomAnchor, left: subLabel.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: timeLabel.intrinsicContentSize.height)
-        playBackground.anchor(top: timeLabel.bottomAnchor, left: timeLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
-        playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 12, height: 12)
-        playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true
-        playIcon.centerYAnchor.constraint(equalTo: playBackground.centerYAnchor).isActive = true
-        
-        collectionView?.parallaxHeader.view = headerView
-        collectionView?.parallaxHeader.height = view.frame.height
-        collectionView?.parallaxHeader.minimumHeight = 0
-        collectionView?.parallaxHeader.mode = .topFill
-        collectionView?.alwaysBounceVertical = true
-        setupBackButton()
-    }
-    
     var postDescription = ""
 }
 
 extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.width, height: view.frame.height - 80)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: videoId, for: indexPath) as! DetailHeader
+        return header
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch true {
         case isStandardView:
-            return 4
+            return 3
         case isChallengeView:
             return 5
         default:
@@ -357,8 +265,6 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
             case 1:
                 return CGSize(width: view.frame.width, height: 550)
             case 2:
-                return CGSize(width: view.frame.width, height: 200)
-            case 3:
                 return CGSize(width: view.frame.width, height: 550)
             default:
                 assert(false, "Not a valid cell")
@@ -400,9 +306,6 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay
                 return cell
             case 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamRow
-                return cell
-            case 3:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
                 return cell
             default:

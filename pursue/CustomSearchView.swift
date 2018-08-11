@@ -12,6 +12,7 @@ class CustomSearchView : UIViewController {
     
     let alertViewGrayColor = UIColor.clear
     let cellId = "cellId"
+    let carouselId = "carouselId"
     
     lazy var alertView : UIView = {
         let view = UIView()
@@ -19,25 +20,34 @@ class CustomSearchView : UIViewController {
         return view
     }()
     
-    lazy var linkLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Options"
-        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
-        label.textAlignment = .left
-        return label
+    lazy var searchBar: UISearchBar = {
+        let sb = UISearchBar()
+        sb.placeholder = "Search"
+        sb.searchBarStyle = UISearchBarStyle.minimal
+        sb.delegate = self
+        sb.translatesAutoresizingMaskIntoConstraints = false
+        sb.barTintColor = .white
+        sb.layer.cornerRadius = 0
+        sb.layer.masksToBounds = true
+        
+//        sb.isTranslucent = true
+        
+//        let attributedPlaceholder = NSMutableAttributedString(string: "Search...", attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.init(25)), NSAttributedStringKey(rawValue: NSAttributedStringKey.foregroundColor.rawValue): UIColor.gray])
+//
+//        let textFieldPlaceHolder = sb.value(forKey: "searchField") as? UITextField
+//        textFieldPlaceHolder?.attributedPlaceholder = attributedPlaceholder
+        
+        return sb
     }()
     
-    lazy var searchButton : UIButton = {
-        let button = UIButton()
-        button.setTitle("Search", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
-        button.titleLabel?.textAlignment = .center
-        button.backgroundColor = .black
-        button.layer.cornerRadius = 2
-        button.clipsToBounds = true
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+    let collectionView : UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.showsVerticalScrollIndicator = false
+        return collectionView
     }()
     
     lazy var cancelBackground : UIView = {
@@ -63,25 +73,6 @@ class CustomSearchView : UIViewController {
         label.textAlignment = .center
         label.isUserInteractionEnabled = true
         return label
-    }()
-    
-    lazy var reportTitle : UIButton = {
-        let button = UIButton()
-        button.setTitle("Report Post", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(handleYes), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var shareTitle : UIButton = {
-        let button = UIButton()
-        button.setTitle("Share", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
     }()
     
     lazy var dismissBackground : UIButton = {
@@ -112,22 +103,33 @@ class CustomSearchView : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(alertView)
-        alertView.addSubview(linkLabel)
-        alertView.addSubview(reportTitle)
-        alertView.addSubview(shareTitle)
         alertView.addSubview(cancelLabel)
         view.addSubview(cancelBackground)
         view.addSubview(dismissBackground)
         
         alertView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 100, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        linkLabel.anchor(top: alertView.topAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: linkLabel.intrinsicContentSize.width, height: linkLabel.intrinsicContentSize.height)
-        reportTitle.anchor(top: linkLabel.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 26, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: reportTitle.intrinsicContentSize.width, height: reportTitle.intrinsicContentSize.height)
-        shareTitle.anchor(top: reportTitle.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 26, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: shareTitle.intrinsicContentSize.width, height: shareTitle.intrinsicContentSize.height)
+        setupSearchBar()
+        setupCollectionView()
+        
         cancelLabel.anchor(top: nil, left: nil, bottom: alertView.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 8, paddingRight: 0, width: cancelLabel.intrinsicContentSize.width, height: cancelLabel.intrinsicContentSize.height)
         cancelLabel.centerXAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
         cancelBackground.anchor(top: nil, left: nil, bottom: alertView.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 8, paddingRight: 0, width: 100, height: 50)
         cancelBackground.centerXAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
         dismissBackground.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: alertView.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+    }
+    
+    func setupCollectionView(){
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(SearchCarousel.self, forCellWithReuseIdentifier: carouselId)
+        collectionView.register(SearchResults.self, forCellWithReuseIdentifier: cellId)
+        view.addSubview(collectionView)
+        collectionView.anchor(top: searchBar.bottomAnchor, left: alertView.leftAnchor, bottom: view.bottomAnchor, right: alertView.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+    }
+    
+    func setupSearchBar(){
+        view.addSubview(searchBar)
+        searchBar.anchor(top: alertView.topAnchor, left: alertView.leftAnchor, bottom: nil, right: alertView.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 45)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -153,4 +155,40 @@ class CustomSearchView : UIViewController {
 
 extension CustomSearchView : UITextViewDelegate {
     
+}
+
+extension CustomSearchView : UISearchBarDelegate {
+    
+}
+
+extension CustomSearchView : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        switch indexPath.item {
+        case 0:
+            return CGSize(width: view.frame.width, height: 400)
+        case 1:
+            return CGSize(width: view.frame.width, height: 500)
+        default:
+            return CGSize(width: view.frame.width, height: 400)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        switch indexPath.item {
+        case 0:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: carouselId, for: indexPath) as! SearchCarousel
+            return cell
+        case 1:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchResults
+            return cell
+        default:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchResults
+            return cell
+        }
+    }
 }

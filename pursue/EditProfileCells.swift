@@ -166,13 +166,23 @@ class EditProfileCells : UICollectionViewCell {
             else { return }
         
         let filename = NSUUID().uuidString
-        Storage.storage().reference().child("profile-images").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, err) in
+        let ref = Storage.storage().reference().child("profile-images").child(filename)
+        ref.putData(uploadData, metadata: nil, completion: { (metadata, err) in
             
             if let err = err {
                 print("Failed to upload", err)
             }
             
-            guard let profileImageURL = metadata?.downloadURL()?.absoluteString else { return }
+            var profileImageURL = ""
+            ref.downloadURL(completion: { (url, error) in
+                if let error = error {
+                    print(error)
+                } else {
+                    let stringUrl = url?.absoluteString
+                    profileImageURL = stringUrl!
+                }
+            })
+            
             self.profileService.updateAccount(username: username, fullname: fullname, photoUrl: profileImageURL)
         })
     }
