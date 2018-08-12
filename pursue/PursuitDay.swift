@@ -39,7 +39,7 @@ class PursuitDay : UICollectionViewCell {
     
     let cellId = "cellId"
     
-    var days = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7", "Day 8"]
+    var days = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"]
     let images = ["788572ee949285fae33dca5d846a4664", "clean-2", "academics", "fashion-design", "690dae66bfe860df34fc7a756b53c15d"]
     
     func setupPostCollection(){
@@ -78,7 +78,7 @@ class PursuitDay : UICollectionViewCell {
 extension PursuitDay : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 9
+        return 4
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -90,7 +90,7 @@ extension PursuitDay : UICollectionViewDelegate, UICollectionViewDataSource, UIC
         case postCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PursuitDayCells
             cell.postTableView.reloadData()
-//            cell.photo.image = UIImage(named: images[indexPath.item])
+            //            cell.photo.image = UIImage(named: images[indexPath.item])
             return cell
         default:
             assert(false, "Not a valid collection")
@@ -127,6 +127,12 @@ extension PursuitDay : UICollectionViewDelegate, UICollectionViewDataSource, UIC
             labelCollectionView.selectItem(at: selIndexPath, animated: true, scrollPosition: .centeredVertically)
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == labelCollectionView{
+            let selIndexPath = IndexPath(row: indexPath.row, section: 0)
+            postCollectionView.selectItem(at: selIndexPath, animated: true, scrollPosition: .centeredHorizontally)
+        }
+    }
 }
-
 

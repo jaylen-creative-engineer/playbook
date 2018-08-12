@@ -37,7 +37,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     var is_step = 0
     
     lazy var backgroundImageView : UIImageView = {
-       let iv = UIImageView()
+        let iv = UIImageView()
         iv.image = backgroundImage
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
@@ -55,7 +55,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     }()
     
     lazy var continueButton : UIButton = {
-       let cv = UIButton()
+        let cv = UIButton()
         cv.backgroundColor = .black
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.layer.cornerRadius = 20
@@ -65,7 +65,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     }()
     
     lazy var forwardArrow : UIImageView = {
-       let iv = UIImageView()
+        let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "forward-arrow").withRenderingMode(.alwaysTemplate)
         iv.tintColor = .white
         iv.contentMode = .scaleAspectFill
@@ -78,7 +78,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     }()
     
     lazy var backgroundOutline : UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.borderColor = UIColor.black.cgColor
         button.layer.borderWidth = 1.5
@@ -88,7 +88,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     }()
     
     lazy var highlightIcon : UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "check").withRenderingMode(.alwaysOriginal), for: .normal)
         button.contentMode = .scaleAspectFill
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -130,7 +130,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     }()
     
     lazy var saveBackground : UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.backgroundColor = .clear
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
@@ -138,7 +138,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     }()
     
     lazy var highlightBackground : UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.backgroundColor = .clear
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(handleHighlight), for: .touchUpInside)
@@ -170,7 +170,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     }()
     
     lazy var principleLabel : UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.backgroundColor = .black
         button.setTitle("Principle", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -180,7 +180,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     }()
     
     lazy var stepLabel : UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.backgroundColor = .black
         button.setTitle("Step", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -190,7 +190,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     }()
     
     lazy var addTextButton : UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.setTitle("Ab", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
@@ -243,24 +243,24 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         self.present(customAlert, animated: true, completion: nil)
     }
-
+    
     func updateStillImage() {
         // Prepare the options to pass when fetching the (photo, or video preview) image.
         let options = PHImageRequestOptions()
         options.deliveryMode = .highQualityFormat
         options.isNetworkAccessAllowed = true
-
+        
         if asset != nil {
             PHImageManager.default().requestImage(for: asset!,
-                  targetSize: targetSize,
-                  contentMode: .aspectFit,
-                  options: options,
-                  resultHandler: { image, _ in
-                    
-                    guard let convertedImage = image else { return }
-                    
-                    self.backgroundImageView.isHidden = false
-                    self.backgroundImageView.image = convertedImage
+                                                  targetSize: targetSize,
+                                                  contentMode: .aspectFit,
+                                                  options: options,
+                                                  resultHandler: { image, _ in
+                                                    
+                                                    guard let convertedImage = image else { return }
+                                                    
+                                                    self.backgroundImageView.isHidden = false
+                                                    self.backgroundImageView.image = convertedImage
             })
         }
     }
@@ -296,7 +296,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         cancelButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
         addTextButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: addTextButton.intrinsicContentSize.width, height: addTextButton.intrinsicContentSize.height)
     }
- 
+    
     func setupView(){
         setupTopOptions()
         
@@ -312,7 +312,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         view.addSubview(pursuitUnderline)
         view.addSubview(continueButton)
         view.addSubview(forwardArrow)
-       
+        
         backgroundImageView.anchor(top: cancelButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 52, paddingLeft: 42, paddingBottom: 0, paddingRight: 42, width: 0, height: view.frame.height / 2)
         principleLabel.anchor(top: backgroundImageView.topAnchor, left: backgroundImageView.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 75, height: 24)
         stepLabel.anchor(top: backgroundImageView.topAnchor, left: backgroundImageView.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 45, height: 24)
@@ -328,7 +328,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     }
     
     @objc func setupEditTextField(){
-        let textfield = SNTextField(x: backgroundImageView.frame.minX, y: SNUtils.screenSize.height / 2, width: backgroundImageView.frame.width, heightOfScreen: SNUtils.screenSize.height)
+        let textfield = SNTextField(x: 0, y: SNUtils.screenSize.height / 2, width: backgroundImageView.frame.width, heightOfScreen: SNUtils.screenSize.height)
         textfield.layer.zPosition = 100
         textfield.backgroundColor = .lightGray
         view.addSubview(textfield)
@@ -364,11 +364,11 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
 }
 
 extension PhotoViewController : UITextViewDelegate {
-
+    
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let currentText:String = textView.text
         let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
-
+        
         if updatedText.isEmpty {
             
             textView.text = "Add Caption"
@@ -395,6 +395,5 @@ extension PhotoViewController : UITextViewDelegate {
             }
         }
     }
-
+    
 }
-
