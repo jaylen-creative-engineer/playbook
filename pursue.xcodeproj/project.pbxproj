@@ -107,6 +107,7 @@
 		E66AEB1D20DD9229000018B5 /* ProfileStepsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66AEB1C20DD9229000018B5 /* ProfileStepsCells.swift */; };
 		E66AEB1F20DD9552000018B5 /* ProfilePrinciples.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66AEB1E20DD9552000018B5 /* ProfilePrinciples.swift */; };
 		E66AEB2120DD95E7000018B5 /* ProfilePrincipleCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66AEB2020DD95E7000018B5 /* ProfilePrincipleCells.swift */; };
+		E67778782120DFAE001820FE /* SearchCarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67778772120DFAE001820FE /* SearchCarouselCell.swift */; };
 		E67FB8C2203117C70008732C /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67FB8C1203117C70008732C /* ImageProcessor.swift */; };
 		E680ECC5206ACBD60023087D /* ProfilePursuitCreateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E680ECC4206ACBD60023087D /* ProfilePursuitCreateCell.swift */; };
 		E68D70B020D9DEE2004398D1 /* HomePursuitsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68D70AF20D9DEE2004398D1 /* HomePursuitsRow.swift */; };
@@ -300,6 +301,7 @@
 		E66AEB1C20DD9229000018B5 /* ProfileStepsCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStepsCells.swift; sourceTree = "<group>"; };
 		E66AEB1E20DD9552000018B5 /* ProfilePrinciples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePrinciples.swift; sourceTree = "<group>"; };
 		E66AEB2020DD95E7000018B5 /* ProfilePrincipleCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePrincipleCells.swift; sourceTree = "<group>"; };
+		E67778772120DFAE001820FE /* SearchCarouselCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCarouselCell.swift; sourceTree = "<group>"; };
 		E67FB8C0202FB18C0008732C /* pursue.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = pursue.entitlements; sourceTree = "<group>"; };
 		E67FB8C1203117C70008732C /* ImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
 		E680ECC4206ACBD60023087D /* ProfilePursuitCreateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePursuitCreateCell.swift; sourceTree = "<group>"; };
@@ -459,6 +461,7 @@
 				E6ADDC0620F298F500C5BCAD /* SearchTrendingCell.swift */,
 				E6ADDC0820F29A5800C5BCAD /* SearchHistoryCell.swift */,
 				E6C1C06A211D205D009BECAC /* SearchCarousel.swift */,
+				E67778772120DFAE001820FE /* SearchCarouselCell.swift */,
 				E6C1C06C211D20E1009BECAC /* SearchResults.swift */,
 			);
 			name = Search;
@@ -908,6 +911,7 @@
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/Gemini/Gemini.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
@@ -932,6 +936,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Gemini.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
@@ -1111,6 +1116,7 @@
 				E617BB191FD88775008B2EA1 /* PageCell.swift in Sources */,
 				E6BCBA6920E58B7900D681E9 /* TwoChatCells.swift in Sources */,
 				E6989BF320475CDD0067A55B /* CustomDetailView.swift in Sources */,
+				E67778782120DFAE001820FE /* SearchCarouselCell.swift in Sources */,
 				E639807220491EBC0049A71B /* MessageComposer.swift in Sources */,
 				E6D571502012AC45008A37CC /* HomeUserImage.swift in Sources */,
 				E62AAB1F1FD0A66B0053EAD7 /* HelpController.swift in Sources */,

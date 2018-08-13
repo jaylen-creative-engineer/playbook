@@ -78,6 +78,15 @@ class DetailHeader : UICollectionViewCell {
         tap.numberOfTapsRequired = 1
         playBackground.addGestureRecognizer(tap)
         
+        let showMoreButton = UIButton()
+        showMoreButton.setImage(#imageLiteral(resourceName: "expand_arrow1600").withRenderingMode(.alwaysTemplate), for: .normal)
+        showMoreButton.tintColor = .white
+        showMoreButton.imageView?.contentMode = .scaleAspectFill
+        
+        let screenOverlay = UIView()
+        screenOverlay.backgroundColor = UIColor.init(white: 0.8, alpha: 0.2)
+        
+        
         addSubview(imageView)
         imageView.addSubview(label)
         imageView.addSubview(timeLabel)
@@ -86,6 +95,8 @@ class DetailHeader : UICollectionViewCell {
         imageView.addSubview(userPhoto)
         imageView.addSubview(username)
         imageView.bringSubview(toFront: playIcon)
+        imageView.addSubview(showMoreButton)
+        imageView.addSubview(screenOverlay)
         
         imageView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         playBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 60, height: 60)
@@ -94,11 +105,15 @@ class DetailHeader : UICollectionViewCell {
         playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 24, height: 24)
         playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true
         playIcon.centerYAnchor.constraint(equalTo: playBackground.centerYAnchor).isActive = true
-        label.anchor(top: playBackground.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 28)
-        timeLabel.anchor(top: label.bottomAnchor, left: label.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: timeLabel.intrinsicContentSize.height)
-        userPhoto.anchor(top: timeLabel.bottomAnchor, left: timeLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
+        userPhoto.anchor(top: nil, left: imageView.leftAnchor, bottom: imageView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 58, paddingRight: 0, width: 40, height: 40)
         username.anchor(top: nil, left: userPhoto.rightAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: username.intrinsicContentSize.height)
         username.centerYAnchor.constraint(equalTo: userPhoto.centerYAnchor).isActive = true
+        timeLabel.anchor(top: nil, left: userPhoto.leftAnchor, bottom: userPhoto.topAnchor, right: imageView.rightAnchor, paddingTop: 6, paddingLeft: 0, paddingBottom: 24, paddingRight: 0, width: 0, height: timeLabel.intrinsicContentSize.height)
+        label.anchor(top: nil, left: imageView.leftAnchor, bottom: timeLabel.topAnchor, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 8, paddingRight: 12, width: 0, height: 28)
+        showMoreButton.anchor(top: userPhoto.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 18, height: 24)
+        showMoreButton.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
+        screenOverlay.anchor(top: imageView.topAnchor, left: imageView.leftAnchor, bottom: imageView.bottomAnchor, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        
     }
     
     override init(frame: CGRect) {

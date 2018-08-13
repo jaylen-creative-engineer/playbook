@@ -7,28 +7,43 @@
 //
 
 import UIKit
-import iCarousel
+import Gemini
 
 class SearchCarousel : UICollectionViewCell {
     
-    lazy var carouselView : iCarousel = {
-        let ic = iCarousel()
-        return ic
+    let collectionView : GeminiCollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        
+        let collectionView = GeminiCollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.decelerationRate = UIScrollViewDecelerationRateFast
+        return collectionView
     }()
     
-     var imageNames = ["788572ee949285fae33dca5d846a4664", "690dae66bfe860df34fc7a756b53c15d", "animals", "business"]
+    let images = [#imageLiteral(resourceName: "cars"), #imageLiteral(resourceName: "ferrari"), #imageLiteral(resourceName: "ferrari-f70"), #imageLiteral(resourceName: "fashion-design"), #imageLiteral(resourceName: "comment-1")]
+    let detailLabels = ["Pursuits", "People", "Steps", "Principles", "Challenges"]
+    let cellId = "cellId"
+    var scaleEffect: GeminScaleEffect = .scaleUp
+    var accessSearchViewController : CustomSearchView?
     
-    func setupCarousel(){
-        carouselView.delegate = self
-        carouselView.dataSource = self
-        carouselView.type = .invertedRotary
-        addSubview(carouselView)
-        carouselView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 300)
+    func setupCollectionView(){
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(SearchCarouselCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.gemini
+            .scaleAnimation()
+            .scale(0.85)
+            .scaleEffect(scaleEffect)
+            .ease(.easeOutQuart)
+        addSubview(collectionView)
+        collectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupCarousel()
+        setupCollectionView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -36,37 +51,36 @@ class SearchCarousel : UICollectionViewCell {
     }
 }
 
-extension SearchCarousel : iCarouselDataSource, iCarouselDelegate {
-    func numberOfItems(in carousel: iCarousel) -> Int {
-        return 4
+extension SearchCarousel : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        collectionView.animateVisibleCells()
     }
     
-    func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
-        var rowCell = UIView()
-        rowCell = UIView(frame: CGRect(x: frame.minX, y: 0, width: 190, height: 230))
-        rowCell.isUserInteractionEnabled = true
-        rowCell.backgroundColor = .clear
-        
-        let carouselImage = UIImageView()
-        carouselImage.contentMode = .scaleAspectFill
-        carouselImage.layer.cornerRadius = 8
-        carouselImage.layer.masksToBounds = true
-        carouselImage.isUserInteractionEnabled = true
-        carouselImage.image = UIImage(named: imageNames[index])
-        
-        rowCell.addSubview(carouselImage)
-        
-        carouselImage.anchor(top: rowCell.topAnchor, left: rowCell.leftAnchor, bottom: rowCell.bottomAnchor, right: rowCell.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        
-        
-        return rowCell
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 60.0
     }
     
-    func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
-        if (option == .spacing) {
-            return value * 1.2
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 195, height: 240)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let cell = cell as? GeminiCell {
+            self.collectionView.animateCell(cell)
         }
-        
-        return value
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return detailLabels.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchCarouselCell
+        cell.detailLabel.text = detailLabels[indexPath.item]
+        cell.photo.image = images[indexPath.item]
+        self.collectionView.animateCell(cell)
+        return cell
     }
 }
+

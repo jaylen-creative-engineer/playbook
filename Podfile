@@ -12,6 +12,7 @@ target 'pursue' do
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
   pod 'iCarousel'
+  pod 'Gemini'
   pod 'SwiftyCam'
   pod 'SnapSliderFilters'
   pod 'Alamofire'

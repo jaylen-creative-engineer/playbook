@@ -29,18 +29,20 @@ class CustomSearchView : UIViewController {
         sb.barTintColor = .white
         sb.layer.cornerRadius = 0
         sb.layer.masksToBounds = true
-        
-//        sb.isTranslucent = true
-        
-//        let attributedPlaceholder = NSMutableAttributedString(string: "Search...", attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.init(25)), NSAttributedStringKey(rawValue: NSAttributedStringKey.foregroundColor.rawValue): UIColor.gray])
-//
-//        let textFieldPlaceHolder = sb.value(forKey: "searchField") as? UITextField
-//        textFieldPlaceHolder?.attributedPlaceholder = attributedPlaceholder
-        
         return sb
     }()
     
-    let collectionView : UICollectionView = {
+    let imageCollectionView : UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        return collectionView
+    }()
+    
+    let returnCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         
@@ -106,7 +108,6 @@ class CustomSearchView : UIViewController {
         alertView.addSubview(cancelLabel)
         view.addSubview(cancelBackground)
         view.addSubview(dismissBackground)
-        
         alertView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 100, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         setupSearchBar()
         setupCollectionView()
@@ -119,12 +120,20 @@ class CustomSearchView : UIViewController {
     }
     
     func setupCollectionView(){
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(SearchCarousel.self, forCellWithReuseIdentifier: carouselId)
-        collectionView.register(SearchResults.self, forCellWithReuseIdentifier: cellId)
-        view.addSubview(collectionView)
-        collectionView.anchor(top: searchBar.bottomAnchor, left: alertView.leftAnchor, bottom: view.bottomAnchor, right: alertView.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        imageCollectionView.delegate = self
+        imageCollectionView.dataSource = self
+        imageCollectionView.register(SearchCarousel.self, forCellWithReuseIdentifier: carouselId)
+        view.addSubview(imageCollectionView)
+        imageCollectionView.anchor(top: searchBar.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: alertView.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 350)
+        setupResultsCollectionView()
+    }
+    
+    func setupResultsCollectionView(){
+        returnCollectionView.delegate = self
+        returnCollectionView.dataSource = self
+        returnCollectionView.register(SearchResults.self, forCellWithReuseIdentifier: cellId)
+        view.addSubview(returnCollectionView)
+        returnCollectionView.anchor(top: imageCollectionView.bottomAnchor, left: alertView.leftAnchor, bottom: view.bottomAnchor, right: alertView.rightAnchor, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
     func setupSearchBar(){
@@ -164,26 +173,26 @@ extension CustomSearchView : UISearchBarDelegate {
 extension CustomSearchView : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch indexPath.item {
-        case 0:
-            return CGSize(width: view.frame.width, height: 400)
-        case 1:
-            return CGSize(width: view.frame.width, height: 500)
+        switch collectionView {
+        case imageCollectionView:
+            return CGSize(width: view.frame.width, height: 375)
+        case returnCollectionView:
+            return CGSize(width: view.frame.width, height: view.frame.height)
         default:
-            return CGSize(width: view.frame.width, height: 400)
+            return CGSize(width: view.frame.width, height: view.frame.height)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.item {
-        case 0:
+        switch collectionView {
+        case imageCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: carouselId, for: indexPath) as! SearchCarousel
             return cell
-        case 1:
+        case returnCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchResults
             return cell
         default:
@@ -191,4 +200,5 @@ extension CustomSearchView : UICollectionViewDelegate, UICollectionViewDataSourc
             return cell
         }
     }
+
 }
