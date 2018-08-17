@@ -157,8 +157,6 @@ class PursuitsDetailHeader : UICollectionViewCell {
     }
     
     func setupEngagements(){
-        addSubview(likeButton)
-        addSubview(likeLabel)
         addSubview(saveButton)
         addSubview(saveLabel)
         addSubview(addButton)
@@ -168,11 +166,7 @@ class PursuitsDetailHeader : UICollectionViewCell {
         addSubview(shareButton)
         addSubview(shareLabel)
         
-        likeButton.anchor(top: userPhoto.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 28, paddingBottom: 0, paddingRight: 0, width: 24, height: 24)
-        likeLabel.anchor(top: likeButton.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: likeLabel.intrinsicContentSize.width, height: likeLabel.intrinsicContentSize.height)
-        likeLabel.centerXAnchor.constraint(equalTo: likeButton.centerXAnchor).isActive = true
-        
-        saveButton.anchor(top: userPhoto.bottomAnchor, left: likeButton.rightAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 48, paddingBottom: 0, paddingRight: 0, width: 16, height: 24)
+        saveButton.anchor(top: userPhoto.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 28, paddingBottom: 0, paddingRight: 0, width: 16, height: 24)
         saveLabel.anchor(top: saveButton.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: saveLabel.intrinsicContentSize.width, height: saveLabel.intrinsicContentSize.height)
         saveLabel.centerXAnchor.constraint(equalTo: saveButton.centerXAnchor).isActive = true
         
