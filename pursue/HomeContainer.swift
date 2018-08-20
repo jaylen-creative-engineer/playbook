@@ -17,6 +17,8 @@ class HomeContainer : UICollectionViewCell {
     let headerId = "headerId"
     let interestId = "interestId"
     let picksId = "picksId"
+    var accessHomeController : HomeController?
+    
     
     let labelCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -66,6 +68,11 @@ class HomeContainer : UICollectionViewCell {
         setupPostCollection()
     }
     
+    func handleChangeToDetail(){
+        accessHomeController?.handleChangeToDetail(viewType: "isPursuitDetail", transitionId: "1")
+    }
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
@@ -94,6 +101,7 @@ extension HomeContainer : UICollectionViewDelegate, UICollectionViewDataSource, 
             return cell
         case postCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! HomePostRow
+            cell.accessHomeContainerController = self
             cell.postTableView.reloadData()
             return cell
         default:

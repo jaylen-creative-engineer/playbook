@@ -192,6 +192,16 @@ class PursuitsDetailController : UICollectionViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -205,6 +215,7 @@ class PursuitsDetailController : UICollectionViewController {
         collectionView?.contentInset = UIEdgeInsetsMake(-50, 0, 0, 0)
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
+        collectionView?.isScrollEnabled = false
         containerView.isHidden = true
         hero.isEnabled = true
         setupBackButton()
@@ -237,7 +248,7 @@ class PursuitsDetailController : UICollectionViewController {
 extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height - 80)
+        return CGSize(width: view.frame.width, height: view.frame.height + 20)
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -245,107 +256,107 @@ extension PursuitsDetailController : UICollectionViewDelegateFlowLayout {
         return header
     }
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch true {
-        case isStandardView:
-            return 3
-        case isChallengeView:
-            return 5
-        default:
-             return 5
-        }
-    }
+//    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        switch true {
+//        case isStandardView:
+//            return 3
+//        case isChallengeView:
+//            return 5
+//        default:
+//             return 5
+//        }
+//    }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch true {
-        case isStandardView:
-            switch indexPath.item {
-            case 0:
-                return CGSize(width: view.frame.width, height: 145)
-            case 1:
-                return CGSize(width: view.frame.width, height: 550)
-            case 2:
-                return CGSize(width: view.frame.width, height: 550)
-            default:
-                assert(false, "Not a valid cell")
-            }
-        case isChallengeView:
-            switch indexPath.item {
-            case 0:
-                return CGSize(width: view.frame.width, height: 145)
-            case 1:
-                return CGSize(width: view.frame.width, height: 420)
-            case 2:
-                return CGSize(width: view.frame.width, height: 550)
-            case 3:
-                return CGSize(width: view.frame.width, height: 200)
-            case 4:
-                return CGSize(width: view.frame.width, height: 550)
-            default:
-                assert(false, "Not a valid cell")
-            }
-        default:
-            assert(false, "Not a valid cell")
-        }
-        
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        switch true {
+//        case isStandardView:
+//            switch indexPath.item {
+//            case 0:
+//                return CGSize(width: view.frame.width, height: 145)
+//            case 1:
+//                return CGSize(width: view.frame.width, height: 550)
+//            case 2:
+//                return CGSize(width: view.frame.width, height: 550)
+//            default:
+//                assert(false, "Not a valid cell")
+//            }
+//        case isChallengeView:
+//            switch indexPath.item {
+//            case 0:
+//                return CGSize(width: view.frame.width, height: 145)
+//            case 1:
+//                return CGSize(width: view.frame.width, height: 420)
+//            case 2:
+//                return CGSize(width: view.frame.width, height: 550)
+//            case 3:
+//                return CGSize(width: view.frame.width, height: 200)
+//            case 4:
+//                return CGSize(width: view.frame.width, height: 550)
+//            default:
+//                assert(false, "Not a valid cell")
+//            }
+//        default:
+//            assert(false, "Not a valid cell")
+//        }
+//
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//        return 1
+//    }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch true {
-        case isStandardView:
-            switch indexPath.item {
-            case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: headerId, for: indexPath) as! PursuitsDetailHeader
-                cell.delegate = self
-                return cell
-            case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay
-                return cell
-            case 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
-                return cell
-            default:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! DetailChallengeRow
-                return cell
-            }
-        case isChallengeView:
-            switch indexPath.item {
-            case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: headerId, for: indexPath) as! PursuitsDetailHeader
-                return cell
-            case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: solutionId, for: indexPath) as! DetailSolutions
-                return cell
-            case 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay
-                return cell
-            case 3:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamRow
-                return cell
-            case 4:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
-                return cell
-            default:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay
-                return cell
-            }
-        default:
-            assert(false, "Not a valid type")
-        }
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        switch indexPath.item {
-        case 2:
-            Analytics.logEvent("Day switch", parameters: nil)
-        default:
-            assert(false, "Not a vaild selection")
-        }
-    }
+//    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        switch true {
+//        case isStandardView:
+//            switch indexPath.item {
+//            case 0:
+//                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: headerId, for: indexPath) as! PursuitsDetailHeader
+//                cell.delegate = self
+//                return cell
+//            case 1:
+//                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay
+//                return cell
+//            case 2:
+//                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
+//                return cell
+//            default:
+//                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! DetailChallengeRow
+//                return cell
+//            }
+//        case isChallengeView:
+//            switch indexPath.item {
+//            case 0:
+//                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: headerId, for: indexPath) as! PursuitsDetailHeader
+//                return cell
+//            case 1:
+//                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: solutionId, for: indexPath) as! DetailSolutions
+//                return cell
+//            case 2:
+//                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay
+//                return cell
+//            case 3:
+//                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamRow
+//                return cell
+//            case 4:
+//                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
+//                return cell
+//            default:
+//                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay
+//                return cell
+//            }
+//        default:
+//            assert(false, "Not a valid type")
+//        }
+//    }
+//
+//    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        switch indexPath.item {
+//        case 2:
+//            Analytics.logEvent("Day switch", parameters: nil)
+//        default:
+//            assert(false, "Not a vaild selection")
+//        }
+//    }
     
 }
 

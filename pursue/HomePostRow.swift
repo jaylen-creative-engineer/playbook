@@ -8,10 +8,16 @@
 
 import UIKit
 
+protocol PostRowDelegate {
+    func handleItemPress(for cell : HomePostRow, transitionId : Int)
+}
+
 class HomePostRow : UICollectionViewCell {
     
     let peopleId = "peopleId"
-    
+    var delegate : PostRowDelegate?
+    var accessHomeContainerController : HomeContainer?
+        
     let imageView : UIImageView = {
        let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "ferrari").withRenderingMode(.alwaysOriginal)
@@ -27,11 +33,16 @@ class HomePostRow : UICollectionViewCell {
         return view
     }()
     
-    let postTableView : UITableView = {
+    lazy var postTableView : UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.isScrollEnabled = false
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = .red
+        tableView.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handlePageChange))
+        tap.numberOfTapsRequired = 1
+        tableView.addGestureRecognizer(tap)
         return tableView
     }()
     
@@ -60,6 +71,10 @@ class HomePostRow : UICollectionViewCell {
         return iv
     }()
     
+    @objc func handlePageChange(){
+        accessHomeContainerController?.handleChangeToDetail()
+    }
+    
     func setupView(){
         addSubview(photoBackground)
         addSubview(imageView)
@@ -81,7 +96,6 @@ class HomePostRow : UICollectionViewCell {
     }
     
     let userPhotos = [#imageLiteral(resourceName: "clean-3"),#imageLiteral(resourceName: "clean-2"),#imageLiteral(resourceName: "comment-2"), #imageLiteral(resourceName: "comment-6")]
-
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -99,6 +113,9 @@ extension HomePostRow : UITableViewDataSource, UITableViewDelegate{
         cell.setupView()
         return cell
        
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
