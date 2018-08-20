@@ -90,7 +90,7 @@ class PlayView: UIView {
 
 class LargePlayView: UIView {
     
-    var cornerRadius : CGFloat = 30
+    var cornerRadius : CGFloat = 25
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 5
     var shadowColor = UIColor.black
@@ -110,7 +110,7 @@ class LargePlayView: UIView {
 
 class FollowRectangleView: UIView {
     
-    var cornerRadius : CGFloat = 12
+    var cornerRadius : CGFloat = 18
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 3
     var shadowColor = UIColor.black

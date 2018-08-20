@@ -51,7 +51,6 @@ class HomePostRowCells : UITableViewCell {
         postCollectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         postCollectionView.dataSource = self
         postCollectionView.delegate = self
-        backgroundColor = .blue
         postCollectionView.register(HomePursuitsCells.self, forCellWithReuseIdentifier: cellId)
         if let layout = postCollectionView.collectionViewLayout as? PinterestLayout {
             layout.delegate = self

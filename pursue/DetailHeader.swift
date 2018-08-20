@@ -99,6 +99,42 @@ class DetailHeader : UICollectionViewCell {
         return button
     }()
     
+    let followBackground : FollowRectangleView = {
+        let view = FollowRectangleView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    let collaborateBackground : FollowRectangleView = {
+        let view = FollowRectangleView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .black
+        return view
+    }()
+    
+    lazy var collaborateButton : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .black
+        button.setTitle("Collaborate", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 12)
+        button.layer.cornerRadius = 16
+        button.layer.masksToBounds = true
+        return button
+    }()
+    
+    lazy var followButton : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .white
+        button.setTitle("Follow", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 12)
+        button.layer.cornerRadius = 16
+        button.layer.masksToBounds = true
+        return button
+    }()
+    
     lazy var imageView : UIImageView = {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "health").withRenderingMode(.alwaysOriginal)
@@ -122,7 +158,7 @@ class DetailHeader : UICollectionViewCell {
     
     func setupCollectionViewHeader(){
         let label = UILabel()
-        label.text = "Travel through amazing heights"
+        label.text = "Travel On"
         label.numberOfLines = 2
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.init(25))
@@ -136,7 +172,7 @@ class DetailHeader : UICollectionViewCell {
         let userPhoto = UIImageView()
         userPhoto.image = #imageLiteral(resourceName: "steph").withRenderingMode(.alwaysOriginal)
         userPhoto.contentMode = .scaleAspectFill
-        userPhoto.layer.cornerRadius = 20
+        userPhoto.layer.cornerRadius = 25
         userPhoto.layer.masksToBounds = true
         userPhoto.translatesAutoresizingMaskIntoConstraints = false
         
@@ -156,16 +192,23 @@ class DetailHeader : UICollectionViewCell {
         imageView.addSubview(userPhoto)
         imageView.addSubview(username)
         imageView.addSubview(screenOverlay)
+//        imageView.addSubview(followBackground)
+        imageView.addSubview(followButton)
+//        imageView.addSubview(collaborateBackground)
+        imageView.addSubview(collaborateButton)
         
         imageView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        userPhoto.anchor(top: imageView.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
+        userPhoto.anchor(top: imageView.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
         userPhoto.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         username.anchor(top: userPhoto.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
         username.centerXAnchor.constraint(equalTo: userPhoto.centerXAnchor).isActive = true
         timeLabel.anchor(top: username.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
         timeLabel.centerXAnchor.constraint(equalTo: username.centerXAnchor).isActive = true
-        label.anchor(top: timeLabel.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 28)
+        label.anchor(top: timeLabel.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 28)
         screenOverlay.anchor(top: imageView.topAnchor, left: imageView.leftAnchor, bottom: imageView.bottomAnchor, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        followButton.anchor(top: label.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: (frame.width / 5) - 10, paddingBottom: 0, paddingRight: 0, width: 110, height: 32)
+        collaborateButton.anchor(top: followButton.topAnchor, left: followButton.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 0, width: 110, height: 32)
+        
         setupEngagments()
         
     }
@@ -183,7 +226,7 @@ class DetailHeader : UICollectionViewCell {
         imageView.addSubview(shareBackground)
         imageView.addSubview(shareButton)
         
-        playBackground.anchor(top: nil, left: nil, bottom: imageView.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 24, paddingRight: 0, width: 60, height: 60)
+        playBackground.anchor(top: nil, left: nil, bottom: imageView.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 24, paddingRight: 0, width: 50, height: 50)
         playBackground.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
         playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true

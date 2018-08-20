@@ -37,7 +37,7 @@ class HomePostRow : UICollectionViewCell {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.isScrollEnabled = false
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .red
+        tableView.backgroundColor = .clear
         tableView.isUserInteractionEnabled = true
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(handlePageChange))
