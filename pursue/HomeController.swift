@@ -23,18 +23,7 @@ class HomeController : UICollectionViewController {
     let homeServices = HomeServices()
     let detailController = PursuitsDetailController()
     
-    lazy var interestsBar : HomeInterestsBar = {
-        let hb = HomeInterestsBar()
-        hb.accessHomeController = self
-        return hb
-    }()
-    
     let transition = KWTransition.manager()
-    
-    func scrollToMenuIndex(menuIndex: Int) {
-//        let indexPath = IndexPath(item: menuIndex, section: 0)
-//        collectionView?.scrollToItem(at: indexPath, at: [], animated: true)
-    }
     
     let contentCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -77,6 +66,11 @@ class HomeController : UICollectionViewController {
         return label
     }()
     
+    func goToProfile(){
+        let profile = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(profile, animated: true)
+    }
+    
     func setupNavBar(){
         
     }
@@ -87,49 +81,7 @@ class HomeController : UICollectionViewController {
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
     }
-    
-    func setupLabelCollection(){
-        view.addSubview(labelCollectionView)
-        labelCollectionView.delegate = self
-        labelCollectionView.dataSource = self
-        labelCollectionView.register(InterestsLabelCell.self, forCellWithReuseIdentifier: labelId)
-        labelCollectionView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
-        
-        let selectedIndexPath = IndexPath(item: 0, section: 0)
-        labelCollectionView.selectItem(at: selectedIndexPath, animated: false, scrollPosition: [])
-        setupPostCollection()
-    }
-    
-    func setupPostCollection(){
-        view.addSubview(postCollectionView)
-        postCollectionView.delegate = self
-        postCollectionView.dataSource = self
-        postCollectionView.register(PursuitDayCells.self, forCellWithReuseIdentifier: cellId)
-        postCollectionView.anchor(top: labelCollectionView.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-    }
-    
-    func setupTopBar(){
-        view.addSubview(interestsBar)
-        interestsBar.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
-    }
-    
-//    func setupCollectionView(){
-//        if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
-//            flowLayout.scrollDirection = .horizontal
-//            flowLayout.minimumLineSpacing = 0
-//        }
-//
-//        collectionView?.backgroundColor = UIColor.white
-//        collectionView?.isScrollEnabled = true
-//        collectionView?.register(HomeContainer.self, forCellWithReuseIdentifier: cellId)
-//        collectionView?.register(HomeHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
-//        collectionView?.backgroundColor = UIColor.white
-//        collectionView?.isScrollEnabled = true
-//        collectionView?.showsHorizontalScrollIndicator = false
-//        hero.isEnabled = true
-//        setupTopBar()
-//    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
@@ -345,6 +297,7 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! HomeHeader
+        header.accessHomeController = self
         return header
     }
     

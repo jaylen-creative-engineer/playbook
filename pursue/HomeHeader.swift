@@ -45,7 +45,7 @@ class HomeHeader : UICollectionViewCell {
     }
     
     @objc func handleProfile(){
-        
+        accessHomeController?.goToProfile()
     }
     
     private func setupView(){
