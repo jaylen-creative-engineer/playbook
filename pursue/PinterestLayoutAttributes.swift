@@ -82,13 +82,23 @@ class PinterestLayout: UICollectionViewLayout {
                 
                 // cache attributes for each item
                 let attributes = PinterestLayoutAttributes(forCellWith: indexPath)
+                if indexPath.item % 2 == 0 {
+                    
+                    let offsetLeftFrame = CGRect(x: xOffset[column], y: yOffset[column] + 14, width: columnWidth + 2, height: height)
+                    let insetLeftFrame = offsetLeftFrame.insetBy(dx: cellPadding, dy: cellPadding)
+                    
+                    attributes.frame = insetLeftFrame
+                    
+                } else {
+                    attributes.frame = insetFrame
+                }
+                
                 attributes.photoHeight = photoHeight
-                attributes.frame = insetFrame
                 cache.append(attributes)
                 
                 //
                 contentHeight = max(contentHeight, frame.maxY)
-                yOffset[column] = yOffset[column] + height
+                yOffset[column] = (yOffset[column] + height)
                 
                 column = column >= (numberOfColumns - 1) ? 0 : column + 1
             }

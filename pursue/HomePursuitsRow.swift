@@ -67,7 +67,7 @@ class HomePursuitsRow : UICollectionViewCell, HomePursuitsDelegate {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.contentInset = UIEdgeInsetsMake(10, 0, 10, 0)
-        isHeroEnabled = true
+        hero.isEnabled = true
         collectionView.register(HomePursuitsCells.self, forCellWithReuseIdentifier: cellId)
         if let layout = collectionView.collectionViewLayout as? PinterestLayout {
             layout.delegate = self

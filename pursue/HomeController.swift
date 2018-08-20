@@ -13,19 +13,11 @@ import KWTransition
 class HomeController : UICollectionViewController {
     
     let cellId = "cellId"
-    let pursuitsId = "pursuitsId"
-    let recommendId = "recommendId"
-    let challengeId = "challengeId"
-    let peopleId = "peopleId"
     let headerId = "headerId"
-    let interestId = "interestId"
-    let picksId = "picksId"
-    var isImageView = true
-    var isPursuitView = false
-    var isPrinciplesView = false
-    var isDiscussionView = false
-    var isExploreImageView = false
+    let labelId = "labelId"
+
     var isFirstLaunch = false
+    var days = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"]
     
     let backgroundFill = UIView()
     let homeServices = HomeServices()
@@ -39,24 +31,107 @@ class HomeController : UICollectionViewController {
     
     let transition = KWTransition.manager()
     
+    func scrollToMenuIndex(menuIndex: Int) {
+//        let indexPath = IndexPath(item: menuIndex, section: 0)
+//        collectionView?.scrollToItem(at: indexPath, at: [], animated: true)
+    }
+    
+    let contentCollectionView : UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.showsVerticalScrollIndicator = false
+        return collectionView
+    }()
+    
+    let labelCollectionView : UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        return collectionView
+    }()
+    
+    let postCollectionView : UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.isScrollEnabled = true
+        collectionView.isPagingEnabled = true
+        
+        return collectionView
+    }()
+    
+    let homeLabel : UILabel = {
+       let label = UILabel()
+        label.text = "HOME"
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        return label
+    }()
+    
+    func setupNavBar(){
+        
+    }
     
     func setupCollectionView(){
-        collectionView?.register(HomePursuitsRow.self, forCellWithReuseIdentifier: pursuitsId)
-        collectionView?.register(HomePicksRow.self, forCellWithReuseIdentifier: picksId)
-        collectionView?.register(HomePursuitsLists.self, forCellWithReuseIdentifier: recommendId)
-        collectionView?.register(HomePeople.self, forCellWithReuseIdentifier: peopleId)
-        collectionView?.register(HomeInterestRow.self, forCellWithReuseIdentifier: interestId)
-        collectionView?.register(HomeChallengeRow.self, forCellWithReuseIdentifier: challengeId)
+        collectionView?.register(HomeContainer.self, forCellWithReuseIdentifier: cellId)
         collectionView?.register(HomeHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
-        collectionView?.backgroundColor = UIColor.white
-        collectionView?.isScrollEnabled = true
+        collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
-        hero.isEnabled = true
     }
+    
+    func setupLabelCollection(){
+        view.addSubview(labelCollectionView)
+        labelCollectionView.delegate = self
+        labelCollectionView.dataSource = self
+        labelCollectionView.register(InterestsLabelCell.self, forCellWithReuseIdentifier: labelId)
+        labelCollectionView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+        
+        let selectedIndexPath = IndexPath(item: 0, section: 0)
+        labelCollectionView.selectItem(at: selectedIndexPath, animated: false, scrollPosition: [])
+        setupPostCollection()
+    }
+    
+    func setupPostCollection(){
+        view.addSubview(postCollectionView)
+        postCollectionView.delegate = self
+        postCollectionView.dataSource = self
+        postCollectionView.register(PursuitDayCells.self, forCellWithReuseIdentifier: cellId)
+        postCollectionView.anchor(top: labelCollectionView.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+    }
+    
+    func setupTopBar(){
+        view.addSubview(interestsBar)
+        interestsBar.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+    }
+    
+//    func setupCollectionView(){
+//        if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
+//            flowLayout.scrollDirection = .horizontal
+//            flowLayout.minimumLineSpacing = 0
+//        }
+//
+//        collectionView?.backgroundColor = UIColor.white
+//        collectionView?.isScrollEnabled = true
+//        collectionView?.register(HomeContainer.self, forCellWithReuseIdentifier: cellId)
+//        collectionView?.register(HomeHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+//        collectionView?.backgroundColor = UIColor.white
+//        collectionView?.isScrollEnabled = true
+//        collectionView?.showsHorizontalScrollIndicator = false
+//        hero.isEnabled = true
+//        setupTopBar()
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupCollectionView()
         if UserDefaults.standard.value(forKey: "homeIntroPopover") == nil {
             setupIntroView()
@@ -75,17 +150,14 @@ class HomeController : UICollectionViewController {
     func goToFeedView(){}
     
     func principleTapped() {
-//        handleChangeToDetail(viewType: "isPrinciplesDetail")
         detailController.standardView()
     }
     
     func stepTapped(){
-//        handleChangeToDetail(viewType: "isStepDetail")
         detailController.standardView()
     }
     
     func pursuitTapped() {
-//        handleChangeToDetail(viewType: "isPursuitDetail")
         detailController.standardView()
     }
     
@@ -267,61 +339,26 @@ class HomeController : UICollectionViewController {
 
 extension HomeController : UICollectionViewDelegateFlowLayout {
     
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! HomeHeader
-        cell.accessHomeController = self
-        return cell
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.width, height: 20)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 50)
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! HomeHeader
+        return header
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-       return 5
+        return 1
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        switch indexPath.item {
-        case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! HomePursuitsRow
-            cell.accessHomeController = self
-            return cell
-        case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: recommendId, for: indexPath) as! HomePursuitsLists
-            return cell
-        case 2:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! HomePeople
-            return cell
-        case 3:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: interestId, for: indexPath) as! HomeInterestRow
-            cell.accessHomeController = self
-            return cell
-        case 4:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! HomeChallengeRow
-            cell.accessHomeController = self
-            return cell
-        default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! HomePursuitsRow
-            return cell
-        }
-        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeContainer
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch indexPath.item {
-        case 0:
-            return CGSize(width: view.frame.width, height: 590)
-        case 1:
-            return CGSize(width: view.frame.width, height: 930)
-        case 2:
-            return CGSize(width: view.frame.width, height: 220)
-        case 3, 4:
-            return CGSize(width: view.frame.width, height: view.frame.height - 10)
-        default:
-            return CGSize(width: view.frame.width, height: 370)
-        }
+        return CGSize(width: view.frame.width, height: view.frame.height)
     }
 }
 

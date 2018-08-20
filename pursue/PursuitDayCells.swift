@@ -15,9 +15,6 @@ class PursuitDayCells : UICollectionViewCell {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.isScrollEnabled = false
         tableView.separatorStyle = .none
-        
-//        collectionView.backgroundColor = .clear
-//        collectionView.showsHorizontalScrollIndicator = false
         return tableView
     }()
 
@@ -48,13 +45,12 @@ extension PursuitDayCells : UITableViewDataSource,UITableViewDelegate{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! PursuitDayTableViewCell
         cell.setupView(index: indexPath.row)
-//        cell.imageView?.image =  UIImage(named: images[indexPath.row])
         return cell
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 4
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 115
+        return 300
     }
 }

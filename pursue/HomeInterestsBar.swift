@@ -38,7 +38,8 @@ class HomeInterestsBar : UIView, UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeInterestsCells
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeInterestsBarCells
+        cell.selectInterests.text = interestsNames[indexPath.item]
         return cell
     }
     
@@ -59,7 +60,7 @@ class HomeInterestsBar : UIView, UICollectionViewDataSource, UICollectionViewDel
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        collectionView.register(HomeInterestsCells.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(HomeInterestsBarCells.self, forCellWithReuseIdentifier: cellId)
         collectionView.delegate = self
         collectionView.dataSource = self
         

@@ -108,6 +108,11 @@
 		E66AEB1F20DD9552000018B5 /* ProfilePrinciples.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66AEB1E20DD9552000018B5 /* ProfilePrinciples.swift */; };
 		E66AEB2120DD95E7000018B5 /* ProfilePrincipleCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66AEB2020DD95E7000018B5 /* ProfilePrincipleCells.swift */; };
 		E67778782120DFAE001820FE /* SearchCarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67778772120DFAE001820FE /* SearchCarouselCell.swift */; };
+		E677787A2129DBD3001820FE /* HomeInterestsBarCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67778792129DBD3001820FE /* HomeInterestsBarCells.swift */; };
+		E677787C2129EA91001820FE /* HomeContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E677787B2129EA91001820FE /* HomeContainer.swift */; };
+		E677787E2129F285001820FE /* InterestsLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E677787D2129F285001820FE /* InterestsLabelCell.swift */; };
+		E6777880212A08F2001820FE /* HomePostRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E677787F212A08F2001820FE /* HomePostRow.swift */; };
+		E6777882212A0CAF001820FE /* HomePostRowCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6777881212A0CAF001820FE /* HomePostRowCells.swift */; };
 		E67FB8C2203117C70008732C /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67FB8C1203117C70008732C /* ImageProcessor.swift */; };
 		E680ECC5206ACBD60023087D /* ProfilePursuitCreateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E680ECC4206ACBD60023087D /* ProfilePursuitCreateCell.swift */; };
 		E68D70B020D9DEE2004398D1 /* HomePursuitsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68D70AF20D9DEE2004398D1 /* HomePursuitsRow.swift */; };
@@ -302,6 +307,11 @@
 		E66AEB1E20DD9552000018B5 /* ProfilePrinciples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePrinciples.swift; sourceTree = "<group>"; };
 		E66AEB2020DD95E7000018B5 /* ProfilePrincipleCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePrincipleCells.swift; sourceTree = "<group>"; };
 		E67778772120DFAE001820FE /* SearchCarouselCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCarouselCell.swift; sourceTree = "<group>"; };
+		E67778792129DBD3001820FE /* HomeInterestsBarCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInterestsBarCells.swift; sourceTree = "<group>"; };
+		E677787B2129EA91001820FE /* HomeContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContainer.swift; sourceTree = "<group>"; };
+		E677787D2129F285001820FE /* InterestsLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsLabelCell.swift; sourceTree = "<group>"; };
+		E677787F212A08F2001820FE /* HomePostRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostRow.swift; sourceTree = "<group>"; };
+		E6777881212A0CAF001820FE /* HomePostRowCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostRowCells.swift; sourceTree = "<group>"; };
 		E67FB8C0202FB18C0008732C /* pursue.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = pursue.entitlements; sourceTree = "<group>"; };
 		E67FB8C1203117C70008732C /* ImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
 		E680ECC4206ACBD60023087D /* ProfilePursuitCreateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePursuitCreateCell.swift; sourceTree = "<group>"; };
@@ -697,6 +707,7 @@
 			isa = PBXGroup;
 			children = (
 				E65F1E511FCCBE5000BD850E /* HomeController.swift */,
+				E677787B2129EA91001820FE /* HomeContainer.swift */,
 				E627283620DC453E00860707 /* HomePicksRow.swift */,
 				E6BCBA6E20EA8F2C00D681E9 /* HomePicksCell.swift */,
 				E627284220DC9EDC00860707 /* HomeChallengeRow.swift */,
@@ -704,6 +715,7 @@
 				E6D571422010FD7D008A37CC /* HomeInterestsCells.swift */,
 				E6D5714F2012AC44008A37CC /* HomeUserImage.swift */,
 				E6FF95DE20349BAE003BDB86 /* HomeInterestsBar.swift */,
+				E67778792129DBD3001820FE /* HomeInterestsBarCells.swift */,
 				E6989BF42047797B0067A55B /* CustomHomeView.swift */,
 				E636E7752056493A00BCA756 /* HomePeople.swift */,
 				E636E7772056497400BCA756 /* HomePeopleCells.swift */,
@@ -717,6 +729,9 @@
 				E627283E20DC5DE200860707 /* HomePursuitsListCells.swift */,
 				E627284020DC7D4100860707 /* HomeInterestRow.swift */,
 				E6BCBA6C20EA68A500D681E9 /* HomeHeader.swift */,
+				E677787D2129F285001820FE /* InterestsLabelCell.swift */,
+				E677787F212A08F2001820FE /* HomePostRow.swift */,
+				E6777881212A0CAF001820FE /* HomePostRowCells.swift */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -981,6 +996,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6777882212A0CAF001820FE /* HomePostRowCells.swift in Sources */,
 				E6D0B402203E13D2008D4268 /* ViewWithDiagonalLine.swift in Sources */,
 				E6D2B8DE20194AFB008D3055 /* NotificationController.swift in Sources */,
 				E62AAB231FD1E8A20053EAD7 /* CameraCell.swift in Sources */,
@@ -1009,6 +1025,7 @@
 				E61A70EA20E2917C00EB69D8 /* DetailSolutions.swift in Sources */,
 				E60EB26D20462DF0006E4F1A /* FollowPursuit.swift in Sources */,
 				E6234E9E2044F96B00A57A2C /* AssetSelectionViewController.swift in Sources */,
+				E677787C2129EA91001820FE /* HomeContainer.swift in Sources */,
 				446C359921181F80005BDE71 /* PursuitDayTableViewCell.swift in Sources */,
 				E6CB1B472057063F00B5D2ED /* CustomPeopleView.swift in Sources */,
 				E627283F20DC5DE200860707 /* HomePursuitsListCells.swift in Sources */,
@@ -1063,7 +1080,9 @@
 				E6DF9EBB203B8778005C86DB /* DetailSteps.swift in Sources */,
 				E6E0B0262061671E00007A21 /* CreateAlertViewCell.swift in Sources */,
 				E680ECC5206ACBD60023087D /* ProfilePursuitCreateCell.swift in Sources */,
+				E6777880212A08F2001820FE /* HomePostRow.swift in Sources */,
 				E63CEB6220ED60D500FFDEF3 /* Utility.swift in Sources */,
+				E677787E2129F285001820FE /* InterestsLabelCell.swift in Sources */,
 				E66AEB2120DD95E7000018B5 /* ProfilePrincipleCells.swift in Sources */,
 				E63CEB5020EACEC100FFDEF3 /* DayLabelCell.swift in Sources */,
 				E6D571432010FD7D008A37CC /* HomeInterestsCells.swift in Sources */,
@@ -1097,6 +1116,7 @@
 				E6F9D961207E680A00640950 /* CustomHomeIntro.swift in Sources */,
 				E639807C204B6A350049A71B /* PrinciplesPage.swift in Sources */,
 				E6299BA32077143500B59061 /* UsernameCell.swift in Sources */,
+				E677787A2129DBD3001820FE /* HomeInterestsBarCells.swift in Sources */,
 				E6BCBA6B20E58BB000D681E9 /* GroupChatCells.swift in Sources */,
 				E636E77A2056F61200BCA756 /* CustomEngagementView.swift in Sources */,
 				E659EB192040786500CA8DB5 /* CustomAlertViewCell.swift in Sources */,

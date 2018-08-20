@@ -1,16 +1,22 @@
 //
-//  PursuitDay.swift
+//  HomeContainer.swift
 //  pursue
 //
-//  Created by Jaylen Sanders on 7/2/18.
+//  Created by Jaylen Sanders on 8/19/18.
 //  Copyright © 2018 Glory. All rights reserved.
 //
 
 import UIKit
 
-class PursuitDay : UICollectionViewCell {
+class HomeContainer : UICollectionViewCell {
     
+    let postId = "postId"
+    let cellId = "cellId"
     let labelId = "labelId"
+    let peopleId = "peopleId"
+    let headerId = "headerId"
+    let interestId = "interestId"
+    let picksId = "picksId"
     
     let labelCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -36,17 +42,14 @@ class PursuitDay : UICollectionViewCell {
         return collectionView
     }()
     
-    let cellId = "cellId"
-    
-    var days = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"]
-    let images = ["788572ee949285fae33dca5d846a4664", "clean-2", "academics", "fashion-design", "690dae66bfe860df34fc7a756b53c15d"]
-    
+    var interestsLabel = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"]
+
     func setupPostCollection(){
         addSubview(postCollectionView)
         postCollectionView.delegate = self
         postCollectionView.dataSource = self
-        postCollectionView.register(PursuitDayCells.self, forCellWithReuseIdentifier: cellId)
-        postCollectionView.anchor(top: labelCollectionView.bottomAnchor, left: labelCollectionView.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 480)
+        postCollectionView.register(HomePostRow.self, forCellWithReuseIdentifier: postId)
+        postCollectionView.anchor(top: labelCollectionView.bottomAnchor, left: labelCollectionView.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: frame.height + 40)
     }
     
     
@@ -54,7 +57,7 @@ class PursuitDay : UICollectionViewCell {
         addSubview(labelCollectionView)
         labelCollectionView.delegate = self
         labelCollectionView.dataSource = self
-        labelCollectionView.register(DayLabelCell.self, forCellWithReuseIdentifier: labelId)
+        labelCollectionView.register(InterestsLabelCell.self, forCellWithReuseIdentifier: labelId)
         
         labelCollectionView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 40)
         
@@ -65,6 +68,7 @@ class PursuitDay : UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .white
         setupLabelCollection()
     }
     
@@ -74,36 +78,39 @@ class PursuitDay : UICollectionViewCell {
     
 }
 
-extension PursuitDay : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
+
+
+extension HomeContainer : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch collectionView {
         case labelCollectionView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: labelId, for: indexPath) as! DayLabelCell
-            cell.dayLabel.text = days[indexPath.item]
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: labelId, for: indexPath) as! InterestsLabelCell
+            cell.interestsLabel.text = interestsLabel[indexPath.item]
             return cell
         case postCollectionView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PursuitDayCells
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! HomePostRow
             cell.postTableView.reloadData()
-            //            cell.photo.image = UIImage(named: images[indexPath.item])
             return cell
         default:
             assert(false, "Not a valid collection")
         }
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         switch collectionView {
         case labelCollectionView:
-            return UIEdgeInsetsMake(0, 24, 0, -24)
+            return UIEdgeInsetsMake(0, 14, 0, -14)
         default:
             return UIEdgeInsetsMake(0, 0, 0, 0)
         }
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
@@ -113,7 +120,7 @@ extension PursuitDay : UICollectionViewDelegate, UICollectionViewDataSource, UIC
         case labelCollectionView:
             return CGSize(width: 60, height: 24)
         case postCollectionView:
-            return CGSize(width: frame.width, height: 420)
+            return CGSize(width: frame.width, height: frame.height + 20)
         default:
             assert(false, "Not a valid collection")
         }
@@ -134,4 +141,3 @@ extension PursuitDay : UICollectionViewDelegate, UICollectionViewDataSource, UIC
         }
     }
 }
-
