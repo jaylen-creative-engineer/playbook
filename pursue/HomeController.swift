@@ -138,8 +138,8 @@ class HomeController : UICollectionViewController {
         let searchView = CustomSearchView()
         let transition = CATransition()
         transition.duration = 0.5
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromTop
+        transition.type = kCATransitionFromTop
+//        transition.subtype = kCATransitionFromTop
         transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
         view.window!.layer.add(transition, forKey: kCATransition)
         

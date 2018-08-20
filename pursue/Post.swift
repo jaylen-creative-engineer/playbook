@@ -11,5 +11,7 @@ import UIKit
 struct Post : Decodable {
     let postId : String?
     let postThumbnail : String?
-    let contentUrl : String?
+    let contentUrl : URL?
+    let postType : String?
+    let postImage : Data?
 }
