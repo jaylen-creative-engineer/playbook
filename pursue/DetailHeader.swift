@@ -18,7 +18,7 @@ class DetailHeader : UICollectionViewCell {
         return view
     }()
     
-    let playBackground : LargePlayView = {
+    lazy var playBackground : LargePlayView = {
        let pv = LargePlayView()
         pv.translatesAutoresizingMaskIntoConstraints = false
         pv.backgroundColor = .white
@@ -139,7 +139,7 @@ class DetailHeader : UICollectionViewCell {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "health").withRenderingMode(.alwaysOriginal)
         imageView.contentMode = .scaleAspectFill
-        //        imageView.isUserInteractionEnabled = true
+                imageView.isUserInteractionEnabled = true
         //
         //        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         //        imageView.addGestureRecognizer(pan)
@@ -147,13 +147,16 @@ class DetailHeader : UICollectionViewCell {
     }()
     
     @objc func playVideo(){
-//        let videoURL = URL(string: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
-//        let player = AVPlayer(url: videoURL!)
-//        let playerViewController = AVPlayerViewController()
-//        playerViewController.player = player
-//        self.present(playerViewController, animated: true) {
-//            playerViewController.player!.play()
-//        }
+        let videoURL = URL(string: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
+        let player = AVPlayer(url: videoURL!)
+        let layer: AVPlayerLayer = AVPlayerLayer(player: player)
+        // make the layer the same size as the container view
+        layer.frame = imageView.bounds
+        // make the video fill the layer as much as possible while keeping its aspect size
+        layer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        // add the layer to the container view
+        imageView.layer.addSublayer(layer)//
+        player.play()
     }
     
     func setupCollectionViewHeader(){
@@ -225,7 +228,7 @@ class DetailHeader : UICollectionViewCell {
         imageView.addSubview(commentButton)
         imageView.addSubview(shareBackground)
         imageView.addSubview(shareButton)
-        
+//        playBackground.bringSubview(toFront: imageView)
         playBackground.anchor(top: nil, left: nil, bottom: imageView.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 24, paddingRight: 0, width: 50, height: 50)
         playBackground.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
