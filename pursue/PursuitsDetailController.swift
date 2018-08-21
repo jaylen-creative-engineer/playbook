@@ -94,10 +94,10 @@ class PursuitsDetailController : UICollectionViewController {
     
     lazy var backBackground : PlayView = {
         let view = PlayView()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.init(white: 1, alpha: 0.4)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isUserInteractionEnabled = true
-        
+
         let tap = UITapGestureRecognizer(target: self, action: #selector(goBack))
         tap.numberOfTapsRequired = 1
         view.addGestureRecognizer(tap)
@@ -106,7 +106,8 @@ class PursuitsDetailController : UICollectionViewController {
     
     lazy var backIcon : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "back-button").withRenderingMode(.alwaysOriginal)
+        iv.image = #imageLiteral(resourceName: "cancel").withRenderingMode(.alwaysTemplate)
+        iv.tintColor = .white
         iv.contentMode = .scaleAspectFill
         iv.isUserInteractionEnabled = true
         
@@ -182,13 +183,13 @@ class PursuitsDetailController : UICollectionViewController {
     }
     
     func setupBackButton(){
-        view.addSubview(backBackground)
-        backBackground.addSubview(backIcon)
+        view.addSubview(backIcon)
+//        backBackground.addSubview(backIcon)
         
-        backBackground.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
-        backIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 18, height: 18)
-        backIcon.centerXAnchor.constraint(equalTo: backBackground.centerXAnchor).isActive = true
-        backIcon.centerYAnchor.constraint(equalTo: backBackground.centerYAnchor).isActive = true
+//        backBackground.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
+        backIcon.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 18, height: 18)
+//        backIcon.centerXAnchor.constraint(equalTo: backBackground.centerXAnchor).isActive = true
+//        backIcon.centerYAnchor.constraint(equalTo: backBackground.centerYAnchor).isActive = true
         
     }
     

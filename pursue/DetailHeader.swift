@@ -231,20 +231,20 @@ class DetailHeader : UICollectionViewCell {
         playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
         playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true
         playIcon.centerYAnchor.constraint(equalTo: playBackground.centerYAnchor).isActive = true
-        saveBackground.anchor(top: nil, left: playBackground.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
+        saveBackground.anchor(top: nil, left: playBackground.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 32, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
         saveBackground.centerYAnchor.constraint(equalTo: playBackground.centerYAnchor).isActive = true
         saveButton.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 12, height: 16)
         saveButton.centerXAnchor.constraint(equalTo: saveBackground.centerXAnchor).isActive = true
         saveButton.centerYAnchor.constraint(equalTo: saveBackground.centerYAnchor).isActive = true
-        contributeBackground.anchor(top: saveBackground.topAnchor, left: nil, bottom: nil, right: playBackground.leftAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 24, width: 40, height: 40)
+        contributeBackground.anchor(top: saveBackground.topAnchor, left: nil, bottom: nil, right: playBackground.leftAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 32, width: 40, height: 40)
         contributeButton.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 16, height: 16)
         contributeButton.centerXAnchor.constraint(equalTo: contributeBackground.centerXAnchor).isActive = true
         contributeButton.centerYAnchor.constraint(equalTo: contributeBackground.centerYAnchor).isActive = true
-        commentBackground.anchor(top: contributeBackground.topAnchor, left: nil, bottom: nil, right: contributeBackground.leftAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 24, width: 40, height: 40)
+        commentBackground.anchor(top: contributeBackground.topAnchor, left: nil, bottom: nil, right: contributeBackground.leftAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 32, width: 40, height: 40)
         commentButton.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 16, height: 16)
         commentButton.centerYAnchor.constraint(equalTo: commentBackground.centerYAnchor).isActive = true
         commentButton.centerXAnchor.constraint(equalTo: commentBackground.centerXAnchor).isActive = true
-        shareBackground.anchor(top: saveBackground.topAnchor, left: saveBackground.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
+        shareBackground.anchor(top: saveBackground.topAnchor, left: saveBackground.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 32, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
         shareButton.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 17, height: 16)
         shareButton.centerXAnchor.constraint(equalTo: shareBackground.centerXAnchor).isActive = true
         shareButton.centerYAnchor.constraint(equalTo: shareBackground.centerYAnchor).isActive = true
