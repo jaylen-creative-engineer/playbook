@@ -23,7 +23,6 @@ class HomeController : UICollectionViewController {
     let homeServices = HomeServices()
     let detailController = PursuitsDetailController()
     
-    let transition = KWTransition.manager()
     
     let contentCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -132,16 +131,6 @@ class HomeController : UICollectionViewController {
         customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         self.showDetailViewController(customAlert, sender: self)
-    }
-    
-    func openSearchModal(){
-        let searchView = CustomSearchView()
-        let transition = CATransition()
-        transition.duration = 0.5
-        transition.type = kCATransitionFromTop
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.showDetailViewController(searchView, sender: self)
     }
     
     func postHeld(transitionId : String) {

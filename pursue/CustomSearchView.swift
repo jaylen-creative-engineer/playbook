@@ -22,13 +22,18 @@ class CustomSearchView : UIViewController {
     
     lazy var searchBar: UISearchBar = {
         let sb = UISearchBar()
-        sb.placeholder = "Search"
-        sb.searchBarStyle = UISearchBarStyle.minimal
+        sb.placeholder = "Search..."
+        sb.searchBarStyle = UISearchBarStyle.prominent
+        sb.backgroundImage = UIImage(color: .clear)
         sb.delegate = self
         sb.translatesAutoresizingMaskIntoConstraints = false
         sb.barTintColor = .white
-        sb.layer.cornerRadius = 0
-        sb.layer.masksToBounds = true
+        sb.isTranslucent = true
+        
+        let attributedPlaceholder = NSMutableAttributedString(string: "Search...", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18), NSAttributedStringKey(rawValue: NSAttributedStringKey.foregroundColor.rawValue): UIColor.gray])
+        
+        let textFieldPlaceHolder = sb.value(forKey: "searchField") as? UITextField
+        textFieldPlaceHolder?.attributedPlaceholder = attributedPlaceholder
         return sb
     }()
     

@@ -45,16 +45,6 @@ class NotificationsContainer : UICollectionViewController {
         navigationController?.pushViewController(profile, animated: true)
     }
     
-    func openSearchModal(){
-        let searchView = CustomSearchView()
-        let transition = CATransition()
-        transition.duration = 0.5
-        transition.type = kCATransitionFromTop
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.showDetailViewController(searchView, sender: self)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
@@ -96,7 +86,7 @@ extension NotificationsContainer : UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 312)
+        return CGSize(width: view.frame.width, height: 330)
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

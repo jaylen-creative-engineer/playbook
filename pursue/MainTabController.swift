@@ -16,7 +16,7 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         
         let index = viewControllers?.index(of: viewController)
-        if index == 1 {
+        if index == 2 {
             
             let photoSelectorController = SelectCameraController()
             let navController = UINavigationController(rootViewController: photoSelectorController)
@@ -49,24 +49,29 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
     func setupViewControllers() {
         
         let homeNavController = UINavigationController(rootViewController: HomeController(collectionViewLayout: UICollectionViewFlowLayout()))
+        let searchNavController = UINavigationController(rootViewController: SearchController(collectionViewLayout: UICollectionViewFlowLayout()))
         let notificationsNavController = UINavigationController(rootViewController: NotificationsContainer(collectionViewLayout: UICollectionViewFlowLayout()))
         let plusNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "create_unselected"), selectedImage: #imageLiteral(resourceName: "create_unselected"))
         
         tabBar.tintColor = .black
         tabBar.barTintColor = UIColor.rgb(red: 255, green: 255, blue: 255)
         
-        viewControllers = [homeNavController, plusNavController, notificationsNavController]
+        viewControllers = [homeNavController, searchNavController, plusNavController, notificationsNavController]
         
         guard let items = tabBar.items else { return }
         let tabHome = items[0]
         tabHome.image = #imageLiteral(resourceName: "home_unselected").withRenderingMode(.alwaysOriginal)
         tabHome.selectedImage = #imageLiteral(resourceName: "home_selected").withRenderingMode(.alwaysOriginal)
         
-        let tabCreate = items[1]
+        let tabSearch = items[1]
+        tabSearch.image = #imageLiteral(resourceName: "search_unselected").withRenderingMode(.alwaysOriginal)
+        tabSearch.selectedImage = #imageLiteral(resourceName: "search_selected").withRenderingMode(.alwaysOriginal)
+        
+        let tabCreate = items[2]
         tabCreate.image = #imageLiteral(resourceName: "create_unselected").withRenderingMode(.alwaysOriginal)
         tabCreate.selectedImage = #imageLiteral(resourceName: "create_unselected").withRenderingMode(.alwaysOriginal)
         
-        let tabNotification = items[2]
+        let tabNotification = items[3]
         tabNotification.image = #imageLiteral(resourceName: "notifications-bell-grey").withRenderingMode(.alwaysOriginal)
         tabNotification.selectedImage = #imageLiteral(resourceName: "notifications-bell").withRenderingMode(.alwaysOriginal)
         

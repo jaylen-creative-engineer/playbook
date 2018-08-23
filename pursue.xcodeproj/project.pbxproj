@@ -116,6 +116,8 @@
 		E6777884212CDC48001820FE /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6777883212CDC48001820FE /* Reachability.swift */; };
 		E6777886212E1345001820FE /* NotificationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6777885212E1345001820FE /* NotificationHeader.swift */; };
 		E6777888212E200C001820FE /* NotificationRowHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6777887212E200C001820FE /* NotificationRowHeader.swift */; };
+		E677788A212EB435001820FE /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6777889212EB435001820FE /* SearchController.swift */; };
+		E677788C212EB642001820FE /* SearchHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E677788B212EB642001820FE /* SearchHeader.swift */; };
 		E67FB8C2203117C70008732C /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67FB8C1203117C70008732C /* ImageProcessor.swift */; };
 		E680ECC5206ACBD60023087D /* ProfilePursuitCreateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E680ECC4206ACBD60023087D /* ProfilePursuitCreateCell.swift */; };
 		E68D70B020D9DEE2004398D1 /* HomePursuitsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68D70AF20D9DEE2004398D1 /* HomePursuitsRow.swift */; };
@@ -315,6 +317,8 @@
 		E6777883212CDC48001820FE /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		E6777885212E1345001820FE /* NotificationHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHeader.swift; sourceTree = "<group>"; };
 		E6777887212E200C001820FE /* NotificationRowHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRowHeader.swift; sourceTree = "<group>"; };
+		E6777889212EB435001820FE /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
+		E677788B212EB642001820FE /* SearchHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHeader.swift; sourceTree = "<group>"; };
 		E67FB8C0202FB18C0008732C /* pursue.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = pursue.entitlements; sourceTree = "<group>"; };
 		E67FB8C1203117C70008732C /* ImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
 		E680ECC4206ACBD60023087D /* ProfilePursuitCreateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePursuitCreateCell.swift; sourceTree = "<group>"; };
@@ -473,6 +477,8 @@
 				E6C1C06A211D205D009BECAC /* SearchCarousel.swift */,
 				E67778772120DFAE001820FE /* SearchCarouselCell.swift */,
 				E6C1C06C211D20E1009BECAC /* SearchResults.swift */,
+				E6777889212EB435001820FE /* SearchController.swift */,
+				E677788B212EB642001820FE /* SearchHeader.swift */,
 			);
 			name = Search;
 			sourceTree = "<group>";
@@ -998,6 +1004,7 @@
 				E6777882212A0CAF001820FE /* HomePostRowCells.swift in Sources */,
 				E6D0B402203E13D2008D4268 /* ViewWithDiagonalLine.swift in Sources */,
 				E62AAB231FD1E8A20053EAD7 /* CameraCell.swift in Sources */,
+				E677788A212EB435001820FE /* SearchController.swift in Sources */,
 				E6989BF52047797B0067A55B /* CustomHomeView.swift in Sources */,
 				E6CE22771F671D10006C5755 /* SignupController.swift in Sources */,
 				E6DEC844201ABD6C00E02393 /* Principles.swift in Sources */,
@@ -1125,6 +1132,7 @@
 				E6CE22751F671D10006C5755 /* AppDelegate.swift in Sources */,
 				E6398078204B392A0049A71B /* PrinciplesPageCell.swift in Sources */,
 				E627283D20DC5C3B00860707 /* HomePursuitsLists.swift in Sources */,
+				E677788C212EB642001820FE /* SearchHeader.swift in Sources */,
 				E60433ED2042189F00E6D4DA /* ProfileAboutRow.swift in Sources */,
 				E61A70E620E18D5900EB69D8 /* DetailChallengeRow.swift in Sources */,
 				E643EF8920E5685E00EE411B /* NotificationsContainer.swift in Sources */,
