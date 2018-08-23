@@ -135,14 +135,12 @@ extension InterestsController{
         for (index,obj) in ["Animal","Architectures","Food","Fashion","Nature","People"].enumerated(){
             
             let width = obj.getWidthofString(font:UIFont(name: "Lato-Semibold", size: 12)!) + 35
-            if x + width >= (self.view.frame.size.width - 40){
+            if x + width >= (self.view.frame.size.width - 10){
                 x = 10
                 y = y + 35
             }
             
             let tileview = designView(title: obj, x: x, y: y)
-
-            
             let button = UIButton(frame: CGRect(x: 0, y: 0, width: tileview.frame.size.width, height: tileview.frame.size.height))
             button.tag = index
             tileview.backgroundColor = UIColor.darkGray.withAlphaComponent(0.7)
