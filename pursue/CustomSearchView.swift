@@ -32,7 +32,7 @@ class CustomSearchView : UIViewController {
         return sb
     }()
     
-    let imageCollectionView : UICollectionView = {
+    let contentCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         
@@ -121,25 +121,16 @@ class CustomSearchView : UIViewController {
     }
     
     func setupCollectionView(){
-        imageCollectionView.delegate = self
-        imageCollectionView.dataSource = self
-        imageCollectionView.register(SearchCarousel.self, forCellWithReuseIdentifier: carouselId)
-        view.addSubview(imageCollectionView)
-        imageCollectionView.anchor(top: searchBar.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: alertView.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 350)
-        setupResultsCollectionView()
+        contentCollectionView.delegate = self
+        contentCollectionView.dataSource = self
+        contentCollectionView.register(SearchCarousel.self, forCellWithReuseIdentifier: carouselId)
+        view.addSubview(contentCollectionView)
+        contentCollectionView.anchor(top: searchBar.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: alertView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 275)
     }
-    
-    func setupResultsCollectionView(){
-        returnCollectionView.delegate = self
-        returnCollectionView.dataSource = self
-        returnCollectionView.register(SearchResults.self, forCellWithReuseIdentifier: cellId)
-        view.addSubview(returnCollectionView)
-        returnCollectionView.anchor(top: imageCollectionView.bottomAnchor, left: alertView.leftAnchor, bottom: view.bottomAnchor, right: alertView.rightAnchor, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-    }
-    
+
     func setupSearchBar(){
         view.addSubview(searchBar)
-        searchBar.anchor(top: alertView.topAnchor, left: alertView.leftAnchor, bottom: nil, right: alertView.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 45)
+        searchBar.anchor(top: alertView.safeAreaLayoutGuide.topAnchor, left: alertView.leftAnchor, bottom: nil, right: alertView.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 45)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -178,28 +169,12 @@ extension CustomSearchView : UICollectionViewDelegate, UICollectionViewDataSourc
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch collectionView {
-        case imageCollectionView:
-            return CGSize(width: view.frame.width, height: 375)
-        case returnCollectionView:
-            return CGSize(width: view.frame.width, height: view.frame.height)
-        default:
-            return CGSize(width: view.frame.width, height: view.frame.height)
-        }
+        return CGSize(width: view.frame.width, height: view.frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch collectionView {
-        case imageCollectionView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: carouselId, for: indexPath) as! SearchCarousel
-            return cell
-        case returnCollectionView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchResults
-            return cell
-        default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchResults
-            return cell
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: carouselId, for: indexPath) as! SearchCarousel
+        return cell
     }
 
 }

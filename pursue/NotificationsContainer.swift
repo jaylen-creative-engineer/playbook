@@ -8,15 +8,13 @@
 
 import UIKit
 
-class NotificationsContainer : UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    let cellId = "cellId"
-    let chatId = "chatId"
+class NotificationsContainer : UICollectionViewController {
     
-    lazy var interestsBar : NotificationsBar = {
-        let hb = NotificationsBar()
-        hb.accessNotificationsController = self
-        return hb
-    }()
+    let cellId = "cellId"
+    let messageId = "messageId"
+    let groupId = "groupId"
+    let twoId = "twoId"
+    let headerId = "headerId"
     
     let composeButton : UIButton = {
        let button = UIButton()
@@ -25,40 +23,41 @@ class NotificationsContainer : UICollectionViewController, UICollectionViewDeleg
         return button
     }()
     
-    func scrollToMenuIndex(menuIndex: Int) {
-        let indexPath = IndexPath(item: menuIndex, section: 0)
-        collectionView?.scrollToItem(at: indexPath, at: [], animated: true)
-    }
-    
+    let messageTableView : UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.isScrollEnabled = true
+        tableView.separatorStyle = .none
+        return tableView
+    }()
+
     func setupCollectionView(){
-        if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.scrollDirection = .horizontal
-            flowLayout.minimumLineSpacing = 0
-        }
         
-        collectionView?.register(NotificationController.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.register(ChatController.self, forCellWithReuseIdentifier: chatId)
-        collectionView?.backgroundColor = UIColor.white
-        collectionView?.isScrollEnabled = false
+        collectionView?.register(NotificationHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView?.register(ChatCells.self, forCellWithReuseIdentifier: messageId)
+        collectionView?.register(TwoChatCells.self, forCellWithReuseIdentifier: twoId)
+        collectionView?.register(GroupChatCells.self, forCellWithReuseIdentifier: groupId)
+        collectionView?.backgroundColor = .white
+        collectionView?.showsVerticalScrollIndicator = false
     }
     
-    private func setupTopBar(){
-        let backgroundFill = UIView()
-        view.addSubview(backgroundFill)
-        view.addSubview(interestsBar)
-        view.addSubview(composeButton)
-        
-        backgroundFill.backgroundColor = .white
-        backgroundFill.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 75)
-        interestsBar.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: backgroundFill.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 5, paddingRight: 0, width: 140, height: 200)
-        composeButton.anchor(top: nil, left: nil, bottom: nil, right: backgroundFill.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 24, height: 24)
-        composeButton.centerYAnchor.constraint(equalTo: interestsBar.centerYAnchor).isActive = true
+    func goToProfile(){
+        let profile = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(profile, animated: true)
+    }
+    
+    func openSearchModal(){
+        let searchView = CustomSearchView()
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.type = kCATransitionFromTop
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.showDetailViewController(searchView, sender: self)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
-        setupTopBar()
     }
     
     
@@ -68,30 +67,41 @@ class NotificationsContainer : UICollectionViewController, UICollectionViewDeleg
     }
 }
 
-extension NotificationsContainer {
+extension NotificationsContainer : UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: 110)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return 10
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.item {
-        case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! NotificationController
-            return cell
         case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: chatId, for: indexPath) as! ChatController
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: twoId, for: indexPath) as! TwoChatCells
+            return cell
+        case 2:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: groupId, for: indexPath) as! GroupChatCells
             return cell
         default:
-            assert(false, "Not a valid cell")
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: messageId, for: indexPath) as! ChatCells
+            return cell
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height + 40)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(8, 0, 0, 0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.width, height: 312)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! NotificationHeader
+        header.accessNotificationController = self
+        return header
     }
 }

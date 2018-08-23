@@ -48,7 +48,7 @@ class HomeHeader : UICollectionViewCell {
         accessHomeController?.goToProfile()
     }
     
-    private func setupView(){
+    func setupView(){
         addSubview(homeLabel)
         addSubview(profilePhoto)
         addSubview(searchIcon)
@@ -56,8 +56,6 @@ class HomeHeader : UICollectionViewCell {
         homeLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 5, paddingRight: 0, width: homeLabel.intrinsicContentSize.width, height: homeLabel.intrinsicContentSize.height)
         profilePhoto.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 24, height: 24)
         profilePhoto.centerYAnchor.constraint(equalTo: homeLabel.centerYAnchor).isActive = true
-//        notificationIcon.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 17, height: 17)
-//        notificationIcon.centerYAnchor.constraint(equalTo: homeLabel.centerYAnchor).isActive = true
         searchIcon.anchor(top: nil, left: nil, bottom: nil, right: profilePhoto.leftAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 24, width: 17.18, height: 18)
         searchIcon.centerYAnchor.constraint(equalTo: homeLabel.centerYAnchor).isActive = true
     }

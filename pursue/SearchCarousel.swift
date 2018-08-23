@@ -22,9 +22,20 @@ class SearchCarousel : UICollectionViewCell {
         return collectionView
     }()
     
+    let returnCollectionView : UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.showsVerticalScrollIndicator = false
+        return collectionView
+    }()
+    
     let images = [#imageLiteral(resourceName: "cars"), #imageLiteral(resourceName: "ferrari"), #imageLiteral(resourceName: "ferrari-f70"), #imageLiteral(resourceName: "fashion-design"), #imageLiteral(resourceName: "comment-1")]
     let detailLabels = ["Pursuits", "People", "Steps", "Principles", "Challenges"]
     let cellId = "cellId"
+    let resultId = "resultId"
     var scaleEffect: GeminScaleEffect = .scaleUp
     var accessSearchViewController : CustomSearchView?
     
@@ -38,8 +49,17 @@ class SearchCarousel : UICollectionViewCell {
             .scaleEffect(scaleEffect)
             .ease(.easeOutQuart)
         addSubview(collectionView)
-        collectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        collectionView.backgroundColor = .red
+        collectionView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 250)
     }
+    
+//    func setupResultsCollection(){
+//        returnCollectionView.delegate = self
+//        returnCollectionView.dataSource = self
+//        returnCollectionView.register(SearchResults.self, forCellWithReuseIdentifier: resultId)
+//        addSubview(returnCollectionView)
+//        returnCollectionView.anchor(top: collectionView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+//    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -62,7 +82,7 @@ extension SearchCarousel : UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 195, height: 240)
+        return CGSize(width: 215, height: 240)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
