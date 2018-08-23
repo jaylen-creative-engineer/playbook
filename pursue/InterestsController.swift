@@ -13,7 +13,7 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
     let headerId = "headerId"
     let cellId = "cellId"
     
-    lazy var categoryBackIcon : UIButton = {
+    let categoryBackIcon : UIButton = {
         let button = UIButton()
         button.setBackgroundImage(#imageLiteral(resourceName: "back-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
         button.addTarget(self, action: #selector(goBack), for: .touchUpInside)
