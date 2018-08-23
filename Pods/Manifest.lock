@@ -137,7 +137,7 @@ DEPENDENCIES:
   - SwiftyCam
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - Alamofire
     - Bolts
     - DropDown
@@ -207,4 +207,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: afd793d6e5d65b33e2c875d8884343ae13f24c76
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.5.3
