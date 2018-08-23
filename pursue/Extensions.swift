@@ -187,3 +187,20 @@ class UITextViewFixed: UITextView {
         textContainer.lineFragmentPadding = 0
     }
 }
+
+extension String{
+    func getWidthofString(font : UIFont) -> CGFloat{
+        let fontAttributes = [NSAttributedStringKey.font: font]
+        let size = (self as NSString).size(withAttributes: fontAttributes)
+        return size.width
+    }
+    func getConvertDateString(currentdateformatter : String ,convdateformatter : String) -> String{
+        //Sunday,July 16 2017
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = currentdateformatter
+        let date = dateformatter.date(from: self)
+        dateformatter.dateFormat = convdateformatter
+        return dateformatter.string(from:date!)
+    }
+}
+

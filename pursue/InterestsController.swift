@@ -30,6 +30,8 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
     
     var viewType = ""
     
+    var interestTagView = UIView()
+    
     lazy var nextTitle : UILabel = {
         let label = UILabel()
         label.text = "Next"
@@ -66,13 +68,14 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
     private func setupTopBar(){
         let backgroundFill = UIView()
         backgroundFill.backgroundColor = .white
-        
         view.addSubview(backgroundFill)
+        view.addSubview(interestTagView)
         view.addSubview(categoryBackIcon)
         view.addSubview(pageTitle)
         view.addSubview(nextTitle)
         
         backgroundFill.anchor(top: view.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 80)
+        interestTagView.anchor(top: backgroundFill.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 80, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: self.view.frame.size.width, height: 80)
         categoryBackIcon.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 16, paddingRight: 0, width: 20, height: 20)
         pageTitle.anchor(top: nil, left: categoryBackIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: pageTitle.intrinsicContentSize.width, height: pageTitle.intrinsicContentSize.height)
         pageTitle.centerYAnchor.constraint(equalTo: categoryBackIcon.centerYAnchor).isActive = true
@@ -91,7 +94,7 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return 15
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -119,5 +122,55 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
         
         setupTopBar()
         interestViewType()
+        addTileOnview()
     }
+}
+
+extension InterestsController{
+    func addTileOnview(){
+        
+        
+        var x : CGFloat = 10
+        var y : CGFloat = 5.0
+        for (index,obj) in ["Animal","Architectures","Food","Fashion","Nature","People"].enumerated(){
+            
+            let width = obj.getWidthofString(font:UIFont(name: "Lato-Semibold", size: 12)!) + 35
+            if x + width >= (self.view.frame.size.width - 40){
+                x = 10
+                y = y + 35
+            }
+            
+            let tileview = designView(title: obj, x: x, y: y)
+
+            
+            let button = UIButton(frame: CGRect(x: 0, y: 0, width: tileview.frame.size.width, height: tileview.frame.size.height))
+            button.tag = index
+            tileview.backgroundColor = UIColor.darkGray.withAlphaComponent(0.7)
+            tileview.layer.cornerRadius = tileview.frame.size.height / 2
+            tileview.layer.borderColor = UIColor.white.cgColor
+            tileview.layer.borderWidth = 1.0
+            tileview.clipsToBounds = true
+            tileview.layer.masksToBounds = true
+            tileview.addSubview(button)
+            interestTagView.addSubview(tileview)
+            x = x + tileview.frame.size.width + 5
+        }
+        interestTagView.frame = CGRect(x: interestTagView.frame.origin.x, y: interestTagView.frame.origin.y, width: interestTagView.frame.size.width, height: y + 30)
+  
+    }
+    
+    func designView(title : String,x : CGFloat,y : CGFloat) -> UIView{
+        let view = UIView()
+        let label = UILabel()
+        label.text = title
+        label.font = UIFont(name: "Lato-Semibold", size: 12)
+        label.textColor = UIColor.white
+        label.frame = CGRect(x: 0, y: 0, width: label.intrinsicContentSize.width + 20, height: 30)
+        label.textAlignment = .center
+        view.addSubview(label)
+        view.frame = CGRect(x: x, y: y, width: label.frame.size.width, height: 30)
+        return view
+    }
+    
+    
 }
