@@ -21,7 +21,7 @@ class ImageCells : UICollectionViewCell {
         iv.image = #imageLiteral(resourceName: "steph").withRenderingMode(.alwaysOriginal)
         iv.layer.masksToBounds = true
         iv.contentMode = .scaleAspectFill
-        iv.heroID = "photoId-1"
+        iv.hero.id = "photoId-1"
         return iv
     }()
     

@@ -11,29 +11,51 @@ import UIKit
 class SearchController : UICollectionViewController {
     
     let headerId = "headerId"
+    let principleId = "principleId"
+    let peopleId = "peopleId"
     
     func setupCollectionView(){
         collectionView?.register(SearchHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView?.register(RecentSearchUsers.self, forCellWithReuseIdentifier: peopleId)
+        collectionView?.register(RecentSearchPrinciples.self, forCellWithReuseIdentifier: principleId)
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
-        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
 }
 
 extension SearchController : UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 275)
+        return CGSize(width: view.frame.width, height: 325)
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! SearchHeader
         return header
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: 120)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! RecentSearchUsers
+        cell.backgroundColor = .red
+        return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
     }
 }
 

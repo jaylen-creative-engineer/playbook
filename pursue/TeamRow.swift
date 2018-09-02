@@ -83,7 +83,6 @@ extension TeamRow : UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! TeamRowCells
         cell.profileImage.image = UIImage(named: peopleImages[indexPath.item])
         cell.usernameLabel.text = peopleUsernames[indexPath.item]
-        cell.fullnameLabel.text = peopleFullname[indexPath.item]
         return cell
     }
     

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ParallaxHeader
 import Hero
 import Firebase
 import AVFoundation
@@ -219,7 +218,6 @@ class PursuitsDetailController : UICollectionViewController {
         collectionView?.isScrollEnabled = false
         containerView.isHidden = true
         hero.isEnabled = true
-        setupBackButton()
     }
     
     @objc func handlePan(panGesture : UIPanGestureRecognizer){

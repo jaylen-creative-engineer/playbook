@@ -147,10 +147,10 @@ class CustomCreateView : UIViewController, InterestNameSelected, NVActivityIndic
     let createService = CreateServices()
     
     @objc func handleSend(){
-        let pursuitId = NSUUID().uuidString
-        let stepId = NSUUID().uuidString
-        let principleId = NSUUID().uuidString
-        let postId = NSUUID().uuidString
+//        let pursuitId = NSUUID().uuidString
+//        let stepId = NSUUID().uuidString
+//        let principleId = NSUUID().uuidString
+//        let postId = NSUUID().uuidString
         
         let indicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
         indicator.type = .ballClipRotatePulse

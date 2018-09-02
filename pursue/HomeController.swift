@@ -15,75 +15,38 @@ class HomeController : UICollectionViewController {
     let cellId = "cellId"
     let headerId = "headerId"
     let labelId = "labelId"
+    let pursuitId = "pursuitId"
+    let postId = "postId"
+    let myId = "myId"
 
     var isFirstLaunch = false
     var days = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"]
     
+    let imageName = [#imageLiteral(resourceName: "health"), #imageLiteral(resourceName: "fashion-design"), #imageLiteral(resourceName: "ferrari-f70"), #imageLiteral(resourceName: "ferrari")]
+    let userPhotos = [#imageLiteral(resourceName: "clean-3"),#imageLiteral(resourceName: "clean-2"),#imageLiteral(resourceName: "comment-2"), #imageLiteral(resourceName: "comment-6")]
     let backgroundFill = UIView()
     let homeServices = HomeServices()
     let detailController = PursuitsDetailController()
-    
-    
-    let contentCollectionView : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        collectionView.showsVerticalScrollIndicator = false
-        return collectionView
-    }()
-    
-    let labelCollectionView : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        collectionView.showsHorizontalScrollIndicator = false
-        return collectionView
-    }()
-    
-    let postCollectionView : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.isScrollEnabled = true
-        collectionView.isPagingEnabled = true
-        
-        return collectionView
-    }()
-    
-    let homeLabel : UILabel = {
-       let label = UILabel()
-        label.text = "HOME"
-        label.font = UIFont.boldSystemFont(ofSize: 16)
-        return label
-    }()
     
     func goToProfile(){
         let profile = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
         navigationController?.pushViewController(profile, animated: true)
     }
     
-    func setupNavBar(){
-        
-    }
-    
+
     func setupCollectionView(){
-        collectionView?.register(HomeContainer.self, forCellWithReuseIdentifier: cellId)
         collectionView?.register(HomeHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView?.register(HomePostCells.self, forCellWithReuseIdentifier: postId)
+        collectionView?.register(MyPursuitCells.self, forCellWithReuseIdentifier: myId)
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupCollectionView()
+        
         if UserDefaults.standard.value(forKey: "homeIntroPopover") == nil {
             setupIntroView()
         } else {
@@ -97,52 +60,14 @@ class HomeController : UICollectionViewController {
     }
     
     // MARK: - Setup View
-    
-    func goToFeedView(){}
-    
-    func principleTapped() {
-        detailController.standardView()
-    }
-    
-    func stepTapped(){
-        detailController.standardView()
-    }
-    
-    func pursuitTapped() {
-        detailController.standardView()
-    }
-    
-    func challengeTapped(){
-        detailController.challengeView()
-    }
-    
-    func principleHeld() {
-        
-    }
-    
-    func homeRowImageHeld() {
-        
-    }
+
     
     func showPeople(){
-        let customAlert = CustomEngagementView()
-        customAlert.providesPresentationContextTransitionStyle = true
-        customAlert.definesPresentationContext = true
-        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.showDetailViewController(customAlert, sender: self)
+        
     }
     
     func postHeld(transitionId : String) {
-        let customAlert = CustomEngagementView()
-        customAlert.providesPresentationContextTransitionStyle = true
-        customAlert.definesPresentationContext = true
-        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.showDetailViewController(customAlert, sender: self)
-    }
-    
-    func showOptionClicked(){
+        
     }
     
     func handleChangeToDetail(viewType : String, transitionId : String) {
@@ -275,30 +200,41 @@ class HomeController : UICollectionViewController {
 extension HomeController : UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 20)
+        return CGSize(width: view.frame.width, height: 90)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        switch indexPath.item {
+        case 1:
+            return CGSize(width: view.frame.width, height: (view.frame.height / 2) + 90)
+        default:
+            return CGSize(width: view.frame.width, height: (view.frame.height / 2) - 60)
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! HomeHeader
         header.accessHomeController = self
         return header
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return 4
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeContainer
-        cell.accessHomeController = self
-        return cell
+        switch indexPath.item {
+        case 1:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: myId, for: indexPath) as! MyPursuitCells
+            return cell
+        default:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! HomePostCells
+            cell.photo.image = imageName[indexPath.item]
+            cell.userPhoto.image = userPhotos[indexPath.item]
+            return cell
+        }
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height)
-    }
 }
 
-extension HomeController : UIViewControllerTransitioningDelegate{
-    
-}

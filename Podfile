@@ -21,7 +21,6 @@ target 'pursue' do
   pod 'FBSDKCoreKit'
   pod 'FBSDKShareKit'
   pod 'FBSDKLoginKit'
-  pod 'ParallaxHeader'
   pod 'PryntTrimmerView'
   pod 'NVActivityIndicatorView'
   pod 'DropDown'

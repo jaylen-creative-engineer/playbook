@@ -39,7 +39,7 @@ class PinterestLayoutAttributes: UICollectionViewLayoutAttributes {
     }
 }
 
-class PinterestLayout: UICollectionViewLayout {
+class PinterestLayout : UICollectionViewLayout {
     var delegate: PinterestLayoutDelegate!
     
     var numberOfColumns = 2

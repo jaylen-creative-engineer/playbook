@@ -911,10 +911,8 @@ open class SwiftyCamViewController: UIViewController {
     /// Get Devices
     
     fileprivate class func deviceWithMediaType(_ mediaType: String, preferringPosition position: AVCaptureDevice.Position) -> AVCaptureDevice? {
-        if let devices = AVCaptureDevice.devices(for: AVMediaType(rawValue: mediaType)) as? [AVCaptureDevice] {
-            return devices.filter({ $0.position == position }).first
-        }
-        return nil
+        let devices = AVCaptureDevice.devices(for: AVMediaType(rawValue: mediaType))
+        return devices.filter({ $0.position == position }).first
     }
     
     /// Enable or disable flash for photo

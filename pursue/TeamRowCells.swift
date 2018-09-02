@@ -16,12 +16,6 @@ class TeamRowCells : UICollectionViewCell {
         return label
     }()
     
-    let fullnameLabel : UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10)
-        return label
-    }()
-    
     lazy var profileImage : UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
@@ -32,7 +26,7 @@ class TeamRowCells : UICollectionViewCell {
         iv.addGestureRecognizer(tapGesture)
         iv.addGestureRecognizer(longGesture)
         iv.isUserInteractionEnabled = true
-        iv.layer.cornerRadius = 25
+        iv.layer.cornerRadius = 20
         return iv
     }()
     
@@ -44,14 +38,11 @@ class TeamRowCells : UICollectionViewCell {
     
     func setupView(){
         addSubview(profileImage)
-        addSubview(fullnameLabel)
         addSubview(usernameLabel)
         
-        profileImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
+        profileImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
         usernameLabel.anchor(top: profileImage.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
         usernameLabel.centerXAnchor.constraint(equalTo: profileImage.centerXAnchor).isActive = true
-        fullnameLabel.anchor(top: usernameLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: fullnameLabel.intrinsicContentSize.width, height: fullnameLabel.intrinsicContentSize.height)
-        fullnameLabel.centerXAnchor.constraint(equalTo: usernameLabel.centerXAnchor).isActive = true
     }
     
     override init(frame: CGRect) {

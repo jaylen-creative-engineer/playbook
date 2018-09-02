@@ -29,16 +29,6 @@ class NotificationHeader : UICollectionViewCell {
         label.font = .boldSystemFont(ofSize: 14)
         return label
     }()
-
-    lazy var profilePhoto : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "steph").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFill
-        button.addTarget(self, action: #selector(handleProfile), for: .touchUpInside)
-        button.layer.cornerRadius = 12
-        button.layer.masksToBounds = true
-        return button
-    }()
     
     let imageCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -49,10 +39,15 @@ class NotificationHeader : UICollectionViewCell {
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
-
-    @objc func handleProfile(){
-        accessNotificationController?.goToProfile()
-    }
+    
+    lazy var searchButton : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "search_selected").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .gray
+        button.imageView?.contentMode = .scaleAspectFill
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     
     func setupCollectionView(){
         imageCollectionView.delegate = self
@@ -65,12 +60,12 @@ class NotificationHeader : UICollectionViewCell {
     
     func setupView(){
         addSubview(notificationLabel)
-        addSubview(profilePhoto)
         addSubview(messageLabel)
+        addSubview(searchButton)
         
         notificationLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 5, paddingRight: 0, width: notificationLabel.intrinsicContentSize.width, height: notificationLabel.intrinsicContentSize.height)
-        profilePhoto.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 24, height: 24)
-        profilePhoto.centerYAnchor.constraint(equalTo: notificationLabel.centerYAnchor).isActive = true
+        searchButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 19, height: 18)
+        searchButton.centerYAnchor.constraint(equalTo: notificationLabel.centerYAnchor).isActive = true
         setupCollectionView()
         messageLabel.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 12, paddingRight: 0, width: messageLabel.intrinsicContentSize.width, height: messageLabel.intrinsicContentSize.height)
     }

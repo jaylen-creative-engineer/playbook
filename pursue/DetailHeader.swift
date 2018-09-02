@@ -159,6 +159,22 @@ class DetailHeader : UICollectionViewCell {
         player.play()
     }
     
+    func setupEngagements(){
+        imageView.addSubview(saveBackground)
+        imageView.addSubview(saveButton)
+        imageView.addSubview(contributeBackground)
+        imageView.addSubview(contributeButton)
+        
+        saveBackground.anchor(top: centerYAnchor, left: nil, bottom: nil, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 40, height: 40)
+        saveButton.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 12, height: 16)
+        saveButton.centerXAnchor.constraint(equalTo: saveBackground.centerXAnchor).isActive = true
+        saveButton.centerYAnchor.constraint(equalTo: saveBackground.centerYAnchor).isActive = true
+        contributeBackground.anchor(top: saveBackground.bottomAnchor, left: saveBackground.leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
+        contributeButton.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 16, height: 16)
+        contributeButton.centerXAnchor.constraint(equalTo: contributeBackground.centerXAnchor).isActive = true
+        contributeButton.centerYAnchor.constraint(equalTo: contributeBackground.centerYAnchor).isActive = true
+    }
+    
     func setupCollectionViewHeader(){
         let label = UILabel()
         label.text = "Travel On"
@@ -212,45 +228,7 @@ class DetailHeader : UICollectionViewCell {
         followButton.anchor(top: label.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: (frame.width / 5) - 10, paddingBottom: 0, paddingRight: 0, width: 110, height: 32)
         collaborateButton.anchor(top: followButton.topAnchor, left: followButton.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 0, width: 110, height: 32)
         
-        setupEngagments()
-        
-    }
-    
-    func setupEngagments(){
-        imageView.addSubview(playBackground)
-        imageView.addSubview(playIcon)
-        imageView.bringSubview(toFront: playIcon)
-        imageView.addSubview(saveBackground)
-        imageView.addSubview(saveButton)
-        imageView.addSubview(contributeBackground)
-        imageView.addSubview(contributeButton)
-        imageView.addSubview(commentBackground)
-        imageView.addSubview(commentButton)
-        imageView.addSubview(shareBackground)
-        imageView.addSubview(shareButton)
-//        playBackground.bringSubview(toFront: imageView)
-        playBackground.anchor(top: nil, left: nil, bottom: imageView.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 24, paddingRight: 0, width: 50, height: 50)
-        playBackground.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
-        playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true
-        playIcon.centerYAnchor.constraint(equalTo: playBackground.centerYAnchor).isActive = true
-        saveBackground.anchor(top: nil, left: playBackground.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 32, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
-        saveBackground.centerYAnchor.constraint(equalTo: playBackground.centerYAnchor).isActive = true
-        saveButton.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 12, height: 16)
-        saveButton.centerXAnchor.constraint(equalTo: saveBackground.centerXAnchor).isActive = true
-        saveButton.centerYAnchor.constraint(equalTo: saveBackground.centerYAnchor).isActive = true
-        contributeBackground.anchor(top: saveBackground.topAnchor, left: nil, bottom: nil, right: playBackground.leftAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 32, width: 40, height: 40)
-        contributeButton.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 16, height: 16)
-        contributeButton.centerXAnchor.constraint(equalTo: contributeBackground.centerXAnchor).isActive = true
-        contributeButton.centerYAnchor.constraint(equalTo: contributeBackground.centerYAnchor).isActive = true
-        commentBackground.anchor(top: contributeBackground.topAnchor, left: nil, bottom: nil, right: contributeBackground.leftAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 32, width: 40, height: 40)
-        commentButton.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 16, height: 16)
-        commentButton.centerYAnchor.constraint(equalTo: commentBackground.centerYAnchor).isActive = true
-        commentButton.centerXAnchor.constraint(equalTo: commentBackground.centerXAnchor).isActive = true
-        shareBackground.anchor(top: saveBackground.topAnchor, left: saveBackground.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 32, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
-        shareButton.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 17, height: 16)
-        shareButton.centerXAnchor.constraint(equalTo: shareBackground.centerXAnchor).isActive = true
-        shareButton.centerYAnchor.constraint(equalTo: shareBackground.centerYAnchor).isActive = true
+        setupEngagements()
         
     }
     

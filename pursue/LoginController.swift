@@ -182,16 +182,16 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
             guard let accessTokenString = accessToken?.tokenString else { return }
             
             let credentials = FacebookAuthProvider.credential(withAccessToken: accessTokenString)
-            Auth.auth().signIn(with: credentials) { (user, error) in
+            Auth.auth().signInAndRetrieveData(with: credentials, completion: { (user, error) in
                 if let error = error {
                     print("Failed to create account: ", error)
                     return
                 }
                 
-                guard let email = user?.email else { return }
-                guard let fullname = user?.displayName else { return }
+                guard let email = user?.user.email else { return }
+                guard let fullname = user?.user.displayName else { return }
                 
-                if let profileImageUrl = user?.photoURL {
+                if let profileImageUrl = user?.user.photoURL {
                     do {
                         let imageData = try Data(contentsOf: profileImageUrl as URL)
                         self.userPhoto = imageData
@@ -208,7 +208,7 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
                         print("Failed to upload", err)
                     }
                     
-                    guard let photoUrl = user?.photoURL?.absoluteString else { return }
+                    guard let photoUrl = user?.user.photoURL?.absoluteString else { return }
                     
                     self.profileService.socialLogin(email: email, fullname: fullname, photoUrl: photoUrl, completion: { (_) in
                         let layout = UICollectionViewFlowLayout()
@@ -218,7 +218,7 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
                     })
                 })
                 
-            }
+            })
         }
     }
     

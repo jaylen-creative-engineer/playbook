@@ -9,7 +9,6 @@
 import UIKit
 import Alamofire
 import Firebase
-import ParallaxHeader
 
 class ProfileController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
