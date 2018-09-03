@@ -23,6 +23,7 @@ class ProfileHeader : UICollectionViewCell {
         iv.clipsToBounds = true
         iv.contentMode = .scaleAspectFill
         iv.image = #imageLiteral(resourceName: "comment-1").withRenderingMode(.alwaysOriginal)
+        iv.layer.cornerRadius = 70
         return iv
     }()
     
@@ -30,7 +31,7 @@ class ProfileHeader : UICollectionViewCell {
        let label = UILabel()
         label.text = "jaylenhu27"
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
         return label
     }()
     
@@ -38,7 +39,7 @@ class ProfileHeader : UICollectionViewCell {
        let label = UILabel()
         label.text = "Jaylen Sanders"
         label.textAlignment = .center
-        label.font = UIFont(name: "Lato-Black", size: 18)
+        label.font = UIFont(name: "Lato-Bold", size: 18)
         return label
     }()
     
@@ -58,14 +59,18 @@ class ProfileHeader : UICollectionViewCell {
         return label
     }()
     
-    let messageBackground : CardView = {
-       let view = CardView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+    lazy var notificationsButton : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "notifications-bell-grey").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(handleNotifications), for: .touchUpInside)
+        return button
     }()
     
-    let followBackground : CardView = {
-       let view = CardView()
+    let messageBackground : MessageView = {
+       let view = MessageView()
+        view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -73,104 +78,137 @@ class ProfileHeader : UICollectionViewCell {
     lazy var messageButton : UIButton = {
        let button = UIButton()
         button.backgroundColor = .black
-        button.setTitle("Interests", for: .normal)
+        button.setTitle("Message", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 14)
-        button.layer.cornerRadius = 20
+        button.layer.cornerRadius = 17
         button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(handleMessageTap), for: .touchUpInside)
         return button
     }()
-    
-    lazy var followButton : UIButton = {
-       let button = UIButton()
-        button.backgroundColor = .white
-        button.setTitle("Add", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 14)
-        button.layer.cornerRadius = 20
-        button.layer.masksToBounds = true
+
+    let addedCountLabel : UIButton = {
+        let button = UIButton()
+        button.setTitle("120", for: .normal)
+        button.setTitleColor(.gray, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
         return button
     }()
     
-    lazy var addedCollectionView : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.isScrollEnabled = false
-        collectionView.isUserInteractionEnabled = true
-        return collectionView
+    let addedLabel : UIButton = {
+        let button = UIButton()
+        button.setTitle("ADDED", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 10)
+        return button
     }()
     
-    let addedCountLabel : UILabel = {
-        let label = UILabel()
-        label.text = "120 Added."
-        label.font = UIFont(name: "Lato-Bold", size: 14)
-        return label
+    let pursuitsCountLabel : UIButton = {
+        let button = UIButton()
+        button.setTitle("120", for: .normal)
+        button.setTitleColor(.gray, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
+        return button
+    }()
+    
+    let pursuitsLabel : UIButton = {
+        let button = UIButton()
+        button.setTitle("PURSUITS", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 10)
+        return button
     }()
     
     let pursuitsRowLabel : UILabel = {
        let label = UILabel()
-        label.text = "Pursuits."
-        label.font = UIFont(name: "Lato-Bold", size: 14)
+        label.text = "Pursuits"
+        label.font = UIFont(name: "Lato-Bold", size: 16)
         return label
     }()
     
+    let circleBackground : PlayView = {
+       let view = PlayView()
+        view.backgroundColor = .white
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    lazy var chatImageView : UIImageView = {
+       let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "chat").withRenderingMode(.alwaysOriginal)
+        return iv
+    }()
+    
+    lazy var addImageView : UIImageView = {
+       let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "add").withRenderingMode(.alwaysOriginal)
+        iv.contentMode = .scaleAspectFill
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        return iv
+    }()
+    
     var fakeFollowerArray = [#imageLiteral(resourceName: "samuel-l"), #imageLiteral(resourceName: "comment-4"), #imageLiteral(resourceName: "comment-5"), #imageLiteral(resourceName: "comment-4"), #imageLiteral(resourceName: "comment-7")]
+    
+    @objc func handleNotifications(){
+        accessProfileController?.goToNotifications()
+    }
     
     @objc func handleMessageTap(){
         accessProfileController?.changeToInterests()
     }
     
-    func setupFollowersCollectionView(){
-        addSubview(addedCollectionView)
+    func setupEngagements(){
         addSubview(addedCountLabel)
+        addSubview(addedLabel)
+        addSubview(pursuitsCountLabel)
+        addSubview(pursuitsLabel)
+        addSubview(chatImageView)
+        addSubview(messageBackground)
+        addSubview(messageButton)
+        
         addSubview(pursuitsRowLabel)
+
+        addedCountLabel.anchor(top: bioText.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: frame.width / 5.5, paddingLeft: 16, paddingBottom: 0, paddingRight: 0, width: addedCountLabel.intrinsicContentSize.width, height: 18)
+        addedLabel.anchor(top: addedCountLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: addedLabel.intrinsicContentSize.height)
+        addedLabel.centerXAnchor.constraint(equalTo: addedCountLabel.centerXAnchor).isActive = true
+        pursuitsCountLabel.anchor(top: addedCountLabel.topAnchor, left: addedLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 48, paddingBottom: 0, paddingRight: 0, width: pursuitsCountLabel.intrinsicContentSize.width, height: 18)
+        pursuitsLabel.anchor(top: pursuitsCountLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: pursuitsLabel.intrinsicContentSize.height)
+        pursuitsLabel.centerXAnchor.constraint(equalTo: pursuitsCountLabel.centerXAnchor).isActive = true
+        messageBackground.anchor(top: addedCountLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 120, height: 35)
+        messageButton.anchor(top: messageBackground.topAnchor, left: messageBackground.leftAnchor, bottom: messageBackground.bottomAnchor, right: messageBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
-        addedCollectionView.delegate = self
-        addedCollectionView.dataSource = self
-        addedCollectionView.register(FollowingCells.self, forCellWithReuseIdentifier: followId)
-        
-        addedCountLabel.anchor(top: messageButton.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 42, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: addedCountLabel.intrinsicContentSize.width, height: addedCountLabel.intrinsicContentSize.height)
-        addedCollectionView.anchor(top: addedCountLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 100, height: 60)
-        pursuitsRowLabel.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: pursuitsRowLabel.intrinsicContentSize.width, height: pursuitsRowLabel.intrinsicContentSize.height)
+        pursuitsRowLabel.anchor(top: addedLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: pursuitsRowLabel.intrinsicContentSize.width, height: 16)
     }
     
     
-    func setupProfileDetails(){
+    func setupNavBar(){
         addSubview(usernameLabel)
+        addSubview(notificationsButton)
+        addSubview(imageView)
+        addSubview(circleBackground)
+        circleBackground.addSubview(addImageView)
         addSubview(fullnameLabel)
         addSubview(bioText)
-        addSubview(messageBackground)
-        addSubview(followBackground)
-        addSubview(messageButton)
-        addSubview(followButton)
         
-        usernameLabel.anchor(top: imageView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
-        usernameLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        fullnameLabel.anchor(top: usernameLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: fullnameLabel.intrinsicContentSize.width, height: fullnameLabel.intrinsicContentSize.height)
+        usernameLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
+        notificationsButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 18, height: 19)
+        notificationsButton.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
+        imageView.anchor(top: usernameLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 140, height: 140)
+        imageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        fullnameLabel.anchor(top: imageView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: fullnameLabel.intrinsicContentSize.width, height: fullnameLabel.intrinsicContentSize.height)
         fullnameLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        bioText.anchor(top: fullnameLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 24, paddingBottom: 0, paddingRight: 24, width: 0, height: 70)
-        messageBackground.anchor(top: bioText.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 48, paddingBottom: 0, paddingRight: 0, width: 130, height: 40)
-        messageButton.anchor(top: messageBackground.topAnchor, left: messageBackground.leftAnchor, bottom: messageBackground.bottomAnchor, right: messageBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        followBackground.anchor(top: bioText.bottomAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 48, width: 130, height: 40)
-        followButton.anchor(top: followBackground.topAnchor, left: followBackground.leftAnchor, bottom: followBackground.bottomAnchor, right: followBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        setupFollowersCollectionView()
+         bioText.anchor(top: fullnameLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 24, paddingBottom: 0, paddingRight: 24, width: 0, height: 70)
+        circleBackground.anchor(top: nil, left: nil, bottom: imageView.bottomAnchor, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
+        addImageView.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 16, height: 16)
+        addImageView.centerYAnchor.constraint(equalTo: circleBackground.centerYAnchor).isActive = true
+        addImageView.centerXAnchor.constraint(equalTo: circleBackground.centerXAnchor).isActive = true
+        setupEngagements()
         
-    }
-    
-    func setupView(){
-        addSubview(imageView)
-        imageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 350)
-        setupProfileDetails()
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
+        setupNavBar()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -178,18 +216,3 @@ class ProfileHeader : UICollectionViewCell {
     }
 }
 
-extension ProfileHeader :  UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: followId, for: indexPath) as! FollowingCells
-        cell.imageView.image = fakeFollowerArray[indexPath.item]
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (frame.width / 7) - 15, height: 50)
-    }
-}

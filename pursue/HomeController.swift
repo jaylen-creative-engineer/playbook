@@ -62,8 +62,9 @@ class HomeController : UICollectionViewController {
     // MARK: - Setup View
 
     
-    func showPeople(){
-        
+    func goToNotifications(){
+        let view = NotificationsContainer(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(view, animated: true)
     }
     
     func postHeld(transitionId : String) {
@@ -200,13 +201,13 @@ class HomeController : UICollectionViewController {
 extension HomeController : UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 90)
+        return CGSize(width: view.frame.width, height: 170)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 1:
-            return CGSize(width: view.frame.width, height: (view.frame.height / 2) + 90)
+            return CGSize(width: view.frame.width, height: (view.frame.height / 2) + 80)
         default:
             return CGSize(width: view.frame.width, height: (view.frame.height / 2) - 60)
         }

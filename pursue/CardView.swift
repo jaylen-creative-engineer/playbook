@@ -88,6 +88,26 @@ class PlayView: UIView {
     }
 }
 
+class MessageView: UIView {
+    
+    var cornerRadius : CGFloat = 17
+    var shadowOffSetWidth : CGFloat = 0
+    var shadowOffSetHeight : CGFloat = 4
+    var shadowColor = UIColor.black
+    var shadowOpacity : CGFloat = 0.2
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = cornerRadius
+        layer.shadowColor = shadowColor.cgColor
+        layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
+        
+        let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
+        layer.shadowPath = shadowPath.cgPath
+        layer.shadowOpacity = Float(shadowOpacity)
+    }
+}
+
 class LargePlayView: UIView {
     
     var cornerRadius : CGFloat = 25
@@ -135,6 +155,28 @@ class SolutionCardView: UIView {
     var shadowOffSetHeight : CGFloat = 1
     var shadowColor = UIColor.black
     var shadowOpacity : CGFloat = 0.3
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = cornerRadius
+        layer.shadowColor = shadowColor.cgColor
+        layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
+        
+        let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
+        layer.shadowPath = shadowPath.cgPath
+        layer.shadowOpacity = Float(shadowOpacity)
+    }
+}
+
+
+
+class SearchCardView: UIView {
+    
+    var cornerRadius : CGFloat = 4
+    var shadowOffSetWidth : CGFloat = 0
+    var shadowOffSetHeight : CGFloat = 1
+    var shadowColor = UIColor.black
+    var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
         super.layoutSubviews()

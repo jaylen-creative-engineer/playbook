@@ -190,7 +190,7 @@ extension MyPursuitCells : UICollectionViewDelegate, UICollectionViewDataSource,
         case userCollectionView:
             return CGSize(width: 80, height: 80)
         default:
-            return CGSize(width: (frame.width / 1.25) + 20, height: 190)
+            return CGSize(width: (frame.width / 1.25) + 40, height: 190)
         }
     }
     

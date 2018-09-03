@@ -25,18 +25,19 @@ class HomeHeader : UICollectionViewCell {
     
     lazy var searchBar : UITextField = {
         let tf = UITextField()
-        tf.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.init(25))
-        tf.attributedPlaceholder = NSAttributedString(string: "SEARCH...", attributes: [kCTForegroundColorAttributeName as NSAttributedStringKey: UIColor.gray])
+        tf.font = UIFont.systemFont(ofSize: 15)
+        tf.attributedPlaceholder = NSAttributedString(string: "Search", attributes: [kCTForegroundColorAttributeName as NSAttributedStringKey: UIColor.black])
         tf.clearButtonMode = .whileEditing
+        tf.backgroundColor = .white
         return tf
     }()
     
     lazy var notificationsButton : UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "notifications-bell").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.tintColor = .gray
+        button.setImage(#imageLiteral(resourceName: "notifications-bell-grey").withRenderingMode(.alwaysOriginal), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(handleNotifications), for: .touchUpInside)
         return button
     }()
     
@@ -48,19 +49,12 @@ class HomeHeader : UICollectionViewCell {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-
     
-    lazy var postTableView : UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
-        tableView.isScrollEnabled = false
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
-        tableView.isUserInteractionEnabled = true
-        
-        //        let tap = UITapGestureRecognizer(target: self, action: #selector(handlePageChange))
-        //        tap.numberOfTapsRequired = 1
-        //        tableView.addGestureRecognizer(tap)
-        return tableView
+    let searchBackground : SearchCardView = {
+       let view = SearchCardView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        return view
     }()
     
     let labelCollectionView : UICollectionView = {
@@ -73,19 +67,33 @@ class HomeHeader : UICollectionViewCell {
         return collectionView
     }()
     
+    @objc func handleNotifications(){
+        accessHomeController?.goToNotifications()
+    }
+    
     func setupView(){
         addSubview(homeLabel)
+        addSubview(searchBackground)
+        addSubview(searchBar)
         addSubview(searchButton)
         addSubview(labelCollectionView)
+        addSubview(notificationsButton)
         
         labelCollectionView.delegate = self
         labelCollectionView.dataSource = self
         labelCollectionView.register(InterestsLabelCell.self, forCellWithReuseIdentifier: labelId)
 
         homeLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 5, paddingRight: 0, width: homeLabel.intrinsicContentSize.width, height: homeLabel.intrinsicContentSize.height)
-        searchButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 19, height: 18)
-        searchButton.centerYAnchor.constraint(equalTo: homeLabel.centerYAnchor).isActive = true
-        labelCollectionView.anchor(top: homeLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 40)
+        notificationsButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 18, height: 19)
+        notificationsButton.centerYAnchor.constraint(equalTo: homeLabel.centerYAnchor).isActive = true
+        
+        searchBackground.anchor(top: homeLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 32)
+        searchButton.anchor(top: nil, left: searchBackground.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 14, height: 14)
+        searchButton.centerYAnchor.constraint(equalTo: searchBackground.centerYAnchor).isActive = true
+        searchBar.anchor(top: nil, left: searchButton.rightAnchor, bottom: nil, right: searchBackground.rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 4, width: 0, height: 20)
+        searchBar.centerYAnchor.constraint(equalTo: searchBackground.centerYAnchor).isActive = true
+        
+        labelCollectionView.anchor(top: searchBackground.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 40)
     }
     
     

@@ -13,12 +13,14 @@ class StoryCell : UICollectionViewCell {
     let backgroundShadow : StoryRectangleView = {
        let view = StoryRectangleView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
         return view
     }()
     
     let topShadow : StoryTopRectangleView = {
        let view = StoryTopRectangleView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
         return view
     }()
     
