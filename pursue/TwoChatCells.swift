@@ -18,23 +18,29 @@ class TwoChatCells : UICollectionViewCell {
         return view
     }()
     
-    let userPhoto : UIImageView = {
+    let circleBackground : UIView = {
+        let iv = UIView()
+        iv.layer.masksToBounds = true
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.layer.cornerRadius = 25
+        return iv
+    }()
+    
+    let firstPhoto : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
+        iv.image = #imageLiteral(resourceName: "ferrari").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         iv.layer.masksToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.layer.cornerRadius = 12
         return iv
     }()
     
     let secondPhoto : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
+        iv.image = #imageLiteral(resourceName: "ferrari-f70").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         iv.layer.masksToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.layer.cornerRadius = 12
         return iv
     }()
     
@@ -63,16 +69,18 @@ class TwoChatCells : UICollectionViewCell {
     
     func setupView(){
         addSubview(unreadBubble)
-        addSubview(userPhoto)
-        addSubview(secondPhoto)
+        addSubview(circleBackground)
+        circleBackground.addSubview(firstPhoto)
+        circleBackground.addSubview(secondPhoto)
         addSubview(usernameLabel)
         addSubview(commentLabel)
         addSubview(timeLabel)
         
         unreadBubble.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 29, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 8, height: 8)
-        userPhoto.anchor(top: topAnchor, left: unreadBubble.rightAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 24, height: 24)
-        secondPhoto.anchor(top: userPhoto.bottomAnchor, left: userPhoto.rightAnchor, bottom: nil, right: nil, paddingTop: 2, paddingLeft: 2, paddingBottom: 0, paddingRight: 0, width: 24, height: 24)
-        usernameLabel.anchor(top: userPhoto.topAnchor, left: secondPhoto.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
+        circleBackground.anchor(top: topAnchor, left: unreadBubble.rightAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
+        firstPhoto.anchor(top: circleBackground.topAnchor, left: circleBackground.leftAnchor, bottom: circleBackground.bottomAnchor, right: circleBackground.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        secondPhoto.anchor(top: circleBackground.topAnchor, left: firstPhoto.rightAnchor, bottom: circleBackground.bottomAnchor, right: circleBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        usernameLabel.anchor(top: circleBackground.topAnchor, left: circleBackground.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
         commentLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: safeAreaLayoutGuide.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 10, width: commentLabel.intrinsicContentSize.width, height: (commentLabel.intrinsicContentSize.height * 2) + 5)
         timeLabel.anchor(top: commentLabel.bottomAnchor, left: commentLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: timeLabel.intrinsicContentSize.width, height: timeLabel.intrinsicContentSize.height)
     }

@@ -101,6 +101,7 @@ class ProfilePursuit : UICollectionViewCell {
         labelCollectionView.register(InterestsLabelCell.self, forCellWithReuseIdentifier: labelId)
         
         labelCollectionView.anchor(top: teamIcon.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 40)
+        
         setupCollectionView()
     }
     
@@ -109,7 +110,7 @@ class ProfilePursuit : UICollectionViewCell {
         postCollectionView.dataSource = self
         postCollectionView.register(StoryCell.self, forCellWithReuseIdentifier: cellId)
         addSubview(postCollectionView)
-        postCollectionView.anchor(top: labelCollectionView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 200)
+        postCollectionView.anchor(top: labelCollectionView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
     func setupView(){
@@ -156,18 +157,9 @@ extension ProfilePursuit : UICollectionViewDelegate, UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch collectionView {
         case postCollectionView:
-            return CGSize(width: (frame.width / 1.25) + 40, height: 190)
+            return CGSize(width: (frame.width / 1.5) - 40, height: (frame.height / 1.5) + 30)
         default:
             return CGSize(width: 60, height: 24)
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        switch collectionView {
-        case postCollectionView:
-            return 20.0
-        default:
-            return 0.0
         }
     }
     

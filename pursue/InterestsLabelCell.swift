@@ -26,7 +26,7 @@ class InterestsLabelCell : UICollectionViewCell {
     override var isHighlighted: Bool {
         didSet {
             interestsLabel.textColor = isHighlighted ? .black : .gray
-            labelUnderline.backgroundColor = isHighlighted ? .black : .clear
+//            labelUnderline.backgroundColor = isHighlighted ? .black : .clear
         }
     }
     
@@ -43,7 +43,7 @@ class InterestsLabelCell : UICollectionViewCell {
         
         interestsLabel.anchor(top: nil, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: interestsLabel.intrinsicContentSize.width, height: interestsLabel.intrinsicContentSize.height)
         interestsLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        labelUnderline.anchor(top: interestsLabel.bottomAnchor, left: interestsLabel.leftAnchor, bottom: nil, right: interestsLabel.rightAnchor, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2)
+        labelUnderline.anchor(top: interestsLabel.bottomAnchor, left: interestsLabel.leftAnchor, bottom: nil, right: interestsLabel.rightAnchor, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 1.5)
     }
     
     override init(frame: CGRect) {

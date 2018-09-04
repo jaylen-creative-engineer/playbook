@@ -100,6 +100,9 @@ class HomeHeader : UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+        
+        let selectedIndexPath = IndexPath(item: 0, section: 0)
+        labelCollectionView.selectItem(at: selectedIndexPath, animated: true, scrollPosition: [])
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -116,10 +119,15 @@ extension HomeHeader : UICollectionViewDelegate, UICollectionViewDataSource, UIC
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: labelId, for: indexPath) as! InterestsLabelCell
-        cell.interestsLabel.text = interestsLabel[indexPath.item]
+        cell.interestsLabel.text = interestsLabel[indexPath.row]
         return cell
     }
     
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cellIndexPath = IndexPath(row: indexPath.row, section: 0)
+        accessHomeController?.scrollCollectionView(shiftTo: cellIndexPath)
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(0, 14, 0, -14)

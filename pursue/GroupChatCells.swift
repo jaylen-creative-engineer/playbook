@@ -33,34 +33,56 @@ class GroupChatCells : UICollectionViewCell {
         return view
     }()
     
-    let userPhoto : UIImageView = {
-        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
-        iv.contentMode = .scaleAspectFill
+    let circleBackground : UIView = {
+        let iv = UIView()
         iv.layer.masksToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.layer.cornerRadius = 12
+        iv.layer.cornerRadius = 25
         return iv
     }()
     
-    let secondUserPhoto : UIImageView = {
+    let firstPhoto : UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         iv.layer.masksToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.layer.cornerRadius = 12
         return iv
     }()
     
-    let thirdUserPhoto : UIImageView = {
+    let secondPhoto : UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         iv.layer.masksToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.layer.cornerRadius = 12
         return iv
+    }()
+    
+    let thirdPhoto : UIImageView = {
+        let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
+        iv.contentMode = .scaleAspectFill
+        iv.layer.masksToBounds = true
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        return iv
+    }()
+    
+    let thirdView : UIView = {
+        let iv = UIView()
+        iv.layer.masksToBounds = true
+        iv.backgroundColor = UIColor.init(white: 0.4, alpha: 0.8)
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        return iv
+    }()
+    
+    let countLabel : UILabel = {
+       let label = UILabel()
+        label.text = "2 +"
+        label.font = UIFont(name: "Lato-Bold", size: 10)
+        label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     let commentLabel : UILabel = {
@@ -87,18 +109,25 @@ class GroupChatCells : UICollectionViewCell {
     
     func setupView(){
         addSubview(unreadBubble)
-        addSubview(userPhoto)
-        addSubview(secondUserPhoto)
-        addSubview(thirdUserPhoto)
+        addSubview(circleBackground)
+        circleBackground.addSubview(firstPhoto)
+        circleBackground.addSubview(secondPhoto)
+        circleBackground.addSubview(thirdPhoto)
+        thirdPhoto.addSubview(thirdView)
+        thirdView.addSubview(countLabel)
         addSubview(usernameLabel)
         addSubview(commentLabel)
         addSubview(timeLabel)
         
         unreadBubble.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 29, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 8, height: 8)
-        userPhoto.anchor(top: topAnchor, left: unreadBubble.rightAnchor, bottom: nil, right: nil, paddingTop: 16, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 24, height: 24)
-        secondUserPhoto.anchor(top: topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: 24, height: 24)
-        thirdUserPhoto.anchor(top: secondUserPhoto.bottomAnchor, left: secondUserPhoto.leftAnchor, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 24, height: 24)
-        usernameLabel.anchor(top: secondUserPhoto.topAnchor, left: secondUserPhoto.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
+        circleBackground.anchor(top: topAnchor, left: unreadBubble.rightAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
+        firstPhoto.anchor(top: circleBackground.topAnchor, left: circleBackground.leftAnchor, bottom: circleBackground.bottomAnchor, right: circleBackground.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        secondPhoto.anchor(top: circleBackground.topAnchor, left: firstPhoto.rightAnchor, bottom: circleBackground.centerYAnchor, right: circleBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        thirdPhoto.anchor(top: secondPhoto.bottomAnchor, left: firstPhoto.rightAnchor, bottom: circleBackground.bottomAnchor, right: circleBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        thirdView.anchor(top: thirdPhoto.topAnchor, left: thirdPhoto.leftAnchor, bottom: thirdPhoto.bottomAnchor, right: thirdPhoto.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        countLabel.anchor(top: thirdView.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 0, paddingBottom: 4, paddingRight: 0, width: 16, height: 12)
+        countLabel.centerXAnchor.constraint(equalTo: thirdView.centerXAnchor).isActive = true
+        usernameLabel.anchor(top: circleBackground.topAnchor, left: circleBackground.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
         commentLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: safeAreaLayoutGuide.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 10, width: commentLabel.intrinsicContentSize.width, height: (commentLabel.intrinsicContentSize.height * 2) + 5)
         timeLabel.anchor(top: commentLabel.bottomAnchor, left: commentLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: timeLabel.intrinsicContentSize.width, height: timeLabel.intrinsicContentSize.height)
     }

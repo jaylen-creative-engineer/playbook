@@ -36,6 +36,7 @@ class StoryCell : UICollectionViewCell {
     let imageView : UIImageView = {
        let iv = UIImageView()
         iv.backgroundColor = .blue
+        iv.layer.cornerRadius = 4
         iv.clipsToBounds = true
         iv.image = #imageLiteral(resourceName: "ferrari").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
@@ -65,21 +66,15 @@ class StoryCell : UICollectionViewCell {
     }()
     
     func setupView(){
-        addSubview(backgroundShadow)
-        addSubview(topShadow)
-        addSubview(postRectangle)
-        postRectangle.addSubview(imageView)
-        postRectangle.addSubview(postType)
-        postRectangle.addSubview(postDetail)
-        postRectangle.addSubview(timeLabel)
+        addSubview(imageView)
+        addSubview(postType)
+        addSubview(postDetail)
+        addSubview(timeLabel)
         
-        backgroundShadow.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        topShadow.anchor(top: backgroundShadow.topAnchor, left: backgroundShadow.leftAnchor, bottom: backgroundShadow.bottomAnchor, right: backgroundShadow.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        postRectangle.anchor(top: topShadow.topAnchor, left: topShadow.leftAnchor, bottom: topShadow.bottomAnchor, right: topShadow.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        imageView.anchor(top: postRectangle.topAnchor, left: postRectangle.leftAnchor, bottom: postRectangle.bottomAnchor, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 8, paddingRight: 0, width: 130, height: 0)
-        postType.anchor(top: imageView.centerYAnchor, left: imageView.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 14)
+        imageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 245)
+        postType.anchor(top: imageView.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
         postDetail.anchor(top: postType.bottomAnchor, left: postType.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 14)
-        timeLabel.anchor(top: nil, left: postDetail.leftAnchor, bottom: imageView.bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 14)
+        timeLabel.anchor(top: postDetail.bottomAnchor, left: postDetail.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
     }
     
     override init(frame: CGRect) {

@@ -101,7 +101,7 @@ class HomePostCells : UICollectionViewCell {
         postCollectionView.dataSource = self
         postCollectionView.register(StoryCell.self, forCellWithReuseIdentifier: cellId)
         addSubview(postCollectionView)
-        postCollectionView.anchor(top: teamIcon.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 200)
+        postCollectionView.anchor(top: teamIcon.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
     func setupView(){
@@ -150,11 +150,7 @@ extension HomePostCells : UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (frame.width / 1.25) + 40, height: 190)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 20.0
+        return CGSize(width: (frame.width / 1.5) - 40, height: (frame.height / 1.5) + 40)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

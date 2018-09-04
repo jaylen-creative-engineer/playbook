@@ -135,8 +135,9 @@ class MyPursuitCells : UICollectionViewCell {
         postCollectionView.delegate = self
         postCollectionView.dataSource = self
         postCollectionView.register(StoryCell.self, forCellWithReuseIdentifier: cellId)
+        postCollectionView.backgroundColor = .red
         addSubview(postCollectionView)
-        postCollectionView.anchor(top: teamIcon.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 200)
+        postCollectionView.anchor(top: teamIcon.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 350)
         setupPeopleCollectionView()
     }
     
@@ -190,7 +191,7 @@ extension MyPursuitCells : UICollectionViewDelegate, UICollectionViewDataSource,
         case userCollectionView:
             return CGSize(width: 80, height: 80)
         default:
-            return CGSize(width: (frame.width / 1.25) + 40, height: 190)
+            return CGSize(width: (frame.width / 1.5) - 40, height: (frame.height / 1.5) + 40)
         }
     }
     
@@ -212,6 +213,7 @@ extension MyPursuitCells : UICollectionViewDelegate, UICollectionViewDataSource,
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! StoryCell
+            cell.backgroundColor = .yellow
             return cell
         }
     }

@@ -89,7 +89,6 @@ extension PursuitDay : UICollectionViewDelegate, UICollectionViewDataSource, UIC
         case postCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PursuitDayCells
             cell.postTableView.reloadData()
-            //            cell.photo.image = UIImage(named: images[indexPath.item])
             return cell
         default:
             assert(false, "Not a valid collection")
