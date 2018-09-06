@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import Hero
+import Motion
 
-class StoryCell : UICollectionViewCell {
+class StoryCell : UICollectionViewCell  {
     
     let backgroundShadow : StoryRectangleView = {
        let view = StoryRectangleView()
@@ -39,7 +41,7 @@ class StoryCell : UICollectionViewCell {
         iv.layer.cornerRadius = 4
         iv.clipsToBounds = true
         iv.image = #imageLiteral(resourceName: "ferrari").withRenderingMode(.alwaysOriginal)
-        iv.contentMode = .scaleAspectFill
+        iv.contentMode = .scaleAspectFill        
         return iv
     }()
     
@@ -76,9 +78,11 @@ class StoryCell : UICollectionViewCell {
         postDetail.anchor(top: postType.bottomAnchor, left: postType.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 14)
         timeLabel.anchor(top: postDetail.bottomAnchor, left: postDetail.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
+        hero.isEnabled = true
+        isMotionEnabled = true
         setupView()
     }
     

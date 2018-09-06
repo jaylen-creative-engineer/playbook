@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import Motion
 
 class HomeHeader : UICollectionViewCell {
     
@@ -29,7 +30,32 @@ class HomeHeader : UICollectionViewCell {
         tf.attributedPlaceholder = NSAttributedString(string: "Search", attributes: [kCTForegroundColorAttributeName as NSAttributedStringKey: UIColor.black])
         tf.clearButtonMode = .whileEditing
         tf.backgroundColor = .white
+        tf.isUserInteractionEnabled = true
+        tf.delegate = self
+        tf.motionIdentifier = "searchBar"
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleSearchTap))
+        tap.numberOfTapsRequired = 1
+        tf.addGestureRecognizer(tap)
         return tf
+    }()
+    
+    lazy var searchButton : UIButton = {
+       let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "search_selected").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .gray
+        button.imageView?.contentMode = .scaleAspectFill
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.motionIdentifier = "searchButton"
+        return button
+    }()
+    
+    let searchBackground : SearchCardView = {
+       let view = SearchCardView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        view.motionIdentifier = "searchBackground"
+        return view
     }()
     
     lazy var notificationsButton : UIButton = {
@@ -41,22 +67,6 @@ class HomeHeader : UICollectionViewCell {
         return button
     }()
     
-    lazy var searchButton : UIButton = {
-       let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "search_selected").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.tintColor = .gray
-        button.imageView?.contentMode = .scaleAspectFill
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    let searchBackground : SearchCardView = {
-       let view = SearchCardView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        return view
-    }()
-    
     let labelCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -66,6 +76,11 @@ class HomeHeader : UICollectionViewCell {
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
+    
+    @objc func handleSearchTap(){
+        textFieldDidBeginEditing(searchBar)
+        accessHomeController?.goToSearchController()
+    }
     
     @objc func handleNotifications(){
         accessHomeController?.goToNotifications()
@@ -87,7 +102,7 @@ class HomeHeader : UICollectionViewCell {
         notificationsButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 18, height: 19)
         notificationsButton.centerYAnchor.constraint(equalTo: homeLabel.centerYAnchor).isActive = true
         
-        searchBackground.anchor(top: homeLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 32)
+        searchBackground.anchor(top: homeLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 32)
         searchButton.anchor(top: nil, left: searchBackground.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 14, height: 14)
         searchButton.centerYAnchor.constraint(equalTo: searchBackground.centerYAnchor).isActive = true
         searchBar.anchor(top: nil, left: searchButton.rightAnchor, bottom: nil, right: searchBackground.rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 4, width: 0, height: 20)
@@ -99,6 +114,7 @@ class HomeHeader : UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isMotionEnabled = true
         setupView()
         
         let selectedIndexPath = IndexPath(item: 0, section: 0)
@@ -137,4 +153,11 @@ extension HomeHeader : UICollectionViewDelegate, UICollectionViewDataSource, UIC
         return CGSize(width: 60, height: 24)
     }
     
+}
+
+extension HomeHeader : UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        print(textField.text)
+    }
 }

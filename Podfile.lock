@@ -100,6 +100,9 @@ PODS:
   - iCarousel (1.8.3)
   - KWTransition (0.0.4)
   - leveldb-library (1.20)
+  - Motion (1.4.3):
+    - Motion/Core (= 1.4.3)
+  - Motion/Core (1.4.3)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
@@ -128,6 +131,7 @@ DEPENDENCIES:
   - Hero
   - iCarousel
   - KWTransition
+  - Motion
   - NVActivityIndicatorView
   - PinterestSegment
   - PryntTrimmerView
@@ -161,6 +165,7 @@ SPEC REPOS:
     - iCarousel
     - KWTransition
     - leveldb-library
+    - Motion
     - nanopb
     - NVActivityIndicatorView
     - PinterestSegment
@@ -194,6 +199,7 @@ SPEC CHECKSUMS:
   iCarousel: d782f635afac190c49bb8ee455882284cff8b85f
   KWTransition: 72d59eef35ddb67769eb99a41317fa75c0444e1b
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
+  Motion: 153ba49692997888556c7a95207278a8b1f8be95
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NVActivityIndicatorView: 963f62bf9f993fcf23218e55958e5b1761b9504c
   PinterestSegment: d589fce6c62141466b9f36ea8ab0a16fde9ac8f4
@@ -201,6 +207,6 @@ SPEC CHECKSUMS:
   SnapSliderFilters: 7f571683b05cf70b8d398e4a0e45691bd9f03a33
   SwiftyCam: 86c114177a1b1f5dc2c82384577d0c20b922a31b
 
-PODFILE CHECKSUM: 964ace7361b8e29b9dbbd57bb8f32595177a1e28
+PODFILE CHECKSUM: 4c2e1567719ee090d24336296fce346927e8f306
 
 COCOAPODS: 1.5.3

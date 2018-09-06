@@ -7,15 +7,17 @@
 //
 
 import UIKit
+import Hero
 
 class HomePostCells : UICollectionViewCell {
+    
+    var accessHomeController : HomeController?
     
     lazy var photo : UIImageView = {
         let iv = UIImageView()
         iv.layer.cornerRadius = 8
         iv.layer.masksToBounds = true
         iv.contentMode = .scaleAspectFill
-//        iv.heroID = "photoId-1"
         return iv
     }()
     
@@ -133,14 +135,18 @@ class HomePostCells : UICollectionViewCell {
         setupCollectionView()
     }
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isMotionEnabled = true
         setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    var transitionId : String?
 }
 
 extension HomePostCells : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -155,6 +161,12 @@ extension HomePostCells : UICollectionViewDelegate, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! StoryCell
+        cell.imageView.motionIdentifier = String(indexPath.item)
+        transitionId = cell.imageView.motionIdentifier
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessHomeController?.handleChangeToDetail(transitionId : "0")
     }
 }

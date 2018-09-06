@@ -122,7 +122,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func handleChangeToDetail(viewType : String) {
-        let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+        let detail = PostDetailController(collectionViewLayout: UICollectionViewFlowLayout())
         navigationController?.pushViewController(detail, animated: true)
     }
 }

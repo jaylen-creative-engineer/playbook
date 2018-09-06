@@ -85,6 +85,10 @@ extension NotificationsContainer : UICollectionViewDelegateFlowLayout {
         return UIEdgeInsetsMake(8, 0, 0, 0)
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        navigationController?.pushViewController(ChatDetailController(), animated: true)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: view.frame.width, height: 330)
     }

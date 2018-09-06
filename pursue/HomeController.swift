@@ -9,6 +9,7 @@
 import UIKit
 import Hero
 import KWTransition
+import Motion
 
 class HomeController : UICollectionViewController {
     
@@ -26,7 +27,9 @@ class HomeController : UICollectionViewController {
     let userPhotos = [#imageLiteral(resourceName: "clean-3"),#imageLiteral(resourceName: "clean-2"),#imageLiteral(resourceName: "comment-2"), #imageLiteral(resourceName: "comment-6")]
     let backgroundFill = UIView()
     let homeServices = HomeServices()
-    let detailController = PursuitsDetailController()
+    let detailController = PostDetailController()
+    
+    let transition = SearchPopAnimation()
     
     func goToProfile(){
         let profile = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
@@ -62,6 +65,11 @@ class HomeController : UICollectionViewController {
         } else {
             dismissHomePopover()
         }
+        isMotionEnabled = true
+//
+//        transition.dismissCompletion = {
+//            self.homeHeaderInstance.isHidden = false
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -76,29 +84,43 @@ class HomeController : UICollectionViewController {
         navigationController?.pushViewController(view, animated: true)
     }
     
+    func goToSearchController(){
+        let searchView = SearchController(collectionViewLayout: UICollectionViewFlowLayout())
+        searchView.searchBar.becomeFirstResponder()
+        present(searchView, animated: true, completion: nil)
+    }
+    
+    
+    
     func postHeld(transitionId : String) {
         
     }
     
-    func handleChangeToDetail(viewType : String, transitionId : String) {
-        switch viewType {
-        case "isPursuitDetail":
-            let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-//            detail.imageView.heroID = transitionId
-            detail.standardView()
-            navigationController?.pushViewController(detail, animated: true)
-//            navigationController?.present(detail, animated: true, completion: nil)
-        case "isChallengeDetail":
-            let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-//            detail.imageView.heroID = transitionId
-            detail.challengeView()
-            navigationController?.pushViewController(detail, animated: true)
-//            navigationController?.present(detail, animated: true, completion: nil)
-        default:
-            assert(false, "Not a valid view type")
-        }
-    }
+//    func handleChangeToDetail(viewType : String, transitionId : String) {
+//        switch viewType {
+//        case "isPursuitDetail":
+//            let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+////            detail.imageView.heroID = transitionId
+//            detail.standardView()
+//            navigationController?.pushViewController(detail, animated: true)
+////            navigationController?.present(detail, animated: true, completion: nil)
+//        case "isChallengeDetail":
+//            let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+////            detail.imageView.heroID = transitionId
+//            detail.challengeView()
+//            navigationController?.pushViewController(detail, animated: true)
+////            navigationController?.present(detail, animated: true, completion: nil)
+//        default:
+//            assert(false, "Not a valid view type")
+//        }
+//    }
     
+    func handleChangeToDetail(transitionId : String){
+        let detail = PostDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+        detail.imageView.motionIdentifier = transitionId
+//        detail.imageView.hero.id = transitionId
+        present(detail, animated: true, completion: nil)
+    }
     
     // MARK: - Show first load popover
     
@@ -205,6 +227,8 @@ class HomeController : UICollectionViewController {
             self.alertView.frame.origin.y = self.alertView.frame.origin.y - 50
         })
     }
+    
+    let homeHeaderInstance = HomeHeader()
 }
 
 extension HomeController : UICollectionViewDelegateFlowLayout {
@@ -230,10 +254,10 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! HomePostCells
+        cell.accessHomeController = self
         cell.photo.image = imageName[indexPath.item]
         cell.userPhoto.image = userPhotos[indexPath.item]
         return cell
     }
     
 }
-
