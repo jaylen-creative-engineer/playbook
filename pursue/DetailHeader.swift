@@ -13,167 +13,26 @@ import MediaPlayer
 
 class DetailHeader : UICollectionViewCell {
     
-    lazy var headerView : UIView = {
-        let view  = UIView()
-        return view
-    }()
-    
-    lazy var playBackground : LargePlayView = {
-       let pv = LargePlayView()
-        pv.translatesAutoresizingMaskIntoConstraints = false
-        pv.backgroundColor = .white
-        pv.layer.masksToBounds = true
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(playVideo))
-        tap.numberOfTapsRequired = 1
-        pv.addGestureRecognizer(tap)
-        return pv
-    }()
-    
-    let playIcon : UIImageView = {
-       let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "view-more").withRenderingMode(.alwaysOriginal)
-        iv.contentMode = .scaleAspectFill
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        return iv
-    }()
-    
-    lazy var commentBackground : UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.init(white: 1, alpha: 0.4)
-        view.layer.cornerRadius = 20
-        view.layer.masksToBounds = true
-        return view
-    }()
-    
-    lazy var commentButton : UIButton = {
-       let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "comment").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFill
-        return button
-    }()
-    
-    lazy var saveBackground : UIView = {
-       let view = UIView()
-        view.backgroundColor = UIColor.init(white: 1, alpha: 0.4)
-        view.layer.cornerRadius = 20
-        view.layer.masksToBounds = true
-        return view
-    }()
-    
-    lazy var saveButton : UIButton = {
-       let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "bookmark").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFill
-        button.tintColor = .black
-        return button
-    }()
-    
-    lazy var shareBackground : UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.init(white: 1, alpha: 0.4)
-        view.layer.cornerRadius = 20
-        view.layer.masksToBounds = true
-        return view
-    }()
-    
-    lazy var shareButton : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "share").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFill
-        return button
-    }()
-    
-    lazy var contributeBackground : UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.init(white: 1, alpha: 0.4)
-        view.layer.cornerRadius = 20
-        view.layer.masksToBounds = true
-        return view
-    }()
-    
-    lazy var contributeButton : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "add").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFill
-        return button
-    }()
-    
-    let followBackground : FollowRectangleView = {
-        let view = FollowRectangleView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        return view
-    }()
-    
-    let collaborateBackground : FollowRectangleView = {
-        let view = FollowRectangleView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .black
-        return view
-    }()
-    
-    lazy var collaborateButton : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .black
-        button.setTitle("Collaborate", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 12)
-        button.layer.cornerRadius = 16
-        button.layer.masksToBounds = true
-        return button
-    }()
-    
-    lazy var followButton : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .white
-        button.setTitle("Follow", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 12)
-        button.layer.cornerRadius = 16
-        button.layer.masksToBounds = true
-        return button
-    }()
-    
     lazy var imageView : UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "health").withRenderingMode(.alwaysOriginal)
+        imageView.image = #imageLiteral(resourceName: "ferrari").withRenderingMode(.alwaysOriginal)
         imageView.contentMode = .scaleAspectFill
-                imageView.isUserInteractionEnabled = true
-        //
-        //        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        //        imageView.addGestureRecognizer(pan)
+        imageView.isUserInteractionEnabled = true
+        
+//        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+//        imageView.addGestureRecognizer(pan)
         return imageView
     }()
     
-    @objc func playVideo(){
-        let videoURL = URL(string: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
-        let player = AVPlayer(url: videoURL!)
-        let layer: AVPlayerLayer = AVPlayerLayer(player: player)
-        // make the layer the same size as the container view
-        layer.frame = imageView.bounds
-        // make the video fill the layer as much as possible while keeping its aspect size
-        layer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        // add the layer to the container view
-        imageView.layer.addSublayer(layer)//
-        player.play()
-    }
+    lazy var viewMoreButton : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 4
+        button.layer.masksToBounds = true
+//        button.addTarget(self, action: #selector(handleViewMore), for: .touchUpInside)
+        return button
+    }()
     
-    func setupEngagements(){
-        imageView.addSubview(saveBackground)
-        imageView.addSubview(saveButton)
-        imageView.addSubview(contributeBackground)
-        imageView.addSubview(contributeButton)
-        
-        saveBackground.anchor(top: centerYAnchor, left: nil, bottom: nil, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 40, height: 40)
-        saveButton.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 12, height: 16)
-        saveButton.centerXAnchor.constraint(equalTo: saveBackground.centerXAnchor).isActive = true
-        saveButton.centerYAnchor.constraint(equalTo: saveBackground.centerYAnchor).isActive = true
-        contributeBackground.anchor(top: saveBackground.bottomAnchor, left: saveBackground.leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
-        contributeButton.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 16, height: 16)
-        contributeButton.centerXAnchor.constraint(equalTo: contributeBackground.centerXAnchor).isActive = true
-        contributeButton.centerYAnchor.constraint(equalTo: contributeBackground.centerYAnchor).isActive = true
-    }
     
     func setupCollectionViewHeader(){
         let label = UILabel()
@@ -211,13 +70,18 @@ class DetailHeader : UICollectionViewCell {
         imageView.addSubview(userPhoto)
         imageView.addSubview(username)
         imageView.addSubview(screenOverlay)
-//        imageView.addSubview(followBackground)
-        imageView.addSubview(followButton)
-//        imageView.addSubview(collaborateBackground)
-        imageView.addSubview(collaborateButton)
+        imageView.addSubview(viewMoreButton)
         
-        imageView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        userPhoto.anchor(top: imageView.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
+        if UIDevice().userInterfaceIdiom == .phone {
+            if UIScreen.main.nativeBounds.height >= 2436 {
+                imageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: -47, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: frame.height + 5)
+                userPhoto.anchor(top: imageView.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
+            } else {
+                imageView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+                userPhoto.anchor(top: imageView.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
+            }
+        }
+        
         userPhoto.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         username.anchor(top: userPhoto.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
         username.centerXAnchor.constraint(equalTo: userPhoto.centerXAnchor).isActive = true
@@ -225,10 +89,12 @@ class DetailHeader : UICollectionViewCell {
         timeLabel.centerXAnchor.constraint(equalTo: username.centerXAnchor).isActive = true
         label.anchor(top: timeLabel.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 28)
         screenOverlay.anchor(top: imageView.topAnchor, left: imageView.leftAnchor, bottom: imageView.bottomAnchor, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        followButton.anchor(top: label.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: (frame.width / 5) - 10, paddingBottom: 0, paddingRight: 0, width: 110, height: 32)
-        collaborateButton.anchor(top: followButton.topAnchor, left: followButton.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 0, width: 110, height: 32)
+        viewMoreButton.anchor(top: nil, left: nil, bottom: imageView.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 0, width: 90, height: 10)
+        viewMoreButton.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
         
-        setupEngagements()
+        //        imageView.transition(.translate(y: 0), .duration(1))
+        
+        //        collectionView?.hero.modifiers = [.scale(), .duration(1.5)]
         
     }
     

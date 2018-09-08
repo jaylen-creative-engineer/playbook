@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FECEE591A990DD0D724958FD9AFEF5C4"
-               BlueprintName = "PinterestSegment"
+               BlueprintIdentifier = "0EADC98135BDFF218FA8EEA855120208"
+               BlueprintName = "ParallaxHeader"
                ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "PinterestSegment.framework">
+               BuildableName = "ParallaxHeader.framework">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

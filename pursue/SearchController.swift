@@ -84,9 +84,9 @@ class SearchController : UICollectionViewController {
     fileprivate func setupAnimation() {
         isMotionEnabled = true
         
-        searchBackground.transition(.translate(y: -80), .duration(0.5))
-        searchBar.transition(.translate(y: -80), .duration(0.5))
-        searchButton.transition(.translate(y: -80), .duration(0.5))
+        searchBackground.transition(.translate(y: -80), .duration(0.3))
+        searchBar.transition(.translate(y: -80), .duration(0.3))
+        searchButton.transition(.translate(y: -80), .duration(0.3))
     }
     
     override func viewDidLoad() {

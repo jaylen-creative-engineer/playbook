@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailChallengeRow : UICollectionViewCell {
+class DetailChallenge : UICollectionViewCell {
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -72,7 +72,7 @@ class DetailChallengeRow : UICollectionViewCell {
     
 }
 
-extension DetailChallengeRow : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension DetailChallenge : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! DetailChallengeCells

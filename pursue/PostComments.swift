@@ -10,13 +10,6 @@ import UIKit
 
 class PostComments: UICollectionViewCell {
     
-    let rowLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Responses."
-        label.font = UIFont.boldSystemFont(ofSize: 14)
-        return label
-    }()
-    
     let cellId = "cellId"
     
      let images = ["788572ee949285fae33dca5d846a4664", "clean-2", "academics", "fashion-design", "690dae66bfe860df34fc7a756b53c15d"]
@@ -34,14 +27,12 @@ class PostComments: UICollectionViewCell {
     
 
     func setupView(){
-        addSubview(rowLabel)
         addSubview(commentCollectionView)
         commentCollectionView.delegate = self
         commentCollectionView.dataSource = self
         commentCollectionView.register(PostCommentsCell.self, forCellWithReuseIdentifier: cellId)
-        
-        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
-        commentCollectionView.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 480)
+
+        commentCollectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
     }
     

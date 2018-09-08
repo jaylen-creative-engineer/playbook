@@ -40,6 +40,7 @@ class HomeController : UICollectionViewController {
     func setupCollectionView(){
         collectionView?.register(HomeHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(HomePostCells.self, forCellWithReuseIdentifier: postId)
+        collectionView?.register(RecommenedPursuit.self, forCellWithReuseIdentifier: cellId)
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
     }
@@ -115,9 +116,11 @@ class HomeController : UICollectionViewController {
 //        }
 //    }
     
+    let detailHeader = DetailHeader()
+    
     func handleChangeToDetail(transitionId : String){
-        let detail = PostDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-        detail.imageView.motionIdentifier = transitionId
+        let detail = PostDetailController()
+        detailHeader.imageView.motionIdentifier = transitionId
 //        detail.imageView.hero.id = transitionId
         present(detail, animated: true, completion: nil)
     }
@@ -234,11 +237,16 @@ class HomeController : UICollectionViewController {
 extension HomeController : UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 170)
+        return CGSize(width: view.frame.width, height: 90)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: (view.frame.height / 2) + 60)
+        switch indexPath.item {
+        case 0:
+            return CGSize(width: view.frame.width, height: view.frame.height / 1.25)
+        default:
+            return CGSize(width: view.frame.width, height: (view.frame.height / 2) + 60)
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -253,11 +261,17 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! HomePostCells
-        cell.accessHomeController = self
-        cell.photo.image = imageName[indexPath.item]
-        cell.userPhoto.image = userPhotos[indexPath.item]
-        return cell
+        switch indexPath.item {
+        case 0:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! RecommenedPursuit
+            return cell
+        default:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! HomePostCells
+            cell.accessHomeController = self
+            cell.photo.image = imageName[indexPath.item]
+            cell.userPhoto.image = userPhotos[indexPath.item]
+            return cell
+        }
     }
     
 }

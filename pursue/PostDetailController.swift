@@ -14,42 +14,9 @@ import AVKit
 import MediaPlayer
 import Motion
 
-class PostDetailController : UICollectionViewController {
-    
-    let headerId = "headerId"
-    let commentId = "commentId"
-    let videoId = "videoId"
-    let postId = "postId"
-    let teamId = "teamId"
-    let dayId = "dayId"
-    let pursuitId = "discussionPursuitId"
-    let solutionId = "solutionId"
-    let cellId = "cellId"
-    let challengeId = "challengeId"
-    
-    var isStandardView = false
-    var isChallengeView = false
-    
-    let homeService = HomeServices()
-    
-    lazy var scrollView : UIScrollView = {
-       let view = UIScrollView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.contentSize.height = 2000
-        view.backgroundColor = .brown
-        return view
-    }()
+class PostDetailController : UIViewController {
 
-    lazy var imageView : UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "ferrari").withRenderingMode(.alwaysOriginal)
-        imageView.contentMode = .scaleAspectFill
-        imageView.isUserInteractionEnabled = true
-        
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        imageView.addGestureRecognizer(pan)
-        return imageView
-    }()
+    let homeService = HomeServices()
     
     lazy var viewMoreButton : UIButton = {
        let button = UIButton()
@@ -60,11 +27,63 @@ class PostDetailController : UICollectionViewController {
         return button
     }()
     
+    lazy var imageView : UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = #imageLiteral(resourceName: "ferrari").withRenderingMode(.alwaysOriginal)
+        imageView.contentMode = .scaleAspectFill
+        imageView.isUserInteractionEnabled = true
+        
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(showEngagements))
+        imageView.addGestureRecognizer(pan)
+        return imageView
+    }()
+
+    lazy var bottomView : UIView = {
+       let view = UIView()
+        view.backgroundColor = .white
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(showEngagements))
+        view.addGestureRecognizer(pan)
+        return view
+    }()
+
+    var maximizedTopAnchorConstraint: NSLayoutConstraint!
+    var minimizedTopAnchorConstraint: NSLayoutConstraint!
+    
     @objc func handleViewMore(){
         let engagementsView = PostEngagementsController(collectionViewLayout: UICollectionViewFlowLayout())
         engagementsView.motionTransitionType = .cover(direction: .up)
         present(engagementsView, animated: true, completion: nil)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
+    }
+
+    func setupBottomView(){
+        view.addSubview(bottomView)
+        bottomView.anchor(top: imageView.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: view.frame.height)
+    }
+    
+//    fileprivate func setupDetailsView() {
+//        // use auto layout
+//        //        view.addSubview(playerDetailsView)
+////        view.insertSubview(playerDetailsView, belowSubview: tabBar)
+//
+//        // enables auto layout
+//
+//        maximizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0)
+//        maximizedTopAnchorConstraint.isActive = true
+//        minimizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -64)
+//
+//    }
     
     func setupCollectionViewHeader(){
         let label = UILabel()
@@ -102,9 +121,11 @@ class PostDetailController : UICollectionViewController {
         imageView.addSubview(userPhoto)
         imageView.addSubview(username)
         imageView.addSubview(screenOverlay)
+        imageView.addSubview(bottomView)
         imageView.addSubview(viewMoreButton)
         
-        imageView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        imageView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: view.frame.height - 60)
+        setupBottomView()
         userPhoto.anchor(top: imageView.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
         userPhoto.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         username.anchor(top: userPhoto.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
@@ -115,61 +136,79 @@ class PostDetailController : UICollectionViewController {
         screenOverlay.anchor(top: imageView.topAnchor, left: imageView.leftAnchor, bottom: imageView.bottomAnchor, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         viewMoreButton.anchor(top: nil, left: nil, bottom: imageView.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 0, width: 90, height: 10)
         viewMoreButton.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
-        
-//        imageView.transition(.translate(y: 0), .duration(1))
-        
-//        collectionView?.hero.modifiers = [.scale(), .duration(1.5)]
-        
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        tabBarController?.tabBar.isHidden = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        tabBarController?.tabBar.isHidden = false
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
-        collectionView?.backgroundColor = .white
-        collectionView?.showsVerticalScrollIndicator = false
-        collectionView?.isScrollEnabled = false
         hero.isEnabled = true
-        
         isMotionEnabled = true
         setupCollectionViewHeader()
+//        view.backgroundColor = .white
+//        view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
+    }
+    
+    let engagementsView = PostEngagementsController()
+    
+    fileprivate func handlePanChanged(_ panGesture : UIPanGestureRecognizer) {
+        let translation = panGesture.translation(in: self.view)
+        self.view.transform = CGAffineTransform(translationX: 0, y: translation.y)
+        self.engagementsView.view.transform = CGAffineTransform(translationX: 0, y: -translation.y - 20)
+    }
+    
+    fileprivate func handlePanEnded(_ panGesture : UIPanGestureRecognizer) {
+        let translation = panGesture.translation(in: self.view)
+        let velocity = panGesture.velocity(in: self.view)
+        
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.transform = .identity
+            
+            if translation.y < 0 || velocity.y < -500 {
+                self.handleViewMore()
+                panGesture.isEnabled = false
+            }
+        })
     }
     
     @objc func handlePan(panGesture : UIPanGestureRecognizer){
-//        let progress = scrollView.contentOffset.y / (scrollView.contentSize.height - scrollView.bounds.size.height)
-        let translation = panGesture.translation(in: nil)
-        let progress = translation.y / 2 / view.bounds.height
-        print(progress)
-//
-//
-//        switch panGesture.state {
-//        case .began:
-//            hero.dismissViewController()
-//        case .changed:
-//            Hero.shared.update(progress)
-//        let currentPos = CGPoint(x: translation.x + imageView.center.x, y: translation.y + imageView.center.y)
-//
-//        Hero.shared.apply(modifiers: [.position(currentPos)], to: imageView)
-//        default:
-//            if progress + panGesture.velocity(in: nil).y / view.bounds.height > 0.2 {
-//                Hero.shared.finish()
-//            } else {
-//                Hero.shared.cancel()
-//            }
-//        }
+        switch panGesture.state {
+        case .changed:
+            handlePanChanged(panGesture)
+        default:
+            handlePanEnded(panGesture)
+        }
     }
     
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    fileprivate func engagementsPanEnded(_ gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: self.view)
+        let velocity = gesture.velocity(in: self.view)
         
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.transform = .identity
+            
+                if translation.y < -200 || velocity.y < -500 {
+                    self.view.frame.origin.y = (self.view.frame.origin.y + 60) - self.view.frame.height
+                } else {
+//                    self.miniPlayerView.alpha = 1
+//                    self.maximizedStackView.alpha = 0
+                }
+        })
     }
+    
+    fileprivate func engagementsPanChanged(_ gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: self.view)
+        self.view.transform = CGAffineTransform(translationX: 0, y: translation.y)
+    }
+    
+    @objc func showEngagements(gesture : UIPanGestureRecognizer) {
+        switch gesture.state {
+        case .changed:
+            engagementsPanChanged(gesture)
+        default:
+            engagementsPanEnded(gesture)
+        }
+    }
+    
+    let headerView = DetailHeader()
 }
 

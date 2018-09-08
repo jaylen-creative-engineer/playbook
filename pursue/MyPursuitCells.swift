@@ -122,7 +122,7 @@ class MyPursuitCells : UICollectionViewCell {
     func setupPeopleCollectionView(){
         userCollectionView.delegate = self
         userCollectionView.dataSource = self
-        userCollectionView.register(TeamRowCells.self, forCellWithReuseIdentifier: teamId)
+        userCollectionView.register(TeamCells.self, forCellWithReuseIdentifier: teamId)
         addSubview(tryingLabel)
         addSubview(userCollectionView)
         
@@ -207,7 +207,7 @@ extension MyPursuitCells : UICollectionViewDelegate, UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch collectionView {
         case userCollectionView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamRowCells
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamCells
             cell.profileImage.image = UIImage(named: peopleImages[indexPath.item])
             cell.usernameLabel.text = peopleUsernames[indexPath.item]
             return cell

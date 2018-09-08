@@ -119,13 +119,6 @@ class ProfileHeader : UICollectionViewCell {
         return button
     }()
     
-    let pursuitsRowLabel : UILabel = {
-       let label = UILabel()
-        label.text = "Pursuits"
-        label.font = UIFont(name: "Lato-Bold", size: 16)
-        return label
-    }()
-    
     let circleBackground : PlayView = {
        let view = PlayView()
         view.backgroundColor = .white
@@ -166,8 +159,6 @@ class ProfileHeader : UICollectionViewCell {
         addSubview(messageBackground)
         addSubview(messageButton)
         
-        addSubview(pursuitsRowLabel)
-
         addedCountLabel.anchor(top: bioText.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: frame.width / 5.5, paddingLeft: 16, paddingBottom: 0, paddingRight: 0, width: addedCountLabel.intrinsicContentSize.width, height: 18)
         addedLabel.anchor(top: addedCountLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: addedLabel.intrinsicContentSize.height)
         addedLabel.centerXAnchor.constraint(equalTo: addedCountLabel.centerXAnchor).isActive = true
@@ -177,7 +168,6 @@ class ProfileHeader : UICollectionViewCell {
         messageBackground.anchor(top: addedCountLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 120, height: 35)
         messageButton.anchor(top: messageBackground.topAnchor, left: messageBackground.leftAnchor, bottom: messageBackground.bottomAnchor, right: messageBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
-        pursuitsRowLabel.anchor(top: addedLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: pursuitsRowLabel.intrinsicContentSize.width, height: 16)
     }
     
     

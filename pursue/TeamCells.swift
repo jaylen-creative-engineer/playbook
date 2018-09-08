@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TeamRowCells : UICollectionViewCell {
+class TeamCells : UICollectionViewCell {
     
     let usernameLabel : UILabel = {
         let label = UILabel()

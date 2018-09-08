@@ -111,7 +111,7 @@ PODS:
   - NVActivityIndicatorView (4.3.0):
     - NVActivityIndicatorView/Presenter (= 4.3.0)
   - NVActivityIndicatorView/Presenter (4.3.0)
-  - PinterestSegment (1.2.0)
+  - ParallaxHeader (2.0.0)
   - PryntTrimmerView (2.0.1)
   - SnapSliderFilters (2.0)
   - SwiftyCam (2.6.0)
@@ -133,7 +133,7 @@ DEPENDENCIES:
   - KWTransition
   - Motion
   - NVActivityIndicatorView
-  - PinterestSegment
+  - ParallaxHeader
   - PryntTrimmerView
   - SnapSliderFilters
   - SwiftyCam
@@ -168,7 +168,7 @@ SPEC REPOS:
     - Motion
     - nanopb
     - NVActivityIndicatorView
-    - PinterestSegment
+    - ParallaxHeader
     - PryntTrimmerView
     - SnapSliderFilters
     - SwiftyCam
@@ -202,11 +202,11 @@ SPEC CHECKSUMS:
   Motion: 153ba49692997888556c7a95207278a8b1f8be95
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NVActivityIndicatorView: 963f62bf9f993fcf23218e55958e5b1761b9504c
-  PinterestSegment: d589fce6c62141466b9f36ea8ab0a16fde9ac8f4
+  ParallaxHeader: fb6ee97915626454f3c029a97b424f79a777c642
   PryntTrimmerView: 4260ae497a2f3e1bbfc0b71247eb74ab92bf0490
   SnapSliderFilters: 7f571683b05cf70b8d398e4a0e45691bd9f03a33
   SwiftyCam: 86c114177a1b1f5dc2c82384577d0c20b922a31b
 
-PODFILE CHECKSUM: 4c2e1567719ee090d24336296fce346927e8f306
+PODFILE CHECKSUM: 6616481c70c8a3b1251b999140369e427891af0d
 
 COCOAPODS: 1.5.3

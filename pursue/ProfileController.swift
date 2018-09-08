@@ -122,7 +122,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func handleChangeToDetail(viewType : String) {
-        let detail = PostDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+        let detail = PostDetailController()
         navigationController?.pushViewController(detail, animated: true)
     }
 }
@@ -130,7 +130,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
 extension ProfileController {
         
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: (view.frame.height / 2) + 115)
+        return CGSize(width: view.frame.width, height: (view.frame.height / 2) + 55)
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -140,19 +140,11 @@ extension ProfileController {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: (view.frame.height / 1.5) - 80)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 50
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 50
+        return CGSize(width: view.frame.width, height: view.frame.height / 2.5)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return 1
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

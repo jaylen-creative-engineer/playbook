@@ -7,31 +7,17 @@
 //
 
 import UIKit
+import Gemini
 
 class PursuitDay : UICollectionViewCell {
     
-    let labelId = "labelId"
-    
-    let labelCollectionView : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        collectionView.showsHorizontalScrollIndicator = false
-        return collectionView
-    }()
-    
     let postCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.isScrollEnabled = true
-        collectionView.isPagingEnabled = true
         
         return collectionView
     }()
@@ -46,26 +32,12 @@ class PursuitDay : UICollectionViewCell {
         postCollectionView.delegate = self
         postCollectionView.dataSource = self
         postCollectionView.register(PursuitDayCells.self, forCellWithReuseIdentifier: cellId)
-        postCollectionView.anchor(top: labelCollectionView.bottomAnchor, left: labelCollectionView.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 480)
-    }
-    
-    
-    func setupLabelCollection(){
-        addSubview(labelCollectionView)
-        labelCollectionView.delegate = self
-        labelCollectionView.dataSource = self
-        labelCollectionView.register(DayLabelCell.self, forCellWithReuseIdentifier: labelId)
-        
-        labelCollectionView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 40)
-        
-        let selectedIndexPath = IndexPath(item: 0, section: 0)
-        labelCollectionView.selectItem(at: selectedIndexPath, animated: false, scrollPosition: [])
-        setupPostCollection()
+        postCollectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupLabelCollection()
+        setupPostCollection()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -81,56 +53,13 @@ extension PursuitDay : UICollectionViewDelegate, UICollectionViewDataSource, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch collectionView {
-        case labelCollectionView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: labelId, for: indexPath) as! DayLabelCell
-            cell.dayLabel.text = days[indexPath.item]
-            return cell
-        case postCollectionView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PursuitDayCells
-            cell.postTableView.reloadData()
-            return cell
-        default:
-            assert(false, "Not a valid collection")
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PursuitDayCells
+        cell.postTableView.reloadData()
+        return cell
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        switch collectionView {
-        case labelCollectionView:
-            return UIEdgeInsetsMake(0, 24, 0, -24)
-        default:
-            return UIEdgeInsetsMake(0, 0, 0, 0)
-        }
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch collectionView {
-        case labelCollectionView:
-            return CGSize(width: 60, height: 24)
-        case postCollectionView:
-            return CGSize(width: frame.width, height: 420)
-        default:
-            assert(false, "Not a valid collection")
-        }
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if scrollView == postCollectionView{
-            let currentpage = Int(scrollView.contentOffset.x / scrollView.bounds.width)
-            let cellIndexPath = IndexPath(row: currentpage, section: 0)
-            labelCollectionView.selectItem(at: cellIndexPath, animated: true, scrollPosition: .centeredVertically)
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == labelCollectionView{
-            let cellIndexPath = IndexPath(row: indexPath.row, section: 0)
-            postCollectionView.selectItem(at: cellIndexPath, animated: true, scrollPosition: .centeredHorizontally)
-        }
+       return CGSize(width: frame.width, height: 420)
     }
 }
 

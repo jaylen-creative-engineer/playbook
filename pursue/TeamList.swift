@@ -9,7 +9,7 @@
 import UIKit
 
 
-class TeamRow : UICollectionViewCell {
+class TeamList : UICollectionViewCell {
     
     let rowLabel : UILabel = {
         let label = UILabel()
@@ -43,27 +43,20 @@ class TeamRow : UICollectionViewCell {
     
     let collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
-        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
     
     func setupView(){
-        addSubview(rowLabel)
         addSubview(collectionView)
-        addSubview(buttonBackground)
-        addSubview(followButton)
-        
-        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: rowLabel.intrinsicContentSize.height)
-        buttonBackground.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 75, height: 25)
-        followButton.anchor(top: buttonBackground.topAnchor, left: buttonBackground.leftAnchor, bottom: buttonBackground.bottomAnchor, right: buttonBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        collectionView.anchor(top: rowLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 28, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 200)
+
+        collectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(TeamRowCells.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(TeamCells.self, forCellWithReuseIdentifier: cellId)
     }
     
     override init(frame: CGRect) {
@@ -77,10 +70,10 @@ class TeamRow : UICollectionViewCell {
     
 }
 
-extension TeamRow : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension TeamList : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! TeamRowCells
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! TeamCells
         cell.profileImage.image = UIImage(named: peopleImages[indexPath.item])
         cell.usernameLabel.text = peopleUsernames[indexPath.item]
         return cell
