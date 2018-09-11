@@ -64,7 +64,6 @@ class HomeHeader : UICollectionViewCell {
         button.setImage(#imageLiteral(resourceName: "notifications-bell-grey").withRenderingMode(.alwaysOriginal), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(handleNotifications), for: .touchUpInside)
         return button
     }()
     
@@ -73,22 +72,14 @@ class HomeHeader : UICollectionViewCell {
         accessHomeController?.goToSearchController()
     }
     
-    @objc func handleNotifications(){
-        accessHomeController?.goToNotifications()
-    }
-    
     func setupView(){
         addSubview(homeLabel)
         addSubview(searchBackground)
         addSubview(searchBar)
         addSubview(searchButton)
-        addSubview(notificationsButton)
 
 
         homeLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 5, paddingRight: 0, width: homeLabel.intrinsicContentSize.width, height: homeLabel.intrinsicContentSize.height)
-        notificationsButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 18, height: 19)
-        notificationsButton.centerYAnchor.constraint(equalTo: homeLabel.centerYAnchor).isActive = true
-        
         searchBackground.anchor(top: homeLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 32)
         searchButton.anchor(top: nil, left: searchBackground.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 14, height: 14)
         searchButton.centerYAnchor.constraint(equalTo: searchBackground.centerYAnchor).isActive = true

@@ -55,11 +55,6 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         navigationController?.pushViewController(interest, animated: true)
     }
     
-    func goToNotifications(){
-        let view = NotificationsContainer(collectionViewLayout: UICollectionViewFlowLayout())
-        navigationController?.pushViewController(view, animated: true)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

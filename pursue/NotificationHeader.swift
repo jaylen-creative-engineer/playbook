@@ -12,55 +12,38 @@ import Firebase
 
 class NotificationHeader : UICollectionViewCell {
     
-    var accessNotificationController : NotificationsContainer?
-    let cellId = "cellId"
+    var accessNotificationController : NotificationsController?
     let headerId = "headerId"
+    let cellId = "cellId"
     
-    let notificationLabel : UILabel = {
-        let label = UILabel()
-        label.text = "NOTIFICATIONS"
-        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
-        return label
-    }()
+    var headerNames = ["NOTIFICATIONS", "CHAT"]
     
-    let messageLabel : UILabel = {
-       let label = UILabel()
-        label.text = "Messages"
-        label.font = .boldSystemFont(ofSize: 14)
-        return label
-    }()
-    
-    let imageCollectionView : UICollectionView = {
+    let labelCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.isScrollEnabled = false
         return collectionView
     }()
-
-    func setupCollectionView(){
-        imageCollectionView.delegate = self
-        imageCollectionView.dataSource = self
-        imageCollectionView.register(PostNotification.self, forCellWithReuseIdentifier: cellId)
-        imageCollectionView.register(NotificationRowHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: headerId)
-        addSubview(imageCollectionView)
-        imageCollectionView.anchor(top: notificationLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 265)
-    }
     
-    func setupView(){
-        addSubview(notificationLabel)
-        addSubview(messageLabel)
+
+    func setupLabelCollectionView(){
+        labelCollectionView.delegate = self
+        labelCollectionView.dataSource = self
+        labelCollectionView.register(NotificationHeaderCells.self, forCellWithReuseIdentifier: cellId)
+        addSubview(labelCollectionView)
+        labelCollectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 24)
         
-        notificationLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 5, paddingRight: 0, width: notificationLabel.intrinsicContentSize.width, height: notificationLabel.intrinsicContentSize.height)
-        setupCollectionView()
-        messageLabel.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 12, paddingRight: 0, width: messageLabel.intrinsicContentSize.width, height: messageLabel.intrinsicContentSize.height)
+        let selectedIndexPath = IndexPath(item: 0, section: 0)
+        labelCollectionView.selectItem(at: selectedIndexPath, animated: true, scrollPosition: .centeredHorizontally)
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
+        setupLabelCollectionView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -72,26 +55,28 @@ class NotificationHeader : UICollectionViewCell {
 extension NotificationHeader : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3
+        return headerNames.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PostNotification
-        if indexPath.item != 0 {
-            cell.dayLabel.isHidden = true
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! NotificationHeaderCells
+        cell.sectionLabel.text = headerNames[indexPath.item]
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 12, 0, 18)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 30.0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width / 2, height: 260)
+        let approximateWidthOfLabel = frame.width / 3.5
+        let size = CGSize(width: approximateWidthOfLabel, height: .infinity)
+        let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)]
+        let estimatedFrame = NSString(string: headerNames[indexPath.item]).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+        return CGSize(width: estimatedFrame.width + 10, height: 22)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessNotificationController?.scrollToMenuIndex(menuIndex: indexPath.item)
     }
 }

@@ -325,8 +325,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
 //            }
 //            return cell
         default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: principleId, for: indexPath) as! PrincipleNotification
-            return cell
+            assert(false, "Not a valid cell")
         }
     }
     

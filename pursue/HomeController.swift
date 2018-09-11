@@ -80,18 +80,11 @@ class HomeController : UICollectionViewController {
     
     // MARK: - Setup View
     
-    func goToNotifications(){
-        let view = NotificationsContainer(collectionViewLayout: UICollectionViewFlowLayout())
-        navigationController?.pushViewController(view, animated: true)
-    }
-    
     func goToSearchController(){
         let searchView = SearchController(collectionViewLayout: UICollectionViewFlowLayout())
         searchView.searchBar.becomeFirstResponder()
         present(searchView, animated: true, completion: nil)
     }
-    
-    
     
     func postHeld(transitionId : String) {
         
@@ -120,7 +113,7 @@ class HomeController : UICollectionViewController {
     
     func handleChangeToDetail(transitionId : String){
         let detail = PostDetailController()
-        detailHeader.imageView.motionIdentifier = transitionId
+//        detailHeader.imageView.motionIdentifier = transitionId
 //        detail.imageView.hero.id = transitionId
         present(detail, animated: true, completion: nil)
     }

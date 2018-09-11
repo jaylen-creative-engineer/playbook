@@ -17,6 +17,7 @@ class PostEngagementsController : UICollectionViewController {
     let teamId = "teamId"
     let relatedId = "relatedId"
     let commentId = "commentId"
+    let savedId = "savedId"
     
     lazy var cancelButton : UIButton = {
        let button = UIButton()
@@ -40,8 +41,8 @@ class PostEngagementsController : UICollectionViewController {
         view.addSubview(cancelButton)
         view.addSubview(engagementsHeader)
         
-        cancelButton.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 2, paddingBottom: 0, paddingRight: 0, width: 16, height: 16)
-        engagementsHeader.anchor(top: cancelButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+        cancelButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 16, height: 16)
+        engagementsHeader.anchor(top: cancelButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 25)
         
     }
     
@@ -50,6 +51,14 @@ class PostEngagementsController : UICollectionViewController {
         collectionView?.scrollToItem(at: indexPath, at: [], animated: true)
     }
     
+
+    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let currentpage = Int(scrollView.contentOffset.x / scrollView.bounds.width)
+        let cellIndexPath = IndexPath(row: currentpage, section: 0)
+
+        engagementsHeader.collectionView.selectItem(at: cellIndexPath, animated: true, scrollPosition: .centeredHorizontally)
+    }
+
     func setupCollectionView(){
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .horizontal
@@ -62,8 +71,10 @@ class PostEngagementsController : UICollectionViewController {
         collectionView?.register(DetailChallenge.self, forCellWithReuseIdentifier: challengeId)
         collectionView?.register(TeamList.self, forCellWithReuseIdentifier: teamId)
         collectionView?.register(PostComments.self, forCellWithReuseIdentifier: commentId)
+        collectionView?.register(DetailSaved.self, forCellWithReuseIdentifier: savedId)
         collectionView?.register(DetailRelated.self, forCellWithReuseIdentifier: relatedId)
         collectionView?.backgroundColor = UIColor.white
+        collectionView?.contentInset = UIEdgeInsetsMake(130, 0, 0, 0)
         collectionView?.isPagingEnabled = true
         setupNavBar()
     }
@@ -97,6 +108,9 @@ extension PostEngagementsController : UICollectionViewDelegateFlowLayout {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
             return cell
         case 6:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: savedId, for: indexPath) as! DetailSaved
+            return cell
+        case 7:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: relatedId, for: indexPath) as! DetailRelated
             return cell
         default:
@@ -105,10 +119,11 @@ extension PostEngagementsController : UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height)
+        
+        return CGSize(width: view.frame.width, height: view.frame.height - 130)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7
+        return 8
     }
 }

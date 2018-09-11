@@ -42,17 +42,28 @@ class RecommenedPursuitCell : UICollectionViewCell {
         return label
     }()
     
+    let userPhoto : UIImageView = {
+       let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "clean-3").withRenderingMode(.alwaysOriginal)
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 15
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    
     func setupView(){
         addSubview(imageView)
+        addSubview(userPhoto)
         addSubview(usernameLabel)
         addSubview(postDescription)
         addSubview(timeLabel)
         
         imageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 400)
-        usernameLabel.anchor(top: imageView.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
+        userPhoto.anchor(top: imageView.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
+        usernameLabel.anchor(top: imageView.bottomAnchor, left: userPhoto.rightAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 8, width: 0, height: 14)
         postDescription.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: usernameLabel.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 0)
         postDescription.heightAnchor.constraint(lessThanOrEqualToConstant: 32).isActive = true
-        timeLabel.anchor(top: postDescription.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
+        timeLabel.anchor(top: postDescription.bottomAnchor, left: userPhoto.rightAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 8, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
     }
     
     override init(frame: CGRect) {

@@ -1,14 +1,14 @@
 //
-//  PursuitPrinciple.swift
+//  DetailRelated.swift
 //  pursue
 //
-//  Created by Jaylen Sanders on 12/12/17.
-//  Copyright © 2017 Glory. All rights reserved.
+//  Created by Jaylen Sanders on 9/7/18.
+//  Copyright © 2018 Glory. All rights reserved.
 //
 
 import UIKit
 
-class PursuitPrinciple : UICollectionViewCell {
+class DetailSaved : UICollectionViewCell {
     
     let cellId = "cellId"
     
@@ -16,7 +16,6 @@ class PursuitPrinciple : UICollectionViewCell {
     
     let collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
@@ -30,7 +29,7 @@ class PursuitPrinciple : UICollectionViewCell {
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(PursuitPrincipleCells.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(DetailSavedCells.self, forCellWithReuseIdentifier: cellId)
     }
     
     override init(frame: CGRect) {
@@ -44,23 +43,23 @@ class PursuitPrinciple : UICollectionViewCell {
     
 }
 
-extension PursuitPrinciple : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension DetailSaved : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PursuitPrincipleCells
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! DetailSavedCells
         cell.imageView.image = UIImage(named: imageName)
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 6
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(0, 6, 0, 6)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (frame.width / 2) - 16, height: (frame.height / 2) - 40)
+        return CGSize(width: (frame.width / 3) - 12, height: (frame.height / 3) - 30)
     }
 }

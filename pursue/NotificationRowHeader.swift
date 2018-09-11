@@ -10,19 +10,18 @@ import UIKit
 
 class NotificationRowHeader : UICollectionViewCell {
     
-    let label : UILabel = {
+    let rowLabel : UILabel = {
        let label = UILabel()
         label.text = "Today"
         label.textColor = .gray
-        label.font = UIFont(name: "Lato-Semibold", size: 12)
+        label.font = UIFont(name: "Lato-Bold", size: 14)
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(label)
-        label.anchor(top: topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: label.intrinsicContentSize.width, height: 14)
-        label.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        addSubview(rowLabel)
+        rowLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: rowLabel.intrinsicContentSize.width, height: 16)
     }
     
     required init?(coder aDecoder: NSCoder) {

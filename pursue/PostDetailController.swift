@@ -32,25 +32,19 @@ class PostDetailController : UIViewController {
         imageView.image = #imageLiteral(resourceName: "ferrari").withRenderingMode(.alwaysOriginal)
         imageView.contentMode = .scaleAspectFill
         imageView.isUserInteractionEnabled = true
-        
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(showEngagements))
-        imageView.addGestureRecognizer(pan)
         return imageView
     }()
 
     lazy var bottomView : UIView = {
        let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .red
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(showEngagements))
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         view.addGestureRecognizer(pan)
         return view
     }()
 
-    var maximizedTopAnchorConstraint: NSLayoutConstraint!
-    var minimizedTopAnchorConstraint: NSLayoutConstraint!
-    
     @objc func handleViewMore(){
         let engagementsView = PostEngagementsController(collectionViewLayout: UICollectionViewFlowLayout())
         engagementsView.motionTransitionType = .cover(direction: .up)
@@ -66,24 +60,6 @@ class PostDetailController : UIViewController {
         super.viewWillDisappear(animated)
         tabBarController?.tabBar.isHidden = false
     }
-
-    func setupBottomView(){
-        view.addSubview(bottomView)
-        bottomView.anchor(top: imageView.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: view.frame.height)
-    }
-    
-//    fileprivate func setupDetailsView() {
-//        // use auto layout
-//        //        view.addSubview(playerDetailsView)
-////        view.insertSubview(playerDetailsView, belowSubview: tabBar)
-//
-//        // enables auto layout
-//
-//        maximizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0)
-//        maximizedTopAnchorConstraint.isActive = true
-//        minimizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -64)
-//
-//    }
     
     func setupCollectionViewHeader(){
         let label = UILabel()
@@ -121,11 +97,9 @@ class PostDetailController : UIViewController {
         imageView.addSubview(userPhoto)
         imageView.addSubview(username)
         imageView.addSubview(screenOverlay)
-        imageView.addSubview(bottomView)
         imageView.addSubview(viewMoreButton)
         
-        imageView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: view.frame.height - 60)
-        setupBottomView()
+        imageView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: view.frame.height)
         userPhoto.anchor(top: imageView.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
         userPhoto.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         username.anchor(top: userPhoto.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
@@ -145,7 +119,7 @@ class PostDetailController : UIViewController {
         isMotionEnabled = true
         setupCollectionViewHeader()
 //        view.backgroundColor = .white
-//        view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
+        view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
     }
     
     let engagementsView = PostEngagementsController()
@@ -153,7 +127,7 @@ class PostDetailController : UIViewController {
     fileprivate func handlePanChanged(_ panGesture : UIPanGestureRecognizer) {
         let translation = panGesture.translation(in: self.view)
         self.view.transform = CGAffineTransform(translationX: 0, y: translation.y)
-        self.engagementsView.view.transform = CGAffineTransform(translationX: 0, y: -translation.y - 20)
+//        self.engagementsView.view.transform = CGAffineTransform(translationX: 0, y: -translation.y - 20)
     }
     
     fileprivate func handlePanEnded(_ panGesture : UIPanGestureRecognizer) {
@@ -167,6 +141,7 @@ class PostDetailController : UIViewController {
                 self.handleViewMore()
                 panGesture.isEnabled = false
             }
+
         })
     }
     
@@ -179,36 +154,8 @@ class PostDetailController : UIViewController {
         }
     }
     
-    fileprivate func engagementsPanEnded(_ gesture: UIPanGestureRecognizer) {
-        let translation = gesture.translation(in: self.view)
-        let velocity = gesture.velocity(in: self.view)
-        
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.view.transform = .identity
-            
-                if translation.y < -200 || velocity.y < -500 {
-                    self.view.frame.origin.y = (self.view.frame.origin.y + 60) - self.view.frame.height
-                } else {
-//                    self.miniPlayerView.alpha = 1
-//                    self.maximizedStackView.alpha = 0
-                }
-        })
-    }
-    
-    fileprivate func engagementsPanChanged(_ gesture: UIPanGestureRecognizer) {
-        let translation = gesture.translation(in: self.view)
-        self.view.transform = CGAffineTransform(translationX: 0, y: translation.y)
-    }
-    
-    @objc func showEngagements(gesture : UIPanGestureRecognizer) {
-        switch gesture.state {
-        case .changed:
-            engagementsPanChanged(gesture)
-        default:
-            engagementsPanEnded(gesture)
-        }
-    }
     
     let headerView = DetailHeader()
 }
+
 

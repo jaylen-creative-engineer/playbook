@@ -11,30 +11,6 @@ import UIKit
 
 class TeamList : UICollectionViewCell {
     
-    let rowLabel : UILabel = {
-        let label = UILabel()
-        label.text = "People."
-        label.font = UIFont(name: "Lato-Bold", size: 14)
-        return label
-    }()
-    
-    lazy var followButton : UIButton = {
-       let button = UIButton()
-        button.setTitle("Follow", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 10)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 12
-        button.layer.masksToBounds = true
-        return button
-    }()
-    
-    let buttonBackground : GroupChatView = {
-       let view = GroupChatView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     let cellId = "cellId"
     
     let peopleFullname = ["Tom Ford", "Versace", "LVME", "Test", "Lit"]
@@ -79,15 +55,11 @@ extension TeamList : UICollectionViewDelegate, UICollectionViewDataSource, UICol
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 12)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 80, height: 200)
+        return CGSize(width: frame.width, height: (frame.height / 6) - 40)
     }
 }

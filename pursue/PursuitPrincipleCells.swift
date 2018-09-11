@@ -8,89 +8,51 @@
 
 import UIKit
 
-class PursuitPrincipleCells : UICollectionViewCell {
+class PursuitPrincipleCells : UICollectionViewCell  {
     
-    var principle : SearchedPrinciples? {
-        didSet {
-//            principleLabel.text = principle?.principleDescription
-            guard let photo = principle?.thumbnailUrl else { return }
-            principleImage.image = UIImage(named: photo)
-        }
-    }
+    let imageView : UIImageView = {
+        let iv = UIImageView()
+        iv.backgroundColor = .blue
+        iv.layer.cornerRadius = 4
+        iv.clipsToBounds = true
+        iv.image = #imageLiteral(resourceName: "ferrari").withRenderingMode(.alwaysOriginal)
+        iv.contentMode = .scaleAspectFill
+        return iv
+    }()
 
-    let principleDescription : UILabel = {
+    let postDetail : UILabel = {
         let label = UILabel()
-        label.text = "Have a vision to work towards"
         label.font = UIFont.systemFont(ofSize: 12)
-        label.numberOfLines = 2
+        label.text = "Working on this."
         return label
     }()
     
     let timeLabel : UILabel = {
         let label = UILabel()
-        label.text = "00:24"
-        label.font = UIFont.systemFont(ofSize: 10)
-        label.textColor = .lightGray
+        label.text = "1h ago"
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .gray
         return label
     }()
     
-    let photoBackground : HomeCellRectangleView = {
-        let iv = HomeCellRectangleView()
-        iv.layer.cornerRadius = 8
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.contentMode = .scaleAspectFill
-        return iv
-    }()
-    
-    lazy var principleImage : UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))
-        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleHomeHold))
-        tapGesture.numberOfTapsRequired = 1
-        iv.addGestureRecognizer(tapGesture)
-        iv.addGestureRecognizer(longGesture)
-        iv.isUserInteractionEnabled = true
-        iv.layer.cornerRadius = 8
-        return iv
-    }()
-    
-    let optionButton : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "options").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFill
-        button.tintColor = .gray
-        return button
-    }()
-    
-    @objc func handleHomeTap(){
-    }
-    
-    @objc func handleHomeHold(){
-    }
-    
-    func setupCardDetails(){
-        addSubview(photoBackground)
-        addSubview(principleImage)
-        addSubview(principleDescription)
+    func setupView(){
+        addSubview(imageView)
+        addSubview(postDetail)
         addSubview(timeLabel)
-        addSubview(optionButton)
         
-        photoBackground.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 30, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 150, height: 150)
-        principleImage.anchor(top: photoBackground.topAnchor, left: photoBackground.leftAnchor, bottom: photoBackground.bottomAnchor, right: photoBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        principleDescription.anchor(top: principleImage.bottomAnchor, left: principleImage.leftAnchor, bottom: nil, right: photoBackground.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (principleDescription.intrinsicContentSize.height * 2) + 5)
-        timeLabel.anchor(top: principleDescription.bottomAnchor, left: principleDescription.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: timeLabel.intrinsicContentSize.width, height: timeLabel.intrinsicContentSize.height)
-        optionButton.anchor(top: principleImage.bottomAnchor, left: nil, bottom: nil, right: principleImage.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 4, width: 8, height: 16)
+        imageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 215)
+        postDetail.anchor(top: imageView.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
+        timeLabel.anchor(top: postDetail.bottomAnchor, left: postDetail.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupCardDetails()
+        hero.isEnabled = true
+        isMotionEnabled = true
+        setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }

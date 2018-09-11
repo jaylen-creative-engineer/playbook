@@ -75,10 +75,10 @@ extension RecommenedPursuit : UICollectionViewDelegate, UICollectionViewDataSour
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 12, 0, -12)
+        return UIEdgeInsetsMake(0, 12, 0, 12)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 320, height: 465)
+        return CGSize(width: (frame.width / 1.25) + 40, height: 465)
     }
 }

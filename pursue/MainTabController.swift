@@ -50,13 +50,13 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
         
         let homeNavController = UINavigationController(rootViewController: HomeController(collectionViewLayout: UICollectionViewFlowLayout()))
         let plusNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "create_unselected"), selectedImage: #imageLiteral(resourceName: "create_unselected"))
-//        let notificationsNavController = UINavigationController(rootViewController: NotificationsContainer(collectionViewLayout: UICollectionViewFlowLayout()))
+        let notificationsNavController = UINavigationController(rootViewController: NotificationsController(collectionViewLayout: UICollectionViewFlowLayout()))
         let userProfileNavController = UINavigationController(rootViewController: ProfileController(collectionViewLayout: UICollectionViewFlowLayout()))
 
         tabBar.tintColor = .black
         tabBar.barTintColor = UIColor.rgb(red: 255, green: 255, blue: 255)
         
-        viewControllers = [homeNavController, plusNavController, userProfileNavController]
+        viewControllers = [homeNavController, plusNavController, notificationsNavController, userProfileNavController]
         
         guard let items = tabBar.items else { return }
         let tabHome = items[0]
@@ -67,11 +67,11 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
         tabCreate.image = #imageLiteral(resourceName: "create_unselected").withRenderingMode(.alwaysOriginal)
         tabCreate.selectedImage = #imageLiteral(resourceName: "create_unselected").withRenderingMode(.alwaysOriginal)
         
-//        let tabNotification = items[2]
-//        tabNotification.image = #imageLiteral(resourceName: "notifications-bell-grey").withRenderingMode(.alwaysOriginal)
-//        tabNotification.selectedImage = #imageLiteral(resourceName: "notifications-bell").withRenderingMode(.alwaysOriginal)
+        let tabNotification = items[2]
+        tabNotification.image = #imageLiteral(resourceName: "notifications-bell-grey").withRenderingMode(.alwaysOriginal)
+        tabNotification.selectedImage = #imageLiteral(resourceName: "notifications-bell").withRenderingMode(.alwaysOriginal)
 
-        let tabProfile = items[2]
+        let tabProfile = items[3]
         tabProfile.image = #imageLiteral(resourceName: "profile_unselected").withRenderingMode(.alwaysOriginal)
         tabProfile.selectedImage = #imageLiteral(resourceName: "profile-selected").withRenderingMode(.alwaysOriginal)
         

@@ -8,81 +8,77 @@
 
 import UIKit
 
-class DetailChallengeCells : UICollectionViewCell {
+class DetailChallengeCells : UICollectionViewCell  {
     
-    let photo : UIImageView = {
+    let imageView : UIImageView = {
         let iv = UIImageView()
-        iv.layer.cornerRadius = 8
-        iv.layer.masksToBounds = true
+        iv.backgroundColor = .blue
+        iv.layer.cornerRadius = 4
+        iv.clipsToBounds = true
+        iv.image = #imageLiteral(resourceName: "ferrari").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         return iv
     }()
     
-    let detailLabel : UILabel = {
+    let postDetail : UILabel = {
         let label = UILabel()
-        label.text = "Have a vision to work towards"
-        label.font = UIFont(name: "Lato-Semibold", size: 12)
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.text = "Working on this."
         return label
     }()
     
-    let usernameLabel : UILabel = {
+    let timeLabel : UILabel = {
         let label = UILabel()
-        label.text = "Test"
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.text = "1h ago"
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .gray
         return label
     }()
     
-    let contributeButtonBackground : GroupChatView = {
-        let gcv = GroupChatView()
-        gcv.translatesAutoresizingMaskIntoConstraints = false
-        gcv.backgroundColor = .white
-        return gcv
-    }()
-    
-    let contributeButton : UIButton = {
-        let button = UIButton()
-        button.setTitle("Contribute", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 10)
-        button.titleLabel?.textAlignment = .center
+    let acceptButton : UIButton = {
+       let button = UIButton()
+        button.setTitle("Accept", for: .normal)
+        button.setTitleColor(.green, for: .normal)
+        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 12)
         return button
     }()
     
-    let playBackground : GroupChatView = {
-        let view = GroupChatView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        return view
+    let declineButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("Decline", for: .normal)
+        button.setTitleColor(.red, for: .normal)
+        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 12)
+        return button
     }()
     
-    let playIcon : UIImageView = {
-        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "view-more").withRenderingMode(.alwaysOriginal)
-        iv.contentMode = .scaleAspectFill
-        return iv
+    let upVotesCount : UILabel = {
+       let label = UILabel()
+        label.text = "30 Upvotes"
+        label.font = UIFont.boldSystemFont(ofSize: 12)
+        return label
     }()
+    
+//    lazy var upVote
     
     func setupView(){
-        addSubview(photo)
-        addSubview(detailLabel)
-        addSubview(playBackground)
-        addSubview(playIcon)
-        addSubview(contributeButtonBackground)
-        addSubview(contributeButton)
-        
-        photo.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 210, height: 230)
-        detailLabel.anchor(top: photo.bottomAnchor, left: photo.leftAnchor, bottom: nil, right: photo.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
-        playBackground.anchor(top: nil, left: nil, bottom: photo.bottomAnchor, right: photo.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 8, paddingRight: 8, width: 24, height: 24)
-        playIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 10, height: 10)
-        playIcon.centerXAnchor.constraint(equalTo: playBackground.centerXAnchor).isActive = true
-        playIcon.centerYAnchor.constraint(equalTo: playBackground.centerYAnchor).isActive = true
-        contributeButtonBackground.anchor(top: photo.topAnchor, left: nil, bottom: nil, right: photo.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 90, height: 25)
-        contributeButton.anchor(top: contributeButtonBackground.topAnchor, left: contributeButtonBackground.leftAnchor, bottom: contributeButtonBackground.bottomAnchor, right: contributeButtonBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        
+        addSubview(imageView)
+        addSubview(acceptButton)
+        addSubview(declineButton)
+        addSubview(upVotesCount)
+        addSubview(postDetail)
+
+        imageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 130, height: 145)
+        postDetail.anchor(top: nil, left: imageView.rightAnchor, bottom: upVotesCount.topAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 8, paddingRight: 12, width: 0, height: 14)
+        acceptButton.anchor(top: nil, left: imageView.rightAnchor, bottom: imageView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: acceptButton.intrinsicContentSize.width, height: 14)
+        declineButton.anchor(top: acceptButton.topAnchor, left: acceptButton.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: declineButton.intrinsicContentSize.width, height: 14)
+        upVotesCount.anchor(top: nil, left: imageView.rightAnchor, bottom: acceptButton.topAnchor, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 8, paddingRight: 0, width: upVotesCount.intrinsicContentSize.width, height: 14)
+       
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        hero.isEnabled = true
+        isMotionEnabled = true
         setupView()
     }
     

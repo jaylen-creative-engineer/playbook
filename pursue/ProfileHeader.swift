@@ -64,7 +64,6 @@ class ProfileHeader : UICollectionViewCell {
         button.setImage(#imageLiteral(resourceName: "notifications-bell-grey").withRenderingMode(.alwaysOriginal), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(handleNotifications), for: .touchUpInside)
         return button
     }()
     
@@ -142,10 +141,6 @@ class ProfileHeader : UICollectionViewCell {
     
     var fakeFollowerArray = [#imageLiteral(resourceName: "samuel-l"), #imageLiteral(resourceName: "comment-4"), #imageLiteral(resourceName: "comment-5"), #imageLiteral(resourceName: "comment-4"), #imageLiteral(resourceName: "comment-7")]
     
-    @objc func handleNotifications(){
-        accessProfileController?.goToNotifications()
-    }
-    
     @objc func handleMessageTap(){
         accessProfileController?.changeToInterests()
     }
@@ -173,7 +168,6 @@ class ProfileHeader : UICollectionViewCell {
     
     func setupNavBar(){
         addSubview(usernameLabel)
-        addSubview(notificationsButton)
         addSubview(imageView)
         addSubview(circleBackground)
         circleBackground.addSubview(addImageView)
@@ -181,8 +175,6 @@ class ProfileHeader : UICollectionViewCell {
         addSubview(bioText)
         
         usernameLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
-        notificationsButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 18, height: 19)
-        notificationsButton.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
         imageView.anchor(top: usernameLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 140, height: 140)
         imageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         fullnameLabel.anchor(top: imageView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: fullnameLabel.intrinsicContentSize.width, height: fullnameLabel.intrinsicContentSize.height)
