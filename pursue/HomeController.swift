@@ -15,27 +15,17 @@ class HomeController : UICollectionViewController {
     
     let cellId = "cellId"
     let headerId = "headerId"
-    let labelId = "labelId"
-    let pursuitId = "pursuitId"
     let postId = "postId"
-    let myId = "myId"
 
     var isFirstLaunch = false
-    var days = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"]
     
-    let imageName = [#imageLiteral(resourceName: "health"), #imageLiteral(resourceName: "fashion-design"), #imageLiteral(resourceName: "ferrari-f70"), #imageLiteral(resourceName: "ferrari")]
-    let userPhotos = [#imageLiteral(resourceName: "clean-3"),#imageLiteral(resourceName: "clean-2"),#imageLiteral(resourceName: "comment-2"), #imageLiteral(resourceName: "comment-6")]
-    let backgroundFill = UIView()
     let homeServices = HomeServices()
     let detailController = PostDetailController()
-    
-    let transition = SearchPopAnimation()
     
     func goToProfile(){
         let profile = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
         navigationController?.pushViewController(profile, animated: true)
     }
-    
 
     func setupCollectionView(){
         collectionView?.register(HomeHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
@@ -44,21 +34,9 @@ class HomeController : UICollectionViewController {
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
     }
-    
-    func scrollCollectionView(shiftTo : IndexPath){
-        collectionView?.selectItem(at: shiftTo, animated: true, scrollPosition: .centeredHorizontally)
-        collectionView?.reloadData()
-    }
-    
-//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//            let currentpage = Int(scrollView.contentOffset.x / scrollView.bounds.width)
-//            let cellIndexPath = IndexPath(row: currentpage, section: 0)
-//            labelCollectionView.selectItem(at: cellIndexPath, animated: true, scrollPosition: .centeredVertically)
-//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupCollectionView()
         
         if UserDefaults.standard.value(forKey: "homeIntroPopover") == nil {
@@ -67,10 +45,6 @@ class HomeController : UICollectionViewController {
             dismissHomePopover()
         }
         isMotionEnabled = true
-//
-//        transition.dismissCompletion = {
-//            self.homeHeaderInstance.isHidden = false
-//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,7 +56,6 @@ class HomeController : UICollectionViewController {
     
     func goToSearchController(){
         let searchView = SearchController(collectionViewLayout: UICollectionViewFlowLayout())
-        searchView.searchBar.becomeFirstResponder()
         present(searchView, animated: true, completion: nil)
     }
     
@@ -230,13 +203,13 @@ class HomeController : UICollectionViewController {
 extension HomeController : UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 90)
+        return CGSize(width: view.frame.width, height: 32)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 0:
-            return CGSize(width: view.frame.width, height: view.frame.height / 1.25)
+            return CGSize(width: view.frame.width, height: (view.frame.height / 1.25) - 30)
         default:
             return CGSize(width: view.frame.width, height: (view.frame.height / 2) + 60)
         }
@@ -261,8 +234,6 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! HomePostCells
             cell.accessHomeController = self
-            cell.photo.image = imageName[indexPath.item]
-            cell.userPhoto.image = userPhotos[indexPath.item]
             return cell
         }
     }

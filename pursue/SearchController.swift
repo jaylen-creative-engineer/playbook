@@ -17,24 +17,15 @@ class SearchController : UICollectionViewController {
     
     lazy var searchBar : UITextField = {
         let tf = UITextField()
-        tf.font = UIFont.systemFont(ofSize: 15)
-        tf.attributedPlaceholder = NSAttributedString(string: "Search", attributes: [kCTForegroundColorAttributeName as NSAttributedStringKey: UIColor.black])
+        tf.font = UIFont.systemFont(ofSize: 16)
+        tf.attributedPlaceholder = NSAttributedString(string: "Search", attributes: [
+            .foregroundColor: UIColor.black, .font: UIFont.systemFont(ofSize: 16)])
         tf.clearButtonMode = .whileEditing
         tf.backgroundColor = .white
         tf.isUserInteractionEnabled = true
         tf.delegate = self
         tf.motionIdentifier = "searchBar"
         return tf
-    }()
-    
-    lazy var searchButton : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "search_selected").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.tintColor = .gray
-        button.imageView?.contentMode = .scaleAspectFill
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.motionIdentifier = "searchButton"
-        return button
     }()
     
     let searchBackground : SearchCardView = {
@@ -45,6 +36,14 @@ class SearchController : UICollectionViewController {
         return view
     }()
     
+    lazy var searchIcon : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "search_unselected").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.motionIdentifier = "searchIcon"
+        return button
+    }()
     
     lazy var backButton : UIButton = {
        let button = UIButton()
@@ -67,26 +66,23 @@ class SearchController : UICollectionViewController {
     }
     
     fileprivate func setupView() {
-        view.addSubview(searchBackground)
-        view.addSubview(searchBar)
-        view.addSubview(searchButton)
         view.addSubview(backButton)
+//        view.addSubview(searchIcon)
+        view.addSubview(searchBar)
         
-        searchBackground.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 32, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 32)
-        searchButton.anchor(top: nil, left: searchBackground.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 14, height: 14)
-        searchButton.centerYAnchor.constraint(equalTo: searchBackground.centerYAnchor).isActive = true
-        searchBar.anchor(top: nil, left: searchButton.rightAnchor, bottom: nil, right: searchBackground.rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 4, width: 0, height: 20)
-        searchBar.centerYAnchor.constraint(equalTo: searchBackground.centerYAnchor).isActive = true
-        searchBar.becomeFirstResponder()
         backButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 18, height: 16)
+//        searchIcon.anchor(top: nil, left: backButton.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 18, height: 18)
+//        searchIcon.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
+        searchBar.anchor(top: nil, left: backButton.rightAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 20)
+        searchBar.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
+        searchBar.becomeFirstResponder()
     }
     
     fileprivate func setupAnimation() {
         isMotionEnabled = true
         
-        searchBackground.transition(.translate(y: -80), .duration(0.3))
-        searchBar.transition(.translate(y: -80), .duration(0.3))
-        searchButton.transition(.translate(y: -80), .duration(0.3))
+        searchBar.transition(.duration(0.3))
+//        searchIcon.transition(.duration(0.3))
     }
     
     override func viewDidLoad() {

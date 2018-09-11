@@ -64,6 +64,11 @@ class NotificationsController : UICollectionViewController {
         navigationController?.pushViewController(profile, animated: true)
     }
     
+    func goToSearchController(){
+        let searchView = SearchController(collectionViewLayout: UICollectionViewFlowLayout())
+        present(searchView, animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()

@@ -29,13 +29,32 @@ class NotificationHeader : UICollectionViewCell {
         return collectionView
     }()
     
+    
+    lazy var searchIcon : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "search_unselected").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.motionIdentifier = "searchIcon"
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleSearchTap))
+        tap.numberOfTapsRequired = 1
+        button.addGestureRecognizer(tap)
+        return button
+    }()
+    
+    @objc func handleSearchTap(){
+        accessNotificationController?.goToSearchController()
+    }
 
     func setupLabelCollectionView(){
         labelCollectionView.delegate = self
         labelCollectionView.dataSource = self
         labelCollectionView.register(NotificationHeaderCells.self, forCellWithReuseIdentifier: cellId)
         addSubview(labelCollectionView)
-        labelCollectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 24)
+        addSubview(searchIcon)
+        labelCollectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        searchIcon.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 9, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 18, height: 18)
         
         let selectedIndexPath = IndexPath(item: 0, section: 0)
         labelCollectionView.selectItem(at: selectedIndexPath, animated: true, scrollPosition: .centeredHorizontally)

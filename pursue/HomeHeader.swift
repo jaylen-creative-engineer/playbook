@@ -13,10 +13,6 @@ import Motion
 class HomeHeader : UICollectionViewCell {
     
     var accessHomeController : HomeController?
-    var interestsLabel = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"]
-    
-    let labelId = "labelId"
-    let storyId = "storyId"
     
     let homeLabel : UILabel = {
         let label = UILabel()
@@ -25,66 +21,31 @@ class HomeHeader : UICollectionViewCell {
         return label
     }()
     
-    lazy var searchBar : UITextField = {
-        let tf = UITextField()
-        tf.font = UIFont.systemFont(ofSize: 15)
-        tf.attributedPlaceholder = NSAttributedString(string: "Search", attributes: [kCTForegroundColorAttributeName as NSAttributedStringKey: UIColor.black])
-        tf.clearButtonMode = .whileEditing
-        tf.backgroundColor = .white
-        tf.isUserInteractionEnabled = true
-        tf.delegate = self
-        tf.motionIdentifier = "searchBar"
+    lazy var searchIcon : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "search_unselected").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.motionIdentifier = "searchIcon"
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleSearchTap))
         tap.numberOfTapsRequired = 1
-        tf.addGestureRecognizer(tap)
-        return tf
-    }()
-    
-    lazy var searchButton : UIButton = {
-       let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "search_selected").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.tintColor = .gray
-        button.imageView?.contentMode = .scaleAspectFill
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.motionIdentifier = "searchButton"
-        return button
-    }()
-    
-    let searchBackground : SearchCardView = {
-       let view = SearchCardView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        view.motionIdentifier = "searchBackground"
-        return view
-    }()
-    
-    lazy var notificationsButton : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "notifications-bell-grey").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFill
-        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addGestureRecognizer(tap)
         return button
     }()
     
     @objc func handleSearchTap(){
-        textFieldDidBeginEditing(searchBar)
         accessHomeController?.goToSearchController()
     }
     
     func setupView(){
         addSubview(homeLabel)
-        addSubview(searchBackground)
-        addSubview(searchBar)
-        addSubview(searchButton)
+        addSubview(searchIcon)
 
 
-        homeLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 5, paddingRight: 0, width: homeLabel.intrinsicContentSize.width, height: homeLabel.intrinsicContentSize.height)
-        searchBackground.anchor(top: homeLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 32)
-        searchButton.anchor(top: nil, left: searchBackground.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 14, height: 14)
-        searchButton.centerYAnchor.constraint(equalTo: searchBackground.centerYAnchor).isActive = true
-        searchBar.anchor(top: nil, left: searchButton.rightAnchor, bottom: nil, right: searchBackground.rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 4, width: 0, height: 20)
-        searchBar.centerYAnchor.constraint(equalTo: searchBackground.centerYAnchor).isActive = true
+        homeLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: homeLabel.intrinsicContentSize.width, height: homeLabel.intrinsicContentSize.height)
+        searchIcon.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 18, height: 18)
+        searchIcon.centerYAnchor.constraint(equalTo: homeLabel.centerYAnchor)
     }
     
     
@@ -96,12 +57,5 @@ class HomeHeader : UICollectionViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension HomeHeader : UITextFieldDelegate {
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        print(textField.text)
     }
 }

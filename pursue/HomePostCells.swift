@@ -18,6 +18,7 @@ class HomePostCells : UICollectionViewCell {
         iv.layer.cornerRadius = 8
         iv.layer.masksToBounds = true
         iv.contentMode = .scaleAspectFill
+        iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
         return iv
     }()
     
