@@ -63,6 +63,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         collectionView?.register(ProfilePursuit.self, forCellWithReuseIdentifier: pursuitsId)
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
+        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 20, 0)
         getUser()
     }
     
@@ -98,7 +99,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         present(cameraController, animated: true, completion: nil)
     }
     
-    @objc func handleSettings() {
+    func handleSettings() {
         let customAlert = CustomSettingsView()
         customAlert.providesPresentationContextTransitionStyle = true
         customAlert.definesPresentationContext = true
@@ -135,7 +136,7 @@ extension ProfileController {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height / 2.5)
+        return CGSize(width: view.frame.width, height: (view.frame.height / 1.5))
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Motion
 
 class PostEngagementsController : UICollectionViewController {
     
@@ -27,22 +28,36 @@ class PostEngagementsController : UICollectionViewController {
         return button
     }()
     
+    lazy var upArrow : UIButton = {
+       let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "up-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(handleViewPost), for: .touchUpInside)
+        return button
+    }()
+    
     lazy var engagementsHeader : EngagementsHeader = {
        let header = EngagementsHeader()
         header.accessPostEngagementsController = self
         return header
     }()
     
-    @objc func handleDismiss(){
+    @objc func handleViewPost(){
         dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func handleDismiss(){
+        self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
     }
     
     func setupNavBar(){
         view.addSubview(cancelButton)
         view.addSubview(engagementsHeader)
+        view.addSubview(upArrow)
         
         cancelButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 16, height: 16)
-        engagementsHeader.anchor(top: cancelButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 25)
+        upArrow.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 22, height: 22)
+        engagementsHeader.anchor(top: cancelButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 25)
         
     }
     
@@ -74,8 +89,9 @@ class PostEngagementsController : UICollectionViewController {
         collectionView?.register(DetailSaved.self, forCellWithReuseIdentifier: savedId)
         collectionView?.register(DetailRelated.self, forCellWithReuseIdentifier: relatedId)
         collectionView?.backgroundColor = UIColor.white
-        collectionView?.contentInset = UIEdgeInsetsMake(130, 0, 0, 0)
+        collectionView?.contentInset = UIEdgeInsetsMake(135, 0, 0, 0)
         collectionView?.isPagingEnabled = true
+        isMotionEnabled = true
         setupNavBar()
     }
     
@@ -120,7 +136,7 @@ extension PostEngagementsController : UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: view.frame.width, height: view.frame.height - 130)
+        return CGSize(width: view.frame.width, height: view.frame.height - 135)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

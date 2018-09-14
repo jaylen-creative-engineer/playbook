@@ -22,11 +22,6 @@ class HomeController : UICollectionViewController {
     let homeServices = HomeServices()
     let detailController = PostDetailController()
     
-    func goToProfile(){
-        let profile = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
-        navigationController?.pushViewController(profile, animated: true)
-    }
-
     func setupCollectionView(){
         collectionView?.register(HomeHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(HomePostCells.self, forCellWithReuseIdentifier: postId)

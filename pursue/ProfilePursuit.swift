@@ -21,6 +21,13 @@ class ProfilePursuit : UICollectionViewCell {
         return collectionView
     }()
     
+    let pursuitsLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Pursuits"
+        label.font = UIFont(name: "Lato-Bold", size: 14)
+        return label
+    }()
+    
     let cellId = "cellId"
     let labelId = "labelId"
     
@@ -31,8 +38,11 @@ class ProfilePursuit : UICollectionViewCell {
         postCollectionView.delegate = self
         postCollectionView.dataSource = self
         postCollectionView.register(RecommenedPursuitCell.self, forCellWithReuseIdentifier: cellId)
+        addSubview(pursuitsLabel)
         addSubview(postCollectionView)
-        postCollectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        
+        pursuitsLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: pursuitsLabel.intrinsicContentSize.width, height: pursuitsLabel.intrinsicContentSize.height)
+        postCollectionView.anchor(top: pursuitsLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
     override init(frame: CGRect) {
@@ -52,7 +62,7 @@ extension ProfilePursuit : UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 320, height: 295)
+        return CGSize(width: (frame.width / 1.25) + 40, height: 465)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

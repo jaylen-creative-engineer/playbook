@@ -103,6 +103,11 @@ class SearchController : UICollectionViewController {
 extension SearchController : UITextFieldDelegate {
     
 }
+
+extension SearchController : UICollectionViewDelegateFlowLayout {
+    
+}
+
 //extension SearchController : UICollectionViewDelegateFlowLayout {
 //
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {

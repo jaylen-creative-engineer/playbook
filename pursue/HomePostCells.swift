@@ -104,7 +104,7 @@ class HomePostCells : UICollectionViewCell {
         postCollectionView.dataSource = self
         postCollectionView.register(StoryCell.self, forCellWithReuseIdentifier: cellId)
         addSubview(postCollectionView)
-        postCollectionView.anchor(top: teamIcon.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        postCollectionView.anchor(top: detailLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
     func setupView(){
@@ -116,23 +116,23 @@ class HomePostCells : UICollectionViewCell {
         addSubview(userPhoto)
         addSubview(usernameLabel)
         addSubview(detailLabel)
-        addSubview(teamIcon)
-        addSubview(teamCount)
-        addSubview(seperatorCircle)
-        addSubview(commentIcon)
-        addSubview(commentCount)
+//        addSubview(teamIcon)
+//        addSubview(teamCount)
+//        addSubview(seperatorCircle)
+//        addSubview(commentIcon)
+//        addSubview(commentCount)
         
         userPhoto.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
         usernameLabel.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: 14)
         detailLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 14)
-        teamIcon.anchor(top: detailLabel.bottomAnchor, left: detailLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 23, height: 16)
-        teamCount.anchor(top: nil, left: teamIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: teamCount.intrinsicContentSize.width, height: teamCount.intrinsicContentSize.height)
-        teamCount.centerYAnchor.constraint(equalTo: teamIcon.centerYAnchor).isActive = true
-        seperatorCircle.anchor(top: nil, left: teamCount.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 4, height: 4)
-        seperatorCircle.centerYAnchor.constraint(equalTo: teamCount.centerYAnchor).isActive = true
-        commentIcon.anchor(top: teamIcon.topAnchor, left: seperatorCircle.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 22.71, height: 16)
-        commentCount.anchor(top: nil, left: commentIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: commentCount.intrinsicContentSize.width, height: commentCount.intrinsicContentSize.height)
-        commentCount.centerYAnchor.constraint(equalTo: commentIcon.centerYAnchor).isActive = true
+//        teamIcon.anchor(top: detailLabel.bottomAnchor, left: detailLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 23, height: 16)
+//        teamCount.anchor(top: nil, left: teamIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: teamCount.intrinsicContentSize.width, height: teamCount.intrinsicContentSize.height)
+//        teamCount.centerYAnchor.constraint(equalTo: teamIcon.centerYAnchor).isActive = true
+//        seperatorCircle.anchor(top: nil, left: teamCount.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 4, height: 4)
+//        seperatorCircle.centerYAnchor.constraint(equalTo: teamCount.centerYAnchor).isActive = true
+//        commentIcon.anchor(top: teamIcon.topAnchor, left: seperatorCircle.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 22.71, height: 16)
+//        commentCount.anchor(top: nil, left: commentIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: commentCount.intrinsicContentSize.width, height: commentCount.intrinsicContentSize.height)
+//        commentCount.centerYAnchor.constraint(equalTo: commentIcon.centerYAnchor).isActive = true
         setupCollectionView()
     }
     

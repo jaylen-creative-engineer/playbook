@@ -17,33 +17,25 @@ class EngagementsHeaderCell : UICollectionViewCell {
         return label
     }()
     
-    let labelUnderline : UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     override var isHighlighted: Bool {
         didSet {
+            sectionLabel.font = isHighlighted ? UIFont(name: "Lato-Bold", size: 16) : UIFont(name: "Lato-Bold", size: 14)
             sectionLabel.textColor = isHighlighted ? .black : .gray
-            labelUnderline.backgroundColor = isHighlighted ? .black : .clear
         }
     }
     
     override var isSelected: Bool {
         didSet {
+            sectionLabel.font = isSelected ? UIFont(name: "Lato-Bold", size: 16) : UIFont(name: "Lato-Bold", size: 14)
             sectionLabel.textColor = isSelected ? .black : .gray
-            labelUnderline.backgroundColor = isSelected ? .black : .clear
         }
     }
     
     func setupView(){
         addSubview(sectionLabel)
-        addSubview(labelUnderline)
         
         sectionLabel.anchor(top: nil, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: sectionLabel.intrinsicContentSize.width, height: sectionLabel.intrinsicContentSize.height)
         sectionLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        labelUnderline.anchor(top: sectionLabel.bottomAnchor, left: sectionLabel.leftAnchor, bottom: nil, right: sectionLabel.rightAnchor, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 2)
     }
     
     override init(frame: CGRect) {

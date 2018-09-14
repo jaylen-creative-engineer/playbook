@@ -47,9 +47,9 @@ class RecommenedPursuit : UICollectionViewCell {
         addSubview(todayLabel)
         
         
-        myPursuitsLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: myPursuitsLabel.intrinsicContentSize.width, height: 15)
-        postCollectionView.anchor(top: myPursuitsLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 500)
-        todayLabel.anchor(top: postCollectionView.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: todayLabel.intrinsicContentSize.width, height: 15)
+        myPursuitsLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: myPursuitsLabel.intrinsicContentSize.width, height: 16)
+        postCollectionView.anchor(top: myPursuitsLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 500)
+        todayLabel.anchor(top: postCollectionView.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: todayLabel.intrinsicContentSize.width, height: 16)
     }
     
     override init(frame: CGRect) {

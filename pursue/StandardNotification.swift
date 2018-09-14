@@ -40,9 +40,9 @@ class StandardNotification : UICollectionViewCell {
         addSubview(stepLabel)
         addSubview(timeLabel)
         
-        imageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 75, height: 90)
-        stepLabel.anchor(top: imageView.centerYAnchor, left: imageView.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 4, paddingLeft: 8, paddingBottom: 0, paddingRight: 12, width: 0, height: 14)
-        timeLabel.anchor(top: nil, left: imageView.rightAnchor, bottom: imageView.bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 12, width: 0, height: 14)
+        imageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 65, height: 80)
+        stepLabel.anchor(top: imageView.centerYAnchor, left: imageView.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 4, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 14)
+        timeLabel.anchor(top: nil, left: imageView.rightAnchor, bottom: imageView.bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 14)
     }
     
     override init(frame: CGRect) {

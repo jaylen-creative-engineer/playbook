@@ -16,7 +16,7 @@ class FollowedNotification : UICollectionViewCell {
         iv.contentMode = .scaleAspectFill
         iv.layer.masksToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.layer.cornerRadius = 35
+        iv.layer.cornerRadius = 32.5
         return iv
     }()
     
@@ -42,14 +42,27 @@ class FollowedNotification : UICollectionViewCell {
         return label
     }()
     
+    let followButton : UIButton = {
+       let button = UIButton()
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 1.5
+        button.layer.cornerRadius = 8
+        button.layer.masksToBounds = true
+        return button
+    }()
+    
     func setupView(){
-        addSubview(userPhoto)
-        addSubview(followLabel)
-        addSubview(timeLabel)
+        let userStackView = UIStackView(arrangedSubviews: [followLabel, timeLabel])
+        userStackView.axis = .vertical
+        userStackView.distribution = .fillEqually
+        userStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        userPhoto.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 70, height: 70)
-        followLabel.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 12, width: 0, height: 14)
-        timeLabel.anchor(top: followLabel.bottomAnchor, left: followLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: timeLabel.intrinsicContentSize.width, height: timeLabel.intrinsicContentSize.height)
+        addSubview(userPhoto)
+        addSubview(userStackView)
+        
+        userPhoto.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 65, height: 65)
+        userStackView.anchor(top: nil, left: userPhoto.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 50)
+        userStackView.centerYAnchor.constraint(equalTo: userPhoto.centerYAnchor).isActive = true
     }
     
     override init(frame: CGRect) {

@@ -27,6 +27,15 @@ class ProfileHeader : UICollectionViewCell {
         return iv
     }()
     
+    lazy var settingsButton : UIButton = {
+       let button = UIButton()
+        button.setTitle("•••", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
+        button.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
+        return button
+    }()
+    
     let usernameLabel : UILabel = {
        let label = UILabel()
         label.text = "jaylenhu27"
@@ -145,6 +154,10 @@ class ProfileHeader : UICollectionViewCell {
         accessProfileController?.changeToInterests()
     }
     
+    @objc func handleSettings(){
+        accessProfileController?.handleSettings()
+    }
+    
     func setupEngagements(){
         addSubview(addedCountLabel)
         addSubview(addedLabel)
@@ -168,13 +181,17 @@ class ProfileHeader : UICollectionViewCell {
     
     func setupNavBar(){
         addSubview(usernameLabel)
+        addSubview(settingsButton)
         addSubview(imageView)
         addSubview(circleBackground)
         circleBackground.addSubview(addImageView)
         addSubview(fullnameLabel)
         addSubview(bioText)
         
-        usernameLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
+        usernameLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: usernameLabel.intrinsicContentSize.height)
+        usernameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: frame.width / 1.75).isActive = true
+        settingsButton.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: settingsButton.intrinsicContentSize.width, height: settingsButton.intrinsicContentSize.height)
+        settingsButton.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
         imageView.anchor(top: usernameLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 140, height: 140)
         imageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         fullnameLabel.anchor(top: imageView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: fullnameLabel.intrinsicContentSize.width, height: fullnameLabel.intrinsicContentSize.height)

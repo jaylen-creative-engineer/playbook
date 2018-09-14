@@ -18,15 +18,6 @@ class PostDetailController : UIViewController {
 
     let homeService = HomeServices()
     
-    lazy var viewMoreButton : UIButton = {
-       let button = UIButton()
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 4
-        button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(handleViewMore), for: .touchUpInside)
-        return button
-    }()
-    
     lazy var imageView : UIImageView = {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "ferrari").withRenderingMode(.alwaysOriginal)
@@ -34,21 +25,75 @@ class PostDetailController : UIViewController {
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
-
-    lazy var bottomView : UIView = {
-       let view = UIView()
-        view.backgroundColor = .red
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        view.addGestureRecognizer(pan)
-        return view
+    
+    lazy var downArrow : UIButton = {
+       let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "down-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(handleViewMore), for: .touchUpInside)
+        return button
     }()
+    
+    lazy var cancelButton : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "cancel").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .white
+        button.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+        return button
+    }()
+    
+    let timeLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Today"
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.textColor = .white
+        return label
+    }()
+    
+    let postLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Travel On"
+        label.numberOfLines = 0
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.init(25))
+        label.textAlignment = .left
+        return label
+    }()
+    
+    let userPhoto : UIImageView = {
+       let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "steph").withRenderingMode(.alwaysOriginal)
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 20
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    
+    let username : UILabel = {
+       let label = UILabel()
+        label.text = "Test"
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.textColor = .white
+        return label
+    }()
+    
+    let numberOfDaysLabel : UILabel = {
+       let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.text = "12 Days On This Pursuit"
+        label.textColor = .white
+        return label
+    }()
+    
+    @objc func handleDismiss(){
+        dismiss(animated: true, completion: nil)
+    }
 
     @objc func handleViewMore(){
-        let engagementsView = PostEngagementsController(collectionViewLayout: UICollectionViewFlowLayout())
-        engagementsView.motionTransitionType = .cover(direction: .up)
-        present(engagementsView, animated: true, completion: nil)
+//        let engagementsView = PostEngagementsController(collectionViewLayout: UICollectionViewFlowLayout())
+//        engagementsView.motionTransitionType = .cover(direction: .up)
+        present(PostEngagementsController(collectionViewLayout: UICollectionViewFlowLayout()), animated: true, completion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,63 +107,36 @@ class PostDetailController : UIViewController {
     }
     
     func setupCollectionViewHeader(){
-        let label = UILabel()
-        label.text = "Travel On"
-        label.numberOfLines = 2
-        label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.init(25))
-        label.textAlignment = .center
-        
-        let timeLabel = UILabel()
-        timeLabel.text = "Day 3"
-        timeLabel.font = UIFont.systemFont(ofSize: 14)
-        timeLabel.textColor = .white
-        
-        let userPhoto = UIImageView()
-        userPhoto.image = #imageLiteral(resourceName: "steph").withRenderingMode(.alwaysOriginal)
-        userPhoto.contentMode = .scaleAspectFill
-        userPhoto.layer.cornerRadius = 25
-        userPhoto.layer.masksToBounds = true
-        userPhoto.translatesAutoresizingMaskIntoConstraints = false
-        
-        let username = UILabel()
-        username.text = "Test"
-        username.font = UIFont.boldSystemFont(ofSize: 16)
-        username.textColor = .white
-        username.translatesAutoresizingMaskIntoConstraints = false
-        
         let screenOverlay = UIView()
         screenOverlay.backgroundColor = UIColor.init(white: 0.8, alpha: 0.2)
         
-        
         view.addSubview(imageView)
-        imageView.addSubview(label)
+        imageView.addSubview(numberOfDaysLabel)
+        imageView.addSubview(postLabel)
         imageView.addSubview(timeLabel)
         imageView.addSubview(userPhoto)
         imageView.addSubview(username)
         imageView.addSubview(screenOverlay)
-        imageView.addSubview(viewMoreButton)
+        imageView.addSubview(downArrow)
+        imageView.addSubview(cancelButton)
         
-        imageView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: view.frame.height)
-        userPhoto.anchor(top: imageView.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
-        userPhoto.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        username.anchor(top: userPhoto.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
-        username.centerXAnchor.constraint(equalTo: userPhoto.centerXAnchor).isActive = true
-        timeLabel.anchor(top: username.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
-        timeLabel.centerXAnchor.constraint(equalTo: username.centerXAnchor).isActive = true
-        label.anchor(top: timeLabel.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 28)
+        imageView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: -5, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: view.frame.height + 5)
+        numberOfDaysLabel.anchor(top: cancelButton.bottomAnchor, left: imageView.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: numberOfDaysLabel.intrinsicContentSize.width, height: 16)
+        postLabel.anchor(top: numberOfDaysLabel.bottomAnchor, left: imageView.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
+        postLabel.heightAnchor.constraint(lessThanOrEqualToConstant: view.frame.height / 3).isActive = true
+        userPhoto.anchor(top: nil, left: imageView.safeAreaLayoutGuide.leftAnchor, bottom: imageView.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 18, paddingRight: 0, width: 40, height: 40)
+        username.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 24, width: 0, height: 16)
+        timeLabel.anchor(top: username.bottomAnchor, left: username.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
         screenOverlay.anchor(top: imageView.topAnchor, left: imageView.leftAnchor, bottom: imageView.bottomAnchor, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        viewMoreButton.anchor(top: nil, left: nil, bottom: imageView.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 0, width: 90, height: 10)
-        viewMoreButton.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
+        downArrow.anchor(top: userPhoto.topAnchor, left: nil, bottom: nil, right: imageView.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 22, height: 22)
+        cancelButton.anchor(top: imageView.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 16, height: 16)
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         hero.isEnabled = true
         isMotionEnabled = true
         setupCollectionViewHeader()
-//        view.backgroundColor = .white
         view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
     }
     
@@ -153,9 +171,5 @@ class PostDetailController : UIViewController {
             handlePanEnded(panGesture)
         }
     }
-    
-    
-    let headerView = DetailHeader()
 }
-
 
