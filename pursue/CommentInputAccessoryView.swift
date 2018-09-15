@@ -8,13 +8,32 @@
 
 import UIKit
 
+//protocol CommentInputAccessoryViewDelegate {
+//    func didSubmit(for comment: String)
+//}
+
 class CommentInputAccessoryView : UIView {
+    
+//    var delegate: CommentInputAccessoryViewDelegate?
+    
+    func clearCommentTextField() {
+        commentTextView.text = nil
+        commentTextView.showPlaceholderLabel()
+    }
     
     fileprivate let commentTextView: CommentInputTextView = {
         let tv = CommentInputTextView()
+        tv.layer.cornerRadius = 8
+        tv.layer.masksToBounds = true
         tv.isScrollEnabled = false
-        tv.font = UIFont.systemFont(ofSize: 18)
+        tv.font = UIFont.systemFont(ofSize: 14)
         return tv
+    }()
+    
+    let textViewBackground : StoryRectangleView = {
+       let view = StoryRectangleView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     fileprivate let submitButton: UIButton = {
@@ -22,29 +41,66 @@ class CommentInputAccessoryView : UIView {
         sb.setTitle("Submit", for: .normal)
         sb.setTitleColor(.black, for: .normal)
         sb.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        sb.addTarget(self, action: #selector(handleSubmit), for: .touchUpInside)
         return sb
     }()
+    
+    lazy var sendBackground : UIButton = {
+       let button = UIButton()
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 20
+        button.layer.masksToBounds = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    lazy var sendIcon : UIImageView = {
+       let button = UIImageView()
+        button.image = #imageLiteral(resourceName: "send").withRenderingMode(.alwaysTemplate)
+        button.tintColor = .white
+        button.contentMode = .scaleAspectFill
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    lazy var attachmentButton : UIButton = {
+       let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "link").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .gray
+        button.contentMode = .scaleAspectFill
+        return button
+    }()
+    
+    fileprivate func setupSendButton() {
+        addSubview(sendBackground)
+        sendBackground.addSubview(sendIcon)
+        
+        sendBackground.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 40, height: 40)
+        sendIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 16, height: 14)
+        sendIcon.centerXAnchor.constraint(equalTo: sendBackground.centerXAnchor).isActive = true
+        sendIcon.centerYAnchor.constraint(equalTo: sendBackground.centerYAnchor).isActive = true
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        // 1
         autoresizingMask = .flexibleHeight
-        
         backgroundColor = .white
         
-        addSubview(submitButton)
-        submitButton.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 50, height: 50)
+        addSubview(attachmentButton)
+        attachmentButton.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 14, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 18, height: 18)
+        setupSendButton()
         
+        
+        addSubview(textViewBackground)
         addSubview(commentTextView)
-        // 3
+        
         if #available(iOS 11.0, *) {
-            commentTextView.anchor(top: topAnchor, left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: submitButton.leftAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 8, paddingRight: 0, width: 0, height: 0)
+            textViewBackground.anchor(top: topAnchor, left: attachmentButton.rightAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: sendBackground.leftAnchor, paddingTop: 8, paddingLeft: 12, paddingBottom: 8, paddingRight: 12, width: 0, height: 0)
+            commentTextView.anchor(top: textViewBackground.topAnchor, left: textViewBackground.leftAnchor, bottom: textViewBackground.bottomAnchor, right: textViewBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         } else {
             // Fallback on earlier versions
         }
-        
-        setupLineSeparatorView()
     }
     
     // 2
@@ -52,11 +108,9 @@ class CommentInputAccessoryView : UIView {
         return .zero
     }
     
-    fileprivate func setupLineSeparatorView() {
-        let lineSeparatorView = UIView()
-        lineSeparatorView.backgroundColor = UIColor.rgb(red: 230, green: 230, blue: 230)
-        addSubview(lineSeparatorView)
-        lineSeparatorView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+    @objc func handleSubmit() {
+        guard let commentText = commentTextView.text else { return }
+//        delegate?.didSubmit(for: commentText)
     }
     
     required init?(coder aDecoder: NSCoder) {

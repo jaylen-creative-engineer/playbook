@@ -13,7 +13,6 @@ class HomePostCells : UICollectionViewCell  {
     
     lazy var imageView : UIImageView = {
         let iv = UIImageView()
-        iv.backgroundColor = .blue
         iv.layer.cornerRadius = 12
         iv.clipsToBounds = true
         iv.image = #imageLiteral(resourceName: "ferrari").withRenderingMode(.alwaysOriginal)

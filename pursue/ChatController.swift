@@ -13,6 +13,9 @@ class ChatController : UICollectionViewCell {
     let messageId = "messageId"
     let twoId = "twoId"
     let groupId = "groupId"
+    let peopleId = "peopleId"
+    
+    var accessNotificationController : NotificationsController?
     
     let messagesCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -23,15 +26,16 @@ class ChatController : UICollectionViewCell {
         collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
-    
+ 
     func setupMessageCollectionView(){
         messagesCollectionView.delegate = self
         messagesCollectionView.dataSource = self
         messagesCollectionView.register(ChatCells.self, forCellWithReuseIdentifier: messageId)
         messagesCollectionView.register(TwoChatCells.self, forCellWithReuseIdentifier: twoId)
         messagesCollectionView.register(GroupChatCells.self, forCellWithReuseIdentifier: groupId)
+        
         addSubview(messagesCollectionView)
-        messagesCollectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        messagesCollectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
     override init(frame: CGRect) {
@@ -66,5 +70,9 @@ extension ChatController : UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: frame.width, height: 110)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessNotificationController?.handleChangeToChatDetail()
     }
 }

@@ -14,6 +14,7 @@ class CommentInputTextView: UITextView {
         let label = UILabel()
         label.text = "Enter Comment"
         label.textColor = UIColor.lightGray
+        label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
     

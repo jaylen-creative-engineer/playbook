@@ -27,6 +27,11 @@ class NotificationsController : UICollectionViewController {
         return header
     }()
 
+    func handleChangeToChatDetail(){
+        let chatDetail = ChatDetailController()
+        navigationController?.pushViewController(chatDetail, animated: true)
+    }
+    
     func setupNavBar(){
         view.addSubview(notificationsHeader)
         notificationsHeader.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 35, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 40)
@@ -98,6 +103,7 @@ extension NotificationsController : UICollectionViewDelegateFlowLayout {
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: chatId, for: indexPath) as! ChatController
+            cell.accessNotificationController = self
             return cell
         }
     }
