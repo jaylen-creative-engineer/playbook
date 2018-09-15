@@ -14,7 +14,7 @@ import AVKit
 import MediaPlayer
 import Motion
 
-class PostDetailController : UIViewController {
+class PostDetailController : UICollectionViewController {
 
     let homeService = HomeServices()
     
@@ -43,48 +43,149 @@ class PostDetailController : UIViewController {
         return button
     }()
     
-    let timeLabel : UILabel = {
-       let label = UILabel()
-        label.text = "Today"
-        label.font = UIFont.systemFont(ofSize: 14)
+    let postType : UILabel = {
+        let label = UILabel()
+        label.text = "Principle"
+        label.font = UIFont(name: "Lato-Bold", size: 14)
         label.textColor = .white
-        return label
-    }()
-    
-    let postLabel : UILabel = {
-       let label = UILabel()
-        label.text = "Travel On"
-        label.numberOfLines = 0
-        label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.init(25))
-        label.textAlignment = .left
+        label.motionIdentifier = "postType"
         return label
     }()
     
     let userPhoto : UIImageView = {
-       let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "steph").withRenderingMode(.alwaysOriginal)
+        let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 20
         iv.layer.masksToBounds = true
+        iv.motionIdentifier = "userPhoto"
         return iv
     }()
     
-    let username : UILabel = {
-       let label = UILabel()
-        label.text = "Test"
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+    let postDetail : UILabel = {
+        let label = UILabel()
+        label.text = "Travel On"
+        label.numberOfLines = 0
         label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.init(25))
+        label.textAlignment = .center
+        label.motionIdentifier = "postDetail"
         return label
     }()
     
-    let numberOfDaysLabel : UILabel = {
-       let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.text = "12 Days On This Pursuit"
+    let daysLabel : UILabel = {
+        let label = UILabel()
+        label.text = "20 Days"
+        label.font = UIFont(name: "Lato-Bold", size: 14)
         label.textColor = .white
+        label.motionIdentifier = "daysLabel"
         return label
     }()
+    
+    let seperatorCircle : UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 3
+        view.layer.masksToBounds = true
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    let username : UILabel = {
+        let label = UILabel()
+        label.text = "Test"
+        label.font = UIFont(name: "Lato-Bold", size: 14)
+        label.textColor = .white
+        label.motionIdentifier = "username"
+        return label
+    }()
+    
+    let timeLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Today"
+        label.font = UIFont(name: "Lato-Bold", size: 12)
+        label.textColor = .white
+        label.motionIdentifier = "timeLabel"
+        return label
+    }()
+    
+    let progressBar : UIProgressView = {
+        let view = UIProgressView()
+        view.progress = 100
+        view.progressTintColor = .white
+        view.layer.cornerRadius = 2
+        view.layer.masksToBounds = true
+        view.motionIdentifier = "progressBar"
+        return view
+    }()
+    
+    let saveBackground : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 17.5
+        button.clipsToBounds = true
+        button.motionIdentifier = "saveBackground"
+        return button
+    }()
+    
+    lazy var saveIcon : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "bookmark").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.contentMode = .scaleAspectFill
+        button.motionIdentifier = "saveIcon"
+        return button
+    }()
+    
+    let tryBackground : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 24
+        button.clipsToBounds = true
+        button.motionIdentifier = "tryBackground"
+        return button
+    }()
+    
+    lazy var tryIcon : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "add").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.contentMode = .scaleAspectFill
+        button.motionIdentifier = "tryIcon"
+        return button
+    }()
+
+    
+    let shareBackground : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 17.5
+        button.clipsToBounds = true
+        button.motionIdentifier = "shareBackground"
+        return button
+    }()
+    
+    lazy var shareIcon : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "share").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.contentMode = .scaleAspectFill
+        button.motionIdentifier = "shareIcon"
+        return button
+    }()
+    
+    let downBackground : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 17.5
+        button.clipsToBounds = true
+        return button
+    }()
+    
+    lazy var downIcon : UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "down-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(handleViewMore), for: .touchUpInside)
+        return button
+    }()
+
     
     @objc func handleDismiss(){
         dismiss(animated: true, completion: nil)
@@ -106,37 +207,74 @@ class PostDetailController : UIViewController {
         tabBarController?.tabBar.isHidden = false
     }
     
-    func setupCollectionViewHeader(){
-        let screenOverlay = UIView()
-        screenOverlay.backgroundColor = UIColor.init(white: 0.8, alpha: 0.2)
-        
+    func setupView(){
         view.addSubview(imageView)
-        imageView.addSubview(numberOfDaysLabel)
-        imageView.addSubview(postLabel)
-        imageView.addSubview(timeLabel)
-        imageView.addSubview(userPhoto)
-        imageView.addSubview(username)
-        imageView.addSubview(screenOverlay)
-        imageView.addSubview(downArrow)
-        imageView.addSubview(cancelButton)
+        view.addSubview(progressBar)
+        view.addSubview(userPhoto)
+        view.addSubview(postType)
+        view.addSubview(postDetail)
+        view.addSubview(seperatorCircle)
+        view.addSubview(daysLabel)
+        view.addSubview(username)
+        view.addSubview(timeLabel)
+        view.addSubview(cancelButton)
         
         imageView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: -5, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: view.frame.height + 5)
-        numberOfDaysLabel.anchor(top: cancelButton.bottomAnchor, left: imageView.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: numberOfDaysLabel.intrinsicContentSize.width, height: 16)
-        postLabel.anchor(top: numberOfDaysLabel.bottomAnchor, left: imageView.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
-        postLabel.heightAnchor.constraint(lessThanOrEqualToConstant: view.frame.height / 3).isActive = true
-        userPhoto.anchor(top: nil, left: imageView.safeAreaLayoutGuide.leftAnchor, bottom: imageView.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 18, paddingRight: 0, width: 40, height: 40)
+        cancelButton.anchor(top: imageView.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 16, height: 16)
+        progressBar.anchor(top: cancelButton.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 24, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 3)
+        userPhoto.anchor(top: progressBar.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
         username.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 24, width: 0, height: 16)
         timeLabel.anchor(top: username.bottomAnchor, left: username.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
-        screenOverlay.anchor(top: imageView.topAnchor, left: imageView.leftAnchor, bottom: imageView.bottomAnchor, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        downArrow.anchor(top: userPhoto.topAnchor, left: nil, bottom: nil, right: imageView.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 22, height: 22)
-        cancelButton.anchor(top: imageView.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 16, height: 16)
+        postDetail.anchor(top: timeLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
+        postDetail.heightAnchor.constraint(lessThanOrEqualToConstant: 52).isActive = true
+        postDetail.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
+        postType.anchor(top: postDetail.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: (view.frame.width / 3) - 12, paddingBottom: 0, paddingRight: 0, width: postType.intrinsicContentSize.width, height: 16)
+        seperatorCircle.anchor(top: nil, left: postType.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
+        seperatorCircle.centerYAnchor.constraint(equalTo: postType.centerYAnchor).isActive = true
+        daysLabel.anchor(top: postDetail.bottomAnchor, left: seperatorCircle.rightAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: daysLabel.intrinsicContentSize.width, height: 16)
+        setupEngagements()
+    }
+    
+    func setupEngagements(){
+        view.addSubview(saveBackground)
+        view.addSubview(saveIcon)
+        view.addSubview(tryBackground)
+        view.addSubview(tryIcon)
+        view.addSubview(shareBackground)
+        view.addSubview(shareIcon)
+        view.addSubview(downBackground)
+        view.addSubview(downIcon)
+        
+        tryBackground.anchor(top: nil, left: nil, bottom: imageView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 32, paddingRight: 0, width: 48, height: 48)
+        tryBackground.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
+        tryIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 24, height: 24)
+        tryIcon.centerXAnchor.constraint(equalTo: tryBackground.centerXAnchor).isActive = true
+        tryIcon.centerYAnchor.constraint(equalTo: tryBackground.centerYAnchor).isActive = true
+        
+        saveBackground.anchor(top: nil, left: nil, bottom: nil, right: tryBackground.leftAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 42, width: 35, height: 35)
+        saveBackground.centerYAnchor.constraint(equalTo: tryBackground.centerYAnchor).isActive = true
+        saveIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 14, height: 18)
+        saveIcon.centerXAnchor.constraint(equalTo: saveBackground.centerXAnchor).isActive = true
+        saveIcon.centerYAnchor.constraint(equalTo: saveBackground.centerYAnchor).isActive = true
+        
+        shareBackground.anchor(top: nil, left: tryBackground.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 42, paddingBottom: 0, paddingRight: 0, width: 35, height: 35)
+        shareBackground.centerYAnchor.constraint(equalTo: tryBackground.centerYAnchor).isActive = true
+        shareIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 18, height: 16)
+        shareIcon.centerXAnchor.constraint(equalTo: shareBackground.centerXAnchor).isActive = true
+        shareIcon.centerYAnchor.constraint(equalTo: shareBackground.centerYAnchor).isActive = true
+        
+        downBackground.anchor(top: nil, left: shareBackground.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 32, paddingBottom: 0, paddingRight: 0, width: 35, height: 35)
+        downBackground.centerYAnchor.constraint(equalTo: tryBackground.centerYAnchor).isActive = true
+        downIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 18, height: 18)
+        downIcon.centerXAnchor.constraint(equalTo: downBackground.centerXAnchor).isActive = true
+        downIcon.centerYAnchor.constraint(equalTo: downBackground.centerYAnchor).isActive = true
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         hero.isEnabled = true
         isMotionEnabled = true
-        setupCollectionViewHeader()
+        setupView()
         view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
     }
     

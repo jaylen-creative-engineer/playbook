@@ -1,23 +1,22 @@
 //
-//  SearchCarouselCell.swift
+//  SearchPrinciples.swift
 //  pursue
 //
-//  Created by Jaylen Sanders on 8/12/18.
+//  Created by Jaylen Sanders on 2/15/18.
 //  Copyright © 2018 Glory. All rights reserved.
 //
 
 import UIKit
-import Gemini
 
-class SearchPursuits : UICollectionViewCell {
+class SearchPosts : UICollectionViewCell {
     
     let cellId = "cellId"
     
     let imageName = "690dae66bfe860df34fc7a756b53c15d"
     
-    let pursuitsLabel : UILabel = {
-       let label = UILabel()
-        label.text = "Pursuits"
+    let postsLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Posts"
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
@@ -33,15 +32,15 @@ class SearchPursuits : UICollectionViewCell {
     }()
     
     func setupView(){
-        addSubview(pursuitsLabel)
+        addSubview(postsLabel)
         addSubview(collectionView)
         
-        pursuitsLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: pursuitsLabel.intrinsicContentSize.width, height: 16)
-        collectionView.anchor(top: pursuitsLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        postsLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: postsLabel.intrinsicContentSize.width, height: 16)
+        collectionView.anchor(top: postsLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(SearchPursuitsCells.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(SearchPostCells.self, forCellWithReuseIdentifier: cellId)
     }
     
     override init(frame: CGRect) {
@@ -55,10 +54,10 @@ class SearchPursuits : UICollectionViewCell {
     
 }
 
-extension SearchPursuits : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension SearchPosts : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchPursuitsCells
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchPostCells
         return cell
     }
     
@@ -71,6 +70,7 @@ extension SearchPursuits : UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (frame.width / 1.4) - 20, height: (frame.height / 1.2) + 20)
+        return CGSize(width: (frame.width / 2) + 20, height: (frame.height / 1.2) + 20)
     }
 }
+

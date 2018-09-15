@@ -10,6 +10,7 @@ import UIKit
 import Hero
 import KWTransition
 import Motion
+import ParallaxHeader
 
 class HomeController : UICollectionViewController {
     
@@ -21,7 +22,7 @@ class HomeController : UICollectionViewController {
     
     let homeServices = HomeServices()
     let detailController = PostDetailController()
-    
+
     func setupCollectionView(){
         collectionView?.register(HomeHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(HomePostCells.self, forCellWithReuseIdentifier: postId)
@@ -29,7 +30,7 @@ class HomeController : UICollectionViewController {
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
@@ -58,30 +59,9 @@ class HomeController : UICollectionViewController {
         
     }
     
-//    func handleChangeToDetail(viewType : String, transitionId : String) {
-//        switch viewType {
-//        case "isPursuitDetail":
-//            let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-////            detail.imageView.heroID = transitionId
-//            detail.standardView()
-//            navigationController?.pushViewController(detail, animated: true)
-////            navigationController?.present(detail, animated: true, completion: nil)
-//        case "isChallengeDetail":
-//            let detail = PursuitsDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-////            detail.imageView.heroID = transitionId
-//            detail.challengeView()
-//            navigationController?.pushViewController(detail, animated: true)
-////            navigationController?.present(detail, animated: true, completion: nil)
-//        default:
-//            assert(false, "Not a valid view type")
-//        }
-//    }
-    
-    let detailHeader = DetailHeader()
-    
     func handleChangeToDetail(transitionId : String){
-        let detail = PostDetailController()
-//        detailHeader.imageView.motionIdentifier = transitionId
+        let detail = PostDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+        detail.imageView.motionIdentifier = transitionId
 //        detail.imageView.hero.id = transitionId
         present(detail, animated: true, completion: nil)
     }
@@ -192,26 +172,25 @@ class HomeController : UICollectionViewController {
         })
     }
     
-    let homeHeaderInstance = HomeHeader()
 }
 
 extension HomeController : UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 32)
-    }
-    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+//        return CGSize(width: view.frame.width, height: 32)
+//    }
+//
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height / 1.4)
+        return CGSize(width: view.frame.width, height: view.frame.height / 1.3)
     }
     
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! HomeHeader
-        header.accessHomeController = self
-        return header
-    }
-    
+//    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+//
+//        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! HomeHeader
+//        header.accessHomeController = self
+//        return header
+//    }
+//
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
     }
@@ -226,7 +205,8 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! HomePostCells
-//        cell.accessHomeController = self
+        cell.imageView.motionIdentifier = String(indexPath.item)
+        cell.accessHomeController = self
         return cell
     }
     

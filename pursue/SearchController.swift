@@ -12,8 +12,9 @@ import Motion
 class SearchController : UICollectionViewController {
     
     let headerId = "headerId"
-    let principleId = "principleId"
+    let pursuitId = "pursuitId"
     let peopleId = "peopleId"
+    let postId = "postId"
     
     lazy var searchBar : UITextField = {
         let tf = UITextField()
@@ -35,69 +36,44 @@ class SearchController : UICollectionViewController {
         view.motionIdentifier = "searchBackground"
         return view
     }()
-    
-    lazy var searchIcon : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "search_unselected").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFill
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.motionIdentifier = "searchIcon"
-        return button
-    }()
-    
-    lazy var backButton : UIButton = {
-       let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "back-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFill
-        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
-        return button
-    }()
-    
-//    func setupCollectionView(){
-//        collectionView?.register(SearchHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
-//        collectionView?.register(RecentSearchUsers.self, forCellWithReuseIdentifier: peopleId)
-//        collectionView?.register(RecentSearchPrinciples.self, forCellWithReuseIdentifier: principleId)
-//        collectionView?.backgroundColor = .white
-//        collectionView?.showsVerticalScrollIndicator = false
-//    }
+
+    func setupCollectionView(){
+        collectionView?.register(SearchUsers.self, forCellWithReuseIdentifier: peopleId)
+        collectionView?.register(SearchPosts.self, forCellWithReuseIdentifier: postId)
+        collectionView?.register(SearchPursuits.self, forCellWithReuseIdentifier: pursuitId)
+        
+        collectionView?.backgroundColor = .white
+        collectionView?.showsVerticalScrollIndicator = false
+        collectionView?.contentInset = UIEdgeInsetsMake(50, 0, 0, 0)
+    }
     
     @objc func handleDismiss(){
         dismiss(animated: true, completion: nil)
     }
     
     fileprivate func setupView() {
-        view.addSubview(backButton)
-//        view.addSubview(searchIcon)
+        let searchBackground = UIView()
+        searchBackground.backgroundColor = .white
+        searchBackground.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(searchBackground)
         view.addSubview(searchBar)
         
-        backButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 18, height: 16)
-//        searchIcon.anchor(top: nil, left: backButton.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 18, height: 18)
-//        searchIcon.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
-        searchBar.anchor(top: nil, left: backButton.rightAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 20)
-        searchBar.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
+        searchBackground.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 80)
+        searchBar.anchor(top: nil, left: searchBackground.leftAnchor, bottom: searchBackground.bottomAnchor, right: searchBackground.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 8, paddingRight: 12, width: 0, height: 20)
         searchBar.becomeFirstResponder()
-    }
-    
-    fileprivate func setupAnimation() {
-        isMotionEnabled = true
-        
-        searchBar.transition(.duration(0.3))
-//        searchIcon.transition(.duration(0.3))
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.backgroundColor = .white
-        collectionView?.showsVerticalScrollIndicator = false
-        setupAnimation()
         setupView()
-//        setupCollectionView()
+        setupCollectionView()
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        navigationController?.navigationBar.isHidden = true
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
 }
 
 extension SearchController : UITextFieldDelegate {
@@ -108,31 +84,49 @@ extension SearchController : UICollectionViewDelegateFlowLayout {
     
 }
 
-//extension SearchController : UICollectionViewDelegateFlowLayout {
-//
+extension SearchController  {
+    
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-//        return CGSize(width: view.frame.width, height: 325)
+//        return CGSize(width: view.frame.width, height: 50)
 //    }
-//
-//    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! SearchHeader
-//        return header
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: view.frame.width, height: 120)
-//    }
-//
-//    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! RecentSearchUsers
-//        cell.backgroundColor = .red
-//        return cell
-//    }
-//
-//    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return 5
-//    }
-//}
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        switch indexPath.item {
+        case 0:
+            return CGSize(width: view.frame.width, height: 100)
+        case 1:
+            return CGSize(width: view.frame.width, height: view.frame.height / 2.2)
+        default:
+            return CGSize(width: view.frame.width, height: (view.frame.height / 2.2) + 30)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 60.0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 60.0
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        switch indexPath.item {
+        case 0:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! SearchUsers
+            return cell
+        case 1:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! SearchPursuits
+            return cell
+        default:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! SearchPosts
+            return cell
+        }
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+}
 
 //extension SearchController : UISearchBarDelegate {
 //

@@ -11,13 +11,18 @@ import Hero
 
 class HomePostCells : UICollectionViewCell  {
     
-    let imageView : UIImageView = {
+    lazy var imageView : UIImageView = {
         let iv = UIImageView()
         iv.backgroundColor = .blue
         iv.layer.cornerRadius = 12
         iv.clipsToBounds = true
         iv.image = #imageLiteral(resourceName: "ferrari").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
+        iv.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleChangeDetail))
+        tap.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tap)
         return iv
     }()
     
@@ -32,6 +37,7 @@ class HomePostCells : UICollectionViewCell  {
         label.text = "Principle"
         label.font = UIFont(name: "Lato-Bold", size: 14)
         label.textColor = .white
+        label.motionIdentifier = "postType"
         return label
     }()
     
@@ -41,6 +47,7 @@ class HomePostCells : UICollectionViewCell  {
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 20
         iv.layer.masksToBounds = true
+        iv.motionIdentifier = "userPhoto"
         return iv
     }()
     
@@ -51,6 +58,7 @@ class HomePostCells : UICollectionViewCell  {
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.init(25))
         label.textAlignment = .center
+        label.motionIdentifier = "postDetail"
         return label
     }()
     
@@ -59,6 +67,7 @@ class HomePostCells : UICollectionViewCell  {
         label.text = "20 Days"
         label.font = UIFont(name: "Lato-Bold", size: 14)
         label.textColor = .white
+        label.motionIdentifier = "daysLabel"
         return label
     }()
     
@@ -75,6 +84,7 @@ class HomePostCells : UICollectionViewCell  {
         label.text = "Test"
         label.font = UIFont(name: "Lato-Bold", size: 14)
         label.textColor = .white
+        label.motionIdentifier = "username"
         return label
     }()
     
@@ -83,6 +93,7 @@ class HomePostCells : UICollectionViewCell  {
         label.text = "Today"
         label.font = UIFont(name: "Lato-Bold", size: 12)
         label.textColor = .white
+        label.motionIdentifier = "timeLabel"
         return label
     }()
     
@@ -91,6 +102,7 @@ class HomePostCells : UICollectionViewCell  {
         button.backgroundColor = .white
         button.layer.cornerRadius = 15
         button.clipsToBounds = true
+        button.motionIdentifier = "saveBackground"
         return button
     }()
     
@@ -99,6 +111,7 @@ class HomePostCells : UICollectionViewCell  {
         label.text = "Save"
         label.font = UIFont(name: "Lato-Bold", size: 12)
         label.textColor = .white
+        label.motionIdentifier = "saveLabel"
         return label
     }()
     
@@ -106,6 +119,7 @@ class HomePostCells : UICollectionViewCell  {
        let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "bookmark").withRenderingMode(.alwaysOriginal), for: .normal)
         button.contentMode = .scaleAspectFill
+        button.motionIdentifier = "saveIcon"
         return button
     }()
     
@@ -114,6 +128,7 @@ class HomePostCells : UICollectionViewCell  {
         button.backgroundColor = .white
         button.layer.cornerRadius = 21
         button.clipsToBounds = true
+        button.motionIdentifier = "tryBackground"
         return button
     }()
     
@@ -121,6 +136,7 @@ class HomePostCells : UICollectionViewCell  {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "add").withRenderingMode(.alwaysOriginal), for: .normal)
         button.contentMode = .scaleAspectFill
+        button.motionIdentifier = "tryIcon"
         return button
     }()
     
@@ -129,6 +145,7 @@ class HomePostCells : UICollectionViewCell  {
         label.text = "Try"
         label.font = UIFont(name: "Lato-Bold", size: 12)
         label.textColor = .white
+        label.motionIdentifier = "tryLabel"
         return label
     }()
     
@@ -137,6 +154,7 @@ class HomePostCells : UICollectionViewCell  {
         button.backgroundColor = .white
         button.layer.cornerRadius = 15
         button.clipsToBounds = true
+        button.motionIdentifier = "shareBackground"
         return button
     }()
     
@@ -144,6 +162,7 @@ class HomePostCells : UICollectionViewCell  {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "share").withRenderingMode(.alwaysOriginal), for: .normal)
         button.contentMode = .scaleAspectFill
+        button.motionIdentifier = "shareIcon"
         return button
     }()
     
@@ -152,8 +171,25 @@ class HomePostCells : UICollectionViewCell  {
         label.text = "Share"
         label.font = UIFont(name: "Lato-Bold", size: 12)
         label.textColor = .white
+        label.motionIdentifier = "shareLabel"
         return label
     }()
+    
+    let progressBar : UIProgressView = {
+       let view = UIProgressView()
+        view.progress = 100
+        view.progressTintColor = .white
+        view.layer.cornerRadius = 2
+        view.layer.masksToBounds = true
+        view.motionIdentifier = "progressBar"
+        return view
+    }()
+    
+    var accessHomeController : HomeController?
+    
+    @objc func handleChangeDetail(){
+        accessHomeController?.handleChangeToDetail(transitionId: "0")
+    }
     
     func setupEngagements(){
         addSubview(saveBackground)
@@ -171,29 +207,24 @@ class HomePostCells : UICollectionViewCell  {
         tryIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 18, height: 18)
         tryIcon.centerXAnchor.constraint(equalTo: tryBackground.centerXAnchor).isActive = true
         tryIcon.centerYAnchor.constraint(equalTo: tryBackground.centerYAnchor).isActive = true
-//        tryLabel.anchor(top: tryBackground.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: tryLabel.intrinsicContentSize.width, height: 14)
-//        tryLabel.centerXAnchor.constraint(equalTo: tryBackground.centerXAnchor).isActive = true
         
         saveBackground.anchor(top: nil, left: nil, bottom: nil, right: tryBackground.leftAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 34, width: 30, height: 30)
         saveBackground.centerYAnchor.constraint(equalTo: tryBackground.centerYAnchor).isActive = true
         saveIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 12, height: 16)
         saveIcon.centerXAnchor.constraint(equalTo: saveBackground.centerXAnchor).isActive = true
         saveIcon.centerYAnchor.constraint(equalTo: saveBackground.centerYAnchor).isActive = true
-//        saveLabel.anchor(top: saveBackground.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: saveLabel.intrinsicContentSize.width, height: 14)
-//        saveLabel.centerXAnchor.constraint(equalTo: saveBackground.centerXAnchor).isActive = true
-        
+
         shareBackground.anchor(top: nil, left: tryBackground.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 34, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
         shareBackground.centerYAnchor.constraint(equalTo: tryBackground.centerYAnchor).isActive = true
         shareIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 16, height: 14)
         shareIcon.centerXAnchor.constraint(equalTo: shareBackground.centerXAnchor).isActive = true
         shareIcon.centerYAnchor.constraint(equalTo: shareBackground.centerYAnchor).isActive = true
-//        shareLabel.anchor(top: shareBackground.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: shareLabel.intrinsicContentSize.width, height: 14)
-//        shareLabel.centerXAnchor.constraint(equalTo: shareBackground.centerXAnchor).isActive = true
     }
     
     func setupView(){
         addSubview(backgroundShadow)
         addSubview(imageView)
+        addSubview(progressBar)
         addSubview(userPhoto)
         addSubview(postType)
         addSubview(postDetail)
@@ -204,7 +235,8 @@ class HomePostCells : UICollectionViewCell  {
         
         backgroundShadow.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 0)
         imageView.anchor(top: backgroundShadow.topAnchor, left: backgroundShadow.leftAnchor, bottom: backgroundShadow.bottomAnchor, right: backgroundShadow.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        userPhoto.anchor(top: imageView.topAnchor, left: imageView.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
+        progressBar.anchor(top: imageView.topAnchor, left: imageView.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 3)
+        userPhoto.anchor(top: progressBar.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
         username.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 24, width: 0, height: 16)
         timeLabel.anchor(top: username.bottomAnchor, left: username.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
         postDetail.anchor(top: imageView.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: frame.height / 6, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
@@ -215,7 +247,6 @@ class HomePostCells : UICollectionViewCell  {
         seperatorCircle.centerYAnchor.constraint(equalTo: postType.centerYAnchor).isActive = true
         daysLabel.anchor(top: postDetail.bottomAnchor, left: seperatorCircle.rightAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: daysLabel.intrinsicContentSize.width, height: 16)
         setupEngagements()
-        
     }
     
     override init(frame: CGRect) {

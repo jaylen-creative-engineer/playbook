@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecentSearchUsers : UICollectionViewCell {
+class SearchUsers : UICollectionViewCell {
     
     lazy var userPhoto : UIImageView = {
         let iv = UIImageView()
@@ -31,12 +31,11 @@ class RecentSearchUsers : UICollectionViewCell {
         return label
     }()
     
-    let cancelButton : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "cancel").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFill
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+    let usersLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Users"
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
     }()
     
     @objc func handleProfileTap(){
@@ -44,14 +43,13 @@ class RecentSearchUsers : UICollectionViewCell {
     }
     
     func setupUserPhoto(){
+        addSubview(usersLabel)
         addSubview(userPhoto)
         addSubview(usernameLabel)
-        addSubview(cancelButton)
         
-        userPhoto.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 60, height: 60)
+        usersLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: usersLabel.intrinsicContentSize.width, height: 16)
+        userPhoto.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 60, height: 60)
         usernameLabel.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
-        cancelButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 15, height: 15)
-        cancelButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
     
     override init(frame: CGRect) {
