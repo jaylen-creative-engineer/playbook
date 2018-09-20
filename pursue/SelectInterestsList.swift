@@ -14,8 +14,6 @@ protocol SelectInterestsDelegate {
 
 class SelectInterestsList : UICollectionViewCell {
     
-    var delegate : SelectInterestsDelegate?
-    
     var interest : Interests? {
         didSet {
             guard let imageUrl = interest?.interest_photo else { return }
@@ -32,76 +30,48 @@ class SelectInterestsList : UICollectionViewCell {
     }
     
     lazy var isInterested : Bool = {
-       let bl = Bool()
+        let bl = Bool()
         return bl
     }()
     
     lazy var cellBackgroundImage : UIImageView = {
-       let iv = UIImageView()
+        let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 4
         iv.layer.masksToBounds = true
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleImageTapped))
-        tap.numberOfTapsRequired = 1
-        iv.addGestureRecognizer(tap)
-        iv.isUserInteractionEnabled = true
         return iv
     }()
     
     lazy var imageLightOverlay : UIView = {
-       let view = UIView()
+        let view = UIView()
         view.backgroundColor = UIColor.init(white: 0.7, alpha: 0.3)
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleImageTapped))
-        tap.numberOfTapsRequired = 1
-        view.addGestureRecognizer(tap)
-        view.isUserInteractionEnabled = true
         return view
     }()
     
     lazy var interestsLabel : UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight(rawValue: 25))
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleImageTapped))
-        tap.numberOfTapsRequired = 1
-        label.addGestureRecognizer(tap)
-        label.isUserInteractionEnabled = true
         return label
     }()
     
     lazy var checkMark : UIImageView = {
-       let iv = UIImageView()
+        let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "check").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleImageTapped))
-        tap.numberOfTapsRequired = 1
-        iv.addGestureRecognizer(tap)
         return iv
     }()
     
     lazy var checkMarkBackground : UIView = {
-       let view = UIView()
+        let view = UIView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 12
         view.layer.masksToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleImageTapped))
-        tap.numberOfTapsRequired = 1
-        view.addGestureRecognizer(tap)
         return view
     }()
-    
-    
-    @objc func handleImageTapped(){
-        delegate?.didSelect(for: self)
-    }
     
     var interestsNames : [String] = []
     let cellId = "cellId"
@@ -121,7 +91,6 @@ class SelectInterestsList : UICollectionViewCell {
         checkMark.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 12, height: 12)
         checkMark.centerXAnchor.constraint(equalTo: checkMarkBackground.centerXAnchor).isActive = true
         checkMark.centerYAnchor.constraint(equalTo: checkMarkBackground.centerYAnchor).isActive = true
-        handleImageTapped()
     }
     
     required init?(coder aDecoder: NSCoder) {

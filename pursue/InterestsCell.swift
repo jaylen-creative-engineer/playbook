@@ -51,14 +51,12 @@ class InterestsCell : UICollectionViewCell, SelectInterestsDelegate {
     }
     
     func getSelectedInterests(){
-        if userId != nil {
-            interestsService.getSelectedInterests(userId: userId!) { (interest) in
-                DispatchQueue.main.async {
-                    interest.forEach({ (value) in
-                        self.interests.append(value)
-                        self.interestsCollection.reloadData()
-                    })
-                }
+        interestsService.getSelectedInterests() { (interest) in
+            DispatchQueue.main.async {
+                interest.forEach({ (value) in
+                    self.interests.append(value)
+                    self.interestsCollection.reloadData()
+                })
             }
         }
     }
@@ -119,7 +117,6 @@ extension InterestsCell : UICollectionViewDelegateFlowLayout, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: listId, for: indexPath) as! SelectInterestsList
-        cell.delegate = self
         cell.interest = interests[indexPath.item]
         return cell
     }

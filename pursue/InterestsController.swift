@@ -8,12 +8,12 @@
 
 import UIKit
 
-class InterestsController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class InterestsController : UICollectionViewController {
     
     let headerId = "headerId"
     let cellId = "cellId"
     
-    let categoryBackIcon : UIButton = {
+    lazy var categoryBackIcon : UIButton = {
         let button = UIButton()
         button.setBackgroundImage(#imageLiteral(resourceName: "back-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
         button.addTarget(self, action: #selector(goBack), for: .touchUpInside)
@@ -30,8 +30,6 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
     
     var viewType = ""
     
-    var interestTagView = UIView()
-    
     lazy var nextTitle : UILabel = {
         let label = UILabel()
         label.text = "Next"
@@ -44,6 +42,11 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
         label.addGestureRecognizer(tap)
         return label
     }()
+    
+    var interests = [Interests]()
+    var isVisible = [Bool]()
+    let interestsService = InterestServices()
+    let engagementService = EngagementServices()
     
     @objc func goBack(){
         dismiss(animated: true, completion: nil)
@@ -65,17 +68,31 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
         self.dismiss(animated: true, completion: nil)
     }
     
+    func createInterests(){
+        interestsService.createInterestsList()
+    }
+    
+    func getSelectedInterests(){
+        interestsService.getSelectedInterests() { (interest) in
+            DispatchQueue.main.async {
+                interest.forEach({ (value) in
+                    self.interests.append(value)
+                    self.collectionView?.reloadData()
+                })
+            }
+        }
+    }
+    
     private func setupTopBar(){
         let backgroundFill = UIView()
         backgroundFill.backgroundColor = .white
+        
         view.addSubview(backgroundFill)
-        view.addSubview(interestTagView)
         view.addSubview(categoryBackIcon)
         view.addSubview(pageTitle)
         view.addSubview(nextTitle)
         
         backgroundFill.anchor(top: view.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 80)
-        interestTagView.anchor(top: backgroundFill.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 80, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: self.view.frame.size.width, height: 80)
         categoryBackIcon.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 16, paddingRight: 0, width: 20, height: 20)
         pageTitle.anchor(top: nil, left: categoryBackIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: pageTitle.intrinsicContentSize.width, height: pageTitle.intrinsicContentSize.height)
         pageTitle.centerYAnchor.constraint(equalTo: categoryBackIcon.centerYAnchor).isActive = true
@@ -85,16 +102,7 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 60)
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! InterestsRows
-        return cell
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        return CGSize(width: view.frame.width, height: 45)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -107,13 +115,9 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
         tabBarController?.tabBar.isHidden = false
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height + 425)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.register(InterestsRows.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(SelectInterestsList.self, forCellWithReuseIdentifier: cellId)
         collectionView?.backgroundColor = .white
         collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
         collectionView?.delegate = self
@@ -122,53 +126,50 @@ class InterestsController : UICollectionViewController, UICollectionViewDelegate
         
         setupTopBar()
         interestViewType()
-        addTileOnview()
+        getSelectedInterests()
     }
 }
 
-extension InterestsController{
-    func addTileOnview(){
-        
-        
-        var x : CGFloat = 10
-        var y : CGFloat = 5.0
-        for (index,obj) in ["Animal","Architectures","Food","Fashion","Nature","People"].enumerated(){
+extension InterestsController : UICollectionViewDelegateFlowLayout {
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return interests.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 15
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 8
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (view.frame.width) / 3
+        return CGSize(width: width + 45, height: (width - 20))
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(0, 12, 0, 12)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            var interest = self.interests[indexPath.item]
+            guard let interestId = interest.interestId else { return }
             
-            let width = obj.getWidthofString(font:UIFont(name: "Lato-Semibold", size: 12)!) + 35
-            if x + width >= (self.view.frame.size.width - 10){
-                x = 10
-                y = y + 35
+            if interest.selected_interests == 0 {
+                interest.selected_interests = 1
+            } else if interest.selected_interests == 1 {
+                interest.selected_interests = 0
             }
-            
-            let tileview = designView(title: obj, x: x, y: y)
-            let button = UIButton(frame: CGRect(x: 0, y: 0, width: tileview.frame.size.width, height: tileview.frame.size.height))
-            button.tag = index
-            tileview.backgroundColor = UIColor.darkGray.withAlphaComponent(0.7)
-            tileview.layer.cornerRadius = tileview.frame.size.height / 2
-            tileview.layer.borderColor = UIColor.white.cgColor
-            tileview.layer.borderWidth = 1.0
-            tileview.clipsToBounds = true
-            tileview.layer.masksToBounds = true
-            tileview.addSubview(button)
-            interestTagView.addSubview(tileview)
-            x = x + tileview.frame.size.width + 5
-        }
-        interestTagView.frame = CGRect(x: interestTagView.frame.origin.x, y: interestTagView.frame.origin.y, width: interestTagView.frame.size.width, height: y + 30)
-  
+            self.interests[indexPath.item] = interest
+            self.collectionView?.reloadItems(at: [indexPath])
+            engagementService.toggleFollowInterests(interestId: interestId, is_selected: interest.selected_interests)
     }
     
-    func designView(title : String,x : CGFloat,y : CGFloat) -> UIView{
-        let view = UIView()
-        let label = UILabel()
-        label.text = title
-        label.font = UIFont(name: "Lato-Semibold", size: 12)
-        label.textColor = UIColor.white
-        label.frame = CGRect(x: 0, y: 0, width: label.intrinsicContentSize.width + 20, height: 30)
-        label.textAlignment = .center
-        view.addSubview(label)
-        view.frame = CGRect(x: x, y: y, width: label.frame.size.width, height: 30)
-        return view
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SelectInterestsList
+        cell.interest = interests[indexPath.item]
+        return cell
     }
-    
-    
 }

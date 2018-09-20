@@ -81,6 +81,7 @@ class PhotoLibrary : SwiftyCamViewController, UICollectionViewDelegate, UICollec
         collectionView.register(PhotoLibraryCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.delegate = self
         collectionView.dataSource = self
+        hero.isEnabled = true
         setupView()
         
         if fetchResult != nil {
@@ -147,6 +148,7 @@ class PhotoLibrary : SwiftyCamViewController, UICollectionViewDelegate, UICollec
         let targetSize = CGSize(width: 200, height: 200)
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PhotoLibraryCell
         cell.delegate = self
+        cell.hero.id = String(indexPath.item)
         cell.representedAssetIdentifier = asset.localIdentifier
         imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: nil) { (image, _) in
             if cell.representedAssetIdentifier == asset.localIdentifier && image != nil {
@@ -280,6 +282,7 @@ extension PhotoLibrary {
       
         if cell.timeLabel.text == "" {
             let destination = PhotoViewController()
+            destination.backgroundImageView.hero.id = String(indexPath.item)
             destination.asset = asset
             destination.assetCollection = assetCollection
             present(destination, animated: true, completion: nil)

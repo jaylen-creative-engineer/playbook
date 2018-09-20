@@ -180,13 +180,13 @@ class VideoViewController: AssetSelectionViewController {
     @objc func handlePursuit(){
         let grabTime = 0.10
         let image = generateThumnail(url: videoURL!, fromTime: Float64(grabTime))
-        
-        let customAlert = CustomAlertView(capturedImage: image, contentUrl: videoURL, postDescription: pursuitTitle.text, is_principle: is_principle, is_step: is_step)
-        customAlert.providesPresentationContextTransitionStyle = true
-        customAlert.definesPresentationContext = true
-        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.present(customAlert, animated: true, completion: nil)
+//        
+//        let customAlert = CustomAlertView(capturedImage: image, contentUrl: videoURL, postDescription: pursuitTitle.text, is_principle: is_principle, is_step: is_step)
+//        customAlert.providesPresentationContextTransitionStyle = true
+//        customAlert.definesPresentationContext = true
+//        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+//        self.present(customAlert, animated: true, completion: nil)
     }
     
     

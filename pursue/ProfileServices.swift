@@ -13,27 +13,32 @@ import Firebase
 class ProfileServices {
     
     // MARK: - CREATE account
+    var apiUrl = "http://localhost:8080/users/"
     
     func createAccount(email : String, username : String, fullname : String, photoUrl : String, bio : String?){
-        let url = "http://localhost:8080/signup"
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+        let url = apiUrl + "signup"
 
         var parameters = Alamofire.Parameters()
-        parameters["userId"] = userId
         parameters["email"] = email
         parameters["username"] = username
         parameters["fullname"] = fullname
         parameters["photoUrl"] = photoUrl
         parameters["bio"] = bio
         
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseString { (response) in
             switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
+                case .success:
+                    print("Success: \(response.result.isSuccess)")
+                case .failure(let error):
+                    print("\n\n===========Error===========")
+                    print("Error Code: \(error._code)")
+                    print("Error Messsage: \(error.localizedDescription)")
+                    if let data = response.data, let str = String(data: data, encoding: String.Encoding.utf8){
+                        print("Server Error: " + str)
+                    }
+                    debugPrint(error as Any)
+                    print("===========================\n\n")
             }
-            
         }
     }
     
@@ -59,9 +64,11 @@ class ProfileServices {
     }
     
     // MARK: - GET user account info
-    func getAccountDetails(completion: @escaping (UserDetails) -> ()) {
-        let url = "http://localhost:8080/user-details"
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+    func getAccountDetails(completion: @escaping (User) -> ()) {
+        
+        let url = "http://localhost:8080/users/user-details"
+        let defaults = UserDefaults.standard
+        let userId = defaults.integer(forKey: "userId")
         
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId
@@ -69,7 +76,7 @@ class ProfileServices {
         Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { response in
             guard let data = response.data else { return }
             do {
-                let userResponse = try JSONDecoder().decode(UserDetails.self, from: data)
+                let userResponse = try JSONDecoder().decode(User.self, from: data)
                 completion(userResponse)
             } catch let error {
                 print(error)
@@ -77,26 +84,77 @@ class ProfileServices {
         }
     }
     
+    func getUserId(username : String){
+        let url = apiUrl + "get-userid"
+        
+        var parameters = Alamofire.Parameters()
+        parameters["username"] = username
+        
+        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            switch response.result {
+            case .success:
+                guard let data = response.data else { return }
+                do {
+                    let userResponse = try JSONDecoder().decode(User.self, from: data)
+                     let defaults = UserDefaults.standard
+                     defaults.set(userResponse.userId, forKey: "userId")
+                    
+                } catch let error {
+                    print(error)
+                }
+                
+            case .failure:
+                print("Failure: \(response.result.isSuccess)")
+            }
+        }
+    }
+    
     func getAccount(completion: @escaping (User) -> ()) {
-        let url = "http://localhost:8080/user-profile"
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+        let url = "http://localhost:8080/users/get-user-profile"
+        
+        let defaults = UserDefaults.standard
+        let userId = defaults.integer(forKey: "userId")
         
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId
         
         Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
-            guard let data = response.data else { return }
-            do {
-                var userData : User?
-                let userResponse = try JSONDecoder().decode([User].self, from: data)
-                userResponse.forEach({ (user) in
-                    userData = user
-                })
-                
-                guard let userValues = userData else { return }
-                completion(userValues)
-            } catch let error {
-                print(error)
+            switch response.result {
+            case .success:
+                guard let data = response.data else { return }
+                do {
+                    let userResponse = try JSONDecoder().decode(User.self, from: data)
+                    completion(userResponse)
+                } catch let error {
+                    print(error)
+                }
+            case .failure:
+                print("Failure: \(response.result.isSuccess)")
+            }
+        }
+    }
+    
+    func getUsersPursuits(completion : @escaping ([Pursuit]) -> ()) {
+        let url = "http://localhost:8080/users/get-user-pursuits"
+        
+        let defaults = UserDefaults.standard
+        let userId = defaults.integer(forKey: "userId")
+        
+        var parameters = Alamofire.Parameters()
+        parameters["userId"] = userId
+        
+        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            switch response.result {
+            case .success:
+                guard let data = response.data else { return }
+                do {
+                    let userResponse = try JSONDecoder().decode([Pursuit].self, from: data)
+                    completion(userResponse)
+                } catch let error {
+                    print(error)
+                }
+            case .failure:
+                print("Failure: \(response.result.isSuccess)")
             }
         }
     }
@@ -104,17 +162,26 @@ class ProfileServices {
     
     // MARK: - UPDATE user account info
     
-    func updateAccount(username : String, fullname : String, photoUrl : String){
-        let url = "http://localhost:8080/signup"
-        guard let userId = Auth.auth().currentUser?.uid else { return }
-
+    func updateAccount(username : String, fullname : String, photoUrl : String, bio : String){
+        let url = "http://localhost:8080/users/update_signup"
+        
+        let defaults = UserDefaults.standard
+        let userId = defaults.integer(forKey: "userId")
+        
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId
         parameters["username"] = username
         parameters["fullname"] = fullname
         parameters["photoUrl"] = photoUrl
+        parameters["bio"] = bio
         
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            switch response.result {
+            case .success:
+                print("Success: \(response.result.isSuccess)")
+            case .failure:
+                print("Failure: \(response.result.isSuccess)")
+            }
         }
     }
     

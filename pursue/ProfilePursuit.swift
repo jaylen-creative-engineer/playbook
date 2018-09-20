@@ -9,11 +9,23 @@
 import UIKit
 
 class ProfilePursuit : UICollectionViewCell {
- 
+        
+    let profileService = ProfileServices()
+    var usersPursuits = [Pursuit]()
+    
+    func getUsersPursuits(){
+        profileService.getUsersPursuits { (pursuits) in
+            DispatchQueue.main.async {
+                self.usersPursuits = pursuits
+                self.postCollectionView.reloadData()
+            }
+        }
+    }
+    
+    var pursuitsArray = [Pursuit]()
     let postCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsetsMake(0, 12, 0, 12)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
@@ -47,6 +59,7 @@ class ProfilePursuit : UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        getUsersPursuits()
         setupCollectionView()
     }
     
@@ -58,7 +71,7 @@ class ProfilePursuit : UICollectionViewCell {
 extension ProfilePursuit : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return usersPursuits.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -67,6 +80,7 @@ extension ProfilePursuit : UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! RecommenedPursuitCell
+        cell.pursuit = usersPursuits[indexPath.item]
         return cell
     }
 }

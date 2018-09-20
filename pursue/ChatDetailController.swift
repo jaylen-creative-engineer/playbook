@@ -40,6 +40,7 @@ class ChatDetailController : UIViewController, UITableViewDelegate, UITableViewD
        let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "back-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
         button.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         return button
     }()
  
@@ -118,6 +119,10 @@ class ChatDetailController : UIViewController, UITableViewDelegate, UITableViewD
     
     var chatMessages = [[ChatMessage]]()
     
+    @objc func handleDismiss(){
+        navigationController?.popViewController(animated: true)
+    }
+    
     func setupNavBar(){
         view.addSubview(navBarBackground)
         view.addSubview(backButton)
@@ -158,8 +163,8 @@ class ChatDetailController : UIViewController, UITableViewDelegate, UITableViewD
         override init(frame: CGRect) {
             super.init(frame: frame)
             
-            backgroundColor = .black
-            textColor = .white
+            backgroundColor = .white
+            textColor = .black
             textAlignment = .center
             translatesAutoresizingMaskIntoConstraints = false
             font = UIFont.boldSystemFont(ofSize: 12)

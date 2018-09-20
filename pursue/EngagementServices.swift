@@ -12,6 +12,8 @@ import Firebase
 
 class EngagementServices {
     
+    var apiUrl = "https://arcane-mesa-59373.herokuapp.com/"
+    
     // MARK: - COMMENT ON step/principle/pursuit    
     func commentOnPost(postId : String, commentId : String, comment_text : String, completion: @escaping (PostComment) -> ()){
         let url = "http://localhost:8080/posts_comments"
@@ -184,9 +186,11 @@ class EngagementServices {
     
     // MARK: - TOGGLE follow interests
     
-    func toggleFollowInterests(interestId : String, is_selected : Int) {
-        let url = "http://localhost:8080/user-interests"
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+    func toggleFollowInterests(interestId : Int, is_selected : Int) {
+        let url = "http://localhost:8080/interests/toggle-user-interests"
+        
+        let defaults = UserDefaults.standard
+        let userId = defaults.integer(forKey: "userId")
         
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId
@@ -205,7 +209,7 @@ class EngagementServices {
     
     // MARK: - TOGGLE follow user
     
-    func toggleFollowUser(followeeId : String, is_following : Int, completion: @escaping (User) -> ()){
+    func toggleFollowUser(followeeId : Int, is_following : Int, completion: @escaping (User) -> ()){
         let url = "http://localhost:8080/follow_user"
         guard let userId = Auth.auth().currentUser?.uid else { return }
 
@@ -221,7 +225,7 @@ class EngagementServices {
 
     // MARK: - TOGGLE follow pursuit
     
-    func toggleFollowPursuit(pursuitId : String, is_following : Int, completion: @escaping (Pursuit) -> ()){
+    func toggleFollowPursuit(pursuitId : Int, is_following : Int, completion: @escaping (Pursuit) -> ()){
         let url = "http://localhost:8080/follow_pursuit"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         

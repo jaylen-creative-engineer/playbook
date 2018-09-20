@@ -63,21 +63,11 @@ class CustomSettingsView : UIViewController {
     
     lazy var termsLabel : UIButton = {
         let button = UIButton()
-        button.setTitle("Terms Of Service", for: .normal)
+        button.setTitle("Terms Of Use", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.titleLabel?.textAlignment = .left
         button.addTarget(self, action: #selector(switchToTerms), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var privacyLabel : UIButton = {
-        let button = UIButton()
-        button.setTitle("Privacy Policy", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.titleLabel?.textAlignment = .left
-        button.addTarget(self, action: #selector(switchToPolicy), for: .touchUpInside)
         return button
     }()
     
@@ -115,7 +105,6 @@ class CustomSettingsView : UIViewController {
         view.addSubview(changeInterestsLabel)
         view.addSubview(inviteLabel)
         view.addSubview(termsLabel)
-        view.addSubview(privacyLabel)
         view.addSubview(logOutLabel)
         view.addSubview(cancelBottomButton)
         
@@ -123,8 +112,7 @@ class CustomSettingsView : UIViewController {
         changeInterestsLabel.anchor(top: editProfileLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: changeInterestsLabel.intrinsicContentSize.width, height: 16)
         inviteLabel.anchor(top: changeInterestsLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: inviteLabel.intrinsicContentSize.width, height: 16)
         termsLabel.anchor(top: inviteLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: termsLabel.intrinsicContentSize.width, height: 16)
-        privacyLabel.anchor(top: termsLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: privacyLabel.intrinsicContentSize.width, height: 16)
-        logOutLabel.anchor(top: privacyLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: logOutLabel.intrinsicContentSize.width, height: 16)
+        logOutLabel.anchor(top: termsLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: logOutLabel.intrinsicContentSize.width, height: 16)
         cancelBottomButton.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: cancelBottomButton.intrinsicContentSize.width, height: cancelBottomButton.intrinsicContentSize.height)
         cancelBottomButton.centerXAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
     }
@@ -135,7 +123,7 @@ class CustomSettingsView : UIViewController {
         alertView.addSubview(settingsLabel)
         view.addSubview(dismissBackground)
         
-        alertView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 430)
+        alertView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 380)
         alertView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 10).isActive = true
         settingsLabel.anchor(top: alertView.topAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: settingsLabel.intrinsicContentSize.width, height: settingsLabel.intrinsicContentSize.height)
         dismissBackground.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: alertView.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
@@ -192,7 +180,7 @@ class CustomSettingsView : UIViewController {
     }
     
     @objc func handleEditClick(){
-        let editController = EditProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+        let editController = EditProfileController()
         present(editController, animated: true, completion: nil)
     }
     

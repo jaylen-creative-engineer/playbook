@@ -104,6 +104,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
     // MARK: - Handle User Sign Up
     
     let profileService = ProfileServices()
+    var user : User?
     var firebaseImageUrl : String?
     var loggedinUserId : String?
     
@@ -129,22 +130,31 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         guard let username = usernameTextField.text, username.count > 0 else { return }
         guard let password = passwordTextField.text, password.count > 0 else { return }
         guard let fullname = fullnameTextField.text, fullname.count > 0 else { return }
-        
         guard let image = self.profileImage else { return }
         guard let uploadData = UIImageJPEGRepresentation(image, 0.3) else { return }
         
         let filename = NSUUID().uuidString
+        let ref = Storage.storage().reference().child("profile-images").child(filename)
+        
         DispatchQueue.main.async {
-            Storage.storage().reference().child("profile-images").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, err) in
+            ref.putData(uploadData, metadata: nil, completion: { (metadata, err) in
                 
                 if let err = err {
                     print("Failed to upload", err)
                 }
                 
-//                guard let profileImageURL = metadata?.downloadURL()?.absoluteString else { return }
-//                self.profileService.createAccount(email: email, username: username, fullname: fullname, photoUrl: profileImageURL, bio: nil)
+                ref.downloadURL(completion: { (url, err) in
+                    if err != nil {
+                        print(err ?? "")
+                    }
+                    
+                    guard let photoUrl = url?.absoluteString else { return }
+                    self.profileService.createAccount(email: email, username: username, fullname: fullname, photoUrl: photoUrl, bio: nil)
+                    self.profileService.getUserId(username: username)
+                })
             })
         }
+        
     }
     
     override func viewDidLoad() {
@@ -248,7 +258,9 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
             loginButton.layer.borderColor = UIColor.black.cgColor
             loginButton.isEnabled = true
             collectionView?.isScrollEnabled = true
+            addUserToFirebase()
             handleSignup()
+            
         case 6:
             let appDelegate = UIApplication.shared.delegate! as! AppDelegate
             appDelegate.window = UIWindow()

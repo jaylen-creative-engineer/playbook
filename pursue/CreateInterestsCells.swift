@@ -14,7 +14,7 @@ protocol InterestNameSelected {
 
 class CreateInterestsCells : UICollectionViewCell {
     
-    var interest : CreateInterests? {
+    var interest : CreateInterests! {
         didSet {
             interestButton.setTitle(interest?.interest_name, for: .normal)
         }
@@ -22,14 +22,20 @@ class CreateInterestsCells : UICollectionViewCell {
     
     var delegate : InterestNameSelected?
     
+    let interestsLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Choose Interests"
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
+    }()
+    
     lazy var interestButton : UIButton = {
        let button = UIButton()
         button.setTitleColor(UIColor.black, for: .normal)
         button.titleLabel?.textAlignment = .center
         button.titleLabel?.font = .boldSystemFont(ofSize: 12)
         button.layer.cornerRadius = 15
-        button.layer.borderColor = UIColor.black.cgColor
-        button.layer.borderWidth = 1
+        button.backgroundColor = UIColor.init(white: 0.6, alpha: 0.3)
         button.isUserInteractionEnabled = true
         button.addTarget(self, action: #selector(handleCellSelected), for: .touchUpInside)
         return button
@@ -41,10 +47,10 @@ class CreateInterestsCells : UICollectionViewCell {
         isClicked = !isClicked
         
         if isClicked == true {
-            interestButton.backgroundColor = .black
+            interestButton.backgroundColor = .blue
             interestButton.setTitleColor(.white, for: .normal)
         } else {
-            interestButton.backgroundColor = .white
+            interestButton.backgroundColor = UIColor.init(white: 0.6, alpha: 0.3)
             interestButton.setTitleColor(.black, for: .normal)
         }
     }

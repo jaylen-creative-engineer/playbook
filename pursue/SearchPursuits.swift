@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Gemini
 
 class SearchPursuits : UICollectionViewCell {
     

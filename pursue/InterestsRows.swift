@@ -11,7 +11,7 @@ import UIKit
 import Alamofire
 import Firebase
 
-class InterestsRows : UICollectionViewCell, SelectInterestsDelegate {
+class InterestsRows : UICollectionViewCell {
     
     let listId = "listId"
     
@@ -33,8 +33,7 @@ class InterestsRows : UICollectionViewCell, SelectInterestsDelegate {
     }
     
     func getSelectedInterests(){
-        guard let userId = Auth.auth().currentUser?.uid else { return }
-        interestsService.getSelectedInterests(userId: userId) { (interest) in
+        interestsService.getSelectedInterests() { (interest) in
             DispatchQueue.main.async {
                 interest.forEach({ (value) in
                     self.interests.append(value)
@@ -42,21 +41,6 @@ class InterestsRows : UICollectionViewCell, SelectInterestsDelegate {
                 })
             }
         }
-    }
-    
-    func didSelect(for cell: SelectInterestsList) {
-        guard let indexPath = interestsCollection.indexPath(for: cell) else { return }
-        var interest = self.interests[indexPath.item]
-        guard let interestId = interest.interestId else { return }
-        
-        if interest.selected_interests == 0 {
-            interest.selected_interests = 1
-        } else if interest.selected_interests == 1 {
-            interest.selected_interests = 0
-        }
-        self.interests[indexPath.item] = interest
-        self.interestsCollection.reloadItems(at: [indexPath])
-        engagementService.toggleFollowInterests(interestId: interestId, is_selected: interest.selected_interests)
     }
     
     override init(frame: CGRect) {
@@ -99,7 +83,6 @@ extension InterestsRows : UICollectionViewDelegateFlowLayout, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: listId, for: indexPath) as! SelectInterestsList
-        cell.delegate = self
         cell.interest = interests[indexPath.item]
         return cell
     }

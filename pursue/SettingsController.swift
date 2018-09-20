@@ -204,7 +204,7 @@ class SettingsController : UICollectionViewController, UICollectionViewDelegateF
     }
     
     @objc func handleEditClick(){
-        let editController = EditProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+        let editController = EditProfileController()
         navigationController?.pushViewController(editController, animated: true)
     }
     

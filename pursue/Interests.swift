@@ -9,7 +9,7 @@
 import UIKit
 
 struct Interests : Decodable {
-    let interestId : String?
+    let interestId : Int?
     let interest_name : String?
     let interest_photo : String?
     var selected_interests = 0

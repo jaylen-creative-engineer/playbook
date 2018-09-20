@@ -10,14 +10,12 @@ import UIKit
 
 struct User : Decodable {
     
-    let userId : String?
+    let userId : Int?
     let username : String?
     let fullname : String?
     let photoUrl : String?
     let bio : String?
     let email : String?
-    let followees : [Follower]?
-    let pursuits : [Pursuit]?
-    let following_count : String?
     let followers_count : String?
+    let pursuits_count : Int?
 }

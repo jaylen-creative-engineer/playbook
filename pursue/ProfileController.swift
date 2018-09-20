@@ -46,7 +46,6 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     
     let backgroundFill = UIView()
     var user : User?
-    var pursuits : [Pursuit]?
     var followers : [Follower]?
     let profileService = ProfileServices()
     
@@ -67,16 +66,10 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         getUser()
     }
     
-    var pursuit : Pursuit?
     func getUser(){
         profileService.getAccount { (user) in
             DispatchQueue.main.async {
-                self.followers = user.followees
-                self.pursuits = user.pursuits
-                
-//                self.user = user
-//                guard let photoUrl = user.photoUrl else { return }
-//                self.imageView.loadImage(urlString: photoUrl)
+                self.user = user
                 self.collectionView?.reloadData()
             }
         }
@@ -85,7 +78,6 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
-        dismiss(animated: true, completion: nil)
     }
     
     func showFriendsController(){
@@ -99,7 +91,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         present(cameraController, animated: true, completion: nil)
     }
     
-    func handleSettings() {
+    @objc func handleSettings() {
         let customAlert = CustomSettingsView()
         customAlert.providesPresentationContextTransitionStyle = true
         customAlert.definesPresentationContext = true
@@ -131,6 +123,7 @@ extension ProfileController {
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! ProfileHeader
+        cell.user = user
         cell.accessProfileController = self
         return cell
     }

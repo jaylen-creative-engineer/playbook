@@ -14,7 +14,7 @@ class EditProfileCells : UICollectionViewCell {
     
     var accessEditProfileController : EditProfileController?
     
-    var user : UserDetails? {
+    var user : User? {
         didSet {
             guard let imageUrl = user?.photoUrl else { return }
             profilePicture.loadImageUsingCacheWithUrlString(imageUrl)
@@ -24,7 +24,7 @@ class EditProfileCells : UICollectionViewCell {
         }
     }
     
-    lazy var profilePicture : UIImageView = {
+    let profilePicture : UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 60
@@ -37,7 +37,7 @@ class EditProfileCells : UICollectionViewCell {
         return iv
     }()
     
-    lazy var fullnameLabel : UITextField = {
+    let fullnameLabel : UITextField = {
         let tv = UITextField()
         tv.textColor = .black
         tv.font = UIFont.systemFont(ofSize: 14)
@@ -45,7 +45,7 @@ class EditProfileCells : UICollectionViewCell {
         return tv
     }()
     
-    lazy var usernameLabel : UITextField = {
+    let usernameLabel : UITextField = {
         let tv = UITextField()
         tv.font = UIFont.systemFont(ofSize: 14)
         tv.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
@@ -53,12 +53,11 @@ class EditProfileCells : UICollectionViewCell {
         return tv
     }()
     
-    lazy var bioLabel : BioInputTextView = {
+    let bioLabel : BioInputTextView = {
         let tv = BioInputTextView()
         tv.isScrollEnabled = false
         tv.font = UIFont.systemFont(ofSize: 14)
         tv.translatesAutoresizingMaskIntoConstraints = false
-        tv.delegate = self
         return tv
     }()
     
@@ -67,7 +66,7 @@ class EditProfileCells : UICollectionViewCell {
         bioLabel.showPlaceholderLabel()
     }
     
-    lazy var currentLabel : UITextField = {
+    let currentLabel : UITextField = {
         let tv = UITextField()
         tv.font = UIFont.systemFont(ofSize: 14)
         tv.attributedPlaceholder = NSAttributedString(string: "Current Password", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
@@ -78,7 +77,7 @@ class EditProfileCells : UICollectionViewCell {
         return tv
     }()
     
-    lazy var confirmLabel : UITextField = {
+    let confirmLabel : UITextField = {
         let tv = UITextField()
         tv.font = UIFont.systemFont(ofSize: 14)
         tv.attributedPlaceholder = NSAttributedString(string: "Confirm Password", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
@@ -88,7 +87,7 @@ class EditProfileCells : UICollectionViewCell {
         return tv
     }()
     
-    lazy var updateLabel : UITextField = {
+    let updateLabel : UITextField = {
         let tv = UITextField()
         tv.font = UIFont.systemFont(ofSize: 14)
         tv.attributedPlaceholder = NSAttributedString(string: "Update Password", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
@@ -161,6 +160,7 @@ class EditProfileCells : UICollectionViewCell {
         
         guard let username = usernameLabel.text,
             let fullname = fullnameLabel.text,
+            let bio = bioLabel.text,
             let image = self.profilePicture.image,
             let uploadData = UIImageJPEGRepresentation(image, 0.3)
             else { return }
@@ -183,7 +183,7 @@ class EditProfileCells : UICollectionViewCell {
                 }
             })
             
-            self.profileService.updateAccount(username: username, fullname: fullname, photoUrl: profileImageURL)
+            self.profileService.updateAccount(username: username, fullname: fullname, photoUrl: profileImageURL, bio: bio)
         })
     }
     

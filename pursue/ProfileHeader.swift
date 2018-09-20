@@ -14,6 +14,29 @@ protocol ProfileHeaderDelegate {
 
 class ProfileHeader : UICollectionViewCell {
     
+    var user : User! {
+        didSet {
+            guard let profilePicture = user?.photoUrl else { return }
+            imageView.loadImage(urlString: profilePicture)
+            usernameLabel.text = user?.username
+            fullnameLabel.text = user?.fullname
+            bioText.text = user?.bio
+            addedCountLabel.titleLabel?.text = user?.followers_count
+            guard let pursuitsCount = user?.pursuits_count else { return }
+            pursuitsCountLabel.titleLabel?.text = String(pursuitsCount)
+            
+            let defaults = UserDefaults.standard
+            
+            if user?.userId == defaults.integer(forKey: "userId") {
+                circleBackground.isHidden = true
+                addImageView.isHidden = true
+            } else {
+                circleBackground.isHidden = false
+                addImageView.isHidden = false
+            }
+        }
+    }
+    
     let followId = "followId"
     var delegate : ProfileHeaderDelegate?
     var accessProfileController : ProfileController?
