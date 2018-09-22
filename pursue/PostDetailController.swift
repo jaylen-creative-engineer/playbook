@@ -16,6 +16,12 @@ import Motion
 
 class PostDetailController : UICollectionViewController {
 
+    let dayId = "dayId"
+    let keyId = "keyId"
+    let challengeId = "challengeId"
+    let tryingId = "tryingId"
+    let commentId = "commentId"
+    
     let homeService = HomeServices()
     
     lazy var imageView : UIImageView = {
@@ -209,19 +215,19 @@ class PostDetailController : UICollectionViewController {
     
     func setupView(){
         view.addSubview(imageView)
-        view.addSubview(progressBar)
-        view.addSubview(userPhoto)
-        view.addSubview(postType)
-        view.addSubview(postDetail)
-        view.addSubview(seperatorCircle)
-        view.addSubview(daysLabel)
-        view.addSubview(username)
-        view.addSubview(timeLabel)
-        view.addSubview(cancelButton)
+        imageView.addSubview(progressBar)
+        imageView.addSubview(userPhoto)
+        imageView.addSubview(postType)
+        imageView.addSubview(postDetail)
+        imageView.addSubview(seperatorCircle)
+        imageView.addSubview(daysLabel)
+        imageView.addSubview(username)
+        imageView.addSubview(timeLabel)
+        imageView.addSubview(cancelButton)
         
-        imageView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: -5, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: view.frame.height + 5)
-        cancelButton.anchor(top: imageView.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 16, height: 16)
-        progressBar.anchor(top: cancelButton.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 24, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 3)
+//        imageView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: -5, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: view.frame.height / 1.3)
+        progressBar.anchor(top: imageView.safeAreaLayoutGuide.topAnchor, left: imageView.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 48, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 3)
+        cancelButton.anchor(top: progressBar.bottomAnchor, left: nil, bottom: nil, right: imageView.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 16, height: 16)
         userPhoto.anchor(top: progressBar.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
         username.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 24, width: 0, height: 16)
         timeLabel.anchor(top: username.bottomAnchor, left: username.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
@@ -233,17 +239,33 @@ class PostDetailController : UICollectionViewController {
         seperatorCircle.centerYAnchor.constraint(equalTo: postType.centerYAnchor).isActive = true
         daysLabel.anchor(top: postDetail.bottomAnchor, left: seperatorCircle.rightAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: daysLabel.intrinsicContentSize.width, height: 16)
         setupEngagements()
+        
+        collectionView?.parallaxHeader.view = imageView
+        collectionView?.contentInset = UIEdgeInsets(top: -10, left: 0, bottom: 0, right: 0)
+        collectionView?.parallaxHeader.height = view.frame.height / 1.2
+        collectionView?.parallaxHeader.minimumHeight = 0
+        collectionView?.parallaxHeader.mode = .topFill
+        collectionView?.alwaysBounceVertical = false
+        setupCollectionView()
+    }
+    
+    func setupCollectionView(){
+        collectionView?.register(PursuitDay.self, forCellWithReuseIdentifier: dayId)
+        collectionView?.register(KeyPost.self, forCellWithReuseIdentifier: keyId)
+        collectionView?.register(DetailChallenge.self, forCellWithReuseIdentifier: challengeId)
+        collectionView?.register(DetailTrying.self, forCellWithReuseIdentifier: tryingId)
+        collectionView?.register(PostComments.self, forCellWithReuseIdentifier: commentId)
     }
     
     func setupEngagements(){
-        view.addSubview(saveBackground)
-        view.addSubview(saveIcon)
-        view.addSubview(tryBackground)
-        view.addSubview(tryIcon)
-        view.addSubview(shareBackground)
-        view.addSubview(shareIcon)
-        view.addSubview(downBackground)
-        view.addSubview(downIcon)
+        imageView.addSubview(saveBackground)
+        imageView.addSubview(saveIcon)
+        imageView.addSubview(tryBackground)
+        imageView.addSubview(tryIcon)
+        imageView.addSubview(shareBackground)
+        imageView.addSubview(shareIcon)
+        imageView.addSubview(downBackground)
+        imageView.addSubview(downIcon)
         
         tryBackground.anchor(top: nil, left: nil, bottom: imageView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 32, paddingRight: 0, width: 48, height: 48)
         tryBackground.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
@@ -272,10 +294,11 @@ class PostDetailController : UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        collectionView?.backgroundColor = .white
         hero.isEnabled = true
         isMotionEnabled = true
         setupView()
-        view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
+//        view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
     }
     
     let engagementsView = PostEngagementsController()
@@ -308,6 +331,37 @@ class PostDetailController : UICollectionViewController {
         default:
             handlePanEnded(panGesture)
         }
+    }
+}
+
+extension PostDetailController : UICollectionViewDelegateFlowLayout {
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        switch indexPath.item {
+        case 0:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay
+            return cell
+        case 1:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: keyId, for: indexPath) as! KeyPost
+            return cell
+        case 2:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! DetailChallenge
+            return cell
+        case 3:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: tryingId, for: indexPath) as! DetailTrying
+            return cell
+        default:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
+            return cell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: 200)
     }
 }
 

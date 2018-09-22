@@ -184,10 +184,10 @@ class HomePostCells : UICollectionViewCell  {
         return view
     }()
     
-    var accessHomeController : HomeController?
+    var accessFeedController : FeedCell?
     
     @objc func handleChangeDetail(){
-        accessHomeController?.handleChangeToDetail(transitionId: "0")
+        accessFeedController?.handleChangeToDetail(transitionId: "0")
     }
     
     func setupEngagements(){
@@ -232,7 +232,7 @@ class HomePostCells : UICollectionViewCell  {
         addSubview(username)
         addSubview(timeLabel)
         
-        backgroundShadow.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 0)
+        backgroundShadow.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: frame.height)
         imageView.anchor(top: backgroundShadow.topAnchor, left: backgroundShadow.leftAnchor, bottom: backgroundShadow.bottomAnchor, right: backgroundShadow.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         progressBar.anchor(top: imageView.topAnchor, left: imageView.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 3)
         userPhoto.anchor(top: progressBar.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)

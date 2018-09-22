@@ -40,6 +40,7 @@ class NotificationsList : UICollectionViewCell {
         collectionView.register(StandardNotification.self, forCellWithReuseIdentifier: standardId)
         collectionView.register(FollowedNotification.self, forCellWithReuseIdentifier: followId)
         collectionView.register(NotificationRowHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0)
     }
     
     override init(frame: CGRect) {

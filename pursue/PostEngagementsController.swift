@@ -86,7 +86,6 @@ class PostEngagementsController : UICollectionViewController {
         collectionView?.register(DetailChallenge.self, forCellWithReuseIdentifier: challengeId)
         collectionView?.register(TeamList.self, forCellWithReuseIdentifier: teamId)
         collectionView?.register(PostComments.self, forCellWithReuseIdentifier: commentId)
-        collectionView?.register(DetailSaved.self, forCellWithReuseIdentifier: savedId)
         collectionView?.register(DetailRelated.self, forCellWithReuseIdentifier: relatedId)
         collectionView?.backgroundColor = UIColor.white
         collectionView?.contentInset = UIEdgeInsetsMake(135, 0, 0, 0)
@@ -124,9 +123,6 @@ extension PostEngagementsController : UICollectionViewDelegateFlowLayout {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
             return cell
         case 6:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: savedId, for: indexPath) as! DetailSaved
-            return cell
-        case 7:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: relatedId, for: indexPath) as! DetailRelated
             return cell
         default:

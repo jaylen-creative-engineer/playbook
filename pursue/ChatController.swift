@@ -35,7 +35,8 @@ class ChatController : UICollectionViewCell {
         messagesCollectionView.register(GroupChatCells.self, forCellWithReuseIdentifier: groupId)
         
         addSubview(messagesCollectionView)
-        messagesCollectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        messagesCollectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        messagesCollectionView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0)
     }
     
     override init(frame: CGRect) {
@@ -72,6 +73,9 @@ extension ChatController : UICollectionViewDelegate, UICollectionViewDataSource,
         return CGSize(width: frame.width, height: 110)
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return CGSize(width: frame.width, height: 130)
+    }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         accessNotificationController?.handleChangeToChatDetail()
     }

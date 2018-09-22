@@ -23,7 +23,6 @@ class NotificationsController : UICollectionViewController {
     
     lazy var notificationsHeader : NotificationHeader = {
        let header = NotificationHeader()
-        header.accessNotificationController = self
         return header
     }()
 

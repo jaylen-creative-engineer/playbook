@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailSaved : UICollectionViewCell {
+class DetailTrying : UICollectionViewCell {
     
     let cellId = "cellId"
     
@@ -43,7 +43,7 @@ class DetailSaved : UICollectionViewCell {
     
 }
 
-extension DetailSaved : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension DetailTrying : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! DetailSavedCells

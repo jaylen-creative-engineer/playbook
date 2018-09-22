@@ -14,26 +14,144 @@ import ParallaxHeader
 
 class HomeController : UICollectionViewController {
     
-    let cellId = "cellId"
+    let notificationId = "notificationId"
     let headerId = "headerId"
     let postId = "postId"
+    let feedId = "feedId"
 
     var isFirstLaunch = false
     
     let homeServices = HomeServices()
     let detailController = PostDetailController()
 
+    lazy var userPhoto : UIImageView = {
+       let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 12.5
+        iv.layer.masksToBounds = true
+        iv.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(goToProfileController))
+        tap.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tap)
+        return iv
+    }()
+    
+    let navUnderlineView : UIView = {
+       let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }()
+    
+    lazy var searchButton : UIButton = {
+       let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "search_unselected").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.contentMode = .scaleAspectFill
+        button.motionIdentifier = "searchButton"
+        button.addTarget(self, action: #selector(goToSearchController), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var homeMenuBar : HomeMenuBar = {
+       let hb = HomeMenuBar()
+        hb.accessHomeController = self
+        return hb
+    }()
+    
+    lazy var notificationsBar : NotificationHeader = {
+       let header = NotificationHeader()
+        header.accessHomeController = self
+//        header.accessNotificationsContainer = self
+        return header
+    }()
+    
+    var accessNotificationsContainer : NotificationsContainer?
+    
+    func scrollToMenuIndex(menuIndex : Int){
+        accessNotificationsContainer?.scrollToItem(menuIndex: menuIndex)
+    }
+    
+    func handleCameraTap(){
+        let photoSelectorController = SelectCameraController()
+        let navController = UINavigationController(rootViewController: photoSelectorController)
+        present(navController, animated: true, completion: nil)
+    }
+    
+    func handleChatPageChange(){
+        notificationsBar.isHidden = false
+        homeLabel.isHidden = true
+        
+        homeMenuBar.chatButton.setImage(#imageLiteral(resourceName: "chat_selected").withRenderingMode(.alwaysOriginal), for: .normal)
+        homeMenuBar.homeButton.setImage(#imageLiteral(resourceName: "home_unselected").withRenderingMode(.alwaysOriginal), for: .normal)
+        
+        let indexPath = IndexPath(item: 1, section: 0)
+        collectionView?.scrollToItem(at: indexPath, at: [], animated: false)
+    }
+    
+    func handleHomeTap(){
+        notificationsBar.isHidden = true
+        homeLabel.isHidden = false
+        
+        homeMenuBar.chatButton.setImage(#imageLiteral(resourceName: "chat").withRenderingMode(.alwaysOriginal), for: .normal)
+        homeMenuBar.homeButton.setImage(#imageLiteral(resourceName: "home_selected").withRenderingMode(.alwaysOriginal), for: .normal)
+        
+        let indexPath = IndexPath(item: 0, section: 0)
+        collectionView?.scrollToItem(at: indexPath, at: [], animated: false)
+    }
+    
+    func setupCustomTabBar(){
+        view.addSubview(homeMenuBar)
+        homeMenuBar.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 240, height: 60)
+        homeMenuBar.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    }
+    
     func setupCollectionView(){
+        if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.scrollDirection = .horizontal
+            flowLayout.minimumLineSpacing = 0
+        }
+        
+        collectionView?.register(FeedCell.self, forCellWithReuseIdentifier: feedId)
+        collectionView?.register(NotificationsContainer.self, forCellWithReuseIdentifier: notificationId)
         collectionView?.register(HomeHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
-        collectionView?.register(HomePostCells.self, forCellWithReuseIdentifier: postId)
-        collectionView?.register(RecommenedPursuit.self, forCellWithReuseIdentifier: cellId)
         collectionView?.backgroundColor = .white
-        collectionView?.showsVerticalScrollIndicator = false
+        collectionView?.showsHorizontalScrollIndicator = false
+        collectionView?.contentInset = UIEdgeInsetsMake(60, 0, 0, 0)
+        collectionView?.isScrollEnabled = false
+        setupCustomTabBar()
+        handleHomeTap()
+    }
+    
+    let homeLabel = UILabel()
+
+    func setupNavigationBar(){
+        let navBarBackground = UIView()
+        navBarBackground.backgroundColor = .white
+        navBarBackground.translatesAutoresizingMaskIntoConstraints = false
+        
+        homeLabel.text = "Home"
+        homeLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
+        homeLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(navBarBackground)
+        view.addSubview(navUnderlineView)
+        navBarBackground.addSubview(homeLabel)
+        navBarBackground.addSubview(userPhoto)
+        navBarBackground.addSubview(searchButton)
+        view.addSubview(notificationsBar)
+        
+        navBarBackground.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 80)
+        navUnderlineView.anchor(top: navBarBackground.bottomAnchor, left: navBarBackground.leftAnchor, bottom: nil, right: navBarBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+        homeLabel.anchor(top: nil, left: navBarBackground.leftAnchor, bottom: navUnderlineView.topAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 8, paddingRight: 0, width: 60, height: homeLabel.intrinsicContentSize.height)
+        userPhoto.anchor(top: nil, left: nil, bottom: navUnderlineView.topAnchor, right: navBarBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 6, paddingRight: 12, width: 25, height: 25)
+        searchButton.anchor(top: nil, left: nil, bottom: nil, right: userPhoto.leftAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 28, width: 18, height: 18)
+        searchButton.centerYAnchor.constraint(equalTo: userPhoto.centerYAnchor).isActive = true
+        notificationsBar.anchor(top: nil, left: navBarBackground.leftAnchor, bottom: navUnderlineView.topAnchor, right: searchButton.leftAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 8, paddingRight: 24, width: 0, height: homeLabel.intrinsicContentSize.height)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupCollectionView()
         
         if UserDefaults.standard.value(forKey: "homeIntroPopover") == nil {
             setupIntroView()
@@ -41,22 +159,26 @@ class HomeController : UICollectionViewController {
             dismissHomePopover()
         }
         isMotionEnabled = true
+        setupNavigationBar()
+        setupCollectionView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
+        tabBarController?.tabBar.isHidden = true
     }
     
     // MARK: - Setup View
     
-    func goToSearchController(){
+    @objc func goToSearchController(){
         let searchView = SearchController(collectionViewLayout: UICollectionViewFlowLayout())
         present(searchView, animated: true, completion: nil)
     }
     
-    func postHeld(transitionId : String) {
-        
+    @objc func goToProfileController(){
+        let profileView = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+        present(profileView, animated: true, completion: nil)
     }
     
     func handleChangeToDetail(transitionId : String){
@@ -176,38 +298,25 @@ class HomeController : UICollectionViewController {
 
 extension HomeController : UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 20)
-    }
-//
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height / 1.3)
+        return CGSize(width: view.frame.width, height: view.frame.height - 60)
     }
     
-//    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//
-//        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! HomeHeader
-//        header.accessHomeController = self
-//        return header
-//    }
-//
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 20.0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 20.0
+        return 2
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! HomePostCells
-        cell.imageView.motionIdentifier = String(indexPath.item)
-        cell.accessHomeController = self
-        return cell
+        switch indexPath.item {
+        case 0:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: feedId, for: indexPath) as! FeedCell
+            cell.accessHomeController = self
+            return cell
+        default:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: notificationId, for: indexPath) as! NotificationsContainer
+            self.accessNotificationsContainer = cell
+            return cell
+        }
     }
     
 }
