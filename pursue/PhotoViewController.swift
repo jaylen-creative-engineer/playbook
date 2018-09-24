@@ -10,6 +10,7 @@ import UIKit
 import Photos
 import SnapSliderFilters
 import Hero
+import Mixpanel
 
 class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     
@@ -209,6 +210,10 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     @objc func handleNext(){
         let indexPath = IndexPath(item: 1, section: 0)
         createCollectionViews.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    }
+    
+    func submitPursuit(){
+        Mixpanel.initialize(token: "Pursuit created")
     }
     
     func setupCreateCollectionView(){

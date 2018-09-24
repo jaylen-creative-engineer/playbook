@@ -7,6 +7,7 @@ target 'pursue' do
 
   # Pods for pursue
 
+  pod 'Mixpanel-swift'
   pod 'Firebase/Auth'
   pod 'Firebase/Core'
   pod 'Firebase/Database'
@@ -24,6 +25,7 @@ target 'pursue' do
   pod 'DropDown'
   pod 'Hero'
   pod 'Motion'
+  pod 'Material'
   pod 'KWTransition'
   pod 'ParallaxHeader'
 

@@ -70,8 +70,8 @@ class DetailSolutionCells : UICollectionViewCell {
         return label
     }()
     
-    let upVoteBackground : PlayView = {
-       let view = PlayView()
+    let upVoteBackground : UIView = {
+       let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         return view

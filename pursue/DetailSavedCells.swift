@@ -10,7 +10,7 @@ import UIKit
 
 class DetailSavedCells : UICollectionViewCell  {
     
-    let imageView : UIImageView = {
+    let photo : UIImageView = {
         let iv = UIImageView()
         iv.backgroundColor = .blue
         iv.layer.cornerRadius = 4
@@ -20,19 +20,39 @@ class DetailSavedCells : UICollectionViewCell  {
         return iv
     }()
     
-    let postDetail : UILabel = {
+    let userPhoto : UIImageView = {
+       let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "comment-3").withRenderingMode(.alwaysOriginal)
+        iv.layer.cornerRadius = 15
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    
+    let usernameLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Test"
+        label.font = UIFont(name: "Lato-Semibold", size: 12)
+        return label
+    }()
+    
+    let postLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.text = "Working on this."
         return label
     }()
     
     func setupView(){
-        addSubview(imageView)
-        addSubview(postDetail)
-        
-        imageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 135)
-        postDetail.anchor(top: imageView.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 12)
+        addSubview(photo)
+        addSubview(userPhoto)
+        addSubview(usernameLabel)
+        addSubview(postLabel)
+
+        photo.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 180)
+        userPhoto.anchor(top: photo.bottomAnchor, left: photo.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
+        usernameLabel.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: 14)
+        postLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 6, width: 0, height: 0)
+        postLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 30).isActive = true
     }
     
     override init(frame: CGRect) {

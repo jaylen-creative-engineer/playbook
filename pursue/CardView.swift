@@ -13,13 +13,12 @@ class CardView: UIView {
     var cornerRadius : CGFloat = 20
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 2.5
-    var shadowColor = UIColor.black
     var shadowOpacity : CGFloat = 0.4
     
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColor.cgColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
         
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
@@ -33,13 +32,12 @@ class TopCardView: UIView {
     var cornerRadius : CGFloat = 20
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = -2.5
-    var shadowColor = UIColor.black
     var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColor.cgColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
         
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
@@ -53,13 +51,12 @@ class HomeCellRectangleView : UIView {
     var cornerRadius : CGFloat = 8
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 3
-    var shadowColor = UIColor.black
     var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColor.cgColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
         
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
@@ -68,18 +65,55 @@ class HomeCellRectangleView : UIView {
     }
 }
 
-class PlayView: UIView {
+class KeyPostBottomView: UIView {
     
     var cornerRadius : CGFloat = 15
     var shadowOffSetWidth : CGFloat = 0
-    var shadowOffSetHeight : CGFloat = 5
-    var shadowColor = UIColor.black
+    var shadowOffSetHeight : CGFloat = 3
     var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColor.cgColor
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
+        
+        let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
+        layer.shadowPath = shadowPath.cgPath
+        layer.shadowOpacity = Float(shadowOpacity)
+    }
+}
+
+class KeyPostTopView: UIView {
+    
+    var cornerRadius : CGFloat = 15
+    var shadowOffSetWidth : CGFloat = 0
+    var shadowOffSetHeight : CGFloat = -3
+    var shadowOpacity : CGFloat = 0.2
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = cornerRadius
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
+        
+        let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
+        layer.shadowPath = shadowPath.cgPath
+        layer.shadowOpacity = Float(shadowOpacity)
+    }
+}
+
+class EngagementsView: UIView {
+    
+    var cornerRadius : CGFloat = 17.5
+    var shadowOffSetWidth : CGFloat = 0
+    var shadowOffSetHeight : CGFloat = 4
+    var shadowOpacity : CGFloat = 0.5
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = cornerRadius
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
         
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
@@ -93,13 +127,12 @@ class MessageView: UIView {
     var cornerRadius : CGFloat = 17
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 4
-    var shadowColor = UIColor.black
     var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColor.cgColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
         
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
@@ -112,13 +145,12 @@ class ChatMessageView : UIView {
     var cornerRadius : CGFloat = 12
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 1
-    var shadowColor = UIColor.black
     var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColor.cgColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
         
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
@@ -132,13 +164,12 @@ class LargePlayView: UIView {
     var cornerRadius : CGFloat = 25
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 5
-    var shadowColor = UIColor.black
     var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColor.cgColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
         
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
@@ -149,16 +180,15 @@ class LargePlayView: UIView {
 
 class TabView: UIView {
     
-    var cornerRadius : CGFloat = 32
+    var cornerRadius : CGFloat = 30
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 5
-    var shadowColor = UIColor.black
     var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColor.cgColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
         
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
@@ -172,13 +202,12 @@ class FollowRectangleView: UIView {
     var cornerRadius : CGFloat = 18
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 3
-    var shadowColor = UIColor.black
     var shadowOpacity : CGFloat = 0.7
     
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColor.cgColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
         
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
@@ -192,13 +221,12 @@ class SolutionCardView: UIView {
     var cornerRadius : CGFloat = 4
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 1
-    var shadowColor = UIColor.black
     var shadowOpacity : CGFloat = 0.3
     
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColor.cgColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
         
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
@@ -214,13 +242,12 @@ class SearchCardView: UIView {
     var cornerRadius : CGFloat = 4
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 1
-    var shadowColor = UIColor.black
     var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColor.cgColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
         
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
@@ -234,13 +261,12 @@ class LoginRectangleView: UIView {
     var cornerRadius : CGFloat = 8
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 5
-    var shadowColor = UIColor.black
     var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColor.cgColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
         
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
@@ -254,13 +280,12 @@ class LoginTopRectangleView: UIView {
     var cornerRadius : CGFloat = 8
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = -2
-    var shadowColor = UIColor.black
     var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColor.cgColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
         
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
@@ -274,13 +299,12 @@ class StoryRectangleView: UIView {
     var cornerRadius : CGFloat = 8
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 3
-    var shadowColor = UIColor.black
     var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColor.cgColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
         
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
@@ -294,13 +318,12 @@ class StoryTopRectangleView: UIView {
     var cornerRadius : CGFloat = 8
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 2
-    var shadowColor = UIColor.black
     var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColor.cgColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
         
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
@@ -314,13 +337,12 @@ class FollowRectangleTopView: UIView {
     var cornerRadius : CGFloat = 2
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = -5
-    var shadowColor = UIColor.black
     var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColor.cgColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
         
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
@@ -334,13 +356,12 @@ class HomeView: UIView {
     var cornerRadius : CGFloat = 8
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 10
-    var shadowColor = UIColor.black
     var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColor.cgColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
         
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
@@ -353,13 +374,30 @@ class SmallerCardView : UIView {
     var cornerRadius : CGFloat = 8
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 5
-    var shadowColor = UIColor.black
     var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColor.cgColor
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
+        
+        let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
+        layer.shadowPath = shadowPath.cgPath
+        layer.shadowOpacity = Float(shadowOpacity)
+    }
+}
+
+class AddFriendView : UIView {
+    var cornerRadius : CGFloat = 15
+    var shadowOffSetWidth : CGFloat = 0
+    var shadowOffSetHeight : CGFloat = 5
+    var shadowOpacity : CGFloat = 0.2
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = cornerRadius
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
         
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
@@ -369,16 +407,15 @@ class SmallerCardView : UIView {
 }
 
 class GroupChatView : UIView {
-    var cornerRadius : CGFloat = 12
+    var cornerRadius : CGFloat = 8
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 5
-    var shadowColor = UIColor.black
     var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColor.cgColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
         
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
@@ -391,13 +428,12 @@ class RectangleView : UIView {
     var cornerRadius : CGFloat = 0
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 1
-    var shadowColor = UIColor.gray
     var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColor.cgColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
         
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
@@ -411,7 +447,6 @@ class TopRectangleView : UIView {
     var cornerRadius : CGFloat = 0
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = -5
-    var shadowColor = UIColor.gray
     var shadowOpacity : CGFloat = 0.5
     
     override func layoutSubviews() {

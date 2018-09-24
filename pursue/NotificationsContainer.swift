@@ -20,12 +20,14 @@ class NotificationsContainer : UICollectionViewCell {
         cv.showsHorizontalScrollIndicator = false
         cv.isPagingEnabled = true
         cv.alwaysBounceHorizontal = true
-//        cv.isScrollEnabled = false
+        cv.isScrollEnabled = false
         return cv
     }()
     
     let notificationId = "notificationId"
     let chatId = "chatId"
+    
+    var accessHomeController : HomeController?
     
     func setupView(){
         addSubview(notificationCollectionView)
@@ -36,15 +38,17 @@ class NotificationsContainer : UICollectionViewCell {
         notificationCollectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
-    
     func scrollToItem(menuIndex : Int) {
        let indexPath = IndexPath(item: menuIndex, section: 0)
        self.notificationCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
     }
     
+    func handleChangeDetail(){
+        accessHomeController?.changeToChatDetail()
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setupView()
     }
     
@@ -67,11 +71,10 @@ extension NotificationsContainer : UICollectionViewDelegate, UICollectionViewDat
         switch indexPath.item {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: notificationId, for: indexPath) as!  NotificationsList
-            
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: chatId, for: indexPath) as! ChatController
-//            cell.accessNotificationController = self
+            cell.accessNotificationContainer = self
             return cell
         }
     }

@@ -18,6 +18,7 @@ class HomeController : UICollectionViewController {
     let headerId = "headerId"
     let postId = "postId"
     let feedId = "feedId"
+    let profileId = "profileId"
 
     var isFirstLaunch = false
     
@@ -53,6 +54,15 @@ class HomeController : UICollectionViewController {
         return button
     }()
     
+    lazy var settingsButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("•••", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
+        button.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
+        return button
+    }()
+    
     lazy var homeMenuBar : HomeMenuBar = {
        let hb = HomeMenuBar()
         hb.accessHomeController = self
@@ -78,9 +88,26 @@ class HomeController : UICollectionViewController {
         present(navController, animated: true, completion: nil)
     }
     
+    func changeToChatDetail(){
+        let chatDetail = ChatDetailController()
+        navigationController?.pushViewController(chatDetail, animated: true)
+    }
+    
+    @objc func handleSettings(){
+        let customAlert = CustomSettingsView()
+        customAlert.providesPresentationContextTransitionStyle = true
+        customAlert.definesPresentationContext = true
+        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.showDetailViewController(customAlert, sender: self)
+    }
+    
     func handleChatPageChange(){
         notificationsBar.isHidden = false
         homeLabel.isHidden = true
+        usernameLabel.isHidden = true
+        searchButton.isHidden = false
+        settingsButton.isHidden = true
         
         homeMenuBar.chatButton.setImage(#imageLiteral(resourceName: "chat_selected").withRenderingMode(.alwaysOriginal), for: .normal)
         homeMenuBar.homeButton.setImage(#imageLiteral(resourceName: "home_unselected").withRenderingMode(.alwaysOriginal), for: .normal)
@@ -92,6 +119,9 @@ class HomeController : UICollectionViewController {
     func handleHomeTap(){
         notificationsBar.isHidden = true
         homeLabel.isHidden = false
+        usernameLabel.isHidden = true
+        searchButton.isHidden = false
+        settingsButton.isHidden = true
         
         homeMenuBar.chatButton.setImage(#imageLiteral(resourceName: "chat").withRenderingMode(.alwaysOriginal), for: .normal)
         homeMenuBar.homeButton.setImage(#imageLiteral(resourceName: "home_selected").withRenderingMode(.alwaysOriginal), for: .normal)
@@ -100,9 +130,23 @@ class HomeController : UICollectionViewController {
         collectionView?.scrollToItem(at: indexPath, at: [], animated: false)
     }
     
+    func handleProfileTap(){
+        notificationsBar.isHidden = true
+        homeLabel.isHidden = true
+        usernameLabel.isHidden = false
+        searchButton.isHidden = true
+        settingsButton.isHidden = false
+        
+        homeMenuBar.chatButton.setImage(#imageLiteral(resourceName: "chat").withRenderingMode(.alwaysOriginal), for: .normal)
+        homeMenuBar.homeButton.setImage(#imageLiteral(resourceName: "home_unselected").withRenderingMode(.alwaysOriginal), for: .normal)
+
+        let indexPath = IndexPath(item: 2, section: 0)
+        collectionView?.scrollToItem(at: indexPath, at: [], animated: false)
+    }
+    
     func setupCustomTabBar(){
         view.addSubview(homeMenuBar)
-        homeMenuBar.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 240, height: 60)
+        homeMenuBar.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 280, height: 58)
         homeMenuBar.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
@@ -113,6 +157,7 @@ class HomeController : UICollectionViewController {
         }
         
         collectionView?.register(FeedCell.self, forCellWithReuseIdentifier: feedId)
+        collectionView?.register(ProfileContainer.self, forCellWithReuseIdentifier: profileId)
         collectionView?.register(NotificationsContainer.self, forCellWithReuseIdentifier: notificationId)
         collectionView?.register(HomeHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.backgroundColor = .white
@@ -124,9 +169,16 @@ class HomeController : UICollectionViewController {
     }
     
     let homeLabel = UILabel()
+    let usernameLabel = UILabel()
+    let navBarBackground = UIView()
+    
+    func setupSettings(){
+        view.addSubview(settingsButton)
+        settingsButton.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
+        settingsButton.anchor(top: nil, left: nil, bottom: nil, right: navBarBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: settingsButton.intrinsicContentSize.width, height: settingsButton.intrinsicContentSize.height)
+    }
 
     func setupNavigationBar(){
-        let navBarBackground = UIView()
         navBarBackground.backgroundColor = .white
         navBarBackground.translatesAutoresizingMaskIntoConstraints = false
         
@@ -134,20 +186,24 @@ class HomeController : UICollectionViewController {
         homeLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
         homeLabel.translatesAutoresizingMaskIntoConstraints = false
         
+        usernameLabel.text = "jaylenhu27"
+        usernameLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
+        usernameLabel.translatesAutoresizingMaskIntoConstraints = false
+        
         view.addSubview(navBarBackground)
         view.addSubview(navUnderlineView)
         navBarBackground.addSubview(homeLabel)
-        navBarBackground.addSubview(userPhoto)
+        navBarBackground.addSubview(usernameLabel)
         navBarBackground.addSubview(searchButton)
         view.addSubview(notificationsBar)
         
         navBarBackground.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 80)
         navUnderlineView.anchor(top: navBarBackground.bottomAnchor, left: navBarBackground.leftAnchor, bottom: nil, right: navBarBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
         homeLabel.anchor(top: nil, left: navBarBackground.leftAnchor, bottom: navUnderlineView.topAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 8, paddingRight: 0, width: 60, height: homeLabel.intrinsicContentSize.height)
-        userPhoto.anchor(top: nil, left: nil, bottom: navUnderlineView.topAnchor, right: navBarBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 6, paddingRight: 12, width: 25, height: 25)
-        searchButton.anchor(top: nil, left: nil, bottom: nil, right: userPhoto.leftAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 28, width: 18, height: 18)
-        searchButton.centerYAnchor.constraint(equalTo: userPhoto.centerYAnchor).isActive = true
+        searchButton.anchor(top: nil, left: nil, bottom: navUnderlineView.topAnchor, right: navBarBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 6, paddingRight: 12, width: 18, height: 18)
         notificationsBar.anchor(top: nil, left: navBarBackground.leftAnchor, bottom: navUnderlineView.topAnchor, right: searchButton.leftAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 8, paddingRight: 24, width: 0, height: homeLabel.intrinsicContentSize.height)
+        usernameLabel.anchor(top: nil, left: navBarBackground.leftAnchor, bottom: navUnderlineView.topAnchor, right: searchButton.leftAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 8, paddingRight: 32, width: 0, height: usernameLabel.intrinsicContentSize.height)
+        setupSettings()
     }
     
     override func viewDidLoad() {
@@ -303,7 +359,7 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return 3
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -312,9 +368,14 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: feedId, for: indexPath) as! FeedCell
             cell.accessHomeController = self
             return cell
-        default:
+        case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: notificationId, for: indexPath) as! NotificationsContainer
+            cell.accessHomeController = self
             self.accessNotificationsContainer = cell
+            return cell
+        default:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: profileId, for: indexPath) as! ProfileContainer
+//            self.accessNotificationsContainer = cell
             return cell
         }
     }

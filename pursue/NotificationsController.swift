@@ -102,7 +102,6 @@ extension NotificationsController : UICollectionViewDelegateFlowLayout {
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: chatId, for: indexPath) as! ChatController
-            cell.accessNotificationController = self
             return cell
         }
     }

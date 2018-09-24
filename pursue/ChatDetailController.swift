@@ -72,7 +72,7 @@ class ChatDetailController : UIViewController, UITableViewDelegate, UITableViewD
         tv.separatorStyle = .none
         tv.backgroundColor = .white
         tv.showsVerticalScrollIndicator = false
-        tv.contentInset = UIEdgeInsetsMake(-50, 0, -120, 0)
+        tv.contentInset = UIEdgeInsetsMake(-90, 0, 110, 0)
         return tv
     }()
     
@@ -135,21 +135,28 @@ class ChatDetailController : UIViewController, UITableViewDelegate, UITableViewD
         username.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
         settingsButton.anchor(top: nil, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: settingsButton.intrinsicContentSize.width, height: settingsButton.intrinsicContentSize.height)
         settingsButton.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
+        setupTableView()
     }
     
+    let scrollView : UIScrollView = {
+       let sv = UIScrollView()
+        sv.backgroundColor = .white
+        return sv
+    }()
 
     func setupTableView(){
         view.addSubview(tableView)
+       
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(ChatDetailCell.self, forCellReuseIdentifier: cellId)
-        tableView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        tableView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: view.frame.height)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         attemptToAssembleGroupedMessages()
-        setupTableView()
         setupNavBar()
 
     }
@@ -204,9 +211,9 @@ class ChatDetailController : UIViewController, UITableViewDelegate, UITableViewD
         }
         return nil
     }
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
+        return 40
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

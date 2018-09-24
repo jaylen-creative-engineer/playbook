@@ -66,8 +66,8 @@ class PageCell: UICollectionViewCell {
         return label
     }()
     
-    let playBackground : PlayView = {
-       let pv = PlayView()
+    let playBackground : UIView = {
+       let pv = UIView()
         pv.layer.cornerRadius = 15
         pv.translatesAutoresizingMaskIntoConstraints = false
         pv.backgroundColor = .white

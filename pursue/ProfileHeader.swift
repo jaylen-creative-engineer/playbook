@@ -150,8 +150,8 @@ class ProfileHeader : UICollectionViewCell {
         return button
     }()
     
-    let circleBackground : PlayView = {
-       let view = PlayView()
+    let circleBackground : AddFriendView = {
+       let view = AddFriendView()
         view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -203,19 +203,13 @@ class ProfileHeader : UICollectionViewCell {
     
     
     func setupNavBar(){
-        addSubview(usernameLabel)
-        addSubview(settingsButton)
         addSubview(imageView)
         addSubview(circleBackground)
         circleBackground.addSubview(addImageView)
         addSubview(fullnameLabel)
         addSubview(bioText)
         
-        usernameLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: usernameLabel.intrinsicContentSize.height)
-        usernameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: frame.width / 1.75).isActive = true
-        settingsButton.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: settingsButton.intrinsicContentSize.width, height: settingsButton.intrinsicContentSize.height)
-        settingsButton.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
-        imageView.anchor(top: usernameLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 140, height: 140)
+        imageView.anchor(top: safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 140, height: 140)
         imageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         fullnameLabel.anchor(top: imageView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: fullnameLabel.intrinsicContentSize.width, height: fullnameLabel.intrinsicContentSize.height)
         fullnameLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true

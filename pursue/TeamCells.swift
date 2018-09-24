@@ -12,14 +12,7 @@ class TeamCells : UICollectionViewCell {
     
     let usernameLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Lato-Bold", size: 14)
-        return label
-    }()
-    
-    let fullnameLabel : UILabel = {
-        let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
-        label.text = "Test"
         return label
     }()
     
@@ -46,11 +39,10 @@ class TeamCells : UICollectionViewCell {
     func setupView(){
         addSubview(profileImage)
         addSubview(usernameLabel)
-        addSubview(fullnameLabel)
         
         profileImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
-        usernameLabel.anchor(top: profileImage.topAnchor, left: profileImage.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 14)
-        fullnameLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 14)
+        usernameLabel.anchor(top: profileImage.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
+        usernameLabel.centerXAnchor.constraint(equalTo: profileImage.centerXAnchor).isActive = true
     }
     
     override init(frame: CGRect) {

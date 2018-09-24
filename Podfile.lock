@@ -112,6 +112,13 @@ PODS:
   - Hero (1.3.1)
   - KWTransition (0.0.4)
   - leveldb-library (1.20)
+  - Material (2.16.4):
+    - Material/Core (= 2.16.4)
+  - Material/Core (2.16.4):
+    - Motion (~> 1.4.3)
+  - Mixpanel-swift (2.4.5):
+    - Mixpanel-swift/Complete (= 2.4.5)
+  - Mixpanel-swift/Complete (2.4.5)
   - Motion (1.4.3):
     - Motion/Core (= 1.4.3)
   - Motion/Core (1.4.3)
@@ -143,6 +150,8 @@ DEPENDENCIES:
   - GoogleSignIn
   - Hero
   - KWTransition
+  - Material
+  - Mixpanel-swift
   - Motion
   - NVActivityIndicatorView
   - ParallaxHeader
@@ -176,6 +185,8 @@ SPEC REPOS:
     - Hero
     - KWTransition
     - leveldb-library
+    - Material
+    - Mixpanel-swift
     - Motion
     - nanopb
     - NVActivityIndicatorView
@@ -210,6 +221,8 @@ SPEC CHECKSUMS:
   Hero: 1c3c625ba05856f305d29f5c270f8766c5ff2df7
   KWTransition: 72d59eef35ddb67769eb99a41317fa75c0444e1b
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
+  Material: 4ed78690b09ffd148b5ffab6b4367fb1d8da1cd3
+  Mixpanel-swift: a9ed3dd197d8f2837920cec6be1acdb51d07b31a
   Motion: 153ba49692997888556c7a95207278a8b1f8be95
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NVActivityIndicatorView: 963f62bf9f993fcf23218e55958e5b1761b9504c
@@ -219,6 +232,6 @@ SPEC CHECKSUMS:
   SnapSliderFilters: 7f571683b05cf70b8d398e4a0e45691bd9f03a33
   SwiftyCam: 86c114177a1b1f5dc2c82384577d0c20b922a31b
 
-PODFILE CHECKSUM: 618a30ff881c5674865ad085aca93398f17447d1
+PODFILE CHECKSUM: bffb348a7f469709ab936f53e2d7b24d948c0ea6
 
 COCOAPODS: 1.5.3

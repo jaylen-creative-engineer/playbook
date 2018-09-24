@@ -15,26 +15,35 @@ class DetailChallenge : UICollectionViewCell {
     
     let imageName = [#imageLiteral(resourceName: "health")]
     
-    let collectionView : UICollectionView = {
+    lazy var collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
-        collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     
-    var accessHomeController : HomeController?
+    let challengesLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Challenges"
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
+    }()
+    
+    var accessPostDetailController : PostDetailController?
     
     func setupView(){
+        addSubview(challengesLabel)
         addSubview(collectionView)
         
-        collectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        challengesLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: challengesLabel.intrinsicContentSize.width, height: 18)
+        collectionView.anchor(top: challengesLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 150)
         
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(DetailChallengeCells.self, forCellWithReuseIdentifier: cellId)
-        collectionView.register(DetailChallengeHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
     }
     
     override init(frame: CGRect) {
@@ -50,15 +59,6 @@ class DetailChallenge : UICollectionViewCell {
 
 extension DetailChallenge : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! DetailChallengeHeader
-        return header
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: frame.width, height: 200)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! DetailChallengeCells
         cell.imageView.image = #imageLiteral(resourceName: "health")
@@ -66,11 +66,12 @@ extension DetailChallenge : UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessPostDetailController?.changeToChallenge()
 //        accessHomeController?.handleChangeToDetail(viewType: "isChallengeDetail")
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 18, left: 0, bottom: 12, right: 0)
+        return UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -78,6 +79,6 @@ extension DetailChallenge : UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width, height: 155)
+        return CGSize(width: frame.width - 40, height: 145)
     }
 }

@@ -15,11 +15,10 @@ class ChatController : UICollectionViewCell {
     let groupId = "groupId"
     let peopleId = "peopleId"
     
-    var accessNotificationController : NotificationsController?
+    var accessNotificationContainer : NotificationsContainer?
     
     let messagesCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
@@ -76,7 +75,8 @@ extension ChatController : UICollectionViewDelegate, UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize(width: frame.width, height: 130)
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessNotificationController?.handleChangeToChatDetail()
+        accessNotificationContainer?.handleChangeDetail()
     }
 }

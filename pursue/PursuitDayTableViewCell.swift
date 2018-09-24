@@ -9,7 +9,6 @@
 import UIKit
 
 class PursuitDayTableViewCell: UICollectionViewCell {
-
     
     let photo : UIImageView = {
         let iv = UIImageView()
@@ -18,6 +17,13 @@ class PursuitDayTableViewCell: UICollectionViewCell {
         iv.clipsToBounds = true
         iv.contentMode = .scaleToFill
         return iv
+    }()
+    
+    let dayLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Day 1"
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
     }()
     
     let postLabel : UILabel = {
@@ -39,13 +45,15 @@ class PursuitDayTableViewCell: UICollectionViewCell {
     
     func setupView(index : Int){
 //        self.selectionStyle = .none
-        contentView.addSubview(photo)
-        contentView.addSubview(postLabel)
-        contentView.addSubview(postTypeLabel)
+        addSubview(dayLabel)
+        addSubview(photo)
+        addSubview(postLabel)
         photo.image = UIImage(named: images[index])
-        photo.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 90, height: 100)
-        postTypeLabel.anchor(top: nil, left: photo.rightAnchor, bottom: photo.bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 12, width: 0, height: 14)
-        postLabel.anchor(top: nil, left: photo.rightAnchor, bottom: postTypeLabel.topAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 8, paddingRight: 12, width: 0, height: 14)
+        
+        dayLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
+        photo.anchor(top: dayLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
+        postLabel.anchor(top: photo.bottomAnchor, left: photo.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 6, width: 0, height: 0)
+        postLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 30).isActive = true
     }
     
     override init(frame: CGRect) {

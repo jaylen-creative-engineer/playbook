@@ -13,14 +13,16 @@ import AVFoundation
 import AVKit
 import MediaPlayer
 import Motion
+import Mixpanel
 
-class PostDetailController : UICollectionViewController {
+class PostDetailController : UICollectionViewController, PursuitDayDelegate {
 
     let dayId = "dayId"
     let keyId = "keyId"
     let challengeId = "challengeId"
     let tryingId = "tryingId"
     let commentId = "commentId"
+    let teamId = "teamId"
     
     let homeService = HomeServices()
     
@@ -124,75 +126,6 @@ class PostDetailController : UICollectionViewController {
         return view
     }()
     
-    let saveBackground : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 17.5
-        button.clipsToBounds = true
-        button.motionIdentifier = "saveBackground"
-        return button
-    }()
-    
-    lazy var saveIcon : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "bookmark").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFill
-        button.motionIdentifier = "saveIcon"
-        return button
-    }()
-    
-    let tryBackground : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 24
-        button.clipsToBounds = true
-        button.motionIdentifier = "tryBackground"
-        return button
-    }()
-    
-    lazy var tryIcon : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "add").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFill
-        button.motionIdentifier = "tryIcon"
-        return button
-    }()
-
-    
-    let shareBackground : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 17.5
-        button.clipsToBounds = true
-        button.motionIdentifier = "shareBackground"
-        return button
-    }()
-    
-    lazy var shareIcon : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "share").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFill
-        button.motionIdentifier = "shareIcon"
-        return button
-    }()
-    
-    let downBackground : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .black
-        button.layer.cornerRadius = 17.5
-        button.clipsToBounds = true
-        return button
-    }()
-    
-    lazy var downIcon : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "down-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFill
-        button.addTarget(self, action: #selector(handleViewMore), for: .touchUpInside)
-        return button
-    }()
-
-    
     @objc func handleDismiss(){
         dismiss(animated: true, completion: nil)
     }
@@ -238,7 +171,6 @@ class PostDetailController : UICollectionViewController {
         seperatorCircle.anchor(top: nil, left: postType.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
         seperatorCircle.centerYAnchor.constraint(equalTo: postType.centerYAnchor).isActive = true
         daysLabel.anchor(top: postDetail.bottomAnchor, left: seperatorCircle.rightAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: daysLabel.intrinsicContentSize.width, height: 16)
-        setupEngagements()
         
         collectionView?.parallaxHeader.view = imageView
         collectionView?.contentInset = UIEdgeInsets(top: -10, left: 0, bottom: 0, right: 0)
@@ -246,6 +178,7 @@ class PostDetailController : UICollectionViewController {
         collectionView?.parallaxHeader.minimumHeight = 0
         collectionView?.parallaxHeader.mode = .topFill
         collectionView?.alwaysBounceVertical = false
+        collectionView?.showsVerticalScrollIndicator = false
         setupCollectionView()
     }
     
@@ -255,41 +188,18 @@ class PostDetailController : UICollectionViewController {
         collectionView?.register(DetailChallenge.self, forCellWithReuseIdentifier: challengeId)
         collectionView?.register(DetailTrying.self, forCellWithReuseIdentifier: tryingId)
         collectionView?.register(PostComments.self, forCellWithReuseIdentifier: commentId)
+        collectionView?.register(TeamList.self, forCellWithReuseIdentifier: teamId)
     }
     
-    func setupEngagements(){
-        imageView.addSubview(saveBackground)
-        imageView.addSubview(saveIcon)
-        imageView.addSubview(tryBackground)
-        imageView.addSubview(tryIcon)
-        imageView.addSubview(shareBackground)
-        imageView.addSubview(shareIcon)
-        imageView.addSubview(downBackground)
-        imageView.addSubview(downIcon)
-        
-        tryBackground.anchor(top: nil, left: nil, bottom: imageView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 32, paddingRight: 0, width: 48, height: 48)
-        tryBackground.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
-        tryIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 24, height: 24)
-        tryIcon.centerXAnchor.constraint(equalTo: tryBackground.centerXAnchor).isActive = true
-        tryIcon.centerYAnchor.constraint(equalTo: tryBackground.centerYAnchor).isActive = true
-        
-        saveBackground.anchor(top: nil, left: nil, bottom: nil, right: tryBackground.leftAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 42, width: 35, height: 35)
-        saveBackground.centerYAnchor.constraint(equalTo: tryBackground.centerYAnchor).isActive = true
-        saveIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 14, height: 18)
-        saveIcon.centerXAnchor.constraint(equalTo: saveBackground.centerXAnchor).isActive = true
-        saveIcon.centerYAnchor.constraint(equalTo: saveBackground.centerYAnchor).isActive = true
-        
-        shareBackground.anchor(top: nil, left: tryBackground.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 42, paddingBottom: 0, paddingRight: 0, width: 35, height: 35)
-        shareBackground.centerYAnchor.constraint(equalTo: tryBackground.centerYAnchor).isActive = true
-        shareIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 18, height: 16)
-        shareIcon.centerXAnchor.constraint(equalTo: shareBackground.centerXAnchor).isActive = true
-        shareIcon.centerYAnchor.constraint(equalTo: shareBackground.centerYAnchor).isActive = true
-        
-        downBackground.anchor(top: nil, left: shareBackground.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 32, paddingBottom: 0, paddingRight: 0, width: 35, height: 35)
-        downBackground.centerYAnchor.constraint(equalTo: tryBackground.centerYAnchor).isActive = true
-        downIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 18, height: 18)
-        downIcon.centerXAnchor.constraint(equalTo: downBackground.centerXAnchor).isActive = true
-        downIcon.centerYAnchor.constraint(equalTo: downBackground.centerYAnchor).isActive = true
+    func handleShare(for cell: PursuitDay) {
+        let activityController = UIActivityViewController(activityItems: [imageView.image ?? "", postDetail.text ?? "", daysLabel.text ?? ""], applicationActivities: nil)
+        Mixpanel.mainInstance().track(event: "Post Shared")
+        present(activityController, animated: true, completion: nil)
+    }
+    
+    func changeToChallenge(){
+        let detail = ChallengeDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+        present(detail, animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -336,6 +246,10 @@ class PostDetailController : UICollectionViewController {
 
 extension PostDetailController : UICollectionViewDelegateFlowLayout {
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.width, height: 20)
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
     }
@@ -344,14 +258,19 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
         switch indexPath.item {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay
+            cell.delegate = self
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: keyId, for: indexPath) as! KeyPost
             return cell
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! DetailChallenge
+            cell.accessPostDetailController = self
             return cell
         case 3:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamList
+            return cell
+        case 4:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: tryingId, for: indexPath) as! DetailTrying
             return cell
         default:
@@ -360,8 +279,27 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 40.0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 40.0
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 200)
+        switch indexPath.item {
+        case 0:
+            return CGSize(width: view.frame.width, height: 380)
+        case 1:
+            return CGSize(width: view.frame.width, height: 520)
+        case 3:
+            return CGSize(width: view.frame.width, height: 160)
+        case 4:
+            return CGSize(width: view.frame.width, height: 300)
+        default:
+            return CGSize(width: view.frame.width, height: 220)
+        }
     }
 }
 

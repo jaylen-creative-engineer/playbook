@@ -9,6 +9,7 @@
 import UIKit
 import Contacts
 import MessageUI
+import Mixpanel
 
 class InviteController : UICollectionViewController, UICollectionViewDelegateFlowLayout, SendInviteDelegate {
     
@@ -49,6 +50,7 @@ class InviteController : UICollectionViewController, UICollectionViewDelegateFlo
             controller.messageComposeDelegate = self
             controller.recipients = ["\(String(describing: cell.firstnameLabel.text)) \(String(describing: cell.lastnameLabel.text))"]
             controller.body =  "Follow my latest pursuits here"
+            Mixpanel.initialize(token: "Contact Invited")
             self.present(controller, animated: true, completion: nil)
         } else {
             print("Couldn't send message")

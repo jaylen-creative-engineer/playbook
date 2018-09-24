@@ -72,7 +72,7 @@ extension NotificationHeader : UICollectionViewDelegate, UICollectionViewDataSou
         let size = CGSize(width: approximateWidthOfLabel, height: .infinity)
         let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)]
         let estimatedFrame = NSString(string: headerNames[indexPath.item]).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-        return CGSize(width: estimatedFrame.width + 20, height: frame.height)
+        return CGSize(width: estimatedFrame.width + 15, height: frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

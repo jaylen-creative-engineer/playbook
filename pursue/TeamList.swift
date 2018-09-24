@@ -19,17 +19,39 @@ class TeamList : UICollectionViewCell {
     
     let collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
-        collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     
+    let teamLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Team"
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
+    }()
+    
+    lazy var addTeamButton : UIButton = {
+       let button = UIButton()
+        button.setTitle("Invite Friends", for: .normal)
+        button.titleLabel?.textAlignment = .right
+        button.setTitleColor(.darkGray, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        return button
+    }()
+    
     func setupView(){
+        addSubview(teamLabel)
+        addSubview(addTeamButton)
         addSubview(collectionView)
 
-        collectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        teamLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: teamLabel.intrinsicContentSize.width, height: 16)
+        addTeamButton.centerYAnchor.constraint(equalTo: teamLabel.centerYAnchor).isActive = true
+        addTeamButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: addTeamButton.intrinsicContentSize.width, height: 14)
+        collectionView.anchor(top: teamLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(TeamCells.self, forCellWithReuseIdentifier: cellId)
@@ -59,7 +81,11 @@ extension TeamList : UICollectionViewDelegate, UICollectionViewDataSource, UICol
         return 5
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width, height: (frame.height / 6) - 40)
+        return CGSize(width: frame.width / 5, height: 85)
     }
 }

@@ -8,12 +8,13 @@
 
 import UIKit
 import Hero
+import Material
 
 class HomePostCells : UICollectionViewCell  {
     
     lazy var imageView : UIImageView = {
         let iv = UIImageView()
-        iv.layer.cornerRadius = 12
+        iv.layer.cornerRadius = 8
         iv.clipsToBounds = true
         iv.image = #imageLiteral(resourceName: "ferrari").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
@@ -184,12 +185,59 @@ class HomePostCells : UICollectionViewCell  {
         return view
     }()
     
+    let fabButton : FABButton = {
+       let fab = FABButton()
+        fab.backgroundColor = .white
+        fab.pulseColor = .white
+        return fab
+    }()
+    
+    let fabMenu : FABMenu = {
+       let menu = FABMenu()
+        return menu
+    }()
+    
+    fileprivate let fabMenuSize = CGSize(width: 49, height: 49)
+    fileprivate let bottomInset: CGFloat = 24
+    fileprivate let rightInset: CGFloat = 24
+    
     var accessFeedController : FeedCell?
     
     @objc func handleChangeDetail(){
         accessFeedController?.handleChangeToDetail(transitionId: "0")
     }
-    
+
+//    let notesFABMenuItem = FABMenuItem()
+//    let remindersFABMenuItem = FABMenuItem()
+//
+//    func setupMenuItem(){
+//        notesFABMenuItem.title = "Audio Library"
+//        notesFABMenuItem.titleLabel.font = UIFont.boldSystemFont(ofSize: 14)
+//        notesFABMenuItem.titleLabel.textColor = .black
+//        notesFABMenuItem.fabButton.image = Icon.cm.pen
+//        notesFABMenuItem.fabButton.tintColor = .green
+//        notesFABMenuItem.fabButton.pulseColor = .green
+//        notesFABMenuItem.fabButton.backgroundColor = Color.green.base
+//
+//        remindersFABMenuItem.title = "Reminders"
+//        remindersFABMenuItem.titleLabel.font = UIFont.boldSystemFont(ofSize: 14)
+//        remindersFABMenuItem.fabButton.image = Icon.cm.bell
+//        remindersFABMenuItem.fabButton.tintColor = .blue
+//        remindersFABMenuItem.fabButton.pulseColor = .blue
+//        remindersFABMenuItem.fabButton.backgroundColor = Color.blue.base
+//    }
+//
+//    fileprivate func prepareFABMenu() {
+//        fabMenu.fabButton = fabButton
+//        fabMenu.fabMenuItems = [notesFABMenuItem, remindersFABMenuItem]
+//
+//        imageView.layout(fabMenu)
+//            .size(fabMenuSize)
+//            .bottom(bottomInset)
+//            .right(rightInset)
+//        setupMenuItem()
+//    }
+
     func setupEngagements(){
         addSubview(saveBackground)
         addSubview(saveIcon)
@@ -219,7 +267,7 @@ class HomePostCells : UICollectionViewCell  {
         shareIcon.centerXAnchor.constraint(equalTo: shareBackground.centerXAnchor).isActive = true
         shareIcon.centerYAnchor.constraint(equalTo: shareBackground.centerYAnchor).isActive = true
     }
-    
+
     func setupView(){
         addSubview(backgroundShadow)
         addSubview(imageView)
@@ -245,7 +293,6 @@ class HomePostCells : UICollectionViewCell  {
         seperatorCircle.anchor(top: nil, left: postType.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
         seperatorCircle.centerYAnchor.constraint(equalTo: postType.centerYAnchor).isActive = true
         daysLabel.anchor(top: postDetail.bottomAnchor, left: seperatorCircle.rightAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: daysLabel.intrinsicContentSize.width, height: 16)
-        setupEngagements()
     }
     
     override init(frame: CGRect) {
