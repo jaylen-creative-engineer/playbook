@@ -112,6 +112,7 @@
 		E67205F7215B23930085470C /* video02.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E672C4B72159A7130097E342 /* video02.mp4 */; };
 		E67205F8215B23930085470C /* video03.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E672C4B62159A6FA0097E342 /* video03.mp4 */; };
 		E67205FC215BE0590085470C /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67205FB215BE0590085470C /* System.swift */; };
+		E67205FE215D13280085470C /* CommentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67205FD215D13280085470C /* CommentsController.swift */; };
 		E672C4B1215844990097E342 /* ChallengeDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E672C4B0215844990097E342 /* ChallengeDetailController.swift */; };
 		E672C4B3215847570097E342 /* ChallengeListCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E672C4B2215847570097E342 /* ChallengeListCells.swift */; };
 		E672C4B521584D700097E342 /* ChallengeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E672C4B421584D700097E342 /* ChallengeHeader.swift */; };
@@ -310,6 +311,7 @@
 		E66AEB2020DD95E7000018B5 /* ProfilePrincipleCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePrincipleCells.swift; sourceTree = "<group>"; };
 		E67205F4215AA4DB0085470C /* KeyPostListCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPostListCells.swift; sourceTree = "<group>"; };
 		E67205FB215BE0590085470C /* System.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
+		E67205FD215D13280085470C /* CommentsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsController.swift; sourceTree = "<group>"; };
 		E672C4B0215844990097E342 /* ChallengeDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeDetailController.swift; sourceTree = "<group>"; };
 		E672C4B2215847570097E342 /* ChallengeListCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeListCells.swift; sourceTree = "<group>"; };
 		E672C4B421584D700097E342 /* ChallengeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeHeader.swift; sourceTree = "<group>"; };
@@ -556,6 +558,7 @@
 				E672C4B2215847570097E342 /* ChallengeListCells.swift */,
 				E672C4BB2159E5EB0097E342 /* KeyPostController.swift */,
 				E67205F4215AA4DB0085470C /* KeyPostListCells.swift */,
+				E67205FD215D13280085470C /* CommentsController.swift */,
 			);
 			name = Detail;
 			sourceTree = "<group>";
@@ -1054,6 +1057,7 @@
 				E6DF9ECB203CF8FB005C86DB /* PhotoViewController.swift in Sources */,
 				E62E29B021555A3200139483 /* HomeMenuBar.swift in Sources */,
 				E6E269052145D7F100A7B1FC /* DetailRelatedCells.swift in Sources */,
+				E67205FE215D13280085470C /* CommentsController.swift in Sources */,
 				E6C7387720E57B1900D352D6 /* ChatCells.swift in Sources */,
 				E61A70E420E1832900EB69D8 /* TeamCells.swift in Sources */,
 				E6E1FA36207A88C8008F4280 /* SignupInterestsHeader.swift in Sources */,

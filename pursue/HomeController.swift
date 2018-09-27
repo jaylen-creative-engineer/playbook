@@ -233,6 +233,7 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! HomePostCells
         cell.imageView.motionIdentifier = String(indexPath.item)
+        cell.accessHomeController = self
         return cell
     }
     

@@ -32,15 +32,36 @@ class ChallengeListCells : UICollectionViewCell {
         return label
     }()
     
+    let acceptLabel : UIButton = {
+       let button = UIButton()
+        button.setTitle("Accept", for: .normal)
+        button.setTitleColor(.green, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        return button
+    }()
+    
+    let declineLabel : UIButton = {
+        let button = UIButton()
+        button.setTitle("Decline", for: .normal)
+        button.setTitleColor(.red, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        return button
+    }()
+    
     func setupView(){
         addSubview(postImage)
         addSubview(postDetail)
         addSubview(dateLabel)
+        addSubview(acceptLabel)
+        addSubview(declineLabel)
         
         postImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 100, height: 120)
         postDetail.anchor(top: postImage.topAnchor, left: postImage.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
         postDetail.heightAnchor.constraint(lessThanOrEqualToConstant: 60).isActive = true
         dateLabel.anchor(top: postDetail.bottomAnchor, left: postDetail.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
+        
+        acceptLabel.anchor(top: nil, left: dateLabel.leftAnchor, bottom: postImage.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: acceptLabel.intrinsicContentSize.width, height: 14)
+        declineLabel.anchor(top: acceptLabel.topAnchor, left: acceptLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 16, paddingBottom: 0, paddingRight: 0, width: declineLabel.intrinsicContentSize.width, height: 14)
     }
     
     override init(frame: CGRect) {

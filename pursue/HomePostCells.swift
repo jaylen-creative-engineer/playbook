@@ -12,6 +12,8 @@ import Material
 
 class HomePostCells : UICollectionViewCell  {
     
+    var accessHomeController : HomeController?
+    
     lazy var imageView : UIImageView = {
         let iv = UIImageView()
         iv.layer.cornerRadius = 8
@@ -96,84 +98,7 @@ class HomePostCells : UICollectionViewCell  {
         label.motionIdentifier = "timeLabel"
         return label
     }()
-    
-    let saveBackground : UIButton = {
-       let button = UIButton()
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 15
-        button.clipsToBounds = true
-        button.motionIdentifier = "saveBackground"
-        return button
-    }()
-    
-    let saveLabel : UILabel = {
-       let label = UILabel()
-        label.text = "Save"
-        label.font = UIFont(name: "Lato-Bold", size: 12)
-        label.textColor = .white
-        label.motionIdentifier = "saveLabel"
-        return label
-    }()
-    
-    lazy var saveIcon : UIButton = {
-       let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "bookmark").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFill
-        button.motionIdentifier = "saveIcon"
-        return button
-    }()
-    
-    let tryBackground : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 21
-        button.clipsToBounds = true
-        button.motionIdentifier = "tryBackground"
-        return button
-    }()
-    
-    lazy var tryIcon : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "add").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFill
-        button.motionIdentifier = "tryIcon"
-        return button
-    }()
-    
-    let tryLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Try"
-        label.font = UIFont(name: "Lato-Bold", size: 12)
-        label.textColor = .white
-        label.motionIdentifier = "tryLabel"
-        return label
-    }()
-    
-    let shareBackground : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 15
-        button.clipsToBounds = true
-        button.motionIdentifier = "shareBackground"
-        return button
-    }()
-    
-    lazy var shareIcon : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "share").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFill
-        button.motionIdentifier = "shareIcon"
-        return button
-    }()
-    
-    let shareLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Share"
-        label.font = UIFont(name: "Lato-Bold", size: 12)
-        label.textColor = .white
-        label.motionIdentifier = "shareLabel"
-        return label
-    }()
+  
     
     let progressBar : UIProgressView = {
        let view = UIProgressView()
@@ -184,88 +109,12 @@ class HomePostCells : UICollectionViewCell  {
         view.motionIdentifier = "progressBar"
         return view
     }()
-    
-    let fabButton : FABButton = {
-       let fab = FABButton()
-        fab.backgroundColor = .white
-        fab.pulseColor = .white
-        return fab
-    }()
-    
-    let fabMenu : FABMenu = {
-       let menu = FABMenu()
-        return menu
-    }()
-    
-    fileprivate let fabMenuSize = CGSize(width: 49, height: 49)
-    fileprivate let bottomInset: CGFloat = 24
-    fileprivate let rightInset: CGFloat = 24
+
     
     var accessFeedController : FeedCell?
     
     @objc func handleChangeDetail(){
-        accessFeedController?.handleChangeToDetail(transitionId: "0")
-    }
-
-//    let notesFABMenuItem = FABMenuItem()
-//    let remindersFABMenuItem = FABMenuItem()
-//
-//    func setupMenuItem(){
-//        notesFABMenuItem.title = "Audio Library"
-//        notesFABMenuItem.titleLabel.font = UIFont.boldSystemFont(ofSize: 14)
-//        notesFABMenuItem.titleLabel.textColor = .black
-//        notesFABMenuItem.fabButton.image = Icon.cm.pen
-//        notesFABMenuItem.fabButton.tintColor = .green
-//        notesFABMenuItem.fabButton.pulseColor = .green
-//        notesFABMenuItem.fabButton.backgroundColor = Color.green.base
-//
-//        remindersFABMenuItem.title = "Reminders"
-//        remindersFABMenuItem.titleLabel.font = UIFont.boldSystemFont(ofSize: 14)
-//        remindersFABMenuItem.fabButton.image = Icon.cm.bell
-//        remindersFABMenuItem.fabButton.tintColor = .blue
-//        remindersFABMenuItem.fabButton.pulseColor = .blue
-//        remindersFABMenuItem.fabButton.backgroundColor = Color.blue.base
-//    }
-//
-//    fileprivate func prepareFABMenu() {
-//        fabMenu.fabButton = fabButton
-//        fabMenu.fabMenuItems = [notesFABMenuItem, remindersFABMenuItem]
-//
-//        imageView.layout(fabMenu)
-//            .size(fabMenuSize)
-//            .bottom(bottomInset)
-//            .right(rightInset)
-//        setupMenuItem()
-//    }
-
-    func setupEngagements(){
-        addSubview(saveBackground)
-        addSubview(saveIcon)
-        addSubview(tryBackground)
-        addSubview(tryIcon)
-        addSubview(saveLabel)
-        addSubview(tryLabel)
-        addSubview(shareBackground)
-        addSubview(shareIcon)
-        addSubview(shareLabel)
-
-        tryBackground.anchor(top: nil, left: nil, bottom: imageView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 32, paddingRight: 0, width: 42, height: 42)
-        tryBackground.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
-        tryIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 18, height: 18)
-        tryIcon.centerXAnchor.constraint(equalTo: tryBackground.centerXAnchor).isActive = true
-        tryIcon.centerYAnchor.constraint(equalTo: tryBackground.centerYAnchor).isActive = true
-        
-        saveBackground.anchor(top: nil, left: nil, bottom: nil, right: tryBackground.leftAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 34, width: 30, height: 30)
-        saveBackground.centerYAnchor.constraint(equalTo: tryBackground.centerYAnchor).isActive = true
-        saveIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 12, height: 16)
-        saveIcon.centerXAnchor.constraint(equalTo: saveBackground.centerXAnchor).isActive = true
-        saveIcon.centerYAnchor.constraint(equalTo: saveBackground.centerYAnchor).isActive = true
-
-        shareBackground.anchor(top: nil, left: tryBackground.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 34, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
-        shareBackground.centerYAnchor.constraint(equalTo: tryBackground.centerYAnchor).isActive = true
-        shareIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 16, height: 14)
-        shareIcon.centerXAnchor.constraint(equalTo: shareBackground.centerXAnchor).isActive = true
-        shareIcon.centerYAnchor.constraint(equalTo: shareBackground.centerYAnchor).isActive = true
+        accessHomeController?.handleChangeToDetail(transitionId: "0")
     }
 
     func setupView(){

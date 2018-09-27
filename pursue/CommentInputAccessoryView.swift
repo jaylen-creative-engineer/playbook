@@ -23,7 +23,7 @@ class CommentInputAccessoryView : UIView {
     
     fileprivate let commentTextView: CommentInputTextView = {
         let tv = CommentInputTextView()
-        tv.layer.cornerRadius = 8
+        tv.layer.cornerRadius = 15
         tv.layer.masksToBounds = true
         tv.isScrollEnabled = false
         tv.font = UIFont.systemFont(ofSize: 14)
@@ -48,7 +48,7 @@ class CommentInputAccessoryView : UIView {
     lazy var sendBackground : UIButton = {
        let button = UIButton()
         button.backgroundColor = .black
-        button.layer.cornerRadius = 20
+        button.layer.cornerRadius = 17.5
         button.layer.masksToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -63,19 +63,12 @@ class CommentInputAccessoryView : UIView {
         return button
     }()
     
-    lazy var attachmentButton : UIButton = {
-       let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "link").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.tintColor = .gray
-        button.contentMode = .scaleAspectFill
-        return button
-    }()
     
     fileprivate func setupSendButton() {
         addSubview(sendBackground)
         sendBackground.addSubview(sendIcon)
         
-        sendBackground.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 40, height: 40)
+        sendBackground.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 35, height: 35)
         sendIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 16, height: 14)
         sendIcon.centerXAnchor.constraint(equalTo: sendBackground.centerXAnchor).isActive = true
         sendIcon.centerYAnchor.constraint(equalTo: sendBackground.centerYAnchor).isActive = true
@@ -85,10 +78,8 @@ class CommentInputAccessoryView : UIView {
         super.init(frame: frame)
         
         autoresizingMask = .flexibleHeight
-        backgroundColor = .white
+        backgroundColor = .red
         
-        addSubview(attachmentButton)
-        attachmentButton.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 14, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 18, height: 18)
         setupSendButton()
         
         
@@ -96,7 +87,7 @@ class CommentInputAccessoryView : UIView {
         addSubview(commentTextView)
         
         if #available(iOS 11.0, *) {
-            textViewBackground.anchor(top: topAnchor, left: attachmentButton.rightAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: sendBackground.leftAnchor, paddingTop: 8, paddingLeft: 12, paddingBottom: 8, paddingRight: 12, width: 0, height: 0)
+            textViewBackground.anchor(top: sendBackground.topAnchor, left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: sendBackground.leftAnchor, paddingTop: 2, paddingLeft: 12, paddingBottom: 8, paddingRight: 12, width: 0, height: 0)
             commentTextView.anchor(top: textViewBackground.topAnchor, left: textViewBackground.leftAnchor, bottom: textViewBackground.bottomAnchor, right: textViewBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         } else {
             // Fallback on earlier versions

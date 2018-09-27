@@ -14,6 +14,7 @@ import AVKit
 import MediaPlayer
 import Motion
 import Mixpanel
+import ParallaxHeader
 
 class PostDetailController : UICollectionViewController, PursuitDayDelegate, KeyPostDelegate {
 
@@ -126,11 +127,8 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         return view
     }()
     
-    lazy var videoView : UIView = {
-       let view = UIView()
-        view.backgroundColor = .white
-        return view
-    }()
+    let videoView = UIView()
+    let containerView = UIView()
     
     lazy var forwardButton : UIButton = {
        let button = UIButton()
@@ -194,7 +192,10 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         self.currentStoryIndex += 1
         self.currentStory = stories[self.currentStoryIndex]
         self.avPlayer?.replaceCurrentItem(with: self.currentStory?.avPlayerItem)
-        layer?.frame = self.videoView.frame
+//        layer?.frame = self.videoView.frame
+//        self.videoView.layer.addSublayer(layer!)
+        self.layer?.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (view.frame.height / 1.2) + 20)
+        layer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
         self.videoView.layer.addSublayer(layer!)
         self.startTimer()
         DispatchQueue.main.async(execute: {
@@ -217,7 +218,10 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         self.currentStoryIndex -= 1
         self.currentStory = stories[self.currentStoryIndex]
         self.avPlayer?.replaceCurrentItem(with: self.currentStory?.avPlayerItem)
-        layer?.frame = self.videoView.frame
+//        layer?.frame = self.videoView.frame
+        self.layer?.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (view.frame.height / 1.2) + 20)
+        layer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        self.videoView.layer.addSublayer(layer!)
         self.startTimer()
         DispatchQueue.main.async(execute: {
             //Your main thread code goes in here
@@ -241,7 +245,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         
         self.avPlayer = AVPlayer(playerItem: self.currentStory?.avPlayerItem)
         layer = AVPlayerLayer(player: avPlayer)
-        self.layer?.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height / 1.2)
+        self.layer?.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (view.frame.height / 1.2) + 20)
         layer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
         self.videoView.layer.addSublayer(layer!)
         avPlayer?.play()
@@ -260,7 +264,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         
         videoView.addSubview(progressStackView)
         
-        progressStackView.anchor(top: videoView.safeAreaLayoutGuide.topAnchor, left: videoView.leftAnchor, bottom: nil, right: videoView.rightAnchor, paddingTop: view.frame.height / 4, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 1.5)
+        progressStackView.anchor(top: containerView.safeAreaLayoutGuide.topAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, paddingTop: view.frame.height / 4, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 1.5)
 
         let gaps = self.stories.count
         let viewWidth = self.progressStackView.frame.width - CGFloat(gaps)
@@ -275,11 +279,6 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         }
         
         self.currentStory = stories.first
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
     }
     
     // MARK: - Setup Timer
@@ -318,20 +317,24 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     }
     
     func setupVideoView(){
-        view.addSubview(videoView)
-        videoView.addSubview(forwardButton)
-        videoView.addSubview(backwardButton)
-        videoView.addSubview(cancelButton)
-        videoView.addSubview(userPhoto)
-        videoView.addSubview(postType)
-        videoView.addSubview(postDetail)
-        videoView.addSubview(seperatorCircle)
-        videoView.addSubview(daysLabel)
-        videoView.addSubview(username)
-        videoView.addSubview(timeLabel)
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.backgroundColor = .white
+        videoView.addSubview(containerView)
         
-        forwardButton.anchor(top: videoView.topAnchor, left: videoView.centerXAnchor, bottom: videoView.bottomAnchor, right: videoView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        backwardButton.anchor(top: videoView.topAnchor, left: videoView.leftAnchor, bottom: videoView.bottomAnchor, right: videoView.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        containerView.addSubview(forwardButton)
+        containerView.addSubview(backwardButton)
+        containerView.addSubview(cancelButton)
+        containerView.addSubview(userPhoto)
+        containerView.addSubview(postType)
+        containerView.addSubview(postDetail)
+        containerView.addSubview(seperatorCircle)
+        containerView.addSubview(daysLabel)
+        containerView.addSubview(username)
+        containerView.addSubview(timeLabel)
+        
+        containerView.anchor(top: videoView.topAnchor, left: videoView.leftAnchor, bottom: videoView.bottomAnchor, right: videoView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        forwardButton.anchor(top: containerView.topAnchor, left: containerView.centerXAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        backwardButton.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: containerView.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     
         
         setupMultipleProgressBar()
@@ -347,12 +350,12 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         seperatorCircle.anchor(top: nil, left: postType.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
         seperatorCircle.centerYAnchor.constraint(equalTo: postType.centerYAnchor).isActive = true
         daysLabel.anchor(top: postDetail.bottomAnchor, left: seperatorCircle.rightAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: daysLabel.intrinsicContentSize.width, height: 16)
-        
-        setupCollectionView()
         initializeVideoPlayerWithVideo()
+
     }
     
     func setupCollectionView(){
+        videoView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height / 1.2)
         collectionView?.parallaxHeader.view = videoView
 //        collectionView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         collectionView?.parallaxHeader.height = view.frame.height / 1.2
@@ -385,15 +388,57 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         present(detail, animated: true, completion: nil)
     }
     
+    func changeToComments(){
+        let comments = CommentsController(collectionViewLayout: UICollectionViewFlowLayout())
+        present(comments, animated: true, completion: nil)
+    }
+    
+    func handleInviteContacts(){
+        let inviteController = InviteController(collectionViewLayout: UICollectionViewFlowLayout())
+        present(inviteController, animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         hero.isEnabled = true
         isMotionEnabled = true
+        setupCollectionView()
         setupVideoView()
 //        setupView()
 //        addDataToStory()
 //        progressBarStackViewSetup()
 //        view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
+    }
+    
+    // MARK: - Handle view options
+    
+    override func viewWillLayoutSubviews() {
+        DispatchQueue.main.async(execute: {
+            self.videoView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: (self.view.frame.height / 1.2))
+        })
+    }
+//
+    override func viewDidLayoutSubviews() {
+        DispatchQueue.main.async(execute: {
+            self.videoView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: (self.view.frame.height / 1.2))
+        })
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd(notification:)), name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: self.avPlayer?.currentItem)
+    }
+    
+    @objc func playerItemDidReachEnd(notification: Notification) {
+        if let playerItem: AVPlayerItem = notification.object as? AVPlayerItem {
+            playerItem.seek(to: kCMTimeZero, completionHandler: nil)
+            self.avPlayer?.play()
+        }
     }
     
     let engagementsView = PostEngagementsController()
@@ -436,7 +481,7 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return 6
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -455,12 +500,14 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
             return cell
         case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamList
+            cell.accessPostDetailController = self
             return cell
         case 4:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: tryingId, for: indexPath) as! DetailTrying
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
+            cell.accessPostDetailController = self
             return cell
         }
     }

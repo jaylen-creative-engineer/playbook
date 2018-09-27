@@ -45,8 +45,15 @@ class PostComments: UICollectionViewCell {
         button.setTitle("22 Comments", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.addTarget(self, action: #selector(handleViewComments), for: .touchUpInside)
         return button
     }()
+    
+    var accessPostDetailController : PostDetailController?
+    
+    @objc func handleViewComments(){
+        accessPostDetailController?.changeToComments()
+    }
     
     func setupAddComment(){
         addSubview(userPhoto)

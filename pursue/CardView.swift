@@ -296,7 +296,7 @@ class LoginTopRectangleView: UIView {
 
 class StoryRectangleView: UIView {
     
-    var cornerRadius : CGFloat = 8
+    var cornerRadius : CGFloat = 15
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 3
     var shadowOpacity : CGFloat = 0.2

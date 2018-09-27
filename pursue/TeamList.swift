@@ -40,8 +40,15 @@ class TeamList : UICollectionViewCell {
         button.titleLabel?.textAlignment = .right
         button.setTitleColor(.darkGray, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        button.addTarget(self, action: #selector(handleInvite), for: .touchUpInside)
         return button
     }()
+    
+    var accessPostDetailController : PostDetailController?
+    
+    @objc func handleInvite(){
+        accessPostDetailController?.handleInviteContacts()
+    }
     
     func setupView(){
         addSubview(teamLabel)
