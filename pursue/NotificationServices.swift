@@ -16,7 +16,9 @@ class NotificationServices {
     
     func getNotifications(completion: @escaping (Notification) -> ()){
         let url = "https://pursuit-jaylenhu27.c9users.io/"
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+        
+        let defaults = UserDefaults.standard
+        let userId = defaults.integer(forKey: "userId")
         
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId

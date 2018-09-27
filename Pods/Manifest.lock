@@ -110,6 +110,7 @@ PODS:
   - GTMSessionFetcher/Full (1.2.0):
     - GTMSessionFetcher/Core (= 1.2.0)
   - Hero (1.3.1)
+  - HidingNavigationBar (1.0.0)
   - KWTransition (0.0.4)
   - leveldb-library (1.20)
   - Material (2.16.4):
@@ -149,6 +150,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - GoogleSignIn
   - Hero
+  - HidingNavigationBar
   - KWTransition
   - Material
   - Mixpanel-swift
@@ -183,6 +185,7 @@ SPEC REPOS:
     - GTMOAuth2
     - GTMSessionFetcher
     - Hero
+    - HidingNavigationBar
     - KWTransition
     - leveldb-library
     - Material
@@ -219,6 +222,7 @@ SPEC CHECKSUMS:
   GTMOAuth2: c77fe325e4acd453837e72d91e3b5f13116857b2
   GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
   Hero: 1c3c625ba05856f305d29f5c270f8766c5ff2df7
+  HidingNavigationBar: 170dd21df8e89c465c01f047d4306778d1ce304c
   KWTransition: 72d59eef35ddb67769eb99a41317fa75c0444e1b
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   Material: 4ed78690b09ffd148b5ffab6b4367fb1d8da1cd3
@@ -232,6 +236,6 @@ SPEC CHECKSUMS:
   SnapSliderFilters: 7f571683b05cf70b8d398e4a0e45691bd9f03a33
   SwiftyCam: 86c114177a1b1f5dc2c82384577d0c20b922a31b
 
-PODFILE CHECKSUM: bffb348a7f469709ab936f53e2d7b24d948c0ea6
+PODFILE CHECKSUM: 9295dc42252526274a54cf9ce37bb935a8567e17
 
 COCOAPODS: 1.5.3

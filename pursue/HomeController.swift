@@ -10,219 +10,63 @@ import UIKit
 import Hero
 import KWTransition
 import Motion
-import ParallaxHeader
 
 class HomeController : UICollectionViewController {
     
-    let notificationId = "notificationId"
+    let cellId = "cellId"
     let headerId = "headerId"
     let postId = "postId"
-    let feedId = "feedId"
-    let profileId = "profileId"
-
+    
     var isFirstLaunch = false
     
     let homeServices = HomeServices()
     let detailController = PostDetailController()
-
-    lazy var userPhoto : UIImageView = {
-       let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
-        iv.contentMode = .scaleAspectFill
-        iv.layer.cornerRadius = 12.5
-        iv.layer.masksToBounds = true
-        iv.isUserInteractionEnabled = true
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(goToProfileController))
-        tap.numberOfTapsRequired = 1
-        iv.addGestureRecognizer(tap)
-        return iv
-    }()
-    
-    let navUnderlineView : UIView = {
-       let view = UIView()
-        view.backgroundColor = .clear
-        return view
-    }()
-    
-    lazy var searchButton : UIButton = {
-       let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "search_unselected").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFill
-        button.motionIdentifier = "searchButton"
-        button.addTarget(self, action: #selector(goToSearchController), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var settingsButton : UIButton = {
-        let button = UIButton()
-        button.setTitle("•••", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
-        button.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var homeMenuBar : HomeMenuBar = {
-       let hb = HomeMenuBar()
-        hb.accessHomeController = self
-        return hb
-    }()
-    
-    lazy var notificationsBar : NotificationHeader = {
-       let header = NotificationHeader()
-        header.accessHomeController = self
-//        header.accessNotificationsContainer = self
-        return header
-    }()
-    
-    var accessNotificationsContainer : NotificationsContainer?
-    
-    func scrollToMenuIndex(menuIndex : Int){
-        accessNotificationsContainer?.scrollToItem(menuIndex: menuIndex)
-    }
-    
-    func handleCameraTap(){
-        let photoSelectorController = SelectCameraController()
-        let navController = UINavigationController(rootViewController: photoSelectorController)
-        present(navController, animated: true, completion: nil)
-    }
-    
-    func changeToChatDetail(){
-        let chatDetail = ChatDetailController()
-        navigationController?.pushViewController(chatDetail, animated: true)
-    }
-    
-    @objc func handleSettings(){
-        let customAlert = CustomSettingsView()
-        customAlert.providesPresentationContextTransitionStyle = true
-        customAlert.definesPresentationContext = true
-        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.showDetailViewController(customAlert, sender: self)
-    }
-    
-    func handleChatPageChange(){
-        notificationsBar.isHidden = false
-        homeLabel.isHidden = true
-        usernameLabel.isHidden = true
-        searchButton.isHidden = false
-        settingsButton.isHidden = true
-        
-        homeMenuBar.chatButton.setImage(#imageLiteral(resourceName: "chat_selected").withRenderingMode(.alwaysOriginal), for: .normal)
-        homeMenuBar.homeButton.setImage(#imageLiteral(resourceName: "home_unselected").withRenderingMode(.alwaysOriginal), for: .normal)
-        
-        let indexPath = IndexPath(item: 1, section: 0)
-        collectionView?.scrollToItem(at: indexPath, at: [], animated: false)
-    }
-    
-    func handleHomeTap(){
-        notificationsBar.isHidden = true
-        homeLabel.isHidden = false
-        usernameLabel.isHidden = true
-        searchButton.isHidden = false
-        settingsButton.isHidden = true
-        
-        homeMenuBar.chatButton.setImage(#imageLiteral(resourceName: "chat").withRenderingMode(.alwaysOriginal), for: .normal)
-        homeMenuBar.homeButton.setImage(#imageLiteral(resourceName: "home_selected").withRenderingMode(.alwaysOriginal), for: .normal)
-        
-        let indexPath = IndexPath(item: 0, section: 0)
-        collectionView?.scrollToItem(at: indexPath, at: [], animated: false)
-    }
-    
-    func handleProfileTap(){
-        notificationsBar.isHidden = true
-        homeLabel.isHidden = true
-        usernameLabel.isHidden = false
-        searchButton.isHidden = true
-        settingsButton.isHidden = false
-        
-        homeMenuBar.chatButton.setImage(#imageLiteral(resourceName: "chat").withRenderingMode(.alwaysOriginal), for: .normal)
-        homeMenuBar.homeButton.setImage(#imageLiteral(resourceName: "home_unselected").withRenderingMode(.alwaysOriginal), for: .normal)
-
-        let indexPath = IndexPath(item: 2, section: 0)
-        collectionView?.scrollToItem(at: indexPath, at: [], animated: false)
-    }
-    
-    func setupCustomTabBar(){
-        view.addSubview(homeMenuBar)
-        homeMenuBar.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 280, height: 58)
-        homeMenuBar.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    }
     
     func setupCollectionView(){
-        if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.scrollDirection = .horizontal
-            flowLayout.minimumLineSpacing = 0
-        }
-        
-        collectionView?.register(FeedCell.self, forCellWithReuseIdentifier: feedId)
-        collectionView?.register(ProfileContainer.self, forCellWithReuseIdentifier: profileId)
-        collectionView?.register(NotificationsContainer.self, forCellWithReuseIdentifier: notificationId)
         collectionView?.register(HomeHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView?.register(HomePostCells.self, forCellWithReuseIdentifier: postId)
+        collectionView?.register(RecommenedPursuit.self, forCellWithReuseIdentifier: cellId)
         collectionView?.backgroundColor = .white
-        collectionView?.showsHorizontalScrollIndicator = false
-        collectionView?.contentInset = UIEdgeInsetsMake(60, 0, 0, 0)
-        collectionView?.isScrollEnabled = false
-        setupCustomTabBar()
-        handleHomeTap()
-    }
-    
-    let homeLabel = UILabel()
-    let usernameLabel = UILabel()
-    let navBarBackground = UIView()
-    
-    func setupSettings(){
-        view.addSubview(settingsButton)
-        settingsButton.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
-        settingsButton.anchor(top: nil, left: nil, bottom: nil, right: navBarBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: settingsButton.intrinsicContentSize.width, height: settingsButton.intrinsicContentSize.height)
-    }
-
-    func setupNavigationBar(){
-        navBarBackground.backgroundColor = .white
-        navBarBackground.translatesAutoresizingMaskIntoConstraints = false
-        
-        homeLabel.text = "Home"
-        homeLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
-        homeLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        usernameLabel.text = "jaylenhu27"
-        usernameLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
-        usernameLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(navBarBackground)
-        view.addSubview(navUnderlineView)
-        navBarBackground.addSubview(homeLabel)
-        navBarBackground.addSubview(usernameLabel)
-        navBarBackground.addSubview(searchButton)
-        view.addSubview(notificationsBar)
-        
-        navBarBackground.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 80)
-        navUnderlineView.anchor(top: navBarBackground.bottomAnchor, left: navBarBackground.leftAnchor, bottom: nil, right: navBarBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
-        homeLabel.anchor(top: nil, left: navBarBackground.leftAnchor, bottom: navUnderlineView.topAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 8, paddingRight: 0, width: 60, height: homeLabel.intrinsicContentSize.height)
-        searchButton.anchor(top: nil, left: nil, bottom: navUnderlineView.topAnchor, right: navBarBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 6, paddingRight: 12, width: 18, height: 18)
-        notificationsBar.anchor(top: nil, left: navBarBackground.leftAnchor, bottom: navUnderlineView.topAnchor, right: searchButton.leftAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 8, paddingRight: 24, width: 0, height: homeLabel.intrinsicContentSize.height)
-        usernameLabel.anchor(top: nil, left: navBarBackground.leftAnchor, bottom: navUnderlineView.topAnchor, right: searchButton.leftAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 8, paddingRight: 32, width: 0, height: usernameLabel.intrinsicContentSize.height)
-        setupSettings()
+        collectionView?.showsVerticalScrollIndicator = false
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        tabBarController?.tabBar.isTranslucent = true
+        setupCollectionView()
         
+       
         if UserDefaults.standard.value(forKey: "homeIntroPopover") == nil {
             setupIntroView()
         } else {
             dismissHomePopover()
         }
         isMotionEnabled = true
-        setupNavigationBar()
-        setupCollectionView()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = true
-        tabBarController?.tabBar.isHidden = true
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        if scrollView.panGestureRecognizer.translation(in: scrollView).y < 0{
+            changeTabBar(hidden: true, animated: true)
+        }
+        else{
+            changeTabBar(hidden: false, animated: true)
+        }
+    }
+    
+    func changeTabBar(hidden:Bool, animated: Bool){
+        guard let tabBar = self.tabBarController?.tabBar else { return; }
+        if tabBar.isHidden == hidden{ return }
+        let frame = tabBar.frame
+        let offset = hidden ? frame.size.height : -frame.size.height
+        let duration:TimeInterval = (animated ? 0.5 : 0.0)
+        tabBar.isHidden = false
+        
+        UIView.animate(withDuration: duration, animations: {
+            tabBar.frame = frame.offsetBy(dx: 0, dy: offset)
+        }, completion: { (true) in
+            tabBar.isHidden = hidden
+        })
     }
     
     // MARK: - Setup View
@@ -232,15 +76,19 @@ class HomeController : UICollectionViewController {
         present(searchView, animated: true, completion: nil)
     }
     
-    @objc func goToProfileController(){
-        let profileView = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
-        present(profileView, animated: true, completion: nil)
+    @objc func handleProfile(){
+        let profile = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+        present(profile, animated: true, completion: nil)
+    }
+    
+    func postHeld(transitionId : String) {
+        
     }
     
     func handleChangeToDetail(transitionId : String){
         let detail = PostDetailController(collectionViewLayout: UICollectionViewFlowLayout())
         detail.imageView.motionIdentifier = transitionId
-//        detail.imageView.hero.id = transitionId
+        //        detail.imageView.hero.id = transitionId
         present(detail, animated: true, completion: nil)
     }
     
@@ -258,7 +106,7 @@ class HomeController : UICollectionViewController {
     }()
     
     lazy var backgroundView : UIView = {
-       let view = UIView()
+        let view = UIView()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissHomePopover))
         tap.numberOfTapsRequired = 1
@@ -267,14 +115,14 @@ class HomeController : UICollectionViewController {
     }()
     
     lazy var homeIntroLabel : UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "View Pursuits"
         label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
         return label
     }()
     
     lazy var pursuitsDescription : UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         let attributedString = NSMutableAttributedString(string: "Stay inspired and learn steps and principles that can help you on your journey.")
         
         let paragraphStyle = NSMutableParagraphStyle()
@@ -287,7 +135,7 @@ class HomeController : UICollectionViewController {
     }()
     
     lazy var gotItButton : UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.setTitle("Got It", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
@@ -301,7 +149,7 @@ class HomeController : UICollectionViewController {
     
     @objc func dismissHomePopover(){
         UserDefaults.standard.set("true", forKey: "homeIntroPopover")
-
+        
         backgroundView.isHidden = true
         alertView.isHidden = true
         homeIntroLabel.isHidden = true
@@ -350,34 +198,42 @@ class HomeController : UICollectionViewController {
         })
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
 }
 
 extension HomeController : UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height - 60)
+    
+    //    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    //
+    //        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! HomeHeader
+    //        header.accessHomeController = self
+    //        return header
+    //    }
+    //
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 4
     }
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: view.frame.height / 1.3)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 20.0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 20.0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.item {
-        case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: feedId, for: indexPath) as! FeedCell
-            cell.accessHomeController = self
-            return cell
-        case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: notificationId, for: indexPath) as! NotificationsContainer
-            cell.accessHomeController = self
-            self.accessNotificationsContainer = cell
-            return cell
-        default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: profileId, for: indexPath) as! ProfileContainer
-//            self.accessNotificationsContainer = cell
-            return cell
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! HomePostCells
+        cell.imageView.motionIdentifier = String(indexPath.item)
+        return cell
     }
     
 }

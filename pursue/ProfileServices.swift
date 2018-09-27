@@ -44,7 +44,9 @@ class ProfileServices {
     
     func socialLogin(email : String, fullname : String, photoUrl : String, completion: @escaping (User) -> ()){
         let url = "http://localhost:8080/signup"
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+        
+        let defaults = UserDefaults.standard
+        let userId = defaults.integer(forKey: "userId")
         
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId
@@ -189,7 +191,9 @@ class ProfileServices {
     
     func deleteAccount(){
         let url = "http://localhost:8080/delete_account"
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+        
+        let defaults = UserDefaults.standard
+        let userId = defaults.integer(forKey: "userId")
         
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId

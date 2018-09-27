@@ -15,7 +15,7 @@ import MediaPlayer
 import Motion
 import Mixpanel
 
-class PostDetailController : UICollectionViewController, PursuitDayDelegate {
+class PostDetailController : UICollectionViewController, PursuitDayDelegate, KeyPostDelegate {
 
     let dayId = "dayId"
     let keyId = "keyId"
@@ -126,6 +126,47 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate {
         return view
     }()
     
+    lazy var videoView : UIView = {
+       let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    lazy var forwardButton : UIButton = {
+       let button = UIButton()
+        button.backgroundColor = .clear
+        button.addTarget(self, action: #selector(handleForward), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var backwardButton : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.addTarget(self, action: #selector(handleBackward), for: .touchUpInside)
+        return button
+    }()
+    
+    let progressStackView : UIStackView = {
+       let sv = UIStackView()
+        sv.axis = .horizontal
+        sv.distribution = .equalSpacing
+        sv.alignment = .fill
+        sv.spacing = 5
+        return sv
+    }()
+    
+    var prevFrame = CGRect.zero
+    var avPlayer : AVPlayer?
+    var layer: AVPlayerLayer?
+    var progressBarTimer: Timer?
+    var progressTimerIsOn = false
+    var progressTimeTotal = 0.0
+    var progressTimeRemaining = 0.0
+    var progressTimerUnit = 0.0
+    var currentStory: Story?
+    var stories = [Story]()
+    var currentStoryIndex = 0
+    
     @objc func handleDismiss(){
         dismiss(animated: true, completion: nil)
     }
@@ -136,53 +177,190 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate {
         present(PostEngagementsController(collectionViewLayout: UICollectionViewFlowLayout()), animated: true, completion: nil)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        tabBarController?.tabBar.isHidden = true
+    // MARK: - Click left/right
+    
+    @objc func handleForward(){
+        if(self.currentStory == stories.last) {
+            // Go to the end of video
+            
+        } else {
+            self.nextStory()
+        }
+    }
+    
+    func nextStory(){
+        let previousProgressView = self.progressStackView.subviews[currentStoryIndex] as! UIProgressView
+        previousProgressView.setProgress(1.0, animated: false)
+        self.currentStoryIndex += 1
+        self.currentStory = stories[self.currentStoryIndex]
+        self.avPlayer?.replaceCurrentItem(with: self.currentStory?.avPlayerItem)
+        layer?.frame = self.videoView.frame
+        self.videoView.layer.addSublayer(layer!)
+        self.startTimer()
+        DispatchQueue.main.async(execute: {
+        })
+    }
+    
+    @objc func handleBackward(){
+        if(self.currentStory == stories.first) {
+            self.avPlayer!.currentItem!.seek(to: kCMTimeZero, completionHandler: nil)
+            self.avPlayer?.play()
+            self.startTimer()
+        } else {
+            self.prevStory()
+        }
+    }
+    
+    func prevStory(){
+        let previousProgressView = self.progressStackView.subviews[currentStoryIndex] as! UIProgressView
+        previousProgressView.setProgress(0.0, animated: false)
+        self.currentStoryIndex -= 1
+        self.currentStory = stories[self.currentStoryIndex]
+        self.avPlayer?.replaceCurrentItem(with: self.currentStory?.avPlayerItem)
+        layer?.frame = self.videoView.frame
+        self.startTimer()
+        DispatchQueue.main.async(execute: {
+            //Your main thread code goes in here
+        })
+    }
+    
+    // MARK: - Add Data
+    
+    fileprivate func addDataToStory() {
+        self.stories.append(Story(caption: "Buck Bunny's Adventure", profileName: "Big Buck Bunny", description: "A small glimpse in a Big Buck Bunny's adventure", time: "2m ago", videoName: "video01"))
+        self.stories.append(Story(caption: "Buck Bunny's Adventure 02", profileName: "Big Buck Bunny 02", description: "A small glimpse in a Big Buck Bunny's adventure", time: "2h ago", videoName: "video02"))
+        self.stories.append(Story(caption: "Buck Bunny's Adventure 03", profileName: "Big Buck Bunny 03", description: "A small glimpse in a Big Buck Bunny's adventure", time: "2w ago", videoName: "video03"))
+    }
+    
+    // MARK: - Setup Video
+    
+    func initializeVideoPlayerWithVideo() {
+
+        DispatchQueue.main.async(execute: {
+        })
+        
+        self.avPlayer = AVPlayer(playerItem: self.currentStory?.avPlayerItem)
+        layer = AVPlayerLayer(player: avPlayer)
+        self.layer?.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height / 1.2)
+        layer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        self.videoView.layer.addSublayer(layer!)
+        avPlayer?.play()
+        
+        if !self.progressTimerIsOn {
+            self.avPlayer?.currentItem?.seek(to: kCMTimeZero, completionHandler: nil)
+            self.avPlayer?.play()
+            self.startTimer()
+        }
+    }
+    
+    // MARK: - Setup Progress Bar
+    
+    fileprivate func setupMultipleProgressBar() {
+        addDataToStory()
+        
+        videoView.addSubview(progressStackView)
+        
+        progressStackView.anchor(top: videoView.safeAreaLayoutGuide.topAnchor, left: videoView.leftAnchor, bottom: nil, right: videoView.rightAnchor, paddingTop: view.frame.height / 4, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 1.5)
+
+        let gaps = self.stories.count
+        let viewWidth = self.progressStackView.frame.width - CGFloat(gaps)
+        let viewUnit = Int(viewWidth) / (stories.count + 1)
+        for _ in stories {
+            let progressView = UIProgressView()
+            progressView.progress = 0
+            progressView.trackTintColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)
+            progressView.progressTintColor = UIColor.white
+            progressView.widthAnchor.constraint(equalToConstant: CGFloat(viewUnit)).isActive = true
+            self.progressStackView.addArrangedSubview(progressView)
+        }
+        
+        self.currentStory = stories.first
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        tabBarController?.tabBar.isHidden = false
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
     }
     
-    func setupView(){
-        view.addSubview(imageView)
-        imageView.addSubview(progressBar)
-        imageView.addSubview(userPhoto)
-        imageView.addSubview(postType)
-        imageView.addSubview(postDetail)
-        imageView.addSubview(seperatorCircle)
-        imageView.addSubview(daysLabel)
-        imageView.addSubview(username)
-        imageView.addSubview(timeLabel)
-        imageView.addSubview(cancelButton)
+    // MARK: - Setup Timer
+    
+    func startTimer(){
+        self.stopTimer()
+        guard let duration = self.currentStory?.videoDuration else { return }
+        self.progressTimeTotal = duration
+        self.progressTimeRemaining = self.progressTimeTotal
+        self.progressTimerUnit = self.progressTimeTotal / 100.0
+        self.progressBarTimer = Timer.scheduledTimer(timeInterval: self.progressTimerUnit, target: self, selector: #selector(self.progressTimerRunning), userInfo: nil, repeats: true)
+        self.progressTimerIsOn = true
+        self.avPlayer?.play()
+    }
+    
+    func stopTimer(){
+        progressBarTimer?.invalidate()
+        self.progressTimerIsOn = false
+        let progressView = self.progressStackView.subviews[currentStoryIndex] as! UIProgressView
+        progressView.setProgress(0, animated: false)
+    }
+    
+    @objc func progressTimerRunning(sender: Timer){
+        progressTimeRemaining -= self.progressTimerUnit
+        let progressView = self.progressStackView.subviews[currentStoryIndex] as! UIProgressView
+        progressView.setProgress(((Float(progressTimeTotal) - Float(progressTimeRemaining))/Float(progressTimeTotal)), animated: true)
+        if(progressTimeRemaining <= 0){
+            if(self.currentStory == stories.last){
+                print("shrinked")
+            }
+            else {
+                self.nextStory()
+                print("next story")
+            }
+        }
+    }
+    
+    func setupVideoView(){
+        view.addSubview(videoView)
+        videoView.addSubview(forwardButton)
+        videoView.addSubview(backwardButton)
+        videoView.addSubview(cancelButton)
+        videoView.addSubview(userPhoto)
+        videoView.addSubview(postType)
+        videoView.addSubview(postDetail)
+        videoView.addSubview(seperatorCircle)
+        videoView.addSubview(daysLabel)
+        videoView.addSubview(username)
+        videoView.addSubview(timeLabel)
         
-//        imageView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: -5, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: view.frame.height / 1.3)
-        progressBar.anchor(top: imageView.safeAreaLayoutGuide.topAnchor, left: imageView.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 48, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 3)
-        cancelButton.anchor(top: progressBar.bottomAnchor, left: nil, bottom: nil, right: imageView.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 16, height: 16)
-        userPhoto.anchor(top: progressBar.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
+        forwardButton.anchor(top: videoView.topAnchor, left: videoView.centerXAnchor, bottom: videoView.bottomAnchor, right: videoView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        backwardButton.anchor(top: videoView.topAnchor, left: videoView.leftAnchor, bottom: videoView.bottomAnchor, right: videoView.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+    
+        
+        setupMultipleProgressBar()
+
+        cancelButton.anchor(top: progressStackView.bottomAnchor, left: nil, bottom: nil, right: videoView.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 16, height: 16)
+        userPhoto.anchor(top: progressStackView.bottomAnchor, left: videoView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
         username.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 24, width: 0, height: 16)
         timeLabel.anchor(top: username.bottomAnchor, left: username.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
         postDetail.anchor(top: timeLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
         postDetail.heightAnchor.constraint(lessThanOrEqualToConstant: 52).isActive = true
-        postDetail.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
-        postType.anchor(top: postDetail.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: (view.frame.width / 3) - 12, paddingBottom: 0, paddingRight: 0, width: postType.intrinsicContentSize.width, height: 16)
+        postDetail.centerXAnchor.constraint(equalTo: videoView.centerXAnchor).isActive = true
+        postType.anchor(top: postDetail.bottomAnchor, left: videoView.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: (view.frame.width / 3) - 12, paddingBottom: 0, paddingRight: 0, width: postType.intrinsicContentSize.width, height: 16)
         seperatorCircle.anchor(top: nil, left: postType.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
         seperatorCircle.centerYAnchor.constraint(equalTo: postType.centerYAnchor).isActive = true
         daysLabel.anchor(top: postDetail.bottomAnchor, left: seperatorCircle.rightAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: daysLabel.intrinsicContentSize.width, height: 16)
         
-        collectionView?.parallaxHeader.view = imageView
-        collectionView?.contentInset = UIEdgeInsets(top: -10, left: 0, bottom: 0, right: 0)
+        setupCollectionView()
+        initializeVideoPlayerWithVideo()
+    }
+    
+    func setupCollectionView(){
+        collectionView?.parallaxHeader.view = videoView
+//        collectionView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         collectionView?.parallaxHeader.height = view.frame.height / 1.2
         collectionView?.parallaxHeader.minimumHeight = 0
         collectionView?.parallaxHeader.mode = .topFill
         collectionView?.alwaysBounceVertical = false
         collectionView?.showsVerticalScrollIndicator = false
-        setupCollectionView()
-    }
-    
-    func setupCollectionView(){
+        collectionView?.backgroundColor = .white
         collectionView?.register(PursuitDay.self, forCellWithReuseIdentifier: dayId)
         collectionView?.register(KeyPost.self, forCellWithReuseIdentifier: keyId)
         collectionView?.register(DetailChallenge.self, forCellWithReuseIdentifier: challengeId)
@@ -197,6 +375,11 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate {
         present(activityController, animated: true, completion: nil)
     }
     
+    func viewMore(for cell: KeyPost) {
+        let view = KeyPostController(collectionViewLayout: UICollectionViewFlowLayout())
+        present(view, animated: true, completion: nil)
+    }
+    
     func changeToChallenge(){
         let detail = ChallengeDetailController(collectionViewLayout: UICollectionViewFlowLayout())
         present(detail, animated: true, completion: nil)
@@ -204,10 +387,12 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.backgroundColor = .white
         hero.isEnabled = true
         isMotionEnabled = true
-        setupView()
+        setupVideoView()
+//        setupView()
+//        addDataToStory()
+//        progressBarStackViewSetup()
 //        view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
     }
     
@@ -262,6 +447,7 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: keyId, for: indexPath) as! KeyPost
+            cell.delegate = self
             return cell
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! DetailChallenge

@@ -43,9 +43,12 @@ class InterestsCell : UICollectionViewCell, SelectInterestsDelegate {
         engagementService.toggleFollowInterests(interestId: interestId, is_selected: interest.selected_interests)
     }
     
-    var userId : String? {
+    var userId : Int? {
         didSet {
-            userId = (Auth.auth().currentUser?.uid)!
+            let defaults = UserDefaults.standard
+            let currentUserId = defaults.integer(forKey: "userId")
+            
+            userId = currentUserId
             getSelectedInterests()
         }
     }

@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import Firebase
+import FirebaseAuth
 
 class EngagementServices {
     
@@ -17,7 +18,9 @@ class EngagementServices {
     // MARK: - COMMENT ON step/principle/pursuit    
     func commentOnPost(postId : String, commentId : String, comment_text : String, completion: @escaping (PostComment) -> ()){
         let url = "http://localhost:8080/posts_comments"
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+        
+        let defaults = UserDefaults.standard
+        let userId = defaults.integer(forKey: "userId")
         
         var parameters = Alamofire.Parameters()
         parameters["postId"] = postId
@@ -57,7 +60,9 @@ class EngagementServices {
     
     func commentOnStep(stepId : String, commentId : String, comment_text : String, completion: @escaping (StepsComment) -> ()){
         let url = "http://localhost:8080/steps_comments"
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+        
+        let defaults = UserDefaults.standard
+        let userId = defaults.integer(forKey: "userId")
         
         var parameters = Alamofire.Parameters()
         parameters["stepId"] = stepId
@@ -147,7 +152,9 @@ class EngagementServices {
     
     func togglePostLike(postId : String, is_liked : Int) {
         let url = "http://localhost:8080/post_liked"
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+        
+        let defaults = UserDefaults.standard
+        let userId = defaults.integer(forKey: "userId")
         
         var parameters = Alamofire.Parameters()
         parameters["postId"] = postId
@@ -160,7 +167,9 @@ class EngagementServices {
     
     func togglePrincipleLike(principleId : String, is_liked : Int) {
         let url = "http://localhost:8080/principle_liked"
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+      
+        let defaults = UserDefaults.standard
+        let userId = defaults.integer(forKey: "userId")
         
         var parameters = Alamofire.Parameters()
         parameters["principleId"] = principleId
@@ -173,7 +182,8 @@ class EngagementServices {
     
     func toggleStepLike(stepId : String, is_liked : Int) {
         let url = "http://localhost:8080/step_liked"
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+        let defaults = UserDefaults.standard
+        let userId = defaults.integer(forKey: "userId")
         
         var parameters = Alamofire.Parameters()
         parameters["stepId"] = stepId
@@ -211,7 +221,8 @@ class EngagementServices {
     
     func toggleFollowUser(followeeId : Int, is_following : Int, completion: @escaping (User) -> ()){
         let url = "http://localhost:8080/follow_user"
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+        let defaults = UserDefaults.standard
+        let userId = defaults.integer(forKey: "userId")
 
         var parameters = Alamofire.Parameters()
         parameters["followerId"] = userId
@@ -227,7 +238,8 @@ class EngagementServices {
     
     func toggleFollowPursuit(pursuitId : Int, is_following : Int, completion: @escaping (Pursuit) -> ()){
         let url = "http://localhost:8080/follow_pursuit"
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+        let defaults = UserDefaults.standard
+        let userId = defaults.integer(forKey: "userId")
         
         var parameters = Alamofire.Parameters()
         parameters["pursuitId"] = pursuitId

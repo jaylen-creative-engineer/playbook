@@ -159,7 +159,6 @@ class ProfileHeader : UICollectionViewCell {
     
     lazy var chatImageView : UIImageView = {
        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "chat").withRenderingMode(.alwaysOriginal)
         return iv
     }()
     

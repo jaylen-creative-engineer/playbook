@@ -12,6 +12,8 @@ import GoogleSignIn
 import FBSDKCoreKit
 import FBSDKLoginKit
 import Alamofire
+import FirebaseAuth
+import FirebaseStorage
 
 class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDelegate {
     

@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol KeyPostDelegate {
+    func viewMore(for cell : KeyPost)
+}
+
 class KeyPost : UICollectionViewCell {
+    
+    var delegate : KeyPostDelegate?
     
     let keyPostLabel : UILabel = {
         let label = UILabel()
@@ -42,10 +48,15 @@ class KeyPost : UICollectionViewCell {
         button.setTitle("View More", for: .normal)
         button.setTitleColor(.blue, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.addTarget(self, action: #selector(handleViewMore), for: .touchUpInside)
         return button
     }()
     
     let cellId = "cellId"
+    
+    @objc func handleViewMore(){
+        delegate?.viewMore(for: self)
+    }
     
     func setupView(){
         addSubview(keyPostLabel)

@@ -9,6 +9,8 @@
 import UIKit
 import Alamofire
 import Firebase
+import FirebaseStorage
+import FirebaseAuth
 
 class CreateServices {
     
@@ -16,7 +18,8 @@ class CreateServices {
     
     func createPursuit(pursuitId : String, postId : String, interestId : String, contentUrl : String?, thumbnailUrl : UIImage, pursuitDescription : String?, is_step: Int, is_principle : Int, is_visible : Int, is_public : Int){
         let url = "http://localhost:8080/create_pursuit"
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+        let defaults = UserDefaults.standard
+        let userId = defaults.integer(forKey: "userId")
         
         guard let uploadData = UIImageJPEGRepresentation(thumbnailUrl, 0.3) else { return }
         
@@ -58,7 +61,8 @@ class CreateServices {
     
     func createPrinciplePursuit(pursuitId : String, principleId : String, interestId : String, contentUrl : String?, thumbnailUrl : UIImage, pursuitDescription : String?, is_step: Int, is_principle : Int, is_visible : Int, is_public : Int){
         let url = "http://localhost:8080/create_pursuit_principle"
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+        let defaults = UserDefaults.standard
+        let userId = defaults.integer(forKey: "userId")
         
         guard let uploadData = UIImageJPEGRepresentation(thumbnailUrl, 0.3) else { return }
         
@@ -101,7 +105,8 @@ class CreateServices {
     
     func createStepPursuit(pursuitId : String, stepId : String, interestId : String, contentUrl : String?, thumbnailUrl : UIImage, pursuitDescription : String?, is_step: Int, is_principle : Int, is_visible : Int, is_public : Int){
         let url = "http://localhost:8080/create_pursuit_step"
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+        let defaults = UserDefaults.standard
+        let userId = defaults.integer(forKey: "userId")
         
         guard let uploadData = UIImageJPEGRepresentation(thumbnailUrl, 0.3) else { return }
         

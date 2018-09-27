@@ -7,6 +7,7 @@ target 'pursue' do
 
   # Pods for pursue
 
+  pod 'HidingNavigationBar'
   pod 'Mixpanel-swift'
   pod 'Firebase/Auth'
   pod 'Firebase/Core'

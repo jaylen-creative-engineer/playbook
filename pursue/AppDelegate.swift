@@ -8,6 +8,8 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
+import FirebaseStorage
 import GoogleSignIn
 import Alamofire
 import FBSDKCoreKit

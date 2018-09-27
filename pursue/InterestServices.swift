@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import Firebase
+import FirebaseStorage
 
 class InterestServices {
     

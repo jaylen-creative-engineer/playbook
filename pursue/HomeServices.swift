@@ -16,7 +16,9 @@ class HomeServices {
     
     func getPursuits(completion: @escaping ([Home]) -> ()){
         let url = "http://localhost:8080/interest-pursuits"
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+       
+        let defaults = UserDefaults.standard
+        let userId = defaults.integer(forKey: "userId")
 
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId
@@ -37,7 +39,9 @@ class HomeServices {
     
     func getUserPursuits(completion: @escaping (Pursuit, Post, Steps, Principles) -> ()){
         let url = "http://localhost:8080/user-pursuits"
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+        
+        let defaults = UserDefaults.standard
+        let userId = defaults.integer(forKey: "userId")
 
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId

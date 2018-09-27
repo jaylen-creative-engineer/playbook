@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 import Alamofire
+import FirebaseAuth
+import FirebaseStorage
 
 class EditProfileCells : UICollectionViewCell {
     

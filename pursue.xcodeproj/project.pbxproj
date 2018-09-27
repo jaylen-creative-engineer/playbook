@@ -107,9 +107,16 @@
 		E66AEB1D20DD9229000018B5 /* ProfileStepsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66AEB1C20DD9229000018B5 /* ProfileStepsCells.swift */; };
 		E66AEB1F20DD9552000018B5 /* ProfilePrinciples.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66AEB1E20DD9552000018B5 /* ProfilePrinciples.swift */; };
 		E66AEB2120DD95E7000018B5 /* ProfilePrincipleCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66AEB2020DD95E7000018B5 /* ProfilePrincipleCells.swift */; };
+		E67205F5215AA4DB0085470C /* KeyPostListCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67205F4215AA4DB0085470C /* KeyPostListCells.swift */; };
+		E67205F6215B23930085470C /* video01.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E672C4B82159A71B0097E342 /* video01.mp4 */; };
+		E67205F7215B23930085470C /* video02.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E672C4B72159A7130097E342 /* video02.mp4 */; };
+		E67205F8215B23930085470C /* video03.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E672C4B62159A6FA0097E342 /* video03.mp4 */; };
+		E67205FC215BE0590085470C /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67205FB215BE0590085470C /* System.swift */; };
 		E672C4B1215844990097E342 /* ChallengeDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E672C4B0215844990097E342 /* ChallengeDetailController.swift */; };
 		E672C4B3215847570097E342 /* ChallengeListCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E672C4B2215847570097E342 /* ChallengeListCells.swift */; };
 		E672C4B521584D700097E342 /* ChallengeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E672C4B421584D700097E342 /* ChallengeHeader.swift */; };
+		E672C4BA2159A72E0097E342 /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = E672C4B92159A72E0097E342 /* Story.swift */; };
+		E672C4BC2159E5EB0097E342 /* KeyPostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E672C4BB2159E5EB0097E342 /* KeyPostController.swift */; };
 		E674AB7521434A5200E27867 /* EngagementsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E674AB7421434A5200E27867 /* EngagementsHeader.swift */; };
 		E674AB7721434B2F00E27867 /* EngagementsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E674AB7621434B2F00E27867 /* EngagementsHeaderCell.swift */; };
 		E674AB7B214357E300E27867 /* DetailTrying.swift in Sources */ = {isa = PBXBuildFile; fileRef = E674AB7A214357E300E27867 /* DetailTrying.swift */; };
@@ -301,9 +308,16 @@
 		E66AEB1C20DD9229000018B5 /* ProfileStepsCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStepsCells.swift; sourceTree = "<group>"; };
 		E66AEB1E20DD9552000018B5 /* ProfilePrinciples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePrinciples.swift; sourceTree = "<group>"; };
 		E66AEB2020DD95E7000018B5 /* ProfilePrincipleCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePrincipleCells.swift; sourceTree = "<group>"; };
+		E67205F4215AA4DB0085470C /* KeyPostListCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPostListCells.swift; sourceTree = "<group>"; };
+		E67205FB215BE0590085470C /* System.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
 		E672C4B0215844990097E342 /* ChallengeDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeDetailController.swift; sourceTree = "<group>"; };
 		E672C4B2215847570097E342 /* ChallengeListCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeListCells.swift; sourceTree = "<group>"; };
 		E672C4B421584D700097E342 /* ChallengeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeHeader.swift; sourceTree = "<group>"; };
+		E672C4B62159A6FA0097E342 /* video03.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video03.mp4; sourceTree = "<group>"; };
+		E672C4B72159A7130097E342 /* video02.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video02.mp4; sourceTree = "<group>"; };
+		E672C4B82159A71B0097E342 /* video01.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video01.mp4; sourceTree = "<group>"; };
+		E672C4B92159A72E0097E342 /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
+		E672C4BB2159E5EB0097E342 /* KeyPostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPostController.swift; sourceTree = "<group>"; };
 		E674AB7421434A5200E27867 /* EngagementsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngagementsHeader.swift; sourceTree = "<group>"; };
 		E674AB7621434B2F00E27867 /* EngagementsHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngagementsHeaderCell.swift; sourceTree = "<group>"; };
 		E674AB7A214357E300E27867 /* DetailTrying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTrying.swift; sourceTree = "<group>"; };
@@ -540,6 +554,8 @@
 				E672C4B0215844990097E342 /* ChallengeDetailController.swift */,
 				E672C4B421584D700097E342 /* ChallengeHeader.swift */,
 				E672C4B2215847570097E342 /* ChallengeListCells.swift */,
+				E672C4BB2159E5EB0097E342 /* KeyPostController.swift */,
+				E67205F4215AA4DB0085470C /* KeyPostListCells.swift */,
 			);
 			name = Detail;
 			sourceTree = "<group>";
@@ -593,6 +609,7 @@
 				E6E0B0232060AC4000007A21 /* SearchedSteps.swift */,
 				E63899FF206C1A7E007055A4 /* Home.swift */,
 				E6389A01206C1AD9007055A4 /* HomePostContent.swift */,
+				E672C4B92159A72E0097E342 /* Story.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -669,6 +686,9 @@
 				E6CE22781F671D10006C5755 /* Main.storyboard */,
 				E667066920ED6D9B001A8E8E /* Lato */,
 				E6CE227B1F671D11006C5755 /* Assets.xcassets */,
+				E672C4B82159A71B0097E342 /* video01.mp4 */,
+				E672C4B72159A7130097E342 /* video02.mp4 */,
+				E672C4B62159A6FA0097E342 /* video03.mp4 */,
 				E6CE227D1F671D11006C5755 /* LaunchScreen.storyboard */,
 				E6CE22801F671D11006C5755 /* Info.plist */,
 				E6CE228C1F6721C7006C5755 /* GoogleService-Info.plist */,
@@ -688,6 +708,7 @@
 				E6DF9EBC203BAAB1005C86DB /* CommentInputAccessoryView.swift */,
 				E6DF9EBE203BAB1B005C86DB /* CommentInputTextView.swift */,
 				E6D0B401203E13D2008D4268 /* ViewWithDiagonalLine.swift */,
+				E67205FB215BE0590085470C /* System.swift */,
 				E63CEB6120ED60D500FFDEF3 /* Utility.swift */,
 				E6777883212CDC48001820FE /* Reachability.swift */,
 			);
@@ -861,6 +882,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E67205F6215B23930085470C /* video01.mp4 in Resources */,
+				E67205F7215B23930085470C /* video02.mp4 in Resources */,
+				E67205F8215B23930085470C /* video03.mp4 in Resources */,
 				E667067D20ED6D9B001A8E8E /* OFL.txt in Resources */,
 				E6CE227F1F671D11006C5755 /* LaunchScreen.storyboard in Resources */,
 				E667068620EDA0BA001A8E8E /* Lato-Semibold.ttf in Resources */,
@@ -913,6 +937,7 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
+				"${BUILT_PRODUCTS_DIR}/HidingNavigationBar/HidingNavigationBar.framework",
 				"${BUILT_PRODUCTS_DIR}/KWTransition/KWTransition.framework",
 				"${BUILT_PRODUCTS_DIR}/Material/Material.framework",
 				"${BUILT_PRODUCTS_DIR}/Mixpanel-swift/Mixpanel.framework",
@@ -939,6 +964,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HidingNavigationBar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KWTransition.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Material.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mixpanel.framework",
@@ -1012,6 +1038,7 @@
 				E61A70EA20E2917C00EB69D8 /* DetailSolutions.swift in Sources */,
 				E6234E9E2044F96B00A57A2C /* AssetSelectionViewController.swift in Sources */,
 				E6A8BACC2140559900954537 /* SearchPopAnimation.swift in Sources */,
+				E67205F5215AA4DB0085470C /* KeyPostListCells.swift in Sources */,
 				E674AB7B214357E300E27867 /* DetailTrying.swift in Sources */,
 				446C359921181F80005BDE71 /* PursuitDayTableViewCell.swift in Sources */,
 				E672C4B521584D700097E342 /* ChallengeHeader.swift in Sources */,
@@ -1033,6 +1060,7 @@
 				E67FE162214C9D9E009A6BEF /* SearchPursuits.swift in Sources */,
 				E60EB26720460DB8006E4F1A /* FollowingCells.swift in Sources */,
 				E6DEC840201ABA1100E02393 /* PostComment.swift in Sources */,
+				E672C4BC2159E5EB0097E342 /* KeyPostController.swift in Sources */,
 				E6CB1B4D20578A1100B5D2ED /* ProfilePursuitCells.swift in Sources */,
 				E61A70E220E182D600EB69D8 /* TeamList.swift in Sources */,
 				E62E29AA2153DE5B00139483 /* CreateDetailsCell.swift in Sources */,
@@ -1086,6 +1114,7 @@
 				E62E29B421558C9200139483 /* NotificationsContainer.swift in Sources */,
 				E6398070204911D80049A71B /* InviteCell.swift in Sources */,
 				E62E29A82152BBF500139483 /* CreateTeamCells.swift in Sources */,
+				E672C4BA2159A72E0097E342 /* Story.swift in Sources */,
 				E60EB26B204617B5006E4F1A /* FriendsCells.swift in Sources */,
 				E62AAB211FD1E8680053EAD7 /* CameraBar.swift in Sources */,
 				E62E29AE2153EF3800139483 /* CreateSelectPursuit.swift in Sources */,
@@ -1139,6 +1168,7 @@
 				E61A70EC20E291ED00EB69D8 /* DetailSolutionCells.swift in Sources */,
 				E6989BFF2047A5FD0067A55B /* StandardNotification.swift in Sources */,
 				E6398087204DD7240049A71B /* InterestServices.swift in Sources */,
+				E67205FC215BE0590085470C /* System.swift in Sources */,
 				E6E0B0242060AC4000007A21 /* SearchedSteps.swift in Sources */,
 				E64324B51F79A47F0090075F /* CardView.swift in Sources */,
 				E6C1C069211BAD98009BECAC /* DetailHeader.swift in Sources */,

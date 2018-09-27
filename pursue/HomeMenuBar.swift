@@ -55,19 +55,15 @@ class HomeMenuBar : UIView {
     }()
 
     @objc func handleHomeTap(){
-        accessHomeController?.handleHomeTap()
     }
     
     @objc func handleChatTap(){
-        accessHomeController?.handleChatPageChange()
     }
     
     @objc func handleCreateTap(){
-        accessHomeController?.handleCameraTap()
     }
     
     @objc func handleProfileTap(){
-        accessHomeController?.handleProfileTap()
     }
     
     func setupBackground(){

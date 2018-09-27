@@ -76,6 +76,5 @@ extension NotificationHeader : UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessHomeController?.scrollToMenuIndex(menuIndex: indexPath.item)
     }
 }

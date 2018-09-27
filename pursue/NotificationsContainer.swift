@@ -44,7 +44,6 @@ class NotificationsContainer : UICollectionViewCell {
     }
     
     func handleChangeDetail(){
-        accessHomeController?.changeToChatDetail()
     }
     
     override init(frame: CGRect) {
