@@ -57,6 +57,8 @@ class ProfilePursuit : UICollectionViewCell {
         postCollectionView.anchor(top: pursuitsLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
+    var images = [#imageLiteral(resourceName: "bicycle-3045580_1280"), #imageLiteral(resourceName: "cafe-768771_1280"), #imageLiteral(resourceName: "berlin-1266337_1280"), #imageLiteral(resourceName: "picture-frames-1149414_1280"), #imageLiteral(resourceName: "prague-3540883_1280")]
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         getUsersPursuits()
@@ -71,7 +73,7 @@ class ProfilePursuit : UICollectionViewCell {
 extension ProfilePursuit : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return usersPursuits.count
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -80,7 +82,8 @@ extension ProfilePursuit : UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! RecommenedPursuitCell
-        cell.pursuit = usersPursuits[indexPath.item]
+        cell.imageView.image = images[indexPath.item]
+//        cell.pursuit = usersPursuits[indexPath.item]
         return cell
     }
 }

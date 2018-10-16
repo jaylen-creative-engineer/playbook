@@ -38,7 +38,10 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
     
     var profileImage : UIImage?
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
         if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
             profileImage = originalImage.withRenderingMode(.alwaysOriginal)
             collectionView?.reloadData()
@@ -58,8 +61,8 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         tf.font = UIFont.systemFont(ofSize: 14)
         tf.textColor = .black
         
-        let attributes = [ NSAttributedStringKey.foregroundColor: UIColor.black,
-                           NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)]
+        let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.black,
+                           NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]
         tf.attributedPlaceholder = NSAttributedString(string: "Email", attributes:attributes)
         return tf
     }()
@@ -70,8 +73,8 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         tf.font = UIFont.systemFont(ofSize: 14)
         tf.textColor = .black
         
-        let attributes = [ NSAttributedStringKey.foregroundColor: UIColor.black,
-                           NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)]
+        let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.black,
+                           NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]
         tf.attributedPlaceholder = NSAttributedString(string: "Username", attributes:attributes)
         return tf
     }()
@@ -81,8 +84,8 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         tf.font = UIFont.boldSystemFont(ofSize: 14)
         tf.textColor = .black
         
-        let attributes = [ NSAttributedStringKey.foregroundColor: UIColor.black,
-                           NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)]
+        let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.black,
+                           NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]
         tf.attributedPlaceholder = NSAttributedString(string: "Full Name", attributes:attributes)
         return tf
     }()
@@ -92,8 +95,8 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         tf.font = UIFont.systemFont(ofSize: 14)
         tf.textColor = .black
         
-        let attributes = [ NSAttributedStringKey.foregroundColor: UIColor.black,
-                           NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)]
+        let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.black,
+                           NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]
         tf.attributedPlaceholder = NSAttributedString(string: "Password", attributes:attributes)
         tf.isSecureTextEntry = true
         return tf
@@ -108,7 +111,6 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
     let profileService = ProfileServices()
     var user : User?
     var firebaseImageUrl : String?
-    var loggedinUserId : String?
     
     @objc func addUserToFirebase(){
         
@@ -121,9 +123,11 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
                     print("Failed to create user", err)
                     return
                 }
-                
-                self.loggedinUserId = user?.user.uid
             }
+            self.profileService.getUserId(email: email, completion: { (user) in
+                self.user = user
+                self.collectionView?.reloadData()
+            })
         }
     }
 
@@ -133,7 +137,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         guard let password = passwordTextField.text, password.count > 0 else { return }
         guard let fullname = fullnameTextField.text, fullname.count > 0 else { return }
         guard let image = self.profileImage else { return }
-        guard let uploadData = UIImageJPEGRepresentation(image, 0.3) else { return }
+        guard let uploadData = image.jpegData(compressionQuality: 0.3) else { return }
         
         let filename = NSUUID().uuidString
         let ref = Storage.storage().reference().child("profile-images").child(filename)
@@ -152,12 +156,14 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
                     
                     guard let photoUrl = url?.absoluteString else { return }
                     self.profileService.createAccount(email: email, username: username, fullname: fullname, photoUrl: photoUrl, bio: nil)
-                    self.profileService.getUserId(username: username)
+    
                 })
             })
         }
         
     }
+    
+    var loggedInUserId : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -176,7 +182,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
     private let pageControl: UIPageControl = {
         let pc = UIPageControl()
         pc.currentPage = 1
-        pc.numberOfPages = 4
+        pc.numberOfPages = 5
         pc.currentPageIndicatorTintColor = .black
         pc.pageIndicatorTintColor = .lightGray
         return pc
@@ -209,7 +215,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         button.layer.borderColor = UIColor.gray.cgColor
         button.layer.borderWidth = 1
         button.isEnabled = false
-        button.addTarget(self, action: #selector(handleSignup), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
         return button
     }()
     
@@ -241,7 +247,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         progressControl.progress = Float(nextIndex / pageControl.numberOfPages)
         
         let i = current
-        let max = 5
+        let max = 6
         
         if i <= max {
             let ratio = Float(i) / Float(max)
@@ -253,23 +259,25 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         }
         
         switch countTracker {
-        case 4:
-            addUserToFirebase()
+
         case 5:
+            addUserToFirebase()
+            
+        case 6:
+            handleSignup()
             loginButton.backgroundColor = .black
             loginButton.layer.borderColor = UIColor.black.cgColor
             loginButton.isEnabled = true
             collectionView?.isScrollEnabled = true
-            addUserToFirebase()
-            handleSignup()
             
-        case 6:
+        case 7:
+            
             let appDelegate = UIApplication.shared.delegate! as! AppDelegate
             appDelegate.window = UIWindow()
             appDelegate.window?.rootViewController = MainTabController()
             appDelegate.window?.makeKeyAndVisible()
-            nextButton.isUserInteractionEnabled = false
             self.dismiss(animated: true, completion: nil)
+            
         default:
             loginButton.backgroundColor = .gray
             loginButton.layer.borderColor = UIColor.gray.cgColor
@@ -302,7 +310,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return 6
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -332,12 +340,12 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
                 cell.addIcon.isHidden = true
             }
             return cell
-//        case 5:
-//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: interestId, for: indexPath) as! InterestsCell
-//            if loggedinUserId != nil {
-//                cell.userId = loggedinUserId
-//            }
-//            return cell
+        case 5:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: interestId, for: indexPath) as! InterestsCell
+            if user != nil {
+                cell.user = user
+            }
+            return cell
         default:
             assert(false, "Not a valid cell")
         }
@@ -377,3 +385,8 @@ extension SignupController {
     }
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}

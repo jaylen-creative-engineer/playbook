@@ -84,7 +84,7 @@ class MyPursuitCells : UICollectionViewCell {
     let postCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsetsMake(0, 12, 0, 12)
+        layout.sectionInset = UIEdgeInsets.init(top: 0, left: 12, bottom: 0, right: 12)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
@@ -102,7 +102,7 @@ class MyPursuitCells : UICollectionViewCell {
     let userCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsetsMake(0, 24, 0, 12)
+        layout.sectionInset = UIEdgeInsets.init(top: 0, left: 24, bottom: 0, right: 12)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear

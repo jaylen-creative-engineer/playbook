@@ -17,7 +17,7 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         
         let index = viewControllers?.index(of: viewController)
-        if index == 2 {
+        if index == 1 {
             
             let photoSelectorController = SelectCameraController()
             let navController = UINavigationController(rootViewController: photoSelectorController)
@@ -50,49 +50,29 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
     func setupViewControllers() {
         
         let homeNavController = UINavigationController(rootViewController: HomeController(collectionViewLayout: UICollectionViewFlowLayout()))
-        let searchNavController = UINavigationController(rootViewController: SearchController(collectionViewLayout: UICollectionViewFlowLayout()))
         let plusNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "create_unselected"), selectedImage: #imageLiteral(resourceName: "create_unselected"))
-        let chatNavController = UINavigationController(rootViewController: NotificationsController(collectionViewLayout: UICollectionViewFlowLayout()))
         let userProfileNavController = UINavigationController(rootViewController: ProfileController(collectionViewLayout: UICollectionViewFlowLayout()))
 
         tabBar.tintColor = UIColor.rgb(red: 74, green: 144, blue: 226)
         tabBar.barTintColor = UIColor.rgb(red: 255, green: 255, blue: 255)
         
-        viewControllers = [homeNavController, searchNavController, plusNavController, chatNavController, userProfileNavController]
+        viewControllers = [homeNavController, plusNavController, userProfileNavController]
         
         guard let items = tabBar.items else { return }
         let tabHome = items[0]
         tabHome.image = #imageLiteral(resourceName: "home_unselected").withRenderingMode(.alwaysOriginal)
         tabHome.selectedImage = #imageLiteral(resourceName: "home_selected").withRenderingMode(.alwaysOriginal)
-        tabHome.title = "Home"
-        tabHome.titlePositionAdjustment = UIOffsetMake(0, 2)
         
-        let tabSearch = items[1]
-        tabSearch.image = #imageLiteral(resourceName: "search_unselected").withRenderingMode(.alwaysOriginal)
-        tabSearch.selectedImage = #imageLiteral(resourceName: "search_selected").withRenderingMode(.alwaysOriginal)
-        tabSearch.title = "Search"
-        tabSearch.titlePositionAdjustment = UIOffsetMake(0, 2)
-        
-        let tabCreate = items[2]
+        let tabCreate = items[1]
         tabCreate.image = #imageLiteral(resourceName: "custom-create-button").withRenderingMode(.alwaysOriginal)
         tabCreate.selectedImage = #imageLiteral(resourceName: "custom-create-button").withRenderingMode(.alwaysOriginal)
-        tabCreate.title = "Create"
-        tabCreate.titlePositionAdjustment = UIOffsetMake(0, 2)
-
-        let tabChat = items[3]
-        tabChat.image = #imageLiteral(resourceName: "chat_unselected").withRenderingMode(.alwaysOriginal)
-        tabChat.selectedImage = #imageLiteral(resourceName: "chat-selected").withRenderingMode(.alwaysOriginal)
-        tabChat.title = "Chat"
-        tabChat.titlePositionAdjustment = UIOffsetMake(0, 2)
         
-        let tabProfile = items[4]
+        let tabProfile = items[2]
         tabProfile.image = #imageLiteral(resourceName: "profile_unselected").withRenderingMode(.alwaysOriginal)
         tabProfile.selectedImage = #imageLiteral(resourceName: "profile-selected").withRenderingMode(.alwaysOriginal)
-        tabProfile.title = "Profile"
-        tabProfile.titlePositionAdjustment = UIOffsetMake(0, 2)
-//
+
         for item in items {
-            item.imageInsets = UIEdgeInsetsMake(2, 0, -4, 0)
+            item.imageInsets = UIEdgeInsets.init(top: 4, left: 0, bottom: -4, right: 0)
         }
     }
     

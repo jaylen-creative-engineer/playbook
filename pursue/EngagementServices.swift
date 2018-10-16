@@ -202,6 +202,7 @@ class EngagementServices {
         let defaults = UserDefaults.standard
         let userId = defaults.integer(forKey: "userId")
         
+        print(userId)
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId
         parameters["interestId"] = interestId

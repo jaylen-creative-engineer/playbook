@@ -37,9 +37,9 @@ class ChallengeDetailController : UICollectionViewController {
     
     func setupCollectionView(){
         collectionView?.backgroundColor = .white
-        collectionView?.contentInset = UIEdgeInsetsMake(60, 0, 0, 0)
+        collectionView?.contentInset = UIEdgeInsets.init(top: 60, left: 0, bottom: 0, right: 0)
         collectionView?.showsVerticalScrollIndicator = false
-        collectionView?.register(ChallengeHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView?.register(ChallengeHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(ChallengeListCells.self, forCellWithReuseIdentifier: cellId)
     }
     

@@ -166,7 +166,7 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
     }
     
     func swiftyCam(_ swiftyCam: SwiftyCamViewController, didTake photo: UIImage) {
-        arrPost.append(Post(postId: nil, postThumbnail: nil, contentUrl: nil, postType: "Image", postImage: UIImageJPEGRepresentation(photo, 1.0)))
+        arrPost.append(Post(postId: nil, postThumbnail: nil, contentUrl: nil, postType: "Image", postImage: photo.jpegData(compressionQuality: 1.0)))
         let newVC = PhotoViewController()
         newVC.backgroundImageView.image = photo
         self.present(newVC, animated: true, completion: nil)
@@ -266,7 +266,7 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 5
-        attributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
         label.attributedText = attributedString
         label.font = UIFont.boldSystemFont(ofSize: 14)
         label.numberOfLines = 2

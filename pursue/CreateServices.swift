@@ -21,7 +21,7 @@ class CreateServices {
         let defaults = UserDefaults.standard
         let userId = defaults.integer(forKey: "userId")
         
-        guard let uploadData = UIImageJPEGRepresentation(thumbnailUrl, 0.3) else { return }
+        guard let uploadData = thumbnailUrl.jpegData(compressionQuality: 0.3) else { return }
         
         let filename = NSUUID().uuidString
         let ref = Storage.storage().reference().child("pursuit-images").child(filename)
@@ -64,7 +64,7 @@ class CreateServices {
         let defaults = UserDefaults.standard
         let userId = defaults.integer(forKey: "userId")
         
-        guard let uploadData = UIImageJPEGRepresentation(thumbnailUrl, 0.3) else { return }
+        guard let uploadData = thumbnailUrl.jpegData(compressionQuality: 0.3) else { return }
         
         let filename = NSUUID().uuidString
         let ref = Storage.storage().reference().child("pursuit-images").child(filename)
@@ -108,7 +108,7 @@ class CreateServices {
         let defaults = UserDefaults.standard
         let userId = defaults.integer(forKey: "userId")
         
-        guard let uploadData = UIImageJPEGRepresentation(thumbnailUrl, 0.3) else { return }
+        guard let uploadData = thumbnailUrl.jpegData(compressionQuality: 0.3) else { return }
         
         let filename = NSUUID().uuidString
         let ref = Storage.storage().reference().child("pursuit-images").child(filename)
@@ -177,7 +177,7 @@ class CreateServices {
     func addPostToPursuit(pursuitId : String, interestId : String, postId : String, contentUrl : String, thumbnailUrl : UIImage, is_step : Int, is_principle : Int){
         let url = "http://localhost:8080/create_post"
         
-        guard let uploadData = UIImageJPEGRepresentation(thumbnailUrl, 0.3) else { return }
+        guard let uploadData = thumbnailUrl.jpegData(compressionQuality: 0.3) else { return }
         
         let filename = NSUUID().uuidString
         let ref = Storage.storage().reference().child("pursuit-images").child(filename)
@@ -223,7 +223,7 @@ class CreateServices {
         let url = "http://localhost:8080/create_step"
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
-        guard let uploadData = UIImageJPEGRepresentation(thumbnailUrl, 0.3) else { return }
+        guard let uploadData = thumbnailUrl.jpegData(compressionQuality: 0.3) else { return }
         
         let filename = NSUUID().uuidString
         let ref = Storage.storage().reference().child("pursuit-images").child(filename)
@@ -261,7 +261,7 @@ class CreateServices {
     
     func addPrincipleToPursuit(pursuitId : String, interestId : String, principleId : String, contentUrl : String, thumbnailUrl : UIImage, principleDescription : String, is_visible : Int, is_public : Int){
         let url = "http://localhost:8080/create_principle"
-        guard let uploadData = UIImageJPEGRepresentation(thumbnailUrl, 0.3) else { return }
+        guard let uploadData = thumbnailUrl.jpegData(compressionQuality: 0.3) else { return }
         
         let filename = NSUUID().uuidString
         let ref = Storage.storage().reference().child("pursuit-images").child(filename)

@@ -48,7 +48,6 @@ class PursuitPrincipleCells : UICollectionViewCell  {
     override init(frame: CGRect) {
         super.init(frame: frame)
         hero.isEnabled = true
-        isMotionEnabled = true
         setupView()
     }
     

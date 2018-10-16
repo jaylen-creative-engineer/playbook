@@ -73,7 +73,6 @@ extension FeedCell : UICollectionViewDelegate, UICollectionViewDataSource, UICol
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! HomePostCells
         cell.accessFeedController = self
-        cell.imageView.motionIdentifier = String(indexPath.item)
         return cell
     }
 }

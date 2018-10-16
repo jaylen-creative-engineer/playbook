@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Motion
 
 protocol PhotoDelegate {
     func didSelect(for cell : PhotoLibraryCell)

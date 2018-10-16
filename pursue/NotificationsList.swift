@@ -39,8 +39,8 @@ class NotificationsList : UICollectionViewCell {
         collectionView.register(PursuitNotification.self, forCellWithReuseIdentifier: postId)
         collectionView.register(StandardNotification.self, forCellWithReuseIdentifier: standardId)
         collectionView.register(FollowedNotification.self, forCellWithReuseIdentifier: followId)
-        collectionView.register(NotificationRowHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
-        collectionView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0)
+        collectionView.register(NotificationRowHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView.contentInset = UIEdgeInsets.init(top: 20, left: 0, bottom: 0, right: 0)
     }
     
     override init(frame: CGRect) {
@@ -87,7 +87,7 @@ extension NotificationsList : UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(12, 0, 18, 0)
+        return UIEdgeInsets.init(top: 12, left: 0, bottom: 18, right: 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

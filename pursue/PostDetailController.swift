@@ -12,7 +12,6 @@ import Firebase
 import AVFoundation
 import AVKit
 import MediaPlayer
-import Motion
 import Mixpanel
 import ParallaxHeader
 
@@ -57,7 +56,6 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         label.text = "Principle"
         label.font = UIFont(name: "Lato-Bold", size: 14)
         label.textColor = .white
-        label.motionIdentifier = "postType"
         return label
     }()
     
@@ -67,7 +65,6 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 20
         iv.layer.masksToBounds = true
-        iv.motionIdentifier = "userPhoto"
         return iv
     }()
     
@@ -78,7 +75,6 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.init(25))
         label.textAlignment = .center
-        label.motionIdentifier = "postDetail"
         return label
     }()
     
@@ -87,7 +83,6 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         label.text = "20 Days"
         label.font = UIFont(name: "Lato-Bold", size: 14)
         label.textColor = .white
-        label.motionIdentifier = "daysLabel"
         return label
     }()
     
@@ -104,7 +99,6 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         label.text = "Test"
         label.font = UIFont(name: "Lato-Bold", size: 14)
         label.textColor = .white
-        label.motionIdentifier = "username"
         return label
     }()
     
@@ -113,7 +107,6 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         label.text = "Today"
         label.font = UIFont(name: "Lato-Bold", size: 12)
         label.textColor = .white
-        label.motionIdentifier = "timeLabel"
         return label
     }()
     
@@ -123,7 +116,6 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         view.progressTintColor = .white
         view.layer.cornerRadius = 2
         view.layer.masksToBounds = true
-        view.motionIdentifier = "progressBar"
         return view
     }()
     
@@ -204,7 +196,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     
     @objc func handleBackward(){
         if(self.currentStory == stories.first) {
-            self.avPlayer!.currentItem!.seek(to: kCMTimeZero, completionHandler: nil)
+            self.avPlayer!.currentItem!.seek(to: CMTime.zero, completionHandler: nil)
             self.avPlayer?.play()
             self.startTimer()
         } else {
@@ -231,9 +223,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     // MARK: - Add Data
     
     fileprivate func addDataToStory() {
-        self.stories.append(Story(caption: "Buck Bunny's Adventure", profileName: "Big Buck Bunny", description: "A small glimpse in a Big Buck Bunny's adventure", time: "2m ago", videoName: "video01"))
-        self.stories.append(Story(caption: "Buck Bunny's Adventure 02", profileName: "Big Buck Bunny 02", description: "A small glimpse in a Big Buck Bunny's adventure", time: "2h ago", videoName: "video02"))
-        self.stories.append(Story(caption: "Buck Bunny's Adventure 03", profileName: "Big Buck Bunny 03", description: "A small glimpse in a Big Buck Bunny's adventure", time: "2w ago", videoName: "video03"))
+        self.stories.append(Story(caption: "Buck Bunny's Adventure 02", profileName: "Big Buck Bunny 02", description: "A small glimpse in a Big Buck Bunny's adventure", time: "2h ago", videoName: "video04"))
     }
     
     // MARK: - Setup Video
@@ -242,16 +232,21 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
 
         DispatchQueue.main.async(execute: {
         })
-        
+    
         self.avPlayer = AVPlayer(playerItem: self.currentStory?.avPlayerItem)
         layer = AVPlayerLayer(player: avPlayer)
         self.layer?.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (view.frame.height / 1.2) + 20)
         layer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleSwipeFunction))
+        
+        self.videoView.isUserInteractionEnabled = true
+        self.videoView.addGestureRecognizer(panGestureRecognizer)
         self.videoView.layer.addSublayer(layer!)
         avPlayer?.play()
         
         if !self.progressTimerIsOn {
-            self.avPlayer?.currentItem?.seek(to: kCMTimeZero, completionHandler: nil)
+            self.avPlayer?.currentItem?.seek(to: CMTime.zero, completionHandler: nil)
             self.avPlayer?.play()
             self.startTimer()
         }
@@ -378,6 +373,15 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         present(activityController, animated: true, completion: nil)
     }
     
+    func handleSaveTap(){
+        let customAlert = CustomPursuitPopover()
+        customAlert.providesPresentationContextTransitionStyle = true
+        customAlert.definesPresentationContext = true
+        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.showDetailViewController(customAlert, sender: self)
+    }
+    
     func viewMore(for cell: KeyPost) {
         let view = KeyPostController(collectionViewLayout: UICollectionViewFlowLayout())
         present(view, animated: true, completion: nil)
@@ -401,7 +405,6 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     override func viewDidLoad() {
         super.viewDidLoad()
         hero.isEnabled = true
-        isMotionEnabled = true
         setupCollectionView()
         setupVideoView()
 //        setupView()
@@ -436,12 +439,30 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     
     @objc func playerItemDidReachEnd(notification: Notification) {
         if let playerItem: AVPlayerItem = notification.object as? AVPlayerItem {
-            playerItem.seek(to: kCMTimeZero, completionHandler: nil)
+            playerItem.seek(to: CMTime.zero, completionHandler: nil)
             self.avPlayer?.play()
         }
     }
     
     let engagementsView = PostEngagementsController()
+    
+    @objc func handleSwipeFunction(panGesture : UIPanGestureRecognizer){
+        let translation = panGesture.translation(in: nil)
+        let progress = translation.y / 2 / view.bounds.height
+        
+        switch panGesture.state {
+        case .began:
+            hero.dismissViewController()
+        case .changed:
+            Hero.shared.update(progress)
+        default:
+            if progress + panGesture.velocity(in: nil).y / view.bounds.height > 0.2 {
+                Hero.shared.finish()
+            } else {
+                Hero.shared.cancel()
+            }
+        }
+    }
     
     fileprivate func handlePanChanged(_ panGesture : UIPanGestureRecognizer) {
         let translation = panGesture.translation(in: self.view)
@@ -477,11 +498,11 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
 extension PostDetailController : UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 20)
+        return CGSize(width: view.frame.width, height: 10)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return 5
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -489,20 +510,17 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay
             cell.delegate = self
+            cell.accessPostDetailController = self
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: keyId, for: indexPath) as! KeyPost
             cell.delegate = self
             return cell
         case 2:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! DetailChallenge
-            cell.accessPostDetailController = self
-            return cell
-        case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamList
             cell.accessPostDetailController = self
             return cell
-        case 4:
+        case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: tryingId, for: indexPath) as! DetailTrying
             return cell
         default:
@@ -513,11 +531,11 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 40.0
+        return 60.0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 40.0
+        return 60.0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -526,9 +544,9 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
             return CGSize(width: view.frame.width, height: 380)
         case 1:
             return CGSize(width: view.frame.width, height: 520)
-        case 3:
+        case 2:
             return CGSize(width: view.frame.width, height: 160)
-        case 4:
+        case 3:
             return CGSize(width: view.frame.width, height: 300)
         default:
             return CGSize(width: view.frame.width, height: 220)

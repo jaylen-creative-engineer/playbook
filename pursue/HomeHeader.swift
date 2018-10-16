@@ -8,7 +8,6 @@
 
 import UIKit
 import Firebase
-import Motion
 
 class HomeHeader : UICollectionViewCell {
     
@@ -26,7 +25,6 @@ class HomeHeader : UICollectionViewCell {
         button.setImage(#imageLiteral(resourceName: "search_unselected").withRenderingMode(.alwaysOriginal), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.motionIdentifier = "searchIcon"
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleSearchTap))
         tap.numberOfTapsRequired = 1
@@ -51,7 +49,6 @@ class HomeHeader : UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        isMotionEnabled = true
         setupView()
     }
     

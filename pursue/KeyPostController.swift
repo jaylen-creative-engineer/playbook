@@ -34,7 +34,7 @@ class KeyPostController : UICollectionViewController {
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
         collectionView?.register(KeyPostListCells.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.contentInset = UIEdgeInsetsMake(50, 0, 0, 0)
+        collectionView?.contentInset = UIEdgeInsets.init(top: 50, left: 0, bottom: 0, right: 0)
     }
     
     @objc func handleDismiss(){

@@ -8,7 +8,6 @@
 
 import UIKit
 import Photos
-import SnapSliderFilters
 import Hero
 import Mixpanel
 
@@ -169,6 +168,11 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         }
     }
     
+    func inviteContacts(){
+        let contacts = InviteController(collectionViewLayout: UICollectionViewFlowLayout())
+        present(contacts, animated: true, completion: nil)
+    }
+    
     lazy var nextButton : UIButton = {
        let button = UIButton()
         button.backgroundColor = .blue
@@ -204,11 +208,25 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         return cv
     }()
     
+    lazy var goBackButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("Go Back", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.addTarget(self, action: #selector(handleGoBack), for: .touchUpInside)
+        return button
+    }()
+    
     let detailId = "detailId"
     let pursuitId = "pursuitId"
     
     @objc func handleNext(){
         let indexPath = IndexPath(item: 1, section: 0)
+        createCollectionViews.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    }
+    
+    @objc func handleGoBack(){
+        let indexPath = IndexPath(item: 0, section: 0)
         createCollectionViews.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
     
@@ -225,6 +243,8 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         view.addSubview(createCollectionViews)
         view.addSubview(nextButton)
         view.addSubview(nextArrow)
+        view.addSubview(backButton)
+        view.addSubview(goBackButton)
         
         createCollectionViews.anchor(top: createLabel.bottomAnchor, left: view.leftAnchor, bottom: backgroundWhiteFill.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
        
@@ -232,6 +252,10 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         nextArrow.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 18, height: 18)
         nextArrow.centerXAnchor.constraint(equalTo: nextButton.centerXAnchor).isActive = true
         nextArrow.centerYAnchor.constraint(equalTo: nextButton.centerYAnchor).isActive = true
+        
+        backButton.anchor(top: nil, left: backgroundWhiteFill.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 18, height: 18)
+        backButton.centerYAnchor.constraint(equalTo: createLabel.centerYAnchor).isActive = true
+        
     }
     
     func setupView(){
@@ -239,18 +263,15 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         view.addSubview(cancelFill)
         view.addSubview(backgroundWhiteFill)
         view.addSubview(createLabel)
-        view.addSubview(backButton)
         
         backgroundImageView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         cancelFill.anchor(top: backgroundImageView.topAnchor, left: backgroundImageView.leftAnchor, bottom: backgroundImageView.bottomAnchor, right: backgroundImageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         backgroundWhiteFill.anchor(top: nil, left: cancelFill.leftAnchor, bottom: view.bottomAnchor, right: cancelFill.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: view.frame.height / 1.6)
         createLabel.anchor(top: backgroundWhiteFill.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: createLabel.intrinsicContentSize.width, height: createLabel.intrinsicContentSize.height)
         createLabel.centerXAnchor.constraint(equalTo: backgroundWhiteFill.centerXAnchor).isActive = true
-        backButton.anchor(top: nil, left: backgroundWhiteFill.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 18, height: 18)
-        backButton.centerYAnchor.constraint(equalTo: createLabel.centerYAnchor).isActive = true
+       
         setupCreateCollectionView()
     }
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -262,6 +283,19 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     @objc func cancel() {
         dismiss(animated: true, completion: nil)
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let currentpage = Int(scrollView.contentOffset.x / scrollView.bounds.width)
+        
+        if currentpage == 0 {
+            goBackButton.isHidden = true
+        } else {
+            goBackButton.isHidden = false
+            goBackButton.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: goBackButton.intrinsicContentSize.width, height: 16)
+            goBackButton.centerYAnchor.constraint(equalTo: nextButton.centerYAnchor).isActive = true
+        }
+    }
+    
 }
 
 extension PhotoViewController : UITextViewDelegate {
@@ -309,6 +343,7 @@ extension PhotoViewController : UICollectionViewDelegate, UICollectionViewDataSo
         switch indexPath.item {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: detailId, for: indexPath) as! CreateDetailsCell
+            cell.accessPhotoViewController = self
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! CreatePursuitsCells

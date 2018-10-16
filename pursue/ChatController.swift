@@ -35,7 +35,7 @@ class ChatController : UICollectionViewCell {
         
         addSubview(messagesCollectionView)
         messagesCollectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        messagesCollectionView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0)
+        messagesCollectionView.contentInset = UIEdgeInsets.init(top: 20, left: 0, bottom: 0, right: 0)
     }
     
     override init(frame: CGRect) {

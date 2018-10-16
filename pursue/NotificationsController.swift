@@ -47,7 +47,7 @@ class NotificationsController : UICollectionViewController {
         collectionView?.backgroundColor = .white
         collectionView?.showsHorizontalScrollIndicator = false
         collectionView?.isPagingEnabled = true
-        collectionView?.contentInset = UIEdgeInsetsMake(95, 0, 60, 0)
+        collectionView?.contentInset = UIEdgeInsets.init(top: 95, left: 0, bottom: 60, right: 0)
         setupNavBar()
     }
     

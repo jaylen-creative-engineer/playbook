@@ -15,6 +15,7 @@ protocol CreateTeamCellsDelegate {
 class CreateTeamCells : UICollectionViewCell {
     
     var delegate : CreateTeamCellsDelegate?
+    var accessDetailController : CreateDetailsCell?
     
     lazy var userPhoto : UIImageView = {
        let iv = UIImageView()
@@ -28,13 +29,14 @@ class CreateTeamCells : UICollectionViewCell {
         return iv
     }()
     
-    let searchFriendsButton : UIButton = {
+    lazy var searchFriendsButton : UIButton = {
        let button = UIButton()
         button.setTitle("INVITE TEAM", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.darkGray, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
         button.titleLabel?.textAlignment = .left
         button.backgroundColor = .clear
+        button.addTarget(self, action: #selector(handleInviteFriends), for: .touchUpInside)
         return button
     }()
     
@@ -73,6 +75,10 @@ class CreateTeamCells : UICollectionViewCell {
             userPhotoOverlay.isHidden = true
             checkImageView.isHidden = true
         }
+    }
+    
+    @objc func handleInviteFriends(){
+        accessDetailController?.inviteContacts()
     }
     
     func setupFriendsSearch(){

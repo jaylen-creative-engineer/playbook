@@ -40,8 +40,8 @@ class PasswordCell : UICollectionViewCell {
         tf.layer.cornerRadius = 4
         tf.backgroundColor = UIColor.clear
         
-        let attributes = [ NSAttributedStringKey.foregroundColor: UIColor.gray,
-                           NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)]
+        let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.gray,
+                           NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]
         tf.attributedPlaceholder = NSAttributedString(string: "your password", attributes:attributes)
         tf.isSecureTextEntry = true
         tf.addTarget(self, action: #selector(setPassword), for: .editingChanged)

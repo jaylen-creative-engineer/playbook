@@ -121,14 +121,14 @@ class EditProfileController : UIViewController {
         let tv = UITextField()
         tv.textColor = .black
         tv.font = UIFont.systemFont(ofSize: 14)
-        tv.attributedPlaceholder = NSAttributedString(string: "Full Name", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
+        tv.attributedPlaceholder = NSAttributedString(string: "Full Name", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
         return tv
     }()
     
     let usernameLabel : UITextField = {
         let tv = UITextField()
         tv.font = UIFont.systemFont(ofSize: 14)
-        tv.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
+        tv.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
         tv.textColor = .black
         return tv
     }()
@@ -149,7 +149,7 @@ class EditProfileController : UIViewController {
     let currentLabel : UITextField = {
         let tv = UITextField()
         tv.font = UIFont.systemFont(ofSize: 14)
-        tv.attributedPlaceholder = NSAttributedString(string: "Current Password", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
+        tv.attributedPlaceholder = NSAttributedString(string: "Current Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
         tv.textColor = .black
         tv.isSecureTextEntry = true
         tv.isUserInteractionEnabled = true
@@ -160,7 +160,7 @@ class EditProfileController : UIViewController {
     let confirmLabel : UITextField = {
         let tv = UITextField()
         tv.font = UIFont.systemFont(ofSize: 14)
-        tv.attributedPlaceholder = NSAttributedString(string: "Confirm Password", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
+        tv.attributedPlaceholder = NSAttributedString(string: "Confirm Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
         tv.textColor = .black
         tv.isSecureTextEntry = true
         tv.addTarget(self, action: #selector(updateAccount), for: .editingChanged)
@@ -170,7 +170,7 @@ class EditProfileController : UIViewController {
     let updateLabel : UITextField = {
         let tv = UITextField()
         tv.font = UIFont.systemFont(ofSize: 14)
-        tv.attributedPlaceholder = NSAttributedString(string: "Update Password", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
+        tv.attributedPlaceholder = NSAttributedString(string: "Update Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
         tv.textColor = .black
         tv.isSecureTextEntry = true
         tv.addTarget(self, action: #selector(updateAccount), for: .editingChanged)

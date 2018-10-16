@@ -12,7 +12,7 @@ class CreatePursuitsCells : UICollectionViewCell {
     
     lazy var startPursuitButton : UIButton = {
        let button = UIButton()
-        button.setTitle("Start A New Pursuit", for: .normal)
+        button.setTitle("Start New", for: .normal)
         button.setTitleColor(.darkGray, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.titleLabel?.textAlignment = .left
@@ -36,6 +36,7 @@ class CreatePursuitsCells : UICollectionViewCell {
         return label
     }()
     
+    
     let cellId = "cellId"
     
     func setupView(){
@@ -47,9 +48,10 @@ class CreatePursuitsCells : UICollectionViewCell {
         addSubview(startPursuitButton)
         addSubview(collectionView)
         
-        startPursuitButton.anchor(top: nil, left: nil, bottom: safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 32, paddingRight: 0, width: startPursuitButton.intrinsicContentSize.width, height: 16)
-        startPursuitButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        choosePursuitButton.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: choosePursuitButton.intrinsicContentSize.width, height: 16)
+        choosePursuitButton.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: choosePursuitButton.intrinsicContentSize.width + 10, height: 16)
+        
+        startPursuitButton.anchor(top: choosePursuitButton.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: startPursuitButton.intrinsicContentSize.width, height: 16)
+        
         collectionView.anchor(top: choosePursuitButton.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 300)
     }
     
@@ -75,7 +77,7 @@ extension CreatePursuitsCells : UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 12, 0, 12)
+        return UIEdgeInsets.init(top: 0, left: 12, bottom: 0, right: 12)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

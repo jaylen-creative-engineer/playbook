@@ -74,8 +74,8 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
         tf.layer.cornerRadius = 4
         tf.backgroundColor = UIColor.rgb(red: 225, green: 225, blue: 225)
         
-        let attributes = [ NSAttributedStringKey.foregroundColor: UIColor.darkGray,
-            NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)]
+        let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.darkGray,
+            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]
         tf.attributedPlaceholder = NSAttributedString(string: "Enter email", attributes:attributes)
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         return tf
@@ -88,8 +88,8 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
         tf.layer.cornerRadius = 4
         tf.backgroundColor = UIColor.rgb(red: 225, green: 225, blue: 225)
         
-        let attributes = [ NSAttributedStringKey.foregroundColor: UIColor.darkGray,
-                           NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)]
+        let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.darkGray,
+                           NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]
         tf.attributedPlaceholder = NSAttributedString(string: "Enter password", attributes:attributes)
         tf.isSecureTextEntry = true
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
@@ -285,7 +285,7 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
     
     func facebookSignOut(){
         customSettingsView.accessLoginController = self
-        loginButtonDidLogOut(customFacebookLogin as! FBSDKLoginButton)
+        loginButtonDidLogOut(customFacebookLogin as? FBSDKLoginButton)
     }
     
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {

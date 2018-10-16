@@ -16,7 +16,7 @@ class DetailTrying : UICollectionViewCell {
     
     let tryingLabel : UILabel = {
         let label = UILabel()
-        label.text = "Trying"
+        label.text = "People Trying This Pursuit"
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
@@ -30,6 +30,8 @@ class DetailTrying : UICollectionViewCell {
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
+    
+    var images = [#imageLiteral(resourceName: "stock-exchange"), #imageLiteral(resourceName: "3d-touch"), #imageLiteral(resourceName: "contacts"), #imageLiteral(resourceName: "app-screenshot-1"),#imageLiteral(resourceName: "contacts"), #imageLiteral(resourceName: "app-screenshot-2")]
     
     func setupView(){
         addSubview(tryingLabel)
@@ -58,7 +60,7 @@ extension DetailTrying : UICollectionViewDelegate, UICollectionViewDataSource, U
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! DetailSavedCells
-        cell.photo.image = UIImage(named: imageName)
+        cell.photo.image = images[indexPath.item]
         return cell
     }
     
@@ -67,7 +69,7 @@ extension DetailTrying : UICollectionViewDelegate, UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 12, 0, 12)
+        return UIEdgeInsets.init(top: 0, left: 12, bottom: 0, right: 12)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

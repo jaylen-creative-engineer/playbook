@@ -52,13 +52,13 @@ extension EngagementsHeader : UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let approximateWidthOfLabel = frame.width / 5
         let size = CGSize(width: approximateWidthOfLabel, height: .infinity)
-        let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)]
+        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)]
         let estimatedFrame = NSString(string: headerNames[indexPath.item]).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
         return CGSize(width: estimatedFrame.width + 10, height: 24)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 12, 0, 12)
+        return UIEdgeInsets.init(top: 0, left: 12, bottom: 0, right: 12)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

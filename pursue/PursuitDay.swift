@@ -17,6 +17,8 @@ class PursuitDay : UICollectionViewCell {
 
     var delegate : PursuitDayDelegate?
     
+    var accessPostDetailController: PostDetailController?
+    
     let collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -31,8 +33,8 @@ class PursuitDay : UICollectionViewCell {
     let headerId = "headerId"
     
     var days = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"]
-    let images = ["788572ee949285fae33dca5d846a4664", "clean-2", "academics", "fashion-design", "690dae66bfe860df34fc7a756b53c15d"]
-    
+//    let images = ["788572ee949285fae33dca5d846a4664", "clean-2", "academics", "fashion-design", "690dae66bfe860df34fc7a756b53c15d"]
+        
     lazy var firstProfileImageView : UIImageView = {
        let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "comment-1").withRenderingMode(.alwaysOriginal)
@@ -63,7 +65,6 @@ class PursuitDay : UICollectionViewCell {
         let button = EngagementsView()
         button.backgroundColor = .white
         button.clipsToBounds = true
-        button.motionIdentifier = "saveBackground"
         return button
     }()
     
@@ -71,7 +72,6 @@ class PursuitDay : UICollectionViewCell {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "bookmark").withRenderingMode(.alwaysOriginal), for: .normal)
         button.contentMode = .scaleAspectFill
-        button.motionIdentifier = "saveIcon"
         return button
     }()
     
@@ -79,7 +79,6 @@ class PursuitDay : UICollectionViewCell {
         let button = EngagementsView()
         button.backgroundColor = .white
         button.clipsToBounds = true
-        button.motionIdentifier = "tryBackground"
         return button
     }()
     
@@ -88,8 +87,7 @@ class PursuitDay : UICollectionViewCell {
         button.setImage(#imageLiteral(resourceName: "add").withRenderingMode(.alwaysTemplate), for: .normal)
         button.tintColor = .gray
         button.contentMode = .scaleAspectFill
-        button.motionIdentifier = "tryIcon"
-        button.addTarget(self, action: #selector(handleTry), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
         return button
     }()
     
@@ -113,7 +111,6 @@ class PursuitDay : UICollectionViewCell {
         button.setImage(#imageLiteral(resourceName: "share").withRenderingMode(.alwaysTemplate), for: .normal)
         button.tintColor = .gray
         button.contentMode = .scaleAspectFill
-        button.motionIdentifier = "shareIcon"
         button.addTarget(self, action: #selector(handleShare), for: .touchUpInside)
         return button
     }()
@@ -135,7 +132,7 @@ class PursuitDay : UICollectionViewCell {
     
     lazy var tryLabel : UIButton = {
        let button = UIButton()
-        button.setTitle("Try", for: .normal)
+        button.setTitle("Save", for: .normal)
         button.setTitleColor(.gray, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
         return button
@@ -173,8 +170,11 @@ class PursuitDay : UICollectionViewCell {
         Mixpanel.mainInstance().track(event: "Contribute on pursuit button pressed")
     }
     
-    @objc func handleTry(){
+    @objc func handleSave(){
         Mixpanel.mainInstance().track(event: "Pursuit tried")
+        
+        tryLabel.tintColor = .black
+        accessPostDetailController?.handleSaveTap()
     }
     
     func setupTeamPictures(){
@@ -242,10 +242,6 @@ class PursuitDay : UICollectionViewCell {
 
 extension PursuitDay : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 4
-    }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
     }
@@ -260,7 +256,7 @@ extension PursuitDay : UICollectionViewDelegate, UICollectionViewDataSource, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 12, 0, 12)
+        return UIEdgeInsets.init(top: 0, left: 12, bottom: 0, right: 12)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

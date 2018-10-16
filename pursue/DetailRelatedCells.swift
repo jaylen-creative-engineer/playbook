@@ -84,7 +84,7 @@ class DetailRelatedCells : UICollectionViewCell {
     let postCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsetsMake(0, 12, 0, 12)
+        layout.sectionInset = UIEdgeInsets.init(top: 0, left: 12, bottom: 0, right: 12)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
@@ -137,7 +137,6 @@ class DetailRelatedCells : UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        isMotionEnabled = true
         setupView()
     }
     
@@ -160,8 +159,6 @@ extension DetailRelatedCells : UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! StoryCell
-        cell.imageView.motionIdentifier = String(indexPath.item)
-        transitionId = cell.imageView.motionIdentifier
         return cell
     }
     

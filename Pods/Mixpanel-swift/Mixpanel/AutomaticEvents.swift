@@ -75,12 +75,12 @@ class AutomaticEvents: NSObject, SKPaymentTransactionObserver, SKProductsRequest
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appWillResignActive(_:)),
-                                               name: .UIApplicationWillResignActive,
+                                               name: UIApplication.willResignActiveNotification,
                                                object: nil)
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appDidBecomeActive(_:)),
-                                               name: .UIApplicationDidBecomeActive,
+                                               name: UIApplication.didBecomeActiveNotification,
                                                object: nil)
 
         SKPaymentQueue.default().add(self)
@@ -251,7 +251,7 @@ extension UIResponder {
         let originalSelector = NSSelectorFromString("application:didReceiveRemoteNotification:fetchCompletionHandler:")
         if let originalMethod = class_getInstanceMethod(type(of: self), originalSelector),
             let swizzle = Swizzler.swizzles[originalMethod] {
-            typealias MyCFunction = @convention(c) (AnyObject, Selector, UIApplication, NSDictionary, (UIBackgroundFetchResult) -> Void) -> Void
+            typealias MyCFunction = @convention(c) (AnyObject, Selector, UIApplication, NSDictionary, @escaping (UIBackgroundFetchResult) -> Void) -> Void
             let curriedImplementation = unsafeBitCast(swizzle.originalMethod, to: MyCFunction.self)
             curriedImplementation(self, originalSelector, application, userInfo as NSDictionary, completionHandler)
 
@@ -284,7 +284,7 @@ extension NSObject {
         let originalSelector = NSSelectorFromString("userNotificationCenter:didReceiveNotificationResponse:withCompletionHandler:")
         if let originalMethod = class_getInstanceMethod(type(of: self), originalSelector),
             let swizzle = Swizzler.swizzles[originalMethod] {
-            typealias MyCFunction = @convention(c) (AnyObject, Selector, UNUserNotificationCenter, UNNotificationResponse, () -> Void) -> Void
+            typealias MyCFunction = @convention(c) (AnyObject, Selector, UNUserNotificationCenter, UNNotificationResponse, @escaping () -> Void) -> Void
             let curriedImplementation = unsafeBitCast(swizzle.originalMethod, to: MyCFunction.self)
             curriedImplementation(self, originalSelector, center, response, completionHandler)
 

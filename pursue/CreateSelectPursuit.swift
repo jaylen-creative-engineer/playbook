@@ -32,7 +32,6 @@ class CreateSelectPursuit : UICollectionViewCell {
         label.text = "Principle"
         label.font = UIFont(name: "Lato-Bold", size: 14)
         label.textColor = .white
-        label.motionIdentifier = "postType"
         return label
     }()
     
@@ -42,7 +41,6 @@ class CreateSelectPursuit : UICollectionViewCell {
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 20
         iv.layer.masksToBounds = true
-        iv.motionIdentifier = "userPhoto"
         return iv
     }()
     
@@ -53,7 +51,6 @@ class CreateSelectPursuit : UICollectionViewCell {
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.init(25))
         label.textAlignment = .center
-        label.motionIdentifier = "postDetail"
         return label
     }()
     
@@ -62,7 +59,6 @@ class CreateSelectPursuit : UICollectionViewCell {
         label.text = "20 Days"
         label.font = UIFont(name: "Lato-Bold", size: 14)
         label.textColor = .white
-        label.motionIdentifier = "daysLabel"
         return label
     }()
     

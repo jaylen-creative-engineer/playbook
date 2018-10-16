@@ -73,7 +73,10 @@ class InterestsController : UICollectionViewController {
     }
     
     func getSelectedInterests(){
-        interestsService.getSelectedInterests() { (interest) in
+        let defaults = UserDefaults.standard
+        let userId = defaults.integer(forKey: "userId")
+        
+        interestsService.getSelectedInterests(userId: String(userId)) { (interest) in
             DispatchQueue.main.async {
                 interest.forEach({ (value) in
                     self.interests.append(value)
@@ -119,7 +122,7 @@ class InterestsController : UICollectionViewController {
         super.viewDidLoad()
         collectionView?.register(SelectInterestsList.self, forCellWithReuseIdentifier: cellId)
         collectionView?.backgroundColor = .white
-        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 105, 0)
+        collectionView?.contentInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 105, right: 0)
         collectionView?.delegate = self
         collectionView?.dataSource = self
         collectionView?.showsVerticalScrollIndicator = false
@@ -150,7 +153,7 @@ extension InterestsController : UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 12, 0, 12)
+        return UIEdgeInsets.init(top: 0, left: 12, bottom: 0, right: 12)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

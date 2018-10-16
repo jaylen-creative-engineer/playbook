@@ -58,11 +58,11 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         super.viewDidLoad()
         
         tabBarController?.navigationController?.navigationBar.isHidden = true
-        collectionView?.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView?.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(ProfilePursuit.self, forCellWithReuseIdentifier: pursuitsId)
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
-        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 20, 0)
+        collectionView?.contentInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 20, right: 0)
         getUser()
     }
     

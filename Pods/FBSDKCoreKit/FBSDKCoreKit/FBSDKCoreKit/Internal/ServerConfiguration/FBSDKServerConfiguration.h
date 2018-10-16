@@ -56,6 +56,7 @@ implicitPurchaseLoggingEnabled:(BOOL)implicitPurchaseLoggingEnabled
         codelessEventsEnabled:(BOOL)codelessEventsEnabled
   systemAuthenticationEnabled:(BOOL)systemAuthenticationEnabled
         nativeAuthFlowEnabled:(BOOL)nativeAuthFlowEnabled
+     uninstallTrackingEnabled:(BOOL)uninstallTrackingEnabled
          dialogConfigurations:(NSDictionary *)dialogConfigurations
                   dialogFlows:(NSDictionary *)dialogFlows
                     timestamp:(NSDate *)timestamp
@@ -68,6 +69,7 @@ implicitPurchaseLoggingEnabled:(BOOL)implicitPurchaseLoggingEnabled
         smartLoginMenuIconURL:(NSURL *)smartLoginMenuIconURL
                 updateMessage:(NSString *)updateMessage
                 eventBindings:(NSArray *)eventBindings
+         codelessSetupEnabled:(BOOL)codelessSetupEnabled
 NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, assign, readonly, getter=isAdvertisingIDEnabled) BOOL advertisingIDEnabled;
@@ -82,6 +84,7 @@ NS_DESIGNATED_INITIALIZER;
 @property (nonatomic, assign, readonly, getter=isLoginTooltipEnabled) BOOL loginTooltipEnabled;
 @property (nonatomic, assign, readonly, getter=isNativeAuthFlowEnabled) BOOL nativeAuthFlowEnabled;
 @property (nonatomic, assign, readonly, getter=isSystemAuthenticationEnabled) BOOL systemAuthenticationEnabled;
+@property (nonatomic, assign, readonly, getter=isUninstallTrackingEnabled) BOOL uninstallTrackingEnabled;
 @property (nonatomic, copy, readonly) NSString *loginTooltipText;
 @property (nonatomic, copy, readonly) NSDate *timestamp;
 @property (nonatomic, assign) NSTimeInterval sessionTimoutInterval;
@@ -91,6 +94,7 @@ NS_DESIGNATED_INITIALIZER;
 @property (nonatomic, copy, readonly) NSURL *smartLoginMenuIconURL;
 @property (nonatomic, copy, readonly) NSString *updateMessage;
 @property (nonatomic, copy, readonly) NSArray *eventBindings;
+@property (nonatomic, assign, readonly, getter=isCodelessSetupEnabled) BOOL codelessSetupEnabled;
 @property (nonatomic, readonly) NSInteger version;
 
 - (FBSDKDialogConfiguration *)dialogConfigurationForDialogName:(NSString *)dialogName;

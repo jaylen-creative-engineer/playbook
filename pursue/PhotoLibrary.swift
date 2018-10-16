@@ -133,7 +133,7 @@ class PhotoLibrary : SwiftyCamViewController, UICollectionViewDelegate, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 6, 0, 6)
+        return UIEdgeInsets.init(top: 0, left: 6, bottom: 0, right: 6)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

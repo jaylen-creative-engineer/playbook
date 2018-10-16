@@ -31,6 +31,8 @@ class SearchPursuits : UICollectionViewCell {
         return collectionView
     }()
     
+    var pursuitImages = [#imageLiteral(resourceName: "home-remodel"), #imageLiteral(resourceName: "ghost"), #imageLiteral(resourceName: "food")]
+    
     func setupView(){
         addSubview(pursuitsLabel)
         addSubview(collectionView)
@@ -52,21 +54,24 @@ class SearchPursuits : UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    var descriptions = ["Home Redesign", "Road trip", "A foodie's weakness"]
 }
 
 extension SearchPursuits : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchPursuitsCells
+        cell.postDetail.text = descriptions[indexPath.item]
+        cell.imageView.image = pursuitImages[indexPath.item]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 12, 0, 12)
+        return UIEdgeInsets.init(top: 0, left: 12, bottom: 0, right: 12)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

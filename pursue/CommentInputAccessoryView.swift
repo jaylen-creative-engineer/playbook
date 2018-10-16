@@ -100,7 +100,7 @@ class CommentInputAccessoryView : UIView {
     }
     
     @objc func handleSubmit() {
-        guard let commentText = commentTextView.text else { return }
+//        guard let commentText = commentTextView.text else { return }
 //        delegate?.didSubmit(for: commentText)
     }
     

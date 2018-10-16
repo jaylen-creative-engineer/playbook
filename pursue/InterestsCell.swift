@@ -43,25 +43,25 @@ class InterestsCell : UICollectionViewCell, SelectInterestsDelegate {
         engagementService.toggleFollowInterests(interestId: interestId, is_selected: interest.selected_interests)
     }
     
-    var userId : Int? {
+    var user : User! {
         didSet {
-            let defaults = UserDefaults.standard
-            let currentUserId = defaults.integer(forKey: "userId")
-            
-            userId = currentUserId
-            getSelectedInterests()
+            loggedInUserId = String(user.userId!)
         }
     }
     
+    var loggedInUserId : String?
+    
     func getSelectedInterests(){
-        interestsService.getSelectedInterests() { (interest) in
-            DispatchQueue.main.async {
-                interest.forEach({ (value) in
-                    self.interests.append(value)
-                    self.interestsCollection.reloadData()
-                })
+        if loggedInUserId != nil {
+            interestsService.getSelectedInterests(userId: loggedInUserId!) { (interest) in
+                DispatchQueue.main.async {
+                    interest.forEach({ (value) in
+                        self.interests.append(value)
+                        self.interestsCollection.reloadData()
+                    })
+                }
             }
-        }
+        } 
     }
     
     func setupView(){
@@ -70,7 +70,7 @@ class InterestsCell : UICollectionViewCell, SelectInterestsDelegate {
         interestsCollection.delegate = self
         interestsCollection.dataSource = self
         interestsCollection.register(SelectInterestsList.self, forCellWithReuseIdentifier: listId)
-        interestsCollection.register(SignupInterestsHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+        interestsCollection.register(SignupInterestsHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         
         interestsCollection.anchor(top: topAnchor, left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 84, paddingRight: 0, width: 0, height: 0)
     }
@@ -78,6 +78,7 @@ class InterestsCell : UICollectionViewCell, SelectInterestsDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+        getSelectedInterests()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -106,7 +107,7 @@ extension InterestsCell : UICollectionViewDelegateFlowLayout, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 12, 0, 12)
+        return UIEdgeInsets.init(top: 0, left: 12, bottom: 0, right: 12)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -118,8 +119,23 @@ extension InterestsCell : UICollectionViewDelegateFlowLayout, UICollectionViewDa
         return CGSize(width: frame.width, height: 185)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        var interest = self.interests[indexPath.item]
+        guard let interestId = interest.interestId else { return }
+        
+        if interest.selected_interests == 0 {
+            interest.selected_interests = 1
+        } else if interest.selected_interests == 1 {
+            interest.selected_interests = 0
+        }
+        self.interests[indexPath.item] = interest
+        self.interestsCollection.reloadItems(at: [indexPath])
+        engagementService.toggleFollowInterests(interestId: interestId, is_selected: interest.selected_interests)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: listId, for: indexPath) as! SelectInterestsList
+        cell.delegate = self
         cell.interest = interests[indexPath.item]
         return cell
     }

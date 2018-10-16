@@ -31,7 +31,7 @@ class CreateDetailsCell : UICollectionViewCell {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .white
         cv.showsHorizontalScrollIndicator = false
-        cv.contentInset = UIEdgeInsetsMake(0, 12, 0, 12)
+        cv.contentInset = UIEdgeInsets.init(top: 0, left: 12, bottom: 0, right: 12)
         return cv
     }()
     
@@ -51,7 +51,7 @@ class CreateDetailsCell : UICollectionViewCell {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .white
         cv.showsHorizontalScrollIndicator = false
-        cv.contentInset = UIEdgeInsetsMake(0, 4, 0, 12)
+        cv.contentInset = UIEdgeInsets.init(top: 0, left: 4, bottom: 0, right: 12)
         return cv
     }()
     
@@ -96,6 +96,7 @@ class CreateDetailsCell : UICollectionViewCell {
     
     var interests = [CreateInterests]()
     let interestsService = InterestServices()
+    var accessPhotoViewController : PhotoViewController?
     
     func getInterests(){
         interestsService.getInterestsNames { (interest) in
@@ -120,6 +121,10 @@ class CreateDetailsCell : UICollectionViewCell {
         postTypeLabel.anchor(top: selectInterests.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
         stackView.anchor(top: postTypeLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: frame.width / 1.3, height: 30)
         
+    }
+    
+    func inviteContacts(){
+        accessPhotoViewController?.inviteContacts()
     }
     
     func setupTeamCollectionView(){
@@ -178,6 +183,7 @@ extension CreateDetailsCell : UICollectionViewDelegate, UICollectionViewDataSour
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! CreateTeamCells
+            cell.accessDetailController = self
             switch indexPath.item {
             case 0:
                 cell.setupFriendsSearch()
@@ -198,7 +204,7 @@ extension CreateDetailsCell : UICollectionViewDelegate, UICollectionViewDataSour
             if let interest_name = interests[indexPath.item].interest_name {
                 let approximateHeightOfLabel = frame.width - 20 - 8
                 let size = CGSize(width: .infinity, height: approximateHeightOfLabel)
-                let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12)]
+                let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)]
                 let estimatedFrame = NSString(string: interest_name).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
                 return CGSize(width: estimatedFrame.width + 50, height: 43)
             }

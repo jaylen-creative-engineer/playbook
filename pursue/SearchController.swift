@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Motion
 
 class SearchController : UICollectionViewController {
     
@@ -25,7 +24,6 @@ class SearchController : UICollectionViewController {
         tf.backgroundColor = .white
         tf.isUserInteractionEnabled = true
         tf.delegate = self
-        tf.motionIdentifier = "searchBar"
         return tf
     }()
     
@@ -33,7 +31,6 @@ class SearchController : UICollectionViewController {
         let view = SearchCardView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        view.motionIdentifier = "searchBackground"
         return view
     }()
 
@@ -44,7 +41,7 @@ class SearchController : UICollectionViewController {
         
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
-        collectionView?.contentInset = UIEdgeInsetsMake(50, 0, 0, 0)
+        collectionView?.contentInset = UIEdgeInsets.init(top: 50, left: 0, bottom: 0, right: 0)
     }
     
     @objc func handleDismiss(){
@@ -74,6 +71,7 @@ class SearchController : UICollectionViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
     }
+    
 }
 
 extension SearchController : UITextFieldDelegate {

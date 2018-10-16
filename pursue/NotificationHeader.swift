@@ -70,7 +70,7 @@ extension NotificationHeader : UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let approximateWidthOfLabel = frame.width / 3.5
         let size = CGSize(width: approximateWidthOfLabel, height: .infinity)
-        let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)]
+        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)]
         let estimatedFrame = NSString(string: headerNames[indexPath.item]).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
         return CGSize(width: estimatedFrame.width + 15, height: frame.height)
     }

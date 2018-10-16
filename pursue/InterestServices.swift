@@ -21,7 +21,7 @@ class InterestServices {
     func createInterestsList(){
         for i in 0...interestsNames.count - 1 {
             let image = imageNames[i]
-            guard let uploadData = UIImageJPEGRepresentation(image, 0.3) else { return }
+            guard let uploadData = image.jpegData(compressionQuality: 0.3) else { return }
             
             let filename = NSUUID().uuidString
             let ref = Storage.storage().reference().child("interests-images").child(filename)
@@ -57,11 +57,8 @@ class InterestServices {
     
     // MARK: - GET interests lists
     
-    func getSelectedInterests(completion: @escaping ([Interests]) -> ()){
+    func getSelectedInterests(userId : String, completion: @escaping ([Interests]) -> ()){
         let url = "http://localhost:8080/interests/get-user-interests"
-        
-        let defaults = UserDefaults.standard
-        let userId = defaults.integer(forKey: "userId")
         
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId

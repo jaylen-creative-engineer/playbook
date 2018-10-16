@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Motion
 
 class PostEngagementsController : UICollectionViewController {
     
@@ -88,9 +87,8 @@ class PostEngagementsController : UICollectionViewController {
         collectionView?.register(PostComments.self, forCellWithReuseIdentifier: commentId)
         collectionView?.register(DetailRelated.self, forCellWithReuseIdentifier: relatedId)
         collectionView?.backgroundColor = UIColor.white
-        collectionView?.contentInset = UIEdgeInsetsMake(135, 0, 0, 0)
+        collectionView?.contentInset = UIEdgeInsets.init(top: 135, left: 0, bottom: 0, right: 0)
         collectionView?.isPagingEnabled = true
-        isMotionEnabled = true
         setupNavBar()
     }
     

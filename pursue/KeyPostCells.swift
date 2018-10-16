@@ -43,7 +43,8 @@ class KeyPostCells : UICollectionViewCell {
     
     lazy var createButton : UIButton = {
        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "create_unselected").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "add").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .gray
         button.imageView?.contentMode = .scaleAspectFill
         return button
     }()
@@ -55,7 +56,7 @@ class KeyPostCells : UICollectionViewCell {
         addSubview(timeLabel)
         addSubview(createButton)
         
-        countLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: countLabel.intrinsicContentSize.width, height: 18)
+        countLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 15, height: 18)
         imageView.anchor(top: countLabel.topAnchor, left: countLabel.rightAnchor, bottom: bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 72, height: 0)
         createButton.anchor(top: countLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 6, width: 19, height: 19)
         postDetail.anchor(top: imageView.topAnchor, left: imageView.rightAnchor, bottom: nil, right: createButton.leftAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)

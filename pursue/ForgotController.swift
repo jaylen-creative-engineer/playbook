@@ -25,7 +25,7 @@ class ForgotController : UICollectionViewController, UICollectionViewDelegateFlo
         paragraphStyle.lineSpacing = 5
         
         let attrString = NSMutableAttributedString(string:  "We will send a password reset link to your email.")
-        attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         label.attributedText = attrString
         
         label.numberOfLines = 2
@@ -54,8 +54,8 @@ class ForgotController : UICollectionViewController, UICollectionViewDelegateFlo
         tf.font = UIFont.systemFont(ofSize: 14)
         tf.textColor = .black
         
-        let attributes = [ NSAttributedStringKey.foregroundColor: UIColor.black,
-                           NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)]
+        let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.black,
+                           NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]
         tf.attributedPlaceholder = NSAttributedString(string: "Email", attributes:attributes)
         return tf
     }()

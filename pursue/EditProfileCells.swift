@@ -43,14 +43,14 @@ class EditProfileCells : UICollectionViewCell {
         let tv = UITextField()
         tv.textColor = .black
         tv.font = UIFont.systemFont(ofSize: 14)
-        tv.attributedPlaceholder = NSAttributedString(string: "Full Name", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
+        tv.attributedPlaceholder = NSAttributedString(string: "Full Name", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
         return tv
     }()
     
     let usernameLabel : UITextField = {
         let tv = UITextField()
         tv.font = UIFont.systemFont(ofSize: 14)
-        tv.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
+        tv.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
         tv.textColor = .black
         return tv
     }()
@@ -71,7 +71,7 @@ class EditProfileCells : UICollectionViewCell {
     let currentLabel : UITextField = {
         let tv = UITextField()
         tv.font = UIFont.systemFont(ofSize: 14)
-        tv.attributedPlaceholder = NSAttributedString(string: "Current Password", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
+        tv.attributedPlaceholder = NSAttributedString(string: "Current Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
         tv.textColor = .black
         tv.isSecureTextEntry = true
         tv.isUserInteractionEnabled = true
@@ -82,7 +82,7 @@ class EditProfileCells : UICollectionViewCell {
     let confirmLabel : UITextField = {
         let tv = UITextField()
         tv.font = UIFont.systemFont(ofSize: 14)
-        tv.attributedPlaceholder = NSAttributedString(string: "Confirm Password", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
+        tv.attributedPlaceholder = NSAttributedString(string: "Confirm Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
         tv.textColor = .black
         tv.isSecureTextEntry = true
         tv.addTarget(self, action: #selector(updateAccount), for: .editingChanged)
@@ -92,7 +92,7 @@ class EditProfileCells : UICollectionViewCell {
     let updateLabel : UITextField = {
         let tv = UITextField()
         tv.font = UIFont.systemFont(ofSize: 14)
-        tv.attributedPlaceholder = NSAttributedString(string: "Update Password", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black])
+        tv.attributedPlaceholder = NSAttributedString(string: "Update Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
         tv.textColor = .black
         tv.isSecureTextEntry = true
         tv.addTarget(self, action: #selector(updateAccount), for: .editingChanged)
@@ -164,7 +164,7 @@ class EditProfileCells : UICollectionViewCell {
             let fullname = fullnameLabel.text,
             let bio = bioLabel.text,
             let image = self.profilePicture.image,
-            let uploadData = UIImageJPEGRepresentation(image, 0.3)
+            let uploadData = image.jpegData(compressionQuality: 0.3)
             else { return }
         
         let filename = NSUUID().uuidString

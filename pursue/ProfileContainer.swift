@@ -33,7 +33,7 @@ class ProfileContainer : UICollectionViewCell {
         super.init(frame: frame)
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView.register(ProfilePursuit.self, forCellWithReuseIdentifier: pursuitsId)
         setupView()
     }

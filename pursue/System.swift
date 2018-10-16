@@ -14,9 +14,5 @@ struct System {
         navBar.shadowImage = UIImage()
         navBar.isTranslucent = true
     }
-    
-    static func clearTabBar(forBar tabBar : UITabBar) {
-        tabBar.shadowImage = UIImage()
-        tabBar.isTranslucent = true
-    }
+
 }

@@ -18,7 +18,7 @@ class KeyPost : UICollectionViewCell {
     
     let keyPostLabel : UILabel = {
         let label = UILabel()
-        label.text = "Key Post"
+        label.text = "Key Steps"
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
@@ -54,6 +54,8 @@ class KeyPost : UICollectionViewCell {
     
     let cellId = "cellId"
     
+    var images = [#imageLiteral(resourceName: "3d-touch"), #imageLiteral(resourceName: "app-screenshot-1"), #imageLiteral(resourceName: "app-screenshot-2"), #imageLiteral(resourceName: "contacts")]
+    
     @objc func handleViewMore(){
         delegate?.viewMore(for: self)
     }
@@ -77,6 +79,7 @@ class KeyPost : UICollectionViewCell {
         viewMoreButton.centerXAnchor.constraint(equalTo: topShadowView.centerXAnchor).isActive = true
     }
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -95,6 +98,8 @@ extension KeyPost : UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! KeyPostCells
+        cell.imageView.image = images[indexPath.item]
+        cell.countLabel.text = String(indexPath.item + 1)
         return cell
     }
     

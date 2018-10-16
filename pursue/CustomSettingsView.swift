@@ -186,9 +186,9 @@ class CustomSettingsView : UIViewController {
     }
     
     @objc func logOut(){
-        let alert = UIAlertController(title: "Log Out", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.cancel, handler: dismissAlertView))
-        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: signOut))
+        let alert = UIAlertController(title: "Log Out", message: "Are you sure you want to log out?", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "No", style: UIAlertAction.Style.cancel, handler: dismissAlertView))
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertAction.Style.default, handler: signOut))
         self.present(alert, animated: true, completion: nil)
     }
     

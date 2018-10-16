@@ -257,7 +257,7 @@ open class SwiftyCamViewController: UIViewController {
         super.viewDidLoad()
         previewLayer = PreviewView(frame: view.frame, videoGravity: videoGravity)
         view.addSubview(previewLayer)
-        view.sendSubview(toBack: previewLayer)
+        view.sendSubviewToBack(previewLayer)
         
         // Add Gesture Recognizers
         
@@ -756,11 +756,11 @@ open class SwiftyCamViewController: UIViewController {
     
     fileprivate func subscribeToDeviceOrientationChangeNotifications() {
         self.deviceOrientation = UIDevice.current.orientation
-        NotificationCenter.default.addObserver(self, selector: #selector(deviceDidRotate), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(deviceDidRotate), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     fileprivate func unsubscribeFromDeviceOrientationChangeNotifications() {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
         self.deviceOrientation = nil
     }
     
@@ -799,7 +799,7 @@ open class SwiftyCamViewController: UIViewController {
         }
     }
     
-    fileprivate func getImageOrientation(forCamera: CameraSelection) -> UIImageOrientation {
+    fileprivate func getImageOrientation(forCamera: CameraSelection) -> UIImage.Orientation {
         guard shouldUseDeviceOrientation, let deviceOrientation = self.deviceOrientation else { return forCamera == .rear ? .right : .leftMirrored }
         
         switch deviceOrientation {
@@ -867,9 +867,9 @@ open class SwiftyCamViewController: UIViewController {
             alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: .cancel, handler: nil))
             alertController.addAction(UIAlertAction(title: NSLocalizedString("Settings", comment: "Alert button to open Settings"), style: .default, handler: { action in
                 if #available(iOS 10.0, *) {
-                    UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
+                    UIApplication.shared.openURL(URL(string: UIApplication.openSettingsURLString)!)
                 } else {
-                    if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
+                    if let appSettings = URL(string: UIApplication.openSettingsURLString) {
                         UIApplication.shared.openURL(appSettings)
                     }
                 }
@@ -977,24 +977,7 @@ open class SwiftyCamViewController: UIViewController {
     /// Sets whether SwiftyCam should enable background audio from other applications or sources
     
     fileprivate func setBackgroundAudioPreference() {
-        guard allowBackgroundAudio == true else {
-            return
-        }
-        
-        guard audioEnabled == true else {
-            return
-        }
-        
-        do{
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord,
-                                                            with: [.duckOthers, .defaultToSpeaker])
-            
-            session.automaticallyConfiguresApplicationAudioSession = false
-        }
-        catch {
-            print("[SwiftyCam]: Failed to set background audio preference")
-            
-        }
+       
     }
 }
 
@@ -1038,9 +1021,9 @@ extension SwiftyCamViewController : AVCaptureFileOutputRecordingDelegate {
     
     public func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         if let currentBackgroundRecordingID = backgroundRecordingID {
-            backgroundRecordingID = UIBackgroundTaskInvalid
+            backgroundRecordingID = UIBackgroundTaskIdentifier(rawValue: convertFromUIBackgroundTaskIdentifier(UIBackgroundTaskIdentifier.invalid))
             
-            if currentBackgroundRecordingID != UIBackgroundTaskInvalid {
+            if currentBackgroundRecordingID != UIBackgroundTaskIdentifier.invalid {
                 UIApplication.shared.endBackgroundTask(currentBackgroundRecordingID)
             }
         }
@@ -1214,4 +1197,14 @@ extension SwiftyCamViewController : UIGestureRecognizerDelegate {
         }
         return true
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIBackgroundTaskIdentifier(_ input: UIBackgroundTaskIdentifier) -> Int {
+	return input.rawValue
 }

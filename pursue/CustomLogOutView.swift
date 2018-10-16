@@ -68,6 +68,8 @@ class CustomLogOutView : UIViewController {
             accessLoginController?.facebookSignOut()
             GIDSignIn.sharedInstance().signOut()
             
+            UserDefaults.standard.removeObject(forKey: "userId")
+            
             let loginController = LoginController()
             let navController = UINavigationController(rootViewController: loginController)
             self.present(navController, animated: true, completion: nil)

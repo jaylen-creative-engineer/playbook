@@ -8,7 +8,6 @@
 
 import UIKit
 import Hero
-import Motion
 
 class StoryCell : UICollectionViewCell  {
     
@@ -59,7 +58,6 @@ class StoryCell : UICollectionViewCell  {
     override init(frame: CGRect) {
         super.init(frame: frame)
         hero.isEnabled = true
-        isMotionEnabled = true
         setupView()
     }
     

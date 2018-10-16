@@ -19,7 +19,7 @@ class InterestsHeader : UICollectionViewCell {
         label.textAlignment = .justified
         
         let attrString = NSMutableAttributedString(string: "Choose three or more categories that represent what you want to see.")
-        attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         
         label.attributedText = attrString
         label.translatesAutoresizingMaskIntoConstraints = false

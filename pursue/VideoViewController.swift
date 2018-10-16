@@ -78,7 +78,7 @@ class VideoViewController: AssetSelectionViewController {
         paragraphStyle.paragraphSpacing = 5
         
         let attrString = NSMutableAttributedString(string: "Add description")
-        attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         
         tv.attributedText = attrString
         return tv
@@ -160,9 +160,9 @@ class VideoViewController: AssetSelectionViewController {
         let asset = AVAsset(url: url)
         let assetImgGenerate = AVAssetImageGenerator(asset: asset)
         assetImgGenerate.appliesPreferredTrackTransform = true
-        assetImgGenerate.requestedTimeToleranceAfter = kCMTimeZero;
-        assetImgGenerate.requestedTimeToleranceBefore = kCMTimeZero;
-        let time = CMTimeMakeWithSeconds(fromTime, 600)
+        assetImgGenerate.requestedTimeToleranceAfter = CMTime.zero;
+        assetImgGenerate.requestedTimeToleranceBefore = CMTime.zero;
+        let time = CMTimeMakeWithSeconds(fromTime, preferredTimescale: 600)
         
         do {
             
@@ -178,8 +178,8 @@ class VideoViewController: AssetSelectionViewController {
     }
     
     @objc func handlePursuit(){
-        let grabTime = 0.10
-        let image = generateThumnail(url: videoURL!, fromTime: Float64(grabTime))
+//        let grabTime = 0.10
+//        let image = generateThumnail(url: videoURL!, fromTime: Float64(grabTime))
 //        
 //        let customAlert = CustomAlertView(capturedImage: image, contentUrl: videoURL, postDescription: pursuitTitle.text, is_principle: is_principle, is_step: is_step)
 //        customAlert.providesPresentationContextTransitionStyle = true
@@ -266,12 +266,12 @@ class VideoViewController: AssetSelectionViewController {
         
         player = AVPlayer(url: videoURL!)
         playerController = AVPlayerViewController()
-        playerController?.videoGravity = AVLayerVideoGravity.resizeAspectFill.rawValue
+        playerController?.videoGravity = convertToAVLayerVideoGravity(AVLayerVideoGravity.resizeAspectFill.rawValue)
         
         guard player != nil && playerController != nil else { return }
         playerController!.showsPlaybackControls = false
         playerController!.player = player!
-        self.addChildViewController(playerController!)
+        self.addChild(playerController!)
         setupView()
         NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.player!.currentItem)
         trimmerView.isHidden = true
@@ -338,7 +338,7 @@ class VideoViewController: AssetSelectionViewController {
         trimmerView.seek(to: playBackTime)
         
         if playBackTime >= endTime {
-            player.seek(to: startTime, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
+            player.seek(to: startTime, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
             trimmerView.seek(to: startTime)
         }
     }
@@ -348,7 +348,7 @@ class VideoViewController: AssetSelectionViewController {
 extension VideoViewController: TrimmerViewDelegate {
     
     func positionBarStoppedMoving(_ playerTime: CMTime) {
-        player?.seek(to: playerTime, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
+        player?.seek(to: playerTime, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
         player?.play()
         startPlaybackTimeChecker()
     }
@@ -356,7 +356,12 @@ extension VideoViewController: TrimmerViewDelegate {
     func didChangePositionBar(_ playerTime: CMTime) {
         stopPlaybackTimeChecker()
         player?.pause()
-        player?.seek(to: playerTime, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
+        player?.seek(to: playerTime, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
         let _ = (trimmerView.endTime! - trimmerView.startTime!).seconds
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToAVLayerVideoGravity(_ input: String) -> AVLayerVideoGravity {
+	return AVLayerVideoGravity(rawValue: input)
 }

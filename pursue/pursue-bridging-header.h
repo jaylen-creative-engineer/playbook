@@ -12,5 +12,6 @@
 #import "iCarousel.h"
 #import "CSStickyHeaderFlowLayout/CSStickyHeaderFlowLayout.h"
 #import <KWTransition.h>
+#import "Motion-Swift.h"
 
 #endif /* pursue_bridging_header_h */

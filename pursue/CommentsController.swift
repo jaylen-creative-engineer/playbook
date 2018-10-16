@@ -38,7 +38,7 @@ class CommentsController : UICollectionViewController {
     
     func setupCollectionView(){
         collectionView?.backgroundColor = .white
-        collectionView?.contentInset = UIEdgeInsetsMake(60, 0, 0, 0)
+        collectionView?.contentInset = UIEdgeInsets.init(top: 60, left: 0, bottom: 0, right: 0)
         collectionView?.showsVerticalScrollIndicator = false
         collectionView?.register(PostCommentsCell.self, forCellWithReuseIdentifier: cellId)
     }

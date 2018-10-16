@@ -263,7 +263,7 @@ class CustomStepToggleView : UIViewController {
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 2
-        attributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
         label.attributedText = attributedString
         label.font = UIFont.boldSystemFont(ofSize: 14)
         label.numberOfLines = 2

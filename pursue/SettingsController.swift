@@ -293,7 +293,7 @@ class SettingsController : UICollectionViewController, UICollectionViewDelegateF
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.backgroundColor = .white
-        collectionView?.contentInset = UIEdgeInsetsMake(85, 0, 105, 0)
+        collectionView?.contentInset = UIEdgeInsets.init(top: 85, left: 0, bottom: 105, right: 0)
         setupAccountSection()
         setupSettingsSection()
         setupNavBarWithUser()

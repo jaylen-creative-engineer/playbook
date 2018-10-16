@@ -86,11 +86,11 @@ class ProfileServices {
         }
     }
     
-    func getUserId(username : String){
+    func getUserId(email : String, completion :  @escaping (User) -> ()){
         let url = apiUrl + "get-userid"
         
         var parameters = Alamofire.Parameters()
-        parameters["username"] = username
+        parameters["email"] = email
         
         Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             switch response.result {
@@ -98,8 +98,7 @@ class ProfileServices {
                 guard let data = response.data else { return }
                 do {
                     let userResponse = try JSONDecoder().decode(User.self, from: data)
-                     let defaults = UserDefaults.standard
-                     defaults.set(userResponse.userId, forKey: "userId")
+                    completion(userResponse)
                     
                 } catch let error {
                     print(error)

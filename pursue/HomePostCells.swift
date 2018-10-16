@@ -8,7 +8,6 @@
 
 import UIKit
 import Hero
-import Material
 
 class HomePostCells : UICollectionViewCell  {
     
@@ -39,7 +38,6 @@ class HomePostCells : UICollectionViewCell  {
         label.text = "Principle"
         label.font = UIFont(name: "Lato-Bold", size: 14)
         label.textColor = .white
-        label.motionIdentifier = "postType"
         return label
     }()
     
@@ -49,7 +47,6 @@ class HomePostCells : UICollectionViewCell  {
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 20
         iv.layer.masksToBounds = true
-        iv.motionIdentifier = "userPhoto"
         return iv
     }()
     
@@ -58,9 +55,8 @@ class HomePostCells : UICollectionViewCell  {
         label.text = "Travel On"
         label.numberOfLines = 0
         label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.init(25))
+        label.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.init(25))
         label.textAlignment = .center
-        label.motionIdentifier = "postDetail"
         return label
     }()
     
@@ -69,7 +65,6 @@ class HomePostCells : UICollectionViewCell  {
         label.text = "20 Days"
         label.font = UIFont(name: "Lato-Bold", size: 14)
         label.textColor = .white
-        label.motionIdentifier = "daysLabel"
         return label
     }()
     
@@ -86,7 +81,6 @@ class HomePostCells : UICollectionViewCell  {
         label.text = "Test"
         label.font = UIFont(name: "Lato-Bold", size: 14)
         label.textColor = .white
-        label.motionIdentifier = "username"
         return label
     }()
     
@@ -95,7 +89,6 @@ class HomePostCells : UICollectionViewCell  {
         label.text = "Today"
         label.font = UIFont(name: "Lato-Bold", size: 12)
         label.textColor = .white
-        label.motionIdentifier = "timeLabel"
         return label
     }()
   
@@ -106,7 +99,6 @@ class HomePostCells : UICollectionViewCell  {
         view.progressTintColor = .white
         view.layer.cornerRadius = 2
         view.layer.masksToBounds = true
-        view.motionIdentifier = "progressBar"
         return view
     }()
 
@@ -135,19 +127,14 @@ class HomePostCells : UICollectionViewCell  {
         userPhoto.anchor(top: progressBar.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
         username.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 24, width: 0, height: 16)
         timeLabel.anchor(top: username.bottomAnchor, left: username.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
-        postDetail.anchor(top: imageView.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: frame.height / 6, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
+        postDetail.anchor(top: nil, left: imageView.leftAnchor, bottom: imageView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 18, paddingRight: 12, width: 0, height: 0)
         postDetail.heightAnchor.constraint(lessThanOrEqualToConstant: 52).isActive = true
-        postDetail.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
-        postType.anchor(top: postDetail.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: (frame.width / 3) - 12, paddingBottom: 0, paddingRight: 0, width: postType.intrinsicContentSize.width, height: 16)
-        seperatorCircle.anchor(top: nil, left: postType.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
-        seperatorCircle.centerYAnchor.constraint(equalTo: postType.centerYAnchor).isActive = true
-        daysLabel.anchor(top: postDetail.bottomAnchor, left: seperatorCircle.rightAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: daysLabel.intrinsicContentSize.width, height: 16)
+        
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         hero.isEnabled = true
-        isMotionEnabled = true
         setupView()
     }
     

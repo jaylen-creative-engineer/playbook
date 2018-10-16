@@ -40,8 +40,8 @@ class NameCell : UICollectionViewCell {
         tf.layer.cornerRadius = 4
         tf.backgroundColor = UIColor.clear
         
-        let attributes = [ NSAttributedStringKey.foregroundColor: UIColor.gray,
-                           NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)]
+        let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.gray,
+                           NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]
         tf.attributedPlaceholder = NSAttributedString(string: "your full name", attributes:attributes)
         tf.addTarget(self, action: #selector(setFullname), for: .editingChanged)
         return tf

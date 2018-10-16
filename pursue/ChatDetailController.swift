@@ -72,7 +72,7 @@ class ChatDetailController : UIViewController, UITableViewDelegate, UITableViewD
         tv.separatorStyle = .none
         tv.backgroundColor = .white
         tv.showsVerticalScrollIndicator = false
-        tv.contentInset = UIEdgeInsetsMake(-90, 0, 110, 0)
+        tv.contentInset = UIEdgeInsets.init(top: -90, left: 0, bottom: 110, right: 0)
         return tv
     }()
     

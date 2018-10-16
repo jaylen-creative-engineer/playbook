@@ -14,6 +14,8 @@ protocol SelectInterestsDelegate {
 
 class SelectInterestsList : UICollectionViewCell {
     
+    var delegate : SelectInterestsDelegate?
+    
     var interest : Interests? {
         didSet {
             guard let imageUrl = interest?.interest_photo else { return }
