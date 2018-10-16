@@ -72,14 +72,21 @@ class HomeController : UICollectionViewController {
     func setupNavBar(){
         navigationItem.titleView = searchBar
         
-        if let navController = navigationController {
-            System.clearNavigationBar(forBar: navController.navigationBar)
-            navController.view.backgroundColor = .clear
-        }
-        
         navigationController?.hidesBarsOnSwipe = true
         searchController.searchResultsUpdater = self
         definesPresentationContext = true
+        
+        if searchBar.text?.isEmpty == false {
+            navigationController?.view.backgroundColor = .white
+            navigationController?.navigationBar.isTranslucent = false
+            navigationController?.hidesBarsOnSwipe = false
+        } else {
+            if let navController = navigationController {
+                System.clearNavigationBar(forBar: navController.navigationBar)
+                navController.view.backgroundColor = .white
+            }
+        }
+        
     }
 
     override func viewDidLoad() {
@@ -349,12 +356,17 @@ extension HomeController : UISearchBarDelegate, UISearchResultsUpdating {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == ""{
-            navigationController?.hidesBarsOnSwipe = resultsCollectionView.isHidden
+            resultsCollectionView.isHidden = true
+            navigationController?.hidesBarsOnSwipe = true
+            
+            setupNavBar()
         } else {
-            navigationController?.hidesBarsOnSwipe = resultsCollectionView.isHidden 
+            resultsCollectionView.isHidden = false
+            navigationController?.hidesBarsOnSwipe = false
             
             view.addSubview(resultsCollectionView)
             resultsCollectionView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+            setupNavBar()
             
         }
     }
