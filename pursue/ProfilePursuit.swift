@@ -58,6 +58,7 @@ class ProfilePursuit : UICollectionViewCell {
     }
     
     var images = [#imageLiteral(resourceName: "bicycle-3045580_1280"), #imageLiteral(resourceName: "cafe-768771_1280"), #imageLiteral(resourceName: "berlin-1266337_1280"), #imageLiteral(resourceName: "picture-frames-1149414_1280"), #imageLiteral(resourceName: "prague-3540883_1280")]
+    var accessProfileController : ProfileController?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -80,10 +81,13 @@ extension ProfilePursuit : UICollectionViewDelegate, UICollectionViewDataSource,
         return CGSize(width: (frame.width / 1.25) + 40, height: 465)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessProfileController?.handleChangeToDetail()
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! RecommenedPursuitCell
         cell.imageView.image = images[indexPath.item]
-//        cell.pursuit = usersPursuits[indexPath.item]
         return cell
     }
 }

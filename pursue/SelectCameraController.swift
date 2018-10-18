@@ -7,23 +7,34 @@
 //
 
 import UIKit
-import SwiftyCam
 import Photos
+import AVFoundation
 
-class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerDelegate, UIViewControllerTransitioningDelegate {
+class SelectCameraController : UIViewController, AVCapturePhotoCaptureDelegate {
    
     let libraryId = "libraryId"
     let cameraId = "cameraId"
     var allPhotos : PHFetchResult<PHAsset>!
+    
+    var flashMode = AVCaptureDevice.FlashMode.off
+    var cameraCheck = CameraType.Back
+    
+    var frontCamera: AVCaptureDevice?
+    var frontCameraInput: AVCaptureDeviceInput?
+    
+    var rearCamera: AVCaptureDevice?
+    var rearCameraInput: AVCaptureDeviceInput?
+    
+    let cameraController = CameraController()
     var arrPost : [Post] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        cameraDelegate = self
-        maximumVideoDuration = 10.0
-        shouldUseDeviceOrientation = true
-        allowAutoRotate = true
-        audioEnabled = true
+//        maximumVideoDuration = 10.0
+//        shouldUseDeviceOrientation = true
+//        allowAutoRotate = true
+//        audioEnabled = true
+        setupCaptureSession()
         setupView()
         toggleFlash()
         
@@ -33,14 +44,17 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
         getAssetFromPhoto()
     }
     
-    lazy var captureButton : SwiftyRecordButton = {
-       let button = SwiftyRecordButton()
+    lazy var captureButton : UIButton = {
+       let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = UIColor.init(white: 0.7, alpha: 0.5)
         button.layer.borderWidth = 4
         button.layer.borderColor = UIColor.white.cgColor
-        button.layer.cornerRadius = 25
+        button.layer.cornerRadius = 30
         button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(handleCapturePhoto), for: .touchUpInside)
+        
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleRecordVideo))
+        button.addGestureRecognizer(longPress)
         return button
     }()
     
@@ -88,6 +102,11 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
         return button
     }()
     
+    let capturePreview : UIView = {
+       let view = UIView()
+        return view
+    }()
+    
     @objc func handleLibrary(){
         let libraryController = PhotoLibrary()
         libraryController.fetchResult = allPhotos
@@ -95,6 +114,7 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
         present(libraryController, animated: true, completion: nil)
     }
 
+    override var prefersStatusBarHidden: Bool { return true }
     var photos : PHFetchResult<PHAsset>!
     fileprivate let imageManager = PHCachingImageManager()
     
@@ -110,28 +130,40 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
     }
     
     @objc func handleDismiss(){
-        dismiss(animated: true, completion: nil)
+        self.navigationController?.dismiss(animated: true, completion: nil)
     }
     
     @objc func toggleFlash(){
-        flashEnabled = !flashEnabled
-        if flashEnabled == true {
+        
+        if flashMode == .on {
+            flashMode = .off
             cancelFlashLine.isHidden = true
         } else {
+            flashMode = .on
             cancelFlashLine.isHidden = false
         }
     }
     
+    @objc func handleRecordVideo(){
+        
+    }
     func setupView(){
         view.addSubview(captureButton)
         view.addSubview(flipCameraButton)
         view.addSubview(photoLibraryButton)
+        view.addSubview(flashButton)
+        view.addSubview(cancelFlashLine)
         
-        captureButton.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 0, width: 50, height: 50)
+        captureButton.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 0, width: 60, height: 60)
         captureButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        flipCameraButton.anchor(top: nil, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 24, width: 28, height: 20)
-        flipCameraButton.centerYAnchor.constraint(equalTo: captureButton.centerYAnchor).isActive = true
-        photoLibraryButton.anchor(top: nil, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 24, paddingBottom: 0, paddingRight: 0, width: 28, height: 28)
+        flipCameraButton.anchor(top: nil, left: nil, bottom: captureButton.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 24, paddingRight: 24, width: 28, height: 20)
+        flipCameraButton.centerXAnchor.constraint(equalTo: captureButton.centerXAnchor).isActive = true
+        flashButton.anchor(top: nil, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 48, width: 20, height: 25)
+        flashButton.centerYAnchor.constraint(equalTo: captureButton.centerYAnchor).isActive = true
+
+        cancelFlashLine.anchor(top: flashButton.topAnchor, left: flashButton.leftAnchor, bottom: flashButton.bottomAnchor, right: flashButton.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        
+        photoLibraryButton.anchor(top: nil, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 48, paddingBottom: 0, paddingRight: 0, width: 28, height: 28)
         photoLibraryButton.centerYAnchor.constraint(equalTo: captureButton.centerYAnchor).isActive = true
         setupTopOptions()
         
@@ -143,21 +175,23 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
     }
     
     func setupTopOptions(){
-        view.addSubview(flashButton)
-        view.addSubview(cancelFlashLine)
         view.addSubview(cancelButton)
-        flashButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 15, height: 20)
-        cancelFlashLine.anchor(top: flashButton.topAnchor, left: flashButton.leftAnchor, bottom: flashButton.bottomAnchor, right: flashButton.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         cancelButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
     }
-    
+ 
     @objc func cameraSwitchTapped(){
-        switchCamera()
+        do {
+            try cameraController.switchCameras()
+        } catch {
+            print(error)
+        }
+        
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        captureButton.delegate = self
+//        captureButton.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -165,70 +199,91 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
         navigationController?.navigationBar.isHidden = true
     }
     
-    func swiftyCam(_ swiftyCam: SwiftyCamViewController, didTake photo: UIImage) {
-        arrPost.append(Post(postId: nil, postThumbnail: nil, contentUrl: nil, postType: "Image", postImage: photo.jpegData(compressionQuality: 1.0)))
-        let newVC = PhotoViewController()
-        newVC.backgroundImageView.image = photo
-        self.present(newVC, animated: true, completion: nil)
-    }
-
-    func swiftyCam(_ swiftyCam: SwiftyCamViewController, didBeginRecordingVideo camera: SwiftyCamViewController.CameraSelection) {
-        captureButton.growButton()
-        UIView.animate(withDuration: 0.25, animations: {
-            self.flashButton.alpha = 0.0
-            self.flipCameraButton.alpha = 0.0
-        })
-    }
-
-    func swiftyCam(_ swiftyCam: SwiftyCamViewController, didFinishRecordingVideo camera: SwiftyCamViewController.CameraSelection) {
+    @objc func handleCapturePhoto() {
         
-        captureButton.shrinkButton()
-        UIView.animate(withDuration: 0.25, animations: {
-            self.flashButton.alpha = 1.0
-            self.flipCameraButton.alpha = 1.0
-        })
+        let settings = AVCapturePhotoSettings()
+        
+        guard let previewFormatType = settings.availablePreviewPhotoPixelFormatTypes.first else { return }
+        
+        settings.previewPhotoFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewFormatType]
+        
+        output.capturePhoto(with: settings, delegate: self)
     }
-
-    func swiftyCam(_ swiftyCam: SwiftyCamViewController, didFinishProcessVideoAt url: URL) {
-        arrPost.append(Post(postId: nil, postThumbnail: nil, contentUrl:url, postType: "Video", postImage: nil))
-        let newVC = VideoViewController()
-        newVC.videoURL = url
-        self.present(newVC, animated: true, completion: nil)
+    
+    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        guard let imageData = photo.fileDataRepresentation() else { return }
+        let previewImage = UIImage(data: imageData)
+        
+        let containerView = PreviewPhotoContainerView()
+        containerView.accessSelectController = self
+        containerView.previewImageView.image = previewImage
+        view.addSubview(containerView)
+        containerView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
-
-    func swiftyCam(_ swiftyCam: SwiftyCamViewController, didFocusAtPoint point: CGPoint) {
-        let focusView = UIImageView(image: #imageLiteral(resourceName: "focus"))
-        focusView.center = point
-        focusView.alpha = 0.0
-        view.addSubview(focusView)
-
-        UIView.animate(withDuration: 0.25, delay: 0.0, options: .curveEaseInOut, animations: {
-            focusView.alpha = 1.0
-            focusView.transform = CGAffineTransform(scaleX: 1.25, y: 1.25)
-        }, completion: { (success) in
-            UIView.animate(withDuration: 0.15, delay: 0.5, options: .curveEaseInOut, animations: {
-                focusView.alpha = 0.0
-                focusView.transform = CGAffineTransform(translationX: 0.6, y: 0.6)
-            }, completion: { (success) in
-                focusView.removeFromSuperview()
-            })
-        })
-    }
-
-    func swiftyCam(_ swiftyCam: SwiftyCamViewController, didChangeZoomLevel zoom: CGFloat) {
-        print(zoom)
-    }
-
-    func swiftyCam(_ swiftyCam: SwiftyCamViewController, didSwitchCameras camera: SwiftyCamViewController.CameraSelection) {
-        print(camera)
-    }
-
-    func swiftyCam(_ swiftyCam: SwiftyCamViewController, didFailToRecordVideo error: Error) {
-        print(error)
+    
+    let output = AVCapturePhotoOutput()
+    let captureSession = AVCaptureSession()
+    
+    fileprivate func setupCaptureSession() {
+        if cameraCheck == CameraType.Front {
+            cameraCheck = CameraType.Back
+            
+            guard let captureDevice = AVCaptureDevice.default(for: AVMediaType.video) else { return }
+            do {
+                let input = try AVCaptureDeviceInput(device: captureDevice)
+                if captureSession.canAddInput(input) {
+                    captureSession.addInput(input)
+                }
+            } catch let err {
+                print("Could not setup camera input:", err)
+            }
+            
+            if captureSession.canAddOutput(output) {
+                captureSession.addOutput(output)
+            }
+            
+            let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+            previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+            previewLayer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+            view.layer.addSublayer(previewLayer)
+            
+            captureSession.startRunning()
+            
+        } else {
+            cameraCheck = .Front
+            
+            guard let captureDevice = AVCaptureDevice.default(for: AVMediaType.video) else { return }
+            
+            do {
+                let input = try AVCaptureDeviceInput(device: captureDevice)
+                if captureSession.canAddInput(input) {
+                    captureSession.addInput(input)
+                }
+            } catch let err {
+                print("Could not setup camera input:", err)
+            }
+            
+            if captureSession.canAddOutput(output) {
+                captureSession.addOutput(output)
+            }
+            
+            let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+            previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+            previewLayer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+            view.layer.addSublayer(previewLayer)
+            
+            captureSession.startRunning()
+        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+//        setupCaptureSession()
+//        setupView()
     }
     
     // MARK: - Show first load popover
@@ -351,4 +406,9 @@ extension SelectCameraController : PHPhotoLibraryChangeObserver {
             
         }
     }
+}
+
+enum CameraType {
+    case Front
+    case Back
 }

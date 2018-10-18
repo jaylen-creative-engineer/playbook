@@ -101,17 +101,14 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         
     }
     
-    func profilePostTapped() {
-        handleChangeToDetail(viewType: "isImageDetail")
-    }
-    
     func profilePostHeld() {
         
     }
     
-    func handleChangeToDetail(viewType : String) {
-        let detail = PostDetailController()
-        navigationController?.pushViewController(detail, animated: true)
+    func handleChangeToDetail() {
+        let detail = PostDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+        //        detail.imageView.hero.id = transitionId
+        present(detail, animated: true, completion: nil)
     }
 }
 
@@ -138,6 +135,7 @@ extension ProfileController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuit
+        cell.accessProfileController = self
         return cell
     }
 }

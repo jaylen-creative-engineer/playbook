@@ -11,6 +11,10 @@ import Mixpanel
 
 protocol PursuitDayDelegate {
     func handleShare(for cell : PursuitDay)
+    func handleSave(for cell : PursuitDay)
+    func handleTry(for cell : PursuitDay)
+    func handleResponse(for cell : PursuitDay)
+    func handleMore(for cell : PursuitDay)
 }
 
 class PursuitDay : UICollectionViewCell {
@@ -32,57 +36,7 @@ class PursuitDay : UICollectionViewCell {
     let cellId = "cellId"
     let headerId = "headerId"
     
-    var days = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"]
-//    let images = ["788572ee949285fae33dca5d846a4664", "clean-2", "academics", "fashion-design", "690dae66bfe860df34fc7a756b53c15d"]
-        
-    lazy var firstProfileImageView : UIImageView = {
-       let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "comment-1").withRenderingMode(.alwaysOriginal)
-        iv.contentMode = .scaleAspectFill
-        iv.layer.cornerRadius = 20
-        iv.layer.masksToBounds = true
-        return iv
-    }()
-    
-    lazy var secondProfileImageView : UIImageView = {
-       let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "comment-2").withRenderingMode(.alwaysOriginal)
-        iv.contentMode = .scaleAspectFill
-        iv.layer.cornerRadius = 20
-        iv.layer.masksToBounds = true
-        return iv
-    }()
-    
-    lazy var addButton : UIButton = {
-       let button = UIButton()
-        button.setTitle("Invite Team", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        return button
-    }()
-    
-    let saveBackground : EngagementsView = {
-        let button = EngagementsView()
-        button.backgroundColor = .white
-        button.clipsToBounds = true
-        return button
-    }()
-    
     lazy var saveIcon : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "bookmark").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFill
-        return button
-    }()
-    
-    let tryBackground : EngagementsView = {
-        let button = EngagementsView()
-        button.backgroundColor = .white
-        button.clipsToBounds = true
-        return button
-    }()
-    
-    lazy var tryIcon : UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "add").withRenderingMode(.alwaysTemplate), for: .normal)
         button.tintColor = .gray
@@ -98,11 +52,21 @@ class PursuitDay : UICollectionViewCell {
         return button
     }()
     
-    let optionsIcon : UIButton = {
+    lazy var optionsIcon : UIButton = {
         let button = UIButton()
         button.setTitle("•••", for: .normal)
         button.setTitleColor(.gray, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
+        button.addTarget(self, action: #selector(handleMore), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var tryIcon : UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "try-icon"), for: .normal)
+        button.tintColor = .gray
+        button.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(handleTry), for: .touchUpInside)
         return button
     }()
     
@@ -130,9 +94,17 @@ class PursuitDay : UICollectionViewCell {
         return button
     }()
     
-    lazy var tryLabel : UIButton = {
+    lazy var saveLabel : UIButton = {
        let button = UIButton()
         button.setTitle("Save", for: .normal)
+        button.setTitleColor(.gray, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        return button
+    }()
+    
+    lazy var tryLabel : UIButton = {
+        let button = UIButton()
+        button.setTitle("Try", for: .normal)
         button.setTitleColor(.gray, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
         return button
@@ -148,7 +120,7 @@ class PursuitDay : UICollectionViewCell {
     
     lazy var contributeLabel : UIButton = {
         let button = UIButton()
-        button.setTitle("Contribute", for: .normal)
+        button.setTitle("Respond", for: .normal)
         button.setTitleColor(.gray, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
         return button
@@ -159,38 +131,71 @@ class PursuitDay : UICollectionViewCell {
         button.setTitle("More", for: .normal)
         button.setTitleColor(.gray, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        button.addTarget(self, action: #selector(handleMore), for: .touchUpInside)
         return button
     }()
+    
+    let dayLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Days"
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
+    }()
+    
+    var hasSaved = false
+    var hasTried = false
     
     @objc func handleShare(){
         delegate?.handleShare(for: self)
     }
     
+    @objc func handleMore(){
+        delegate?.handleMore(for: self)
+    }
+    
     @objc func handleCollaborate(){
-        Mixpanel.mainInstance().track(event: "Contribute on pursuit button pressed")
+        Mixpanel.mainInstance().track(event: "Contribute on Pursuit")
+        delegate?.handleResponse(for: self)
     }
     
     @objc func handleSave(){
-        Mixpanel.mainInstance().track(event: "Pursuit tried")
+        Mixpanel.mainInstance().track(event: "Post Saved")
+        hasSaved = !hasSaved
         
-        tryLabel.tintColor = .black
-        accessPostDetailController?.handleSaveTap()
+        if hasSaved == false {
+            saveIcon.tintColor = .gray
+            saveLabel.setTitleColor(.gray, for: .normal)
+        } else if hasSaved == true {
+            saveIcon.tintColor = .black
+            saveLabel.setTitleColor(.black, for: .normal)
+            delegate?.handleSave(for: self)
+        }
+        
     }
     
-    func setupTeamPictures(){
-        addSubview(firstProfileImageView)
-        addSubview(secondProfileImageView)
-        addSubview(addButton)
+    @objc func handleTry(){
+        Mixpanel.mainInstance().track(event: "Pursuit Tried")
+        hasTried = !hasTried
         
-        firstProfileImageView.anchor(top: tryLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 42, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
-        secondProfileImageView.anchor(top: firstProfileImageView.topAnchor, left: firstProfileImageView.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 35, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
-        addButton.anchor(top: nil, left: secondProfileImageView.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 12, width: addButton.intrinsicContentSize.width, height: 16)
-        addButton.centerYAnchor.constraint(equalTo: firstProfileImageView.centerYAnchor).isActive = true
+        if hasTried == false {
+            tryIcon.tintColor = .gray
+            tryIcon.setImage(UIImage(named: "try-icon"), for: .normal)
+            tryLabel.setTitleColor(.gray, for: .normal)
+            tryLabel.setTitle("Try", for: .normal)
+        } else if hasTried == true {
+            tryIcon.tintColor = .black
+            tryIcon.setImage(UIImage(named: "try-icon-black"), for: .normal)
+            tryLabel.setTitle("Tried", for: .normal)
+            tryLabel.setTitleColor(.black, for: .normal)
+            delegate?.handleTry(for: self)
+        }
     }
     
     func setupEngagements(){
         addSubview(tryIcon)
         addSubview(tryLabel)
+        addSubview(saveIcon)
+        addSubview(saveLabel)
         addSubview(optionsBackground)
         addSubview(optionsIcon)
         addSubview(optionLabel)
@@ -201,11 +206,15 @@ class PursuitDay : UICollectionViewCell {
         
         
         tryIcon.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 16, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
-        tryLabel.anchor(top: tryIcon.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: tryLabel.intrinsicContentSize.width, height: 16)
+        tryLabel.anchor(top: tryIcon.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 40, height: 16)
         tryLabel.centerXAnchor.constraint(equalTo: tryIcon.centerXAnchor).isActive = true
         
-        collaborateIcon.anchor(top: tryIcon.topAnchor, left: tryIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 52, paddingBottom: 0, paddingRight: 0, width: 22, height: 22)
-        contributeLabel.anchor(top: tryLabel.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: contributeLabel.intrinsicContentSize.width, height: 16)
+        saveIcon.anchor(top: tryIcon.topAnchor, left: tryIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 44, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
+        saveLabel.anchor(top: saveIcon.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: saveLabel.intrinsicContentSize.width, height: 16)
+        saveLabel.centerXAnchor.constraint(equalTo: saveIcon.centerXAnchor).isActive = true
+        
+        collaborateIcon.anchor(top: saveIcon.topAnchor, left: saveIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 52, paddingBottom: 0, paddingRight: 0, width: 22, height: 22)
+        contributeLabel.anchor(top: saveLabel.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: contributeLabel.intrinsicContentSize.width, height: 16)
         contributeLabel.centerXAnchor.constraint(equalTo: collaborateIcon.centerXAnchor).isActive = true
         
         shareIcon.anchor(top: collaborateIcon.topAnchor, left: collaborateIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 62, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
@@ -222,11 +231,14 @@ class PursuitDay : UICollectionViewCell {
     func setupView(){
         setupEngagements()
 //        setupTeamPictures()
+        addSubview(dayLabel)
         addSubview(collectionView)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(PursuitDayTableViewCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView.anchor(top: tryLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        
+        dayLabel.anchor(top: saveLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 42, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: dayLabel.intrinsicContentSize.width, height: dayLabel.intrinsicContentSize.height)
+        collectionView.anchor(top: dayLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
     override init(frame: CGRect) {
@@ -253,6 +265,10 @@ extension PursuitDay : UICollectionViewDelegate, UICollectionViewDataSource, UIC
             cell.dayLabel.isHidden = true
         }
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessPostDetailController?.changeToDetail()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

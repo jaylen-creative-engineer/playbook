@@ -33,6 +33,8 @@ class DetailTrying : UICollectionViewCell {
     
     var images = [#imageLiteral(resourceName: "stock-exchange"), #imageLiteral(resourceName: "3d-touch"), #imageLiteral(resourceName: "contacts"), #imageLiteral(resourceName: "app-screenshot-1"),#imageLiteral(resourceName: "contacts"), #imageLiteral(resourceName: "app-screenshot-2")]
     
+    var accessPostDetailController : PostDetailController?
+    
     func setupView(){
         addSubview(tryingLabel)
         addSubview(collectionView)
@@ -74,5 +76,9 @@ extension DetailTrying : UICollectionViewDelegate, UICollectionViewDataSource, U
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: frame.width / 2.25, height: frame.height - 72)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessPostDetailController?.changeToDetail()
     }
 }

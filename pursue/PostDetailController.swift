@@ -164,7 +164,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     @objc func handleViewMore(){
 //        let engagementsView = PostEngagementsController(collectionViewLayout: UICollectionViewFlowLayout())
 //        engagementsView.motionTransitionType = .cover(direction: .up)
-        present(PostEngagementsController(collectionViewLayout: UICollectionViewFlowLayout()), animated: true, completion: nil)
+  
     }
     
     // MARK: - Click left/right
@@ -363,8 +363,38 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         collectionView?.register(KeyPost.self, forCellWithReuseIdentifier: keyId)
         collectionView?.register(DetailChallenge.self, forCellWithReuseIdentifier: challengeId)
         collectionView?.register(DetailTrying.self, forCellWithReuseIdentifier: tryingId)
-        collectionView?.register(PostComments.self, forCellWithReuseIdentifier: commentId)
+        collectionView?.register(PostResponses.self, forCellWithReuseIdentifier: commentId)
         collectionView?.register(TeamList.self, forCellWithReuseIdentifier: teamId)
+    }
+    
+    func changeToDetail(){
+        let detail = PostDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+        //        detail.imageView.hero.id = transitionId
+        present(detail, animated: true, completion: nil)
+    }
+    
+    var myTimer: Timer?
+    var seconds = 1
+    
+    deinit {
+        myTimer?.invalidate()
+    }
+    
+    func handleAddResponse(){
+        let alert = UIAlertController(title: "Added Post", message: "You have added this response to your pursuit.", preferredStyle: UIAlertController.Style.alert)
+        present(alert, animated: true) {
+            self.myTimer = Timer.scheduledTimer(withTimeInterval: 0.6, repeats: true) { [weak self] timer in
+                self?.seconds -= 1
+                if self?.seconds == 0 {
+                    self?.dismiss(animated: true, completion: nil)
+                    timer.invalidate()
+                } else if let seconds = self?.seconds {
+                    print(seconds)
+                }
+            }
+            
+            
+        }
     }
     
     func handleShare(for cell: PursuitDay) {
@@ -373,13 +403,46 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         present(activityController, animated: true, completion: nil)
     }
     
-    func handleSaveTap(){
-        let customAlert = CustomPursuitPopover()
+    func handleKeyPostSave(for cell: KeyPost) {
+        let customAlert = CustomSavePopover()
         customAlert.providesPresentationContextTransitionStyle = true
         customAlert.definesPresentationContext = true
         customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         self.showDetailViewController(customAlert, sender: self)
+    }
+    
+    func handleSave(for cell: PursuitDay) {
+        let customAlert = CustomSavePopover()
+        customAlert.providesPresentationContextTransitionStyle = true
+        customAlert.definesPresentationContext = true
+        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.showDetailViewController(customAlert, sender: self)
+    }
+    
+    func handleTry(for cell: PursuitDay) {
+        let customAlert = CustomTryPopover()
+        customAlert.providesPresentationContextTransitionStyle = true
+        customAlert.definesPresentationContext = true
+        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.showDetailViewController(customAlert, sender: self)
+    }
+    
+    func handleMore(for cell: PursuitDay) {
+        let customAlert = CustomMorePopover()
+        customAlert.providesPresentationContextTransitionStyle = true
+        customAlert.definesPresentationContext = true
+        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.showDetailViewController(customAlert, sender: self)
+    }
+    
+    func handleResponse(for cell: PursuitDay) {
+        let photoSelectorController = SelectCameraController()
+        let navController = UINavigationController(rootViewController: photoSelectorController)
+        present(navController, animated: true, completion: nil)
     }
     
     func viewMore(for cell: KeyPost) {
@@ -393,8 +456,8 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     }
     
     func changeToComments(){
-        let comments = CommentsController(collectionViewLayout: UICollectionViewFlowLayout())
-        present(comments, animated: true, completion: nil)
+//        let comments = CommentsController(collectionViewLayout: UICollectionViewFlowLayout())
+//        present(comments, animated: true, completion: nil)
     }
     
     func handleInviteContacts(){
@@ -444,7 +507,6 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         }
     }
     
-    let engagementsView = PostEngagementsController()
     
     @objc func handleSwipeFunction(panGesture : UIPanGestureRecognizer){
         let translation = panGesture.translation(in: nil)
@@ -522,9 +584,10 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
             return cell
         case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: tryingId, for: indexPath) as! DetailTrying
+            cell.accessPostDetailController = self
             return cell
         default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostComments
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostResponses
             cell.accessPostDetailController = self
             return cell
         }
@@ -548,6 +611,8 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
             return CGSize(width: view.frame.width, height: 160)
         case 3:
             return CGSize(width: view.frame.width, height: 300)
+        case 4:
+            return CGSize(width: view.frame.width, height: 450)
         default:
             return CGSize(width: view.frame.width, height: 220)
         }

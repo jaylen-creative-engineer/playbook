@@ -10,11 +10,13 @@ import UIKit
 
 protocol KeyPostDelegate {
     func viewMore(for cell : KeyPost)
+    func handleKeyPostSave(for cell : KeyPost)
 }
 
-class KeyPost : UICollectionViewCell {
+class KeyPost : UICollectionViewCell, KeyPostCellsDelegate {
     
     var delegate : KeyPostDelegate?
+    var accessDetailController : PostDetailController?
     
     let keyPostLabel : UILabel = {
         let label = UILabel()
@@ -80,6 +82,10 @@ class KeyPost : UICollectionViewCell {
     }
     
     
+    func handleSave(for cell: KeyPostCells) {
+        delegate?.handleKeyPostSave(for: self)
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -98,6 +104,7 @@ extension KeyPost : UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! KeyPostCells
+        cell.delegate = self
         cell.imageView.image = images[indexPath.item]
         cell.countLabel.text = String(indexPath.item + 1)
         return cell

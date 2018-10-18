@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KeyPostController : UICollectionViewController {
+class KeyPostController : UICollectionViewController, KeyPostListDelegate {
     
     let keyPostLabel = UILabel()
     let usernameLabel = UILabel()
@@ -39,6 +39,15 @@ class KeyPostController : UICollectionViewController {
     
     @objc func handleDismiss(){
         dismiss(animated: true, completion: nil)
+    }
+    
+    func handleSave(for cell: KeyPostListCells) {
+        let customAlert = CustomSavePopover()
+        customAlert.providesPresentationContextTransitionStyle = true
+        customAlert.definesPresentationContext = true
+        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.showDetailViewController(customAlert, sender: self)
     }
     
     func setupNavigationBar(){
@@ -76,6 +85,7 @@ extension KeyPostController : UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! KeyPostListCells
+        cell.delegate = self
         return cell
     }
     

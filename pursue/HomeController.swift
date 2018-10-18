@@ -256,11 +256,6 @@ class HomeController : UICollectionViewController {
         })
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        navigationController?.navigationBar.isHidden = true
-    }
-    
     var images = [#imageLiteral(resourceName: "artist-1245726_1280"), #imageLiteral(resourceName: "sketch-story"),#imageLiteral(resourceName: "class-1227099_1280"), #imageLiteral(resourceName: "lead-singer-455750_1280")]
     var userPhotos = [#imageLiteral(resourceName: "comment-1"), #imageLiteral(resourceName: "comment-2"), #imageLiteral(resourceName: "comment-3"), #imageLiteral(resourceName: "comment-4")]
     var timePost = ["Now", "2h Ago", "Yesterday", "2 days ago"]
@@ -270,14 +265,6 @@ class HomeController : UICollectionViewController {
 
 extension HomeController : UICollectionViewDelegateFlowLayout {
     
-    
-    //    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    //
-    //        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! HomeHeader
-    //        header.accessHomeController = self
-    //        return header
-    //    }
-    //
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
         case resultsCollectionView:

@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol KeyPostListDelegate {
+    func handleSave(for cell : KeyPostListCells)
+}
+
 class KeyPostListCells : UICollectionViewCell {
+    
+    var delegate : KeyPostListDelegate?
     
     let countLabel : UILabel = {
         let label = UILabel()
@@ -43,10 +49,16 @@ class KeyPostListCells : UICollectionViewCell {
     
     lazy var createButton : UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "create_unselected").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "add").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .gray
         button.imageView?.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
         return button
     }()
+    
+    @objc func handleSave(){
+        delegate?.handleSave(for: self)
+    }
     
     func setupView(){
         addSubview(countLabel)
