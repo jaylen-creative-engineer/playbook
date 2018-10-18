@@ -205,7 +205,7 @@ class PursuitDay : UICollectionViewCell {
         addSubview(contributeLabel)
         
         
-        tryIcon.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 16, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
+        tryIcon.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 16, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
         tryLabel.anchor(top: tryIcon.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 40, height: 16)
         tryLabel.centerXAnchor.constraint(equalTo: tryIcon.centerXAnchor).isActive = true
         

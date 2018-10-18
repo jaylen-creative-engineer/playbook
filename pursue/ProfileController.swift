@@ -98,7 +98,6 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         self.showDetailViewController(customAlert, sender: self)
-        
     }
     
     func profilePostHeld() {

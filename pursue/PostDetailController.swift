@@ -51,14 +51,6 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         return button
     }()
     
-    let postType : UILabel = {
-        let label = UILabel()
-        label.text = "Principle"
-        label.font = UIFont(name: "Lato-Bold", size: 14)
-        label.textColor = .white
-        return label
-    }()
-    
     let userPhoto : UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
@@ -73,8 +65,8 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         label.text = "Travel On"
         label.numberOfLines = 0
         label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.init(25))
-        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.init(25))
+        label.textAlignment = .left
         return label
     }()
     
@@ -184,11 +176,11 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         self.currentStoryIndex += 1
         self.currentStory = stories[self.currentStoryIndex]
         self.avPlayer?.replaceCurrentItem(with: self.currentStory?.avPlayerItem)
-//        layer?.frame = self.videoView.frame
-//        self.videoView.layer.addSublayer(layer!)
-        self.layer?.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (view.frame.height / 1.2) + 20)
+
         layer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        self.videoView.layer.addSublayer(layer!)
+        layer?.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: videoView.frame.height)
+
+        self.videoView.layer.insertSublayer(layer!, below: containerView.layer)
         self.startTimer()
         DispatchQueue.main.async(execute: {
         })
@@ -210,10 +202,9 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         self.currentStoryIndex -= 1
         self.currentStory = stories[self.currentStoryIndex]
         self.avPlayer?.replaceCurrentItem(with: self.currentStory?.avPlayerItem)
-//        layer?.frame = self.videoView.frame
-        self.layer?.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (view.frame.height / 1.2) + 20)
+        layer?.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: videoView.frame.height)
         layer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        self.videoView.layer.addSublayer(layer!)
+        self.videoView.layer.insertSublayer(layer!, below: containerView.layer)
         self.startTimer()
         DispatchQueue.main.async(execute: {
             //Your main thread code goes in here
@@ -235,14 +226,16 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     
         self.avPlayer = AVPlayer(playerItem: self.currentStory?.avPlayerItem)
         layer = AVPlayerLayer(player: avPlayer)
-        self.layer?.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (view.frame.height / 1.2) + 20)
         layer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        layer?.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: videoView.frame.height)
+
         
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleSwipeFunction))
-        
         self.videoView.isUserInteractionEnabled = true
         self.videoView.addGestureRecognizer(panGestureRecognizer)
-        self.videoView.layer.addSublayer(layer!)
+//        self.videoView.layer.addSublayer(layer!)
+        
+        self.videoView.layer.insertSublayer(layer!, below: containerView.layer)
         avPlayer?.play()
         
         if !self.progressTimerIsOn {
@@ -257,9 +250,9 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     fileprivate func setupMultipleProgressBar() {
         addDataToStory()
         
-        videoView.addSubview(progressStackView)
+        containerView.addSubview(progressStackView)
         
-        progressStackView.anchor(top: containerView.safeAreaLayoutGuide.topAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, paddingTop: view.frame.height / 4, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 1.5)
+        progressStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 2.5)
 
         let gaps = self.stories.count
         let viewWidth = self.progressStackView.frame.width - CGFloat(gaps)
@@ -312,48 +305,40 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     }
     
     func setupVideoView(){
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.backgroundColor = .white
-        videoView.addSubview(containerView)
-        
         containerView.addSubview(forwardButton)
         containerView.addSubview(backwardButton)
         containerView.addSubview(cancelButton)
         containerView.addSubview(userPhoto)
-        containerView.addSubview(postType)
         containerView.addSubview(postDetail)
-        containerView.addSubview(seperatorCircle)
-        containerView.addSubview(daysLabel)
         containerView.addSubview(username)
         containerView.addSubview(timeLabel)
         
-        containerView.anchor(top: videoView.topAnchor, left: videoView.leftAnchor, bottom: videoView.bottomAnchor, right: videoView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        forwardButton.anchor(top: containerView.topAnchor, left: containerView.centerXAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        backwardButton.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: containerView.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        
+        forwardButton.anchor(top: containerView.topAnchor, left: containerView.centerXAnchor, bottom: containerView.bottomAnchor, right: videoView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        backwardButton.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: videoView.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     
         
         setupMultipleProgressBar()
 
-        cancelButton.anchor(top: progressStackView.bottomAnchor, left: nil, bottom: nil, right: videoView.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 16, height: 16)
-        userPhoto.anchor(top: progressStackView.bottomAnchor, left: videoView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
+        cancelButton.anchor(top: progressStackView.bottomAnchor, left: nil, bottom: nil, right: containerView.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 16, height: 16)
+        userPhoto.anchor(top: progressStackView.bottomAnchor, left: containerView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
         username.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 24, width: 0, height: 16)
         timeLabel.anchor(top: username.bottomAnchor, left: username.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
-        postDetail.anchor(top: timeLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
+        postDetail.anchor(top: nil, left: containerView.leftAnchor, bottom: containerView.safeAreaLayoutGuide.bottomAnchor, right: containerView.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 32, paddingRight: 12, width: 0, height: 0)
         postDetail.heightAnchor.constraint(lessThanOrEqualToConstant: 52).isActive = true
-        postDetail.centerXAnchor.constraint(equalTo: videoView.centerXAnchor).isActive = true
-        postType.anchor(top: postDetail.bottomAnchor, left: videoView.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: (view.frame.width / 3) - 12, paddingBottom: 0, paddingRight: 0, width: postType.intrinsicContentSize.width, height: 16)
-        seperatorCircle.anchor(top: nil, left: postType.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 6, height: 6)
-        seperatorCircle.centerYAnchor.constraint(equalTo: postType.centerYAnchor).isActive = true
-        daysLabel.anchor(top: postDetail.bottomAnchor, left: seperatorCircle.rightAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: daysLabel.intrinsicContentSize.width, height: 16)
         initializeVideoPlayerWithVideo()
 
     }
     
     func setupCollectionView(){
-        videoView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height / 1.2)
+        
+        view.addSubview(videoView)
+        videoView.addSubview(containerView)
+        videoView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (view.frame.height / 1.2) - 15)
+        containerView.anchor(top: videoView.topAnchor, left: videoView.leftAnchor, bottom: nil, right: videoView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: videoView.frame.height - 15)
+        
         collectionView?.parallaxHeader.view = videoView
-//        collectionView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        collectionView?.parallaxHeader.height = view.frame.height / 1.2
+        collectionView?.parallaxHeader.height = videoView.frame.height - 35
         collectionView?.parallaxHeader.minimumHeight = 0
         collectionView?.parallaxHeader.mode = .topFill
         collectionView?.alwaysBounceVertical = false
@@ -478,18 +463,6 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     
     // MARK: - Handle view options
     
-    override func viewWillLayoutSubviews() {
-        DispatchQueue.main.async(execute: {
-            self.videoView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: (self.view.frame.height / 1.2))
-        })
-    }
-//
-    override func viewDidLayoutSubviews() {
-        DispatchQueue.main.async(execute: {
-            self.videoView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: (self.view.frame.height / 1.2))
-        })
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
@@ -559,10 +532,10 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
 
 extension PostDetailController : UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 10)
-    }
-    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+//        return CGSize(width: view.frame.width, height: 10)
+//    }
+//
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
     }
@@ -596,7 +569,7 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 60.0
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 60.0
     }
