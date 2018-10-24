@@ -58,6 +58,8 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         super.viewDidLoad()
         
         tabBarController?.navigationController?.navigationBar.isHidden = true
+        tabBarController?.tabBar.isTranslucent = false
+
         collectionView?.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(ProfilePursuit.self, forCellWithReuseIdentifier: pursuitsId)
         collectionView?.backgroundColor = .white

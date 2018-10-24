@@ -8,13 +8,13 @@
 
 import UIKit
 
-class UsernameCell : UICollectionViewCell {
+class UsernameCell : UICollectionViewCell, UITextFieldDelegate {
     
     var accessSignupController : SignupController?
     
     let enterUserNamePrompt : UILabel = {
         let label = UILabel()
-        label.text = "Please enter a username that you would like."
+        label.text = "Please enter a username."
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
@@ -51,6 +51,15 @@ class UsernameCell : UICollectionViewCell {
         accessSignupController?.usernameTextField.text = usernameTextField.text
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         let usernameUnderline = UIView()
@@ -68,6 +77,7 @@ class UsernameCell : UICollectionViewCell {
         usernameLabel.anchor(top: enterUserNamePrompt.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 64, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
         usernameTextField.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: usernameTextField.intrinsicContentSize.height)
         usernameUnderline.anchor(top: usernameTextField.bottomAnchor, left: usernameTextField.leftAnchor, bottom: nil, right: usernameTextField.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+        usernameTextField.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -20,6 +20,14 @@ class EditProfileController : UIViewController {
         button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
         return button
     }()
+    
+    lazy var backBackground : UIButton = {
+       let button = UIButton()
+        button.layer.cornerRadius = 19
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
+        return button
+    }()
 
     lazy var saveButton : UIButton = {
        let button = UIButton()
@@ -27,6 +35,16 @@ class EditProfileController : UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(handleSubmitUpdate), for: .touchUpInside)
+        button.contentHorizontalAlignment = .right
+        button.contentVerticalAlignment = .center
+        return button
+    }()
+    
+    lazy var saveBackground : UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = 19
+        button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(handleSubmitUpdate), for: .touchUpInside)
         return button
     }()
@@ -52,7 +70,7 @@ class EditProfileController : UIViewController {
         super.viewDidLoad()
         getUser()
         
-        pageScrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height + 180)
+        pageScrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height + 280)
         setupNavBarWithUser()
         setupProfileSection()
     }
@@ -100,7 +118,13 @@ class EditProfileController : UIViewController {
         
         backgroundView.anchor(top: view.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 80)
         backButton.anchor(top: nil, left: backgroundView.leftAnchor, bottom: backgroundView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 16, paddingRight: 0, width: 20, height: 20)
-        saveButton.anchor(top: nil, left: nil, bottom: nil, right: backgroundView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: saveButton.intrinsicContentSize.width, height: saveButton.intrinsicContentSize.height)
+        
+        backgroundView.addSubview(backBackground)
+        backBackground.centerXAnchor.constraint(equalTo: backButton.centerXAnchor).isActive = true
+        backBackground.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
+        backBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 38, height: 38)
+        
+        saveButton.anchor(top: nil, left: nil, bottom: nil, right: backgroundView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 120, height: 42)
         saveButton.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
     }
     
@@ -291,6 +315,7 @@ class EditProfileController : UIViewController {
         scrollView.isScrollEnabled = true
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = false
+        scrollView.keyboardDismissMode = .onDrag
         return scrollView
     }()
     

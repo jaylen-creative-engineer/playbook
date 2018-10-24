@@ -13,6 +13,7 @@ import FirebaseStorage
 
 class SignupController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    
     // MARK: - Manage User Photo
     
     let cellId = "cellId"
@@ -39,8 +40,8 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
     var profileImage : UIImage?
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-// Local variable inserted by Swift 4.2 migrator.
-let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+        // Local variable inserted by Swift 4.2 migrator.
+        let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
 
         if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
             profileImage = originalImage.withRenderingMode(.alwaysOriginal)
@@ -113,17 +114,23 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     var firebaseImageUrl : String?
     
     @objc func addUserToFirebase(){
-        
+        print(emailTextField.text)
         guard let email = emailTextField.text, email.count > 0 else { return }
         guard let password = passwordTextField.text, password.count > 0 else { return }
+        let ref = Database.database().reference()
         
         DispatchQueue.main.async {
             Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
                 if let err = error {
                     print("Failed to create user", err)
+                    self.handleError(err)
                     return
+                } else {
+                    let userInfo = ["username" : self.usernameTextField.text]
+                    ref.child("users").setValue(userInfo)
                 }
             }
+            
             self.profileService.getUserId(email: email, completion: { (user) in
                 self.user = user
                 self.collectionView?.reloadData()
@@ -147,6 +154,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                 
                 if let err = err {
                     print("Failed to upload", err)
+                    self.handleError(err)
                 }
                 
                 ref.downloadURL(completion: { (url, err) in
@@ -168,6 +176,45 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     override func viewDidLoad() {
         super.viewDidLoad()
         setupIntro()
+        
+        let center = NotificationCenter.default
+        center.addObserver(self, selector: #selector(keyboardWillBeShown(note:)), name: UIApplication.keyboardWillShowNotification, object: nil)
+        center.addObserver(self, selector: #selector(keyboardWillBeHidden(note:)), name: UIApplication.keyboardWillHideNotification, object: nil)
+
+    }
+    
+    @objc func keyboardWillBeShown(note: Notification) {
+        let userInfo = note.userInfo
+        let keyboardFrame = userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
+        let contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: -keyboardFrame.height, right: 0.0)
+        collectionView.contentInset = contentInset
+        collectionView.scrollIndicatorInsets = contentInset
+        
+        UIView.animate(withDuration: 0.5) {
+            self.view.layoutIfNeeded()
+        }
+
+    }
+    
+    @objc func keyboardWillBeHidden(note: Notification) {
+        let userInfo = note.userInfo
+        let keyboardFrame = userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
+        let contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: -keyboardFrame.height, right: 0.0)
+        collectionView.contentInset = contentInset
+        collectionView.scrollIndicatorInsets = contentInset
+        
+        UIView.animate(withDuration: 0.5) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     private let progressControl: UIProgressView = {
@@ -175,7 +222,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         pv.progressTintColor = .black
         pv.translatesAutoresizingMaskIntoConstraints = false
         pv.trackTintColor = .clear
-        pv.progress = 0.16
+//        pv.progress = 0.16
         return pv
     }()
     
@@ -196,12 +243,22 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         return button
     }()
     
+    lazy var cancelBackground : UIButton = {
+       let button = UIButton()
+        button.layer.cornerRadius = 19
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+        return button
+    }()
+    
     lazy var nextButton : UIButton = {
         let button = UIButton()
         button.setTitle("Next", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
+        button.contentHorizontalAlignment = .right
+        button.contentVerticalAlignment = .center
         return button
     }()
     
@@ -219,6 +276,11 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         return button
     }()
     
+    let hiddenButton : UIButton = {
+       let button = UIButton()
+        return button
+    }()
+    
     func setupIntro(){
         setupControls()
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
@@ -233,6 +295,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         collectionView?.register(ProfilePictureCell.self, forCellWithReuseIdentifier: pictureId)
         collectionView?.register(InterestsCell.self, forCellWithReuseIdentifier: interestId)
         collectionView?.isPagingEnabled = true
+        collectionView?.isScrollEnabled = false
         collectionView?.backgroundColor = .white
         collectionView?.showsHorizontalScrollIndicator = false
     }
@@ -240,51 +303,62 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     var current: Int = 2
     var countTracker : Int = 1
     
-    @objc private func handleNext() {
-        let nextIndex = Int(pageControl.currentPage + 1)
-        let indexPath = IndexPath(item: nextIndex, section: 0)
-        pageControl.currentPage = nextIndex
-        progressControl.progress = Float(nextIndex / pageControl.numberOfPages)
+    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let currentpage = Int(scrollView.contentOffset.x / scrollView.bounds.width)
+        progressControl.progress = Float(currentpage) / Float(pageControl.numberOfPages)
+    }
+    
+    func checkUsername(){
+        let username = self.usernameTextField.text
+        let ref = Database.database().reference()
+        let userRef = ref.child("users/\(String(describing: username))")
         
-        let i = current
-        let max = 6
-        
-        if i <= max {
-            let ratio = Float(i) / Float(max)
-            progressControl.progress = Float(ratio)
-            current = current + 1
-            countTracker = countTracker + 1
-        } else {
-            countTracker = countTracker + 1
-        }
-        
-        switch countTracker {
-
-        case 5:
-            addUserToFirebase()
+        userRef.observe(.value, with: { snapshot in
+            if snapshot.exists() {
+                print("Username Already taken!")
+            }
             
-        case 6:
+            userRef.removeAllObservers()
+            
+        }, withCancel: { error in
+            print(error)
+            
+        })
+    }
+    
+    @objc private func handleNext() {
+        if progressControl.progress == 1.0 {
             handleSignup()
             loginButton.backgroundColor = .black
             loginButton.layer.borderColor = UIColor.black.cgColor
             loginButton.isEnabled = true
-            collectionView?.isScrollEnabled = true
             
-        case 7:
+            progressControl.progress = progressControl.progress + Float(1)
             
+        } else if progressControl.progress > 1.0 {
             let appDelegate = UIApplication.shared.delegate! as! AppDelegate
             appDelegate.window = UIWindow()
             appDelegate.window?.rootViewController = MainTabController()
             appDelegate.window?.makeKeyAndVisible()
             self.dismiss(animated: true, completion: nil)
-            
+        }
+        
+        let nextIndex = min(pageControl.currentPage + 1, 4)
+        let indexPath = IndexPath(item: nextIndex, section: 0)
+        pageControl.currentPage = nextIndex
+        progressControl.progress = Float(nextIndex) / Float(pageControl.numberOfPages)
+        collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        
+        switch nextIndex {
+        case 2:
+            addUserToFirebase()
+        case 3:
+            checkUsername()
         default:
             loginButton.backgroundColor = .gray
             loginButton.layer.borderColor = UIColor.gray.cgColor
             loginButton.isEnabled = false
         }
-
-        collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
     
     @objc func handleDismiss(){
@@ -296,13 +370,21 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         view.addSubview(cancelButton)
         view.addSubview(nextButton)
         view.addSubview(loginButton)
+        view.addSubview(hiddenButton)
         
         progressControl.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: view.frame.width, height: 10)
         progressControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -5).isActive = true
         cancelButton.anchor(top: progressControl.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
-        nextButton.anchor(top: nil, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: nextButton.intrinsicContentSize.width, height: nextButton.intrinsicContentSize.height)
+        
+        view.addSubview(cancelBackground)
+        cancelBackground.centerXAnchor.constraint(equalTo: cancelButton.centerXAnchor).isActive = true
+        cancelBackground.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor).isActive = true
+        cancelBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 38, height: 38)
+        
+        nextButton.anchor(top: nil, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 120, height: 34)
         nextButton.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor).isActive = true
         loginButton.anchor(top: nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, width: 0, height: 60)
+        hiddenButton.anchor(top: nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, width: 0, height: 60)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -310,17 +392,17 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return 5
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.item {
         case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! EmailCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: nameId, for: indexPath) as! NameCell
             cell.accessSignupController = self
             return cell
         case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: nameId, for: indexPath) as! NameCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! EmailCell
             cell.accessSignupController = self
             return cell
         case 2:
@@ -328,10 +410,6 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             cell.accessSignupController = self
             return cell
         case 3:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: passwordId, for: indexPath) as! PasswordCell
-            cell.accessSignupController = self
-            return cell
-        case 4:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pictureId, for: indexPath) as! ProfilePictureCell
             cell.accessSignupController = self
             if profileImage != nil {
@@ -340,7 +418,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                 cell.addIcon.isHidden = true
             }
             return cell
-        case 5:
+        case 4:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: interestId, for: indexPath) as! InterestsCell
             if user != nil {
                 cell.user = user

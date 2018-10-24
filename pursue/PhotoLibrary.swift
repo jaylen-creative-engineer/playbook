@@ -8,7 +8,6 @@
 
 import UIKit
 import Photos
-import SwiftyCam
 
 private extension UICollectionView {
     func indexPathsForElements(in rect: CGRect) -> [IndexPath] {

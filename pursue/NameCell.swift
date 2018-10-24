@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NameCell : UICollectionViewCell {
+class NameCell : UICollectionViewCell, UITextFieldDelegate {
     
     var accessSignupController : SignupController?
     
@@ -28,7 +28,7 @@ class NameCell : UICollectionViewCell {
     
     let nameBigLabel : UILabel = {
         let label = UILabel()
-        label.text = "Full Name."
+        label.text = "Welcome."
         label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.init(25))
         return label
     }()
@@ -42,10 +42,19 @@ class NameCell : UICollectionViewCell {
         
         let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.gray,
                            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]
-        tf.attributedPlaceholder = NSAttributedString(string: "your full name", attributes:attributes)
+        tf.attributedPlaceholder = NSAttributedString(string: "your first and last name", attributes:attributes)
         tf.addTarget(self, action: #selector(setFullname), for: .editingChanged)
         return tf
     }()
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
     
     @objc func setFullname(){
         accessSignupController?.fullnameTextField.text = fullnameTextField.text
@@ -69,6 +78,7 @@ class NameCell : UICollectionViewCell {
         fullnameLabel.anchor(top: enterNamePrompt.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 64, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: fullnameLabel.intrinsicContentSize.width, height: fullnameLabel.intrinsicContentSize.height)
         fullnameTextField.anchor(top: fullnameLabel.bottomAnchor, left: fullnameLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: fullnameTextField.intrinsicContentSize.height)
         fullnameUnderline.anchor(top: fullnameTextField.bottomAnchor, left: fullnameTextField.leftAnchor, bottom: nil, right: fullnameTextField.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+        fullnameTextField.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -8,11 +8,16 @@
 
 import UIKit
 
+protocol TeamListDelegate {
+    
+    func handleAddFriends(for cell : TeamList)
+}
 
 class TeamList : UICollectionViewCell {
     
-    let cellId = "cellId"
+    var delegate : TeamListDelegate?
     
+    let cellId = "cellId"
     let peopleFullname = ["Tom Ford", "Versace", "LVME", "Test", "Lit"]
     let peopleUsernames = ["TomFord123", "Versace", "LVME", "Test", "Lit"]
     let peopleImages = ["comment-1", "comment-4", "comment-7", "clean-2", "clean-3"]
@@ -36,18 +41,18 @@ class TeamList : UICollectionViewCell {
     
     lazy var addTeamButton : UIButton = {
        let button = UIButton()
-        button.setTitle("Invite Friends", for: .normal)
+        button.setTitle("Add Friends", for: .normal)
         button.titleLabel?.textAlignment = .right
         button.setTitleColor(.darkGray, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
         button.addTarget(self, action: #selector(handleInvite), for: .touchUpInside)
+        button.contentHorizontalAlignment = .right
+        button.contentVerticalAlignment = .center
         return button
     }()
-    
-    var accessPostDetailController : PostDetailController?
-    
+        
     @objc func handleInvite(){
-        accessPostDetailController?.handleInviteContacts()
+        delegate?.handleAddFriends(for: self)
     }
     
     func setupView(){
@@ -57,7 +62,7 @@ class TeamList : UICollectionViewCell {
 
         teamLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: teamLabel.intrinsicContentSize.width, height: 16)
         addTeamButton.centerYAnchor.constraint(equalTo: teamLabel.centerYAnchor).isActive = true
-        addTeamButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: addTeamButton.intrinsicContentSize.width, height: 14)
+        addTeamButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 120, height: 34)
         collectionView.anchor(top: teamLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         collectionView.delegate = self
         collectionView.dataSource = self

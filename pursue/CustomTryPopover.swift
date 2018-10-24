@@ -34,6 +34,8 @@ class CustomTryPopover : UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 16)
         button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
+        button.contentHorizontalAlignment = .left
+        button.contentVerticalAlignment = .center
         return button
     }()
     
@@ -81,12 +83,12 @@ class CustomTryPopover : UIViewController {
         
         tryLabel.anchor(top: alertView.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: tryLabel.intrinsicContentSize.width, height: tryLabel.intrinsicContentSize.height)
         tryLabel.centerXAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
-        cancelButton.anchor(top: nil, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: cancelButton.intrinsicContentSize.width, height: 18)
+        cancelButton.anchor(top: nil, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 120, height: 34)
         cancelButton.centerYAnchor.constraint(equalTo: tryLabel.centerYAnchor).isActive = true
         tryImageView.anchor(top: tryLabel.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 120, height: 140)
         postDescription.anchor(top: tryLabel.bottomAnchor, left: tryImageView.rightAnchor, bottom: nil, right: alertView.rightAnchor, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
         postDescription.heightAnchor.constraint(lessThanOrEqualToConstant: 60).isActive = true
-        submitButton.anchor(top: nil, left: alertView.leftAnchor, bottom: alertView.safeAreaLayoutGuide.bottomAnchor, right: alertView.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 18, paddingRight: 12, width: 0, height: 40)
+        submitButton.anchor(top: nil, left: alertView.leftAnchor, bottom: alertView.safeAreaLayoutGuide.bottomAnchor, right: alertView.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 18, paddingRight: 12, width: 0, height: 50)
     }
     
     override func viewDidLoad() {

@@ -15,7 +15,7 @@ import Alamofire
 import FirebaseAuth
 import FirebaseStorage
 
-class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDelegate {
+class LoginController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Handle Logo View
     
@@ -23,7 +23,6 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
     
     let textBox : LoginRectangleView = {
         let fv = LoginRectangleView()
-        fv.backgroundColor = .white
         fv.translatesAutoresizingMaskIntoConstraints = false
         fv.layer.cornerRadius = 8
         return fv
@@ -106,36 +105,13 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
         return button
     }()
 
-    lazy var customFacebookLogin : UIButton = {
-       let button = UIButton()
-        button.backgroundColor = UIColor.rgb(red: 59, green: 89, blue: 152)
-        button.layer.cornerRadius = 14
-        button.addTarget(self, action: #selector(handleFacebookLogin), for: .touchUpInside)
-        return button
-    }()
-    
     let haveAccountLabel : UILabel = {
         let label = UILabel()
         label.text = "Don't have an account?"
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
-    
-    lazy var googleIcon : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "google_plus_icon").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    lazy var facebookIcon : UIButton = {
-       let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "facebook_white_icon").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    let signupButton : UIButton = {
+    lazy var signupButton : UIButton = {
         let button = UIButton()
         button.setTitle("Sign Up", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
@@ -145,17 +121,9 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
         return button
     }()
     
-    let facebookLoginButton : FBSDKLoginButton = {
-       let fbutton = FBSDKLoginButton()
-        fbutton.backgroundColor = .blue
-        return fbutton
-    }()
-    
-    lazy var customGoogleLogin : UIButton = {
-        let button = UIButton()
-        button.layer.cornerRadius = 14
-        button.backgroundColor = UIColor.rgb(red: 219, green: 50, blue: 54)
-        button.addTarget(self, action: #selector(handleGoogleLogin), for: .touchUpInside)
+    lazy var signupBackground : UIButton = {
+       let button = UIButton()
+        button.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
         return button
     }()
 
@@ -166,62 +134,6 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
         let layout = UICollectionViewFlowLayout()
         let forgotController = ForgotController(collectionViewLayout: layout)
         navigationController?.pushViewController(forgotController, animated: true)
-    }
-    
-    @objc func handleGoogleLogin(){
-        GIDSignIn.sharedInstance().signIn()
-    }
-    
-    @objc func handleFacebookLogin(){
-        let fbLoginManager = FBSDKLoginManager()
-        fbLoginManager.logIn(withReadPermissions: ["public_profile", "email"], from: self) { (result, error) in
-            if let error = error {
-                print("Failed to login: \(error.localizedDescription)")
-                return
-            }
-            
-            let accessToken = FBSDKAccessToken.current()
-            guard let accessTokenString = accessToken?.tokenString else { return }
-            
-            let credentials = FacebookAuthProvider.credential(withAccessToken: accessTokenString)
-            Auth.auth().signInAndRetrieveData(with: credentials, completion: { (user, error) in
-                if let error = error {
-                    print("Failed to create account: ", error)
-                    return
-                }
-                
-                guard let email = user?.user.email else { return }
-                guard let fullname = user?.user.displayName else { return }
-                
-                if let profileImageUrl = user?.user.photoURL {
-                    do {
-                        let imageData = try Data(contentsOf: profileImageUrl as URL)
-                        self.userPhoto = imageData
-                    } catch {
-                        print("Unable to load data: \(error)")
-                    }
-                }
-                
-                guard let googleProfilePic = self.userPhoto else { return }
-                let filename = NSUUID().uuidString
-                Storage.storage().reference().child("profile-images").child(filename).putData(googleProfilePic, metadata: nil, completion: { (metadata, err) in
-                    
-                    if let err = err {
-                        print("Failed to upload", err)
-                    }
-                    
-                    guard let photoUrl = user?.user.photoURL?.absoluteString else { return }
-                    
-                    self.profileService.socialLogin(email: email, fullname: fullname, photoUrl: photoUrl, completion: { (_) in
-                        let layout = UICollectionViewFlowLayout()
-                        let interestsController = InterestsController(collectionViewLayout: layout)
-                        interestsController.viewType = "signupInterest"
-                        self.navigationController?.pushViewController(interestsController, animated: true)
-                    })
-                })
-                
-            })
-        }
     }
     
     func setupBackgroundTextView(){
@@ -235,82 +147,36 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
         view.addSubview(loginButton)
         view.addSubview(forgotButton)
         
-        textBox.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 64, paddingLeft: 24, paddingBottom: 0, paddingRight: 24, width: 0, height: view.frame.height / 2)
+        textBox.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: view.frame.height / 6, paddingLeft: 24, paddingBottom: 0, paddingRight: 24, width: 0, height: (view.frame.height / 2) - 110)
         textTopHighlight.anchor(top: textBox.topAnchor, left: textBox.leftAnchor, bottom: textBox.bottomAnchor, right: textBox.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         loginLabel.anchor(top: nil, left: textTopHighlight.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 18, paddingBottom: 32, paddingRight: 0, width: loginLabel.intrinsicContentSize.width, height: loginLabel.intrinsicContentSize.height)
         loginLabel.centerYAnchor.constraint(equalTo: textTopHighlight.topAnchor).isActive = true
         emailLabel.anchor(top: loginLabel.bottomAnchor, left: loginLabel.leftAnchor, bottom: nil, right: textTopHighlight.rightAnchor, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 0, height: emailLabel.intrinsicContentSize.height)
         emailTextField.anchor(top: emailLabel.bottomAnchor, left: emailLabel.leftAnchor, bottom: nil, right: textTopHighlight.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 0, height: 40)
         
-        passwordLabel.anchor(top: emailTextField.bottomAnchor, left: emailTextField.leftAnchor, bottom: nil, right: nil, paddingTop: 28, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: passwordLabel.intrinsicContentSize.width, height: passwordLabel.intrinsicContentSize.height)
+        passwordLabel.anchor(top: emailTextField.bottomAnchor, left: emailTextField.leftAnchor, bottom: nil, right: nil, paddingTop: 42, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: passwordLabel.intrinsicContentSize.width, height: passwordLabel.intrinsicContentSize.height)
         passwordTextField.anchor(top: passwordLabel.bottomAnchor, left: passwordLabel.leftAnchor, bottom: nil, right: textTopHighlight.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 0, height: 40)
         
         loginButton.anchor(top: nil, left: textTopHighlight.leftAnchor, bottom: nil, right: textTopHighlight.rightAnchor, paddingTop: 18, paddingLeft: 24, paddingBottom: 0, paddingRight: 24, width: 0, height: 60)
         loginButton.centerYAnchor.constraint(equalTo: textTopHighlight.bottomAnchor).isActive = true
-        forgotButton.anchor(top: loginButton.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: forgotButton.intrinsicContentSize.width, height: forgotButton.intrinsicContentSize.height)
+        forgotButton.anchor(top: loginButton.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 220, height: 34)
         forgotButton.centerXAnchor.constraint(equalTo: loginButton.centerXAnchor).isActive = true
-        socialLogin()
-    }
-    
-    func socialLogin(){
-        view.addSubview(orLoginLabel)
-        view.addSubview(customFacebookLogin)
-        view.addSubview(customGoogleLogin)
-        view.addSubview(googleIcon)
-        view.addSubview(facebookIcon)
-
-        orLoginLabel.anchor(top: passwordTextField.bottomAnchor, left: passwordTextField.leftAnchor, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: orLoginLabel.intrinsicContentSize.width, height: orLoginLabel.intrinsicContentSize.height)
-        customFacebookLogin.anchor(top: nil, left: nil, bottom: nil, right: passwordTextField.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 60, height: 30)
-        customFacebookLogin.centerYAnchor.constraint(equalTo: orLoginLabel.centerYAnchor).isActive = true
-        customGoogleLogin.anchor(top: customFacebookLogin.topAnchor, left: nil, bottom: customFacebookLogin.bottomAnchor, right: customFacebookLogin.leftAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 60, height: 0)
-        googleIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 20, height: 13)
-        googleIcon.centerYAnchor.constraint(equalTo: customGoogleLogin.centerYAnchor).isActive = true
-        googleIcon.centerXAnchor.constraint(equalTo: customGoogleLogin.centerXAnchor).isActive = true
-        facebookIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 8, height: 15)
-        facebookIcon.centerYAnchor.constraint(equalTo: customFacebookLogin.centerYAnchor).isActive = true
-        facebookIcon.centerXAnchor.constraint(equalTo: customFacebookLogin.centerXAnchor).isActive = true
         switchToLogin()
-    }
-    
-    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
-        if error != nil {
-            print(error)
-            return
-        }
-        
-        handleFacebookLogin()
     }
     
     var customSettingsView = CustomSettingsView()
     
-    func facebookSignOut(){
-        customSettingsView.accessLoginController = self
-        loginButtonDidLogOut(customFacebookLogin as? FBSDKLoginButton)
-    }
-    
-    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
-        print("Did log out of facebook")
-    }
-
-    func setupSocialLogin(){
-        view.addSubview(customGoogleLogin)
-        
-        customGoogleLogin.anchor(top: loginButton.bottomAnchor, left: loginButton.leftAnchor, bottom: nil, right: loginButton.rightAnchor, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 40)
-        switchToLogin()
-        view.addSubview(customFacebookLogin)
-        customFacebookLogin.anchor(top: customGoogleLogin.bottomAnchor, left: customGoogleLogin.leftAnchor, bottom: nil, right: customGoogleLogin.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 40)
-       
-    }
-    
     func switchToLogin(){
         view.addSubview(haveAccountLabel)
         view.addSubview(signupButton)
+        view.addSubview(signupBackground)
         
         let guide = view.safeAreaLayoutGuide
         
         haveAccountLabel.anchor(top: nil, left: textBox.leftAnchor, bottom: guide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 24, paddingRight: 0, width: haveAccountLabel.intrinsicContentSize.width, height: haveAccountLabel.intrinsicContentSize.height)
         signupButton.anchor(top: nil, left: haveAccountLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 6, paddingBottom: 0, paddingRight: 0, width: signupButton.intrinsicContentSize.width, height: signupButton.intrinsicContentSize.height)
         signupButton.centerYAnchor.constraint(equalTo: haveAccountLabel.centerYAnchor).isActive = true
+        signupBackground.anchor(top: signupButton.topAnchor, left: haveAccountLabel.leftAnchor, bottom: signupButton.bottomAnchor, right: signupButton.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
     // MARK: - Handle Login 
@@ -336,8 +202,10 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
             
             if let err = err {
                 print("Failed to sign in", err)
+                self.handleError(err)
                 return
-            }            
+            }
+            
             let appDelegate = UIApplication.shared.delegate! as! AppDelegate
             appDelegate.window = UIWindow()
             appDelegate.window?.rootViewController = MainTabController()
@@ -346,7 +214,7 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
             self.dismiss(animated: true, completion: nil)
         }
     }
-    
+
     @objc func handleTextInputChange () {
         let isFormValid = emailTextField.text?.count ?? 0 > 0 &&
             passwordTextField.text?.count ?? 0 > 0
@@ -356,6 +224,15 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
         } else {
             loginButton.isEnabled = false
         }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     // MARK: Handle Doesn't Have Account
@@ -376,10 +253,12 @@ class LoginController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        GIDSignIn.sharedInstance().uiDelegate = self
-
+        
         navigationController?.isNavigationBarHidden = true
         view.backgroundColor = UIColor.white
+        
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
         setupBackgroundTextView()
     }
 }

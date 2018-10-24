@@ -56,6 +56,10 @@ class ProfileHeader : UICollectionViewCell {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
         button.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
+        button.contentHorizontalAlignment = .right
+        button.contentVerticalAlignment = .top
+        button.layer.cornerRadius = 17
+        button.layer.masksToBounds = true
         return button
     }()
     
@@ -118,19 +122,27 @@ class ProfileHeader : UICollectionViewCell {
         return button
     }()
 
-    let addedCountLabel : UIButton = {
+    lazy var addedCountLabel : UIButton = {
         let button = UIButton()
         button.setTitle("120", for: .normal)
         button.setTitleColor(.gray, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
+        button.addTarget(self, action: #selector(handleAdded), for: .touchUpInside)
         return button
     }()
     
-    let addedLabel : UIButton = {
+    lazy var addedLabel : UIButton = {
         let button = UIButton()
         button.setTitle("ADDED", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 10)
+        button.addTarget(self, action: #selector(handleAdded), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var addedBackground : UIButton = {
+       let button = UIButton()
+        button.addTarget(self, action: #selector(handleAdded), for: .touchUpInside)
         return button
     }()
     
@@ -172,6 +184,10 @@ class ProfileHeader : UICollectionViewCell {
     
     var fakeFollowerArray = [#imageLiteral(resourceName: "samuel-l"), #imageLiteral(resourceName: "comment-4"), #imageLiteral(resourceName: "comment-5"), #imageLiteral(resourceName: "comment-4"), #imageLiteral(resourceName: "comment-7")]
     
+    @objc func handleAdded(){
+        accessProfileController?.showFriendsController()
+    }
+    
     @objc func handleMessageTap(){
         accessProfileController?.changeToInterests()
     }
@@ -189,6 +205,10 @@ class ProfileHeader : UICollectionViewCell {
         addedCountLabel.anchor(top: bioText.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: frame.width / 5.5, paddingLeft: 16, paddingBottom: 0, paddingRight: 0, width: addedCountLabel.intrinsicContentSize.width, height: 18)
         addedLabel.anchor(top: addedCountLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: addedLabel.intrinsicContentSize.height)
         addedLabel.centerXAnchor.constraint(equalTo: addedCountLabel.centerXAnchor).isActive = true
+        
+        addSubview(addedBackground)
+        addedBackground.anchor(top: addedCountLabel.topAnchor, left: addedLabel.leftAnchor, bottom: addedLabel.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 90, height: 0)
+        
         pursuitsCountLabel.anchor(top: addedCountLabel.topAnchor, left: addedLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 48, paddingBottom: 0, paddingRight: 0, width: pursuitsCountLabel.intrinsicContentSize.width, height: 18)
         pursuitsLabel.anchor(top: pursuitsCountLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: pursuitsLabel.intrinsicContentSize.height)
         pursuitsLabel.centerXAnchor.constraint(equalTo: pursuitsCountLabel.centerXAnchor).isActive = true
@@ -201,7 +221,7 @@ class ProfileHeader : UICollectionViewCell {
         
         usernameLabel.anchor(top: safeAreaLayoutGuide.topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
         usernameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: frame.width / 2)
-        settingsButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: settingsButton.intrinsicContentSize.width, height: 14)
+        settingsButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 40, height: 40)
         settingsButton.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
     }
     

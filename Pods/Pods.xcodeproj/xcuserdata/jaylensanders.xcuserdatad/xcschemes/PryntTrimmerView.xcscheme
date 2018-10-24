@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FD0026C0B1452C19EB780ABD17A493D3"
+               BlueprintIdentifier = "64AFD9761E5E7F85277EE05B58B1518C"
                BuildableName = "PryntTrimmerView.framework"
                BlueprintName = "PryntTrimmerView"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FD0026C0B1452C19EB780ABD17A493D3"
+            BlueprintIdentifier = "64AFD9761E5E7F85277EE05B58B1518C"
             BuildableName = "PryntTrimmerView.framework"
             BlueprintName = "PryntTrimmerView"
             ReferencedContainer = "container:Pods.xcodeproj">

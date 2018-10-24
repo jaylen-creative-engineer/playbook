@@ -32,10 +32,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         FirebaseApp.configure()
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
-        window = UIWindow()
-        window?.rootViewController = MainTabController()
-        window?.makeKeyAndVisible()
-        UILabel.appearance().font = UIFont(name: "Montserrat", size: 24)
+        
+        if UserDefaults.standard.value(forKey: "firstAppLaunch") == nil {
+            let layout = UICollectionViewFlowLayout()
+            layout.scrollDirection = .horizontal
+            
+            window = UIWindow()
+            window?.rootViewController = SwipingController(collectionViewLayout: layout)
+            window?.makeKeyAndVisible()
+        } else {
+            window = UIWindow()
+            window?.rootViewController = MainTabController()
+            window?.makeKeyAndVisible()
+            UILabel.appearance().font = UIFont(name: "Montserrat", size: 24)
+        }
         
         return true
     }

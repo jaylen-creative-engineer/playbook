@@ -51,6 +51,8 @@ class KeyPost : UICollectionViewCell, KeyPostCellsDelegate {
         button.setTitleColor(.blue, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.addTarget(self, action: #selector(handleViewMore), for: .touchUpInside)
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .center
         return button
     }()
     
@@ -75,9 +77,9 @@ class KeyPost : UICollectionViewCell, KeyPostCellsDelegate {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(KeyPostCells.self, forCellWithReuseIdentifier: cellId)
-        collectionView.anchor(top: topShadowView.topAnchor, left: topShadowView.leftAnchor, bottom: nil, right: topShadowView.rightAnchor, paddingTop: 18, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: frame.height - 40)
+        collectionView.anchor(top: topShadowView.topAnchor, left: topShadowView.leftAnchor, bottom: nil, right: topShadowView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: frame.height - 40)
         
-        viewMoreButton.anchor(top: nil, left: nil, bottom: topShadowView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 0, width: viewMoreButton.intrinsicContentSize.width, height: 16)
+        viewMoreButton.anchor(top: nil, left: nil, bottom: topShadowView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 0, width: 120, height: 34)
         viewMoreButton.centerXAnchor.constraint(equalTo: topShadowView.centerXAnchor).isActive = true
     }
     
@@ -116,6 +118,10 @@ extension KeyPost : UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 20.0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 18, left: 0, bottom: 0, right: 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

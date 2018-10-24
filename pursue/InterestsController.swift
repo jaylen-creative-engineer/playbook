@@ -20,6 +20,14 @@ class InterestsController : UICollectionViewController {
         return button
     }()
     
+    lazy var backBackground : UIButton = {
+       let button = UIButton()
+        button.layer.cornerRadius = 19
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(goBack), for: .touchUpInside)
+        return button
+    }()
+    
     let pageTitle : UILabel = {
         let label = UILabel()
         label.text = "Select Interests"
@@ -97,6 +105,12 @@ class InterestsController : UICollectionViewController {
         
         backgroundFill.anchor(top: view.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 80)
         categoryBackIcon.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 16, paddingRight: 0, width: 20, height: 20)
+        
+        view.addSubview(backBackground)
+        backBackground.centerXAnchor.constraint(equalTo: categoryBackIcon.centerXAnchor).isActive = true
+        backBackground.centerYAnchor.constraint(equalTo: categoryBackIcon.centerYAnchor).isActive = true
+        backBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 38, height: 38)
+        
         pageTitle.anchor(top: nil, left: categoryBackIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: pageTitle.intrinsicContentSize.width, height: pageTitle.intrinsicContentSize.height)
         pageTitle.centerYAnchor.constraint(equalTo: categoryBackIcon.centerYAnchor).isActive = true
         nextTitle.anchor(top: nil, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: nextTitle.intrinsicContentSize.width, height: nextTitle.intrinsicContentSize.height)

@@ -45,10 +45,11 @@ class PursuitDay : UICollectionViewCell {
         return button
     }()
     
-    let optionsBackground : EngagementsView = {
-        let button = EngagementsView()
-        button.backgroundColor = .white
-        button.clipsToBounds = true
+    lazy var saveBackground : UIButton = {
+       let button = UIButton()
+        button.layer.cornerRadius = 18
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
         return button
     }()
     
@@ -57,6 +58,14 @@ class PursuitDay : UICollectionViewCell {
         button.setTitle("•••", for: .normal)
         button.setTitleColor(.gray, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
+        button.addTarget(self, action: #selector(handleMore), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var optionsBackground : UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = 18
+        button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(handleMore), for: .touchUpInside)
         return button
     }()
@@ -70,6 +79,14 @@ class PursuitDay : UICollectionViewCell {
         return button
     }()
     
+    lazy var tryBackground : UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = 18
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(handleTry), for: .touchUpInside)
+        return button
+    }()
+    
     lazy var shareIcon : UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "share").withRenderingMode(.alwaysTemplate), for: .normal)
@@ -79,10 +96,11 @@ class PursuitDay : UICollectionViewCell {
         return button
     }()
     
-    lazy var followIcon : UIButton = {
-       let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "add-profile").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.tintColor = .gray
+    lazy var shareBackground : UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = 18
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(handleShare), for: .touchUpInside)
         return button
     }()
     
@@ -90,6 +108,14 @@ class PursuitDay : UICollectionViewCell {
        let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "custom-create-button").withRenderingMode(.alwaysOriginal), for: .normal)
         button.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(handleCollaborate), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var collaborateBackground : UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = 18
+        button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(handleCollaborate), for: .touchUpInside)
         return button
     }()
@@ -209,22 +235,47 @@ class PursuitDay : UICollectionViewCell {
         tryLabel.anchor(top: tryIcon.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 40, height: 16)
         tryLabel.centerXAnchor.constraint(equalTo: tryIcon.centerXAnchor).isActive = true
         
+        addSubview(tryBackground)
+        tryBackground.centerXAnchor.constraint(equalTo: tryIcon.centerXAnchor).isActive = true
+        tryBackground.centerYAnchor.constraint(equalTo: tryIcon.centerYAnchor).isActive = true
+        tryBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 36, height: 36)
+        
         saveIcon.anchor(top: tryIcon.topAnchor, left: tryIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 44, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
         saveLabel.anchor(top: saveIcon.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: saveLabel.intrinsicContentSize.width, height: 16)
         saveLabel.centerXAnchor.constraint(equalTo: saveIcon.centerXAnchor).isActive = true
+        
+        addSubview(saveBackground)
+        saveBackground.centerXAnchor.constraint(equalTo: saveIcon.centerXAnchor).isActive = true
+        saveBackground.centerYAnchor.constraint(equalTo: saveIcon.centerYAnchor).isActive = true
+        saveBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 36, height: 36)
         
         collaborateIcon.anchor(top: saveIcon.topAnchor, left: saveIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 52, paddingBottom: 0, paddingRight: 0, width: 22, height: 22)
         contributeLabel.anchor(top: saveLabel.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: contributeLabel.intrinsicContentSize.width, height: 16)
         contributeLabel.centerXAnchor.constraint(equalTo: collaborateIcon.centerXAnchor).isActive = true
         
+        addSubview(collaborateBackground)
+        collaborateBackground.centerXAnchor.constraint(equalTo: collaborateIcon.centerXAnchor).isActive = true
+        collaborateBackground.centerYAnchor.constraint(equalTo: collaborateIcon.centerYAnchor).isActive = true
+        collaborateBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 36, height: 36)
+        
         shareIcon.anchor(top: collaborateIcon.topAnchor, left: collaborateIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 62, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
         shareLabel.anchor(top: shareIcon.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: shareLabel.intrinsicContentSize.width, height: 16)
         shareLabel.centerXAnchor.constraint(equalTo: shareIcon.centerXAnchor).isActive = true
+        
+        addSubview(shareBackground)
+        shareBackground.centerXAnchor.constraint(equalTo: shareIcon.centerXAnchor).isActive = true
+        shareBackground.centerYAnchor.constraint(equalTo: shareIcon.centerYAnchor).isActive = true
+        shareBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 36, height: 36)
         
         optionsIcon.centerYAnchor.constraint(equalTo: shareIcon.centerYAnchor).isActive = true
         optionsIcon.anchor(top: nil, left: shareIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 54, paddingBottom: 0, paddingRight: 0, width: optionsIcon.intrinsicContentSize.width, height: 16)
         optionLabel.anchor(top: shareLabel.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: optionLabel.intrinsicContentSize.width, height: 16)
         optionLabel.centerXAnchor.constraint(equalTo: optionsIcon.centerXAnchor).isActive = true
+        
+        addSubview(optionsBackground)
+        optionsBackground.centerXAnchor.constraint(equalTo: optionsIcon.centerXAnchor).isActive = true
+        optionsBackground.centerYAnchor.constraint(equalTo: optionsIcon.centerYAnchor).isActive = true
+        optionsBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 36, height: 36)
         
     }
     

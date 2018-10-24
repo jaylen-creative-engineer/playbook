@@ -12,7 +12,6 @@ class CustomSavePopover : UIViewController {
     
     let alertViewGrayColor = UIColor(red: 224.0/255.0, green: 224.0/255.0, blue: 224.0/255.0, alpha: 1)
     let cellId = "cellId"
-    var accessLoginController : LoginController?
     
     lazy var alertView : UIView = {
         let view = UIView()
@@ -34,6 +33,8 @@ class CustomSavePopover : UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 16)
         button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
+        button.contentHorizontalAlignment = .left
+        button.contentVerticalAlignment = .center
         return button
     }()
     
@@ -71,7 +72,7 @@ class CustomSavePopover : UIViewController {
         
         saveLabel.anchor(top: alertView.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: saveLabel.intrinsicContentSize.width, height: saveLabel.intrinsicContentSize.height)
         saveLabel.centerXAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
-        cancelButton.anchor(top: nil, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: cancelButton.intrinsicContentSize.width, height: 18)
+        cancelButton.anchor(top: nil, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 120, height: 34)
         cancelButton.centerYAnchor.constraint(equalTo: saveLabel.centerYAnchor).isActive = true
         setupCollectionView()
         

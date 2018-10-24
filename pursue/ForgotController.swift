@@ -8,11 +8,12 @@
 
 import UIKit
 
-class ForgotController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class ForgotController : UICollectionViewController, UICollectionViewDelegateFlowLayout, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.backgroundColor = .white
+        emailTextField.delegate = self
         setupNavBar()
     }
     
@@ -67,6 +68,14 @@ class ForgotController : UICollectionViewController, UICollectionViewDelegateFlo
         return button
     }()
     
+    lazy var backBackground : UIButton = {
+       let button = UIButton()
+        button.layer.cornerRadius = 19
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+        return button
+    }()
+    
     let forgotLabel : UILabel = {
         let label = UILabel()
         label.text = "Forgot"
@@ -74,20 +83,32 @@ class ForgotController : UICollectionViewController, UICollectionViewDelegateFlo
         return label
     }()
     
-    
-    
     @objc func handleDismiss(){
         navigationController?.popViewController(animated: true)
     }
     
     func setupNavBar() {
         view.addSubview(backButton)
+        view.addSubview(backBackground)
         view.addSubview(forgotLabel)
         
         backButton.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
+        backBackground.centerXAnchor.constraint(equalTo: backButton.centerXAnchor).isActive = true
+        backBackground.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
+        backBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 38, height: 38)
         forgotLabel.anchor(top: backButton.topAnchor, left: backButton.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: forgotLabel.intrinsicContentSize.width, height: forgotLabel.intrinsicContentSize.height)
         setupEmail()
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     
     @objc func handleSignup() {
         
@@ -109,6 +130,6 @@ class ForgotController : UICollectionViewController, UICollectionViewDelegateFlo
         view.addSubview(emailUnderline)
         emailUnderline.anchor(top: emailTextField.bottomAnchor, left: emailTextField.leftAnchor, bottom: nil, right: emailTextField.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
         
-        submitButton.anchor(top: emailUnderline.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 42, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 40)
+        submitButton.anchor(top: emailUnderline.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 42, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 60)
     }
 }

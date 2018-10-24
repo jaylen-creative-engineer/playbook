@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PasswordCell : UICollectionViewCell {
+class PasswordCell : UICollectionViewCell, UITextFieldDelegate {
     
     var accessSignupController : SignupController?
     
@@ -21,7 +21,7 @@ class PasswordCell : UICollectionViewCell {
     
     let enterPasswordPrompt : UILabel = {
         let label = UILabel()
-        label.text = "Please enter your password."
+        label.text = "Your password must be 6 characters long or more."
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
@@ -52,6 +52,15 @@ class PasswordCell : UICollectionViewCell {
         accessSignupController?.passwordTextField.text = passwordTextField.text
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         let passwordUnderline = UIView()
@@ -69,6 +78,7 @@ class PasswordCell : UICollectionViewCell {
         passwordLabel.anchor(top: enterPasswordPrompt.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 64, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: passwordLabel.intrinsicContentSize.width, height: passwordLabel.intrinsicContentSize.height)
         passwordTextField.anchor(top: passwordLabel.bottomAnchor, left: passwordLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: passwordTextField.intrinsicContentSize.height)
         passwordUnderline.anchor(top: passwordTextField.bottomAnchor, left: passwordTextField.leftAnchor, bottom: nil, right: passwordTextField.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+        passwordTextField.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {

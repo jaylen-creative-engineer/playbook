@@ -60,16 +60,16 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
         
         guard let items = tabBar.items else { return }
         let tabHome = items[0]
-        tabHome.image = #imageLiteral(resourceName: "home_unselected").withRenderingMode(.alwaysOriginal)
-        tabHome.selectedImage = #imageLiteral(resourceName: "home_selected").withRenderingMode(.alwaysOriginal)
+        tabHome.image = UIImage(named: "home_unselected")?.withRenderingMode(.alwaysOriginal)
+        tabHome.selectedImage = UIImage(named: "home_selected")?.withRenderingMode(.alwaysOriginal)
         
         let tabCreate = items[1]
-        tabCreate.image = #imageLiteral(resourceName: "custom-create-button").withRenderingMode(.alwaysOriginal)
-        tabCreate.selectedImage = #imageLiteral(resourceName: "custom-create-button").withRenderingMode(.alwaysOriginal)
+        tabCreate.image = UIImage(named: "create_unselected")?.withRenderingMode(.alwaysOriginal)
+        tabCreate.selectedImage = UIImage(named: "create_unselected")?.withRenderingMode(.alwaysOriginal)
         
         let tabProfile = items[2]
-        tabProfile.image = #imageLiteral(resourceName: "profile_unselected").withRenderingMode(.alwaysOriginal)
-        tabProfile.selectedImage = #imageLiteral(resourceName: "profile-selected").withRenderingMode(.alwaysOriginal)
+        tabProfile.image = UIImage(named: "profile_unselected")?.withRenderingMode(.alwaysOriginal)
+        tabProfile.selectedImage = UIImage(named: "profile_selected")?.withRenderingMode(.alwaysOriginal)
 
         for item in items {
             item.imageInsets = UIEdgeInsets.init(top: 4, left: 0, bottom: -4, right: 0)

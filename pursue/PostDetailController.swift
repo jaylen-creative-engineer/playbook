@@ -15,7 +15,7 @@ import MediaPlayer
 import Mixpanel
 import ParallaxHeader
 
-class PostDetailController : UICollectionViewController, PursuitDayDelegate, KeyPostDelegate {
+class PostDetailController : UICollectionViewController, PursuitDayDelegate, KeyPostDelegate, TeamListDelegate {
 
     let dayId = "dayId"
     let keyId = "keyId"
@@ -47,6 +47,14 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         button.setImage(#imageLiteral(resourceName: "cancel").withRenderingMode(.alwaysTemplate), for: .normal)
         button.tintColor = .white
         button.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var cancelBackground : UIButton = {
+       let button = UIButton()
+        button.layer.cornerRadius = 18
+        button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         return button
     }()
@@ -260,6 +268,8 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         for _ in stories {
             let progressView = UIProgressView()
             progressView.progress = 0
+            progressView.layer.cornerRadius = 2
+            progressView.layer.masksToBounds = true
             progressView.trackTintColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)
             progressView.progressTintColor = UIColor.white
             progressView.widthAnchor.constraint(equalToConstant: CGFloat(viewUnit)).isActive = true
@@ -321,10 +331,16 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         setupMultipleProgressBar()
 
         cancelButton.anchor(top: progressStackView.bottomAnchor, left: nil, bottom: nil, right: containerView.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 16, height: 16)
+        
+        containerView.addSubview(cancelBackground)
+        cancelBackground.centerXAnchor.constraint(equalTo: cancelButton.centerXAnchor).isActive = true
+        cancelBackground.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor).isActive = true
+        cancelBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 36, height: 36)
+        
         userPhoto.anchor(top: progressStackView.bottomAnchor, left: containerView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
         username.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 24, width: 0, height: 16)
         timeLabel.anchor(top: username.bottomAnchor, left: username.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
-        postDetail.anchor(top: nil, left: containerView.leftAnchor, bottom: containerView.safeAreaLayoutGuide.bottomAnchor, right: containerView.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 32, paddingRight: 12, width: 0, height: 0)
+        postDetail.anchor(top: nil, left: containerView.leftAnchor, bottom: containerView.safeAreaLayoutGuide.bottomAnchor, right: containerView.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 18, paddingRight: 12, width: 0, height: 0)
         postDetail.heightAnchor.constraint(lessThanOrEqualToConstant: 52).isActive = true
         initializeVideoPlayerWithVideo()
 
@@ -373,8 +389,9 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
                 if self?.seconds == 0 {
                     self?.dismiss(animated: true, completion: nil)
                     timer.invalidate()
-                } else if let seconds = self?.seconds {
-                    print(seconds)
+                } else if self?.seconds == -1 {
+                    self?.dismiss(animated: true, completion: nil)
+                    timer.invalidate()
                 }
             }
             
@@ -417,6 +434,15 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     
     func handleMore(for cell: PursuitDay) {
         let customAlert = CustomMorePopover()
+        customAlert.providesPresentationContextTransitionStyle = true
+        customAlert.definesPresentationContext = true
+        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.showDetailViewController(customAlert, sender: self)
+    }
+    
+    func handleAddFriends(for cell: TeamList) {
+        let customAlert = CustomFriendPopover()
         customAlert.providesPresentationContextTransitionStyle = true
         customAlert.definesPresentationContext = true
         customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
@@ -553,7 +579,7 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
             return cell
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamList
-            cell.accessPostDetailController = self
+            cell.delegate = self
             return cell
         case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: tryingId, for: indexPath) as! DetailTrying

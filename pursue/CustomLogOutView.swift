@@ -65,8 +65,6 @@ class CustomLogOutView : UIViewController {
     @objc func handleYes(){
         do {
             try Auth.auth().signOut()
-            accessLoginController?.facebookSignOut()
-            GIDSignIn.sharedInstance().signOut()
             
             UserDefaults.standard.removeObject(forKey: "userId")
             

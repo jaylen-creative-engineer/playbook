@@ -47,6 +47,14 @@ class KeyPostCells : UICollectionViewCell {
         return label
     }()
     
+    lazy var saveBackground : UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = 18
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
+        return button
+    }()
+    
     lazy var createButton : UIButton = {
        let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "add").withRenderingMode(.alwaysTemplate), for: .normal)
@@ -66,10 +74,14 @@ class KeyPostCells : UICollectionViewCell {
         addSubview(postDetail)
         addSubview(timeLabel)
         addSubview(createButton)
+        addSubview(saveBackground)
         
         countLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 15, height: 18)
         imageView.anchor(top: countLabel.topAnchor, left: countLabel.rightAnchor, bottom: bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 72, height: 0)
         createButton.anchor(top: countLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 6, width: 19, height: 19)
+        saveBackground.centerYAnchor.constraint(equalTo: createButton.centerYAnchor).isActive = true
+        saveBackground.centerXAnchor.constraint(equalTo: createButton.centerXAnchor).isActive = true
+        saveBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 36, height: 36)
         postDetail.anchor(top: imageView.topAnchor, left: imageView.rightAnchor, bottom: nil, right: createButton.leftAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
         postDetail.heightAnchor.constraint(lessThanOrEqualToConstant: 30).isActive = true
         timeLabel.anchor(top: postDetail.bottomAnchor, left: postDetail.leftAnchor, bottom: nil, right: createButton.leftAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)

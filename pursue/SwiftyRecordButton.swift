@@ -7,12 +7,13 @@
 //
 
 import UIKit
-import SwiftyCam
 
 class SwiftyRecordButton : SwiftyCamButton {
     
     private var circleBorder: CALayer!
     private var innerCircle: UIView!
+    
+    let shapeLayer = CAShapeLayer()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,6 +37,37 @@ class SwiftyRecordButton : SwiftyCamButton {
         circleBorder.cornerRadius = self.frame.size.width / 2
         layer.insertSublayer(circleBorder, at: 0)
         
+    }
+    
+    func setupAnimation(){
+        let trackLayer = CAShapeLayer()
+        let circularPath = UIBezierPath(arcCenter: center, radius: 35, startAngle: -CGFloat.pi / 2, endAngle: 2 * CGFloat.pi, clockwise: true)
+        trackLayer.path = circularPath.cgPath
+        
+        trackLayer.strokeColor = UIColor.lightGray.cgColor
+        trackLayer.lineWidth = 10
+        trackLayer.fillColor = UIColor.red.cgColor
+        trackLayer.lineCap = CAShapeLayerLineCap.round
+        layer.insertSublayer(trackLayer, at: 0)
+        
+        shapeLayer.path = circularPath.cgPath
+        
+        shapeLayer.strokeColor = UIColor.red.cgColor
+        shapeLayer.lineWidth = 10
+        shapeLayer.fillColor = UIColor.blue.cgColor
+        shapeLayer.lineCap = CAShapeLayerLineCap.round
+        
+        shapeLayer.strokeEnd = 0
+        
+        layer.insertSublayer(shapeLayer, at: 0)
+        
+        let outlineAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        outlineAnimation.toValue = 1
+        outlineAnimation.duration = 2
+        outlineAnimation.fillMode = CAMediaTimingFillMode.forwards
+        outlineAnimation.isRemovedOnCompletion = false
+        
+        shapeLayer.add(outlineAnimation, forKey: "outlineAnimation")
     }
     
     public  func growButton() {

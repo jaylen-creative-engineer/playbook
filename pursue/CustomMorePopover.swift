@@ -40,9 +40,9 @@ class CustomMorePopover : UIViewController {
         button.setTitle("Report", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 20)
-        button.titleLabel?.textAlignment = .left
-        button.contentHorizontalAlignment = .left
         button.addTarget(self, action: #selector(handleReport), for: .touchUpInside)
+        button.contentHorizontalAlignment = .left
+        button.contentVerticalAlignment = .top
         return button
     }()
     
@@ -52,6 +52,8 @@ class CustomMorePopover : UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 16)
         button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
+        button.contentHorizontalAlignment = .left
+        button.contentVerticalAlignment = .center
         return button
     }()
     
@@ -59,8 +61,8 @@ class CustomMorePopover : UIViewController {
         alertView.addSubview(cancelButton)
         alertView.addSubview(reportButton)
         
-        cancelButton.anchor(top: alertView.topAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: cancelButton.intrinsicContentSize.width, height: 32)
-        reportButton.anchor(top: cancelButton.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 90, height: 16)
+        cancelButton.anchor(top: alertView.topAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 120, height: 34)
+        reportButton.anchor(top: cancelButton.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 120, height: 34)
     }
     
     override func viewDidLoad() {

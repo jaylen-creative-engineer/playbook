@@ -17,7 +17,6 @@ target 'pursue' do
   pod 'FBSDKShareKit'
   pod 'FBSDKLoginKit'
   pod 'PryntTrimmerView'
-  pod 'SwiftyCam'
   pod 'Alamofire'
   pod 'GoogleSignIn'
   pod 'NVActivityIndicatorView'

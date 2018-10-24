@@ -37,7 +37,8 @@ class CustomSettingsView : UIViewController {
         button.setTitle("Edit Profile", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.titleLabel?.textAlignment = .left
+        button.contentHorizontalAlignment = .left
+        button.contentVerticalAlignment = .top
         button.addTarget(self, action: #selector(handleEditClick), for: .touchUpInside)
         return button
     }()
@@ -47,7 +48,8 @@ class CustomSettingsView : UIViewController {
         button.setTitle("Change Interests", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.titleLabel?.textAlignment = .left
+        button.contentHorizontalAlignment = .left
+        button.contentVerticalAlignment = .top
         button.addTarget(self, action: #selector(handleChangeToInterests), for: .touchUpInside)
         return button
     }()
@@ -57,7 +59,8 @@ class CustomSettingsView : UIViewController {
         button.setTitle("Invite Contacts", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.titleLabel?.textAlignment = .left
+        button.contentHorizontalAlignment = .left
+        button.contentVerticalAlignment = .top
         button.addTarget(self, action: #selector(handleChangeToInvite), for: .touchUpInside)
         return button
     }()
@@ -67,7 +70,8 @@ class CustomSettingsView : UIViewController {
         button.setTitle("Terms Of Use", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.titleLabel?.textAlignment = .left
+        button.contentHorizontalAlignment = .left
+        button.contentVerticalAlignment = .top
         button.addTarget(self, action: #selector(switchToTerms), for: .touchUpInside)
         return button
     }()
@@ -78,7 +82,8 @@ class CustomSettingsView : UIViewController {
         button.setTitle("Log Out", for: .normal)
         button.setTitleColor(.gray, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.titleLabel?.textAlignment = .left
+        button.contentHorizontalAlignment = .left
+        button.contentVerticalAlignment = .top
         button.addTarget(self, action: #selector(logOut), for: .touchUpInside)
         return button
     }()
@@ -96,7 +101,8 @@ class CustomSettingsView : UIViewController {
         button.setTitle("Cancel", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
-        button.titleLabel?.textAlignment = .center
+        button.contentHorizontalAlignment = .center
+        button.contentVerticalAlignment = .top
         button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
         return button
     }()
@@ -109,13 +115,12 @@ class CustomSettingsView : UIViewController {
         view.addSubview(logOutLabel)
         view.addSubview(cancelBottomButton)
         
-        editProfileLabel.anchor(top: settingsLabel.bottomAnchor, left: settingsLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: editProfileLabel.intrinsicContentSize.width, height: 16)
-        changeInterestsLabel.anchor(top: editProfileLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: changeInterestsLabel.intrinsicContentSize.width, height: 16)
-        inviteLabel.anchor(top: changeInterestsLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: inviteLabel.intrinsicContentSize.width, height: 16)
-        termsLabel.anchor(top: inviteLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: termsLabel.intrinsicContentSize.width, height: 16)
-        logOutLabel.anchor(top: termsLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: logOutLabel.intrinsicContentSize.width, height: 16)
-        cancelBottomButton.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: cancelBottomButton.intrinsicContentSize.width, height: cancelBottomButton.intrinsicContentSize.height)
-        cancelBottomButton.centerXAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
+        editProfileLabel.anchor(top: settingsLabel.bottomAnchor, left: settingsLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 32)
+        changeInterestsLabel.anchor(top: editProfileLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 32)
+        inviteLabel.anchor(top: changeInterestsLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 32)
+        termsLabel.anchor(top: inviteLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 32)
+        logOutLabel.anchor(top: termsLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 32)
+        cancelBottomButton.anchor(top: nil, left: alertView.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: alertView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 34)
     }
     
     override func viewDidLoad() {
@@ -195,9 +200,9 @@ class CustomSettingsView : UIViewController {
     func signOut(action: UIAlertAction){
         do {
             try Auth.auth().signOut()
-            accessLoginController?.facebookSignOut()
-            GIDSignIn.sharedInstance().signOut()
             
+            UserDefaults.standard.removeObject(forKey: "userId")
+
             let appDelegate = UIApplication.shared.delegate! as! AppDelegate
             appDelegate.window = UIWindow()
             appDelegate.window?.rootViewController = LoginController()

@@ -21,6 +21,14 @@ class InviteController : UICollectionViewController, UICollectionViewDelegateFlo
         return button
     }()
     
+    lazy var backBackground : UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = 19
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
+        return button
+    }()
+    
     let pageTitle : UILabel = {
         let label = UILabel()
         label.text = "Contacts"
@@ -108,6 +116,11 @@ class InviteController : UICollectionViewController, UICollectionViewDelegateFlo
         backButton.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 16, paddingRight: 0, width: 20, height: 20)
         pageTitle.anchor(top: nil, left: backButton.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: pageTitle.intrinsicContentSize.width, height: pageTitle.intrinsicContentSize.height)
         pageTitle.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
+        
+        view.addSubview(backBackground)
+        backBackground.centerXAnchor.constraint(equalTo: backButton.centerXAnchor).isActive = true
+        backBackground.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
+        backBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 38, height: 38)
     }
 }
 

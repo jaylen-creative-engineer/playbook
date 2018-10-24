@@ -136,6 +136,7 @@
 		E67FE162214C9D9E009A6BEF /* SearchPursuits.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67FE161214C9D9E009A6BEF /* SearchPursuits.swift */; };
 		E67FE164214C9E2B009A6BEF /* SearchPursuitsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67FE163214C9E2B009A6BEF /* SearchPursuitsCells.swift */; };
 		E67FE166214D55F8009A6BEF /* SearchPostCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67FE165214D55F8009A6BEF /* SearchPostCells.swift */; };
+		E680AAB9217969B600DBE9E4 /* CustomFriendPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = E680AAB8217969B600DBE9E4 /* CustomFriendPopover.swift */; };
 		E680ECC5206ACBD60023087D /* ProfilePursuitCreateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E680ECC4206ACBD60023087D /* ProfilePursuitCreateCell.swift */; };
 		E6812891213606B60006D498 /* HomePostCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6812890213606B60006D498 /* HomePostCells.swift */; };
 		E6812893213C3B560006D498 /* StoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6812892213C3B560006D498 /* StoryCell.swift */; };
@@ -147,6 +148,10 @@
 		E6A273F91F68314F00F5B4C8 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A273F81F68314F00F5B4C8 /* CustomImageView.swift */; };
 		E6A273FE1F68325A00F5B4C8 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A273FD1F68325A00F5B4C8 /* Post.swift */; };
 		E6A274001F68327F00F5B4C8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A273FF1F68327F00F5B4C8 /* User.swift */; };
+		E6A39205217C0AB200ABF10B /* SwiftyCamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A39204217C0AB200ABF10B /* SwiftyCamViewController.swift */; };
+		E6A39207217C0B0B00ABF10B /* SwiftyCamButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A39206217C0B0B00ABF10B /* SwiftyCamButton.swift */; };
+		E6A39209217C0B2E00ABF10B /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A39208217C0B2E00ABF10B /* PreviewView.swift */; };
+		E6A3920B217C0B6800ABF10B /* SwiftyCamViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A3920A217C0B6800ABF10B /* SwiftyCamViewControllerDelegate.swift */; };
 		E6A8BAAA2140280A00954537 /* ChatDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A8BAA92140280A00954537 /* ChatDetailController.swift */; };
 		E6A8BAAC214029B600954537 /* ChatDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A8BAAB214029B600954537 /* ChatDetailCell.swift */; };
 		E6A8BACC2140559900954537 /* SearchPopAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A8BACB2140559900954537 /* SearchPopAnimation.swift */; };
@@ -342,6 +347,7 @@
 		E67FE161214C9D9E009A6BEF /* SearchPursuits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPursuits.swift; sourceTree = "<group>"; };
 		E67FE163214C9E2B009A6BEF /* SearchPursuitsCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPursuitsCells.swift; sourceTree = "<group>"; };
 		E67FE165214D55F8009A6BEF /* SearchPostCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPostCells.swift; sourceTree = "<group>"; };
+		E680AAB8217969B600DBE9E4 /* CustomFriendPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFriendPopover.swift; sourceTree = "<group>"; };
 		E680ECC4206ACBD60023087D /* ProfilePursuitCreateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePursuitCreateCell.swift; sourceTree = "<group>"; };
 		E6812890213606B60006D498 /* HomePostCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostCells.swift; sourceTree = "<group>"; };
 		E6812892213C3B560006D498 /* StoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCell.swift; sourceTree = "<group>"; };
@@ -353,6 +359,10 @@
 		E6A273F81F68314F00F5B4C8 /* CustomImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		E6A273FD1F68325A00F5B4C8 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		E6A273FF1F68327F00F5B4C8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		E6A39204217C0AB200ABF10B /* SwiftyCamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyCamViewController.swift; sourceTree = "<group>"; };
+		E6A39206217C0B0B00ABF10B /* SwiftyCamButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyCamButton.swift; sourceTree = "<group>"; };
+		E6A39208217C0B2E00ABF10B /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
+		E6A3920A217C0B6800ABF10B /* SwiftyCamViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyCamViewControllerDelegate.swift; sourceTree = "<group>"; };
 		E6A8BAA92140280A00954537 /* ChatDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailController.swift; sourceTree = "<group>"; };
 		E6A8BAAB214029B600954537 /* ChatDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailCell.swift; sourceTree = "<group>"; };
 		E6A8BACB2140559900954537 /* SearchPopAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPopAnimation.swift; sourceTree = "<group>"; };
@@ -564,6 +574,7 @@
 				E6E76D2E2173E7A9006A7DDF /* CustomSavePopover.swift */,
 				E623DBEC2177B531008DDE64 /* CustomTryPopover.swift */,
 				E623DBEE2177B578008DDE64 /* CustomMorePopover.swift */,
+				E680AAB8217969B600DBE9E4 /* CustomFriendPopover.swift */,
 			);
 			name = Detail;
 			sourceTree = "<group>";
@@ -720,6 +731,10 @@
 				E67205FB215BE0590085470C /* System.swift */,
 				E63CEB6120ED60D500FFDEF3 /* Utility.swift */,
 				E6777883212CDC48001820FE /* Reachability.swift */,
+				E6A39204217C0AB200ABF10B /* SwiftyCamViewController.swift */,
+				E6A39206217C0B0B00ABF10B /* SwiftyCamButton.swift */,
+				E6A39208217C0B2E00ABF10B /* PreviewView.swift */,
+				E6A3920A217C0B6800ABF10B /* SwiftyCamViewControllerDelegate.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -956,7 +971,6 @@
 				"${BUILT_PRODUCTS_DIR}/ParallaxHeader/ParallaxHeader.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/PryntTrimmerView/PryntTrimmerView.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyCam/SwiftyCam.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -978,7 +992,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ParallaxHeader.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PryntTrimmerView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyCam.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -1013,6 +1026,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E6D0B402203E13D2008D4268 /* ViewWithDiagonalLine.swift in Sources */,
+				E6A3920B217C0B6800ABF10B /* SwiftyCamViewControllerDelegate.swift in Sources */,
 				E62AAB231FD1E8A20053EAD7 /* CameraCell.swift in Sources */,
 				E677788A212EB435001820FE /* SearchController.swift in Sources */,
 				E6CE22771F671D10006C5755 /* SignupController.swift in Sources */,
@@ -1070,6 +1084,7 @@
 				E6CB1B4D20578A1100B5D2ED /* ProfilePursuitCells.swift in Sources */,
 				E61A70E220E182D600EB69D8 /* TeamList.swift in Sources */,
 				E62E29AA2153DE5B00139483 /* CreateDetailsCell.swift in Sources */,
+				E680AAB9217969B600DBE9E4 /* CustomFriendPopover.swift in Sources */,
 				E6CE228B1F671ED6006C5755 /* LoginController.swift in Sources */,
 				E6308EA71FBD241000571130 /* SettingsController.swift in Sources */,
 				E6235EA81F94208F00BF1FDE /* PostResponses.swift in Sources */,
@@ -1088,8 +1103,10 @@
 				E6DEC846201ABF4D00E02393 /* Interests.swift in Sources */,
 				E6234E9C2044F93F00A57A2C /* AVPlayer+isPlaying.swift in Sources */,
 				E65F1E561FCCC7BF00BD850E /* ProfileController.swift in Sources */,
+				E6A39205217C0AB200ABF10B /* SwiftyCamViewController.swift in Sources */,
 				E6A273FE1F68325A00F5B4C8 /* Post.swift in Sources */,
 				E639807F204DD63D0049A71B /* HomeServices.swift in Sources */,
+				E6A39209217C0B2E00ABF10B /* PreviewView.swift in Sources */,
 				E60EB269204616D8006E4F1A /* FriendsController.swift in Sources */,
 				E6989BF92047A55C0067A55B /* PursuitNotification.swift in Sources */,
 				E66AEB1920DD6ECC000018B5 /* ProfileHeader.swift in Sources */,
@@ -1169,6 +1186,7 @@
 				E61667C021416EA000BF74ED /* RecommenedPursuitCell.swift in Sources */,
 				E6B49F2B1FACDCE800AEDAFD /* InterestsController.swift in Sources */,
 				E6E0B01E2060720800007A21 /* Search.swift in Sources */,
+				E6A39207217C0B0B00ABF10B /* SwiftyCamButton.swift in Sources */,
 				E66AEB1B20DD91DE000018B5 /* ProfileSteps.swift in Sources */,
 				E6A8BAAA2140280A00954537 /* ChatDetailController.swift in Sources */,
 				E6DF9EC7203CF7F2005C86DB /* SwiftyRecordButton.swift in Sources */,
