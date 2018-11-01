@@ -8,9 +8,14 @@
 
 import UIKit
 
+protocol UsernameDelegate {
+    func handleUsernameNext(for cell : UsernameCell)
+}
+
 class UsernameCell : UICollectionViewCell, UITextFieldDelegate {
     
     var accessSignupController : SignupController?
+    var delegate : UsernameDelegate?
     
     let enterUserNamePrompt : UILabel = {
         let label = UILabel()
@@ -47,6 +52,21 @@ class UsernameCell : UICollectionViewCell, UITextFieldDelegate {
         return tf
     }()
     
+    lazy var nextButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("Next", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
+        button.contentHorizontalAlignment = .right
+        button.contentVerticalAlignment = .center
+        return button
+    }()
+    
+    @objc func handleNext(){
+        delegate?.handleUsernameNext(for: self)
+    }
+    
     @objc func setUsername(){
         accessSignupController?.usernameTextField.text = usernameTextField.text
     }
@@ -70,6 +90,8 @@ class UsernameCell : UICollectionViewCell, UITextFieldDelegate {
         addSubview(usernameLabel)
         addSubview(usernameTextField)
         addSubview(usernameUnderline)
+        addSubview(nextButton)
+        
         usernameBigLabel.anchor(top: topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 64, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameBigLabel.intrinsicContentSize.width, height: usernameBigLabel.intrinsicContentSize.height)
         usernameBigLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         enterUserNamePrompt.anchor(top: usernameBigLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: enterUserNamePrompt.intrinsicContentSize.width, height: enterUserNamePrompt.intrinsicContentSize.height)
@@ -78,6 +100,7 @@ class UsernameCell : UICollectionViewCell, UITextFieldDelegate {
         usernameTextField.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: usernameTextField.intrinsicContentSize.height)
         usernameUnderline.anchor(top: usernameTextField.bottomAnchor, left: usernameTextField.leftAnchor, bottom: nil, right: usernameTextField.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
         usernameTextField.delegate = self
+         nextButton.anchor(top: topAnchor, left: nil, bottom: nil, right: safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 120, height: 34)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -11,8 +11,7 @@ import Firebase
 import FirebaseAuth
 import FirebaseStorage
 
-class SignupController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
+class SignupController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate, NameDelegate, EmailDelegate, UsernameDelegate, ProfilePictureDelegate {
     
     // MARK: - Manage User Photo
     
@@ -112,31 +111,6 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
     let profileService = ProfileServices()
     var user : User?
     var firebaseImageUrl : String?
-    
-    @objc func addUserToFirebase(){
-        print(emailTextField.text)
-        guard let email = emailTextField.text, email.count > 0 else { return }
-        guard let password = passwordTextField.text, password.count > 0 else { return }
-        let ref = Database.database().reference()
-        
-        DispatchQueue.main.async {
-            Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
-                if let err = error {
-                    print("Failed to create user", err)
-                    self.handleError(err)
-                    return
-                } else {
-                    let userInfo = ["username" : self.usernameTextField.text]
-                    ref.child("users").setValue(userInfo)
-                }
-            }
-            
-            self.profileService.getUserId(email: email, completion: { (user) in
-                self.user = user
-                self.collectionView?.reloadData()
-            })
-        }
-    }
 
     @objc func handleSignup(){
         guard let email = emailTextField.text, email.count > 0 else { return }
@@ -256,7 +230,6 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         button.setTitle("Next", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
         button.contentHorizontalAlignment = .right
         button.contentVerticalAlignment = .center
         return button
@@ -302,39 +275,87 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
     
     var current: Int = 2
     var countTracker : Int = 1
+    var isValidUsername = false
+    var isValidLogin = false
     
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let currentpage = Int(scrollView.contentOffset.x / scrollView.bounds.width)
         progressControl.progress = Float(currentpage) / Float(pageControl.numberOfPages)
     }
     
-    func checkUsername(){
-        let username = self.usernameTextField.text
-        let ref = Database.database().reference()
-        let userRef = ref.child("users/\(String(describing: username))")
+    func handleFullnameNext(for cell: NameCell) {
+        handleNext()
+    }
+    
+    func handlePasswordKeyboard(for cell: EmailCell) {}
+    
+    func handleEmailNext(for cell: EmailCell) {
+        guard let email = emailTextField.text, email.count > 0 else { return }
+        guard let password = passwordTextField.text, password.count > 0 else { return }
         
-        userRef.observe(.value, with: { snapshot in
-            if snapshot.exists() {
-                print("Username Already taken!")
+        DispatchQueue.main.async {
+            Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
+                if let err = error {
+                    self.handleError(err)
+                    return
+                }
+                self.handleNext()
             }
             
-            userRef.removeAllObservers()
+            self.profileService.getUserId(email: email, completion: { (user) in
+                self.user = user
+                self.collectionView?.reloadData()
+            })
+        }
+    }
+    
+    func handleUsernameNext(for cell: UsernameCell) {
+        if usernameTextField.hasText {
+            let username = self.usernameTextField.text
+            let ref = Database.database().reference().child("users")
             
-        }, withCancel: { error in
-            print(error)
+            guard let currentUserId = Auth.auth().currentUser?.uid else { return }
+            let dictionaryValues = ["userId": currentUserId]
+            let values = [username: dictionaryValues]
             
-        })
+            ref.observeSingleEvent(of: .value, with: { (snapshot) in
+                if snapshot.hasChild(username!) {
+                    let alert = UIAlertController(title: "Username", message: "Username is taken. Try again.", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+                    alert.addAction(okAction)
+                    self.present(alert, animated: true, completion: nil)
+                } else if !snapshot.hasChild(username!) {
+                    ref.updateChildValues(values) { (err, usernameRefCheck) in
+                        if let err = err {
+                            print(err)
+                        }
+                        self.handleNext()
+                    }
+                }
+            }, withCancel: nil)
+            
+        } else {
+            print("Username must have text")
+        }
+    }
+    
+    func handleProfilePicture(for cell: ProfilePictureCell) {
+        handleNext()
     }
     
     @objc private func handleNext() {
+        let nextIndex = min(pageControl.currentPage + 1, 4)
+        let indexPath = IndexPath(item: nextIndex, section: 0)
+        pageControl.currentPage = nextIndex
+
         if progressControl.progress == 1.0 {
             handleSignup()
             loginButton.backgroundColor = .black
             loginButton.layer.borderColor = UIColor.black.cgColor
             loginButton.isEnabled = true
-            
+
             progressControl.progress = progressControl.progress + Float(1)
-            
+
         } else if progressControl.progress > 1.0 {
             let appDelegate = UIApplication.shared.delegate! as! AppDelegate
             appDelegate.window = UIWindow()
@@ -342,23 +363,42 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
             appDelegate.window?.makeKeyAndVisible()
             self.dismiss(animated: true, completion: nil)
         }
+
+        loginButton.backgroundColor = .gray
+        loginButton.layer.borderColor = UIColor.gray.cgColor
+        loginButton.isEnabled = false
+
+        self.progressControl.progress = Float(nextIndex) / Float(self.pageControl.numberOfPages)
+        self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         
-        let nextIndex = min(pageControl.currentPage + 1, 4)
-        let indexPath = IndexPath(item: nextIndex, section: 0)
-        pageControl.currentPage = nextIndex
-        progressControl.progress = Float(nextIndex) / Float(pageControl.numberOfPages)
-        collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+//        switch nextIndex {
+//        case 2:
+//            addUserToFirebase {
+//                if self.isValidLogin == true {
+//                    self.progressControl.progress = Float(nextIndex) / Float(self.pageControl.numberOfPages)
+//                    self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+//                }
+//            }
+//        case 3:
+//            if usernameTextField.hasText {
+//                checkUsername {
+//                    if self.isValidUsername == true {
+//                        self.progressControl.progress = Float(nextIndex) / Float(self.pageControl.numberOfPages)
+//                        self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+//                    }
+//                }
+//            } else {
+//                nextButton.isEnabled = !nextButton.isEnabled
+//            }
+//        default:
+//            loginButton.backgroundColor = .gray
+//            loginButton.layer.borderColor = UIColor.gray.cgColor
+//            loginButton.isEnabled = false
+//
+//            self.progressControl.progress = Float(nextIndex) / Float(self.pageControl.numberOfPages)
+//            self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+//        }
         
-        switch nextIndex {
-        case 2:
-            addUserToFirebase()
-        case 3:
-            checkUsername()
-        default:
-            loginButton.backgroundColor = .gray
-            loginButton.layer.borderColor = UIColor.gray.cgColor
-            loginButton.isEnabled = false
-        }
     }
     
     @objc func handleDismiss(){
@@ -368,7 +408,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
     func setupControls(){
         view.addSubview(progressControl)
         view.addSubview(cancelButton)
-        view.addSubview(nextButton)
+//        view.addSubview(nextButton)
         view.addSubview(loginButton)
         view.addSubview(hiddenButton)
         
@@ -381,8 +421,8 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         cancelBackground.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor).isActive = true
         cancelBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 38, height: 38)
         
-        nextButton.anchor(top: nil, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 120, height: 34)
-        nextButton.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor).isActive = true
+//        nextButton.anchor(top: nil, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 120, height: 34)
+//        nextButton.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor).isActive = true
         loginButton.anchor(top: nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, width: 0, height: 60)
         hiddenButton.anchor(top: nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, width: 0, height: 60)
     }
@@ -400,18 +440,23 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: nameId, for: indexPath) as! NameCell
             cell.accessSignupController = self
+            cell.delegate = self
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! EmailCell
             cell.accessSignupController = self
+            cell.delegate = self
             return cell
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: usernameId, for: indexPath) as! UsernameCell
             cell.accessSignupController = self
+            cell.delegate = self
             return cell
         case 3:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pictureId, for: indexPath) as! ProfilePictureCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pictureId, for: indexPath) as!
+            ProfilePictureCell
             cell.accessSignupController = self
+            cell.delegate = self
             if profileImage != nil {
                 cell.profilePicture.setImage(profileImage, for: .normal)
                 cell.profilePicture.layer.borderColor = UIColor.clear.cgColor
@@ -463,8 +508,6 @@ extension SignupController {
     }
 }
 
-
-// Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
 	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
 }

@@ -10,6 +10,7 @@ import UIKit
 
 protocol EmailDelegate {
     func handlePasswordKeyboard(for cell : EmailCell)
+    func handleEmailNext(for cell : EmailCell)
 }
 
 class EmailCell : UICollectionViewCell, UITextFieldDelegate {
@@ -88,6 +89,21 @@ class EmailCell : UICollectionViewCell, UITextFieldDelegate {
         return tf
     }()
     
+    lazy var nextButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("Next", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
+        button.contentHorizontalAlignment = .right
+        button.contentVerticalAlignment = .center
+        return button
+    }()
+    
+    @objc func handleNext(){
+        delegate?.handleEmailNext(for: self)
+    }
+    
     @objc func setPassword(){
         accessSignupController?.passwordTextField.text = passwordTextField.text
     }
@@ -119,11 +135,13 @@ class EmailCell : UICollectionViewCell, UITextFieldDelegate {
         addSubview(emailLabel)
         addSubview(emailTextField)
         addSubview(emailUnderline)
+        addSubview(nextButton)
         hiLabel.anchor(top: topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 64, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: hiLabel.intrinsicContentSize.width, height: hiLabel.intrinsicContentSize.height)
         hiLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         emailLabel.anchor(top: hiLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 64, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: emailLabel.intrinsicContentSize.width, height: emailLabel.intrinsicContentSize.height)
         emailTextField.anchor(top: emailLabel.bottomAnchor, left: emailLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: emailTextField.intrinsicContentSize.height)
         emailUnderline.anchor(top: emailTextField.bottomAnchor, left: emailTextField.leftAnchor, bottom: nil, right: emailTextField.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+         nextButton.anchor(top: topAnchor, left: nil, bottom: nil, right: safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 120, height: 34)
         setupPasswordView()
     }
     

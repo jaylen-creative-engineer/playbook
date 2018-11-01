@@ -78,7 +78,7 @@ class CreateTeamCells : UICollectionViewCell {
     }
     
     @objc func handleInviteFriends(){
-        accessDetailController?.inviteContacts()
+//        accessDetailController?.inviteContacts()
     }
     
     func setupFriendsSearch(){

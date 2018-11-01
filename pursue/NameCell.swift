@@ -8,9 +8,14 @@
 
 import UIKit
 
+protocol NameDelegate {
+    func handleFullnameNext(for cell : NameCell)
+}
+
 class NameCell : UICollectionViewCell, UITextFieldDelegate {
     
     var accessSignupController : SignupController?
+    var delegate : NameDelegate?
     
     let enterNamePrompt : UILabel = {
         let label = UILabel()
@@ -33,6 +38,17 @@ class NameCell : UICollectionViewCell, UITextFieldDelegate {
         return label
     }()
     
+    lazy var nextButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("Next", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
+        button.contentHorizontalAlignment = .right
+        button.contentVerticalAlignment = .center
+        return button
+    }()
+    
     lazy var fullnameTextField : UITextField = {
         let tf = UITextField()
         tf.font = UIFont.systemFont(ofSize: 14)
@@ -47,6 +63,7 @@ class NameCell : UICollectionViewCell, UITextFieldDelegate {
         return tf
     }()
     
+   
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.endEditing(true)
     }
@@ -54,6 +71,10 @@ class NameCell : UICollectionViewCell, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    @objc func handleNext(){
+        delegate?.handleFullnameNext(for: self)
     }
     
     @objc func setFullname(){
@@ -70,6 +91,7 @@ class NameCell : UICollectionViewCell, UITextFieldDelegate {
         addSubview(fullnameLabel)
         addSubview(fullnameTextField)
         addSubview(fullnameUnderline)
+        addSubview(nextButton)
         
         nameBigLabel.anchor(top: topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 64, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: nameBigLabel.intrinsicContentSize.width, height: nameBigLabel.intrinsicContentSize.height)
         nameBigLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
@@ -79,6 +101,7 @@ class NameCell : UICollectionViewCell, UITextFieldDelegate {
         fullnameTextField.anchor(top: fullnameLabel.bottomAnchor, left: fullnameLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: fullnameTextField.intrinsicContentSize.height)
         fullnameUnderline.anchor(top: fullnameTextField.bottomAnchor, left: fullnameTextField.leftAnchor, bottom: nil, right: fullnameTextField.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
         fullnameTextField.delegate = self
+        nextButton.anchor(top: topAnchor, left: nil, bottom: nil, right: safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 120, height: 34)
     }
     
     required init?(coder aDecoder: NSCoder) {

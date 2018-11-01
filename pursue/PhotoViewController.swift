@@ -29,14 +29,6 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
                       height: backgroundImageView.bounds.height * scale)
     }
     
-    lazy var progressView : UIProgressView = {
-        let pv = UIProgressView()
-        return pv
-    }()
-    
-    var is_principle = 0
-    var is_step = 0
-    
     lazy var backgroundImageView : UIImageView = {
         let iv = UIImageView()
         iv.image = backgroundImage
@@ -47,17 +39,65 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         return iv
     }()
     
-    lazy var cancelButton : UIButton = {
+    lazy var backgroundWhiteFill : UIView = {
+       let view = UIView()
+        view.backgroundColor = UIColor.init(white: 0.7, alpha: 0.7)
+        view.layer.cornerRadius = 20
+        view.layer.masksToBounds = true
+        return view
+    }()
+    
+    lazy var saveIcon : UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "cancel").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "save").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .white
         button.contentMode = .scaleAspectFill
-        button.addTarget(self, action: #selector(cancel), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var saveLabel  : UILabel = {
+        let label = UILabel()
+        label.text = "Save"
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleSave))
+        tap.numberOfTapsRequired = 1
+        label.addGestureRecognizer(tap)
+        return label
+    }()
+    
+    lazy var saveBackground : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
+        return button
+    }()
+
+    lazy var cancelButton : UIButton = {
+       let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "cancel").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .white
+        button.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var cancelBackground : UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = 19
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         return button
     }()
     
     lazy var continueButton : UIButton = {
         let cv = UIButton()
-        cv.backgroundColor = .black
+        cv.backgroundColor = .white
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.layer.cornerRadius = 20
         cv.layer.masksToBounds = true
@@ -67,8 +107,8 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     
     lazy var forwardArrow : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "forward-arrow").withRenderingMode(.alwaysTemplate)
-        iv.tintColor = .white
+        iv.image = #imageLiteral(resourceName: "forward-arrow").withRenderingMode(.alwaysOriginal)
+//        iv.tintColor = .white
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
         
@@ -78,52 +118,14 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         return iv
     }()
     
-    lazy var backgroundWhiteFill : UIView = {
-       let view = UIView()
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 20
-        view.layer.masksToBounds = true
-        return view
-    }()
-    
-    lazy var cancelFill : UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.init(white: 0.3, alpha: 0.7)
-        return view
-    }()
-    
-    let createLabel : UILabel = {
-       let label = UILabel()
-        label.text = "Create"
-        label.font = UIFont(name: "Lato-Bold", size: 18)
-        return label
-    }()
-    
-    lazy var backButton : UIButton = {
-       let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "back-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFill
-        return button
-    }()
-    
     @objc func handlePursuit(){
-//        if pursuitTitle.isHidden == false {
-//            guard let image = backgroundImageView.image else { return }
-////            let customAlert = CustomAlertView(capturedImage: image, contentUrl: nil, postDescription: pursuitTitle.text, is_principle: is_principle, is_step: is_step)
-////            customAlert.providesPresentationContextTransitionStyle = true
-////            customAlert.definesPresentationContext = true
-////            customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-////            customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-////            self.present(customAlert, animated: true, completion: nil)
-//        } else {
-//            guard let image = backgroundImageView.image else { return }
-////            let customAlert = CustomAlertView(capturedImage: image, contentUrl: nil, postDescription: "", is_principle: is_principle, is_step: is_step)
-////            customAlert.providesPresentationContextTransitionStyle = true
-////            customAlert.definesPresentationContext = true
-////            customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-////            customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-////            self.present(customAlert, animated: true, completion: nil)
-//        }
+        let customAlert = CaptureDetailView()
+        customAlert.providesPresentationContextTransitionStyle = true
+        customAlert.definesPresentationContext = true
+        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.showDetailViewController(customAlert, sender: self)
+
     }
     
     @objc func handleSave(){
@@ -143,13 +145,6 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     }
     
     @objc func handleHighlight () {
-        let customAlert = CustomStepToggleView(is_step: is_step, is_principle: is_principle)
-        customAlert.photoController = self
-        customAlert.providesPresentationContextTransitionStyle = true
-        customAlert.definesPresentationContext = true
-        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.present(customAlert, animated: true, completion: nil)
     }
     
     func updateStillImage() {
@@ -168,109 +163,51 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         }
     }
     
-    func inviteContacts(){
-        let contacts = InviteController(collectionViewLayout: UICollectionViewFlowLayout())
-        present(contacts, animated: true, completion: nil)
-    }
-    
-    lazy var nextButton : UIButton = {
-       let button = UIButton()
-        button.backgroundColor = .blue
-        button.layer.cornerRadius = 20
-        button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var nextArrow : UIImageView = {
-       let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "forward-arrow").withRenderingMode(.alwaysTemplate)
-        iv.contentMode = .scaleAspectFill
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleNext))
-        tap.numberOfTapsRequired = 1
-        iv.addGestureRecognizer(tap)
-        return iv
-    }()
-    
-    lazy var createCollectionViews: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
-        
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = .white
-        cv.dataSource = self
-        cv.delegate = self
-        cv.showsHorizontalScrollIndicator = false
-        cv.isPagingEnabled = true
-        cv.isScrollEnabled = false
-        return cv
-    }()
-    
-    lazy var goBackButton : UIButton = {
-        let button = UIButton()
-        button.setTitle("Go Back", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.addTarget(self, action: #selector(handleGoBack), for: .touchUpInside)
-        return button
-    }()
-    
-    let detailId = "detailId"
-    let pursuitId = "pursuitId"
-    
-    @objc func handleNext(){
-        let indexPath = IndexPath(item: 1, section: 0)
-        createCollectionViews.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-    }
-    
-    @objc func handleGoBack(){
-        let indexPath = IndexPath(item: 0, section: 0)
-        createCollectionViews.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    @objc func handleDismiss(){
+        self.dismiss(animated: true, completion: nil)
     }
     
     func submitPursuit(){
         Mixpanel.initialize(token: "Pursuit created")
     }
     
-    func setupCreateCollectionView(){
-        createCollectionViews.delegate = self
-        createCollectionViews.dataSource = self
-        createCollectionViews.register(CreateDetailsCell.self, forCellWithReuseIdentifier: detailId)
-        createCollectionViews.register(CreatePursuitsCells.self, forCellWithReuseIdentifier: pursuitId)
+    func setupBottomLeftOptions(){
+        view.addSubview(saveLabel)
+        view.addSubview(saveIcon)
+        view.addSubview(saveBackground)
         
-        view.addSubview(createCollectionViews)
-        view.addSubview(nextButton)
-        view.addSubview(nextArrow)
-        view.addSubview(backButton)
-        view.addSubview(goBackButton)
+        saveLabel.anchor(top: nil, left: backgroundImageView.safeAreaLayoutGuide.leftAnchor, bottom: continueButton.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: saveLabel.intrinsicContentSize.width, height: saveLabel.intrinsicContentSize.height)
+        saveIcon.anchor(top: nil, left: nil, bottom: saveLabel.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 0, width: 20, height: 20)
+        saveIcon.centerXAnchor.constraint(equalTo: saveLabel.centerXAnchor).isActive = true
+        saveBackground.anchor(top: saveIcon.topAnchor, left: saveLabel.leftAnchor, bottom: saveLabel.bottomAnchor, right: saveLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
-        createCollectionViews.anchor(top: createLabel.bottomAnchor, left: view.leftAnchor, bottom: backgroundWhiteFill.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-       
-        nextButton.anchor(top: nil, left: nil, bottom: createCollectionViews.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 12, width: 40, height: 40)
-        nextArrow.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 18, height: 18)
-        nextArrow.centerXAnchor.constraint(equalTo: nextButton.centerXAnchor).isActive = true
-        nextArrow.centerYAnchor.constraint(equalTo: nextButton.centerYAnchor).isActive = true
+    }
+
+    func setupPage(){
+        view.addSubview(cancelButton)
+        view.addSubview(continueButton)
+        view.addSubview(forwardArrow)
         
-        backButton.anchor(top: nil, left: backgroundWhiteFill.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 18, height: 18)
-        backButton.centerYAnchor.constraint(equalTo: createLabel.centerYAnchor).isActive = true
+        cancelButton.anchor(top: backgroundImageView.safeAreaLayoutGuide.topAnchor, left: backgroundImageView.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
         
+        view.addSubview(cancelBackground)
+        cancelBackground.centerXAnchor.constraint(equalTo: cancelButton.centerXAnchor).isActive = true
+        cancelBackground.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor).isActive = true
+        cancelBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 38, height: 38)
+        
+        continueButton.anchor(top: nil, left: nil, bottom: backgroundImageView.safeAreaLayoutGuide.bottomAnchor, right: backgroundImageView.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 24, width: 40, height: 40)
+        forwardArrow.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 15, height: 10)
+        forwardArrow.centerXAnchor.constraint(equalTo: continueButton.centerXAnchor).isActive = true
+        forwardArrow.centerYAnchor.constraint(equalTo: continueButton.centerYAnchor).isActive = true
+        
+        setupBottomLeftOptions()
     }
     
     func setupView(){
         view.addSubview(backgroundImageView)
-        view.addSubview(cancelFill)
-        view.addSubview(backgroundWhiteFill)
-        view.addSubview(createLabel)
         
         backgroundImageView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        cancelFill.anchor(top: backgroundImageView.topAnchor, left: backgroundImageView.leftAnchor, bottom: backgroundImageView.bottomAnchor, right: backgroundImageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        backgroundWhiteFill.anchor(top: nil, left: cancelFill.leftAnchor, bottom: view.bottomAnchor, right: cancelFill.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: view.frame.height / 1.6)
-        createLabel.anchor(top: backgroundWhiteFill.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: createLabel.intrinsicContentSize.width, height: createLabel.intrinsicContentSize.height)
-        createLabel.centerXAnchor.constraint(equalTo: backgroundWhiteFill.centerXAnchor).isActive = true
-       
-        setupCreateCollectionView()
+        setupPage()
     }
     
     override func viewDidLoad() {
@@ -278,80 +215,5 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         self.view.backgroundColor = .white
         hero.isEnabled = true
         setupView()
-    }
-    
-    @objc func cancel() {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let currentpage = Int(scrollView.contentOffset.x / scrollView.bounds.width)
-        
-        if currentpage == 0 {
-            goBackButton.isHidden = true
-        } else {
-            goBackButton.isHidden = false
-            goBackButton.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: goBackButton.intrinsicContentSize.width, height: 16)
-            goBackButton.centerYAnchor.constraint(equalTo: nextButton.centerYAnchor).isActive = true
-        }
-    }
-    
-}
-
-extension PhotoViewController : UITextViewDelegate {
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        let currentText:String = textView.text
-        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
-        
-        if updatedText.isEmpty {
-            
-            textView.text = "Add Caption"
-            textView.textColor = .gray
-            textView.font = UIFont.boldSystemFont(ofSize: 14)
-            
-            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
-            
-            return false
-        }
-            
-        else if textView.textColor == UIColor.lightGray && !text.isEmpty {
-            textView.text = nil
-            textView.textColor = UIColor.black
-        }
-        
-        return true
-    }
-    
-    func textViewDidChangeSelection(_ textView: UITextView) {
-        if self.view.window != nil {
-            if textView.textColor == UIColor.lightGray {
-                textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
-            }
-        }
-    }
-    
-}
-
-extension PhotoViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.item {
-        case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: detailId, for: indexPath) as! CreateDetailsCell
-            cell.accessPhotoViewController = self
-            return cell
-        default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! CreatePursuitsCells
-            return cell
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height / 1.6)
     }
 }

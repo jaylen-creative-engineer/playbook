@@ -35,12 +35,11 @@ class CreateDetailsCell : UICollectionViewCell {
         return cv
     }()
     
-    let addCaptionTextView : CreateInputTextView = {
-        let tv = CreateInputTextView()
-        tv.layer.cornerRadius = 20
-        tv.layer.borderColor = UIColor.gray.cgColor
-        tv.layer.borderWidth = 0.5
-        tv.layer.masksToBounds = true
+    let addCaptionTextView : CaptionInputTextView = {
+        let tv = CaptionInputTextView()
+        tv.isScrollEnabled = false
+        tv.font = UIFont.systemFont(ofSize: 14)
+        tv.translatesAutoresizingMaskIntoConstraints = false
         return tv
     }()
     
@@ -121,10 +120,6 @@ class CreateDetailsCell : UICollectionViewCell {
         postTypeLabel.anchor(top: selectInterests.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
         stackView.anchor(top: postTypeLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: frame.width / 1.3, height: 30)
         
-    }
-    
-    func inviteContacts(){
-        accessPhotoViewController?.inviteContacts()
     }
     
     func setupTeamCollectionView(){

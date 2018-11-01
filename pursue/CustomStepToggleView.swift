@@ -190,7 +190,7 @@ class CustomStepToggleView : UIViewController {
     @objc func handleChangeToStep(){
         if is_step == 1 {
             stepCheckMark.isHidden = false
-            photoController?.is_step = 0
+//            photoController?.is_step = 0
 //            photoController?.stepLabel.isHidden = true
 //            photoController?.principleLabel.isHidden = true
 //            photoController?.pursuitUnderline.isHidden = true
@@ -198,7 +198,7 @@ class CustomStepToggleView : UIViewController {
             dismiss(animated: true, completion: nil)
         } else {
             stepCheckMark.isHidden = true
-            photoController?.is_step = 1
+//            photoController?.is_step = 1
 //            photoController?.stepLabel.isHidden = false
 //            photoController?.principleLabel.isHidden = true
 //            photoController?.pursuitUnderline.isHidden = false
@@ -210,7 +210,7 @@ class CustomStepToggleView : UIViewController {
     @objc func handleChangeToPrinciple(){
         if is_principle == 1 {
             principleCheckMark.isHidden = false
-            photoController?.is_principle = 0
+//            photoController?.is_principle = 0
 //            photoController?.principleLabel.isHidden = true
 //            photoController?.stepLabel.isHidden = true
 //            photoController?.pursuitUnderline.isHidden = true
@@ -218,7 +218,7 @@ class CustomStepToggleView : UIViewController {
             dismiss(animated: true, completion: nil)
         } else {
             principleCheckMark.isHidden = true
-            photoController?.is_principle = 1
+//            photoController?.is_principle = 1
 //            photoController?.principleLabel.isHidden = false
 //            photoController?.stepLabel.isHidden = true
 //            photoController?.pursuitUnderline.isHidden = false

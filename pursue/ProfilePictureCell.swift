@@ -8,9 +8,14 @@
 
 import UIKit
 
+protocol ProfilePictureDelegate {
+    func handleProfilePicture(for cell : ProfilePictureCell)
+}
+
 class ProfilePictureCell : UICollectionViewCell {
     
     var accessSignupController : SignupController?
+    var delegate : ProfilePictureDelegate?
     
     let pictureBigLabel : UILabel = {
         let label = UILabel()
@@ -48,6 +53,21 @@ class ProfilePictureCell : UICollectionViewCell {
         return iv
     }()
     
+    lazy var nextButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("Next", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
+        button.contentHorizontalAlignment = .right
+        button.contentVerticalAlignment = .center
+        return button
+    }()
+    
+    @objc func handleNext(){
+        delegate?.handleProfilePicture(for: self)
+    }
+    
     @objc func changeProfilePicture(){
         accessSignupController?.handlePlusPhoto()
     }
@@ -58,6 +78,7 @@ class ProfilePictureCell : UICollectionViewCell {
         addSubview(enterPicturePrompt)
         addSubview(profilePicture)
         profilePicture.addSubview(addIcon)
+        addSubview(nextButton)
         
         pictureBigLabel.anchor(top: topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 64, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: pictureBigLabel.intrinsicContentSize.width, height: pictureBigLabel.intrinsicContentSize.height)
         pictureBigLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
@@ -69,6 +90,7 @@ class ProfilePictureCell : UICollectionViewCell {
         addIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
         addIcon.centerXAnchor.constraint(equalTo: profilePicture.centerXAnchor).isActive = true
         addIcon.centerYAnchor.constraint(equalTo: profilePicture.centerYAnchor).isActive = true
+        nextButton.anchor(top: topAnchor, left: nil, bottom: nil, right: safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 120, height: 34)
     }
     
     required init?(coder aDecoder: NSCoder) {
