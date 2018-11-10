@@ -11,13 +11,31 @@ import Hero
 
 class HomePostCells : UICollectionViewCell  {
     
+    var post : Post!{
+        didSet {
+            guard let photo = post.thumbnailUrl else { return }
+            imageView.loadImageUsingCacheWithUrlString(photo)
+            postDetail.text = post.posts_description
+//            guard let timeAgoDisplay = post.created_at?.timeAgoDisplay() else { return }
+//            let attributedText = NSAttributedString(string: timeAgoDisplay, attributes: [NSAttributedString.Key.font: UIFont(name: "Lato-Bold", size: 12) as Any, NSAttributedString.Key.foregroundColor: UIColor.white])
+//            timeLabel.attributedText = attributedText
+        }
+    }
+    
+    var home : Home! {
+        didSet {
+            guard let postUser = home.photoUrl else { return }
+            userPhoto.loadImageUsingCacheWithUrlString(postUser)
+            username.text = home.username
+        }
+    }
+    
     var accessHomeController : HomeController?
     
     lazy var imageView : UIImageView = {
         let iv = UIImageView()
         iv.layer.cornerRadius = 8
         iv.clipsToBounds = true
-        iv.image = #imageLiteral(resourceName: "ferrari").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         iv.isUserInteractionEnabled = true
         
@@ -29,21 +47,13 @@ class HomePostCells : UICollectionViewCell  {
     
     let backgroundShadow : GroupChatView = {
        let view = GroupChatView()
+        view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    let postType : UILabel = {
-        let label = UILabel()
-        label.text = "Principle"
-        label.font = UIFont(name: "Lato-Bold", size: 14)
-        label.textColor = .white
-        return label
-    }()
-    
     let userPhoto : UIImageView = {
        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 20
         iv.layer.masksToBounds = true
@@ -52,7 +62,6 @@ class HomePostCells : UICollectionViewCell  {
     
     let postDetail : UILabel = {
         let label = UILabel()
-        label.text = "Travel On"
         label.numberOfLines = 0
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.init(25))
@@ -60,25 +69,8 @@ class HomePostCells : UICollectionViewCell  {
         return label
     }()
     
-    let daysLabel : UILabel = {
-        let label = UILabel()
-        label.text = "20 Days"
-        label.font = UIFont(name: "Lato-Bold", size: 14)
-        label.textColor = .white
-        return label
-    }()
-    
-    let seperatorCircle : UIView = {
-       let view = UIView()
-        view.layer.cornerRadius = 3
-        view.layer.masksToBounds = true
-        view.backgroundColor = .white
-        return view
-    }()
-    
     let username : UILabel = {
         let label = UILabel()
-        label.text = "Test"
         label.font = UIFont(name: "Lato-Bold", size: 14)
         label.textColor = .white
         return label
@@ -86,12 +78,10 @@ class HomePostCells : UICollectionViewCell  {
     
     let timeLabel : UILabel = {
         let label = UILabel()
-        label.text = "Today"
         label.font = UIFont(name: "Lato-Bold", size: 12)
         label.textColor = .white
         return label
     }()
-  
     
     let progressBar : UIProgressView = {
        let view = UIProgressView()
@@ -101,12 +91,42 @@ class HomePostCells : UICollectionViewCell  {
         view.layer.masksToBounds = true
         return view
     }()
-
+    
+    let progressStackView : UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .horizontal
+        sv.distribution = .equalSpacing
+        sv.alignment = .fill
+        sv.spacing = 5
+        return sv
+    }()
+    
+    var stories = [Story]()
     
     var accessFeedController : FeedCell?
     
     @objc func handleChangeDetail(){
         accessHomeController?.handleChangeToDetail(transitionId: "0")
+    }
+    
+    fileprivate func setupMultipleProgressBar() {
+        addSubview(progressStackView)
+        
+        progressStackView.anchor(top: imageView.topAnchor, left: imageView.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 2.5)
+        
+        let gaps = self.stories.count
+        let viewWidth = self.progressStackView.frame.width - CGFloat(gaps)
+        let viewUnit = Int(viewWidth) / (stories.count + 1)
+        for _ in stories {
+            let progressView = UIProgressView()
+            progressView.progress = 0
+            progressView.layer.cornerRadius = 2
+            progressView.layer.masksToBounds = true
+            progressView.trackTintColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)
+            progressView.progressTintColor = UIColor.white
+            progressView.widthAnchor.constraint(equalToConstant: CGFloat(viewUnit)).isActive = true
+            self.progressStackView.addArrangedSubview(progressView)
+        }
     }
 
     func setupView(){
@@ -114,17 +134,14 @@ class HomePostCells : UICollectionViewCell  {
         addSubview(imageView)
         addSubview(progressBar)
         addSubview(userPhoto)
-        addSubview(postType)
         addSubview(postDetail)
-        addSubview(seperatorCircle)
-        addSubview(daysLabel)
         addSubview(username)
         addSubview(timeLabel)
         
         backgroundShadow.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: frame.height)
         imageView.anchor(top: backgroundShadow.topAnchor, left: backgroundShadow.leftAnchor, bottom: backgroundShadow.bottomAnchor, right: backgroundShadow.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        progressBar.anchor(top: imageView.topAnchor, left: imageView.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 3)
-        userPhoto.anchor(top: progressBar.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
+        setupMultipleProgressBar()
+        userPhoto.anchor(top: progressStackView.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
         username.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 24, width: 0, height: 16)
         timeLabel.anchor(top: username.bottomAnchor, left: username.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
         postDetail.anchor(top: nil, left: imageView.leftAnchor, bottom: imageView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 18, paddingRight: 12, width: 0, height: 0)

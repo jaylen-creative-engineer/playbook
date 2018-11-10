@@ -8,13 +8,7 @@
 
 import UIKit
 
-protocol PostResponseDelegate {
-    func handleAccept(for cell : PostResponsesCell)
-}
-
 class PostResponsesCell : UICollectionViewCell {
-
-    var delegate : PostResponseDelegate?
     
     let photo : UIImageView = {
         let iv = UIImageView()
@@ -39,44 +33,14 @@ class PostResponsesCell : UICollectionViewCell {
         return label
     }()
     
-    lazy var acceptLabel : UIButton = {
-        let button = UIButton()
-        button.setTitle("Add To Pursuit", for: .normal)
-        button.setTitleColor(.gray, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
-        button.addTarget(self, action: #selector(handleAccept), for: .touchUpInside)
-        button.contentHorizontalAlignment = .left
-        button.contentVerticalAlignment = .top
-        return button
-    }()
-    
-    var isAccepted = false
-    
-    @objc func handleAccept(){
-        isAccepted = !isAccepted
-        
-        if isAccepted == true {
-            acceptLabel.setTitle("Added", for: .normal)
-            acceptLabel.setTitleColor(.black, for: .normal)
-            delegate?.handleAccept(for: self)
-        } else {
-            acceptLabel.setTitle("Add To Pursuit", for: .normal)
-            acceptLabel.setTitleColor(.gray, for: .normal)
-        }
-        
-    }
-    
     func setupView(){
         addSubview(photo)
         addSubview(solutionLabel)
         addSubview(usernameLabel)
-        addSubview(acceptLabel)
         
         photo.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 8, paddingRight: 0, width: 110, height: 120)
         solutionLabel.anchor(top: photo.topAnchor, left: photo.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: (solutionLabel.intrinsicContentSize.height * 2) + 5)
         usernameLabel.anchor(top: solutionLabel.bottomAnchor, left: solutionLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
-        acceptLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 120, height: 34)
-//        acceptLabel.anchor(top: nil, left: usernameLabel.leftAnchor, bottom: photo.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: acceptLabel.intrinsicContentSize.width, height: acceptLabel.intrinsicContentSize.height)
     }
     
     override init(frame: CGRect) {

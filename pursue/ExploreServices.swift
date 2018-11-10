@@ -14,7 +14,7 @@ class ExploreServices {
     
     // MARK: - GET pursuits by interests
     
-    func getPursuits(completion: @escaping (Pursuit, Post, Steps, User, Principles) -> ()){
+    func getPursuits(completion: @escaping (Pursuit, Post, User) -> ()){
         let url = "http://localhost:8080/"
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
@@ -47,7 +47,7 @@ class ExploreServices {
     // MARK: - QUERY database by user input
     
     func queryDatabase(searchText : String, completion: @escaping (Search) -> ()){
-        let url = "http://localhost:8080/search"
+        let url = "http://localhost:8080/search/get-search"
         var parameters = Alamofire.Parameters()
         parameters["searchText"] = searchText
         

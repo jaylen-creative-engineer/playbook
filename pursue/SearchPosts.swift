@@ -10,8 +10,16 @@ import UIKit
 
 class SearchPosts : UICollectionViewCell {
     
-    let cellId = "cellId"
+    var posts : [Post]? {
+        didSet {
+            guard let postsContent = posts else { return }
+            postData = postsContent
+            collectionView.reloadData()
+        }
+    }
     
+    let cellId = "cellId"
+    var postData = [Post]()
     let imageName = "690dae66bfe860df34fc7a756b53c15d"
     
     let postsLabel : UILabel = {
@@ -52,24 +60,24 @@ class SearchPosts : UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var postImages = [#imageLiteral(resourceName: "fall"), #imageLiteral(resourceName: "beauty"), #imageLiteral(resourceName: "ferrari"), #imageLiteral(resourceName: "animals")]
-    var userImages = [#imageLiteral(resourceName: "comment-4"), #imageLiteral(resourceName: "comment-7"), #imageLiteral(resourceName: "comment-5"), #imageLiteral(resourceName: "comment-6")]
-    var username = ["JacobB", "Hozier", "LBTA", "BroScience"]
-    
 }
 
 extension SearchPosts : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchPostCells
-        cell.postType.text = username[indexPath.item]
-        cell.userPhoto.image = userImages[indexPath.item]
-        cell.imageView.image = postImages[indexPath.item]
+        if !postData.isEmpty {
+            cell.post = postData[indexPath.item]
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        if !postData.isEmpty {
+            return postData.count
+        }
+        
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

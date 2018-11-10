@@ -58,6 +58,9 @@ class FriendsController : UICollectionViewController, UICollectionViewDelegateFl
         pageTitle.centerYAnchor.constraint(equalTo: backIcon.centerYAnchor).isActive = true
     }
     
+    let profileService = ProfileServices()
+    var added : Added?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTopBar()
@@ -68,6 +71,10 @@ class FriendsController : UICollectionViewController, UICollectionViewDelegateFl
         collectionView?.delegate = self
         collectionView?.dataSource = self
         collectionView?.showsVerticalScrollIndicator = false
+        
+        profileService.getUsersAdded { (added) in
+            self.added = added
+        }
     }
     
 //    override func viewWillAppear(_ animated: Bool) {

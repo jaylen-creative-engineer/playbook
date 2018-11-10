@@ -10,12 +10,19 @@ import UIKit
 
 class SearchUsers : UICollectionViewCell {
     
+    var searchUser : Search? {
+        didSet {
+            guard let image = searchUser?.photoUrl else { return }
+            userPhoto.loadImageUsingCacheWithUrlString(image)
+            usernameLabel.text = searchUser?.username
+        }
+    }
+    
     lazy var userPhoto : UIImageView = {
         let iv = UIImageView()
         iv.layer.cornerRadius = 30
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleProfileTap))
         tapGesture.numberOfTapsRequired = 1
         iv.addGestureRecognizer(tapGesture)

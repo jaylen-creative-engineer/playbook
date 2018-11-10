@@ -11,10 +11,12 @@ import UIKit
 struct Pursuit : Decodable {
     
     let pursuitId : Int?
+    let posts : [Post]?
+    let postId : Int?
     let contentUrl : String?
     let thumbnailUrl : String?
     let interestId : Int?
-    let pursuit_description : String?
+    let description : String?
     let created_at : String?
     var is_visible : Int?
     var is_liked : Int?

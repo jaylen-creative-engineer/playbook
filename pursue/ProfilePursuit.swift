@@ -9,20 +9,13 @@
 import UIKit
 
 class ProfilePursuit : UICollectionViewCell {
-        
-    let profileService = ProfileServices()
-    var usersPursuits = [Pursuit]()
     
-    func getUsersPursuits(){
-        profileService.getUsersPursuits { (pursuits) in
-            DispatchQueue.main.async {
-                self.usersPursuits = pursuits
-                self.postCollectionView.reloadData()
-            }
+    var pursuits : [Post]? {
+        didSet {
+            postCollectionView.reloadData()
         }
     }
     
-    var pursuitsArray = [Pursuit]()
     let postCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -57,12 +50,10 @@ class ProfilePursuit : UICollectionViewCell {
         postCollectionView.anchor(top: pursuitsLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
-    var images = [#imageLiteral(resourceName: "bicycle-3045580_1280"), #imageLiteral(resourceName: "cafe-768771_1280"), #imageLiteral(resourceName: "berlin-1266337_1280"), #imageLiteral(resourceName: "picture-frames-1149414_1280"), #imageLiteral(resourceName: "prague-3540883_1280")]
     var accessProfileController : ProfileController?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        getUsersPursuits()
         setupCollectionView()
     }
     
@@ -74,7 +65,7 @@ class ProfilePursuit : UICollectionViewCell {
 extension ProfilePursuit : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+       return pursuits?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -87,7 +78,7 @@ extension ProfilePursuit : UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! RecommenedPursuitCell
-        cell.imageView.image = images[indexPath.item]
+        cell.post = pursuits?[indexPath.item]
         return cell
     }
 }

@@ -111,10 +111,12 @@ class ProfileServices {
     }
     
     func getAccount(completion: @escaping (User) -> ()) {
-        let url = "http://localhost:8080/users/get-user-profile"
+        let url = "http://localhost:8080/users/get_user_profile"
         
         let defaults = UserDefaults.standard
-        let userId = defaults.integer(forKey: "userId")
+//        let userId = defaults.integer(forKey: "userId")
+        
+        let userId = 1
         
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId
@@ -125,6 +127,31 @@ class ProfileServices {
                 guard let data = response.data else { return }
                 do {
                     let userResponse = try JSONDecoder().decode(User.self, from: data)
+                    completion(userResponse)
+                } catch let error {
+                    print(error)
+                }
+            case .failure:
+                print("Failure: \(response.result.isSuccess)")
+            }
+        }
+    }
+    
+    func getUsersAdded(completion : @escaping (Added) -> ()) {
+        let url = "http://localhost:8080/users/get_user_added"
+        
+        let defaults = UserDefaults.standard
+//        let userId = defaults.integer(forKey: "userId")
+        
+        var parameters = Alamofire.Parameters()
+        parameters["userId"] = 1
+        
+        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            switch response.result {
+            case .success:
+                guard let data = response.data else { return }
+                do {
+                    let userResponse = try JSONDecoder().decode(Added.self, from: data)
                     completion(userResponse)
                 } catch let error {
                     print(error)

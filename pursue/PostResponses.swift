@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PostResponses: UICollectionViewCell, PostResponseDelegate {
+class PostResponses: UICollectionViewCell {
     
     let cellId = "cellId"
     
@@ -39,12 +39,6 @@ class PostResponses: UICollectionViewCell, PostResponseDelegate {
         return iv
     }()
 
-    var accessPostDetailController : PostDetailController?
-    
-    func handleAccept(for cell: PostResponsesCell) {
-        accessPostDetailController?.handleAddResponse()
-    }
-    
     func setupView(){
         addSubview(responsesLabel)
         addSubview(responsesCollectionView)
@@ -74,7 +68,6 @@ extension PostResponses : UICollectionViewDelegate, UICollectionViewDataSource, 
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PostResponsesCell
-        cell.delegate = self
         cell.photo.image = UIImage(named: images[indexPath.item])
         return cell
     }

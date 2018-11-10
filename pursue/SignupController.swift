@@ -117,32 +117,59 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         guard let username = usernameTextField.text, username.count > 0 else { return }
         guard let password = passwordTextField.text, password.count > 0 else { return }
         guard let fullname = fullnameTextField.text, fullname.count > 0 else { return }
-        guard let image = self.profileImage else { return }
-        guard let uploadData = image.jpegData(compressionQuality: 0.3) else { return }
         
-        let filename = NSUUID().uuidString
-        let ref = Storage.storage().reference().child("profile-images").child(filename)
-        
-        DispatchQueue.main.async {
-            ref.putData(uploadData, metadata: nil, completion: { (metadata, err) in
-                
-                if let err = err {
-                    print("Failed to upload", err)
-                    self.handleError(err)
-                }
-                
-                ref.downloadURL(completion: { (url, err) in
-                    if err != nil {
-                        print(err ?? "")
+        if self.profileImage == nil {
+            let defaultProfileImage = UIImage(named: "profile_unselected")?.withRenderingMode(.alwaysOriginal)
+            guard let image = defaultProfileImage else { return }
+            guard let uploadData = image.jpegData(compressionQuality: 0.3) else { return }
+            let filename = NSUUID().uuidString
+            let ref = Storage.storage().reference().child("profile-images").child(filename)
+            
+            DispatchQueue.main.async {
+                ref.putData(uploadData, metadata: nil, completion: { (metadata, err) in
+                    
+                    if let err = err {
+                        print("Failed to upload", err)
+                        self.handleError(err)
                     }
                     
-                    guard let photoUrl = url?.absoluteString else { return }
-                    self.profileService.createAccount(email: email, username: username, fullname: fullname, photoUrl: photoUrl, bio: nil)
-    
+                    ref.downloadURL(completion: { (url, err) in
+                        if err != nil {
+                            print(err ?? "")
+                        }
+                        
+                        guard let photoUrl = url?.absoluteString else { return }
+                        self.profileService.createAccount(email: email, username: username, fullname: fullname, photoUrl: photoUrl, bio: nil)
+                        
+                    })
                 })
-            })
+            }
+        } else {
+            guard let image = self.profileImage else { return }
+            guard let uploadData = image.jpegData(compressionQuality: 0.3) else { return }
+            let filename = NSUUID().uuidString
+            let ref = Storage.storage().reference().child("profile-images").child(filename)
+            
+            DispatchQueue.main.async {
+                ref.putData(uploadData, metadata: nil, completion: { (metadata, err) in
+                    
+                    if let err = err {
+                        print("Failed to upload", err)
+                        self.handleError(err)
+                    }
+                    
+                    ref.downloadURL(completion: { (url, err) in
+                        if err != nil {
+                            print(err ?? "")
+                        }
+                        
+                        guard let photoUrl = url?.absoluteString else { return }
+                        self.profileService.createAccount(email: email, username: username, fullname: fullname, photoUrl: photoUrl, bio: nil)
+                        
+                    })
+                })
+            }
         }
-        
     }
     
     var loggedInUserId : String?

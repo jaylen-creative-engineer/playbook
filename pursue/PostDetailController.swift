@@ -350,8 +350,8 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         
         view.addSubview(videoView)
         videoView.addSubview(containerView)
-        videoView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (view.frame.height / 1.2) - 15)
-        containerView.anchor(top: videoView.topAnchor, left: videoView.leftAnchor, bottom: nil, right: videoView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: videoView.frame.height - 15)
+        videoView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (view.frame.height / 1.2) + 45)
+        containerView.anchor(top: videoView.topAnchor, left: videoView.leftAnchor, bottom: nil, right: videoView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: videoView.frame.height)
         
         collectionView?.parallaxHeader.view = videoView
         collectionView?.parallaxHeader.height = videoView.frame.height - 35
@@ -379,24 +379,6 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     
     deinit {
         myTimer?.invalidate()
-    }
-    
-    func handleAddResponse(){
-        let alert = UIAlertController(title: "Added Post", message: "You have added this response to your pursuit.", preferredStyle: UIAlertController.Style.alert)
-        present(alert, animated: true) {
-            self.myTimer = Timer.scheduledTimer(withTimeInterval: 0.6, repeats: true) { [weak self] timer in
-                self?.seconds -= 1
-                if self?.seconds == 0 {
-                    self?.dismiss(animated: true, completion: nil)
-                    timer.invalidate()
-                } else if self?.seconds == -1 {
-                    self?.dismiss(animated: true, completion: nil)
-                    timer.invalidate()
-                }
-            }
-            
-            
-        }
     }
     
     func handleShare(for cell: PursuitDay) {
@@ -476,11 +458,28 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         present(inviteController, animated: true, completion: nil)
     }
     
+    var detailPost: HomeDetail?
+    var engagements : Engagements?
+    let engagementsService = EngagementServices()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        homeService.getHomeDetail(pursuitId: 1) { (detail) in
+            self.detailPost = detail
+        }
+        
+        engagementsService.getSaveStatus(postId: 1) { (engagement) in
+            self.engagements = engagement
+        }
+        
+        engagementsService.getTrystatus(pursuitId: 1) { (engagement) in
+            self.engagements = engagement
+        }
+        
         hero.isEnabled = true
         setupCollectionView()
         setupVideoView()
+        
 //        setupView()
 //        addDataToStory()
 //        progressBarStackViewSetup()
@@ -587,7 +586,6 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostResponses
-            cell.accessPostDetailController = self
             return cell
         }
     }

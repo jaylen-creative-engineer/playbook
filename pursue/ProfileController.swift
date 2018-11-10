@@ -136,6 +136,7 @@ extension ProfileController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuit
+        cell.pursuits = user?.pursuits
         cell.accessProfileController = self
         return cell
     }

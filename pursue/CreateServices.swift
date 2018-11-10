@@ -298,46 +298,6 @@ class CreateServices {
         })
     }
     
-    // MARK: - UPDATE step/principle
-    
-    func updateStep(pursuitId : String, stepId : String, interestId : String, stepDescription : String, completion: @escaping (Steps) -> ()){
-        let url = "http://localhost:8080/create_step"
-        
-        var parameters = Alamofire.Parameters()
-        parameters["pursuitId"] = pursuitId
-        parameters["stepId"] = stepId
-        parameters["interestId"] = interestId
-        parameters["stepDescription"] = stepDescription
-        
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
-        }
-    }
-    
-    func updatePrinciple(pursuitId : String, principleId : String, interestId : String, principleDescription : String, completion: @escaping (Principles) -> ()){
-        let url = "http://localhost:8080/create_principle"
-        
-        var parameters = Alamofire.Parameters()
-        parameters["pursuitId"] = pursuitId
-        parameters["interestId"] = interestId
-        parameters["principleId"] = principleId
-        parameters["principleDescription"] = principleDescription
-        
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
-        }
-    }
-    
     // MARK: - DELETE pursuit
     
     func deletePursuit(pursuitId : String){

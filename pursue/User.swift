@@ -16,6 +16,7 @@ struct User : Decodable {
     let photoUrl : String?
     let bio : String?
     let email : String?
-    let followers_count : String?
+    let followers_count : Int?
     let pursuits_count : Int?
+    let pursuits : [Post]?
 }

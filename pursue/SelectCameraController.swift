@@ -209,7 +209,6 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
     }
     
     func swiftyCam(_ swiftyCam: SwiftyCamViewController, didTake photo: UIImage) {
-//        arrPost.append(Post(postId: nil, postThumbnail: nil, contentUrl: nil, postType: "Image", postImage: UIImageJPEGRepresentation(photo, 1.0)))
         let newVC = PhotoViewController()
         newVC.backgroundImageView.image = photo
         self.present(newVC, animated: true, completion: nil)
@@ -243,8 +242,7 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
     }
     
     func swiftyCam(_ swiftyCam: SwiftyCamViewController, didFinishProcessVideoAt url: URL) {
-        arrPost.append(Post(postId: nil, postThumbnail: nil, contentUrl:url, postType: "Video", postImage: nil))
-        let newVC = VideoViewController()
+        let newVC = PhotoViewController()
         newVC.videoURL = url
         self.present(newVC, animated: true, completion: nil)
     }

@@ -9,9 +9,12 @@
 import UIKit
 
 struct Post : Decodable {
-    let postId : String?
-    let postThumbnail : String?
-    let contentUrl : URL?
-    let postType : String?
-    let postImage : Data?
+    
+    let postId : Int?
+    let pursuitId : Int?
+    let thumbnailUrl : String?
+    let videoUrl : String?
+    let posts_description : String?
+    let is_keyPost : Int?
+//    let created_at : Data?
 }

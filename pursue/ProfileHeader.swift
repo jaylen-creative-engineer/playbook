@@ -21,12 +21,8 @@ class ProfileHeader : UICollectionViewCell {
             usernameLabel.text = user?.username
             fullnameLabel.text = user?.fullname
             bioText.text = user?.bio
-            addedCountLabel.titleLabel?.text = user?.followers_count
-            guard let pursuitsCount = user?.pursuits_count else { return }
-            pursuitsCountLabel.titleLabel?.text = String(pursuitsCount)
             
             let defaults = UserDefaults.standard
-            
             if user?.userId == defaults.integer(forKey: "userId") {
                 circleBackground.isHidden = true
                 addImageView.isHidden = true
@@ -34,6 +30,11 @@ class ProfileHeader : UICollectionViewCell {
                 circleBackground.isHidden = false
                 addImageView.isHidden = false
             }
+            
+            guard let followersCount = user?.followers_count else { return }
+            addedCountLabel.titleLabel?.text = String(followersCount)
+            guard let pursuitsCount = user?.pursuits_count else { return }
+            pursuitsCountLabel.titleLabel?.text = String(pursuitsCount)
         }
     }
     
@@ -45,7 +46,6 @@ class ProfileHeader : UICollectionViewCell {
         let iv = CustomImageView()
         iv.clipsToBounds = true
         iv.contentMode = .scaleAspectFill
-        iv.image = #imageLiteral(resourceName: "comment-1").withRenderingMode(.alwaysOriginal)
         iv.layer.cornerRadius = 70
         return iv
     }()
@@ -65,7 +65,6 @@ class ProfileHeader : UICollectionViewCell {
     
     let usernameLabel : UILabel = {
        let label = UILabel()
-        label.text = "jaylenhu27"
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
         return label
@@ -73,7 +72,6 @@ class ProfileHeader : UICollectionViewCell {
     
     let fullnameLabel : UILabel = {
        let label = UILabel()
-        label.text = "Jaylen Sanders"
         label.textAlignment = .center
         label.font = UIFont(name: "Lato-Bold", size: 18)
         return label
@@ -181,8 +179,6 @@ class ProfileHeader : UICollectionViewCell {
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
     }()
-    
-    var fakeFollowerArray = [#imageLiteral(resourceName: "samuel-l"), #imageLiteral(resourceName: "comment-4"), #imageLiteral(resourceName: "comment-5"), #imageLiteral(resourceName: "comment-4"), #imageLiteral(resourceName: "comment-7")]
     
     @objc func handleAdded(){
         accessProfileController?.showFriendsController()

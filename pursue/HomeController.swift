@@ -21,14 +21,16 @@ class HomeController : UICollectionViewController {
     var isFirstLaunch = false
     
     let homeServices = HomeServices()
+    let exploreServices = ExploreServices()
     let detailController = PostDetailController()
     let searchController = UISearchController(searchResultsController: nil)
+    var homeArray = [Home]()
+    var search : Search?
 
     lazy var searchBar: UISearchBar = {
         let sb = UISearchBar()
         sb.searchBarStyle = UISearchBar.Style.prominent
         sb.backgroundImage = UIImage(color: .clear)
-        sb.delegate = self
         sb.translatesAutoresizingMaskIntoConstraints = false
         sb.barTintColor = .white
         sb.isTranslucent = true
@@ -90,12 +92,23 @@ class HomeController : UICollectionViewController {
         }
         
     }
+    
+    func getHomeFeedData(){
+        homeServices.getHomeFeed { (home) in
+            DispatchQueue.main.async {
+                self.homeArray = home
+                self.collectionView?.reloadData()
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        getHomeFeedData()
         setupNavBar()
         tabBarController?.tabBar.isTranslucent = false
+       
+        searchBar.delegate = self
         setupCollectionView()
         setupResultsCollectionView()
     }
@@ -103,7 +116,21 @@ class HomeController : UICollectionViewController {
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
        searchBar.resignFirstResponder()
     }
-
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.searchBar.endEditing(true)
+    }
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        self.searchBar.endEditing(true)
+//        self.view.endEditing(true)
+//    }
+    
+    
+//    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+//        searchBar.resignFirstResponder()
+//        return true
+//    }
+    
     // MARK: - Setup View
     
     @objc func goToSearchController(){
@@ -125,12 +152,6 @@ class HomeController : UICollectionViewController {
         //        detail.imageView.hero.id = transitionId
         present(detail, animated: true, completion: nil)
     }
-    
-    var images = [#imageLiteral(resourceName: "artist-1245726_1280"), #imageLiteral(resourceName: "sketch-story"),#imageLiteral(resourceName: "class-1227099_1280"), #imageLiteral(resourceName: "lead-singer-455750_1280")]
-    var userPhotos = [#imageLiteral(resourceName: "comment-1"), #imageLiteral(resourceName: "comment-2"), #imageLiteral(resourceName: "comment-3"), #imageLiteral(resourceName: "comment-4")]
-    var timePost = ["Now", "2h Ago", "Yesterday", "2 days ago"]
-    var username = ["Strive", "Harito", "Paris", "Rio"]
-    var descriptions = ["A Chalk Portrait", "Creating Mockup", "New Changes To the Warehouse", "Our First Show"]
 }
 
 extension HomeController : UICollectionViewDelegateFlowLayout {
@@ -140,7 +161,11 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
         case resultsCollectionView:
             return 3
         default:
-            return 4
+            if !homeArray.isEmpty {
+                return homeArray.count
+            } else {
+                return 0
+            }
         }
     }
     
@@ -151,7 +176,7 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
             case 0:
                 return CGSize(width: view.frame.width, height: 100)
             case 1:
-                return CGSize(width: view.frame.width, height: view.frame.height / 2.2)
+                return CGSize(width: view.frame.width, height: (view.frame.height / 2.2) + 100)
             default:
                 return CGSize(width: view.frame.width, height: (view.frame.height / 2.2) + 30)
             }
@@ -184,21 +209,24 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
             switch indexPath.item {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userId, for: indexPath) as! SearchUsers
+                cell.searchUser = search
                 return cell
             case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! SearchPursuits
+                cell.pursuits = search?.pursuits
                 return cell
             default:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! SearchPosts
+                cell.posts = search?.posts
                 return cell
             }
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! HomePostCells
-            cell.postDetail.text = descriptions[indexPath.item]
-            cell.username.text = username[indexPath.item]
-            cell.timeLabel.text = timePost[indexPath.item]
-            cell.imageView.image = images[indexPath.item]
-            cell.userPhoto.image = userPhotos[indexPath.item]
+            if !homeArray.isEmpty {
+                let homeContent = homeArray[indexPath.item]
+                cell.home = homeContent
+                cell.post = homeContent.posts?[indexPath.item]
+            }
             cell.accessHomeController = self
             return cell
         }
@@ -224,7 +252,34 @@ extension HomeController : UISearchBarDelegate, UISearchResultsUpdating {
             view.addSubview(resultsCollectionView)
             resultsCollectionView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
             setupNavBar()
+            getSearchContent(searchText: searchText)
             
+        }
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+            self.searchBar.endEditing(true)
+            searchBar.resignFirstResponder()
+            guard let searchText = searchBar.text else { return }
+            getSearchContent(searchText: searchText)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.searchBar.endEditing(true)
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        self.searchBar.endEditing(true)
+    }
+    
+    func getSearchContent(searchText : String){
+        let queryString = "%" + searchText + "%"
+        
+        exploreServices.queryDatabase(searchText: queryString) { (search) in
+            DispatchQueue.main.async{
+                self.search = search
+                self.resultsCollectionView.reloadData()
+            }
         }
     }
     

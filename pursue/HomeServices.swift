@@ -14,6 +14,41 @@ class HomeServices {
     
     // MARK: - GET pursuits by users interests
     
+    func getHomeFeed(completion: @escaping ([Home]) -> ()){
+        let url = "http://localhost:8080/posts/get_home_feed"
+
+        Alamofire.request(url, method: .get, parameters: nil, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            
+            guard let data = response.data else { return }
+            do {
+                let homeResponse = try JSONDecoder().decode([Home].self, from: data)
+                completion(homeResponse)
+            } catch let error {
+                print(error)
+            }
+        }
+    }
+    
+    func getHomeDetail(pursuitId : Int, completion: @escaping (HomeDetail) -> ()){
+        let url = "http://localhost:8080/posts/get_post_details"
+        let defaults = UserDefaults.standard
+      
+        var parameters = Alamofire.Parameters()
+        parameters["userId"] = defaults.integer(forKey: "userId")
+        parameters["pursuitId"] = pursuitId
+        
+        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            
+            guard let data = response.data else { return }
+            do {
+                let homeResponse = try JSONDecoder().decode(HomeDetail.self, from: data)
+                completion(homeResponse)
+            } catch let error {
+                print(error)
+            }
+        }
+    }
+    
     func getPursuits(completion: @escaping ([Home]) -> ()){
         let url = "http://localhost:8080/interest-pursuits"
        
@@ -37,9 +72,8 @@ class HomeServices {
     
     // MARK: - GET users pursuits
     
-    func getUserPursuits(completion: @escaping (Pursuit, Post, Steps, Principles) -> ()){
+    func getUserPursuits(completion: @escaping (Pursuit, Post) -> ()){
         let url = "http://localhost:8080/user-pursuits"
-        
         let defaults = UserDefaults.standard
         let userId = defaults.integer(forKey: "userId")
 
@@ -74,37 +108,4 @@ class HomeServices {
             
         }
     }
-    
-    func getStep(stepId : String, completion: @escaping (Steps) -> ()){
-        let url = "http://localhost:8080/one_step"
-        var parameters = Alamofire.Parameters()
-        parameters["stepId"] = stepId
-        
-        Alamofire.request(url, method: .get, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
-            
-        }
-    }
-    
-    func getPrinciple(principleId : String, completion: @escaping (Principles) -> ()){
-        let url = "http://localhost:8080/one_principle"
-        var parameters = Alamofire.Parameters()
-        parameters["principleId"] = principleId
-        
-        Alamofire.request(url, method: .get, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
-            
-        }
-    }
-    
 }

@@ -10,9 +10,16 @@ import UIKit
 
 class SearchPursuits : UICollectionViewCell {
     
-    let cellId = "cellId"
+    var pursuits : [Post]? {
+        didSet {
+            guard let pursuitsContent = pursuits else { return }
+            pursuitsData = pursuitsContent
+            collectionView.reloadData()
+        }
+    }
     
-    let imageName = "690dae66bfe860df34fc7a756b53c15d"
+    var pursuitsData = [Post]()
+    let cellId = "cellId"
     
     let pursuitsLabel : UILabel = {
        let label = UILabel()
@@ -30,8 +37,6 @@ class SearchPursuits : UICollectionViewCell {
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
-    
-    var pursuitImages = [#imageLiteral(resourceName: "home-remodel"), #imageLiteral(resourceName: "ghost"), #imageLiteral(resourceName: "food")]
     
     func setupView(){
         addSubview(pursuitsLabel)
@@ -53,21 +58,24 @@ class SearchPursuits : UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    var descriptions = ["Home Redesign", "Road trip", "A foodie's weakness"]
 }
 
 extension SearchPursuits : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchPursuitsCells
-        cell.postDetail.text = descriptions[indexPath.item]
-        cell.imageView.image = pursuitImages[indexPath.item]
+        if !pursuitsData.isEmpty {
+            cell.post = pursuitsData[indexPath.item]
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        if !pursuitsData.isEmpty {
+            return pursuitsData.count
+        }
+        
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -75,6 +83,6 @@ extension SearchPursuits : UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (frame.width / 1.4) - 20, height: (frame.height / 1.2) + 20)
+        return CGSize(width: (frame.width / 1.4) - 20, height: (frame.height / 1.2))
     }
 }
