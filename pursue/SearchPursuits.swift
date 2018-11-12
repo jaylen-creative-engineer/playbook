@@ -12,13 +12,10 @@ class SearchPursuits : UICollectionViewCell {
     
     var pursuits : [Post]? {
         didSet {
-            guard let pursuitsContent = pursuits else { return }
-            pursuitsData = pursuitsContent
             collectionView.reloadData()
         }
     }
     
-    var pursuitsData = [Post]()
     let cellId = "cellId"
     
     let pursuitsLabel : UILabel = {
@@ -64,18 +61,12 @@ extension SearchPursuits : UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchPursuitsCells
-        if !pursuitsData.isEmpty {
-            cell.post = pursuitsData[indexPath.item]
-        }
+        cell.post = pursuits?[indexPath.item]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if !pursuitsData.isEmpty {
-            return pursuitsData.count
-        }
-        
-        return 0
+        return pursuits?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

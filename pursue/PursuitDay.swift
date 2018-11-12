@@ -18,6 +18,33 @@ protocol PursuitDayDelegate {
 }
 
 class PursuitDay : UICollectionViewCell {
+    
+    var days : [Post]? {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
+    var engagements : Engagements? {
+        didSet {
+            
+            if engagements?.saved == 1 {
+                saveIcon.tintColor = .black
+                saveLabel.setTitleColor(.black, for: .normal)
+            } else {
+                saveIcon.tintColor = .gray
+                saveLabel.setTitleColor(.gray, for: .normal)
+            }
+            
+            if engagements?.tried == 1 {
+                tryIcon.tintColor = .black
+                tryLabel.setTitleColor(.black, for: .normal)
+            } else {
+                tryIcon.tintColor = .gray
+                tryLabel.setTitleColor(.gray, for: .normal)
+            }
+        }
+    }
 
     var delegate : PursuitDayDelegate?
     
@@ -281,7 +308,6 @@ class PursuitDay : UICollectionViewCell {
     
     func setupView(){
         setupEngagements()
-//        setupTeamPictures()
         addSubview(dayLabel)
         addSubview(collectionView)
         collectionView.delegate = self
@@ -306,15 +332,12 @@ class PursuitDay : UICollectionViewCell {
 extension PursuitDay : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return days?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PursuitDayTableViewCell
-        cell.setupView(index: indexPath.item)
-        if indexPath.item != 0 {
-            cell.dayLabel.isHidden = true
-        }
+        cell.post = days?[indexPath.item]
         return cell
     }
     

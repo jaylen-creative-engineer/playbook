@@ -161,11 +161,7 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
         case resultsCollectionView:
             return 3
         default:
-            if !homeArray.isEmpty {
-                return homeArray.count
-            } else {
-                return 0
-            }
+            return homeArray.count
         }
     }
     
@@ -174,14 +170,14 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
         case resultsCollectionView:
             switch indexPath.item {
             case 0:
-                return CGSize(width: view.frame.width, height: 100)
+                return CGSize(width: view.frame.width, height: 120)
             case 1:
                 return CGSize(width: view.frame.width, height: (view.frame.height / 2.2) + 100)
             default:
-                return CGSize(width: view.frame.width, height: (view.frame.height / 2.2) + 30)
+                return CGSize(width: view.frame.width, height: (view.frame.height / 2.2) + 20)
             }
         default:
-            return CGSize(width: view.frame.width, height: view.frame.height / 1.3)
+            return CGSize(width: view.frame.width, height: view.frame.height / 1.2)
         }
     }
     
@@ -222,11 +218,7 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
             }
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! HomePostCells
-            if !homeArray.isEmpty {
-                let homeContent = homeArray[indexPath.item]
-                cell.home = homeContent
-                cell.post = homeContent.posts?[indexPath.item]
-            }
+            cell.post = homeArray[indexPath.item].posts?[indexPath.item]
             cell.accessHomeController = self
             return cell
         }

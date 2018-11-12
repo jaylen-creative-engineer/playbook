@@ -305,3 +305,13 @@ extension Date {
     }
 }
 
+extension String {
+    func toDate(withFormat format: String = "dd-MM-yyyy HH:mm:ss.SSS") -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        guard let date = dateFormatter.date(from: self) else {
+            preconditionFailure("Take a look to your format")
+        }
+        return date
+    }
+}

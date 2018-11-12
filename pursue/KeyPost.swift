@@ -15,6 +15,12 @@ protocol KeyPostDelegate {
 
 class KeyPost : UICollectionViewCell, KeyPostCellsDelegate {
     
+    var keyPost : [Post]? {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
     var delegate : KeyPostDelegate?
     var accessDetailController : PostDetailController?
     
@@ -58,8 +64,6 @@ class KeyPost : UICollectionViewCell, KeyPostCellsDelegate {
     
     let cellId = "cellId"
     
-    var images = [#imageLiteral(resourceName: "3d-touch"), #imageLiteral(resourceName: "app-screenshot-1"), #imageLiteral(resourceName: "app-screenshot-2"), #imageLiteral(resourceName: "contacts")]
-    
     @objc func handleViewMore(){
         delegate?.viewMore(for: self)
     }
@@ -101,13 +105,13 @@ class KeyPost : UICollectionViewCell, KeyPostCellsDelegate {
 extension KeyPost : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return keyPost?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! KeyPostCells
         cell.delegate = self
-        cell.imageView.image = images[indexPath.item]
+        cell.post = keyPost?[indexPath.item]
         cell.countLabel.text = String(indexPath.item + 1)
         return cell
     }

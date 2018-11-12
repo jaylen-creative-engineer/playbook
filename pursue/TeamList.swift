@@ -15,6 +15,12 @@ protocol TeamListDelegate {
 
 class TeamList : UICollectionViewCell {
     
+    var team : [User]? {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
     var delegate : TeamListDelegate?
     
     let cellId = "cellId"
@@ -84,13 +90,12 @@ extension TeamList : UICollectionViewDelegate, UICollectionViewDataSource, UICol
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! TeamCells
-        cell.profileImage.image = UIImage(named: peopleImages[indexPath.item])
-        cell.usernameLabel.text = peopleUsernames[indexPath.item]
+        cell.team = team?[indexPath.item]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return team?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

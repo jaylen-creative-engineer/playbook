@@ -14,19 +14,26 @@ class HomePostCells : UICollectionViewCell  {
     var post : Post!{
         didSet {
             guard let photo = post.thumbnailUrl else { return }
+            guard let postUser = post.userPhotourl else { return }
             imageView.loadImageUsingCacheWithUrlString(photo)
-            postDetail.text = post.posts_description
-//            guard let timeAgoDisplay = post.created_at?.timeAgoDisplay() else { return }
-//            let attributedText = NSAttributedString(string: timeAgoDisplay, attributes: [NSAttributedString.Key.font: UIFont(name: "Lato-Bold", size: 12) as Any, NSAttributedString.Key.foregroundColor: UIColor.white])
-//            timeLabel.attributedText = attributedText
-        }
-    }
-    
-    var home : Home! {
-        didSet {
-            guard let postUser = home.photoUrl else { return }
             userPhoto.loadImageUsingCacheWithUrlString(postUser)
-            username.text = home.username
+            postDetail.text = post.posts_description
+            username.text = post.username
+            
+            let dateFormatterGet = DateFormatter()
+            dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
+            
+            let dateFormatterPrint = DateFormatter()
+            dateFormatterPrint.dateFormat = "MMM dd,yyyy"
+            
+            if let date = dateFormatterGet.date(from: post.created_at!) {
+                let timeAgoDisplay = date.timeAgoDisplay()
+                let attributedText = NSAttributedString(string: timeAgoDisplay, attributes: [NSAttributedString.Key.font: UIFont(name: "Lato-Bold", size: 12) as Any, NSAttributedString.Key.foregroundColor: UIColor.white])
+                timeLabel.attributedText = attributedText
+            } else {
+                print("There was an error decoding the string")
+            }
+            
         }
     }
     
@@ -117,6 +124,7 @@ class HomePostCells : UICollectionViewCell  {
         let gaps = self.stories.count
         let viewWidth = self.progressStackView.frame.width - CGFloat(gaps)
         let viewUnit = Int(viewWidth) / (stories.count + 1)
+        
         for _ in stories {
             let progressView = UIProgressView()
             progressView.progress = 0

@@ -10,9 +10,13 @@ import UIKit
 
 class PostResponses: UICollectionViewCell {
     
-    let cellId = "cellId"
+    var responses : [Post]? {
+        didSet {
+            responsesCollectionView.reloadData()
+        }
+    }
     
-     let images = ["788572ee949285fae33dca5d846a4664", "clean-2", "academics", "fashion-design", "690dae66bfe860df34fc7a756b53c15d"]
+    let cellId = "cellId"
     
     let responsesCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -29,22 +33,15 @@ class PostResponses: UICollectionViewCell {
         label.text = "Responses"
         return label
     }()
-    
-    lazy var userPhoto : UIImageView = {
-       let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "comment-5").withRenderingMode(.alwaysOriginal)
-        iv.contentMode = .scaleAspectFill
-        iv.layer.cornerRadius = 20
-        iv.layer.masksToBounds = true
-        return iv
-    }()
 
     func setupView(){
         addSubview(responsesLabel)
         addSubview(responsesCollectionView)
+        
         responsesCollectionView.delegate = self
         responsesCollectionView.dataSource = self
         responsesCollectionView.register(PostResponsesCell.self, forCellWithReuseIdentifier: cellId)
+        
         responsesLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: responsesLabel.intrinsicContentSize.width, height: 16)
         responsesCollectionView.anchor(top: responsesLabel.topAnchor, left: responsesLabel.leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
@@ -63,12 +60,12 @@ class PostResponses: UICollectionViewCell {
 extension PostResponses : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return responses?.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PostResponsesCell
-        cell.photo.image = UIImage(named: images[indexPath.item])
+        cell.post = responses?[indexPath.item]
         return cell
     }
 

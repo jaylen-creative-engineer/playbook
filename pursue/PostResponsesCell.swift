@@ -10,6 +10,15 @@ import UIKit
 
 class PostResponsesCell : UICollectionViewCell {
     
+    var post : Post? {
+        didSet {
+            guard let image = post?.thumbnailUrl else { return }
+            photo.loadImageUsingCacheWithUrlString(image)
+            solutionLabel.text = post?.posts_description
+            usernameLabel.text = post?.username
+        }
+    }
+    
     let photo : UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
@@ -21,14 +30,12 @@ class PostResponsesCell : UICollectionViewCell {
     let solutionLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 12)
-        label.text = "Hold your breath for four, release for four and breath in for four"
         label.numberOfLines = 2
         return label
     }()
     
     let usernameLabel : UILabel = {
         let label = UILabel()
-        label.text = "Test"
         label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()

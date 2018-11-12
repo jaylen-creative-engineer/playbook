@@ -22,19 +22,35 @@ class ProfileHeader : UICollectionViewCell {
             fullnameLabel.text = user?.fullname
             bioText.text = user?.bio
             
+            if user?.bio == nil {
+                bioText.text = "Add Bio"
+                bioText.isUserInteractionEnabled = true
+                
+                let tap = UITapGestureRecognizer(target: self, action: #selector(handleEdit))
+                tap.numberOfTapsRequired = 1
+                bioText.addGestureRecognizer(tap)
+            }
+            
             let defaults = UserDefaults.standard
             if user?.userId == defaults.integer(forKey: "userId") {
                 circleBackground.isHidden = true
                 addImageView.isHidden = true
+                backIcon.isHidden = true
+                backBackground.isHidden = true
             } else {
                 circleBackground.isHidden = false
                 addImageView.isHidden = false
+                backIcon.isHidden = false
+                backBackground.isHidden = false
             }
             
             guard let followersCount = user?.followers_count else { return }
             addedCountLabel.titleLabel?.text = String(followersCount)
             guard let pursuitsCount = user?.pursuits_count else { return }
             pursuitsCountLabel.titleLabel?.text = String(pursuitsCount)
+            
+            addImageView.setImage(user.is_following == 1 ? UIImage(named: "check")?.withRenderingMode(.alwaysOriginal) : UIImage(named: "add")?.withRenderingMode(.alwaysOriginal), for: .normal)
+            circleBackground.backgroundColor = user.is_following == 1 ? .black : .white
         }
     }
     
@@ -77,7 +93,7 @@ class ProfileHeader : UICollectionViewCell {
         return label
     }()
     
-    let bioText : UILabel = {
+    lazy var bioText : UILabel = {
         let label = UILabel()
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 2
@@ -93,33 +109,6 @@ class ProfileHeader : UICollectionViewCell {
         return label
     }()
     
-    lazy var notificationsButton : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "notifications-bell-grey").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFill
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    let messageBackground : MessageView = {
-       let view = MessageView()
-        view.backgroundColor = .white
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    lazy var messageButton : UIButton = {
-       let button = UIButton()
-        button.backgroundColor = .black
-        button.setTitle("Message", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 14)
-        button.layer.cornerRadius = 17
-        button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(handleMessageTap), for: .touchUpInside)
-        return button
-    }()
-
     lazy var addedCountLabel : UIButton = {
         let button = UIButton()
         button.setTitle("120", for: .normal)
@@ -160,36 +149,67 @@ class ProfileHeader : UICollectionViewCell {
         return button
     }()
     
-    let circleBackground : AddFriendView = {
+    lazy var circleBackground : AddFriendView = {
        let view = AddFriendView()
         view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleAdd))
+        tap.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tap)
         return view
     }()
     
-    lazy var chatImageView : UIImageView = {
-       let iv = UIImageView()
-        return iv
+    lazy var addImageView : UIButton = {
+       let button = UIButton()
+        button.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(handleAdd), for: .touchUpInside)
+//        button.contentMode = .scaleAspectFill
+        
+//        iv.image = #imageLiteral(resourceName: "add").withRenderingMode(.alwaysOriginal)
+//        iv.contentMode = .scaleAspectFill
+//        iv.translatesAutoresizingMaskIntoConstraints = false
+//        iv.isUserInteractionEnabled = true
+//
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(handleAdd))
+//        tap.numberOfTapsRequired = 1
+//        iv.addGestureRecognizer(tap)
+        return button
     }()
     
-    lazy var addImageView : UIImageView = {
-       let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "add").withRenderingMode(.alwaysOriginal)
-        iv.contentMode = .scaleAspectFill
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        return iv
+    lazy var backIcon : UIButton = {
+        let button = UIButton()
+        button.setBackgroundImage(#imageLiteral(resourceName: "back-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(goBack), for: .touchUpInside)
+        return button
     }()
+    
+    lazy var backBackground : UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = 19
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(goBack), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func handleAdd(){
+        
+    }
+    
+    @objc func goBack(){
+        accessProfileController?.goBack()
+    }
     
     @objc func handleAdded(){
         accessProfileController?.showFriendsController()
     }
     
-    @objc func handleMessageTap(){
-        accessProfileController?.changeToInterests()
-    }
-    
     @objc func handleSettings(){
         accessProfileController?.handleSettings()
+    }
+    
+    @objc func handleEdit(){
+        accessProfileController?.handleEditProfile()
     }
     
     func setupEngagements(){
@@ -212,13 +232,32 @@ class ProfileHeader : UICollectionViewCell {
     }
     
     func setupSettings(){
+        setupBackButton()
         addSubview(usernameLabel)
         addSubview(settingsButton)
         
-        usernameLabel.anchor(top: safeAreaLayoutGuide.topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
-        usernameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: frame.width / 2)
+        if backIcon.isHidden {
+            usernameLabel.anchor(top: safeAreaLayoutGuide.topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
+            usernameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: frame.width / 2)
+        } else {
+            usernameLabel.anchor(top: safeAreaLayoutGuide.topAnchor, left: backIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
+            usernameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: frame.width / 2)
+        }
+       
         settingsButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 40, height: 40)
         settingsButton.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
+        
+        
+    }
+    
+    func setupBackButton(){
+        addSubview(backIcon)
+        addSubview(backBackground)
+        
+        backIcon.anchor(top: safeAreaLayoutGuide.topAnchor, left: safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
+        backBackground.centerXAnchor.constraint(equalTo: backIcon.centerXAnchor).isActive = true
+        backBackground.centerYAnchor.constraint(equalTo: backIcon.centerYAnchor).isActive = true
+        backBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 38, height: 38)
     }
     
     func setupNavBar(){

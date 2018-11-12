@@ -14,6 +14,14 @@ protocol KeyPostCellsDelegate {
 
 class KeyPostCells : UICollectionViewCell {
     
+    var post : Post? {
+        didSet {
+            guard let image = post?.thumbnailUrl else { return }
+            imageView.loadImageUsingCacheWithUrlString(image)
+            postDetail.text = post?.posts_description
+        }
+    }
+    
     var delegate : KeyPostCellsDelegate?
     
     let countLabel : UILabel = {
@@ -25,7 +33,6 @@ class KeyPostCells : UICollectionViewCell {
     
     let imageView : UIImageView = {
        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "beauty").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 4
         iv.layer.masksToBounds = true
@@ -34,7 +41,6 @@ class KeyPostCells : UICollectionViewCell {
     
     let postDetail : UILabel = {
        let label = UILabel()
-        label.text = "Some text about this post"
         label.numberOfLines = 0
         label.font = UIFont.boldSystemFont(ofSize: 12)
         return label

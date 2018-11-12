@@ -15,6 +15,11 @@ struct Post : Decodable {
     let thumbnailUrl : String?
     let videoUrl : String?
     let posts_description : String?
+    let description : String?
     let is_keyPost : Int?
-//    let created_at : Data?
+    let userId : Int?
+    let username : String?
+    let fullname : String?
+    let userPhotourl : String?
+    let created_at : String?
 }

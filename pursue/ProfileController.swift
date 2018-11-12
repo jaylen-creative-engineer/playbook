@@ -18,33 +18,6 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     let headerId = "headerId"
     let stepId = "stepId"
     
-    lazy var optionButton : UIButton = {
-        let button = UIButton()
-        button.setTitle("•••", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
-        return button
-    }()
-    
-    
-    let topBackground : UIView = {
-       let view = UIView()
-        view.backgroundColor = UIColor.init(white: 0.8, alpha: 0.3)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 15
-        return view
-    }()
-    
-    let photoImageView : UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        return iv
-    }()
-    
-    
-    let backgroundFill = UIView()
     var user : User?
     var followers : [Follower]?
     let profileService = ProfileServices()
@@ -88,18 +61,22 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         navigationController?.pushViewController(friendsController, animated: true)
     }
     
-    func showCamera(){
-        let cameraController = SelectCameraController()
-        present(cameraController, animated: true, completion: nil)
-    }
-    
-    @objc func handleSettings() {
+    func handleSettings() {
         let customAlert = CustomSettingsView()
         customAlert.providesPresentationContextTransitionStyle = true
         customAlert.definesPresentationContext = true
         customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         self.showDetailViewController(customAlert, sender: self)
+    }
+    
+    func goBack(){
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func handleEditProfile(){
+        let editController = EditProfileController()
+        present(editController, animated: true, completion: nil)
     }
     
     func profilePostHeld() {

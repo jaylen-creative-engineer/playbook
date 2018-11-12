@@ -10,6 +10,17 @@ import UIKit
 
 class DetailSavedCells : UICollectionViewCell  {
     
+    var post : Post? {
+        didSet {
+            guard let image = post?.thumbnailUrl else { return }
+            guard let profilePicture = post?.userPhotourl else { return }
+            photo.loadImageUsingCacheWithUrlString(image)
+            userPhoto.loadImageUsingCacheWithUrlString(profilePicture)
+            usernameLabel.text = post?.username
+            postLabel.text = post?.posts_description
+        }
+    }
+    
     let photo : UIImageView = {
         let iv = UIImageView()
         iv.backgroundColor = .blue
@@ -22,7 +33,6 @@ class DetailSavedCells : UICollectionViewCell  {
     
     let userPhoto : UIImageView = {
        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "comment-3").withRenderingMode(.alwaysOriginal)
         iv.layer.cornerRadius = 15
         iv.layer.masksToBounds = true
         return iv
@@ -30,7 +40,6 @@ class DetailSavedCells : UICollectionViewCell  {
     
     let usernameLabel : UILabel = {
        let label = UILabel()
-        label.text = "Test"
         label.font = UIFont(name: "Lato-Semibold", size: 12)
         return label
     }()

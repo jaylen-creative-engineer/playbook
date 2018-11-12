@@ -11,7 +11,6 @@ import Hero
 import Firebase
 import AVFoundation
 import AVKit
-import MediaPlayer
 import Mixpanel
 import ParallaxHeader
 
@@ -133,6 +132,19 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         let button = UIButton()
         button.backgroundColor = .clear
         button.addTarget(self, action: #selector(handleBackward), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var savedButton : UIButton = {
+       let button = UIButton()
+        button.setTitle("Saved", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        button.contentHorizontalAlignment = .center
+        button.contentVerticalAlignment = .center
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 4
+        button.layer.masksToBounds = true
         return button
     }()
     
@@ -322,6 +334,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         containerView.addSubview(postDetail)
         containerView.addSubview(username)
         containerView.addSubview(timeLabel)
+        containerView.addSubview(savedButton)
         
         
         forwardButton.anchor(top: containerView.topAnchor, left: containerView.centerXAnchor, bottom: containerView.bottomAnchor, right: videoView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
@@ -342,6 +355,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         timeLabel.anchor(top: username.bottomAnchor, left: username.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
         postDetail.anchor(top: nil, left: containerView.leftAnchor, bottom: containerView.safeAreaLayoutGuide.bottomAnchor, right: containerView.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 18, paddingRight: 12, width: 0, height: 0)
         postDetail.heightAnchor.constraint(lessThanOrEqualToConstant: 52).isActive = true
+        savedButton.anchor(top: nil, left: containerView.leftAnchor, bottom: postDetail.topAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 24, paddingRight: 0, width: 70, height: 30)
         initializeVideoPlayerWithVideo()
 
     }
@@ -462,23 +476,32 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     var engagements : Engagements?
     let engagementsService = EngagementServices()
     
+    fileprivate func getEngagements() {
+        self.engagementsService.getSaveStatus(postId: 1) { (engagement) in
+            self.engagements = engagement
+            self.engagementsService.getTrystatus(pursuitId: 1) { (engagement) in
+                self.engagements = engagement
+            }
+        }
+    }
+    
+    func getDetailContent(){
+        homeService.getHomeDetail(pursuitId: 1) { (detail) in
+            DispatchQueue.main.async{
+                self.detailPost = detail
+                self.getEngagements()
+                self.collectionView?.reloadData()
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        homeService.getHomeDetail(pursuitId: 1) { (detail) in
-            self.detailPost = detail
-        }
-        
-        engagementsService.getSaveStatus(postId: 1) { (engagement) in
-            self.engagements = engagement
-        }
-        
-        engagementsService.getTrystatus(pursuitId: 1) { (engagement) in
-            self.engagements = engagement
-        }
         
         hero.isEnabled = true
         setupCollectionView()
         setupVideoView()
+        getDetailContent()
         
 //        setupView()
 //        addDataToStory()
@@ -557,10 +580,6 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
 
 extension PostDetailController : UICollectionViewDelegateFlowLayout {
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-//        return CGSize(width: view.frame.width, height: 10)
-//    }
-//
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
     }
@@ -569,23 +588,29 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
         switch indexPath.item {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay
+            cell.days = detailPost?.days
+            cell.engagements = engagements
             cell.delegate = self
             cell.accessPostDetailController = self
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: keyId, for: indexPath) as! KeyPost
+            cell.keyPost = detailPost?.key_post
             cell.delegate = self
             return cell
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamList
+            cell.team = detailPost?.team
             cell.delegate = self
             return cell
         case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: tryingId, for: indexPath) as! DetailTrying
+            cell.trying = detailPost?.trying
             cell.accessPostDetailController = self
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostResponses
+            cell.responses = detailPost?.responses
             return cell
         }
     }

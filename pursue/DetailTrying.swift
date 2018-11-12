@@ -10,10 +10,14 @@ import UIKit
 
 class DetailTrying : UICollectionViewCell {
     
+    var trying : [Post]? {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
     let cellId = "cellId"
-    
-    let imageName = "690dae66bfe860df34fc7a756b53c15d"
-    
+        
     let tryingLabel : UILabel = {
         let label = UILabel()
         label.text = "People Trying This Pursuit"
@@ -30,8 +34,6 @@ class DetailTrying : UICollectionViewCell {
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
-    
-    var images = [#imageLiteral(resourceName: "stock-exchange"), #imageLiteral(resourceName: "3d-touch"), #imageLiteral(resourceName: "contacts"), #imageLiteral(resourceName: "app-screenshot-1"),#imageLiteral(resourceName: "contacts"), #imageLiteral(resourceName: "app-screenshot-2")]
     
     var accessPostDetailController : PostDetailController?
     
@@ -62,12 +64,12 @@ extension DetailTrying : UICollectionViewDelegate, UICollectionViewDataSource, U
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! DetailSavedCells
-        cell.photo.image = images[indexPath.item]
+        cell.post = trying?[indexPath.item]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return trying?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

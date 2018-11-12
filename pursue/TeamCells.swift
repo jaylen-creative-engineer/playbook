@@ -10,6 +10,14 @@ import UIKit
 
 class TeamCells : UICollectionViewCell {
     
+    var team : User? {
+        didSet {
+            guard let image = team?.photoUrl else { return }
+            profileImage.loadImageUsingCacheWithUrlString(image)
+            usernameLabel.text = team?.username
+        }
+    }
+    
     let usernameLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)

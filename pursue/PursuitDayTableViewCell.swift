@@ -10,6 +10,14 @@ import UIKit
 
 class PursuitDayTableViewCell: UICollectionViewCell {
     
+    var post : Post? {
+        didSet {
+            guard let image = post?.thumbnailUrl else { return }
+            photo.loadImageUsingCacheWithUrlString(image)
+            postLabel.text = post?.posts_description
+        }
+    }
+    
     let photo : UIImageView = {
         let iv = UIImageView()
         iv.layer.cornerRadius = 4
@@ -19,35 +27,15 @@ class PursuitDayTableViewCell: UICollectionViewCell {
         return iv
     }()
     
-    let dayLabel : UILabel = {
-       let label = UILabel()
-        label.text = "Days"
-        label.font = UIFont.boldSystemFont(ofSize: 14)
-        return label
-    }()
-    
     let postLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Lato-Semibold", size: 12)
-        label.text = "Working at this thing here."
         return label
     }()
     
-    let postTypeLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Principle"
-        label.textColor = .gray
-        label.font = UIFont(name: "Lato-Bold", size: 12)
-        return label
-    }()
-    
-    var images = [#imageLiteral(resourceName: "app-screenshot-1"), #imageLiteral(resourceName: "app-screenshot-2"), #imageLiteral(resourceName: "contacts"), #imageLiteral(resourceName: "3d-touch"), #imageLiteral(resourceName: "stock-exchange")]
-
-    
-    func setupView(index : Int){
+    func setupView(){
         addSubview(photo)
         addSubview(postLabel)
-        photo.image = images[index]
         
         photo.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
         postLabel.anchor(top: photo.bottomAnchor, left: photo.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 6, width: 0, height: 0)
@@ -56,6 +44,7 @@ class PursuitDayTableViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {
