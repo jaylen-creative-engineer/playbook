@@ -219,12 +219,13 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! HomePostCells
             cell.post = homeArray[indexPath.item].posts?[indexPath.item]
+            cell.postArray = homeArray[indexPath.item].posts
             cell.accessHomeController = self
             return cell
         }
     }
-    
 }
+
 
 extension HomeController : UISearchBarDelegate, UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {

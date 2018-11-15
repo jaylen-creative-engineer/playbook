@@ -57,38 +57,45 @@ class EngagementServices {
     
     // MARK: - TOGGLE saving step
     
-    func toggleSaveStep(stepId : String, pursuitId : String, is_saved : Int) {
-        let url = "http://localhost:8080/step_saved"
-        var parameters = Alamofire.Parameters()
-        parameters["pursuitId"] = pursuitId
-        parameters["stepId"] = stepId
-        parameters["is_saved"] = is_saved
+    func toggleSave(postId : Int, is_saved : Int) {
+        let url = "http://localhost:8080/engagements/post-saved"
+        let defaults = UserDefaults.standard
         
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-        }
-    }
-    
-    func toggleSavePost(postId : String, pursuitId : String, is_saved : Int) {
-        let url = "http://localhost:8080/post_saved"
         var parameters = Alamofire.Parameters()
-        parameters["pursuitId"] = pursuitId
+        parameters["userId"] = 1
         parameters["postId"] = postId
         parameters["is_saved"] = is_saved
         
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseString { (response) in
+            switch response.result {
+            case .success:
+                print("Success: \(response.result.isSuccess)")
+            case .failure(let error):
+                print("\n\n===========Error===========")
+                print("Error Code: \(error._code)")
+                print("Error Messsage: \(error.localizedDescription)")
+                if let data = response.data, let str = String(data: data, encoding: String.Encoding.utf8){
+                    print("Server Error: " + str)
+                }
+                debugPrint(error as Any)
+                print("===========================\n\n")
+            }
+        }
+    }
+    
+    func toggleTry(pursuitId : Int, is_tried : Int) {
+        let url = "http://localhost:8080/engagements/pursuit_tried"
+        let defaults = UserDefaults.standard
+        
+        var parameters = Alamofire.Parameters()
+        parameters["pursuitId"] = pursuitId
+        parameters["userId"] = defaults.integer(forKey: "userId")
+        parameters["is_tried"] = is_tried
+        
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
         }
     }
     
-    func toggleSavePrinciple(principleId : String, pursuitId : String) {
-        let url = "http://localhost:8080/principle_saved"
-        var parameters = Alamofire.Parameters()
-        parameters["principleId"] = principleId
-        parameters["pursuitId"] = pursuitId
-        
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            
-        }
-    }
     
     // MARK: - TOOGLE like step/principle/pursuit
     
@@ -107,34 +114,6 @@ class EngagementServices {
         }
     }
     
-    func togglePrincipleLike(principleId : String, is_liked : Int) {
-        let url = "http://localhost:8080/principle_liked"
-      
-        let defaults = UserDefaults.standard
-        let userId = defaults.integer(forKey: "userId")
-        
-        var parameters = Alamofire.Parameters()
-        parameters["principleId"] = principleId
-        parameters["userId"] = userId
-        parameters["is_liked"] = is_liked
-        
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-        }
-    }
-    
-    func toggleStepLike(stepId : String, is_liked : Int) {
-        let url = "http://localhost:8080/step_liked"
-        let defaults = UserDefaults.standard
-        let userId = defaults.integer(forKey: "userId")
-        
-        var parameters = Alamofire.Parameters()
-        parameters["stepId"] = stepId
-        parameters["userId"] = userId
-        parameters["is_liked"] = is_liked
-        
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-        }
-    }
     
     // MARK: - TOGGLE follow interests
     
@@ -162,18 +141,31 @@ class EngagementServices {
     
     // MARK: - TOGGLE follow user
     
-    func toggleFollowUser(followeeId : Int, is_following : Int, completion: @escaping (User) -> ()){
-        let url = "http://localhost:8080/follow_user"
+    func toggleFollowUser(followeeId : Int, is_following : Int){
+        let url = "http://localhost:8080/users/follow_user"
         let defaults = UserDefaults.standard
         let userId = defaults.integer(forKey: "userId")
 
         var parameters = Alamofire.Parameters()
-        parameters["followerId"] = userId
+        parameters["followerId"] = 1
         parameters["followeeId"] = followeeId
         parameters["is_following"] = is_following
         
         
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseString { (response) in
+            switch response.result {
+            case .success:
+                print("Success: \(response.result.isSuccess)")
+            case .failure(let error):
+                print("\n\n===========Error===========")
+                print("Error Code: \(error._code)")
+                print("Error Messsage: \(error.localizedDescription)")
+                if let data = response.data, let str = String(data: data, encoding: String.Encoding.utf8){
+                    print("Server Error: " + str)
+                }
+                debugPrint(error as Any)
+                print("===========================\n\n")
+            }
         }
     }
 

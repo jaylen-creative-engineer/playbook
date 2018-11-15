@@ -14,7 +14,7 @@ class PursuitDayTableViewCell: UICollectionViewCell {
         didSet {
             guard let image = post?.thumbnailUrl else { return }
             photo.loadImageUsingCacheWithUrlString(image)
-            postLabel.text = post?.posts_description
+            postLabel.text = post?.description
         }
     }
     
@@ -29,7 +29,7 @@ class PursuitDayTableViewCell: UICollectionViewCell {
     
     let postLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Lato-Semibold", size: 12)
+        label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
     
@@ -37,7 +37,7 @@ class PursuitDayTableViewCell: UICollectionViewCell {
         addSubview(photo)
         addSubview(postLabel)
         
-        photo.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 190)
+        photo.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 210)
         postLabel.anchor(top: photo.bottomAnchor, left: photo.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 6, width: 0, height: 0)
         postLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 30).isActive = true
     }

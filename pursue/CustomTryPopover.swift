@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Mixpanel
 
 class CustomTryPopover : UIViewController {
     
@@ -47,6 +48,7 @@ class CustomTryPopover : UIViewController {
         button.backgroundColor = .blue
         button.layer.cornerRadius = 8
         button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(handleSubmit), for: .touchUpInside)
         return button
     }()
     
@@ -73,6 +75,15 @@ class CustomTryPopover : UIViewController {
         tf.translatesAutoresizingMaskIntoConstraints = false
         return tf
     }()
+    
+    let engagementService = EngagementServices()
+    
+    @objc func handleSubmit(){
+        Mixpanel.mainInstance().track(event: "Try on Pursuit submitted")
+        
+        engagementService.toggleTry(pursuitId: 1, is_tried: 1)
+        handleCancel()
+    }
     
     func setupPage(){
         alertView.addSubview(cancelButton)

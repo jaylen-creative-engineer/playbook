@@ -17,7 +17,7 @@ class DetailSavedCells : UICollectionViewCell  {
             photo.loadImageUsingCacheWithUrlString(image)
             userPhoto.loadImageUsingCacheWithUrlString(profilePicture)
             usernameLabel.text = post?.username
-            postLabel.text = post?.posts_description
+            postLabel.text = post?.description
         }
     }
     
@@ -26,7 +26,6 @@ class DetailSavedCells : UICollectionViewCell  {
         iv.backgroundColor = .blue
         iv.layer.cornerRadius = 4
         iv.clipsToBounds = true
-        iv.image = #imageLiteral(resourceName: "ferrari").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         return iv
     }()
@@ -47,7 +46,7 @@ class DetailSavedCells : UICollectionViewCell  {
     let postLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
-        label.text = "Working on this."
+        label.numberOfLines = 1
         return label
     }()
     
@@ -57,7 +56,7 @@ class DetailSavedCells : UICollectionViewCell  {
         addSubview(usernameLabel)
         addSubview(postLabel)
 
-        photo.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 180)
+        photo.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 210)
         userPhoto.anchor(top: photo.bottomAnchor, left: photo.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
         usernameLabel.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: 14)
         postLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 6, width: 0, height: 0)

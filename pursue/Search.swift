@@ -14,6 +14,6 @@ struct Search : Decodable {
     let userId : Int?
     let username : String?
     let photoUrl : String?
-    let pursuits : [Post]?
-    let posts : [Post]?
+    var pursuits : [Post]?
+    var posts : [Post]?
 }

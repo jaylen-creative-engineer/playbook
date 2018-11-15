@@ -12,6 +12,15 @@ class PostResponses: UICollectionViewCell {
     
     var responses : [Post]? {
         didSet {
+            for value in responses ?? [] {
+                if value.postId == nil {
+                    addSubview(noResponses)
+                    noResponses.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+                    noResponses.anchor(top: responsesLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: noResponses.intrinsicContentSize.width, height: 18)
+                    viewMoreButton.isHidden = true
+                }
+            }
+            
             responsesCollectionView.reloadData()
         }
     }
@@ -33,17 +42,47 @@ class PostResponses: UICollectionViewCell {
         label.text = "Responses"
         return label
     }()
+    
+    let noResponses : UILabel = {
+       let label = UILabel()
+        label.text = "No Responses Yet"
+        label.textColor = .gray
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        return label
+    }()
+    
+    lazy var viewMoreButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("View More", for: .normal)
+        button.titleLabel?.textAlignment = .right
+        button.setTitleColor(.darkGray, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        button.contentHorizontalAlignment = .right
+        button.contentVerticalAlignment = .center
+        button.addTarget(self, action: #selector(handleViewMore), for: .touchUpInside)
+        return button
+    }()
+    
+    var accessDetailController : PostDetailController?
+    
+    @objc func handleViewMore(){
+        accessDetailController?.handleViewMoreResponses()
+    }
 
     func setupView(){
         addSubview(responsesLabel)
         addSubview(responsesCollectionView)
+        addSubview(viewMoreButton)
         
         responsesCollectionView.delegate = self
         responsesCollectionView.dataSource = self
         responsesCollectionView.register(PostResponsesCell.self, forCellWithReuseIdentifier: cellId)
         
         responsesLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: responsesLabel.intrinsicContentSize.width, height: 16)
+        viewMoreButton.centerYAnchor.constraint(equalTo: responsesLabel.centerYAnchor).isActive = true
+        viewMoreButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 120, height: 34)
         responsesCollectionView.anchor(top: responsesLabel.topAnchor, left: responsesLabel.leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        
     }
     
     override init(frame: CGRect) {

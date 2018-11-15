@@ -14,7 +14,7 @@ class PostResponsesCell : UICollectionViewCell {
         didSet {
             guard let image = post?.thumbnailUrl else { return }
             photo.loadImageUsingCacheWithUrlString(image)
-            solutionLabel.text = post?.posts_description
+            solutionLabel.text = post?.description
             usernameLabel.text = post?.username
         }
     }

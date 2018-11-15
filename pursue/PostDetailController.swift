@@ -353,9 +353,9 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         userPhoto.anchor(top: progressStackView.bottomAnchor, left: containerView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
         username.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 24, width: 0, height: 16)
         timeLabel.anchor(top: username.bottomAnchor, left: username.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
-        postDetail.anchor(top: nil, left: containerView.leftAnchor, bottom: containerView.safeAreaLayoutGuide.bottomAnchor, right: containerView.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 18, paddingRight: 12, width: 0, height: 0)
+        savedButton.anchor(top: nil, left: containerView.leftAnchor, bottom: containerView.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 24, paddingRight: 0, width: 70, height: 30)
+        postDetail.anchor(top: nil, left: containerView.leftAnchor, bottom: savedButton.topAnchor, right: containerView.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 18, paddingRight: 12, width: 0, height: 0)
         postDetail.heightAnchor.constraint(lessThanOrEqualToConstant: 52).isActive = true
-        savedButton.anchor(top: nil, left: containerView.leftAnchor, bottom: postDetail.topAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 24, paddingRight: 0, width: 70, height: 30)
         initializeVideoPlayerWithVideo()
 
     }
@@ -446,6 +446,12 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         self.showDetailViewController(customAlert, sender: self)
     }
     
+    func handleViewMoreResponses() {
+        let view = ResponseController(collectionViewLayout: UICollectionViewFlowLayout())
+        view.responses = detailPost?.responses
+        present(view, animated: true, completion: nil)
+    }
+    
     func handleResponse(for cell: PursuitDay) {
         let photoSelectorController = SelectCameraController()
         let navController = UINavigationController(rootViewController: photoSelectorController)
@@ -474,6 +480,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     
     var detailPost: HomeDetail?
     var engagements : Engagements?
+    var days = [HomeDetail]()
     let engagementsService = EngagementServices()
     
     fileprivate func getEngagements() {
@@ -581,37 +588,69 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
 extension PostDetailController : UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        if detailPost?.key_post == nil {
+            return 4
+        } else {
+            return 5
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.item {
-        case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay
-            cell.days = detailPost?.days
-            cell.engagements = engagements
-            cell.delegate = self
-            cell.accessPostDetailController = self
-            return cell
-        case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: keyId, for: indexPath) as! KeyPost
-            cell.keyPost = detailPost?.key_post
-            cell.delegate = self
-            return cell
-        case 2:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamList
-            cell.team = detailPost?.team
-            cell.delegate = self
-            return cell
-        case 3:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: tryingId, for: indexPath) as! DetailTrying
-            cell.trying = detailPost?.trying
-            cell.accessPostDetailController = self
-            return cell
-        default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostResponses
-            cell.responses = detailPost?.responses
-            return cell
+        if detailPost?.key_post == nil {
+            switch indexPath.item {
+            case 0:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay
+                cell.days = detailPost?.days
+                cell.engagements = engagements
+                cell.delegate = self
+                cell.accessPostDetailController = self
+                return cell
+            case 1:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamList
+                cell.team = detailPost?.team
+                cell.delegate = self
+                return cell
+            case 2:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: tryingId, for: indexPath) as! DetailTrying
+                cell.trying = detailPost?.trying
+                cell.accessPostDetailController = self
+                return cell
+            default:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostResponses
+                cell.responses = detailPost?.responses
+                cell.accessDetailController = self
+                return cell
+            }
+        } else {
+            switch indexPath.item {
+            case 0:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay
+                cell.days = detailPost?.days
+                cell.engagements = engagements
+                cell.delegate = self
+                cell.accessPostDetailController = self
+                return cell
+            case 1:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: keyId, for: indexPath) as! KeyPost
+                cell.keyPost = detailPost?.key_post
+                cell.delegate = self
+                return cell
+            case 2:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamList
+                cell.team = detailPost?.team
+                cell.delegate = self
+                return cell
+            case 3:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: tryingId, for: indexPath) as! DetailTrying
+                cell.trying = detailPost?.trying
+                cell.accessPostDetailController = self
+                return cell
+            default:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostResponses
+                cell.responses = detailPost?.responses
+                cell.accessDetailController = self
+                return cell
+            }
         }
     }
     
@@ -624,19 +663,34 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch indexPath.item {
-        case 0:
-            return CGSize(width: view.frame.width, height: 380)
-        case 1:
-            return CGSize(width: view.frame.width, height: 520)
-        case 2:
-            return CGSize(width: view.frame.width, height: 160)
-        case 3:
-            return CGSize(width: view.frame.width, height: 300)
-        case 4:
-            return CGSize(width: view.frame.width, height: 450)
-        default:
-            return CGSize(width: view.frame.width, height: 220)
+        if detailPost?.key_post == nil {
+            switch indexPath.item {
+            case 0:
+                return CGSize(width: view.frame.width, height: 400)
+            case 1:
+                return CGSize(width: view.frame.width, height: 120)
+            case 2:
+                return CGSize(width: view.frame.width, height: 320)
+            case 3:
+               return CGSize(width: view.frame.width, height: 450)
+            default:
+                return CGSize(width: view.frame.width, height: 220)
+            }
+        } else {
+            switch indexPath.item {
+            case 0:
+                return CGSize(width: view.frame.width, height: 400)
+            case 1:
+                return CGSize(width: view.frame.width, height: 520)
+            case 2:
+                return CGSize(width: view.frame.width, height: 120)
+            case 3:
+                return CGSize(width: view.frame.width, height: 320)
+            case 4:
+                return CGSize(width: view.frame.width, height: 450)
+            default:
+                return CGSize(width: view.frame.width, height: 220)
+            }
         }
     }
 }

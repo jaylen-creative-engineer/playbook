@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Mixpanel
 
 class CustomSavePopover : UIViewController {
     
@@ -54,6 +55,8 @@ class CustomSavePopover : UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
+    
+    let engagementService = EngagementServices()
     
     var descriptions = ["Home Redesign", "Road trip", "A foodie's weakness"]
     var pursuitImages = [#imageLiteral(resourceName: "home-remodel"), #imageLiteral(resourceName: "ghost"), #imageLiteral(resourceName: "food")]
@@ -130,6 +133,11 @@ extension CustomSavePopover : UICollectionViewDelegate, UICollectionViewDataSour
         cell.postDetail.text = descriptions[indexPath.item]
         cell.imageView.image = pursuitImages[indexPath.item]
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        Mixpanel.mainInstance().track(event: "Post Saved")
+        engagementService.toggleSave(postId: 1, is_saved: 1)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

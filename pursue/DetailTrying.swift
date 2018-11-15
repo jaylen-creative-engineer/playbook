@@ -12,7 +12,17 @@ class DetailTrying : UICollectionViewCell {
     
     var trying : [Post]? {
         didSet {
+            for value in trying ?? [] {
+                print(value)
+                if value.pursuitId == nil {
+                    addSubview(noTries)
+                    noTries.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+                    noTries.anchor(top: tryingLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: noTries.intrinsicContentSize.width, height: 18)
+                }
+            }
+            
             collectionView.reloadData()
+            
         }
     }
     
@@ -33,6 +43,14 @@ class DetailTrying : UICollectionViewCell {
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
+    }()
+    
+    let noTries : UILabel = {
+        let label = UILabel()
+        label.text = "No One Has Tried This Pursuit Yet"
+        label.textColor = .gray
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        return label
     }()
     
     var accessPostDetailController : PostDetailController?
@@ -69,6 +87,12 @@ extension DetailTrying : UICollectionViewDelegate, UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        for value in trying ?? [] {
+            if value.pursuitId == nil {
+               return 0
+            }
+        }
+        
         return trying?.count ?? 0
     }
     

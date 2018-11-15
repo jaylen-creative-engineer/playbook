@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Mixpanel
 
 protocol ProfileHeaderDelegate {
     func handleMessage(for cell : ProfileHeader)
@@ -192,8 +193,23 @@ class ProfileHeader : UICollectionViewCell {
         return button
     }()
     
+    var isAdded = false
+    let engagementService = EngagementServices()
+    
     @objc func handleAdd(){
+        Mixpanel.mainInstance().track(event: "Post Save Clicked")
+        isAdded = !isAdded
         
+        if isAdded == false {
+            circleBackground.backgroundColor = .white
+            addImageView.setImage(UIImage(named: "add")?.withRenderingMode(.alwaysOriginal), for: .normal)
+            engagementService.toggleFollowUser(followeeId: 2, is_following: 0)
+        } else if isAdded == true {
+            circleBackground.backgroundColor = .black
+            addImageView.setImage(UIImage(named: "check")?.withRenderingMode(.alwaysOriginal), for: .normal)
+            engagementService.toggleFollowUser(followeeId: 2, is_following: 1)
+            
+        }
     }
     
     @objc func goBack(){
@@ -273,7 +289,8 @@ class ProfileHeader : UICollectionViewCell {
         imageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         fullnameLabel.anchor(top: imageView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: fullnameLabel.intrinsicContentSize.width, height: fullnameLabel.intrinsicContentSize.height)
         fullnameLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-         bioText.anchor(top: fullnameLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 24, paddingBottom: 0, paddingRight: 24, width: 0, height: 70)
+         bioText.anchor(top: fullnameLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 24, paddingBottom: 0, paddingRight: 24, width: 0, height: 0)
+        bioText.heightAnchor.constraint(lessThanOrEqualToConstant: 80).isActive = true
         circleBackground.anchor(top: nil, left: nil, bottom: imageView.bottomAnchor, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
         addImageView.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 16, height: 16)
         addImageView.centerYAnchor.constraint(equalTo: circleBackground.centerYAnchor).isActive = true

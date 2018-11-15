@@ -45,7 +45,7 @@ class PursuitDay : UICollectionViewCell {
             }
         }
     }
-
+    
     var delegate : PursuitDayDelegate?
     
     var accessPostDetailController: PostDetailController?
@@ -190,13 +190,15 @@ class PursuitDay : UICollectionViewCell {
     
     let dayLabel : UILabel = {
         let label = UILabel()
-        label.text = "Days"
+        label.text = "Posts"
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
     
     var hasSaved = false
     var hasTried = false
+    
+    let engagementService = EngagementServices()
     
     @objc func handleShare(){
         delegate?.handleShare(for: self)
@@ -212,7 +214,7 @@ class PursuitDay : UICollectionViewCell {
     }
     
     @objc func handleSave(){
-        Mixpanel.mainInstance().track(event: "Post Saved")
+        Mixpanel.mainInstance().track(event: "Post Save Clicked")
         hasSaved = !hasSaved
         
         if hasSaved == false {
@@ -220,14 +222,14 @@ class PursuitDay : UICollectionViewCell {
             saveLabel.setTitleColor(.gray, for: .normal)
         } else if hasSaved == true {
             saveIcon.tintColor = .black
-            saveLabel.setTitleColor(.black, for: .normal)
+            saveLabel.setTitleColor(.black, for: .normal)            
             delegate?.handleSave(for: self)
         }
         
     }
     
     @objc func handleTry(){
-        Mixpanel.mainInstance().track(event: "Pursuit Tried")
+        Mixpanel.mainInstance().track(event: "Pursuit Try Clicked")
         hasTried = !hasTried
         
         if hasTried == false {
@@ -241,6 +243,7 @@ class PursuitDay : UICollectionViewCell {
             tryLabel.setTitle("Tried", for: .normal)
             tryLabel.setTitleColor(.black, for: .normal)
             delegate?.handleTry(for: self)
+            
         }
     }
     

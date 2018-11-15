@@ -18,7 +18,7 @@ class KeyPostCells : UICollectionViewCell {
         didSet {
             guard let image = post?.thumbnailUrl else { return }
             imageView.loadImageUsingCacheWithUrlString(image)
-            postDetail.text = post?.posts_description
+            postDetail.text = post?.description
         }
     }
     

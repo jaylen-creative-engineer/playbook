@@ -49,6 +49,26 @@ class HomeServices {
         }
     }
     
+    func getHomeDetailDays(pursuitId : Int, completion: @escaping ([HomeDetail]) -> ()){
+        let url = "http://localhost:8080/posts/get_days"
+//        let defaults = UserDefaults.standard
+        
+        var parameters = Alamofire.Parameters()
+//        parameters["userId"] = defaults.integer(forKey: "userId")
+        parameters["pursuitId"] = pursuitId
+        
+        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            
+            guard let data = response.data else { return }
+            do {
+                let homeResponse = try JSONDecoder().decode([HomeDetail].self, from: data)
+                completion(homeResponse)
+            } catch let error {
+                print(error)
+            }
+        }
+    }
+    
     func getPursuits(completion: @escaping ([Home]) -> ()){
         let url = "http://localhost:8080/interest-pursuits"
        
