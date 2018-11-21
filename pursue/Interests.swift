@@ -14,3 +14,5 @@ struct Interests : Decodable {
     let interest_photo : String?
     var selected_interests = 0
 }
+
+

@@ -10,8 +10,6 @@ import UIKit
 
 struct Home : Decodable {
     
-    let userId : Int?
-    let username : String?
-    let photoUrl : String?
     let posts : [Post]?
+    let posts_count : Int?
 }

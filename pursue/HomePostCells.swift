@@ -9,16 +9,23 @@
 import UIKit
 import Hero
 
+protocol HomePostDelegate {
+    func changeToDetail(for cell : HomePostCells)
+}
+
 class HomePostCells : UICollectionViewCell  {
     
-    var post : Post!{
+    var delegate : HomePostDelegate?
+    var accessHomeController : HomeController?
+    
+    var post : [Post]! {
         didSet {
-            guard let photo = post.thumbnailUrl else { return }
-            guard let postUser = post.userPhotourl else { return }
+            guard let photo = post.first?.thumbnailUrl else { return }
+            guard let postUser = post.first?.userPhotourl else { return }
             imageView.loadImageUsingCacheWithUrlString(photo)
             userPhoto.loadImageUsingCacheWithUrlString(postUser)
-            postDetail.text = post.posts_description
-            username.text = post.username
+            postDetail.text = post.first?.posts_description
+            username.text = post.first?.username
             
             let dateFormatterGet = DateFormatter()
             dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
@@ -26,20 +33,40 @@ class HomePostCells : UICollectionViewCell  {
             let dateFormatterPrint = DateFormatter()
             dateFormatterPrint.dateFormat = "MMM dd,yyyy"
             
-            if let date = dateFormatterGet.date(from: post.created_at!) {
+            if let date = dateFormatterGet.date(from: (post.first?.created_at!)!) {
                 let timeAgoDisplay = date.timeAgoDisplay()
                 let attributedText = NSAttributedString(string: timeAgoDisplay, attributes: [NSAttributedString.Key.font: UIFont(name: "Lato-Bold", size: 12) as Any, NSAttributedString.Key.foregroundColor: UIColor.white])
                 timeLabel.attributedText = attributedText
             } else {
                 print("There was an error decoding the string")
             }
+            collectionView.reloadData()
+//            post.forEach { (value) in
+//                guard let photo = value.thumbnailUrl else { return }
+//                guard let postUser = value.userPhotourl else { return }
+//                imageView.loadImageUsingCacheWithUrlString(photo)
+//                userPhoto.loadImageUsingCacheWithUrlString(postUser)
+//                postDetail.text = value.posts_description
+//                username.text = value.username
+//
+//                let dateFormatterGet = DateFormatter()
+//                dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
+//
+//                let dateFormatterPrint = DateFormatter()
+//                dateFormatterPrint.dateFormat = "MMM dd,yyyy"
+//
+//                if let date = dateFormatterGet.date(from: value.created_at!) {
+//                    let timeAgoDisplay = date.timeAgoDisplay()
+//                    let attributedText = NSAttributedString(string: timeAgoDisplay, attributes: [NSAttributedString.Key.font: UIFont(name: "Lato-Bold", size: 12) as Any, NSAttributedString.Key.foregroundColor: UIColor.white])
+//                    timeLabel.attributedText = attributedText
+//                } else {
+//                    print("There was an error decoding the string")
+//                }
+//            }
         }
     }
     
-    var postArray : [Post]?
-    
-    var accessHomeController : HomeController?
-    
+    var postArrayCount : Int?
     lazy var imageView : UIImageView = {
         let iv = UIImageView()
         iv.layer.cornerRadius = 8
@@ -101,11 +128,9 @@ class HomePostCells : UICollectionViewCell  {
         return collectionView
     }()
     
-    
-    var accessFeedController : FeedCell?
-    
     @objc func handleChangeDetail(){
-        accessHomeController?.handleChangeToDetail(transitionId: "0")
+        delegate?.changeToDetail(for: self)
+//        accessHomeController?.handleChangeToDetail(transitionId: "0")
     }
     
     func setupCollectionView(){
@@ -158,11 +183,11 @@ extension HomePostCells : UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return postArray?.count ?? 0
+        return post.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (frame.width - 32) / CGFloat(postArray?.count ?? 1), height: frame.height)
+        return CGSize(width: (frame.width - 32) / CGFloat(post.count), height: frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

@@ -10,12 +10,18 @@ import UIKit
 
 class SavePopoverCells : UICollectionViewCell {
     
+    var pursuit : Pursuit? {
+        didSet {
+            guard let image = pursuit?.thumbnailUrl else { return }
+            imageView.loadImageUsingCacheWithUrlString(image)
+            postDetail.text = pursuit?.pursuit_description
+        }
+    }
+    
     lazy var imageView : UIImageView = {
         let iv = UIImageView()
-        iv.backgroundColor = .blue
         iv.layer.cornerRadius = 8
         iv.clipsToBounds = true
-        iv.image = #imageLiteral(resourceName: "ferrari").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         iv.isUserInteractionEnabled = true
         return iv
@@ -24,51 +30,17 @@ class SavePopoverCells : UICollectionViewCell {
     let backgroundShadow : HomeCellRectangleView = {
         let view = HomeCellRectangleView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
         return view
-    }()
-    
-    let userPhoto : UIImageView = {
-        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
-        iv.contentMode = .scaleAspectFill
-        iv.layer.cornerRadius = 20
-        iv.layer.masksToBounds = true
-        return iv
     }()
     
     let postDetail : UILabel = {
         let label = UILabel()
-        label.text = "Travel On"
         label.numberOfLines = 0
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.init(25))
         label.textAlignment = .center
         return label
-    }()
-    
-    let daysLabel : UILabel = {
-        let label = UILabel()
-        label.text = "20 Days"
-        label.font = UIFont(name: "Lato-Bold", size: 14)
-        label.textColor = .white
-        return label
-    }()
-    
-    let seperatorCircle : UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 3
-        view.layer.masksToBounds = true
-        view.backgroundColor = .white
-        return view
-    }()
-    
-    let progressBar : UIProgressView = {
-        let view = UIProgressView()
-        view.progress = 100
-        view.progressTintColor = .white
-        view.layer.cornerRadius = 2
-        view.layer.masksToBounds = true
-        return view
     }()
     
     func setupView(){

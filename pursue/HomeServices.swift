@@ -29,6 +29,57 @@ class HomeServices {
         }
     }
     
+    func getPostCount(completion: @escaping ([Home]) -> ()){
+        let url = "http://localhost:8080/posts/get_post_count"
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            
+            guard let data = response.data else { return }
+            do {
+                let homeResponse = try JSONDecoder().decode([Home].self, from: data)
+                completion(homeResponse)
+            } catch let error {
+                print(error)
+            }
+        }
+    }
+    
+    func getMorePostForHomeFeed(postId : Int?, completion: @escaping ([Home]) -> ()){
+        let url = "http://localhost:8080/posts/get_more_post"
+        
+        var parameters = Alamofire.Parameters()
+        parameters["postId"] = postId
+        
+        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            
+            guard let data = response.data else { return }
+            do {
+                let homeResponse = try JSONDecoder().decode([Home].self, from: data)
+                completion(homeResponse)
+            } catch let error {
+                print(error)
+            }
+        }
+    }
+    
+    func refreshHomeFeed(postId : Int?, completion: @escaping ([Home]) -> ()){
+        let url = "http://localhost:8080/posts/get_refresh_feed"
+        
+        var parameters = Alamofire.Parameters()
+        parameters["postId"] = postId
+        
+        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            
+            guard let data = response.data else { return }
+            do {
+                let homeResponse = try JSONDecoder().decode([Home].self, from: data)
+                completion(homeResponse)
+            } catch let error {
+                print(error)
+            }
+        }
+    }
+    
     func getHomeDetail(pursuitId : Int, completion: @escaping (HomeDetail) -> ()){
         let url = "http://localhost:8080/posts/get_post_details"
         let defaults = UserDefaults.standard
@@ -90,26 +141,6 @@ class HomeServices {
         }
     }
     
-    // MARK: - GET users pursuits
-    
-    func getUserPursuits(completion: @escaping (Pursuit, Post) -> ()){
-        let url = "http://localhost:8080/user-pursuits"
-        let defaults = UserDefaults.standard
-        let userId = defaults.integer(forKey: "userId")
-
-        var parameters = Alamofire.Parameters()
-        parameters["userId"] = userId
-        
-        Alamofire.request(url, method: .get, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
-            
-        }
-    }
     
     // MARK: - GET post by id
     

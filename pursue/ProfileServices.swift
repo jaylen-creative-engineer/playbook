@@ -169,7 +169,7 @@ class ProfileServices {
         let userId = defaults.integer(forKey: "userId")
         
         var parameters = Alamofire.Parameters()
-        parameters["userId"] = userId
+        parameters["userId"] = 1
         
         Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             switch response.result {

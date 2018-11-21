@@ -12,6 +12,8 @@ struct Post : Decodable {
     
     let postId : Int?
     let pursuitId : Int?
+    let interestId : Int?
+    var posts_count : Int?
     let thumbnailUrl : String?
     let videoUrl : String?
     let posts_description : String?

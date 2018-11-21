@@ -11,6 +11,8 @@ import Mixpanel
 
 class CustomSavePopover : UIViewController {
     
+    var post : Post?
+    
     let alertViewGrayColor = UIColor(red: 224.0/255.0, green: 224.0/255.0, blue: 224.0/255.0, alpha: 1)
     let cellId = "cellId"
     
@@ -57,9 +59,19 @@ class CustomSavePopover : UIViewController {
     }()
     
     let engagementService = EngagementServices()
+    let profileService = ProfileServices()
+    let createService = CreateServices()
+    var pursuits = [Pursuit]()
+    var accessDetailController : PostDetailController?
     
-    var descriptions = ["Home Redesign", "Road trip", "A foodie's weakness"]
-    var pursuitImages = [#imageLiteral(resourceName: "home-remodel"), #imageLiteral(resourceName: "ghost"), #imageLiteral(resourceName: "food")]
+    func getUserPursuit(){
+        profileService.getUsersPursuits { (pursuitData) in
+            DispatchQueue.main.async {
+                self.pursuits = pursuitData
+                self.postCollectionView.reloadData()
+            }
+        }
+    }
     
     func setupCollectionView(){
         alertView.addSubview(postCollectionView)
@@ -83,7 +95,7 @@ class CustomSavePopover : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        getUserPursuit()
         view.addSubview(alertView)
         view.addSubview(dismissBackground)
         
@@ -103,7 +115,7 @@ class CustomSavePopover : UIViewController {
         super.viewWillDisappear(animated)
         tabBarController?.tabBar.isHidden = false
     }
-    
+        
     @objc func handleCancel(){
         dismiss(animated: true, completion: nil)
     }
@@ -121,7 +133,6 @@ class CustomSavePopover : UIViewController {
             self.alertView.frame.origin.y = self.alertView.frame.origin.y - 50
         })
     }
-
     
 }
 
@@ -130,18 +141,24 @@ extension CustomSavePopover : UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SavePopoverCells
-        cell.postDetail.text = descriptions[indexPath.item]
-        cell.imageView.image = pursuitImages[indexPath.item]
+        cell.pursuit = pursuits[indexPath.item]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         Mixpanel.mainInstance().track(event: "Post Saved")
         engagementService.toggleSave(postId: 1, is_saved: 1)
+        
+        let currentPursuit = pursuits[indexPath.item]
+        guard let pursuitId = currentPursuit.pursuitId else { return }
+        createService.savePost(pursuitId: pursuitId, videoUrl: post?.videoUrl, thumbnailUrl: post?.thumbnailUrl, posts_description: post?.description)
+        handleCancel()
+        self.accessDetailController?.refreshEngagements()
+       
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return pursuits.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

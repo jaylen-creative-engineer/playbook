@@ -72,6 +72,18 @@ open class SwiftyCamViewController: UIViewController {
         case configurationFailed
     }
     
+    public enum FlashMode{
+        
+        //Flash mode is set to auto
+        case auto
+        
+        //Flash mode is set to on
+        case on
+        
+        //Flash mode is set to off
+        case off
+    }
+    
     // MARK: Public Variable Declarations
     
     /// Public Camera Delegate for the Custom View Controller Subclass
@@ -87,8 +99,9 @@ open class SwiftyCamViewController: UIViewController {
     public var videoQuality : VideoQuality       = .high
     
     /// Sets whether flash is enabled for photo and video capture
+    public var flashMode:FlashMode               = .off
     
-    public var flashEnabled                      = false
+//    public var flashEnabled                      = false
     
     /// Sets whether Pinch to Zoom is enabled for the capture session
     
@@ -406,39 +419,52 @@ open class SwiftyCamViewController: UIViewController {
      */
     
     public func takePhoto() {
-        
         guard let device = videoDevice else {
             return
         }
         
-        if device.hasFlash == true && flashEnabled == true /* TODO: Add Support for Retina Flash and add front flash */ {
-            changeFlashSettings(device: device, mode: .on)
+        if device.hasFlash == true && flashMode != .off /* TODO: Add Support for Retina Flash and add front flash */ {
+            changeFlashSettings(device: device, mode: flashMode)
             capturePhotoAsyncronously(completionHandler: { (_) in })
-            
-        } else if device.hasFlash == false && flashEnabled == true && currentCamera == .front {
-            flashView = UIView(frame: view.frame)
-            flashView?.alpha = 0.0
-            flashView?.backgroundColor = UIColor.white
-            previewLayer.addSubview(flashView!)
-            
-            UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseInOut, animations: {
-                self.flashView?.alpha = 1.0
-                
-            }, completion: { (_) in
-                self.capturePhotoAsyncronously(completionHandler: { (success) in
-                    UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseInOut, animations: {
-                        self.flashView?.alpha = 0.0
-                    }, completion: { (_) in
-                        self.flashView?.removeFromSuperview()
-                    })
-                })
-            })
-        } else {
+        }else{
             if device.isFlashActive == true {
-                changeFlashSettings(device: device, mode: .off)
+                changeFlashSettings(device: device, mode: flashMode)
             }
             capturePhotoAsyncronously(completionHandler: { (_) in })
         }
+        
+//        guard let device = videoDevice else {
+//            return
+//        }
+//
+//        if device.hasFlash == true && flashEnabled == true /* TODO: Add Support for Retina Flash and add front flash */ {
+//            changeFlashSettings(device: device, mode: .on)
+//            capturePhotoAsyncronously(completionHandler: { (_) in })
+//
+//        } else if device.hasFlash == false && flashEnabled == true && currentCamera == .front {
+//            flashView = UIView(frame: view.frame)
+//            flashView?.alpha = 0.0
+//            flashView?.backgroundColor = UIColor.white
+//            previewLayer.addSubview(flashView!)
+//
+//            UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseInOut, animations: {
+//                self.flashView?.alpha = 1.0
+//
+//            }, completion: { (_) in
+//                self.capturePhotoAsyncronously(completionHandler: { (success) in
+//                    UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseInOut, animations: {
+//                        self.flashView?.alpha = 0.0
+//                    }, completion: { (_) in
+//                        self.flashView?.removeFromSuperview()
+//                    })
+//                })
+//            })
+//        } else {
+//            if device.isFlashActive == true {
+//                changeFlashSettings(device: device, mode: .off)
+//            }
+//            capturePhotoAsyncronously(completionHandler: { (_) in })
+//        }
     }
     
     /**
@@ -454,11 +480,11 @@ open class SwiftyCamViewController: UIViewController {
             return
         }
         
-        if currentCamera == .rear && flashEnabled == true {
+        if currentCamera == .rear && flashMode == .on {
             enableFlash()
         }
         
-        if currentCamera == .front && flashEnabled == true {
+        if currentCamera == .front && flashMode == .on {
             flashView = UIView(frame: view.frame)
             flashView?.backgroundColor = UIColor.white
             flashView?.alpha = 0.85
@@ -513,7 +539,7 @@ open class SwiftyCamViewController: UIViewController {
             movieFileOutput!.stopRecording()
             disableFlash()
             
-            if currentCamera == .front && flashEnabled == true && flashView != nil {
+            if currentCamera == .front && flashMode == .on && flashView != nil {
                 UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseInOut, animations: {
                     self.flashView?.alpha = 0.0
                 }, completion: { (_) in
@@ -902,14 +928,33 @@ open class SwiftyCamViewController: UIViewController {
     
     /// Enable or disable flash for photo
     
-    fileprivate func changeFlashSettings(device: AVCaptureDevice, mode: AVCaptureDevice.FlashMode) {
+    fileprivate func changeFlashSettings(device: AVCaptureDevice, mode: FlashMode) {
         do {
             try device.lockForConfiguration()
+            let mode:AVCaptureDevice.FlashMode
+            switch flashMode{
+            case .on:
+                mode = .on
+            case .off:
+                mode = .off
+            case .auto:
+                mode = .auto
+                
+            }
             device.flashMode = mode
             device.unlockForConfiguration()
         } catch {
             print("[SwiftyCam]: \(error)")
         }
+        
+//        let settings = AVCapturePhotoSettings()
+//        if device.hasFlash {
+//            switch mode {
+//            case .auto: settings.flashMode = .auto
+//            case .on: settings.flashMode = .on
+//            default: settings.flashMode = .off
+//            }
+//        }
     }
     
     /// Enable flash
@@ -1192,4 +1237,10 @@ fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Categ
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertFromUIBackgroundTaskIdentifier(_ input: UIBackgroundTaskIdentifier) -> Int {
     return input.rawValue
+}
+
+enum CurrentFlashMode {
+    case off
+    case on
+    case auto
 }

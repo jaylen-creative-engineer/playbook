@@ -29,6 +29,7 @@ class CaptureDetailView: UIViewController {
     
     var interests = [CreateInterests]()
     let interestsService = InterestServices()
+    let createService = CreateServices()
     
     var descriptions = ["Home Redesign", "Road trip", "A foodie's weakness"]
     var pursuitImages = [#imageLiteral(resourceName: "home-remodel"), #imageLiteral(resourceName: "ghost"), #imageLiteral(resourceName: "food")]
@@ -196,32 +197,34 @@ class CaptureDetailView: UIViewController {
         return collectionView
     }()
     
-    
-    
     var isCreate = false
     
-    func getInterests(){
-        interestsService.getInterestsNames { (interest) in
+    var createDetail : CreateDetail?
+    
+    func getCaptureDetail(){
+        createService.getCreateDetail { (detailData) in
             DispatchQueue.main.async {
-                self.interests = interest
+                self.createDetail = detailData
                 self.interestsCollectionView.reloadData()
+                self.teamCollectionView.reloadData()
+                self.pursuitsCollectionView.reloadData()
             }
         }
     }
     
     @objc func keyPostSwitchChanged(mySwitch: UISwitch) {
         if mySwitch.isOn {
-            print("UISwitch is ON")
+            is_keyPost = 1
         } else {
-            print("UISwitch is OFF")
+            is_keyPost = 0
         }
     }
     
     @objc func privatePostSwitchChanged(mySwitch: UISwitch) {
         if mySwitch.isOn {
-            print("UISwitch is ON")
+            is_public = 1
         } else {
-            print("UISwitch is OFF")
+            is_public = 0
         }
     }
     
@@ -354,8 +357,9 @@ class CaptureDetailView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height + 280)
+        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height + 360)
         setupTopBar()
+        getCaptureDetail()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -374,11 +378,48 @@ class CaptureDetailView: UIViewController {
     }
     
     @objc func submitPost(){
-        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
-        appDelegate.window = UIWindow()
-        appDelegate.window?.rootViewController = MainTabController()
-        appDelegate.window?.makeKeyAndVisible()
-        self.dismiss(animated: true, completion: nil)
+        if createPursuitId == nil {
+            submitPursuit()
+        } else if createPursuitId != nil {
+             createService.createPost(pursuitId: createPursuitId!, contentUrl: videoURL, thumbnailUrl: thumbnailImage, posts_description: captionLabel.text, is_keyPost: is_keyPost, is_public: is_public)
+            addTeam()
+        }
+        
+//        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+//        appDelegate.window = UIWindow()
+//        appDelegate.window?.rootViewController = MainTabController()
+//        appDelegate.window?.makeKeyAndVisible()
+//        self.dismiss(animated: true, completion: nil)
+    }
+    
+    var createPursuitId : Int?
+    var is_public = 0
+    var is_keyPost = 0
+    var createInterestId : Int?
+    var thumbnailImage : UIImage?
+    var videoURL : URL?
+    var team = [User]()
+    
+    func addTeam(){
+        if !team.isEmpty {
+            for value in team {
+                createService.addTeam(pursuitId: createPursuitId, userId: value.userId)
+            }
+        }
+    }
+    
+    @objc func submitPursuit(){
+        createService.createPursuit(interestId: createInterestId, thumbnailUrl: thumbnailImage, pursuitDescription: captionLabel.text, is_public: is_public)
+        createService.getUserPursuitsId { (returnPursuit) in
+            DispatchQueue.main.async{
+                self.createService.createPost(pursuitId: (returnPursuit.pursuitId)!, contentUrl: self.videoURL, thumbnailUrl: self.thumbnailImage, posts_description: self.captionLabel.text, is_keyPost: self.is_keyPost, is_public: self.is_public)
+                if !self.team.isEmpty {
+                    for value in self.team {
+                        self.createService.addTeam(pursuitId: (returnPursuit.pursuitId)!, userId: value.userId)
+                    }
+                }
+            }
+        }
     }
     
     func setupView() {
@@ -405,11 +446,11 @@ extension CaptureDetailView : UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
         case teamCollectionView:
-            return 6
+            return createDetail?.team?.count ?? 0
         case interestsCollectionView:
-            return 3
+            return createDetail?.interests?.count ?? 0
         case pursuitsCollectionView:
-            return 5
+            return createDetail?.pursuits?.count ?? 0
         default:
             return 1
         }
@@ -429,30 +470,33 @@ extension CaptureDetailView : UICollectionViewDelegate, UICollectionViewDataSour
         switch collectionView {
         case teamCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamCells
-            cell.usernameLabel.text = peopleUsernames[indexPath.item]
-            cell.profileImage.image = UIImage(named: peopleImages[indexPath.item])
+            cell.accessDetailView = self
+            cell.team = createDetail?.team?[indexPath.item]
             return cell
         case interestsCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: interestId, for: indexPath) as! CreateInterestsCells
+            cell.accessDetailView = self
+            cell.interest = createDetail?.interests?[indexPath.item]
             return cell
         case pursuitsCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SavePopoverCells
-            cell.postDetail.text = descriptions[indexPath.item]
-            cell.imageView.image = pursuitImages[indexPath.item]
+            cell.pursuit = createDetail?.pursuits?[indexPath.item]
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! CreatePursuitsCells
             return cell
         }
-        //        switch indexPath.item {
-        //        case 0:
-        //            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: detailId, for: indexPath) as! CreateDetailsCell
-        ////            cell.accessPhotoViewController = self
-        //            return cell
-        //        default:
-        //            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! CreatePursuitsCells
-        //            return cell
-        //        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch collectionView {
+        case pursuitsCollectionView:
+            createPursuitId = createDetail?.pursuits?[indexPath.item].pursuitId ?? 0
+        case interestsCollectionView:
+            createInterestId = createDetail?.interests?[indexPath.item].interestId ?? 0
+        default:
+            assert(false, "Not a valid selection")
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

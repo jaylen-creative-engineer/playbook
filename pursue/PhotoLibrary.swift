@@ -292,9 +292,7 @@ extension PhotoLibrary {
                 if let urlAsset = asset as? AVURLAsset {
                     DispatchQueue.main.async {
                         let destination = VideoViewController()
-                        var videoURL : URL?
-                        videoURL = urlAsset.url
-                        destination.videoURL = videoURL
+                        destination.videoURL = urlAsset.url
                         self.present(destination, animated: true, completion: nil)
                     }
                 } else {

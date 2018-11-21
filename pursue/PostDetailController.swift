@@ -13,6 +13,7 @@ import AVFoundation
 import AVKit
 import Mixpanel
 import ParallaxHeader
+import TRVSEventSource
 
 class PostDetailController : UICollectionViewController, PursuitDayDelegate, KeyPostDelegate, TeamListDelegate {
 
@@ -157,6 +158,8 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         return sv
     }()
     
+    var post : [Post]?
+    
     var prevFrame = CGRect.zero
     var avPlayer : AVPlayer?
     var layer: AVPlayerLayer?
@@ -203,6 +206,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         self.videoView.layer.insertSublayer(layer!, below: containerView.layer)
         self.startTimer()
         DispatchQueue.main.async(execute: {
+            self.setStory()
         })
     }
     
@@ -227,14 +231,36 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         self.videoView.layer.insertSublayer(layer!, below: containerView.layer)
         self.startTimer()
         DispatchQueue.main.async(execute: {
-            //Your main thread code goes in here
+            self.setStory()
         })
     }
     
     // MARK: - Add Data
     
     fileprivate func addDataToStory() {
-        self.stories.append(Story(caption: "Buck Bunny's Adventure 02", profileName: "Big Buck Bunny 02", description: "A small glimpse in a Big Buck Bunny's adventure", time: "2h ago", videoName: "video04"))
+        let dateFormatterGet = DateFormatter()
+        dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
+        
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "MMM dd,yyyy"
+        
+        post?.forEach({ (value) in
+            if let date = dateFormatterGet.date(from: (value.created_at)!) {
+                let timeAgoDisplay = date.timeAgoDisplay()
+                self.stories.append(Story(caption: value.posts_description, profileName: value.username, userPhoto: value.userPhotourl, time: timeAgoDisplay, videoName: value.videoUrl))
+            } else {
+                print("There was an error decoding the string")
+            }
+        })
+        
+       self.currentStory = stories.first
+    }
+    
+    func setStory(){
+        self.postDetail.text = self.currentStory?.caption
+        self.username.text = self.currentStory?.profileName
+        self.timeLabel.text = self.currentStory?.time
+        self.userPhoto.loadImageUsingCacheWithUrlString((self.currentStory?.userPhoto)!)
     }
     
     // MARK: - Setup Video
@@ -242,6 +268,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     func initializeVideoPlayerWithVideo() {
 
         DispatchQueue.main.async(execute: {
+            self.setStory()
         })
     
         self.avPlayer = AVPlayer(playerItem: self.currentStory?.avPlayerItem)
@@ -411,7 +438,12 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     }
     
     func handleSave(for cell: PursuitDay) {
+        guard let indexPath = collectionView?.indexPath(for: cell) else { return }
+        let post = self.detailPost?.days?[indexPath.item]
+        
         let customAlert = CustomSavePopover()
+        customAlert.post = post
+        customAlert.accessDetailController = self
         customAlert.providesPresentationContextTransitionStyle = true
         customAlert.definesPresentationContext = true
         customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
@@ -420,7 +452,11 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     }
     
     func handleTry(for cell: PursuitDay) {
+        guard let indexPath = collectionView?.indexPath(for: cell) else { return }
+        let post = self.detailPost?.days?[indexPath.item]
+        
         let customAlert = CustomTryPopover()
+        customAlert.post = post
         customAlert.providesPresentationContextTransitionStyle = true
         customAlert.definesPresentationContext = true
         customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
@@ -483,7 +519,17 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     var days = [HomeDetail]()
     let engagementsService = EngagementServices()
     
-    fileprivate func getEngagements() {
+    func refreshEngagements() {
+        self.engagementsService.getSaveStatus(postId: 1) { (engagement) in
+            self.engagements = engagement
+            self.engagementsService.getTrystatus(pursuitId: 1) { (engagement) in
+                self.engagements = engagement
+            }
+            self.collectionView?.reloadData()
+        }
+    }
+    
+    func getEngagements() {
         self.engagementsService.getSaveStatus(postId: 1) { (engagement) in
             self.engagements = engagement
             self.engagementsService.getTrystatus(pursuitId: 1) { (engagement) in
@@ -509,11 +555,16 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         setupCollectionView()
         setupVideoView()
         getDetailContent()
+        addDataToStory()
+    }
+    
+    func handleEngagementChanges(){
+        let configs = URLSessionConfiguration.default
+        configs.httpAdditionalHeaders = ["Accept" : "text/event-stream"]
         
-//        setupView()
-//        addDataToStory()
-//        progressBarStackViewSetup()
-//        view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
+        let eventsource = TRVSEventSource(url: NSURL(string: "http://localhost:8080/engagements/post-saved")! as URL, sessionConfiguration: configs)
+        eventsource?.delegate = self
+        eventsource?.open()
     }
     
     // MARK: - Handle view options
@@ -695,3 +746,18 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
     }
 }
 
+extension PostDetailController : TRVSEventSourceDelegate  {
+    
+    private func eventSource(eventSource: TRVSEventSource!, didReceiveEvent event: TRVSServerSentEvent!) {
+        do {
+            let enagementResponse = try JSONDecoder().decode(Engagements.self, from: event.data)
+            self.engagements = enagementResponse
+            self.collectionView?.reloadData()
+            print(enagementResponse)
+//            print(data)
+        }
+        catch let error {
+            print(error)
+        }
+    }
+}

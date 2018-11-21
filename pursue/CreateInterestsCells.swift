@@ -14,7 +14,7 @@ protocol InterestNameSelected {
 
 class CreateInterestsCells : UICollectionViewCell {
     
-    var interest : CreateInterests! {
+    var interest : CreateInterests? {
         didSet {
             interestButton.setTitle(interest?.interest_name, for: .normal)
         }
@@ -42,13 +42,17 @@ class CreateInterestsCells : UICollectionViewCell {
     }()
     
     var isClicked = false
+    var accessDetailView : CaptureDetailView?
+    
     @objc func handleCellSelected(){
         delegate?.interestSelected(for: self)
         isClicked = !isClicked
         
         if isClicked == true {
+            accessDetailView?.createInterestId = (interest?.interestId)!
             interestButton.backgroundColor = .blue
             interestButton.setTitleColor(.white, for: .normal)
+            
         } else {
             interestButton.backgroundColor = UIColor.init(white: 0.6, alpha: 0.3)
             interestButton.setTitleColor(.black, for: .normal)

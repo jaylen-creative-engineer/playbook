@@ -1,0 +1,6 @@
+framework module TRVSEventSource {
+  umbrella header "TRVSEventSource-umbrella.h"
+
+  export *
+  module * { export * }
+}

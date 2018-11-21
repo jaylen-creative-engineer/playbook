@@ -123,12 +123,21 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     
     @objc func handlePursuit(){
         let customAlert = CaptureDetailView()
+        customAlert.videoURL = videoURL
+        print(backgroundImageView.image)
+        
+        if backgroundImageView.image == nil {
+            guard let url = videoURL else { return }
+            let image = generateThumnail(url: url, fromTime: Float64(0.10))
+            customAlert.thumbnailImage = image
+        } else if backgroundImageView.image != nil {
+            customAlert.thumbnailImage = backgroundImageView.image!
+        }
         customAlert.providesPresentationContextTransitionStyle = true
         customAlert.definesPresentationContext = true
         customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         self.showDetailViewController(customAlert, sender: self)
-
     }
     
     @objc func handleSave(){
@@ -169,11 +178,9 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         let time = CMTimeMakeWithSeconds(fromTime, preferredTimescale: 600)
         
         do {
-            
             let img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
-            let image : UIImage = UIImage.init(cgImage: img)
+            let image = UIImage.init(cgImage: img)
             return image
-            
         } catch let error as NSError {
             
             print("Image generation failed with error \(error)")

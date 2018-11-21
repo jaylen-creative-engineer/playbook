@@ -19,9 +19,11 @@ target 'pursue' do
   pod 'PryntTrimmerView'
   pod 'Alamofire'
   pod 'GoogleSignIn'
+  pod 'ReachabilitySwift'
   pod 'NVActivityIndicatorView'
   pod 'Hero'
   pod 'KWTransition'
   pod 'ParallaxHeader'
+  pod 'TRVSEventSource'
 
 end

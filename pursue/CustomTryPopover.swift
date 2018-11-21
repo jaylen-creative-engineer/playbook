@@ -11,6 +11,14 @@ import Mixpanel
 
 class CustomTryPopover : UIViewController {
     
+    var post : Post? {
+        didSet {
+            guard let image = post?.thumbnailUrl else { return }
+            tryImageView.loadImageUsingCacheWithUrlString(image)
+            postDescription.text = post?.description
+        }
+    }
+    
     let alertViewGrayColor = UIColor(red: 224.0/255.0, green: 224.0/255.0, blue: 224.0/255.0, alpha: 1)
     let cellId = "cellId"
     var accessLoginController : LoginController?
@@ -77,11 +85,15 @@ class CustomTryPopover : UIViewController {
     }()
     
     let engagementService = EngagementServices()
+    let createService = CreateServices()
     
     @objc func handleSubmit(){
         Mixpanel.mainInstance().track(event: "Try on Pursuit submitted")
         
         engagementService.toggleTry(pursuitId: 1, is_tried: 1)
+        
+        guard let thumbnailUrl = post?.thumbnailUrl, let interestId = post?.interestId else { return }
+        createService.sendTry(pursuit_description: postDescription.text, thumbnailUrl: thumbnailUrl, interestId: interestId)
         handleCancel()
     }
     
@@ -150,6 +162,4 @@ class CustomTryPopover : UIViewController {
             self.alertView.frame.origin.y = self.alertView.frame.origin.y - 50
         })
     }
-    
-    
 }

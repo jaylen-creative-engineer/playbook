@@ -8,6 +8,7 @@
 
 import UIKit
 import Hero
+import Reachability
 import KWTransition
 
 class HomeController : UICollectionViewController {
@@ -17,6 +18,7 @@ class HomeController : UICollectionViewController {
     let headerId = "headerId"
     let postId = "postId"
     let pursuitId = "pursuitId"
+    let loadId = "loadId"
     
     var isFirstLaunch = false
     
@@ -26,6 +28,7 @@ class HomeController : UICollectionViewController {
     let searchController = UISearchController(searchResultsController: nil)
     var homeArray = [Home]()
     var search : Search?
+    let leadingScreensForBatching:CGFloat = 3.0
 
     lazy var searchBar: UISearchBar = {
         let sb = UISearchBar()
@@ -41,6 +44,26 @@ class HomeController : UICollectionViewController {
         
         
         return sb
+    }()
+    
+    let tryAgainLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Could not connect to server. Please try again."
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
+    }()
+    
+    lazy var callAgain : UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Try Again", for: .normal)
+        button.backgroundColor = UIColor.black
+        button.layer.cornerRadius = 12
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
+        button.setTitleColor(.white, for: .normal)
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 1
+        button.addTarget(self, action: #selector(getHomeFeedData), for: .touchUpInside)
+        return button
     }()
     
     let resultsScrollView : UIScrollView = {
@@ -69,8 +92,10 @@ class HomeController : UICollectionViewController {
         collectionView?.register(HomeHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(HomePostCells.self, forCellWithReuseIdentifier: postId)
         collectionView?.register(RecommenedPursuit.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(HomeLoadMoreIndicator.self, forCellWithReuseIdentifier: loadId)
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0)
     }
     
     func setupNavBar(){
@@ -93,24 +118,115 @@ class HomeController : UICollectionViewController {
         
     }
     
-    func getHomeFeedData(){
+    var posts_count = [Int]()
+    var anotherTry = [Home]()
+    var feed = [Feed]()
+    
+    @objc func getHomeFeedData(){
         homeServices.getHomeFeed { (home) in
+            self.collectionView?.refreshControl?.endRefreshing()
             DispatchQueue.main.async {
+                if home.isEmpty {
+                    self.isFinishedFetching = true
+                }
                 self.homeArray = home
+                self.lastPostId = home.last?.posts?.first?.postId
                 self.collectionView?.reloadData()
             }
         }
     }
+    
+    var lastPostId : Int?
+    var refreshId : Int?
+    
+    func getMoreData(){
+        if lastPostId != nil && isFinishedFetching == false {
+            homeServices.getMorePostForHomeFeed(postId: lastPostId) { (home) in
+                if home.isEmpty {
+                    self.isFinishedFetching = true
+                }
+                home.forEach({ (value) in
+                    self.lastPostId = value.posts?.first?.postId
+                    self.endReached = value.posts?.count == 0
+                    value.posts?.forEach({ (data) in
+                        self.feed.append(Feed(post: data, post_count: value.posts_count ?? 1))
+                    })
+                    
+                    UIView.performWithoutAnimation {
+                        self.collectionView.reloadData()
+                    }
+                })
+            }
+        } else {
+            getHomeFeedData()
+        }
+    }
+    
+    var isFinishedFetching = false
+    var endReached = false
+    
+    let reachability = Reachability()
+    
+    func setupTryConnection(){
+        view.addSubview(tryAgainLabel)
+        view.addSubview(callAgain)
+        
+        tryAgainLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        tryAgainLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        tryAgainLabel.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 30)
+        callAgain.centerXAnchor.constraint(equalTo: tryAgainLabel.centerXAnchor).isActive = true
+        callAgain.anchor(top: tryAgainLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 120, height: 24)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        getHomeFeedData()
         setupNavBar()
         tabBarController?.tabBar.isTranslucent = false
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        collectionView?.refreshControl = refreshControl
        
         searchBar.delegate = self
         setupCollectionView()
         setupResultsCollectionView()
+        
+        reachability?.whenReachable = { _ in
+            DispatchQueue.main.async {
+                self.getMoreData()
+            }
+        }
+        
+        reachability?.whenUnreachable = { _ in
+            DispatchQueue.main.async {
+                self.setupTryConnection()
+            }
+        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(internetChanged), name: Notification.Name.reachabilityChanged, object: reachability)
+        
+        do {
+            try reachability?.startNotifier()
+        } catch {
+            print("Could not start notifier")
+        }
+    }
+    
+    @objc func internetChanged(note : Notification) {
+        let reachability = note.object as! Reachability
+        switch reachability.connection {
+        case .wifi:
+            self.getMoreData()
+        case .cellular:
+            self.getMoreData()
+        case .none:
+            self.setupTryConnection()
+        }
+    }
+    
+    @objc func handleRefresh() {
+        self.feed.removeAll()
+        getHomeFeedData()
     }
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
@@ -146,22 +262,23 @@ class HomeController : UICollectionViewController {
     func postHeld(transitionId : String) {
         
     }
-    
-    func handleChangeToDetail(transitionId : String){
-        let detail = PostDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-        //        detail.imageView.hero.id = transitionId
-        present(detail, animated: true, completion: nil)
-    }
 }
 
-extension HomeController : UICollectionViewDelegateFlowLayout {
+extension HomeController : UICollectionViewDelegateFlowLayout, HomePostDelegate {
+    
+    func changeToDetail(for cell: HomePostCells) {
+        guard let indexPath = collectionView?.indexPath(for: cell) else { return }
+        let detail = PostDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+        detail.post = self.homeArray[indexPath.item].posts
+        present(detail, animated: true, completion: nil)
+    }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
         case resultsCollectionView:
             return 3
         default:
-            return homeArray.count
+             return homeArray.count
         }
     }
     
@@ -217,10 +334,13 @@ extension HomeController : UICollectionViewDelegateFlowLayout {
                 return cell
             }
         default:
+            if indexPath.item == self.feed.count - 1 && !isFinishedFetching {
+                getMoreData()
+            }
+            
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! HomePostCells
-            cell.post = homeArray[indexPath.item].posts?[indexPath.item]
-            cell.postArray = homeArray[indexPath.item].posts
-            cell.accessHomeController = self
+            cell.delegate = self
+            cell.post = homeArray[indexPath.item].posts
             return cell
         }
     }
@@ -270,6 +390,8 @@ extension HomeController : UISearchBarDelegate, UISearchResultsUpdating {
         
         exploreServices.queryDatabase(searchText: queryString) { (search) in
             DispatchQueue.main.async{
+                self.search?.posts?.removeAll()
+                self.search?.pursuits?.removeAll()
                 self.search = search
                 self.resultsCollectionView.reloadData()
             }

@@ -28,20 +28,18 @@ class TeamCells : UICollectionViewCell {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleHomeTap))
-        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleHomeHold))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(addToTeam))
         tapGesture.numberOfTapsRequired = 1
         iv.addGestureRecognizer(tapGesture)
-        iv.addGestureRecognizer(longGesture)
         iv.isUserInteractionEnabled = true
         iv.layer.cornerRadius = 25
         return iv
     }()
     
-    @objc func handleHomeTap(){
-    }
+    var accessDetailView : CaptureDetailView?
     
-    @objc func handleHomeHold(){
+    @objc func addToTeam(){
+        accessDetailView?.team.append(team!)
     }
     
     func setupView(){

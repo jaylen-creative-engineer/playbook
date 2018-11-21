@@ -20,7 +20,7 @@ class EngagementServices {
         let defaults = UserDefaults.standard
         
         var parameters = Alamofire.Parameters()
-        parameters["userId"] = defaults.integer(forKey: "userId")
+        parameters["userId"] = 1
         parameters["postId"] = postId
         
         Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
@@ -40,7 +40,7 @@ class EngagementServices {
         let defaults = UserDefaults.standard
         
         var parameters = Alamofire.Parameters()
-        parameters["userId"] = defaults.integer(forKey: "userId")
+        parameters["userId"] = 1
         parameters["pursuitId"] = pursuitId
         
         Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
@@ -89,10 +89,23 @@ class EngagementServices {
         
         var parameters = Alamofire.Parameters()
         parameters["pursuitId"] = pursuitId
-        parameters["userId"] = defaults.integer(forKey: "userId")
+        parameters["userId"] = 1
         parameters["is_tried"] = is_tried
         
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseString { (response) in
+            switch response.result {
+            case .success:
+                print("Success: \(response.result.isSuccess)")
+            case .failure(let error):
+                print("\n\n===========Error===========")
+                print("Error Code: \(error._code)")
+                print("Error Messsage: \(error.localizedDescription)")
+                if let data = response.data, let str = String(data: data, encoding: String.Encoding.utf8){
+                    print("Server Error: " + str)
+                }
+                debugPrint(error as Any)
+                print("===========================\n\n")
+            }
         }
     }
     

@@ -174,7 +174,7 @@ extension CreateDetailsCell : UICollectionViewDelegate, UICollectionViewDataSour
         switch collectionView {
         case selectInterests:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: interestsId, for: indexPath) as! CreateInterestsCells
-            cell.interest = interests[indexPath.item]
+//            cell.interest = interests[indexPath.item]
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! CreateTeamCells

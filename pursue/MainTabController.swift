@@ -53,7 +53,7 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
         let plusNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "create_unselected"), selectedImage: #imageLiteral(resourceName: "create_unselected"))
         let userProfileNavController = UINavigationController(rootViewController: ProfileController(collectionViewLayout: UICollectionViewFlowLayout()))
 
-        tabBar.tintColor = UIColor.rgb(red: 74, green: 144, blue: 226)
+        tabBar.tintColor = UIColor.black
         tabBar.barTintColor = UIColor.rgb(red: 255, green: 255, blue: 255)
         
         viewControllers = [homeNavController, plusNavController, userProfileNavController]

@@ -9,6 +9,7 @@
 import UIKit
 import Photos
 
+
 class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerDelegate, UIViewControllerTransitioningDelegate {
     
     let libraryId = "libraryId"
@@ -19,10 +20,13 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
     override func viewDidLoad() {
         super.viewDidLoad()
         cameraDelegate = self
-        maximumVideoDuration = 60.0
+        maximumVideoDuration = 16.0
         shouldUseDeviceOrientation = true
         allowAutoRotate = true
         audioEnabled = true
+        allowBackgroundAudio = true
+        defaultCamera = .front
+        flashMode = .auto
         setupView()
 //        toggleFlash()
         getAssetFromPhoto()
@@ -139,10 +143,15 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
     
     
     @objc func toggleFlash(){
-        flashEnabled = !flashEnabled
-        if flashEnabled == true {
-            cancelFlashLine.isHidden = true
-        } else {
+        if flashMode == .auto{
+            flashMode = .on
+             cancelFlashLine.isHidden = true
+//            flashButton.setImage(#imageLiteral(resourceName: "flash"), for: UIControlState())
+        }else if flashMode == .on{
+            flashMode = .off
+            cancelFlashLine.isHidden = false
+        }else if flashMode == .off{
+            flashMode = .auto
             cancelFlashLine.isHidden = false
         }
     }
@@ -296,13 +305,11 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
 extension SelectCameraController : PHPhotoLibraryChangeObserver {
     
     func photoLibraryDidChange(_ changeInstance: PHChange) {
-        DispatchQueue.main.sync {
-            // Check each of the three top-level fetches for changes.
-            if let changeDetails = changeInstance.changeDetails(for: allPhotos) {
-                allPhotos = changeDetails.fetchResultAfterChanges
+        DispatchQueue.main.async {
+            if let changeDetails = changeInstance.changeDetails(for: self.allPhotos) {
+                self.allPhotos = changeDetails.fetchResultAfterChanges
                 // (The table row for this one doesn't need updating, it always says "All Photos".)
             }
-            
         }
     }
 }
