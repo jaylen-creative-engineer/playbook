@@ -10,6 +10,7 @@ import UIKit
 import Hero
 import Reachability
 import KWTransition
+import UserNotifications
 
 class HomeController : UICollectionViewController {
     
@@ -182,6 +183,8 @@ class HomeController : UICollectionViewController {
         super.viewDidLoad()
         setupNavBar()
         tabBarController?.tabBar.isTranslucent = false
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (didAllow, error) in
+        }
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
@@ -210,6 +213,27 @@ class HomeController : UICollectionViewController {
         } catch {
             print("Could not start notifier")
         }
+        
+        setupNotification()
+    }
+    
+    func setupNotification(){
+        let content = UNMutableNotificationContent()
+        content.title = "Check out these new pursuits in your interests"
+        content.subtitle = "15 new pursuits you may like"
+        content.body = "View new pursuits"
+        content.badge = 1
+        
+        var dateComponents = DateComponents()
+        dateComponents.weekday = 5
+        dateComponents.hour = 10
+        dateComponents.minute = 0
+        
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        let request = UNNotificationRequest(identifier: "pursuitNotification", content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
     }
     
     @objc func internetChanged(note : Notification) {

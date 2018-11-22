@@ -41,28 +41,6 @@ class HomePostCells : UICollectionViewCell  {
                 print("There was an error decoding the string")
             }
             collectionView.reloadData()
-//            post.forEach { (value) in
-//                guard let photo = value.thumbnailUrl else { return }
-//                guard let postUser = value.userPhotourl else { return }
-//                imageView.loadImageUsingCacheWithUrlString(photo)
-//                userPhoto.loadImageUsingCacheWithUrlString(postUser)
-//                postDetail.text = value.posts_description
-//                username.text = value.username
-//
-//                let dateFormatterGet = DateFormatter()
-//                dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
-//
-//                let dateFormatterPrint = DateFormatter()
-//                dateFormatterPrint.dateFormat = "MMM dd,yyyy"
-//
-//                if let date = dateFormatterGet.date(from: value.created_at!) {
-//                    let timeAgoDisplay = date.timeAgoDisplay()
-//                    let attributedText = NSAttributedString(string: timeAgoDisplay, attributes: [NSAttributedString.Key.font: UIFont(name: "Lato-Bold", size: 12) as Any, NSAttributedString.Key.foregroundColor: UIColor.white])
-//                    timeLabel.attributedText = attributedText
-//                } else {
-//                    print("There was an error decoding the string")
-//                }
-//            }
         }
     }
     

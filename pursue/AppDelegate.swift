@@ -14,9 +14,10 @@ import GoogleSignIn
 import Alamofire
 import FBSDKCoreKit
 import Mixpanel
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
     var userPhoto : Data?
@@ -25,6 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        UNUserNotificationCenter.current().delegate = self
+        setCategories()
+
         Mixpanel.initialize(token: "966109a7aee1fb1067d5c2363b8a4284")
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -110,6 +114,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         return GIDSignIn.sharedInstance().handle(url, sourceApplication: sourceApplication, annotation: annotation)
+    }
+    
+    func setCategories(){
+        let clearRepeatAction = UNNotificationAction(
+            identifier: "clear.repeat.action",
+            title: "Stop Repeat",
+            options: [])
+        
+        let pursuitCategory = UNNotificationCategory(
+            identifier: "pizza.reminder.category",
+            actions: [clearRepeatAction],
+            intentIdentifiers: [],
+            options: [])
+        
+        UNUserNotificationCenter.current().setNotificationCategories([pursuitCategory])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("Did recieve response: \(response.actionIdentifier)")
+        if response.actionIdentifier == "clear.repeat.action"{
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [response.notification.request.identifier])
+        }
+        completionHandler()
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert,.sound, .badge])
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

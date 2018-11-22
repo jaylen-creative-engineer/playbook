@@ -38,39 +38,8 @@ class SwiftyRecordButton : SwiftyCamButton {
         layer.insertSublayer(circleBorder, at: 0)
         
     }
-    
-    func setupAnimation(){
-        let trackLayer = CAShapeLayer()
-        let circularPath = UIBezierPath(arcCenter: center, radius: 35, startAngle: -CGFloat.pi / 2, endAngle: 2 * CGFloat.pi, clockwise: true)
-        trackLayer.path = circularPath.cgPath
-        
-        trackLayer.strokeColor = UIColor.lightGray.cgColor
-        trackLayer.lineWidth = 10
-        trackLayer.fillColor = UIColor.red.cgColor
-        trackLayer.lineCap = CAShapeLayerLineCap.round
-        layer.insertSublayer(trackLayer, at: 0)
-        
-        shapeLayer.path = circularPath.cgPath
-        
-        shapeLayer.strokeColor = UIColor.red.cgColor
-        shapeLayer.lineWidth = 10
-        shapeLayer.fillColor = UIColor.blue.cgColor
-        shapeLayer.lineCap = CAShapeLayerLineCap.round
-        
-        shapeLayer.strokeEnd = 0
-        
-        layer.insertSublayer(shapeLayer, at: 0)
-        
-        let outlineAnimation = CABasicAnimation(keyPath: "strokeEnd")
-        outlineAnimation.toValue = 1
-        outlineAnimation.duration = 2
-        outlineAnimation.fillMode = CAMediaTimingFillMode.forwards
-        outlineAnimation.isRemovedOnCompletion = false
-        
-        shapeLayer.add(outlineAnimation, forKey: "outlineAnimation")
-    }
-    
-    public  func growButton() {
+
+    public func growButton() {
         innerCircle = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
         innerCircle.center = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
         innerCircle.backgroundColor = UIColor.red
@@ -81,6 +50,7 @@ class SwiftyRecordButton : SwiftyCamButton {
         UIView.animate(withDuration: 0.6, delay: 0.0, options: .curveEaseOut, animations: {
             self.innerCircle.transform = CGAffineTransform(scaleX: 62.4, y: 62.4)
             self.circleBorder.setAffineTransform(CGAffineTransform(scaleX: 1.352, y: 1.352))
+            self.circleBorder.borderColor = UIColor.red.cgColor
             self.circleBorder.borderWidth = (6 / 1.352)
             
         }, completion: nil)

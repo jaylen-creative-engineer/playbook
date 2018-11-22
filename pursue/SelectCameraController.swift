@@ -17,10 +17,19 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
     var allPhotos : PHFetchResult<PHAsset>!
     var arrPost : [Post] = []
     
+    var seconds = 2
+    var timer = Timer()
+    var isTimerRunning = false
+    var progressBarTimer: Timer?
+    var progressTimerIsOn = false
+    var progressTimeTotal = 0.0
+    var progressTimeRemaining = 0.0
+    var progressTimerUnit = 0.0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         cameraDelegate = self
-        maximumVideoDuration = 16.0
+        maximumVideoDuration = 20.0
         shouldUseDeviceOrientation = true
         allowAutoRotate = true
         audioEnabled = true
@@ -84,6 +93,15 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
         tap.numberOfTapsRequired = 1
         v.addGestureRecognizer(tap)
         return v
+    }()
+    
+    let captureProgressTrack : UIProgressView = {
+        let view = UIProgressView()
+        view.trackTintColor = .black
+        view.progressTintColor = .white
+        view.layer.cornerRadius = 2
+        view.layer.masksToBounds = true
+        return view
     }()
     
     lazy var cancelButton : UIButton = {
@@ -232,21 +250,25 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
     
     func swiftyCam(_ swiftyCam: SwiftyCamViewController, didBeginRecordingVideo camera: SwiftyCamViewController.CameraSelection) {
         captureButton.growButton()
-//        captureButton.setupAnimation()
         UIView.animate(withDuration: 0.25, animations: {
             self.flashButton.alpha = 0.0
+            self.photoLibraryButton.alpha = 0.0
+            self.cancelFlashLine.alpha = 0.0
             self.flipCameraButton.alpha = 0.0
             self.cancelButton.alpha = 0.0
+            self.captureProgressTrack.alpha = 1.0
         })
     }
     
     func swiftyCam(_ swiftyCam: SwiftyCamViewController, didFinishRecordingVideo camera: SwiftyCamViewController.CameraSelection) {
-        
         captureButton.shrinkButton()
         UIView.animate(withDuration: 0.25, animations: {
             self.flashButton.alpha = 1.0
+            self.photoLibraryButton.alpha = 1.0
+            self.cancelFlashLine.alpha = 1.0
             self.flipCameraButton.alpha = 1.0
             self.cancelButton.alpha = 1.0
+            self.captureProgressTrack.alpha = 0.0
         })
     }
     
