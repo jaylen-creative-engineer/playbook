@@ -22,7 +22,7 @@ class TeamList : UICollectionViewCell {
                     addSubview(noTeam)
                     
                     noTeam.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-                    noTeam.anchor(top: teamLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: noTeam.intrinsicContentSize.width, height: 18)
+                    noTeam.anchor(top: teamLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: noTeam.intrinsicContentSize.width, height: 18)
                 }
             }
             
@@ -31,8 +31,10 @@ class TeamList : UICollectionViewCell {
     }
     
     var delegate : TeamListDelegate?
-    
+    var accessDetailController : PostDetailController?
     let cellId = "cellId"
+    
+    var added = [User]()
     
     let collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -56,7 +58,7 @@ class TeamList : UICollectionViewCell {
         button.setTitle("Add Friends", for: .normal)
         button.titleLabel?.textAlignment = .right
         button.setTitleColor(.darkGray, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.addTarget(self, action: #selector(handleInvite), for: .touchUpInside)
         button.contentHorizontalAlignment = .right
         button.contentVerticalAlignment = .center
@@ -108,6 +110,9 @@ class TeamList : UICollectionViewCell {
         return label
     }()
     
+    func addToUser(){
+        
+    }
     @objc func handleInvite(){
         delegate?.handleAddFriends(for: self)
     }
@@ -127,6 +132,28 @@ class TeamList : UICollectionViewCell {
         collectionView.register(TeamCells.self, forCellWithReuseIdentifier: cellId)
     }
     
+    func handleLongPress(gestureReconizer: UILongPressGestureRecognizer) {
+        if gestureReconizer.state != UIGestureRecognizer.State.ended {
+            return
+        }
+        
+        let p = gestureReconizer.location(in: self.collectionView)
+        let indexPath = self.collectionView.indexPathForItem(at: p)
+        
+        if let index = indexPath {
+            var cell = self.collectionView.cellForItem(at: index)
+            // do stuff with your cell, for example print the indexPath
+            print(index.row)
+        } else {
+            print("Could not find index path")
+        }
+    }
+    
+    func changeToProfile(userId : Int){
+        accessDetailController?.handleChangeToProfile(userId: userId)
+    }
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -143,7 +170,13 @@ extension TeamList : UICollectionViewDelegate, UICollectionViewDataSource, UICol
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! TeamCells
         cell.team = team?[indexPath.item]
+        cell.isDetailView = true
+        cell.accessTeamView = self
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessDetailController?.handleChangeToProfile(userId: (team?[indexPath.item].userId)!)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

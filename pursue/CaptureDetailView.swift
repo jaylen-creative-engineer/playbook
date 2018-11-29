@@ -355,6 +355,8 @@ class CaptureDetailView: UIViewController {
 //        captureCollectionView.anchor(top: backgroundFill.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: alertView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: view.frame.height)
     }
     
+    static let updateFeedNotificationName = NSNotification.Name(rawValue: "UpdateFeed")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height + 360)
@@ -377,21 +379,6 @@ class CaptureDetailView: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func submitPost(){
-        if createPursuitId == nil {
-            submitPursuit()
-        } else if createPursuitId != nil {
-             createService.createPost(pursuitId: createPursuitId!, contentUrl: videoURL, thumbnailUrl: thumbnailImage, posts_description: captionLabel.text, is_keyPost: is_keyPost, is_public: is_public)
-            addTeam()
-        }
-        
-//        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
-//        appDelegate.window = UIWindow()
-//        appDelegate.window?.rootViewController = MainTabController()
-//        appDelegate.window?.makeKeyAndVisible()
-//        self.dismiss(animated: true, completion: nil)
-    }
-    
     var createPursuitId : Int?
     var is_public = 0
     var is_keyPost = 0
@@ -408,6 +395,23 @@ class CaptureDetailView: UIViewController {
         }
     }
     
+    @objc func submitPost(){
+        if createPursuitId == nil {
+            submitPursuit()
+        } else if createPursuitId != nil {
+            createService.createPost(pursuitId: createPursuitId!, contentUrl: videoURL, thumbnailUrl: thumbnailImage, posts_description: captionLabel.text, is_keyPost: is_keyPost, is_public: is_public)
+            addTeam()
+        }
+        
+        NotificationCenter.default.post(name: CaptureDetailView.updateFeedNotificationName, object: nil)
+
+        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+        appDelegate.window = UIWindow()
+        appDelegate.window?.rootViewController = MainTabController()
+        appDelegate.window?.makeKeyAndVisible()
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     @objc func submitPursuit(){
         createService.createPursuit(interestId: createInterestId, thumbnailUrl: thumbnailImage, pursuitDescription: captionLabel.text, is_public: is_public)
         createService.getUserPursuitsId { (returnPursuit) in
@@ -420,6 +424,7 @@ class CaptureDetailView: UIViewController {
                 }
             }
         }
+        
     }
     
     func setupView() {

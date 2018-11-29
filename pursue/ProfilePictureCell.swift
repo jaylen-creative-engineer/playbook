@@ -90,7 +90,7 @@ class ProfilePictureCell : UICollectionViewCell {
         addIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
         addIcon.centerXAnchor.constraint(equalTo: profilePicture.centerXAnchor).isActive = true
         addIcon.centerYAnchor.constraint(equalTo: profilePicture.centerYAnchor).isActive = true
-        nextButton.anchor(top: topAnchor, left: nil, bottom: nil, right: safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 120, height: 34)
+        nextButton.anchor(top: topAnchor, left: nil, bottom: nil, right: safeAreaLayoutGuide.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 120, height: 34)
     }
     
     required init?(coder aDecoder: NSCoder) {

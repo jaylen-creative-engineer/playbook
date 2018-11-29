@@ -26,6 +26,9 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
     var progressTimeRemaining = 0.0
     var progressTimerUnit = 0.0
     
+    var isResponse : Bool?
+    var pursuitId : Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         cameraDelegate = self
@@ -37,7 +40,6 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
         defaultCamera = .front
         flashMode = .auto
         setupView()
-//        toggleFlash()
         getAssetFromPhoto()
     }
     
@@ -132,6 +134,8 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
     
     @objc func handleLibrary(){
         let libraryController = PhotoLibrary()
+        libraryController.pursuitId = pursuitId
+        libraryController.isResponse = isResponse
         libraryController.fetchResult = allPhotos
         libraryController.photoLibraryButton.setImage(photoLibraryButton.imageView?.image, for: .normal)
         present(libraryController, animated: true, completion: nil)
@@ -164,7 +168,6 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
         if flashMode == .auto{
             flashMode = .on
              cancelFlashLine.isHidden = true
-//            flashButton.setImage(#imageLiteral(resourceName: "flash"), for: UIControlState())
         }else if flashMode == .on{
             flashMode = .off
             cancelFlashLine.isHidden = false
@@ -237,6 +240,8 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
     
     func swiftyCam(_ swiftyCam: SwiftyCamViewController, didTake photo: UIImage) {
         let newVC = PhotoViewController()
+        newVC.pursuitId = pursuitId
+        newVC.isResponse = isResponse
         newVC.backgroundImageView.image = photo
         self.present(newVC, animated: true, completion: nil)
     }
@@ -256,7 +261,6 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
             self.cancelFlashLine.alpha = 0.0
             self.flipCameraButton.alpha = 0.0
             self.cancelButton.alpha = 0.0
-            self.captureProgressTrack.alpha = 1.0
         })
     }
     
@@ -268,33 +272,15 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
             self.cancelFlashLine.alpha = 1.0
             self.flipCameraButton.alpha = 1.0
             self.cancelButton.alpha = 1.0
-            self.captureProgressTrack.alpha = 0.0
         })
     }
     
     func swiftyCam(_ swiftyCam: SwiftyCamViewController, didFinishProcessVideoAt url: URL) {
-        let newVC = PhotoViewController()
+        let newVC = VideoViewController()
+        newVC.pursuitId = pursuitId
+        newVC.isResponse = isResponse
         newVC.videoURL = url
         self.present(newVC, animated: true, completion: nil)
-    }
-    
-    func swiftyCam(_ swiftyCam: SwiftyCamViewController, didFocusAtPoint point: CGPoint) {
-//        let focusView = UIImageView(image: #imageLiteral(resourceName: "focus"))
-//        focusView.center = point
-//        focusView.alpha = 0.0
-//        view.addSubview(focusView)
-//        
-//        UIView.animate(withDuration: 0.25, delay: 0.0, options: .curveEaseInOut, animations: {
-//            focusView.alpha = 1.0
-//            focusView.transform = CGAffineTransform(scaleX: 1.25, y: 1.25)
-//        }, completion: { (success) in
-//            UIView.animate(withDuration: 0.15, delay: 0.5, options: .curveEaseInOut, animations: {
-//                focusView.alpha = 0.0
-//                focusView.transform = CGAffineTransform(translationX: 0.6, y: 0.6)
-//            }, completion: { (success) in
-//                focusView.removeFromSuperview()
-//            })
-//        })
     }
     
     func swiftyCamSessionDidStartRunning(_ swiftyCam: SwiftyCamViewController) {

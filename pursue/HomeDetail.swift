@@ -10,9 +10,10 @@ import UIKit
 
 struct HomeDetail : Decodable {
     
+    let posts : [Post]?
     let days : [Post]?
     let responses : [Post]?
     let trying : [Post]?
     let team : [User]?
-    let key_post : [Post]?
+    let key_posts : [Post]?
 }

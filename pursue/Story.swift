@@ -13,17 +13,19 @@ class Story: Equatable{
     var caption : String?
     var profileName : String?
     var userPhoto : String?
+    var thumbnailUrl : String?
     var time : String?
     var videoName : String?
     var avPlayerItem: AVPlayerItem?
     var videoDuration: Double?
     
-    init(caption: String?, profileName: String?, userPhoto : String?, time: String?, videoName: String?) {
+    init(caption: String?, profileName: String?, userPhoto : String?, time: String?, videoName: String?, thumbnailUrl : String?) {
         self.caption = caption
         self.profileName = profileName
         self.time = time
         self.userPhoto = userPhoto
         self.videoName = videoName
+        self.thumbnailUrl = thumbnailUrl
         
         guard let videoData = videoName else { return }
         guard let videoUrl = URL(string: videoData) else { return }
@@ -32,7 +34,7 @@ class Story: Equatable{
     }
     
     static func == (lhs: Story, rhs: Story) -> Bool {
-        if(lhs.caption == rhs.caption && lhs.userPhoto == rhs.userPhoto && lhs.profileName == rhs.profileName && lhs.time == rhs.time && lhs.videoName == rhs.videoName){
+        if(lhs.caption == rhs.caption && lhs.userPhoto == rhs.userPhoto && lhs.thumbnailUrl == rhs.thumbnailUrl && lhs.profileName == rhs.profileName && lhs.time == rhs.time && lhs.videoName == rhs.videoName){
             return true
         }
         return false

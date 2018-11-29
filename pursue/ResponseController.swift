@@ -10,15 +10,12 @@ import UIKit
 
 class ResponseController : UICollectionViewController, KeyPostListDelegate {
     
-    var responses : [Post]? {
-        didSet {
-            collectionView?.reloadData()
-        }
-    }
-    
     let responsePostLabel = UILabel()
     let usernameLabel = UILabel()
     let navBarBackground = UIView()
+    var responses = [Post]()
+    var pursuitId : Int?
+    let homeService = HomeServices()
     
     let cellId = "cellId"
     
@@ -76,22 +73,32 @@ class ResponseController : UICollectionViewController, KeyPostListDelegate {
         responsePostLabel.anchor(top: nil, left: backButton.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: responsePostLabel.intrinsicContentSize.width, height: responsePostLabel.intrinsicContentSize.height)
     }
     
+    func getResponseData(){
+        homeService.getResponses(pursuitId: pursuitId) { (homeDetail) in
+            DispatchQueue.main.async {
+                self.responses = homeDetail.responses!
+                self.collectionView.reloadData()
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
         setupCollectionView()
+        getResponseData()
     }
 }
 
 extension ResponseController : UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return responses?.count ?? 0
+        return responses.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PostResponsesCell
-        cell.post = responses?[indexPath.item]
+        cell.post = responses[indexPath.item]
         return cell
     }
     

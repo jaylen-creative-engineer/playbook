@@ -30,6 +30,19 @@ class KeyPostController : UICollectionViewController, KeyPostListDelegate {
         return button
     }()
     
+    var pursuitId : Int?
+    let homeServices = HomeServices()
+    var keyPost = [Post]()
+    
+    func keyPostData(){
+        homeServices.getKeyPosts(pursuitId: pursuitId) { (homeDetail) in
+            DispatchQueue.main.async {
+                self.keyPost = homeDetail.key_posts!
+                self.collectionView?.reloadData()
+            }
+        }
+    }
+    
     func setupCollectionView(){
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
@@ -72,6 +85,7 @@ class KeyPostController : UICollectionViewController, KeyPostListDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        keyPostData()
         setupNavigationBar()
         setupCollectionView()
     }
@@ -80,12 +94,13 @@ class KeyPostController : UICollectionViewController, KeyPostListDelegate {
 extension KeyPostController : UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return keyPost.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! KeyPostListCells
         cell.delegate = self
+        cell.post = keyPost[indexPath.item]
         return cell
     }
     
@@ -98,6 +113,6 @@ extension KeyPostController : UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 85)
+        return CGSize(width: view.frame.width, height: 115)
     }
 }

@@ -10,6 +10,6 @@ import UIKit
 
 struct Engagements : Decodable {
     
-    let tried : Int?
-    let saved : Int?
+    var tried : Int?
+    var saved : Int?
 }

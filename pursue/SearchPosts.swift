@@ -17,6 +17,7 @@ class SearchPosts : UICollectionViewCell {
     }
     
     let cellId = "cellId"
+    var accessHomeController : HomeController?
     
     let postsLabel : UILabel = {
         let label = UILabel()
@@ -68,6 +69,10 @@ extension SearchPosts : UICollectionViewDelegate, UICollectionViewDataSource, UI
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return posts?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessHomeController?.changeToSearchPostDetail(searchPostId: (posts?[indexPath.item].postId)!, searchPursuitId: (posts?[indexPath.item].pursuitId)!)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

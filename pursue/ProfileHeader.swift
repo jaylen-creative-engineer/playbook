@@ -8,6 +8,7 @@
 
 import UIKit
 import Mixpanel
+import ParallaxHeader
 
 protocol ProfileHeaderDelegate {
     func handleMessage(for cell : ProfileHeader)
@@ -38,11 +39,13 @@ class ProfileHeader : UICollectionViewCell {
                 addImageView.isHidden = true
                 backIcon.isHidden = true
                 backBackground.isHidden = true
+                settingsButton.isHidden = true
             } else {
                 circleBackground.isHidden = false
                 addImageView.isHidden = false
                 backIcon.isHidden = false
                 backBackground.isHidden = false
+                settingsButton.isHidden = false
             }
             
             guard let followersCount = user?.followers_count else { return }
@@ -213,7 +216,7 @@ class ProfileHeader : UICollectionViewCell {
     }
     
     @objc func goBack(){
-        accessProfileController?.goBack()
+        accessProfileController?.handleDismiss()
     }
     
     @objc func handleAdded(){
@@ -255,15 +258,13 @@ class ProfileHeader : UICollectionViewCell {
         if backIcon.isHidden {
             usernameLabel.anchor(top: safeAreaLayoutGuide.topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
             usernameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: frame.width / 2)
+            settingsButton.isHidden = true
         } else {
             usernameLabel.anchor(top: safeAreaLayoutGuide.topAnchor, left: backIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
             usernameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: frame.width / 2)
+            settingsButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 40, height: 40)
+            settingsButton.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
         }
-       
-        settingsButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 40, height: 40)
-        settingsButton.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
-        
-        
     }
     
     func setupBackButton(){
@@ -296,6 +297,7 @@ class ProfileHeader : UICollectionViewCell {
         addImageView.centerYAnchor.constraint(equalTo: circleBackground.centerYAnchor).isActive = true
         addImageView.centerXAnchor.constraint(equalTo: circleBackground.centerXAnchor).isActive = true
         setupEngagements()
+        
         
     }
     

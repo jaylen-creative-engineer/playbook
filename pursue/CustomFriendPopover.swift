@@ -15,6 +15,7 @@ class CustomFriendPopover : UIViewController {
     let peopleFullname = ["Tom Ford", "Versace", "LVME", "Test", "Lit"]
     let peopleUsernames = ["TomFord123", "Versace", "LVME", "Test", "Lit"]
     let peopleImages = ["comment-1", "comment-4", "comment-7", "clean-2", "clean-3"]
+    var pursuitId : Int?
     
     lazy var alertView : UIView = {
         let view = UIView()
@@ -36,6 +37,16 @@ class CustomFriendPopover : UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 16)
         button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var sendButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("Send", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 16)
+        button.addTarget(self, action: #selector(handleSend), for: .touchUpInside)
+        button.contentHorizontalAlignment = .right
         return button
     }()
     
@@ -66,12 +77,27 @@ class CustomFriendPopover : UIViewController {
         return collectionView
     }()
     
-    var descriptions = ["Home Redesign", "Road trip", "A foodie's weakness"]
-    var pursuitImages = [#imageLiteral(resourceName: "home-remodel"), #imageLiteral(resourceName: "ghost"), #imageLiteral(resourceName: "food")]
+    let profileServices = ProfileServices()
+    var users = [User]()
+    
+    func getTeam(){
+        profileServices.getUsersAdded { (added) in
+            DispatchQueue.main.async {
+                self.users = added.added ?? []
+                self.peopleCollectionView.reloadData()
+            }
+        }
+    }
     
     @objc func handleInvite(){
         let inviteController = InviteController(collectionViewLayout: UICollectionViewFlowLayout())
         present(inviteController, animated: true, completion: nil)
+    }
+    
+    @objc func handleSend(){
+        users.forEach { (value) in
+            profileServices.sendAddedUsers(pursuitId: pursuitId, userId: value.userId, is_following: 1)
+        }
     }
     
     func setupCollectionView(){
@@ -83,8 +109,9 @@ class CustomFriendPopover : UIViewController {
     }
     
     func setupPage(){
-        alertView.addSubview(cancelButton)
         alertView.addSubview(addLabel)
+        alertView.addSubview(cancelButton)
+        alertView.addSubview(sendButton)
         alertView.addSubview(inviteContactsButton)
         
         addLabel.anchor(top: alertView.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: addLabel.intrinsicContentSize.width, height: addLabel.intrinsicContentSize.height)
@@ -94,6 +121,8 @@ class CustomFriendPopover : UIViewController {
         setupCollectionView()
         inviteContactsButton.anchor(top: nil, left: nil, bottom: alertView.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 0, width: 100, height: 24)
         inviteContactsButton.centerXAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
+        sendButton.centerYAnchor.constraint(equalTo: addLabel.centerYAnchor).isActive = true
+        sendButton.anchor(top: nil, left: nil, bottom: nil, right: alertView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 80, height: 18)
         
     }
     
@@ -107,6 +136,7 @@ class CustomFriendPopover : UIViewController {
         alertView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 10).isActive = true
         setupPage()
         dismissBackground.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: alertView.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        getTeam()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -146,13 +176,13 @@ extension CustomFriendPopover : UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! TeamCells
-        cell.profileImage.image = UIImage(named: peopleImages[indexPath.item])
-        cell.usernameLabel.text = peopleUsernames[indexPath.item]
+        cell.accessFriendPopover = self
+        cell.team = users[indexPath.item]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return users.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

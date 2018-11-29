@@ -19,6 +19,8 @@ private extension UICollectionView {
 class PhotoLibrary : SwiftyCamViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PhotoDelegate, SwiftyCamViewControllerDelegate, UIViewControllerTransitioningDelegate {
     
     var fetchResult: PHFetchResult<PHAsset>!
+    var isResponse : Bool?
+    var pursuitId : Int?
     
     fileprivate var thumbnailSize: CGSize!
     fileprivate let imageManager = PHCachingImageManager()
@@ -281,6 +283,8 @@ extension PhotoLibrary {
       
         if cell.timeLabel.text == "" {
             let destination = PhotoViewController()
+            destination.isResponse = isResponse
+            destination.pursuitId = pursuitId
             destination.backgroundImageView.hero.id = String(indexPath.item)
             destination.asset = asset
             destination.assetCollection = assetCollection
@@ -292,6 +296,8 @@ extension PhotoLibrary {
                 if let urlAsset = asset as? AVURLAsset {
                     DispatchQueue.main.async {
                         let destination = VideoViewController()
+                        destination.pursuitId = self.pursuitId
+                        destination.isResponse = self.isResponse
                         destination.videoURL = urlAsset.url
                         self.present(destination, animated: true, completion: nil)
                     }

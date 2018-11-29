@@ -46,15 +46,6 @@ class PageCell: UICollectionViewCell {
         return textView
     }()
     
-    let backgroundButton : UIButton = {
-       let button = UIButton()
-        button.backgroundColor = .white
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.cornerRadius = 2
-        button.clipsToBounds = true
-        return button
-    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
@@ -65,10 +56,12 @@ class PageCell: UICollectionViewCell {
         addSubview(headerLabel)
         addSubview(descriptionTextView)
         
-        imageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: (frame.height / 5) - 12, paddingLeft: 24, paddingBottom: 0, paddingRight: 24, width: 0, height: 400)
+        imageView.anchor(top: topAnchor, left: nil, bottom: nil, right: nil, paddingTop: (frame.height / 3.5), paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 250, height: 250)
+        imageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         
-        headerLabel.anchor(top: imageView.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: headerLabel.intrinsicContentSize.width, height: 26)
-        descriptionTextView.anchor(top: headerLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
+        headerLabel.anchor(top: imageView.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: headerLabel.intrinsicContentSize.width, height: 26)
+        headerLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        descriptionTextView.anchor(top: headerLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 18, paddingLeft: 8, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {

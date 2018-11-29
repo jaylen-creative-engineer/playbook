@@ -14,9 +14,13 @@ import PryntTrimmerView
 
 class VideoViewController: AssetSelectionViewController {
     
+    var isResponse : Bool?
+    var pursuitId : Int?
+    
     lazy var cancelButton : UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "cancel").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "cancel").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .white
         button.contentMode = .scaleAspectFill
         button.addTarget(self, action: #selector(cancel), for: .touchUpInside)
         return button
@@ -24,7 +28,7 @@ class VideoViewController: AssetSelectionViewController {
     
     lazy var continueButton : UIButton = {
         let cv = UIButton()
-        cv.backgroundColor = .black
+        cv.backgroundColor = .white
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.layer.cornerRadius = 20
         cv.layer.masksToBounds = true
@@ -34,8 +38,7 @@ class VideoViewController: AssetSelectionViewController {
     
     lazy var forwardArrow : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "forward-arrow").withRenderingMode(.alwaysTemplate)
-        iv.tintColor = .white
+        iv.image = #imageLiteral(resourceName: "forward-arrow").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
         
@@ -45,55 +48,10 @@ class VideoViewController: AssetSelectionViewController {
         return iv
     }()
     
-    lazy var highlightIcon : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "mark").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFill
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(handleHighlight), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var highlightLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Mark"
-        label.font = .systemFont(ofSize: 12)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleHighlight))
-        tap.numberOfTapsRequired = 1
-        label.addGestureRecognizer(tap)
-        return label
-    }()
-    
-    lazy var pursuitTitle : UITextView = {
-        let tv = UITextView()
-        tv.translatesAutoresizingMaskIntoConstraints = false
-        tv.font = UIFont.boldSystemFont(ofSize: 14)
-        tv.isScrollEnabled = false
-        tv.isUserInteractionEnabled = false
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 5
-        paragraphStyle.paragraphSpacing = 5
-        
-        let attrString = NSMutableAttributedString(string: "Add description")
-        attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
-        
-        tv.attributedText = attrString
-        return tv
-    }()
-    
-    lazy var pursuitUnderline : UIView = {
-        let view = UIView()
-        view.backgroundColor = .black
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     lazy var saveIcon : UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "save").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "save").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .white
         button.contentMode = .scaleAspectFill
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
@@ -104,6 +62,7 @@ class VideoViewController: AssetSelectionViewController {
         let label = UILabel()
         label.text = "Save"
         label.font = .systemFont(ofSize: 12)
+        label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleSave))
@@ -120,35 +79,12 @@ class VideoViewController: AssetSelectionViewController {
         return button
     }()
     
-    lazy var highlightBackground : UIButton = {
+    lazy var cancelBackground : UIButton = {
         let button = UIButton()
-        button.backgroundColor = .clear
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(handleHighlight), for: .touchUpInside)
+        button.layer.cornerRadius = 19
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         return button
-    }()
-    
-    lazy var keyboardButton : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "keyboard").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFill
-        return button
-    }()
-    
-    lazy var trimmerButton : UIButton = {
-       let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "trim").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.contentMode = .scaleAspectFill
-        button.addTarget(self, action: #selector(loadVideo), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var trimmerView : TrimmerView = {
-       let tv = TrimmerView()
-        tv.handleColor = .white
-        tv.mainColor = .gray
-        tv.delegate = self
-        return tv
     }()
     
     var playbackTimeCheckerTimer: Timer?
@@ -177,16 +113,36 @@ class VideoViewController: AssetSelectionViewController {
         }
     }
     
+    @objc func handleDismiss(){
+        dismiss(animated: true, completion: nil)
+    }
+    
     @objc func handlePursuit(){
-//        let grabTime = 0.10
-//        let image = generateThumnail(url: videoURL!, fromTime: Float64(grabTime))
-//        
-//        let customAlert = CustomAlertView(capturedImage: image, contentUrl: videoURL, postDescription: pursuitTitle.text, is_principle: is_principle, is_step: is_step)
-//        customAlert.providesPresentationContextTransitionStyle = true
-//        customAlert.definesPresentationContext = true
-//        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-//        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-//        self.present(customAlert, animated: true, completion: nil)
+        if isResponse == true {
+            guard let url = videoURL else { return }
+            let image = generateThumnail(url: url, fromTime: Float64(0.10))
+            let customAlert = CaptureResponseView()
+            customAlert.respondImageView.image = image
+            customAlert.pursuitId = pursuitId
+            customAlert.thumbnailImage = image
+            customAlert.videoURL = url
+            customAlert.providesPresentationContextTransitionStyle = true
+            customAlert.definesPresentationContext = true
+            customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            self.showDetailViewController(customAlert, sender: self)
+        } else {
+            guard let url = videoURL else { return }
+            let image = generateThumnail(url: url, fromTime: Float64(0.10))
+            let customAlert = CaptureDetailView()
+            customAlert.thumbnailImage = image
+            customAlert.videoURL = url
+            customAlert.providesPresentationContextTransitionStyle = true
+            customAlert.definesPresentationContext = true
+            customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            self.showDetailViewController(customAlert, sender: self)
+        }
     }
     
     
@@ -210,54 +166,33 @@ class VideoViewController: AssetSelectionViewController {
     var player: AVPlayer?
     var playerController : AVPlayerViewController?
     
-    func setupBottomLeftOptions(){
-        view.addSubview(highlightLabel)
-        view.addSubview(highlightIcon)
+    func setupView(){
+        view.addSubview(playerController!.view)
         view.addSubview(saveLabel)
         view.addSubview(saveIcon)
-        view.addSubview(highlightBackground)
         view.addSubview(saveBackground)
+        view.addSubview(cancelButton)
+        view.addSubview(cancelBackground)
+        view.addSubview(continueButton)
+        view.addSubview(forwardArrow)
         
-        highlightLabel.anchor(top: nil, left: view.safeAreaLayoutGuide.leftAnchor, bottom: continueButton.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: highlightLabel.intrinsicContentSize.width, height: highlightLabel.intrinsicContentSize.height)
-        highlightIcon.anchor(top: nil, left: nil, bottom: highlightLabel.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 0, width: 22, height: 20)
-        highlightIcon.centerXAnchor.constraint(equalTo: highlightLabel.centerXAnchor).isActive = true
-        highlightBackground.anchor(top: highlightIcon.topAnchor, left: highlightLabel.leftAnchor, bottom: highlightLabel.bottomAnchor, right: highlightLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        
-        saveLabel.anchor(top: highlightLabel.topAnchor, left: highlightLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 28, paddingBottom: 0, paddingRight: 0, width: saveLabel.intrinsicContentSize.width, height: saveLabel.intrinsicContentSize.height)
+        playerController!.view.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        saveLabel.anchor(top: nil, left: playerController?.view.safeAreaLayoutGuide.leftAnchor, bottom: continueButton.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: saveLabel.intrinsicContentSize.width, height: saveLabel.intrinsicContentSize.height)
         saveIcon.anchor(top: nil, left: nil, bottom: saveLabel.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 0, width: 20, height: 20)
         saveIcon.centerXAnchor.constraint(equalTo: saveLabel.centerXAnchor).isActive = true
         saveBackground.anchor(top: saveIcon.topAnchor, left: saveLabel.leftAnchor, bottom: saveLabel.bottomAnchor, right: saveLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
-    }
-    
-    func setupTopOptions() {
-        view.addSubview(keyboardButton)
-        view.addSubview(trimmerButton)
+        cancelButton.anchor(top: playerController?.view.safeAreaLayoutGuide.topAnchor, left: playerController?.view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
         
-        keyboardButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 22, height: 17)
-        trimmerButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: keyboardButton.leftAnchor, paddingTop: 11, paddingLeft: 0, paddingBottom: 0, paddingRight: 24, width: 24, height: 19)
-    }
-    
-    func setupView(){
-        view.addSubview(cancelButton)
-        setupTopOptions()
+        cancelBackground.centerXAnchor.constraint(equalTo: cancelButton.centerXAnchor).isActive = true
+        cancelBackground.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor).isActive = true
+        cancelBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 38, height: 38)
         
-        view.addSubview(playerController!.view)
-        view.addSubview(continueButton)
-        view.addSubview(forwardArrow)
-        view.addSubview(trimmerView)
-        
-        playerController!.view.layer.masksToBounds = true
-        playerController!.view.layer.cornerRadius = 4
-        cancelButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
-        playerController!.view.anchor(top: cancelButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 32, paddingLeft: 42, paddingBottom: 0, paddingRight: 42, width: 0, height: view.frame.height / 2)
-        continueButton.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 24, width: 40, height: 40)
+        continueButton.anchor(top: nil, left: nil, bottom: playerController?.view.safeAreaLayoutGuide.bottomAnchor, right: playerController?.view.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 24, width: 40, height: 40)
         forwardArrow.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 15, height: 10)
         forwardArrow.centerXAnchor.constraint(equalTo: continueButton.centerXAnchor).isActive = true
         forwardArrow.centerYAnchor.constraint(equalTo: continueButton.centerYAnchor).isActive = true
-        trimmerView.anchor(top: nil, left: playerController!.view.leftAnchor, bottom: playerController!.view.bottomAnchor, right: playerController!.view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 30)
         
-        setupBottomLeftOptions()
     }
     
     override func viewDidLoad() {
@@ -267,6 +202,7 @@ class VideoViewController: AssetSelectionViewController {
         player = AVPlayer(url: videoURL!)
         playerController = AVPlayerViewController()
         playerController?.videoGravity = convertToAVLayerVideoGravity(AVLayerVideoGravity.resizeAspectFill.rawValue)
+        player?.play()
         
         guard player != nil && playerController != nil else { return }
         playerController!.showsPlaybackControls = false
@@ -274,8 +210,6 @@ class VideoViewController: AssetSelectionViewController {
         self.addChild(playerController!)
         setupView()
         NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.player!.currentItem)
-        trimmerView.isHidden = true
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -296,10 +230,7 @@ class VideoViewController: AssetSelectionViewController {
     
     @objc fileprivate func playerItemDidReachEnd(_ notification: Notification) {
         if self.player != nil {
-            if let startTime = trimmerView.startTime {
-                self.player!.seek(to: startTime)
-                self.player!.play()
-            }
+            self.player!.play()
         }
     }
     
@@ -308,14 +239,14 @@ class VideoViewController: AssetSelectionViewController {
     
     @objc func loadVideo() {
         // override in subclass
-        isCrop = !isCrop
-        if isCrop == true {
-            let asset = AVAsset(url: videoURL!)
-            trimmerView.asset = asset
-            trimmerView.isHidden = false
-        } else {
-            trimmerView.isHidden = true
-        }
+//        isCrop = !isCrop
+//        if isCrop == true {
+//            let asset = AVAsset(url: videoURL!)
+//            trimmerView.asset = asset
+//            trimmerView.isHidden = false
+//        } else {
+//            trimmerView.isHidden = true
+//        }
     }
 
     func startPlaybackTimeChecker() {
@@ -332,15 +263,15 @@ class VideoViewController: AssetSelectionViewController {
     
     @objc func onPlaybackTimeChecker() {
         
-        guard let startTime = trimmerView.startTime, let endTime = trimmerView.endTime, let player = player else { return }
-        
-        let playBackTime = player.currentTime()
-        trimmerView.seek(to: playBackTime)
-        
-        if playBackTime >= endTime {
-            player.seek(to: startTime, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
-            trimmerView.seek(to: startTime)
-        }
+//        guard let startTime = trimmerView.startTime, let endTime = trimmerView.endTime, let player = player else { return }
+//
+//        let playBackTime = player.currentTime()
+//        trimmerView.seek(to: playBackTime)
+//
+//        if playBackTime >= endTime {
+//            player.seek(to: startTime, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
+//            trimmerView.seek(to: startTime)
+//        }
     }
 
 }
@@ -357,7 +288,7 @@ extension VideoViewController: TrimmerViewDelegate {
         stopPlaybackTimeChecker()
         player?.pause()
         player?.seek(to: playerTime, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
-        let _ = (trimmerView.endTime! - trimmerView.startTime!).seconds
+//        let _ = (trimmerView.endTime! - trimmerView.startTime!).seconds
     }
 }
 

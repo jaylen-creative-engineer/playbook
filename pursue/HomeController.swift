@@ -11,6 +11,7 @@ import Hero
 import Reachability
 import KWTransition
 import UserNotifications
+import NVActivityIndicatorView
 
 class HomeController : UICollectionViewController {
     
@@ -63,7 +64,8 @@ class HomeController : UICollectionViewController {
         button.setTitleColor(.white, for: .normal)
         button.layer.borderColor = UIColor.black.cgColor
         button.layer.borderWidth = 1
-        button.addTarget(self, action: #selector(getHomeFeedData), for: .touchUpInside)
+        button.contentVerticalAlignment = .center
+        button.addTarget(self, action: #selector(getMoreData), for: .touchUpInside)
         return button
     }()
     
@@ -80,8 +82,9 @@ class HomeController : UICollectionViewController {
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 105, right: 0)
         return collectionView
     }()
-    
+
     func setupResultsCollectionView(){
+        
         resultsCollectionView.delegate = self
         resultsCollectionView.dataSource = self
         resultsCollectionView.register(SearchUsers.self, forCellWithReuseIdentifier: userId)
@@ -90,16 +93,14 @@ class HomeController : UICollectionViewController {
     }
     
     func setupCollectionView(){
-        collectionView?.register(HomeHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(HomePostCells.self, forCellWithReuseIdentifier: postId)
-        collectionView?.register(RecommenedPursuit.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.register(HomeLoadMoreIndicator.self, forCellWithReuseIdentifier: loadId)
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0)
     }
     
     func setupNavBar(){
+        tabBarController?.tabBar.isTranslucent = false
         navigationItem.titleView = searchBar
         
         navigationController?.hidesBarsOnSwipe = true
@@ -130,6 +131,8 @@ class HomeController : UICollectionViewController {
                 if home.isEmpty {
                     self.isFinishedFetching = true
                 }
+                self.spinnerView.stopAnimating()
+                self.spinnerView.isHidden = true
                 self.homeArray = home
                 self.lastPostId = home.last?.posts?.first?.postId
                 self.collectionView?.reloadData()
@@ -140,7 +143,14 @@ class HomeController : UICollectionViewController {
     var lastPostId : Int?
     var refreshId : Int?
     
-    func getMoreData(){
+    let spinnerView : NVActivityIndicatorView = {
+       let spinner = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        spinner.type = NVActivityIndicatorType.ballScaleRipple
+        spinner.color = .blue
+        return spinner
+    }()
+    
+    @objc func getMoreData(){
         if lastPostId != nil && isFinishedFetching == false {
             homeServices.getMorePostForHomeFeed(postId: lastPostId) { (home) in
                 if home.isEmpty {
@@ -153,6 +163,8 @@ class HomeController : UICollectionViewController {
                         self.feed.append(Feed(post: data, post_count: value.posts_count ?? 1))
                     })
                     
+                    self.spinnerView.stopAnimating()
+                    self.spinnerView.isHidden = true
                     UIView.performWithoutAnimation {
                         self.collectionView.reloadData()
                     }
@@ -176,13 +188,20 @@ class HomeController : UICollectionViewController {
         tryAgainLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         tryAgainLabel.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 30)
         callAgain.centerXAnchor.constraint(equalTo: tryAgainLabel.centerXAnchor).isActive = true
-        callAgain.anchor(top: tryAgainLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 120, height: 24)
+        callAgain.anchor(top: tryAgainLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 120, height: 48)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(spinnerView)
+        spinnerView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
+        spinnerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        spinnerView.startAnimating()
+        
         setupNavBar()
-        tabBarController?.tabBar.isTranslucent = false
+        NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: CaptureDetailView.updateFeedNotificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: CaptureResponseView.updateResponseFeedNotificationName, object: nil)
+            
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (didAllow, error) in
         }
         
@@ -217,11 +236,21 @@ class HomeController : UICollectionViewController {
         setupNotification()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        resultsCollectionView.isHidden = true
+        navigationController?.hidesBarsOnSwipe = true
+        self.searchBar.text = nil
+        self.searchBar.endEditing(true)
+        searchBar.resignFirstResponder()
+        setupNavBar()
+    }
+    
     func setupNotification(){
         let content = UNMutableNotificationContent()
         content.title = "Check out these new pursuits in your interests"
         content.subtitle = "15 new pursuits you may like"
-        content.body = "View new pursuits"
+        content.body = "View latests pursuits"
         content.badge = 1
         
         var dateComponents = DateComponents()
@@ -229,10 +258,8 @@ class HomeController : UICollectionViewController {
         dateComponents.hour = 10
         dateComponents.minute = 0
         
-        
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         let request = UNNotificationRequest(identifier: "pursuitNotification", content: content, trigger: trigger)
-        
         UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
     }
     
@@ -254,7 +281,9 @@ class HomeController : UICollectionViewController {
     }
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-       searchBar.resignFirstResponder()
+        if scrollView == resultsCollectionView {
+            searchBar.resignFirstResponder()
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -273,16 +302,6 @@ class HomeController : UICollectionViewController {
     
     // MARK: - Setup View
     
-    @objc func goToSearchController(){
-        let searchView = SearchController(collectionViewLayout: UICollectionViewFlowLayout())
-        present(searchView, animated: true, completion: nil)
-    }
-    
-    @objc func handleProfile(){
-        let profile = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
-        present(profile, animated: true, completion: nil)
-    }
-    
     func postHeld(transitionId : String) {
         
     }
@@ -293,8 +312,32 @@ extension HomeController : UICollectionViewDelegateFlowLayout, HomePostDelegate 
     func changeToDetail(for cell: HomePostCells) {
         guard let indexPath = collectionView?.indexPath(for: cell) else { return }
         let detail = PostDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-        detail.post = self.homeArray[indexPath.item].posts
+        detail.postId = self.homeArray[indexPath.item].posts?.first?.postId
+        detail.pursuitId = self.homeArray[indexPath.item].posts?.first?.pursuitId
+        detail.isProfile = false
         present(detail, animated: true, completion: nil)
+    }
+    
+    func changeToSearchPostDetail(searchPostId : Int, searchPursuitId : Int) {
+        let detail = PostDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+        detail.postId = searchPostId
+        detail.pursuitId = searchPursuitId
+        detail.isProfile = false
+        present(detail, animated: true, completion: nil)
+    }
+    
+    func changeToPursuitDetail(searchPursuitId : Int){
+        let detail = PostDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+        detail.pursuitId = searchPursuitId
+        detail.isProfile = true
+        present(detail, animated: true, completion: nil)
+    }
+    
+    func handleChangeToProfile(userId : Int) {
+        let profileController = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+        profileController.isForeignAccount = true
+        profileController.userId = userId
+        navigationController?.pushViewController(profileController, animated: true)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -347,14 +390,17 @@ extension HomeController : UICollectionViewDelegateFlowLayout, HomePostDelegate 
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userId, for: indexPath) as! SearchUsers
                 cell.searchUser = search
+                cell.accessHomeController = self
                 return cell
             case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! SearchPursuits
                 cell.pursuits = search?.pursuits
+                cell.accessHomeController = self
                 return cell
             default:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! SearchPosts
                 cell.posts = search?.posts
+                cell.accessHomeController = self
                 return cell
             }
         default:

@@ -92,7 +92,7 @@ open class SwiftyCamViewController: UIViewController {
     
     /// Maxiumum video duration if SwiftyCamButton is used
     
-    public var maximumVideoDuration : Double     = 0.0
+    public var maximumVideoDuration : Double     = 20.0
     
     /// Video capture quality
     

@@ -17,7 +17,7 @@ class DetailTrying : UICollectionViewCell {
                 if value.pursuitId == nil {
                     addSubview(noTries)
                     noTries.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-                    noTries.anchor(top: tryingLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: noTries.intrinsicContentSize.width, height: 18)
+                    noTries.anchor(top: tryingLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: noTries.intrinsicContentSize.width, height: 18)
                 }
             }
             
@@ -105,6 +105,6 @@ extension DetailTrying : UICollectionViewDelegate, UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessPostDetailController?.changeToDetail()
+        accessPostDetailController?.handleChangeToTryDetail(sentPursuitId: (trying?[indexPath.item].pursuitId)!)
     }
 }

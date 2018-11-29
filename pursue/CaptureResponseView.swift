@@ -1,23 +1,15 @@
 //
-//  CustomTryPopover.swift
+//  CaptureResponseView.swift
 //  pursue
 //
-//  Created by Jaylen Sanders on 10/17/18.
+//  Created by Jaylen Sanders on 11/27/18.
 //  Copyright © 2018 Glory. All rights reserved.
 //
 
 import UIKit
 import Mixpanel
 
-class CustomTryPopover : UIViewController {
-    
-    var post : Post? {
-        didSet {
-            guard let image = post?.thumbnailUrl else { return }
-            tryImageView.loadImageUsingCacheWithUrlString(image)
-            postDescription.text = post?.description
-        }
-    }
+class CaptureResponseView : UIViewController {
     
     let alertViewGrayColor = UIColor(red: 224.0/255.0, green: 224.0/255.0, blue: 224.0/255.0, alpha: 1)
     let cellId = "cellId"
@@ -29,16 +21,16 @@ class CustomTryPopover : UIViewController {
         return view
     }()
     
-    lazy var tryLabel : UILabel = {
+    lazy var respondLabel : UILabel = {
         let label = UILabel()
-        label.text = "Try"
+        label.text = "Respond"
         label.font = UIFont(name: "Lato-Bold", size: 18)
         label.textAlignment = .center
         return label
     }()
     
     lazy var cancelButton : UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.setTitle("Cancel", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 16)
@@ -49,7 +41,7 @@ class CustomTryPopover : UIViewController {
     }()
     
     lazy var submitButton : UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.setTitle("Submit", for: .normal)
         button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 18)
         button.setTitleColor(.white, for: .normal)
@@ -67,8 +59,8 @@ class CustomTryPopover : UIViewController {
         return button
     }()
     
-    let tryImageView : UIImageView = {
-       let iv = UIImageView()
+    let respondImageView : UIImageView = {
+        let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 8
         iv.layer.masksToBounds = true
@@ -76,7 +68,7 @@ class CustomTryPopover : UIViewController {
     }()
     
     let postDescription : UITextField = {
-       let tf = UITextField()
+        let tf = UITextField()
         tf.font = UIFont.systemFont(ofSize: 14)
         tf.attributedPlaceholder = NSAttributedString(string: "Enter Description", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
         tf.textColor = .black
@@ -86,30 +78,39 @@ class CustomTryPopover : UIViewController {
     
     let engagementService = EngagementServices()
     let createService = CreateServices()
+    var thumbnailImage : UIImage?
+    var videoURL : URL?
+    var pursuitId : Int?
     
     @objc func handleSubmit(){
-        Mixpanel.mainInstance().track(event: "Try on Pursuit submitted")
+        Mixpanel.mainInstance().track(event: "Response on Pursuit submitted")
+        engagementService.createResponse(pursuitId: pursuitId, contentUrl: videoURL, thumbnailUrl: respondImageView.image, posts_description: postDescription.text, is_public: 1)
         
-        engagementService.toggleTry(pursuitId: 1, is_tried: 1)
-        
-        guard let thumbnailUrl = post?.thumbnailUrl, let interestId = post?.interestId else { return }
-        createService.sendTry(pursuit_description: postDescription.text, thumbnailUrl: thumbnailUrl, interestId: interestId)
-        handleCancel()
+        NotificationCenter.default.post(name: CaptureResponseView.updateResponseFeedNotificationName, object: nil)
+
+        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+        appDelegate.window = UIWindow()
+        appDelegate.window?.rootViewController = MainTabController()
+        appDelegate.window?.makeKeyAndVisible()
+        self.dismiss(animated: true, completion: nil)
     }
+    
+    static let updateResponseFeedNotificationName = NSNotification.Name(rawValue: "UpdateResponseFeed")
+
     
     func setupPage(){
         alertView.addSubview(cancelButton)
-        alertView.addSubview(tryLabel)
-        alertView.addSubview(tryImageView)
+        alertView.addSubview(respondLabel)
+        alertView.addSubview(respondImageView)
         alertView.addSubview(postDescription)
         alertView.addSubview(submitButton)
         
-        tryLabel.anchor(top: alertView.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: tryLabel.intrinsicContentSize.width, height: tryLabel.intrinsicContentSize.height)
-        tryLabel.centerXAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
+        respondLabel.anchor(top: alertView.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: respondLabel.intrinsicContentSize.width, height: respondLabel.intrinsicContentSize.height)
+        respondLabel.centerXAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
         cancelButton.anchor(top: nil, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 120, height: 34)
-        cancelButton.centerYAnchor.constraint(equalTo: tryLabel.centerYAnchor).isActive = true
-        tryImageView.anchor(top: tryLabel.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 120, height: 140)
-        postDescription.anchor(top: tryLabel.bottomAnchor, left: tryImageView.rightAnchor, bottom: nil, right: alertView.rightAnchor, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
+        cancelButton.centerYAnchor.constraint(equalTo: respondLabel.centerYAnchor).isActive = true
+        respondImageView.anchor(top: respondLabel.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 120, height: 140)
+        postDescription.anchor(top: respondLabel.bottomAnchor, left: respondImageView.rightAnchor, bottom: nil, right: alertView.rightAnchor, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
         postDescription.heightAnchor.constraint(lessThanOrEqualToConstant: 60).isActive = true
         submitButton.anchor(top: nil, left: alertView.leftAnchor, bottom: alertView.safeAreaLayoutGuide.bottomAnchor, right: alertView.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 18, paddingRight: 12, width: 0, height: 50)
     }
@@ -155,3 +156,4 @@ class CustomTryPopover : UIViewController {
         })
     }
 }
+

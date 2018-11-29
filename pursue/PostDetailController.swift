@@ -14,6 +14,7 @@ import AVKit
 import Mixpanel
 import ParallaxHeader
 import TRVSEventSource
+import NVActivityIndicatorView
 
 class PostDetailController : UICollectionViewController, PursuitDayDelegate, KeyPostDelegate, TeamListDelegate {
 
@@ -23,12 +24,14 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     let tryingId = "tryingId"
     let commentId = "commentId"
     let teamId = "teamId"
+    let headerId = "headerId"
+    var isProfile : Bool?
     
     let homeService = HomeServices()
+    let profileService = ProfileServices()
     
     lazy var imageView : UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "ferrari").withRenderingMode(.alwaysOriginal)
         imageView.contentMode = .scaleAspectFill
         imageView.isUserInteractionEnabled = true
         return imageView
@@ -61,7 +64,6 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     
     let userPhoto : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 20
         iv.layer.masksToBounds = true
@@ -70,7 +72,6 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     
     let postDetail : UILabel = {
         let label = UILabel()
-        label.text = "Travel On"
         label.numberOfLines = 0
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.init(25))
@@ -80,7 +81,6 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     
     let daysLabel : UILabel = {
         let label = UILabel()
-        label.text = "20 Days"
         label.font = UIFont(name: "Lato-Bold", size: 14)
         label.textColor = .white
         return label
@@ -96,7 +96,6 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     
     let username : UILabel = {
         let label = UILabel()
-        label.text = "Test"
         label.font = UIFont(name: "Lato-Bold", size: 14)
         label.textColor = .white
         return label
@@ -104,7 +103,6 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     
     let timeLabel : UILabel = {
         let label = UILabel()
-        label.text = "Today"
         label.font = UIFont(name: "Lato-Bold", size: 12)
         label.textColor = .white
         return label
@@ -158,7 +156,12 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         return sv
     }()
     
-    var post : [Post]?
+    var postId : Int?
+    
+    var pursuitId : Int?
+    
+    var posts = [Post]()
+    var pursuits = [Post]()
     
     var prevFrame = CGRect.zero
     var avPlayer : AVPlayer?
@@ -185,24 +188,24 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     // MARK: - Click left/right
     
     @objc func handleForward(){
-        if(self.currentStory == stories.last) {
-            // Go to the end of video
-            
-        } else {
-            self.nextStory()
+        if !stories.isEmpty {
+            if(self.currentStory == stories.last) {
+             
+            } else {
+                self.nextStory()
+            }
         }
     }
     
     func nextStory(){
-        let previousProgressView = self.progressStackView.subviews[currentStoryIndex] as! UIProgressView
-        previousProgressView.setProgress(1.0, animated: false)
+//        let previousProgressView = self.progressStackView.subviews[currentStoryIndex] as! UIProgressView
+//        previousProgressView.setProgress(1.0, animated: false)
         self.currentStoryIndex += 1
         self.currentStory = stories[self.currentStoryIndex]
+        
         self.avPlayer?.replaceCurrentItem(with: self.currentStory?.avPlayerItem)
-
         layer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
         layer?.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: videoView.frame.height)
-
         self.videoView.layer.insertSublayer(layer!, below: containerView.layer)
         self.startTimer()
         DispatchQueue.main.async(execute: {
@@ -211,20 +214,23 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     }
     
     @objc func handleBackward(){
-        if(self.currentStory == stories.first) {
-            self.avPlayer!.currentItem!.seek(to: CMTime.zero, completionHandler: nil)
-            self.avPlayer?.play()
-            self.startTimer()
-        } else {
-            self.prevStory()
+        if !stories.isEmpty {
+            if(self.currentStory == stories.first) {
+                self.avPlayer!.currentItem!.seek(to: CMTime.zero, completionHandler: nil)
+                self.avPlayer?.play()
+                self.startTimer()
+            } else {
+                self.prevStory()
+            }
         }
     }
     
     func prevStory(){
-        let previousProgressView = self.progressStackView.subviews[currentStoryIndex] as! UIProgressView
-        previousProgressView.setProgress(0.0, animated: false)
+//        let previousProgressView = self.progressStackView.subviews[currentStoryIndex] as! UIProgressView
+//        previousProgressView.setProgress(0.0, animated: false)
         self.currentStoryIndex -= 1
         self.currentStory = stories[self.currentStoryIndex]
+        
         self.avPlayer?.replaceCurrentItem(with: self.currentStory?.avPlayerItem)
         layer?.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: videoView.frame.height)
         layer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
@@ -244,23 +250,56 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = "MMM dd,yyyy"
         
-        post?.forEach({ (value) in
+        self.posts.forEach({ (value) in
             if let date = dateFormatterGet.date(from: (value.created_at)!) {
                 let timeAgoDisplay = date.timeAgoDisplay()
-                self.stories.append(Story(caption: value.posts_description, profileName: value.username, userPhoto: value.userPhotourl, time: timeAgoDisplay, videoName: value.videoUrl))
+                self.stories.append(Story(caption: value.posts_description, profileName: value.username, userPhoto: value.userPhotourl, time: timeAgoDisplay, videoName: value.videoUrl, thumbnailUrl: value.thumbnailUrl))
             } else {
                 print("There was an error decoding the string")
             }
         })
+        self.currentStory = self.stories.first
         
-       self.currentStory = stories.first
+//        if pursuitId != nil {
+//            DispatchQueue.main.async {
+//                self.posts.forEach({ (value) in
+//                    if let date = dateFormatterGet.date(from: (value.created_at)!) {
+//                        let timeAgoDisplay = date.timeAgoDisplay()
+//                        self.stories.append(Story(caption: value.posts_description, profileName: value.username, userPhoto: value.userPhotourl, time: timeAgoDisplay, videoName: value.videoUrl, thumbnailUrl: value.thumbnailUrl))
+//                    } else {
+//                        print("There was an error decoding the string")
+//                    }
+//                })
+//                self.currentStory = self.stories.first
+//            }
+//        } else if pursuitId == nil {
+//            DispatchQueue.main.async {
+//                self.posts.forEach({ (value) in
+//                    if let date = dateFormatterGet.date(from: (value.created_at)!) {
+//                        let timeAgoDisplay = date.timeAgoDisplay()
+//                        self.stories.append(Story(caption: value.posts_description, profileName: value.username, userPhoto: value.userPhotourl, time: timeAgoDisplay, videoName: value.videoUrl, thumbnailUrl: value.thumbnailUrl))
+//                    } else {
+//                        print("There was an error decoding the string")
+//                    }
+//                })
+//                self.currentStory = self.stories.first
+//            }
+//        }
     }
     
     func setStory(){
-        self.postDetail.text = self.currentStory?.caption
-        self.username.text = self.currentStory?.profileName
-        self.timeLabel.text = self.currentStory?.time
-        self.userPhoto.loadImageUsingCacheWithUrlString((self.currentStory?.userPhoto)!)
+        if self.currentStory != nil {
+            if self.currentStory?.avPlayerItem != nil {
+                self.imageView.isHidden = true
+            } else {
+                self.imageView.isHidden = false
+            }
+            
+            self.postDetail.text = self.currentStory?.caption
+            self.username.text = self.currentStory?.profileName
+            self.timeLabel.text = self.currentStory?.time
+            self.userPhoto.loadImageUsingCacheWithUrlString((self.currentStory?.userPhoto)!)
+        }
     }
     
     // MARK: - Setup Video
@@ -270,18 +309,16 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         DispatchQueue.main.async(execute: {
             self.setStory()
         })
-    
+        
         self.avPlayer = AVPlayer(playerItem: self.currentStory?.avPlayerItem)
+        
         layer = AVPlayerLayer(player: avPlayer)
         layer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
         layer?.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: videoView.frame.height)
-
         
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleSwipeFunction))
         self.videoView.isUserInteractionEnabled = true
         self.videoView.addGestureRecognizer(panGestureRecognizer)
-//        self.videoView.layer.addSublayer(layer!)
-        
         self.videoView.layer.insertSublayer(layer!, below: containerView.layer)
         avPlayer?.play()
         
@@ -295,8 +332,6 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     // MARK: - Setup Progress Bar
     
     fileprivate func setupMultipleProgressBar() {
-        addDataToStory()
-        
         containerView.addSubview(progressStackView)
         
         progressStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 2.5)
@@ -334,26 +369,28 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     func stopTimer(){
         progressBarTimer?.invalidate()
         self.progressTimerIsOn = false
-        let progressView = self.progressStackView.subviews[currentStoryIndex] as! UIProgressView
-        progressView.setProgress(0, animated: false)
+//        let progressView = self.progressStackView.subviews[currentStoryIndex] as! UIProgressView
+//        progressView.setProgress(0, animated: false)
     }
     
     @objc func progressTimerRunning(sender: Timer){
         progressTimeRemaining -= self.progressTimerUnit
-        let progressView = self.progressStackView.subviews[currentStoryIndex] as! UIProgressView
-        progressView.setProgress(((Float(progressTimeTotal) - Float(progressTimeRemaining))/Float(progressTimeTotal)), animated: true)
+//        let progressView = self.progressStackView.subviews[currentStoryIndex] as! UIProgressView
+//        progressView.setProgress(((Float(progressTimeTotal) - Float(progressTimeRemaining))/Float(progressTimeTotal)), animated: true)
         if(progressTimeRemaining <= 0){
             if(self.currentStory == stories.last){
-                print("shrinked")
             }
             else {
                 self.nextStory()
-                print("next story")
             }
         }
     }
     
     func setupVideoView(){
+        videoView.backgroundColor = .black
+        imageView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (view.frame.height / 1.2) + 65)
+        containerView.insertSubview(imageView, belowSubview: containerView)
+        
         containerView.addSubview(forwardButton)
         containerView.addSubview(backwardButton)
         containerView.addSubview(cancelButton)
@@ -361,8 +398,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         containerView.addSubview(postDetail)
         containerView.addSubview(username)
         containerView.addSubview(timeLabel)
-        containerView.addSubview(savedButton)
-        
+       
         
         forwardButton.anchor(top: containerView.topAnchor, left: containerView.centerXAnchor, bottom: containerView.bottomAnchor, right: videoView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         backwardButton.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: videoView.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
@@ -380,18 +416,15 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         userPhoto.anchor(top: progressStackView.bottomAnchor, left: containerView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
         username.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 24, width: 0, height: 16)
         timeLabel.anchor(top: username.bottomAnchor, left: username.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
-        savedButton.anchor(top: nil, left: containerView.leftAnchor, bottom: containerView.safeAreaLayoutGuide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 24, paddingRight: 0, width: 70, height: 30)
-        postDetail.anchor(top: nil, left: containerView.leftAnchor, bottom: savedButton.topAnchor, right: containerView.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 18, paddingRight: 12, width: 0, height: 0)
+        postDetail.anchor(top: nil, left: containerView.leftAnchor, bottom: containerView.safeAreaLayoutGuide.bottomAnchor, right: containerView.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 18, paddingRight: 12, width: 0, height: 0)
         postDetail.heightAnchor.constraint(lessThanOrEqualToConstant: 52).isActive = true
-        initializeVideoPlayerWithVideo()
-
     }
     
     func setupCollectionView(){
-        
         view.addSubview(videoView)
         videoView.addSubview(containerView)
         videoView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (view.frame.height / 1.2) + 45)
+        
         containerView.anchor(top: videoView.topAnchor, left: videoView.leftAnchor, bottom: nil, right: videoView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: videoView.frame.height)
         
         collectionView?.parallaxHeader.view = videoView
@@ -403,15 +436,23 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         collectionView?.backgroundColor = .white
         collectionView?.register(PursuitDay.self, forCellWithReuseIdentifier: dayId)
         collectionView?.register(KeyPost.self, forCellWithReuseIdentifier: keyId)
-        collectionView?.register(DetailChallenge.self, forCellWithReuseIdentifier: challengeId)
         collectionView?.register(DetailTrying.self, forCellWithReuseIdentifier: tryingId)
         collectionView?.register(PostResponses.self, forCellWithReuseIdentifier: commentId)
         collectionView?.register(TeamList.self, forCellWithReuseIdentifier: teamId)
     }
     
-    func changeToDetail(){
+    func changeToDetail(sentPostId : Int){
         let detail = PostDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-        //        detail.imageView.hero.id = transitionId
+        detail.isProfile = false
+        detail.pursuitId = pursuitId
+        detail.postId = sentPostId
+        present(detail, animated: true, completion: nil)
+    }
+    
+    func handleChangeToTryDetail(sentPursuitId : Int) {
+        let detail = PostDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+        detail.pursuitId = sentPursuitId
+        detail.isProfile = true
         present(detail, animated: true, completion: nil)
     }
     
@@ -435,6 +476,14 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         self.showDetailViewController(customAlert, sender: self)
+    }
+    
+    func handleChangeToProfile(userId : Int) {
+        let profileController = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+        profileController.isForeignAccount = true
+        profileController.userId = userId
+        profileController.isDetailView = true
+        present(profileController, animated: true, completion: nil)
     }
     
     func handleSave(for cell: PursuitDay) {
@@ -475,6 +524,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     
     func handleAddFriends(for cell: TeamList) {
         let customAlert = CustomFriendPopover()
+        customAlert.pursuitId = pursuitId
         customAlert.providesPresentationContextTransitionStyle = true
         customAlert.definesPresentationContext = true
         customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
@@ -484,31 +534,24 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     
     func handleViewMoreResponses() {
         let view = ResponseController(collectionViewLayout: UICollectionViewFlowLayout())
-        view.responses = detailPost?.responses
+        view.pursuitId = pursuitId
         present(view, animated: true, completion: nil)
     }
     
     func handleResponse(for cell: PursuitDay) {
         let photoSelectorController = SelectCameraController()
+        photoSelectorController.isResponse = true
+        photoSelectorController.pursuitId = pursuitId
         let navController = UINavigationController(rootViewController: photoSelectorController)
         present(navController, animated: true, completion: nil)
     }
     
     func viewMore(for cell: KeyPost) {
         let view = KeyPostController(collectionViewLayout: UICollectionViewFlowLayout())
+        view.pursuitId = pursuitId
         present(view, animated: true, completion: nil)
     }
-    
-    func changeToChallenge(){
-        let detail = ChallengeDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-        present(detail, animated: true, completion: nil)
-    }
-    
-    func changeToComments(){
-//        let comments = CommentsController(collectionViewLayout: UICollectionViewFlowLayout())
-//        present(comments, animated: true, completion: nil)
-    }
-    
+
     func handleInviteContacts(){
         let inviteController = InviteController(collectionViewLayout: UICollectionViewFlowLayout())
         present(inviteController, animated: true, completion: nil)
@@ -520,42 +563,100 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     let engagementsService = EngagementServices()
     
     func refreshEngagements() {
-        self.engagementsService.getSaveStatus(postId: 1) { (engagement) in
-            self.engagements = engagement
-            self.engagementsService.getTrystatus(pursuitId: 1) { (engagement) in
-                self.engagements = engagement
+        if isProfile == false {
+            self.engagementsService.getSaveStatus(postId: postId) { (engagement) in
+                self.engagements?.tried = engagement.tried
+                self.engagementsService.getTrystatus(pursuitId: self.pursuitId) { (engagement) in
+                    self.engagements?.saved = engagement.saved
+                }
+                self.collectionView?.reloadData()
             }
-            self.collectionView?.reloadData()
         }
     }
     
     func getEngagements() {
-        self.engagementsService.getSaveStatus(postId: 1) { (engagement) in
-            self.engagements = engagement
-            self.engagementsService.getTrystatus(pursuitId: 1) { (engagement) in
-                self.engagements = engagement
+        if isProfile == false {
+            self.engagementsService.getSaveStatus(postId: postId) { (engagement) in
+                self.engagements?.tried = engagement.tried
+                self.engagementsService.getTrystatus(pursuitId: self.pursuitId) { (engagement) in
+                    self.engagements?.saved = engagement.saved
+                }
             }
         }
     }
     
     func getDetailContent(){
-        homeService.getHomeDetail(pursuitId: 1) { (detail) in
+        let dateFormatterGet = DateFormatter()
+        dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
+        
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "MMM dd,yyyy"
+        
+        if isProfile == false {
+            homeService.getArrayOfPost(postId: postId, pursuitId: pursuitId) { (homeDetail) in
+                DispatchQueue.main.async {
+                    homeDetail.posts?.forEach({ (value) in
+                        if let date = dateFormatterGet.date(from: (value.created_at)!) {
+                            let timeAgoDisplay = date.timeAgoDisplay()
+                            self.stories.append(Story(caption: value.posts_description, profileName: value.username, userPhoto: value.userPhotourl, time: timeAgoDisplay, videoName: value.videoUrl, thumbnailUrl: value.thumbnailUrl))
+                        } else {
+                            print("There was an error decoding the string")
+                        }
+                    })
+                    
+                    self.currentStory = self.stories.first
+                    self.postDetail.text = self.currentStory?.caption
+                    self.username.text = self.currentStory?.profileName
+                    self.timeLabel.text = self.currentStory?.time
+                    self.imageView.loadImageUsingCacheWithUrlString((self.currentStory?.thumbnailUrl)!)
+                    self.userPhoto.loadImageUsingCacheWithUrlString((self.currentStory?.userPhoto)!)
+                    self.initializeVideoPlayerWithVideo()
+                }
+                
+                self.setupVideoView()
+            }
+        } else {
+            profileService.getArrayOfProfilePost(pursuitId: pursuitId) { (homeDetail) in
+                DispatchQueue.main.async {
+                    homeDetail.posts?.forEach({ (value) in
+                        if let date = dateFormatterGet.date(from: (value.created_at)!) {
+                            let timeAgoDisplay = date.timeAgoDisplay()
+                            self.stories.append(Story(caption: value.posts_description, profileName: value.username, userPhoto: value.userPhotourl, time: timeAgoDisplay, videoName: value.videoUrl, thumbnailUrl: value.thumbnailUrl))
+                        } else {
+                            print("There was an error decoding the string")
+                        }
+                    })
+                    
+                    self.currentStory = self.stories.first
+                    self.postDetail.text = self.currentStory?.caption
+                    self.username.text = self.currentStory?.profileName
+                    self.timeLabel.text = self.currentStory?.time
+                    self.imageView.loadImageUsingCacheWithUrlString((self.currentStory?.thumbnailUrl)!)
+                    self.userPhoto.loadImageUsingCacheWithUrlString((self.currentStory?.userPhoto)!)
+                    self.initializeVideoPlayerWithVideo()
+                }
+
+                self.setupVideoView()
+            }
+        }
+        
+        homeService.getHomeDetail(pursuitId: pursuitId) { (detail) in
             DispatchQueue.main.async{
                 self.detailPost = detail
                 self.getEngagements()
                 self.collectionView?.reloadData()
             }
+            
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        hero.isEnabled = true
-        setupCollectionView()
-        setupVideoView()
         getDetailContent()
-        addDataToStory()
+        setupCollectionView()
+        hero.isEnabled = true
+        setupVideoView()
     }
     
     func handleEngagementChanges(){
@@ -572,6 +673,10 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+        if avPlayer != nil{
+            avPlayer?.replaceCurrentItem(with: nil)
+            avPlayer = nil
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -639,7 +744,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
 extension PostDetailController : UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if detailPost?.key_post == nil {
+        if detailPost?.key_posts == nil {
             return 4
         } else {
             return 5
@@ -647,7 +752,7 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if detailPost?.key_post == nil {
+        if detailPost?.key_posts == nil {
             switch indexPath.item {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay
@@ -660,6 +765,7 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamList
                 cell.team = detailPost?.team
                 cell.delegate = self
+                cell.accessDetailController = self
                 return cell
             case 2:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: tryingId, for: indexPath) as! DetailTrying
@@ -683,13 +789,14 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
                 return cell
             case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: keyId, for: indexPath) as! KeyPost
-                cell.keyPost = detailPost?.key_post
+                cell.keyPost = detailPost?.key_posts
                 cell.delegate = self
                 return cell
             case 2:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamList
                 cell.team = detailPost?.team
                 cell.delegate = self
+                cell.accessDetailController = self
                 return cell
             case 3:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: tryingId, for: indexPath) as! DetailTrying
@@ -714,7 +821,7 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if detailPost?.key_post == nil {
+        if detailPost?.key_posts == nil {
             switch indexPath.item {
             case 0:
                 return CGSize(width: view.frame.width, height: 400)
@@ -753,8 +860,6 @@ extension PostDetailController : TRVSEventSourceDelegate  {
             let enagementResponse = try JSONDecoder().decode(Engagements.self, from: event.data)
             self.engagements = enagementResponse
             self.collectionView?.reloadData()
-            print(enagementResponse)
-//            print(data)
         }
         catch let error {
             print(error)

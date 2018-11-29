@@ -18,6 +18,8 @@ class SearchUsers : UICollectionViewCell {
         }
     }
     
+    var accessHomeController : HomeController?
+    
     lazy var userPhoto : UIImageView = {
         let iv = UIImageView()
         iv.layer.cornerRadius = 30
@@ -46,7 +48,7 @@ class SearchUsers : UICollectionViewCell {
     }()
     
     @objc func handleProfileTap(){
-        
+        accessHomeController?.handleChangeToProfile(userId: (searchUser?.userId)!)
     }
     
     func setupUserPhoto(){

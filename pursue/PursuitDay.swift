@@ -27,7 +27,6 @@ class PursuitDay : UICollectionViewCell {
     
     var engagements : Engagements? {
         didSet {
-            print(engagements)
             if engagements?.saved == 1 {
                 saveIcon.tintColor = .black
                 saveLabel.setTitleColor(.black, for: .normal)
@@ -344,7 +343,7 @@ extension PursuitDay : UICollectionViewDelegate, UICollectionViewDataSource, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessPostDetailController?.changeToDetail()
+        accessPostDetailController?.changeToDetail(sentPostId: (days?[indexPath.item].postId)!)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

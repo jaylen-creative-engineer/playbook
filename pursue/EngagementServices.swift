@@ -15,7 +15,7 @@ class EngagementServices {
     
     var apiUrl = "https://arcane-mesa-59373.herokuapp.com/"
     
-    func getSaveStatus(postId : Int, completion: @escaping (Engagements) -> ()){
+    func getSaveStatus(postId : Int?, completion: @escaping (Engagements) -> ()){
         let url = "http://localhost:8080/engagements/get_save_status"
         let defaults = UserDefaults.standard
         
@@ -35,7 +35,7 @@ class EngagementServices {
         }
     }
     
-    func getTrystatus(pursuitId : Int, completion: @escaping (Engagements) -> ()){
+    func getTrystatus(pursuitId : Int?, completion: @escaping (Engagements) -> ()){
         let url = "http://localhost:8080/engagements/get_try_status"
         let defaults = UserDefaults.standard
         
@@ -150,6 +150,44 @@ class EngagementServices {
                 print("Failure: \(response.result.isSuccess)")
             }
         }
+    }
+    
+    func createResponse(pursuitId : Int?, contentUrl : URL?, thumbnailUrl : UIImage?, posts_description : String?, is_public : Int){
+        let url = "http://localhost:8080/posts/create_responses"
+        
+        guard let uploadData = thumbnailUrl?.jpegData(compressionQuality: 0.3) else { return }
+        
+        let filename = NSUUID().uuidString
+        let ref = Storage.storage().reference().child("pursuit-images").child(filename)
+        ref.putData(uploadData, metadata: nil, completion: { (metadata, err) in
+            
+            if let err = err {
+                print("Failed to upload", err)
+            }
+            
+            ref.downloadURL(completion: { (thumbnailUrl, error) in
+                if let error = error {
+                    print(error)
+                } else {
+                    
+                    var parameters = Alamofire.Parameters()
+                    parameters["posts_description"] = posts_description
+                    parameters["pursuitId"] = pursuitId
+                    parameters["videoUrl"] = contentUrl
+                    parameters["thumbnailUrl"] = thumbnailUrl
+                    parameters["is_public"] = 1
+                    parameters["is_visible"] = 1
+                    parameters["is_keyPost"] = 0
+                    parameters["is_public"] = 1
+                    parameters["is_response"] = 1
+                    parameters["is_saved"] = 0
+                    
+                    Alamofire.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON(completionHandler: { (response) in
+                        print(response.result)
+                    })
+                }
+            })
+        })
     }
     
     // MARK: - TOGGLE follow user

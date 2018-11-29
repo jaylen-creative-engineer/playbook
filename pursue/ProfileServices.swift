@@ -137,6 +137,46 @@ class ProfileServices {
         }
     }
     
+    func getForeigntAccount(userId : Int, completion: @escaping (User) -> ()) {
+        let url = "http://localhost:8080/users/get_user_profile"
+        
+        var parameters = Alamofire.Parameters()
+        parameters["userId"] = userId
+        
+        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            switch response.result {
+            case .success:
+                guard let data = response.data else { return }
+                do {
+                    let userResponse = try JSONDecoder().decode(User.self, from: data)
+                    completion(userResponse)
+                } catch let error {
+                    print(error)
+                }
+            case .failure:
+                print("Failure: \(response.result.isSuccess)")
+            }
+        }
+    }
+    
+    func getArrayOfProfilePost(pursuitId : Int?, completion: @escaping (HomeDetail) -> ()){
+        let url = "http://localhost:8080/posts/profile_posts"
+        
+        var parameters = Alamofire.Parameters()
+        parameters["pursuitId"] = pursuitId
+        
+        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            
+            guard let data = response.data else { return }
+            do {
+                let homeResponse = try JSONDecoder().decode(HomeDetail.self, from: data)
+                completion(homeResponse)
+            } catch let error {
+                print(error)
+            }
+        }
+    }
+    
     func getUsersAdded(completion : @escaping (Added) -> ()) {
         let url = "http://localhost:8080/users/get_user_added"
         
@@ -183,6 +223,31 @@ class ProfileServices {
                 }
             case .failure:
                 print("Failure: \(response.result.isSuccess)")
+            }
+        }
+    }
+    
+    func sendAddedUsers(pursuitId : Int?, userId : Int?, is_following : Int?){
+        let url = "http://localhost:8080/users/added-user"
+        
+        var parameters = Alamofire.Parameters()
+        parameters["pursuitId"] = pursuitId
+        parameters["is_following"] = is_following
+        parameters["userId"] = userId
+        
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseString { (response) in
+            switch response.result {
+            case .success:
+                print("Success: \(response.result.isSuccess)")
+            case .failure(let error):
+                print("\n\n===========Error===========")
+                print("Error Code: \(error._code)")
+                print("Error Messsage: \(error.localizedDescription)")
+                if let data = response.data, let str = String(data: data, encoding: String.Encoding.utf8){
+                    print("Server Error: " + str)
+                }
+                debugPrint(error as Any)
+                print("===========================\n\n")
             }
         }
     }

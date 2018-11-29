@@ -14,6 +14,26 @@ protocol KeyPostListDelegate {
 
 class KeyPostListCells : UICollectionViewCell {
     
+    var post : Post? {
+        didSet {
+            guard let image = post?.thumbnailUrl else { return }
+            imageView.loadImageUsingCacheWithUrlString(image)
+            postDetail.text = post?.description
+            
+            let dateFormatterGet = DateFormatter()
+            dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
+            
+            let dateFormatterPrint = DateFormatter()
+            dateFormatterPrint.dateFormat = "MMM dd,yyyy"
+            
+            guard let createdTime = post?.created_at else { return }
+            if let date = dateFormatterGet.date(from: createdTime) {
+                let timeAgoDisplay = date.timeAgoDisplay()
+                timeLabel.text = timeAgoDisplay
+            }
+        }
+    }
+    
     var delegate : KeyPostListDelegate?
     
     let countLabel : UILabel = {
@@ -67,12 +87,11 @@ class KeyPostListCells : UICollectionViewCell {
         addSubview(timeLabel)
         addSubview(createButton)
         
-        countLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: countLabel.intrinsicContentSize.width, height: 18)
+        countLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 15, height: 18)
         imageView.anchor(top: countLabel.topAnchor, left: countLabel.rightAnchor, bottom: bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 72, height: 0)
-        createButton.anchor(top: countLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 19, height: 19)
-        postDetail.anchor(top: imageView.topAnchor, left: imageView.rightAnchor, bottom: nil, right: createButton.leftAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
+        postDetail.anchor(top: imageView.topAnchor, left: imageView.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
         postDetail.heightAnchor.constraint(lessThanOrEqualToConstant: 30).isActive = true
-        timeLabel.anchor(top: postDetail.bottomAnchor, left: postDetail.leftAnchor, bottom: nil, right: createButton.leftAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
+        timeLabel.anchor(top: postDetail.bottomAnchor, left: postDetail.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
         timeLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 30).isActive = true
     }
     

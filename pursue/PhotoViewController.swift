@@ -18,6 +18,8 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     private var backgroundImage: UIImage?
     var asset: PHAsset?
     var assetCollection: PHAssetCollection?
+    var isResponse : Bool?
+    var pursuitId : Int?
     
     var videoURL: URL?
     var player: AVPlayer?
@@ -122,22 +124,24 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     }()
     
     @objc func handlePursuit(){
-        let customAlert = CaptureDetailView()
-        customAlert.videoURL = videoURL
-        print(backgroundImageView.image)
-        
-        if backgroundImageView.image == nil {
-            guard let url = videoURL else { return }
-            let image = generateThumnail(url: url, fromTime: Float64(0.10))
-            customAlert.thumbnailImage = image
-        } else if backgroundImageView.image != nil {
+        if isResponse == true {
+            let customAlert = CaptureResponseView()
+            customAlert.respondImageView.image = backgroundImageView.image!
+            customAlert.pursuitId = pursuitId
+            customAlert.providesPresentationContextTransitionStyle = true
+            customAlert.definesPresentationContext = true
+            customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            self.showDetailViewController(customAlert, sender: self)
+        } else {
+            let customAlert = CaptureDetailView()
             customAlert.thumbnailImage = backgroundImageView.image!
+            customAlert.providesPresentationContextTransitionStyle = true
+            customAlert.definesPresentationContext = true
+            customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            self.showDetailViewController(customAlert, sender: self)
         }
-        customAlert.providesPresentationContextTransitionStyle = true
-        customAlert.definesPresentationContext = true
-        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        self.showDetailViewController(customAlert, sender: self)
     }
     
     @objc func handleSave(){

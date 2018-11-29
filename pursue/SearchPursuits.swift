@@ -55,6 +55,8 @@ class SearchPursuits : UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    var accessHomeController : HomeController?
 }
 
 extension SearchPursuits : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -67,6 +69,10 @@ extension SearchPursuits : UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return pursuits?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessHomeController?.changeToPursuitDetail(searchPursuitId: (pursuits?[indexPath.item].pursuitId)!)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

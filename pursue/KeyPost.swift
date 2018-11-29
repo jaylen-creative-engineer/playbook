@@ -17,6 +17,14 @@ class KeyPost : UICollectionViewCell, KeyPostCellsDelegate {
     
     var keyPost : [Post]? {
         didSet {
+            if keyPost?.first?.postId != nil {
+                if (keyPost?.count)! < 5 {
+                    viewMoreButton.isHidden = true
+                } else if (keyPost?.count)! > 5 {
+                    viewMoreButton.isHidden = false
+                }
+            }
+            
             collectionView.reloadData()
         }
     }
@@ -26,7 +34,7 @@ class KeyPost : UICollectionViewCell, KeyPostCellsDelegate {
     
     let keyPostLabel : UILabel = {
         let label = UILabel()
-        label.text = "Key Steps"
+        label.text = "Key Posts"
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
@@ -59,6 +67,7 @@ class KeyPost : UICollectionViewCell, KeyPostCellsDelegate {
         button.addTarget(self, action: #selector(handleViewMore), for: .touchUpInside)
         button.contentVerticalAlignment = .center
         button.contentHorizontalAlignment = .center
+        button.isHidden = true
         return button
     }()
     

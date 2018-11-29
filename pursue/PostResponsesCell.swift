@@ -14,7 +14,7 @@ class PostResponsesCell : UICollectionViewCell {
         didSet {
             guard let image = post?.thumbnailUrl else { return }
             photo.loadImageUsingCacheWithUrlString(image)
-            solutionLabel.text = post?.description
+            solutionLabel.text = post?.posts_description
             usernameLabel.text = post?.username
         }
     }
@@ -30,7 +30,7 @@ class PostResponsesCell : UICollectionViewCell {
     let solutionLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 12)
-        label.numberOfLines = 2
+        label.numberOfLines = 0
         return label
     }()
     
@@ -42,12 +42,20 @@ class PostResponsesCell : UICollectionViewCell {
     
     func setupView(){
         addSubview(photo)
-        addSubview(solutionLabel)
-        addSubview(usernameLabel)
         
         photo.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 8, paddingRight: 0, width: 110, height: 120)
-        solutionLabel.anchor(top: photo.topAnchor, left: photo.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: (solutionLabel.intrinsicContentSize.height * 2) + 5)
-        usernameLabel.anchor(top: solutionLabel.bottomAnchor, left: solutionLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: usernameLabel.intrinsicContentSize.height)
+        if solutionLabel.text == "" {
+            addSubview(usernameLabel)
+            usernameLabel.anchor(top: photo.topAnchor, left: photo.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
+            usernameLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 30).isActive = true
+        } else {
+            addSubview(solutionLabel)
+            addSubview(usernameLabel)
+            solutionLabel.anchor(top: photo.topAnchor, left: photo.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
+            solutionLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 30).isActive = true
+            usernameLabel.anchor(top: solutionLabel.bottomAnchor, left: photo.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
+            usernameLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 30).isActive = true
+        }
     }
     
     override init(frame: CGRect) {

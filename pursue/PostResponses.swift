@@ -16,7 +16,7 @@ class PostResponses: UICollectionViewCell {
                 if value.postId == nil {
                     addSubview(noResponses)
                     noResponses.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-                    noResponses.anchor(top: responsesLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: noResponses.intrinsicContentSize.width, height: 18)
+                    noResponses.anchor(top: responsesLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: noResponses.intrinsicContentSize.width, height: 18)
                     viewMoreButton.isHidden = true
                 }
             }
@@ -56,7 +56,7 @@ class PostResponses: UICollectionViewCell {
         button.setTitle("View More", for: .normal)
         button.titleLabel?.textAlignment = .right
         button.setTitleColor(.darkGray, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.contentHorizontalAlignment = .right
         button.contentVerticalAlignment = .center
         button.addTarget(self, action: #selector(handleViewMore), for: .touchUpInside)
@@ -106,6 +106,10 @@ extension PostResponses : UICollectionViewDelegate, UICollectionViewDataSource, 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PostResponsesCell
         cell.post = responses?[indexPath.item]
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessDetailController?.changeToDetail(sentPostId: (responses?[indexPath.item].postId)!)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

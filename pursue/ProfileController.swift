@@ -37,12 +37,29 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         collectionView?.register(ProfilePursuit.self, forCellWithReuseIdentifier: pursuitsId)
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
-        collectionView?.contentInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 20, right: 0)
+        collectionView?.contentInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 100, right: 0)
         getUser()
     }
     
+    var isForeignAccount : Bool?
+    var isDetailView : Bool?
+    var userId : Int?
+    
     func getUser(){
-        profileService.getAccount { (user) in
+        if isForeignAccount == nil {
+            profileService.getAccount { (user) in
+                DispatchQueue.main.async {
+                    self.user = user
+                    self.collectionView?.reloadData()
+                }
+            }
+        } else if isForeignAccount == true {
+            getForeignUser()
+        }
+    }
+    
+    func getForeignUser(){
+        profileService.getForeigntAccount(userId: userId!) { (user) in
             DispatchQueue.main.async {
                 self.user = user
                 self.collectionView?.reloadData()
@@ -70,8 +87,12 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         self.showDetailViewController(customAlert, sender: self)
     }
     
-    func goBack(){
-        dismiss(animated: true, completion: nil)
+    func handleDismiss(){
+        if isDetailView == true {
+            dismiss(animated: true, completion: nil)
+        } else if isDetailView == nil {
+            navigationController?.popViewController(animated: true)
+        }
     }
     
     func handleEditProfile(){
@@ -83,9 +104,10 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         
     }
     
-    func handleChangeToDetail() {
+    func handleChangeToDetail(pursuitNumber : IndexPath) {
         let detail = PostDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-        //        detail.imageView.hero.id = transitionId
+        detail.pursuitId = self.user?.pursuits?[pursuitNumber.item].pursuitId
+        detail.isProfile = true
         present(detail, animated: true, completion: nil)
     }
 }
@@ -106,11 +128,19 @@ extension ProfileController {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: (view.frame.height / 1.5))
     }
-    
+
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        if user != nil {
+            if (user?.pursuits?.isEmpty)! {
+                return 0
+            } else {
+                return 1
+            }
+        } else {
+            return 0
+        }
     }
-    
+
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitsId, for: indexPath) as! ProfilePursuit
         cell.pursuits = user?.pursuits

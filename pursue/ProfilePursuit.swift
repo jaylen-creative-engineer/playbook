@@ -50,6 +50,13 @@ class ProfilePursuit : UICollectionViewCell {
         postCollectionView.anchor(top: pursuitsLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
+    func changeToDetail(for cell: ProfilePursuit) {
+//        guard let indexPath = postCollectionView.indexPath(for: cell) else { return }
+//        let detail = PostDetailController(collectionViewLayout: UICollectionViewFlowLayout())
+//        detail.post = self.pursuits
+//        present(detail, animated: true, completion: nil)
+    }
+    
     var accessProfileController : ProfileController?
     
     override init(frame: CGRect) {
@@ -65,7 +72,11 @@ class ProfilePursuit : UICollectionViewCell {
 extension ProfilePursuit : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-       return pursuits?.count ?? 0
+        if pursuits?.first?.created_at == nil {
+            return 0
+        } else {
+            return pursuits?.count ?? 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -73,7 +84,7 @@ extension ProfilePursuit : UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessProfileController?.handleChangeToDetail()
+        accessProfileController?.handleChangeToDetail(pursuitNumber: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
