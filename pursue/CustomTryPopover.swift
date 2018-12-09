@@ -86,14 +86,15 @@ class CustomTryPopover : UIViewController {
     
     let engagementService = EngagementServices()
     let createService = CreateServices()
+    var pursuitId : Int?
     
     @objc func handleSubmit(){
         Mixpanel.mainInstance().track(event: "Try on Pursuit submitted")
         
-        engagementService.toggleTry(pursuitId: 1, is_tried: 1)
+        engagementService.toggleTry(pursuitId: pursuitId, is_tried: 1)
         
-        guard let thumbnailUrl = post?.thumbnailUrl, let interestId = post?.interestId else { return }
-        createService.sendTry(pursuit_description: postDescription.text, thumbnailUrl: thumbnailUrl, interestId: interestId)
+        guard let thumbnailUrl = post?.thumbnailUrl else { return }
+        createService.sendTry(pursuit_description: postDescription.text, thumbnailUrl: thumbnailUrl, interestId: post?.interestId)
         handleCancel()
     }
     

@@ -91,12 +91,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, UNUser
                 }
                 
                 guard let photoUrl = user?.user.photoURL?.absoluteString else { return }
-                self.profileService.socialLogin(email: email, fullname: fullname, photoUrl: photoUrl, completion: { (_) in
-                    let layout = UICollectionViewFlowLayout()
-                    let interestsController = InterestsController(collectionViewLayout: layout)
-                    interestsController.viewType = "signupInterest"
-                    self.window?.rootViewController = interestsController
-                })
+                let layout = UICollectionViewFlowLayout()
+                let interestsController = InterestsController(collectionViewLayout: layout)
+                interestsController.viewType = "signupInterest"
+                self.window?.rootViewController = interestsController
                 
             })
             

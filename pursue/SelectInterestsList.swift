@@ -21,6 +21,7 @@ class SelectInterestsList : UICollectionViewCell {
             guard let imageUrl = interest?.interest_photo else { return }
             cellBackgroundImage.loadImageUsingCacheWithUrlString(imageUrl)
             interestsLabel.text = interest?.interest_name
+            
             if interest?.selected_interests == 1 {
                 checkMark.isHidden = false
                 checkMarkBackground.isHidden = false
@@ -60,7 +61,7 @@ class SelectInterestsList : UICollectionViewCell {
     
     lazy var checkMark : UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "check").withRenderingMode(.alwaysOriginal)
+        iv.image = UIImage(named: "check")?.withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
@@ -68,7 +69,7 @@ class SelectInterestsList : UICollectionViewCell {
     
     lazy var checkMarkBackground : UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .black
         view.layer.cornerRadius = 12
         view.layer.masksToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false

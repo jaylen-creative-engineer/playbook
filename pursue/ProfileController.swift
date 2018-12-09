@@ -43,7 +43,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     
     var isForeignAccount : Bool?
     var isDetailView : Bool?
-    var userId : Int?
+    var userId : String?
     
     func getUser(){
         if isForeignAccount == nil {

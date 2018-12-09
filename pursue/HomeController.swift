@@ -248,9 +248,9 @@ class HomeController : UICollectionViewController {
     
     func setupNotification(){
         let content = UNMutableNotificationContent()
-        content.title = "Check out these new pursuits in your interests"
-        content.subtitle = "15 new pursuits you may like"
-        content.body = "View latests pursuits"
+        content.title = "Check Out The Latests Pursuits in Your Interests"
+        content.subtitle = "15 New Pursuits You May Like"
+        content.body = "View Latests Pursuits"
         content.badge = 1
         
         var dateComponents = DateComponents()
@@ -333,7 +333,7 @@ extension HomeController : UICollectionViewDelegateFlowLayout, HomePostDelegate 
         present(detail, animated: true, completion: nil)
     }
     
-    func handleChangeToProfile(userId : Int) {
+    func handleChangeToProfile(userId : String) {
         let profileController = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
         profileController.isForeignAccount = true
         profileController.userId = userId
@@ -459,13 +459,11 @@ extension HomeController : UISearchBarDelegate, UISearchResultsUpdating {
         let queryString = "%" + searchText + "%"
         
         exploreServices.queryDatabase(searchText: queryString) { (search) in
-            DispatchQueue.main.async{
-                self.search?.posts?.removeAll()
-                self.search?.pursuits?.removeAll()
-                self.search = search
-                self.resultsCollectionView.reloadData()
-            }
-        }
+            self.search?.posts?.removeAll()
+            self.search?.pursuits?.removeAll()
+            self.search = search
+            self.resultsCollectionView.reloadData()
+       }
     }
     
     func searchBarIsEmpty() -> Bool {

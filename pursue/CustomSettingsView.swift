@@ -67,7 +67,7 @@ class CustomSettingsView : UIViewController {
     
     lazy var termsLabel : UIButton = {
         let button = UIButton()
-        button.setTitle("Terms Of Use", for: .normal)
+        button.setTitle("Terms & Conditions", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.contentHorizontalAlignment = .left
@@ -76,6 +76,16 @@ class CustomSettingsView : UIViewController {
         return button
     }()
     
+    lazy var privacyLabel : UIButton = {
+        let button = UIButton()
+        button.setTitle("Privacy Policy", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.contentHorizontalAlignment = .left
+        button.contentVerticalAlignment = .top
+        button.addTarget(self, action: #selector(switchToPolicy), for: .touchUpInside)
+        return button
+    }()
     
     lazy var logOutLabel : UIButton = {
         let button = UIButton()
@@ -112,6 +122,7 @@ class CustomSettingsView : UIViewController {
         view.addSubview(changeInterestsLabel)
         view.addSubview(inviteLabel)
         view.addSubview(termsLabel)
+        view.addSubview(privacyLabel)
         view.addSubview(logOutLabel)
         view.addSubview(cancelBottomButton)
         
@@ -119,7 +130,8 @@ class CustomSettingsView : UIViewController {
         changeInterestsLabel.anchor(top: editProfileLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 32)
         inviteLabel.anchor(top: changeInterestsLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 32)
         termsLabel.anchor(top: inviteLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 32)
-        logOutLabel.anchor(top: termsLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 32)
+        privacyLabel.anchor(top: termsLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 32)
+        logOutLabel.anchor(top: privacyLabel.bottomAnchor, left: editProfileLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 32)
         cancelBottomButton.anchor(top: nil, left: alertView.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: alertView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 34)
     }
     
@@ -129,7 +141,7 @@ class CustomSettingsView : UIViewController {
         alertView.addSubview(settingsLabel)
         view.addSubview(dismissBackground)
         
-        alertView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 380)
+        alertView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 420)
         alertView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 10).isActive = true
         settingsLabel.anchor(top: alertView.topAnchor, left: alertView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: settingsLabel.intrinsicContentSize.width, height: settingsLabel.intrinsicContentSize.height)
         dismissBackground.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: alertView.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
@@ -171,12 +183,12 @@ class CustomSettingsView : UIViewController {
     }
     
     @objc func switchToPolicy(){
-        let policyController = PolicyController(collectionViewLayout: UICollectionViewFlowLayout())
+        let policyController = PolicyController()
         present(policyController, animated: true, completion: nil)
     }
     
     @objc func switchToTerms(){
-        let termsController = TermsController(collectionViewLayout: UICollectionViewFlowLayout())
+        let termsController = TermsController()
         present(termsController, animated: true, completion: nil)
     }
     

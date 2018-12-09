@@ -13,41 +13,12 @@ import Firebase
 class ExploreServices {
     
     // MARK: - GET pursuits by interests
-    
-    func getPursuits(completion: @escaping (Pursuit, Post, User) -> ()){
-        let url = "http://localhost:8080/"
-        
-        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
-            
-        }
-    }
-    
-    // MARK: - GET users
-    
-    func getUsers(completion: @escaping (User) -> ()){
-        let url = "http://localhost:8080/"
-        
-        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
-            
-        }
-    }
+    var apiUrl = "https://arcane-mesa-59373.herokuapp.com"
     
     // MARK: - QUERY database by user input
     
     func queryDatabase(searchText : String, completion: @escaping (Search) -> ()){
-        let url = "http://localhost:8080/search/get-search"
+        let url = apiUrl + "/search/get-search"
         var parameters = Alamofire.Parameters()
         parameters["searchText"] = searchText
         

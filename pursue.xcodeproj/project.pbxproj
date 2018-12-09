@@ -75,7 +75,6 @@
 		E6398083204DD6B60049A71B /* CreateServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6398082204DD6B60049A71B /* CreateServices.swift */; };
 		E6398085204DD6DF0049A71B /* ProfileServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6398084204DD6DF0049A71B /* ProfileServices.swift */; };
 		E6398087204DD7240049A71B /* InterestServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6398086204DD7240049A71B /* InterestServices.swift */; };
-		E6398089204DD7630049A71B /* NotificationServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6398088204DD7630049A71B /* NotificationServices.swift */; };
 		E639808B204DD9B00049A71B /* EngagementServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E639808A204DD9B00049A71B /* EngagementServices.swift */; };
 		E639808D204DF3D40049A71B /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = E639808C204DF3D40049A71B /* Notifications.swift */; };
 		E63CEB4E20EACAC000FFDEF3 /* PursuitDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CEB4D20EACAC000FFDEF3 /* PursuitDay.swift */; };
@@ -234,7 +233,6 @@
 		E6398082204DD6B60049A71B /* CreateServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateServices.swift; sourceTree = "<group>"; };
 		E6398084204DD6DF0049A71B /* ProfileServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileServices.swift; sourceTree = "<group>"; };
 		E6398086204DD7240049A71B /* InterestServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestServices.swift; sourceTree = "<group>"; };
-		E6398088204DD7630049A71B /* NotificationServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationServices.swift; sourceTree = "<group>"; };
 		E639808A204DD9B00049A71B /* EngagementServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngagementServices.swift; sourceTree = "<group>"; };
 		E639808C204DF3D40049A71B /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		E63CEB4D20EACAC000FFDEF3 /* PursuitDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PursuitDay.swift; sourceTree = "<group>"; };
@@ -439,7 +437,6 @@
 				E6398080204DD6780049A71B /* ExploreServices.swift */,
 				E639807E204DD63D0049A71B /* HomeServices.swift */,
 				E6398086204DD7240049A71B /* InterestServices.swift */,
-				E6398088204DD7630049A71B /* NotificationServices.swift */,
 				E6398082204DD6B60049A71B /* CreateServices.swift */,
 				E6398084204DD6DF0049A71B /* ProfileServices.swift */,
 			);
@@ -963,7 +960,6 @@
 				E6989BF320475CDD0067A55B /* CustomDetailView.swift in Sources */,
 				E639807220491EBC0049A71B /* MessageComposer.swift in Sources */,
 				E62AAB1F1FD0A66B0053EAD7 /* HelpController.swift in Sources */,
-				E6398089204DD7630049A71B /* NotificationServices.swift in Sources */,
 				E639806E20490E920049A71B /* Contacts.swift in Sources */,
 				E6B49F2B1FACDCE800AEDAFD /* InterestsController.swift in Sources */,
 				E6E0B01E2060720800007A21 /* Search.swift in Sources */,

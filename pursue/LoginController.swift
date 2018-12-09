@@ -167,13 +167,15 @@ class LoginController: UIViewController, UITextFieldDelegate {
     var customSettingsView = CustomSettingsView()
     
     func switchToLogin(){
+//        view.addSubview(termsLabel)
         view.addSubview(haveAccountLabel)
         view.addSubview(signupButton)
         view.addSubview(signupBackground)
         
         let guide = view.safeAreaLayoutGuide
         
-        haveAccountLabel.anchor(top: nil, left: textBox.leftAnchor, bottom: guide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 24, paddingRight: 0, width: haveAccountLabel.intrinsicContentSize.width, height: haveAccountLabel.intrinsicContentSize.height)
+//        termsLabel.anchor(top: nil, left: view.leftAnchor, bottom: guide.bottomAnchor, right: textBox.rightAnchor, paddingTop: 9, paddingLeft: 24, paddingBottom: 9, paddingRight: 0, width: 0, height: 40)
+        haveAccountLabel.anchor(top: nil, left: textBox.leftAnchor, bottom: guide.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 9, paddingRight: 0, width: haveAccountLabel.intrinsicContentSize.width, height: haveAccountLabel.intrinsicContentSize.height)
         signupButton.anchor(top: nil, left: haveAccountLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 6, paddingBottom: 0, paddingRight: 0, width: signupButton.intrinsicContentSize.width, height: signupButton.intrinsicContentSize.height)
         signupButton.centerYAnchor.constraint(equalTo: haveAccountLabel.centerYAnchor).isActive = true
         signupBackground.anchor(top: signupButton.topAnchor, left: haveAccountLabel.leftAnchor, bottom: signupButton.bottomAnchor, right: signupButton.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
@@ -192,6 +194,15 @@ class LoginController: UIViewController, UITextFieldDelegate {
         button.layer.borderWidth = 1
         button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         return button
+    }()
+    
+    let termsLabel : UILabel = {
+       let label = UILabel()
+        label.text = "By continuing, you agree to our Privacy Policy and Terms of Use."
+        label.textAlignment = .center
+        label.numberOfLines = 2
+        label.font = UIFont.systemFont(ofSize: 14)
+        return label
     }()
     
     @objc func handleLogin(){
@@ -253,7 +264,6 @@ class LoginController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         navigationController?.isNavigationBarHidden = true
         view.backgroundColor = UIColor.white
         

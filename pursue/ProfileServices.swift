@@ -13,12 +13,13 @@ import Firebase
 class ProfileServices {
     
     // MARK: - CREATE account
-    var apiUrl = "http://localhost:8080/users/"
+    var apiUrl = "https://arcane-mesa-59373.herokuapp.com"
     
-    func createAccount(email : String, username : String, fullname : String, photoUrl : String, bio : String?){
-        let url = apiUrl + "signup"
+    func createAccount(email : String?, username : String?, fullname : String?, photoUrl : String?, bio : String?, completion : @escaping () -> ()){
+        let url = apiUrl + "/users/signup"
 
         var parameters = Alamofire.Parameters()
+        parameters["userId"] = Auth.auth().currentUser?.uid
         parameters["email"] = email
         parameters["username"] = username
         parameters["fullname"] = fullname
@@ -29,6 +30,7 @@ class ProfileServices {
             switch response.result {
                 case .success:
                     print("Success: \(response.result.isSuccess)")
+                completion()
                 case .failure(let error):
                     print("\n\n===========Error===========")
                     print("Error Code: \(error._code)")
@@ -36,44 +38,19 @@ class ProfileServices {
                     if let data = response.data, let str = String(data: data, encoding: String.Encoding.utf8){
                         print("Server Error: " + str)
                     }
+                    completion()
                     debugPrint(error as Any)
                     print("===========================\n\n")
             }
         }
     }
     
-    func socialLogin(email : String, fullname : String, photoUrl : String, completion: @escaping (User) -> ()){
-        let url = "http://localhost:8080/signup"
-        
-        let defaults = UserDefaults.standard
-        let userId = defaults.integer(forKey: "userId")
-        
-        var parameters = Alamofire.Parameters()
-        parameters["userId"] = userId
-        parameters["email"] = email
-        parameters["fullname"] = fullname
-        parameters["photoUrl"] = photoUrl
-        
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                print("Success: \(response.result.isSuccess)")
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
-            
-        }
-    }
-    
     // MARK: - GET user account info
     func getAccountDetails(completion: @escaping (User) -> ()) {
-        
-        let url = "http://localhost:8080/users/user-details"
-        let defaults = UserDefaults.standard
-        let userId = defaults.integer(forKey: "userId")
+        let url = apiUrl + "/users/user-details"
         
         var parameters = Alamofire.Parameters()
-        parameters["userId"] = userId
+        parameters["userId"] = Auth.auth().currentUser?.uid
         
         Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { response in
             guard let data = response.data else { return }
@@ -86,40 +63,11 @@ class ProfileServices {
         }
     }
     
-    func getUserId(email : String, completion :  @escaping (User) -> ()){
-        let url = apiUrl + "get-userid"
-        
-        var parameters = Alamofire.Parameters()
-        parameters["email"] = email
-        
-        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
-            switch response.result {
-            case .success:
-                guard let data = response.data else { return }
-                do {
-                    let userResponse = try JSONDecoder().decode(User.self, from: data)
-                    completion(userResponse)
-                    
-                } catch let error {
-                    print(error)
-                }
-                
-            case .failure:
-                print("Failure: \(response.result.isSuccess)")
-            }
-        }
-    }
-    
     func getAccount(completion: @escaping (User) -> ()) {
-        let url = "http://localhost:8080/users/get_user_profile"
-        
-        let defaults = UserDefaults.standard
-//        let userId = defaults.integer(forKey: "userId")
-        
-        let userId = 1
+        let url = apiUrl + "/users/get_user_profile"
         
         var parameters = Alamofire.Parameters()
-        parameters["userId"] = userId
+        parameters["userId"] = Auth.auth().currentUser?.uid
         
         Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             switch response.result {
@@ -137,8 +85,8 @@ class ProfileServices {
         }
     }
     
-    func getForeigntAccount(userId : Int, completion: @escaping (User) -> ()) {
-        let url = "http://localhost:8080/users/get_user_profile"
+    func getForeigntAccount(userId : String, completion: @escaping (User) -> ()) {
+        let url = apiUrl + "/users/get_user_profile"
         
         var parameters = Alamofire.Parameters()
         parameters["userId"] = userId
@@ -160,7 +108,7 @@ class ProfileServices {
     }
     
     func getArrayOfProfilePost(pursuitId : Int?, completion: @escaping (HomeDetail) -> ()){
-        let url = "http://localhost:8080/posts/profile_posts"
+        let url = apiUrl + "/posts/profile_posts"
         
         var parameters = Alamofire.Parameters()
         parameters["pursuitId"] = pursuitId
@@ -178,13 +126,10 @@ class ProfileServices {
     }
     
     func getUsersAdded(completion : @escaping (Added) -> ()) {
-        let url = "http://localhost:8080/users/get_user_added"
-        
-        let defaults = UserDefaults.standard
-//        let userId = defaults.integer(forKey: "userId")
+        let url = apiUrl + "/users/get_user_added"
         
         var parameters = Alamofire.Parameters()
-        parameters["userId"] = 1
+        parameters["userId"] = Auth.auth().currentUser?.uid
         
         Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             switch response.result {
@@ -203,13 +148,10 @@ class ProfileServices {
     }
     
     func getUsersPursuits(completion : @escaping ([Pursuit]) -> ()) {
-        let url = "http://localhost:8080/users/get-user-pursuits"
-        
-        let defaults = UserDefaults.standard
-        let userId = defaults.integer(forKey: "userId")
+        let url = apiUrl + "/users/get-user-pursuits"
         
         var parameters = Alamofire.Parameters()
-        parameters["userId"] = 1
+        parameters["userId"] = Auth.auth().currentUser?.uid
         
         Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             switch response.result {
@@ -227,8 +169,8 @@ class ProfileServices {
         }
     }
     
-    func sendAddedUsers(pursuitId : Int?, userId : Int?, is_following : Int?){
-        let url = "http://localhost:8080/users/added-user"
+    func sendAddedUsers(pursuitId : Int?, userId : String?, is_following : Int?){
+        let url = apiUrl + "/users/added-user"
         
         var parameters = Alamofire.Parameters()
         parameters["pursuitId"] = pursuitId
@@ -255,14 +197,11 @@ class ProfileServices {
     
     // MARK: - UPDATE user account info
     
-    func updateAccount(username : String, fullname : String, photoUrl : String, bio : String){
-        let url = "http://localhost:8080/users/update_signup"
-        
-        let defaults = UserDefaults.standard
-        let userId = defaults.integer(forKey: "userId")
+    func updateAccount(username : String, fullname : String, photoUrl : String, bio : String?){
+        let url = apiUrl + "/users/update_signup"
         
         var parameters = Alamofire.Parameters()
-        parameters["userId"] = userId
+        parameters["userId"] = Auth.auth().currentUser?.uid
         parameters["username"] = username
         parameters["fullname"] = fullname
         parameters["photoUrl"] = photoUrl
@@ -281,13 +220,10 @@ class ProfileServices {
     // MARK: - DELETE user account
     
     func deleteAccount(){
-        let url = "http://localhost:8080/delete_account"
-        
-        let defaults = UserDefaults.standard
-        let userId = defaults.integer(forKey: "userId")
+        let url = apiUrl + "/users/delete_account"
         
         var parameters = Alamofire.Parameters()
-        parameters["userId"] = userId
+        parameters["userId"] = Auth.auth().currentUser?.uid
         
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
         }

@@ -271,7 +271,7 @@ extension UIViewController{
 extension Date {
     func timeAgoDisplay() -> String {
         let secondsAgo = Int(Date().timeIntervalSince(self))
-        
+        let absoluteSec = abs(secondsAgo)
         let minute = 60
         let hour = 60 * minute
         let day = 24 * hour
@@ -280,23 +280,23 @@ extension Date {
         
         let quotient: Int
         let unit: String
-        if secondsAgo < minute {
-            quotient = secondsAgo
+        if absoluteSec < minute {
+            quotient = absoluteSec
             unit = "second"
-        } else if secondsAgo < hour {
-            quotient = secondsAgo / minute
+        } else if absoluteSec < hour {
+            quotient = absoluteSec / minute
             unit = "min"
-        } else if secondsAgo < day {
-            quotient = secondsAgo / hour
+        } else if absoluteSec < day {
+            quotient = absoluteSec / hour
             unit = "hour"
-        } else if secondsAgo < week {
+        } else if absoluteSec < week {
             quotient = secondsAgo / day
             unit = "day"
-        } else if secondsAgo < month {
-            quotient = secondsAgo / week
+        } else if absoluteSec < month {
+            quotient = absoluteSec / week
             unit = "week"
         } else {
-            quotient = secondsAgo / month
+            quotient = absoluteSec / month
             unit = "month"
         }
         

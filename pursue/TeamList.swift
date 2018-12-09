@@ -149,7 +149,7 @@ class TeamList : UICollectionViewCell {
         }
     }
     
-    func changeToProfile(userId : Int){
+    func changeToProfile(userId : String){
         accessDetailController?.handleChangeToProfile(userId: userId)
     }
     

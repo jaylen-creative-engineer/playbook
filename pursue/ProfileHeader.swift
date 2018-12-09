@@ -9,6 +9,7 @@
 import UIKit
 import Mixpanel
 import ParallaxHeader
+import Firebase
 
 protocol ProfileHeaderDelegate {
     func handleMessage(for cell : ProfileHeader)
@@ -33,25 +34,45 @@ class ProfileHeader : UICollectionViewCell {
                 bioText.addGestureRecognizer(tap)
             }
             
-            let defaults = UserDefaults.standard
-            if user?.userId == defaults.integer(forKey: "userId") {
+            if user?.userId == Auth.auth().currentUser?.uid {
                 circleBackground.isHidden = true
                 addImageView.isHidden = true
                 backIcon.isHidden = true
                 backBackground.isHidden = true
-                settingsButton.isHidden = true
+                
+                addSubview(usernameLabel)
+                addSubview(settingsButton)
+                
+                usernameLabel.anchor(top: safeAreaLayoutGuide.topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
+                usernameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: frame.width / 2)
+                settingsButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 40, height: 40)
+                settingsButton.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
             } else {
                 circleBackground.isHidden = false
                 addImageView.isHidden = false
                 backIcon.isHidden = false
                 backBackground.isHidden = false
                 settingsButton.isHidden = false
+                
+                addSubview(usernameLabel)
+                
+                usernameLabel.anchor(top: safeAreaLayoutGuide.topAnchor, left: backIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
+                usernameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: frame.width / 2)
             }
             
-            guard let followersCount = user?.followers_count else { return }
-            addedCountLabel.titleLabel?.text = String(followersCount)
-            guard let pursuitsCount = user?.pursuits_count else { return }
-            pursuitsCountLabel.titleLabel?.text = String(pursuitsCount)
+            if user?.followers_count == 0 {
+                addedCountLabel.titleLabel?.text = String(0)
+            } else {
+                guard let followersCount = user?.followers_count else { return }
+                addedCountLabel.titleLabel?.text = String(followersCount)
+            }
+            
+            if user?.pursuits_count == 0 {
+                pursuitsCountLabel.text = String(0)
+            } else {
+                guard let pursuitsCount = user?.pursuits_count else { return }
+                pursuitsCountLabel.text = String(pursuitsCount)
+            }
             
             addImageView.setImage(user.is_following == 1 ? UIImage(named: "check")?.withRenderingMode(.alwaysOriginal) : UIImage(named: "add")?.withRenderingMode(.alwaysOriginal), for: .normal)
             circleBackground.backgroundColor = user.is_following == 1 ? .black : .white
@@ -115,7 +136,7 @@ class ProfileHeader : UICollectionViewCell {
     
     lazy var addedCountLabel : UIButton = {
         let button = UIButton()
-        button.setTitle("120", for: .normal)
+        button.setTitle("0", for: .normal)
         button.setTitleColor(.gray, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
         button.addTarget(self, action: #selector(handleAdded), for: .touchUpInside)
@@ -137,19 +158,19 @@ class ProfileHeader : UICollectionViewCell {
         return button
     }()
     
-    let pursuitsCountLabel : UIButton = {
-        let button = UIButton()
-        button.setTitle("120", for: .normal)
-        button.setTitleColor(.gray, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
+    let pursuitsCountLabel : UILabel = {
+        let button = UILabel()
+        button.text = "0"
+        button.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
+        button.textColor = .gray
         return button
     }()
     
-    let pursuitsLabel : UIButton = {
-        let button = UIButton()
-        button.setTitle("PURSUITS", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 10)
+    let pursuitsLabel : UILabel = {
+        let button = UILabel()
+        button.text = "PURSUITS"
+        button.font = UIFont(name: "Lato-Bold", size: 10)
+        button.textColor = .black
         return button
     }()
     
@@ -249,25 +270,12 @@ class ProfileHeader : UICollectionViewCell {
         pursuitsLabel.centerXAnchor.constraint(equalTo: pursuitsCountLabel.centerXAnchor).isActive = true
         
     }
-    
-    func setupSettings(){
-        setupBackButton()
-        addSubview(usernameLabel)
-        addSubview(settingsButton)
-        
-        if backIcon.isHidden {
-            usernameLabel.anchor(top: safeAreaLayoutGuide.topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
-            usernameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: frame.width / 2)
-            settingsButton.isHidden = true
-        } else {
-            usernameLabel.anchor(top: safeAreaLayoutGuide.topAnchor, left: backIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
-            usernameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: frame.width / 2)
-            settingsButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 40, height: 40)
-            settingsButton.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
-        }
-    }
-    
+
     func setupBackButton(){
+//        addSubview(settingsButton)
+//        
+//        settingsButton.anchor(top: safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 40, height: 40)
+        
         addSubview(backIcon)
         addSubview(backBackground)
         
@@ -278,8 +286,8 @@ class ProfileHeader : UICollectionViewCell {
     }
     
     func setupNavBar(){
-        setupSettings()
-        
+        setupBackButton()
+
         addSubview(imageView)
         addSubview(circleBackground)
         circleBackground.addSubview(addImageView)

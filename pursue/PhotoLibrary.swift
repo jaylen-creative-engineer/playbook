@@ -285,7 +285,6 @@ extension PhotoLibrary {
             let destination = PhotoViewController()
             destination.isResponse = isResponse
             destination.pursuitId = pursuitId
-            destination.backgroundImageView.hero.id = String(indexPath.item)
             destination.asset = asset
             destination.assetCollection = assetCollection
             present(destination, animated: true, completion: nil)

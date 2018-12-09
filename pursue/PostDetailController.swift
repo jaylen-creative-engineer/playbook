@@ -216,13 +216,15 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     @objc func handleBackward(){
         if !stories.isEmpty {
             if(self.currentStory == stories.first) {
-                self.avPlayer!.currentItem!.seek(to: CMTime.zero, completionHandler: nil)
-                self.avPlayer?.play()
-                self.startTimer()
-            } else {
-                self.prevStory()
+                if self.currentStory?.videoName != nil {
+                    self.avPlayer!.currentItem!.seek(to: CMTime.zero, completionHandler: nil)
+                    self.avPlayer?.play()
+                    self.startTimer()
+                }
+                } else {
+                    self.prevStory()
+                }
             }
-        }
     }
     
     func prevStory(){
@@ -289,7 +291,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     
     func setStory(){
         if self.currentStory != nil {
-            if self.currentStory?.avPlayerItem != nil {
+            if self.currentStory?.videoName != nil {
                 self.imageView.isHidden = true
             } else {
                 self.imageView.isHidden = false
@@ -416,7 +418,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         userPhoto.anchor(top: progressStackView.bottomAnchor, left: containerView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
         username.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 24, width: 0, height: 16)
         timeLabel.anchor(top: username.bottomAnchor, left: username.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
-        postDetail.anchor(top: nil, left: containerView.leftAnchor, bottom: containerView.safeAreaLayoutGuide.bottomAnchor, right: containerView.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 18, paddingRight: 12, width: 0, height: 0)
+        postDetail.anchor(top: nil, left: containerView.leftAnchor, bottom: containerView.safeAreaLayoutGuide.bottomAnchor, right: containerView.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 28, paddingRight: 12, width: 0, height: 0)
         postDetail.heightAnchor.constraint(lessThanOrEqualToConstant: 52).isActive = true
     }
     
@@ -478,7 +480,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         self.showDetailViewController(customAlert, sender: self)
     }
     
-    func handleChangeToProfile(userId : Int) {
+    func handleChangeToProfile(userId : String) {
         let profileController = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
         profileController.isForeignAccount = true
         profileController.userId = userId
@@ -505,6 +507,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         let post = self.detailPost?.days?[indexPath.item]
         
         let customAlert = CustomTryPopover()
+        customAlert.pursuitId = pursuitId
         customAlert.post = post
         customAlert.providesPresentationContextTransitionStyle = true
         customAlert.definesPresentationContext = true
@@ -744,7 +747,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
 extension PostDetailController : UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if detailPost?.key_posts == nil {
+        if detailPost?.key_posts?.first?.postId == nil {
             return 4
         } else {
             return 5
@@ -752,7 +755,7 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if detailPost?.key_posts == nil {
+        if detailPost?.key_posts?.first?.postId == nil {
             switch indexPath.item {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay

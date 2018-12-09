@@ -269,31 +269,6 @@ class EditProfileController : UIViewController {
         
         self.profileService.updateAccount(username: username, fullname: fullname, photoUrl: photoUrl, bio: bio)
         self.dismiss(animated: true, completion: nil)
-            
-//            let image = self.profilePicture.image,
-//            let uploadData = UIImageJPEGRepresentation(image, 0.3)
-//            else { return }
-//
-//        let filename = NSUUID().uuidString
-//        let ref = Storage.storage().reference().child("profile-images").child(filename)
-//        ref.putData(uploadData, metadata: nil, completion: { (metadata, err) in
-//
-//            if let err = err {
-//                print("Failed to upload", err)
-//            }
-//
-//            var profileImageURL = ""
-//            ref.downloadURL(completion: { (url, error) in
-//                if let error = error {
-//                    print(error)
-//                } else {
-//                    let stringUrl = url?.absoluteString
-//                    profileImageURL = stringUrl!
-//                }
-//            })
-//
-//            self.profileService.updateAccount(username: username, fullname: fullname, photoUrl: profileImageURL, bio: bio)
-//        })
     }
     
     @objc func deleteAccount(){

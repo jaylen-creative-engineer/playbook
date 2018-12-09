@@ -39,7 +39,7 @@ class PostResponses: UICollectionViewCell {
     let responsesLabel : UILabel = {
        let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.text = "Responses"
+        label.text = "Feedback"
         return label
     }()
     

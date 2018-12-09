@@ -11,7 +11,7 @@ import UIKit
 struct Search : Decodable {
     
     let users : SearchedUsers?
-    let userId : Int?
+    let userId : String?
     let username : String?
     let photoUrl : String?
     var pursuits : [Post]?

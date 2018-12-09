@@ -19,10 +19,6 @@ class CaptureDetailView: UIViewController {
     let pursuitId = "pursuitId"
     var accessLoginController : LoginController?
     
-    let peopleFullname = ["Tom Ford", "Versace", "LVME", "Test", "Lit"]
-    let peopleUsernames = ["TomFord123", "Versace", "LVME", "Test", "Lit"]
-    let peopleImages = ["comment-1", "comment-4", "comment-7", "clean-2", "clean-3"]
-    
     let teamId = "teamId"
     let interestId = "interestId"
     let cellId = "cellId"
@@ -30,9 +26,6 @@ class CaptureDetailView: UIViewController {
     var interests = [CreateInterests]()
     let interestsService = InterestServices()
     let createService = CreateServices()
-    
-    var descriptions = ["Home Redesign", "Road trip", "A foodie's weakness"]
-    var pursuitImages = [#imageLiteral(resourceName: "home-remodel"), #imageLiteral(resourceName: "ghost"), #imageLiteral(resourceName: "food")]
     
     lazy var alertView : UIView = {
         let view = UIView()
@@ -187,6 +180,17 @@ class CaptureDetailView: UIViewController {
         return label
     }()
     
+    let createFirstPursuit : UILabel = {
+        let label = UILabel()
+        label.text = "You have no pursuits to select from."
+        label.numberOfLines = 2
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.textColor = .gray
+        label.isHidden = true
+        return label
+    }()
+    
     let pursuitsCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -205,6 +209,16 @@ class CaptureDetailView: UIViewController {
         createService.getCreateDetail { (detailData) in
             DispatchQueue.main.async {
                 self.createDetail = detailData
+                if detailData.pursuits?.first?.pursuitId == nil {
+                    self.scrollView.addSubview(self.createFirstPursuit)
+                    self.createFirstPursuit.isHidden = false
+                    self.createFirstPursuit.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
+                    self.createFirstPursuit.centerYAnchor.constraint(equalTo: self.pursuitsCollectionView.centerYAnchor).isActive = true
+                    self.createFirstPursuit.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor).isActive = true
+                } else {
+                    self.createFirstPursuit.isHidden = true
+                }
+                
                 self.interestsCollectionView.reloadData()
                 self.teamCollectionView.reloadData()
                 self.pursuitsCollectionView.reloadData()
@@ -267,6 +281,7 @@ class CaptureDetailView: UIViewController {
         pursuitsCollectionView.anchor(top: pursuitsLabel.bottomAnchor, left: scrollView.leftAnchor, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 250)
         createNewLabel.anchor(top: nil, left: nil, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 120, height: 34)
         createNewLabel.centerYAnchor.constraint(equalTo: pursuitsLabel.centerYAnchor).isActive = true
+       
         
     }
     
@@ -300,11 +315,21 @@ class CaptureDetailView: UIViewController {
         privateLabel.isHidden = true
         privatePostSwitch.isHidden = true
         
-        inviteLabel.anchor(top: pursuitsCollectionView.bottomAnchor, left: scrollView.leftAnchor, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: inviteLabel.intrinsicContentSize.width, height: 16)
-        teamCollectionView.anchor(top: inviteLabel.bottomAnchor, left: scrollView.leftAnchor, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 90)
-        privateLabel.anchor(top: teamCollectionView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: privateLabel.intrinsicContentSize.width, height: 20)
-        privatePostSwitch.centerYAnchor.constraint(equalTo: privateLabel.centerYAnchor).isActive = true
-        privatePostSwitch.anchor(top: nil, left: nil, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 80, height: 24)
+        
+        if createDetail?.team?.first?.userId == nil {
+            teamCollectionView.isHidden = true
+            inviteLabel.isHidden = true
+            privateLabel.anchor(top: pursuitsCollectionView.bottomAnchor, left: scrollView.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: privateLabel.intrinsicContentSize.width, height: 20)
+            privatePostSwitch.centerYAnchor.constraint(equalTo: privateLabel.centerYAnchor).isActive = true
+            privatePostSwitch.anchor(top: nil, left: nil, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 80, height: 24)
+        } else {
+            inviteLabel.anchor(top: pursuitsCollectionView.bottomAnchor, left: scrollView.leftAnchor, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: inviteLabel.intrinsicContentSize.width, height: 16)
+            teamCollectionView.anchor(top: inviteLabel.bottomAnchor, left: scrollView.leftAnchor, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 90)
+            privateLabel.anchor(top: teamCollectionView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: privateLabel.intrinsicContentSize.width, height: 20)
+            privatePostSwitch.centerYAnchor.constraint(equalTo: privateLabel.centerYAnchor).isActive = true
+            privatePostSwitch.anchor(top: nil, left: nil, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 80, height: 24)
+        }
+        
     }
 
     func setupScrollView(){
@@ -380,7 +405,7 @@ class CaptureDetailView: UIViewController {
     }
     
     var createPursuitId : Int?
-    var is_public = 0
+    var is_public = 1
     var is_keyPost = 0
     var createInterestId : Int?
     var thumbnailImage : UIImage?
@@ -398,31 +423,46 @@ class CaptureDetailView: UIViewController {
     @objc func submitPost(){
         if createPursuitId == nil {
             submitPursuit()
+            
+
         } else if createPursuitId != nil {
             createService.createPost(pursuitId: createPursuitId!, contentUrl: videoURL, thumbnailUrl: thumbnailImage, posts_description: captionLabel.text, is_keyPost: is_keyPost, is_public: is_public)
             addTeam()
+            NotificationCenter.default.post(name: CaptureDetailView.updateFeedNotificationName, object: nil)
+            
+            let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+            appDelegate.window = UIWindow()
+            appDelegate.window?.rootViewController = MainTabController()
+            appDelegate.window?.makeKeyAndVisible()
+            self.dismiss(animated: true, completion: nil)
         }
         
-        NotificationCenter.default.post(name: CaptureDetailView.updateFeedNotificationName, object: nil)
-
-        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
-        appDelegate.window = UIWindow()
-        appDelegate.window?.rootViewController = MainTabController()
-        appDelegate.window?.makeKeyAndVisible()
-        self.dismiss(animated: true, completion: nil)
+    }
+    
+    fileprivate func createPost() {
+        self.createService.getUserPursuitsId { (returnPursuit) in
+            self.createService.createPost(pursuitId: (returnPursuit.pursuitId)!, contentUrl: self.videoURL, thumbnailUrl: self.thumbnailImage, posts_description: self.captionLabel.text, is_keyPost: self.is_keyPost, is_public: self.is_public)
+            
+            if !self.team.isEmpty {
+                for value in self.team {
+                    self.createService.addTeam(pursuitId: (returnPursuit.pursuitId)!, userId: value.userId)
+                }
+            }
+        }
     }
     
     @objc func submitPursuit(){
-        createService.createPursuit(interestId: createInterestId, thumbnailUrl: thumbnailImage, pursuitDescription: captionLabel.text, is_public: is_public)
-        createService.getUserPursuitsId { (returnPursuit) in
-            DispatchQueue.main.async{
-                self.createService.createPost(pursuitId: (returnPursuit.pursuitId)!, contentUrl: self.videoURL, thumbnailUrl: self.thumbnailImage, posts_description: self.captionLabel.text, is_keyPost: self.is_keyPost, is_public: self.is_public)
-                if !self.team.isEmpty {
-                    for value in self.team {
-                        self.createService.addTeam(pursuitId: (returnPursuit.pursuitId)!, userId: value.userId)
-                    }
-                }
+        DispatchQueue.main.async {
+            self.createService.createPursuit(interestId: self.createInterestId, thumbnailUrl: self.thumbnailImage, pursuitDescription: self.captionLabel.text, is_public: self.is_public) {
+                self.createPost()
             }
+            NotificationCenter.default.post(name: CaptureDetailView.updateFeedNotificationName, object: nil)
+            
+            let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+            appDelegate.window = UIWindow()
+            appDelegate.window?.rootViewController = MainTabController()
+            appDelegate.window?.makeKeyAndVisible()
+            self.dismiss(animated: true, completion: nil)
         }
         
     }
@@ -455,13 +495,18 @@ extension CaptureDetailView : UICollectionViewDelegate, UICollectionViewDataSour
         case interestsCollectionView:
             return createDetail?.interests?.count ?? 0
         case pursuitsCollectionView:
-            return createDetail?.pursuits?.count ?? 0
+            if createDetail?.pursuits?.first?.pursuitId == nil {
+                return 0
+            } else {
+                return createDetail?.pursuits?.count ?? 0
+            }
         default:
             return 1
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        
         switch collectionView {
         case teamCollectionView:
             return UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
@@ -471,7 +516,6 @@ extension CaptureDetailView : UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         switch collectionView {
         case teamCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamCells

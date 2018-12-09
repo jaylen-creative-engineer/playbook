@@ -81,10 +81,7 @@ class InterestsController : UICollectionViewController {
     }
     
     func getSelectedInterests(){
-        let defaults = UserDefaults.standard
-        let userId = defaults.integer(forKey: "userId")
-        
-        interestsService.getSelectedInterests(userId: String(userId)) { (interest) in
+        interestsService.getSelectedInterests { (interest) in
             DispatchQueue.main.async {
                 interest.forEach({ (value) in
                     self.interests.append(value)
@@ -174,14 +171,14 @@ extension InterestsController : UICollectionViewDelegateFlowLayout {
             var interest = self.interests[indexPath.item]
             guard let interestId = interest.interestId else { return }
             
-            if interest.selected_interests == 0 {
-                interest.selected_interests = 1
-            } else if interest.selected_interests == 1 {
-                interest.selected_interests = 0
-            }
+//            if interest.selected_interests == 0 {
+//                interest.selected_interests = 1
+//            } else if interest.selected_interests == 1 {
+//                interest.selected_interests = 0
+//            }
             self.interests[indexPath.item] = interest
             self.collectionView?.reloadItems(at: [indexPath])
-            engagementService.toggleFollowInterests(interestId: interestId, is_selected: interest.selected_interests)
+//            engagementService.toggleFollowInterests(interestId: interestId, is_selected: interest.selected_interests)
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

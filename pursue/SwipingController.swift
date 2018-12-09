@@ -11,9 +11,9 @@ import UIKit
 class SwipingController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     let pages = [
-        Page(imageName: "celebrate-walkthrough", headerText: "Collaborate", bodyText: "Find friends and blah, blah, blah."),
-        Page(imageName: "share-walkthrough", headerText: "Share", bodyText: "Share your day 90 seconds at a time."),
-        Page(imageName: "try-walkthrough", headerText: "Try", bodyText: "Try the posts you like and build the path through your pursuits.")
+        Page(imageName: "celebrate-walkthrough", headerText: "Collaborate", bodyText: "Add teams of friends to your pursuits."),
+        Page(imageName: "share-walkthrough", headerText: "Share", bodyText: "Share the behind the scenes of your day 20 seconds at a time."),
+        Page(imageName: "try-walkthrough", headerText: "Try", bodyText: "Try the pursuits you like and build the path through your interests.")
     ]
     
     @objc private func handlePrev() {

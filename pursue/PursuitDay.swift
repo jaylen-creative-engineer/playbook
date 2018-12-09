@@ -172,7 +172,7 @@ class PursuitDay : UICollectionViewCell {
     
     lazy var contributeLabel : UIButton = {
         let button = UIButton()
-        button.setTitle("Respond", for: .normal)
+        button.setTitle("Feedback", for: .normal)
         button.setTitleColor(.gray, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
         return button
@@ -217,13 +217,13 @@ class PursuitDay : UICollectionViewCell {
         hasSaved = !hasSaved
         delegate?.handleSave(for: self)
         
-//        if hasSaved == false {
-//            saveIcon.tintColor = .gray
-//            saveLabel.setTitleColor(.gray, for: .normal)
-//        } else if hasSaved == true {
-//            saveIcon.tintColor = .black
-//            saveLabel.setTitleColor(.black, for: .normal)
-//        }
+        if hasSaved == false {
+            saveIcon.tintColor = .gray
+            saveLabel.setTitleColor(.gray, for: .normal)
+        } else if hasSaved == true {
+            saveIcon.tintColor = .black
+            saveLabel.setTitleColor(.black, for: .normal)
+        }
         
     }
     
@@ -232,17 +232,17 @@ class PursuitDay : UICollectionViewCell {
         hasTried = !hasTried
         delegate?.handleTry(for: self)
         
-//        if hasTried == false {
-//            tryIcon.tintColor = .gray
-//            tryIcon.setImage(UIImage(named: "try-icon"), for: .normal)
-//            tryLabel.setTitleColor(.gray, for: .normal)
-//            tryLabel.setTitle("Try", for: .normal)
-//        } else if hasTried == true {
-//            tryIcon.tintColor = .black
-//            tryIcon.setImage(UIImage(named: "try-icon-black"), for: .normal)
-//            tryLabel.setTitle("Tried", for: .normal)
-//            tryLabel.setTitleColor(.black, for: .normal)
-//        }
+        if hasTried == false {
+            tryIcon.tintColor = .gray
+            tryIcon.setImage(UIImage(named: "try-icon"), for: .normal)
+            tryLabel.setTitleColor(.gray, for: .normal)
+            tryLabel.setTitle("Try", for: .normal)
+        } else if hasTried == true {
+            tryIcon.tintColor = .black
+            tryIcon.setImage(UIImage(named: "try-icon-black"), for: .normal)
+            tryLabel.setTitle("Tried", for: .normal)
+            tryLabel.setTitleColor(.black, for: .normal)
+        }
     }
     
     func setupEngagements(){

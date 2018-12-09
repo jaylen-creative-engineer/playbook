@@ -19,7 +19,7 @@ struct Post : Decodable {
     let posts_description : String?
     let description : String?
     let is_keyPost : Int?
-    let userId : Int?
+    let userId : String?
     let username : String?
     let fullname : String?
     let userPhotourl : String?

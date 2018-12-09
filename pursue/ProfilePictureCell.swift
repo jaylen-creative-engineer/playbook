@@ -10,6 +10,7 @@ import UIKit
 
 protocol ProfilePictureDelegate {
     func handleProfilePicture(for cell : ProfilePictureCell)
+    func setProfileImage(for cell : ProfilePictureCell)
 }
 
 class ProfilePictureCell : UICollectionViewCell {
@@ -72,28 +73,33 @@ class ProfilePictureCell : UICollectionViewCell {
         accessSignupController?.handlePlusPhoto()
     }
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(pictureBigLabel)
-        addSubview(enterPicturePrompt)
-        addSubview(profilePicture)
-        profilePicture.addSubview(addIcon)
-        addSubview(nextButton)
-        
-        pictureBigLabel.anchor(top: topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 64, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: pictureBigLabel.intrinsicContentSize.width, height: pictureBigLabel.intrinsicContentSize.height)
-        pictureBigLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        enterPicturePrompt.anchor(top: pictureBigLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: enterPicturePrompt.intrinsicContentSize.width, height: enterPicturePrompt.intrinsicContentSize.height)
-        enterPicturePrompt.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        
-        profilePicture.anchor(top: enterPicturePrompt.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 120, height: 120)
-        profilePicture.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        addIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
-        addIcon.centerXAnchor.constraint(equalTo: profilePicture.centerXAnchor).isActive = true
-        addIcon.centerYAnchor.constraint(equalTo: profilePicture.centerYAnchor).isActive = true
-        nextButton.anchor(top: topAnchor, left: nil, bottom: nil, right: safeAreaLayoutGuide.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 120, height: 34)
+//        addSubview(pictureBigLabel)
+//        addSubview(enterPicturePrompt)
+//        addSubview(profilePicture)
+//        profilePicture.addSubview(addIcon)
+//        addSubview(nextButton)
+//        
+//        pictureBigLabel.anchor(top: topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 64, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: pictureBigLabel.intrinsicContentSize.width, height: pictureBigLabel.intrinsicContentSize.height)
+//        pictureBigLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+//        enterPicturePrompt.anchor(top: pictureBigLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: enterPicturePrompt.intrinsicContentSize.width, height: enterPicturePrompt.intrinsicContentSize.height)
+//        enterPicturePrompt.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+//        
+//        profilePicture.anchor(top: enterPicturePrompt.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 120, height: 120)
+//        profilePicture.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+//        addIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
+//        addIcon.centerXAnchor.constraint(equalTo: profilePicture.centerXAnchor).isActive = true
+//        addIcon.centerYAnchor.constraint(equalTo: profilePicture.centerYAnchor).isActive = true
+//        nextButton.anchor(top: topAnchor, left: nil, bottom: nil, right: safeAreaLayoutGuide.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 120, height: 34)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+    return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
 }

@@ -31,7 +31,7 @@ class InterestsCell : UICollectionViewCell, SelectInterestsDelegate {
     
     lazy var nextButton : UIButton = {
         let button = UIButton()
-        button.setTitle("Next", for: .normal)
+        button.setTitle("Sign Up", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
@@ -71,18 +71,21 @@ class InterestsCell : UICollectionViewCell, SelectInterestsDelegate {
     }
     
     var loggedInUserId : String?
+    var isSignup : Bool?
+    var email : String?
+    
+    let profileService = ProfileServices()
     
     func getSelectedInterests(){
-        if loggedInUserId != nil {
-            interestsService.getSelectedInterests(userId: loggedInUserId!) { (interest) in
-                DispatchQueue.main.async {
-                    interest.forEach({ (value) in
-                        self.interests.append(value)
-                        self.interestsCollection.reloadData()
-                    })
-                }
+        interestsService.getSelectedInterests { (interest) in
+            DispatchQueue.main.async {
+                interest.forEach({ (value) in
+                    self.interests.append(value)
+                    self.interestsCollection.reloadData()
+                })
             }
-        } 
+        }
+        
     }
     
     func setupView(){
@@ -139,7 +142,7 @@ extension InterestsCell : UICollectionViewDelegateFlowLayout, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: frame.width, height: 185)
+        return CGSize(width: frame.width, height: 125)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

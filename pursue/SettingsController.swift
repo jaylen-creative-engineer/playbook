@@ -189,12 +189,12 @@ class SettingsController : UICollectionViewController, UICollectionViewDelegateF
     }
     
     @objc func switchToPolicy(){
-        let policyController = PolicyController(collectionViewLayout: UICollectionViewFlowLayout())
+        let policyController = PolicyController()
         navigationController?.pushViewController(policyController, animated: true)
     }
     
     @objc func switchToTerms(){
-        let termsController = TermsController(collectionViewLayout: UICollectionViewFlowLayout())
+        let termsController = TermsController()
         navigationController?.pushViewController(termsController, animated: true)
     }
     

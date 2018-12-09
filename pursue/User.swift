@@ -10,7 +10,7 @@ import UIKit
 
 struct User : Decodable {
     
-    let userId : Int?
+    let userId : String?
     let username : String?
     let fullname : String?
     let photoUrl : String?

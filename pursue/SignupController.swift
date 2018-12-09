@@ -11,7 +11,7 @@ import Firebase
 import FirebaseAuth
 import FirebaseStorage
 
-class SignupController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate, NameDelegate, EmailDelegate, UsernameDelegate, ProfilePictureDelegate {
+class SignupController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate, NameDelegate, EmailDelegate, UsernameDelegate, ProfilePictureDelegate, InterestsDelegate {
     
     // MARK: - Manage User Photo
     
@@ -22,6 +22,53 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
     let pictureId = "pictureId"
     let interestId = "interestId"
     let principleId = "principleId"
+    
+    let pictureBigLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Upload Picture."
+        label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.init(25))
+        return label
+    }()
+    
+    let enterPicturePrompt : UILabel = {
+        let label = UILabel()
+        label.text = "Please upload your profile picture"
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
+    }()
+    
+    lazy var profilePicture : UIButton = {
+        let iv = UIButton()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 60
+        iv.layer.masksToBounds = true
+        iv.layer.borderColor = UIColor.black.cgColor
+        iv.layer.borderWidth = 2
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.addTarget(self, action: #selector(handlePlusPhoto), for: .touchUpInside)
+        return iv
+    }()
+    
+    lazy var addIcon : UIImageView = {
+        let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "add").withRenderingMode(.alwaysOriginal)
+        iv.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handlePlusPhoto))
+        tap.numberOfTapsRequired = 1
+        iv.addGestureRecognizer(tap)
+        return iv
+    }()
+    
+    lazy var nextButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("Next", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
+        button.contentHorizontalAlignment = .right
+        button.contentVerticalAlignment = .center
+        return button
+    }()
     
     @objc func handlePlusPhoto(){
         
@@ -43,12 +90,17 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
 
         if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
-            profileImage = originalImage.withRenderingMode(.alwaysOriginal)
-            collectionView?.reloadData()
-            
+            DispatchQueue.main.async {
+                self.profilePicture.setImage(originalImage.withRenderingMode(.alwaysOriginal), for: .normal)
+                self.addIcon.isHidden = true
+                self.profileImage = originalImage.withRenderingMode(.alwaysOriginal)
+            }
         } else if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
-            profileImage = editedImage.withRenderingMode(.alwaysOriginal)
-            collectionView?.reloadData()
+            DispatchQueue.main.async {
+                self.profilePicture.setImage(editedImage.withRenderingMode(.alwaysOriginal), for: .normal)
+                self.addIcon.isHidden = true
+                self.profileImage = editedImage.withRenderingMode(.alwaysOriginal)
+            }
         }
 
         dismissImagePicker()
@@ -139,8 +191,12 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
                         }
                         
                         guard let photoUrl = url?.absoluteString else { return }
-                        self.profileService.createAccount(email: email, username: username, fullname: fullname, photoUrl: photoUrl, bio: nil)
-                        
+                        self.profileService.updateAccount(username: username, fullname: fullname, photoUrl: photoUrl, bio: nil)
+                        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+                        appDelegate.window = UIWindow()
+                        appDelegate.window?.rootViewController = MainTabController()
+                        appDelegate.window?.makeKeyAndVisible()
+                        self.dismiss(animated: true, completion: nil)
                     })
                 })
             }
@@ -164,8 +220,12 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
                         }
                         
                         guard let photoUrl = url?.absoluteString else { return }
-                        self.profileService.createAccount(email: email, username: username, fullname: fullname, photoUrl: photoUrl, bio: nil)
-                        
+                        self.profileService.updateAccount(username: username, fullname: fullname, photoUrl: photoUrl, bio: nil)
+                        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+                        appDelegate.window = UIWindow()
+                        appDelegate.window?.rootViewController = MainTabController()
+                        appDelegate.window?.makeKeyAndVisible()
+                        self.dismiss(animated: true, completion: nil)
                     })
                 })
             }
@@ -252,28 +312,13 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         return button
     }()
     
-    lazy var nextButton : UIButton = {
-        let button = UIButton()
-        button.setTitle("Next", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        button.contentHorizontalAlignment = .right
-        button.contentVerticalAlignment = .center
-        return button
-    }()
-    
-    lazy var loginButton : UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("SIGN UP", for: .normal)
-        button.backgroundColor = UIColor.gray
-        button.layer.cornerRadius = 28
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.init(25))
-        button.setTitleColor(.white, for: .normal)
-        button.layer.borderColor = UIColor.gray.cgColor
-        button.layer.borderWidth = 1
-        button.isEnabled = false
-        button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
-        return button
+    let termsLabel : UILabel = {
+        let label = UILabel()
+        label.text = "By continuing, you agree to our Privacy Policy and Terms of Use."
+        label.textAlignment = .center
+        label.numberOfLines = 1
+        label.font = UIFont.systemFont(ofSize: 11)
+        return label
     }()
     
     let hiddenButton : UIButton = {
@@ -294,6 +339,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         collectionView?.register(PasswordCell.self, forCellWithReuseIdentifier: passwordId)
         collectionView?.register(ProfilePictureCell.self, forCellWithReuseIdentifier: pictureId)
         collectionView?.register(InterestsCell.self, forCellWithReuseIdentifier: interestId)
+        collectionView?.isSpringLoaded = false
         collectionView?.isPagingEnabled = true
         collectionView?.isScrollEnabled = false
         collectionView?.backgroundColor = .white
@@ -319,20 +365,15 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
     func handleEmailNext(for cell: EmailCell) {
         guard let email = emailTextField.text, email.count > 0 else { return }
         guard let password = passwordTextField.text, password.count > 0 else { return }
-        
-        DispatchQueue.main.async {
-            Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
-                if let err = error {
-                    self.handleError(err)
-                    return
-                }
-                self.handleNext()
+        Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
+            if let err = error {
+                self.handleError(err)
+                return
             }
-            
-            self.profileService.getUserId(email: email, completion: { (user) in
-                self.user = user
-                self.collectionView?.reloadData()
+  
+            self.profileService.createAccount(email: email, username: nil, fullname: self.fullnameTextField.text, photoUrl: "https://photoUrl.com", bio: nil, completion: {
             })
+            self.handleNext()
         }
     }
     
@@ -357,6 +398,11 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
                             print(err)
                         }
                         self.handleNext()
+                        self.pictureBigLabel.isHidden = false
+                        self.enterPicturePrompt.isHidden = false
+                        self.profilePicture.isHidden = false
+                        self.addIcon.isHidden = false
+                        self.nextButton.isHidden = false
                     }
                 }
             }, withCancel: nil)
@@ -370,16 +416,28 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         handleNext()
     }
     
+    func setProfileImage(for cell: ProfilePictureCell) {
+        cell.profilePicture.setImage(profileImage?.withRenderingMode(.alwaysOriginal), for: .normal)
+    }
+    
+    var checkSignup = false
+    func handleInterestsCell(for cell: InterestsCell) {
+        handleSignup()
+    }
+    
     @objc private func handleNext() {
+        pictureBigLabel.isHidden = true
+        enterPicturePrompt.isHidden = true
+        profilePicture.isHidden = true
+        addIcon.isHidden = true
+        nextButton.isHidden = true
+        
         let nextIndex = min(pageControl.currentPage + 1, 4)
         let indexPath = IndexPath(item: nextIndex, section: 0)
         pageControl.currentPage = nextIndex
 
         if progressControl.progress == 1.0 {
             handleSignup()
-            loginButton.backgroundColor = .black
-            loginButton.layer.borderColor = UIColor.black.cgColor
-            loginButton.isEnabled = true
 
             progressControl.progress = progressControl.progress + Float(1)
 
@@ -391,53 +449,45 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
             self.dismiss(animated: true, completion: nil)
         }
 
-        loginButton.backgroundColor = .gray
-        loginButton.layer.borderColor = UIColor.gray.cgColor
-        loginButton.isEnabled = false
-
         self.progressControl.progress = Float(nextIndex) / Float(self.pageControl.numberOfPages)
-        self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        
-//        switch nextIndex {
-//        case 2:
-//            addUserToFirebase {
-//                if self.isValidLogin == true {
-//                    self.progressControl.progress = Float(nextIndex) / Float(self.pageControl.numberOfPages)
-//                    self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-//                }
-//            }
-//        case 3:
-//            if usernameTextField.hasText {
-//                checkUsername {
-//                    if self.isValidUsername == true {
-//                        self.progressControl.progress = Float(nextIndex) / Float(self.pageControl.numberOfPages)
-//                        self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-//                    }
-//                }
-//            } else {
-//                nextButton.isEnabled = !nextButton.isEnabled
-//            }
-//        default:
-//            loginButton.backgroundColor = .gray
-//            loginButton.layer.borderColor = UIColor.gray.cgColor
-//            loginButton.isEnabled = false
-//
-//            self.progressControl.progress = Float(nextIndex) / Float(self.pageControl.numberOfPages)
-//            self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-//        }
-        
+        self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
     }
     
     @objc func handleDismiss(){
         dismiss(animated: true, completion: nil)
     }
     
+    func setupAddProfile(){
+        pictureBigLabel.isHidden = true
+        enterPicturePrompt.isHidden = true
+        profilePicture.isHidden = true
+        addIcon.isHidden = true
+        nextButton.isHidden = true
+        
+        view.addSubview(pictureBigLabel)
+        view.addSubview(enterPicturePrompt)
+        view.addSubview(profilePicture)
+        profilePicture.addSubview(addIcon)
+        view.addSubview(nextButton)
+        
+        pictureBigLabel.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 64, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: pictureBigLabel.intrinsicContentSize.width, height: pictureBigLabel.intrinsicContentSize.height)
+        pictureBigLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        enterPicturePrompt.anchor(top: pictureBigLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: enterPicturePrompt.intrinsicContentSize.width, height: enterPicturePrompt.intrinsicContentSize.height)
+        enterPicturePrompt.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        profilePicture.anchor(top: enterPicturePrompt.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 120, height: 120)
+        profilePicture.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        addIcon.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
+        addIcon.centerXAnchor.constraint(equalTo: profilePicture.centerXAnchor).isActive = true
+        addIcon.centerYAnchor.constraint(equalTo: profilePicture.centerYAnchor).isActive = true
+        nextButton.anchor(top: view.topAnchor, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 120, height: 34)
+    }
+    
     func setupControls(){
         view.addSubview(progressControl)
         view.addSubview(cancelButton)
-//        view.addSubview(nextButton)
-        view.addSubview(loginButton)
         view.addSubview(hiddenButton)
+        view.addSubview(termsLabel)
         
         progressControl.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: view.frame.width, height: 10)
         progressControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -5).isActive = true
@@ -448,16 +498,11 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         cancelBackground.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor).isActive = true
         cancelBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 38, height: 38)
         
-//        nextButton.anchor(top: nil, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 120, height: 34)
-//        nextButton.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor).isActive = true
-        loginButton.anchor(top: nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, width: 0, height: 60)
         hiddenButton.anchor(top: nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, width: 0, height: 60)
+        termsLabel.anchor(top: nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 18, paddingRight: 12, width: 0, height: 18)
+        setupAddProfile()
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
+   
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
     }
@@ -492,9 +537,8 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
             return cell
         case 4:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: interestId, for: indexPath) as! InterestsCell
-            if user != nil {
-                cell.user = user
-            }
+            cell.delegate = self
+            cell.isSignup = true
             return cell
         default:
             assert(false, "Not a valid cell")
@@ -510,27 +554,27 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
 extension SignupController {
     
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        
+
         let x = targetContentOffset.pointee.x
-        
+
         pageControl.currentPage = Int(x / view.frame.width)
-        
+
     }
-    
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        
+
         coordinator.animate(alongsideTransition: { (_) in
             self.collectionViewLayout.invalidateLayout()
-            
+
             if self.pageControl.currentPage == 0 {
                 self.collectionView?.contentOffset = .zero
             } else {
                 let indexPath = IndexPath(item: self.pageControl.currentPage, section: 0)
-                self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+                self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
             }
-            
+
         }) { (_) in
-            
+
         }
     }
 }

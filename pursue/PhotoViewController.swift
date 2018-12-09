@@ -8,7 +8,6 @@
 
 import UIKit
 import Photos
-import Hero
 import Mixpanel
 import AVFoundation
 import AVKit
@@ -313,7 +312,6 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        hero.isEnabled = true
         setupView()
     }
     

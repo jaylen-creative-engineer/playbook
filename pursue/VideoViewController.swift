@@ -222,6 +222,12 @@ class VideoViewController: AssetSelectionViewController {
         super.viewDidDisappear(animated)
         player?.pause()
         stopPlaybackTimeChecker()
+        
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+        if player != nil{
+            player?.replaceCurrentItem(with: nil)
+            player = nil
+        }
     }
     
     @objc func cancel() {
