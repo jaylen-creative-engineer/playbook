@@ -74,6 +74,7 @@ class NameCell : UICollectionViewCell, UITextFieldDelegate {
     }
     
     @objc func handleNext(){
+        nextButton.isEnabled = false
         delegate?.handleFullnameNext(for: self)
     }
     

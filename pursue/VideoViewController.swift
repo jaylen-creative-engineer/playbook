@@ -48,37 +48,6 @@ class VideoViewController: AssetSelectionViewController {
         return iv
     }()
     
-    lazy var saveIcon : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "save").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.tintColor = .white
-        button.contentMode = .scaleAspectFill
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var saveLabel  : UILabel = {
-        let label = UILabel()
-        label.text = "Save"
-        label.font = .systemFont(ofSize: 12)
-        label.textColor = .white
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleSave))
-        tap.numberOfTapsRequired = 1
-        label.addGestureRecognizer(tap)
-        return label
-    }()
-    
-    lazy var saveBackground : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .clear
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
-        return button
-    }()
-    
     lazy var cancelBackground : UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 19
@@ -119,6 +88,15 @@ class VideoViewController: AssetSelectionViewController {
     
     @objc func handlePursuit(){
         if isResponse == true {
+            player?.pause()
+            stopPlaybackTimeChecker()
+            
+            NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+            if player != nil{
+                player?.replaceCurrentItem(with: nil)
+                player = nil
+            }
+            
             guard let url = videoURL else { return }
             let image = generateThumnail(url: url, fromTime: Float64(0.10))
             let customAlert = CaptureResponseView()
@@ -132,6 +110,15 @@ class VideoViewController: AssetSelectionViewController {
             customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
             self.showDetailViewController(customAlert, sender: self)
         } else {
+            player?.pause()
+            stopPlaybackTimeChecker()
+            
+            NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+            if player != nil{
+                player?.replaceCurrentItem(with: nil)
+                player = nil
+            }
+            
             guard let url = videoURL else { return }
             let image = generateThumnail(url: url, fromTime: Float64(0.10))
             let customAlert = CaptureDetailView()
@@ -168,19 +155,12 @@ class VideoViewController: AssetSelectionViewController {
     
     func setupView(){
         view.addSubview(playerController!.view)
-        view.addSubview(saveLabel)
-        view.addSubview(saveIcon)
-        view.addSubview(saveBackground)
         view.addSubview(cancelButton)
         view.addSubview(cancelBackground)
         view.addSubview(continueButton)
         view.addSubview(forwardArrow)
         
         playerController!.view.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        saveLabel.anchor(top: nil, left: playerController?.view.safeAreaLayoutGuide.leftAnchor, bottom: continueButton.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: saveLabel.intrinsicContentSize.width, height: saveLabel.intrinsicContentSize.height)
-        saveIcon.anchor(top: nil, left: nil, bottom: saveLabel.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 0, width: 20, height: 20)
-        saveIcon.centerXAnchor.constraint(equalTo: saveLabel.centerXAnchor).isActive = true
-        saveBackground.anchor(top: saveIcon.topAnchor, left: saveLabel.leftAnchor, bottom: saveLabel.bottomAnchor, right: saveLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
         cancelButton.anchor(top: playerController?.view.safeAreaLayoutGuide.topAnchor, left: playerController?.view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
         
@@ -198,7 +178,7 @@ class VideoViewController: AssetSelectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
-        
+        player?.automaticallyWaitsToMinimizeStalling = false
         player = AVPlayer(url: videoURL!)
         playerController = AVPlayerViewController()
         playerController?.videoGravity = convertToAVLayerVideoGravity(AVLayerVideoGravity.resizeAspectFill.rawValue)
@@ -209,13 +189,17 @@ class VideoViewController: AssetSelectionViewController {
         playerController!.player = player!
         self.addChild(playerController!)
         setupView()
-        NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.player!.currentItem)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         player?.play()
         startPlaybackTimeChecker()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd(notification:)), name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: self.player?.currentItem)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -234,7 +218,8 @@ class VideoViewController: AssetSelectionViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    @objc fileprivate func playerItemDidReachEnd(_ notification: Notification) {
+    @objc func playerItemDidReachEnd(notification: Notification) {
+        
         if self.player != nil {
             self.player!.play()
         }

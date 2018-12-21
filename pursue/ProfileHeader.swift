@@ -47,17 +47,26 @@ class ProfileHeader : UICollectionViewCell {
                 usernameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: frame.width / 2)
                 settingsButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 40, height: 40)
                 settingsButton.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
+                settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
             } else {
+                if user?.bio == nil {
+                    bioText.isHidden = true
+                }
+                
                 circleBackground.isHidden = false
                 addImageView.isHidden = false
                 backIcon.isHidden = false
                 backBackground.isHidden = false
-                settingsButton.isHidden = false
                 
                 addSubview(usernameLabel)
+                addSubview(settingsButton)
                 
                 usernameLabel.anchor(top: safeAreaLayoutGuide.topAnchor, left: backIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
                 usernameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: frame.width / 2)
+                settingsButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 40, height: 40)
+                settingsButton.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
+                settingsButton.addTarget(self, action: #selector(handleFriendSettings), for: .touchUpInside)
+
             }
             
             if user?.followers_count == 0 {
@@ -96,7 +105,7 @@ class ProfileHeader : UICollectionViewCell {
         button.setTitle("•••", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
-        button.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
         button.contentHorizontalAlignment = .right
         button.contentVerticalAlignment = .top
         button.layer.cornerRadius = 17
@@ -248,6 +257,11 @@ class ProfileHeader : UICollectionViewCell {
         accessProfileController?.handleSettings()
     }
     
+    @objc func handleFriendSettings(){
+        guard let userId = user.userId else { return }
+        accessProfileController?.handleFriendsSettings(friendId: userId)
+    }
+    
     @objc func handleEdit(){
         accessProfileController?.handleEditProfile()
     }
@@ -258,15 +272,17 @@ class ProfileHeader : UICollectionViewCell {
         addSubview(pursuitsCountLabel)
         addSubview(pursuitsLabel)
         
-        addedCountLabel.anchor(top: bioText.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: frame.width / 5.5, paddingLeft: 16, paddingBottom: 0, paddingRight: 0, width: addedCountLabel.intrinsicContentSize.width, height: 18)
+        addedCountLabel.anchor(top: bioText.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: frame.width / 5.5, paddingLeft: 16, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
+        addedCountLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 120).isActive = true
         addedLabel.anchor(top: addedCountLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: addedLabel.intrinsicContentSize.height)
         addedLabel.centerXAnchor.constraint(equalTo: addedCountLabel.centerXAnchor).isActive = true
         
         addSubview(addedBackground)
         addedBackground.anchor(top: addedCountLabel.topAnchor, left: addedLabel.leftAnchor, bottom: addedLabel.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 90, height: 0)
         
-        pursuitsCountLabel.anchor(top: addedCountLabel.topAnchor, left: addedLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 48, paddingBottom: 0, paddingRight: 0, width: pursuitsCountLabel.intrinsicContentSize.width, height: 18)
-        pursuitsLabel.anchor(top: pursuitsCountLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: pursuitsLabel.intrinsicContentSize.height)
+        pursuitsCountLabel.anchor(top: bioText.bottomAnchor, left: addedLabel.rightAnchor, bottom: nil, right: nil, paddingTop: frame.width / 5.5, paddingLeft: 48, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
+        pursuitsCountLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 60).isActive = true
+        pursuitsLabel.anchor(top: pursuitsCountLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: pursuitsLabel.intrinsicContentSize.height)
         pursuitsLabel.centerXAnchor.constraint(equalTo: pursuitsCountLabel.centerXAnchor).isActive = true
         
     }

@@ -10,9 +10,9 @@ import UIKit
 
 class PostResponses: UICollectionViewCell {
     
-    var responses : [Post]? {
+    var responses : [Post]! {
         didSet {
-            for value in responses ?? [] {
+            for value in responses {
                 if value.postId == nil {
                     addSubview(noResponses)
                     noResponses.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
@@ -45,7 +45,7 @@ class PostResponses: UICollectionViewCell {
     
     let noResponses : UILabel = {
        let label = UILabel()
-        label.text = "No Responses Yet"
+        label.text = "No Feedback Yet"
         label.textColor = .gray
         label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
@@ -99,17 +99,21 @@ class PostResponses: UICollectionViewCell {
 extension PostResponses : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return responses?.count ?? 0
+        if responses.count > 3 {
+            return 3
+        } else {
+            return responses.count
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PostResponsesCell
-        cell.post = responses?[indexPath.item]
+        cell.post = responses[indexPath.item]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessDetailController?.changeToDetail(sentPostId: (responses?[indexPath.item].postId)!)
+        accessDetailController?.changeToDetail(sentPostId: (responses[indexPath.item].postId)!)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

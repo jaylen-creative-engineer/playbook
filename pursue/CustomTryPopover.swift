@@ -92,11 +92,21 @@ class CustomTryPopover : UIViewController {
         Mixpanel.mainInstance().track(event: "Try on Pursuit submitted")
         
         engagementService.toggleTry(pursuitId: pursuitId, is_tried: 1)
+        createService.sendTry(pursuit_description: postDescription.text, thumbnailUrl: post?.thumbnailUrl, interestId: post?.interestId, pursuitId: pursuitId) {
+            DispatchQueue.main.async {
+                self.createService.getUserPursuitsId { (returnPursuit) in
+                    self.createService.sendToSimilarPursuit(new_pursuitId: returnPursuit.pursuitId, pursuitId: self.pursuitId)
+                }
+            }
+        }
         
-        guard let thumbnailUrl = post?.thumbnailUrl else { return }
-        createService.sendTry(pursuit_description: postDescription.text, thumbnailUrl: thumbnailUrl, interestId: post?.interestId)
+        NotificationCenter.default.post(name: CustomTryPopover.updateEngagementsNotificationName, object: nil)
+
         handleCancel()
     }
+    
+    static let updateEngagementsNotificationName = NSNotification.Name(rawValue: "UpdateEngagements")
+
     
     func setupPage(){
         alertView.addSubview(cancelButton)

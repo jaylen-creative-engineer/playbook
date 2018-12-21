@@ -50,37 +50,6 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         view.layer.masksToBounds = true
         return view
     }()
-    
-    lazy var saveIcon : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "save").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.tintColor = .white
-        button.contentMode = .scaleAspectFill
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var saveLabel  : UILabel = {
-        let label = UILabel()
-        label.text = "Save"
-        label.font = .systemFont(ofSize: 14)
-        label.textColor = .white
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleSave))
-        tap.numberOfTapsRequired = 1
-        label.addGestureRecognizer(tap)
-        return label
-    }()
-    
-    lazy var saveBackground : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .clear
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
-        return button
-    }()
 
     lazy var cancelButton : UIButton = {
        let button = UIButton()
@@ -242,14 +211,6 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
             
             playerController!.view.anchor(top: cancelButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 32, paddingLeft: 42, paddingBottom: 0, paddingRight: 42, width: 0, height: view.frame.height / 2)
             
-            view.addSubview(saveLabel)
-            view.addSubview(saveIcon)
-            view.addSubview(saveBackground)
-            
-            saveLabel.anchor(top: nil, left: playerController?.view.safeAreaLayoutGuide.leftAnchor, bottom: continueButton.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: saveLabel.intrinsicContentSize.width, height: saveLabel.intrinsicContentSize.height)
-            saveIcon.anchor(top: nil, left: nil, bottom: saveLabel.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 0, width: 20, height: 20)
-            saveIcon.centerXAnchor.constraint(equalTo: saveLabel.centerXAnchor).isActive = true
-            saveBackground.anchor(top: saveIcon.topAnchor, left: saveLabel.leftAnchor, bottom: saveLabel.bottomAnchor, right: saveLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
             
             view.addSubview(cancelButton)
             view.addSubview(continueButton)
@@ -289,15 +250,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         forwardArrow.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 15, height: 10)
         forwardArrow.centerXAnchor.constraint(equalTo: continueButton.centerXAnchor).isActive = true
         forwardArrow.centerYAnchor.constraint(equalTo: continueButton.centerYAnchor).isActive = true
-        
-        view.addSubview(saveLabel)
-        view.addSubview(saveIcon)
-        view.addSubview(saveBackground)
-        
-        saveLabel.anchor(top: nil, left: backgroundImageView.safeAreaLayoutGuide.leftAnchor, bottom: continueButton.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: saveLabel.intrinsicContentSize.width, height: saveLabel.intrinsicContentSize.height)
-        saveIcon.anchor(top: nil, left: nil, bottom: saveLabel.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 0, width: 20, height: 20)
-        saveIcon.centerXAnchor.constraint(equalTo: saveLabel.centerXAnchor).isActive = true
-        saveBackground.anchor(top: saveIcon.topAnchor, left: saveLabel.leftAnchor, bottom: saveLabel.bottomAnchor, right: saveLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+    
     }
     
     func setupView(){

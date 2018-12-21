@@ -57,7 +57,7 @@ class ResponseController : UICollectionViewController, KeyPostListDelegate {
         navBarBackground.backgroundColor = .white
         navBarBackground.translatesAutoresizingMaskIntoConstraints = false
         
-        responsePostLabel.text = "Responses"
+        responsePostLabel.text = "Feedback"
         responsePostLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
         responsePostLabel.translatesAutoresizingMaskIntoConstraints = false
         

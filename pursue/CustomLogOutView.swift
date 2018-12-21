@@ -8,8 +8,6 @@
 
 import UIKit
 import Firebase
-import FBSDKCoreKit
-import GoogleSignIn
 import FirebaseAuth
 
 class CustomLogOutView : UIViewController {

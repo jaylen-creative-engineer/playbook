@@ -56,6 +56,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     
     lazy var cancelBackground : UIButton = {
        let button = UIButton()
+        button.backgroundColor = UIColor.init(white: 0.4, alpha: 0.5)
         button.layer.cornerRadius = 18
         button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
@@ -410,7 +411,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
 
         cancelButton.anchor(top: progressStackView.bottomAnchor, left: nil, bottom: nil, right: containerView.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 16, height: 16)
         
-        containerView.addSubview(cancelBackground)
+        containerView.insertSubview(cancelBackground, belowSubview: cancelButton)
         cancelBackground.centerXAnchor.constraint(equalTo: cancelButton.centerXAnchor).isActive = true
         cancelBackground.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor).isActive = true
         cancelBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 36, height: 36)
@@ -466,9 +467,21 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     }
     
     func handleShare(for cell: PursuitDay) {
-        let activityController = UIActivityViewController(activityItems: [imageView.image ?? "", postDetail.text ?? "", daysLabel.text ?? ""], applicationActivities: nil)
-        Mixpanel.mainInstance().track(event: "Post Shared")
-        present(activityController, animated: true, completion: nil)
+        if let name = NSURL(string: "https://itunes.apple.com/us/app/inpursuit-social/id1446350125?ls=1&mt=8") {
+            let activityController = UIActivityViewController(activityItems: ["Add me on inpursuit ", name], applicationActivities: nil)
+            Mixpanel.mainInstance().track(event: "Post Shared")
+            present(activityController, animated: true, completion: nil)
+        }
+        else
+        {
+            let alert = UIAlertController(title: "Share", message: "Share is not available for this device. Consider updating to iOS 11.", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.cancel, handler: dismissAlertView))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func dismissAlertView(action : UIAlertAction) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     func handleKeyPostSave(for cell: KeyPost) {
@@ -565,7 +578,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     var days = [HomeDetail]()
     let engagementsService = EngagementServices()
     
-    func refreshEngagements() {
+    @objc func refreshEngagements() {
         if isProfile == false {
             self.engagementsService.getSaveStatus(postId: postId) { (engagement) in
                 self.engagements?.tried = engagement.tried
@@ -596,6 +609,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         dateFormatterPrint.dateFormat = "MMM dd,yyyy"
         
         if isProfile == false {
+            
             homeService.getArrayOfPost(postId: postId, pursuitId: pursuitId) { (homeDetail) in
                 DispatchQueue.main.async {
                     homeDetail.posts?.forEach({ (value) in
@@ -653,13 +667,25 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         }
     }
     
+    @objc func reloadTeam(){
+        engagementsService.getTeam(pursuitId: pursuitId) { (team) in
+            self.detailPost?.team = team.first?.team
+            self.collectionView.reloadData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        avPlayer?.automaticallyWaitsToMinimizeStalling = false
         getDetailContent()
         setupCollectionView()
         hero.isEnabled = true
         setupVideoView()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshEngagements), name: CustomTryPopover.updateEngagementsNotificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshEngagements), name: CustomSavePopover.updateEngagementsNotificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTeam), name: CustomFriendPopover.updateTeamNotificationName, object: nil)
     }
     
     func handleEngagementChanges(){
@@ -781,7 +807,7 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
                 cell.accessDetailController = self
                 return cell
             }
-        } else {
+        } else  {
             switch indexPath.item {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay
@@ -824,7 +850,7 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if detailPost?.key_posts == nil {
+        if detailPost?.key_posts?.first?.postId == nil {
             switch indexPath.item {
             case 0:
                 return CGSize(width: view.frame.width, height: 400)

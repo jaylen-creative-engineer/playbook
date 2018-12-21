@@ -53,16 +53,18 @@ class HomeServices {
         parameters["postId"] = postId
         parameters["pursuitId"] = pursuitId
         
-        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
-            
-            guard let data = response.data else { return }
-            do {
-                let homeResponse = try JSONDecoder().decode(HomeDetail.self, from: data)
-                completion(homeResponse)
-            } catch let error {
-                print(error)
+//        DispatchQueue.global(qos: .background).async {
+            Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+                
+                guard let data = response.data else { return }
+                do {
+                    let homeResponse = try JSONDecoder().decode(HomeDetail.self, from: data)
+                    completion(homeResponse)
+                } catch let error {
+                    print(error)
+                }
             }
-        }
+//        }
     }
     
     

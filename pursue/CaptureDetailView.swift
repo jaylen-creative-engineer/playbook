@@ -364,7 +364,6 @@ class CaptureDetailView: UIViewController {
         
         captureCollectionView.delegate = self
         captureCollectionView.dataSource = self
-        captureCollectionView.register(CaptureDetailCell.self, forCellWithReuseIdentifier: cellId)
         
         alertView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         backgroundFill.anchor(top: alertView.topAnchor, left: alertView.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 80)
@@ -422,10 +421,12 @@ class CaptureDetailView: UIViewController {
     
     @objc func submitPost(){
         if createPursuitId == nil {
+            nextLabel.setTitle("Sending...", for: .normal)
             submitPursuit()
             
-
         } else if createPursuitId != nil {
+            nextLabel.setTitle("Sending...", for: .normal)
+            
             createService.createPost(pursuitId: createPursuitId!, contentUrl: videoURL, thumbnailUrl: thumbnailImage, posts_description: captionLabel.text, is_keyPost: is_keyPost, is_public: is_public)
             addTeam()
             NotificationCenter.default.post(name: CaptureDetailView.updateFeedNotificationName, object: nil)
@@ -438,6 +439,7 @@ class CaptureDetailView: UIViewController {
         }
         
     }
+    
     
     fileprivate func createPost() {
         self.createService.getUserPursuitsId { (returnPursuit) in
@@ -455,14 +457,14 @@ class CaptureDetailView: UIViewController {
         DispatchQueue.main.async {
             self.createService.createPursuit(interestId: self.createInterestId, thumbnailUrl: self.thumbnailImage, pursuitDescription: self.captionLabel.text, is_public: self.is_public) {
                 self.createPost()
+                NotificationCenter.default.post(name: CaptureDetailView.updateFeedNotificationName, object: nil)
+                
+                let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+                appDelegate.window = UIWindow()
+                appDelegate.window?.rootViewController = MainTabController()
+                appDelegate.window?.makeKeyAndVisible()
+                self.dismiss(animated: true, completion: nil)
             }
-            NotificationCenter.default.post(name: CaptureDetailView.updateFeedNotificationName, object: nil)
-            
-            let appDelegate = UIApplication.shared.delegate! as! AppDelegate
-            appDelegate.window = UIWindow()
-            appDelegate.window?.rootViewController = MainTabController()
-            appDelegate.window?.makeKeyAndVisible()
-            self.dismiss(animated: true, completion: nil)
         }
         
     }
@@ -532,7 +534,7 @@ extension CaptureDetailView : UICollectionViewDelegate, UICollectionViewDataSour
             cell.pursuit = createDetail?.pursuits?[indexPath.item]
             return cell
         default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! CreatePursuitsCells
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "randomCell", for: indexPath)
             return cell
         }
     }

@@ -10,14 +10,12 @@ import UIKit
 import Firebase
 import FirebaseAuth
 import FirebaseStorage
-import GoogleSignIn
 import Alamofire
-import FBSDKCoreKit
 import Mixpanel
 import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
     var userPhoto : Data?
@@ -29,13 +27,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, UNUser
         UNUserNotificationCenter.current().delegate = self
         setCategories()
 
-        Mixpanel.initialize(token: "966109a7aee1fb1067d5c2363b8a4284")
-        
-        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        Mixpanel.initialize(token: "d691451088376e5aaa53c095d5ca4e44")
+        Mixpanel.mainInstance().loggingEnabled = true
+        Mixpanel.mainInstance().flushInterval = 5
+        let allTweaks: [TweakClusterType] = [MixpanelTweaks.floatTweak,
+                                             MixpanelTweaks.intTweak,
+                                             MixpanelTweaks.boolTweak,
+                                             MixpanelTweaks.stringTweak]
+        MixpanelTweaks.setTweaks(tweaks: allTweaks)
         
         FirebaseApp.configure()
-        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
-        GIDSignIn.sharedInstance().delegate = self
         
         if UserDefaults.standard.value(forKey: "firstAppLaunch") == nil {
             let layout = UICollectionViewFlowLayout()
@@ -54,65 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, UNUser
         return true
     }
     
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        if let error = error {
-            print("Failed to login \(error)")
-            return
-        }
-        
-        guard let idToken = user.authentication.idToken else { return }
-        guard let accessToken = user.authentication.accessToken else { return }
-        let credentials = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
-
-        Auth.auth().signInAndRetrieveData(with: credentials) { (user, error) in
-            if let error = error {
-                print("Failed to create account: ", error)
-                return
-            }
-            
-            guard let email = user?.user.email else { return }
-            guard let fullname = user?.user.displayName else { return }
-            
-            if let profileImageUrl = user?.user.photoURL {
-                do {
-                    let imageData = try Data(contentsOf: profileImageUrl as URL)
-                    self.userPhoto = imageData
-                } catch {
-                    print("Unable to load data: \(error)")
-                }
-            }
-            
-            guard let googleProfilePic = self.userPhoto else { return }
-            let filename = NSUUID().uuidString
-            Storage.storage().reference().child("profile-images").child(filename).putData(googleProfilePic, metadata: nil, completion: { (metadata, err) in
-                
-                if let err = err {
-                    print("Failed to upload", err)
-                }
-                
-                guard let photoUrl = user?.user.photoURL?.absoluteString else { return }
-                let layout = UICollectionViewFlowLayout()
-                let interestsController = InterestsController(collectionViewLayout: layout)
-                interestsController.viewType = "signupInterest"
-                self.window?.rootViewController = interestsController
-                
-            })
-            
-        }
-    }
-    
-    
-    @available(iOS 9.0, *)
-    func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any])
-        -> Bool {
-            let handled = FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String, annotation: options[UIApplication.OpenURLOptionsKey.annotation])
-    GIDSignIn.sharedInstance().handle(url,sourceApplication:options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String, annotation: [:])
-        return handled
-    }
-    
-    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        return GIDSignIn.sharedInstance().handle(url, sourceApplication: sourceApplication, annotation: annotation)
-    }
     
     func setCategories(){
         let clearRepeatAction = UNNotificationAction(
@@ -157,7 +99,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, UNUser
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        FBSDKAppEvents.activateApp()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -166,3 +107,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, UNUser
 
 }
 
+extension MixpanelTweaks {
+    public static let floatTweak = Tweak<CGFloat>(tweakName: "floatTweak", defaultValue: 20.5, min: 0, max: 30.1)
+    public static let intTweak = Tweak<Int>(tweakName: "intTweak", defaultValue: 10, min: 0)
+    public static let boolTweak = Tweak(tweakName: "boolTweak", defaultValue: true)
+    public static let stringTweak = Tweak(tweakName: "stringTweak", defaultValue: "hello")
+}

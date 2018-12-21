@@ -20,4 +20,5 @@ struct User : Decodable {
     let pursuits_count : Int?
     let pursuits : [Post]?
     let is_following : Int?
+    var is_blocked : Int?
 }

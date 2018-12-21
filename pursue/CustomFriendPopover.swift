@@ -12,9 +12,6 @@ class CustomFriendPopover : UIViewController {
     
     let alertViewGrayColor = UIColor(red: 224.0/255.0, green: 224.0/255.0, blue: 224.0/255.0, alpha: 1)
     let cellId = "cellId"
-    let peopleFullname = ["Tom Ford", "Versace", "LVME", "Test", "Lit"]
-    let peopleUsernames = ["TomFord123", "Versace", "LVME", "Test", "Lit"]
-    let peopleImages = ["comment-1", "comment-4", "comment-7", "clean-2", "clean-3"]
     var pursuitId : Int?
     
     lazy var alertView : UIView = {
@@ -77,6 +74,14 @@ class CustomFriendPopover : UIViewController {
         return collectionView
     }()
     
+    let inviteFriendsLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Invite friends to join you on this pursuit."
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.textColor = .gray
+        return label
+    }()
+    
     let profileServices = ProfileServices()
     var users = [User]()
     
@@ -84,6 +89,16 @@ class CustomFriendPopover : UIViewController {
         profileServices.getUsersAdded { (added) in
             DispatchQueue.main.async {
                 self.users = added.added ?? []
+                if added.added?.first?.userId == nil {
+                    self.view.addSubview(self.inviteFriendsLabel)
+                    self.inviteFriendsLabel.isHidden = false
+                    self.inviteFriendsLabel.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 20)
+                    self.inviteFriendsLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+                    self.inviteFriendsLabel.centerYAnchor.constraint(equalTo: self.peopleCollectionView.centerYAnchor).isActive = true
+                } else if added.added?.first?.userId != nil {
+                    self.inviteFriendsLabel.isHidden = true
+                }
+                
                 self.peopleCollectionView.reloadData()
             }
         }
@@ -98,8 +113,12 @@ class CustomFriendPopover : UIViewController {
         users.forEach { (value) in
             profileServices.sendAddedUsers(pursuitId: pursuitId, userId: value.userId, is_following: 1)
         }
+        
+        NotificationCenter.default.post(name: CustomFriendPopover.updateTeamNotificationName, object: nil)
     }
     
+    static let updateTeamNotificationName = NSNotification.Name(rawValue: "UpdateTeam")
+
     func setupCollectionView(){
         alertView.addSubview(peopleCollectionView)
         peopleCollectionView.delegate = self

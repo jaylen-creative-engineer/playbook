@@ -9,22 +9,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Bolts.xcscheme</key>
+		<key>AnimatedCollectionViewLayout.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>FBSDKCoreKit.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>FBSDKLoginKit.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>FBSDKShareKit.xcscheme</key>
+		<key>CHIPageControl.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -45,11 +35,6 @@
 			<false/>
 		</dict>
 		<key>FirebaseStorage.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>GTMOAuth2.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -94,7 +79,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-pursue.xcscheme</key>
+		<key>PinterestLayout.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Inpursuit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -115,6 +105,11 @@
 			<false/>
 		</dict>
 		<key>TRVSEventSource.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>iCarousel.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

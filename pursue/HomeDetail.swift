@@ -14,6 +14,6 @@ struct HomeDetail : Decodable {
     let days : [Post]?
     let responses : [Post]?
     let trying : [Post]?
-    let team : [User]?
+    var team : [User]?
     let key_posts : [Post]?
 }

@@ -23,7 +23,7 @@ class CaptureResponseView : UIViewController {
     
     lazy var respondLabel : UILabel = {
         let label = UILabel()
-        label.text = "Respond"
+        label.text = "Feedback"
         label.font = UIFont(name: "Lato-Bold", size: 18)
         label.textAlignment = .center
         return label
@@ -82,10 +82,15 @@ class CaptureResponseView : UIViewController {
     var videoURL : URL?
     var pursuitId : Int?
     
+
     @objc func handleSubmit(){
         Mixpanel.mainInstance().track(event: "Response on Pursuit submitted")
-        engagementService.createResponse(pursuitId: pursuitId, contentUrl: videoURL, thumbnailUrl: respondImageView.image, posts_description: postDescription.text, is_public: 1)
-        
+        self.engagementService.createResponse(pursuitId: self.pursuitId, contentUrl: self.videoURL, thumbnailUrl: self.respondImageView.image, posts_description: self.postDescription.text, is_public: 1) {
+            self.createService.getUserPostId(pursuitId: self.pursuitId!) { (post) in
+                self.createService.sendToResponses(pursuitId: self.pursuitId, postId: post.postId)
+            }
+
+        }
         NotificationCenter.default.post(name: CaptureResponseView.updateResponseFeedNotificationName, object: nil)
 
         let appDelegate = UIApplication.shared.delegate! as! AppDelegate

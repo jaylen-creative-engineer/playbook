@@ -149,14 +149,20 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
         allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
         allPhotos = PHAsset.fetchAssets(with: allPhotosOptions)
         
-        DispatchQueue.main.async {
+        
+       
+        DispatchQueue.global(qos: .background).async {
             self.allPhotos.enumerateObjects({ (asset, count, stop) in
                 let targetSize = CGSize(width: 200, height: 200)
                 self.imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: nil) { (image, _) in
-                    self.photoLibraryButton.setImage(image, for: .normal)
+                    DispatchQueue.main.async {
+                        self.photoLibraryButton.setImage(image, for: .normal)
+                    }
                 }
             })
         }
+        
+
     }
     
     @objc func handleDismiss(){

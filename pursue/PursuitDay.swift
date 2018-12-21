@@ -8,6 +8,7 @@
 
 import UIKit
 import Mixpanel
+import Firebase
 
 protocol PursuitDayDelegate {
     func handleShare(for cell : PursuitDay)
@@ -304,7 +305,6 @@ class PursuitDay : UICollectionViewCell {
         optionsBackground.centerXAnchor.constraint(equalTo: optionsIcon.centerXAnchor).isActive = true
         optionsBackground.centerYAnchor.constraint(equalTo: optionsIcon.centerYAnchor).isActive = true
         optionsBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 36, height: 36)
-        
     }
     
     func setupView(){

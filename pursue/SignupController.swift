@@ -75,7 +75,6 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         imagePickerController.allowsEditing = true
-        
         present(imagePickerController, animated: true, completion: nil)
     }
     
@@ -165,70 +164,27 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
     var firebaseImageUrl : String?
 
     @objc func handleSignup(){
+        
         guard let email = emailTextField.text, email.count > 0 else { return }
         guard let username = usernameTextField.text, username.count > 0 else { return }
         guard let password = passwordTextField.text, password.count > 0 else { return }
         guard let fullname = fullnameTextField.text, fullname.count > 0 else { return }
         
         if self.profileImage == nil {
-            let defaultProfileImage = UIImage(named: "profile_unselected")?.withRenderingMode(.alwaysOriginal)
-            guard let image = defaultProfileImage else { return }
-            guard let uploadData = image.jpegData(compressionQuality: 0.3) else { return }
-            let filename = NSUUID().uuidString
-            let ref = Storage.storage().reference().child("profile-images").child(filename)
+            self.profileService.updateAccountWithPlaceholderImage(username: username, fullname: fullname, bio: nil)
+            let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+            appDelegate.window = UIWindow()
+            appDelegate.window?.rootViewController = MainTabController()
+            appDelegate.window?.makeKeyAndVisible()
+            self.dismiss(animated: true, completion: nil)
             
-            DispatchQueue.main.async {
-                ref.putData(uploadData, metadata: nil, completion: { (metadata, err) in
-                    
-                    if let err = err {
-                        print("Failed to upload", err)
-                        self.handleError(err)
-                    }
-                    
-                    ref.downloadURL(completion: { (url, err) in
-                        if err != nil {
-                            print(err ?? "")
-                        }
-                        
-                        guard let photoUrl = url?.absoluteString else { return }
-                        self.profileService.updateAccount(username: username, fullname: fullname, photoUrl: photoUrl, bio: nil)
-                        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
-                        appDelegate.window = UIWindow()
-                        appDelegate.window?.rootViewController = MainTabController()
-                        appDelegate.window?.makeKeyAndVisible()
-                        self.dismiss(animated: true, completion: nil)
-                    })
-                })
-            }
         } else {
-            guard let image = self.profileImage else { return }
-            guard let uploadData = image.jpegData(compressionQuality: 0.3) else { return }
-            let filename = NSUUID().uuidString
-            let ref = Storage.storage().reference().child("profile-images").child(filename)
-            
-            DispatchQueue.main.async {
-                ref.putData(uploadData, metadata: nil, completion: { (metadata, err) in
-                    
-                    if let err = err {
-                        print("Failed to upload", err)
-                        self.handleError(err)
-                    }
-                    
-                    ref.downloadURL(completion: { (url, err) in
-                        if err != nil {
-                            print(err ?? "")
-                        }
-                        
-                        guard let photoUrl = url?.absoluteString else { return }
-                        self.profileService.updateAccount(username: username, fullname: fullname, photoUrl: photoUrl, bio: nil)
-                        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
-                        appDelegate.window = UIWindow()
-                        appDelegate.window?.rootViewController = MainTabController()
-                        appDelegate.window?.makeKeyAndVisible()
-                        self.dismiss(animated: true, completion: nil)
-                    })
-                })
-            }
+            self.profileService.updateAccount(username: username, fullname: fullname, photoUrl: self.profileImage, bio: nil)
+            let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+            appDelegate.window = UIWindow()
+            appDelegate.window?.rootViewController = MainTabController()
+            appDelegate.window?.makeKeyAndVisible()
+            self.dismiss(animated: true, completion: nil)
         }
     }
     
@@ -312,12 +268,25 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         return button
     }()
     
-    let termsLabel : UILabel = {
+    lazy var termsLabel : UILabel = {
         let label = UILabel()
-        label.text = "By continuing, you agree to our Privacy Policy and Terms of Use."
+        label.text = "By continuing, you agree to our Privacy Policy and Terms & Conditions."
+        let text = (label.text)!
+        let underlineAttriString = NSMutableAttributedString(string: text)
+        let range1 = (text as NSString).range(of: "Privacy Policy")
+        underlineAttriString.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: range1)
+        let range2 = (text as NSString).range(of: "Terms & Conditions")
+        underlineAttriString.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: range2)
+        label.attributedText = underlineAttriString
+        
         label.textAlignment = .center
         label.numberOfLines = 1
         label.font = UIFont.systemFont(ofSize: 11)
+        label.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTermTap))
+        tap.numberOfTapsRequired = 1
+        label.addGestureRecognizer(tap)
         return label
     }()
     
@@ -325,6 +294,22 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
        let button = UIButton()
         return button
     }()
+    
+    @objc func handleTermTap(gesture : UITapGestureRecognizer) {
+        let text = (termsLabel.text)!
+        let termsRange = (text as NSString).range(of: "Terms & Conditions")
+        let privacyRange = (text as NSString).range(of: "Privacy Policy")
+        
+        if gesture.didTapAttributedTextInLabel(label: termsLabel, inRange: termsRange) {
+            let termsController = TermsController()
+            present(termsController, animated: true, completion: nil)
+        } else if gesture.didTapAttributedTextInLabel(label: termsLabel, inRange: privacyRange) {
+            let policyController = PolicyController()
+            present(policyController, animated: true, completion: nil)
+        } else {
+            print("Tapped none")
+        }
+    }
     
     func setupIntro(){
         setupControls()
@@ -371,7 +356,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
                 return
             }
   
-            self.profileService.createAccount(email: email, username: nil, fullname: self.fullnameTextField.text, photoUrl: "https://photoUrl.com", bio: nil, completion: {
+            self.profileService.createAccount(email: email, username: nil, fullname: self.fullnameTextField.text, photoUrl: "https://firebasestorage.googleapis.com/v0/b/inpursuit-production.appspot.com/o/profile_unselected%402x.png?alt=media&token=8e334984-340a-413e-879b-c3ef50c6787b", bio: nil, completion: {
             })
             self.handleNext()
         }
@@ -431,6 +416,7 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         profilePicture.isHidden = true
         addIcon.isHidden = true
         nextButton.isHidden = true
+        
         
         let nextIndex = min(pageControl.currentPage + 1, 4)
         let indexPath = IndexPath(item: nextIndex, section: 0)
@@ -543,6 +529,9 @@ class SignupController: UICollectionViewController, UICollectionViewDelegateFlow
         default:
             assert(false, "Not a valid cell")
         }
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "randomCell", for: indexPath)
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -581,4 +570,35 @@ extension SignupController {
 
 fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
 	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+extension UITapGestureRecognizer {
+    
+    func didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange) -> Bool {
+        // Create instances of NSLayoutManager, NSTextContainer and NSTextStorage
+        let layoutManager = NSLayoutManager()
+        let textContainer = NSTextContainer(size: CGSize.zero)
+        let textStorage = NSTextStorage(attributedString: label.attributedText!)
+        
+        // Configure layoutManager and textStorage
+        layoutManager.addTextContainer(textContainer)
+        textStorage.addLayoutManager(layoutManager)
+        
+        // Configure textContainer
+        textContainer.lineFragmentPadding = 0.0
+        textContainer.lineBreakMode = label.lineBreakMode
+        textContainer.maximumNumberOfLines = label.numberOfLines
+        let labelSize = label.bounds.size
+        textContainer.size = labelSize
+        
+        // Find the tapped character location and compare it to the specified range
+        let locationOfTouchInLabel = self.location(in: label)
+        let textBoundingBox = layoutManager.usedRect(for: textContainer)
+        let textContainerOffset = CGPoint(x: (labelSize.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x, y: (labelSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y)
+        let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInLabel.x - textContainerOffset.x, y: locationOfTouchInLabel.y - textContainerOffset.y)
+        let indexOfCharacter = layoutManager.characterIndex(for: locationOfTouchInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        
+        return NSLocationInRange(indexOfCharacter, targetRange)
+    }
+    
 }

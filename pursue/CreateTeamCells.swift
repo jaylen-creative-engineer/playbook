@@ -15,13 +15,11 @@ protocol CreateTeamCellsDelegate {
 class CreateTeamCells : UICollectionViewCell {
     
     var delegate : CreateTeamCellsDelegate?
-    var accessDetailController : CreateDetailsCell?
     
     lazy var userPhoto : UIImageView = {
        let iv = UIImageView()
         iv.layer.cornerRadius = 20
         iv.layer.masksToBounds = true
-        iv.image = #imageLiteral(resourceName: "samuel-l").withRenderingMode(.alwaysOriginal)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleCellSelected))
         tap.numberOfTapsRequired = 1

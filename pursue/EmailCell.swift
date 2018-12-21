@@ -101,6 +101,7 @@ class EmailCell : UICollectionViewCell, UITextFieldDelegate {
     }()
     
     @objc func handleNext(){
+        nextButton.isEnabled = false
         delegate?.handleEmailNext(for: self)
     }
     

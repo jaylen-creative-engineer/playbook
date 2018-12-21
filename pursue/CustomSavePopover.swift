@@ -134,6 +134,8 @@ class CustomSavePopover : UIViewController {
         })
     }
     
+    static let updateEngagementsNotificationName = NSNotification.Name(rawValue: "UpdateEngagements")
+    
 }
 
 
@@ -153,8 +155,8 @@ extension CustomSavePopover : UICollectionViewDelegate, UICollectionViewDataSour
         guard let pursuitId = currentPursuit.pursuitId else { return }
         createService.savePost(pursuitId: pursuitId, videoUrl: post?.videoUrl, thumbnailUrl: post?.thumbnailUrl, posts_description: post?.description)
         handleCancel()
-        self.accessDetailController?.refreshEngagements()
-       
+        NotificationCenter.default.post(name: CustomSavePopover.updateEngagementsNotificationName, object: nil)
+
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

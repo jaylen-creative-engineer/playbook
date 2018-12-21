@@ -33,6 +33,8 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         tabBarController?.navigationController?.navigationBar.isHidden = true
         tabBarController?.tabBar.isTranslucent = false
 
+        NotificationCenter.default.addObserver(self, selector: #selector(getUser), name: EditProfileController.updateProfileValues, object: nil)
+        
         collectionView?.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(ProfilePursuit.self, forCellWithReuseIdentifier: pursuitsId)
         collectionView?.backgroundColor = .white
@@ -45,7 +47,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     var isDetailView : Bool?
     var userId : String?
     
-    func getUser(){
+    @objc func getUser(){
         if isForeignAccount == nil {
             profileService.getAccount { (user) in
                 DispatchQueue.main.async {
@@ -76,6 +78,16 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         let layout = UICollectionViewFlowLayout()
         let friendsController = FriendsController(collectionViewLayout: layout)
         navigationController?.pushViewController(friendsController, animated: true)
+    }
+    
+    func handleFriendsSettings(friendId : String) {
+        let customAlert = CustomFriendSettingsView()
+        customAlert.userId = friendId
+        customAlert.providesPresentationContextTransitionStyle = true
+        customAlert.definesPresentationContext = true
+        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.showDetailViewController(customAlert, sender: self)
     }
     
     func handleSettings() {

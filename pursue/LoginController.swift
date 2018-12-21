@@ -8,9 +8,6 @@
 
 import UIKit
 import Firebase
-import GoogleSignIn
-import FBSDKCoreKit
-import FBSDKLoginKit
 import Alamofire
 import FirebaseAuth
 import FirebaseStorage
@@ -147,7 +144,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
         view.addSubview(loginButton)
         view.addSubview(forgotButton)
         
-        textBox.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: view.frame.height / 6, paddingLeft: 24, paddingBottom: 0, paddingRight: 24, width: 0, height: (view.frame.height / 2) - 110)
+        textBox.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: view.frame.height / 6, paddingLeft: 24, paddingBottom: 0, paddingRight: 24, width: 0, height: (view.frame.height / 2) - 60)
         textTopHighlight.anchor(top: textBox.topAnchor, left: textBox.leftAnchor, bottom: textBox.bottomAnchor, right: textBox.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         loginLabel.anchor(top: nil, left: textTopHighlight.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 18, paddingBottom: 32, paddingRight: 0, width: loginLabel.intrinsicContentSize.width, height: loginLabel.intrinsicContentSize.height)
         loginLabel.centerYAnchor.constraint(equalTo: textTopHighlight.topAnchor).isActive = true

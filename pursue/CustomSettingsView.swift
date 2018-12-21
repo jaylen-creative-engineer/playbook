@@ -9,8 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseAuth
-import FBSDKCoreKit
-import GoogleSignIn
+
 
 class CustomSettingsView : UIViewController {
     

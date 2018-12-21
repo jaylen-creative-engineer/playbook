@@ -74,7 +74,7 @@ class CreateServices {
                     var parameters = Alamofire.Parameters()
                     parameters["posts_description"] = posts_description
                     parameters["pursuitId"] = pursuitId
-                    if contentUrl?.absoluteString != "" {
+                    if contentUrl?.absoluteString != nil {
                             self.uploadVideo(contentUrl: contentUrl!, completion: { (videoUrl) in
                                 parameters["videoUrl"] = videoUrl
                                 parameters["thumbnailUrl"] = thumbnailUrl
@@ -90,7 +90,7 @@ class CreateServices {
                                 })
                             })
                        
-                    } else if contentUrl?.absoluteString == "" {
+                    } else if contentUrl?.absoluteString == nil {
                         parameters["videoUrl"] = nil
                         parameters["thumbnailUrl"] = thumbnailUrl
                         parameters["userId"] = Auth.auth().currentUser?.uid
@@ -141,6 +141,50 @@ class CreateServices {
         })
     }
     
+    func submitBlock(friendId : String?){
+        let url = apiUrl + "/users/block_user"
+        
+        var parameters = Alamofire.Parameters()
+        parameters["blockerId"] = Auth.auth().currentUser?.uid
+        parameters["blockeeId"] = friendId
+        parameters["is_blocked"] = 1
+        
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON(completionHandler: { (response) in
+            print(response.result)
+        })
+    }
+    
+    func unblockUser(friendId : String?){
+        let url = apiUrl + "/users/delete_post"
+        
+        var parameters = Alamofire.Parameters()
+        parameters["blockerId"] = Auth.auth().currentUser?.uid
+        parameters["blockeeId"] = friendId
+        
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON(completionHandler: { (response) in
+            print(response.result)
+        })
+    }
+    
+    func getBlockStatus(friendId : String?, completion: @escaping (User) -> ()){
+        let url = apiUrl + "/users/get_block_status"
+        
+        var parameters = Alamofire.Parameters()
+        parameters["blockerId"] = Auth.auth().currentUser?.uid
+        parameters["blockeeId"] = friendId
+        
+        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+            
+            guard let data = response.data else { return }
+            do {
+                let userResponse = try JSONDecoder().decode(User.self, from: data)
+                completion(userResponse)
+            } catch let error {
+                print(error)
+            }
+        }
+    }
+    
     // MARK: - GET users pursuits
     
     func getUserPostId(pursuitId : Int, completion: @escaping (Post) -> ()){
@@ -177,7 +221,7 @@ class CreateServices {
             }
         }
     }
-
+    
     func getCreateDetail(completion: @escaping (CreateDetail) -> ()){
         let url = apiUrl + "/posts/get_create_details"
 
@@ -226,21 +270,16 @@ class CreateServices {
                 print("===========================\n\n")
             }
             
-//            completion()
         }
     }
     
-    func sendTry(pursuit_description : String?, thumbnailUrl : String, interestId : Int?) {
-        let url = apiUrl + "/pursuits/create_pursuit"
+    func sendToResponses(pursuitId : Int?, postId : Int?) {
+        let url = apiUrl + "/posts/create_responses_ids"
         
         var parameters = Alamofire.Parameters()
-        parameters["pursuit_description"] = pursuit_description
         parameters["userId"] = Auth.auth().currentUser?.uid
-        parameters["interestId"] = 1
-        parameters["thumbnailUrl"] = thumbnailUrl
-        parameters["is_visible"] = 1
-        parameters["is_public"] = 1
-        parameters["is_tried"] = 1
+        parameters["pursuitId"] = pursuitId
+        parameters["postId"] = postId
         
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseString { (response) in
             switch response.result {
@@ -253,6 +292,64 @@ class CreateServices {
                 if let data = response.data, let str = String(data: data, encoding: String.Encoding.utf8){
                     print("Server Error: " + str)
                 }
+                debugPrint(error as Any)
+                print("===========================\n\n")
+            }
+            
+        }
+    }
+    
+    func sendToSimilarPursuit(new_pursuitId : Int?, pursuitId : Int?) {
+        let url = apiUrl + "/pursuits/similar_pursuit"
+        
+        var parameters = Alamofire.Parameters()
+        parameters["new_pursuitId"] = new_pursuitId
+        parameters["pursuitId"] =  pursuitId
+        
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseString { (response) in
+            switch response.result {
+            case .success:
+                print("Success: \(response.result.isSuccess)")
+            case .failure(let error):
+                print("\n\n===========Error===========")
+                print("Error Code: \(error._code)")
+                print("Error Messsage: \(error.localizedDescription)")
+                if let data = response.data, let str = String(data: data, encoding: String.Encoding.utf8){
+                    print("Server Error: " + str)
+                }
+                debugPrint(error as Any)
+                print("===========================\n\n")
+            }
+        }
+    }
+
+    
+    func sendTry(pursuit_description : String?, thumbnailUrl : String?, interestId : Int?, pursuitId : Int?, completion : @escaping () -> ()) {
+        let url = apiUrl + "/pursuits/try_pursuit"
+        
+        var parameters = Alamofire.Parameters()
+        parameters["pursuit_description"] = pursuit_description
+        parameters["userId"] = Auth.auth().currentUser?.uid
+        parameters["interestId"] = interestId
+        parameters["thumbnailUrl"] = thumbnailUrl
+        parameters["old_pursuitId"] =  pursuitId
+        parameters["is_visible"] = 1
+        parameters["is_public"] = 1
+        parameters["is_tried"] = 1
+        
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseString { (response) in
+            switch response.result {
+            case .success:
+                print("Success: \(response.result.isSuccess)")
+                completion()
+            case .failure(let error):
+                print("\n\n===========Error===========")
+                print("Error Code: \(error._code)")
+                print("Error Messsage: \(error.localizedDescription)")
+                if let data = response.data, let str = String(data: data, encoding: String.Encoding.utf8){
+                    print("Server Error: " + str)
+                }
+                completion()
                 debugPrint(error as Any)
                 print("===========================\n\n")
             }

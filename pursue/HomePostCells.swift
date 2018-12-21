@@ -8,6 +8,7 @@
 
 import UIKit
 import Hero
+import PinterestLayout
 
 protocol HomePostDelegate {
     func changeToDetail(for cell : HomePostCells)
@@ -17,32 +18,33 @@ class HomePostCells : UICollectionViewCell  {
     
     var delegate : HomePostDelegate?
     var accessHomeController : HomeController?
+    let cellId = "cellId"
     
-    var post : [Post]! {
-        didSet {
-            guard let photo = post.first?.thumbnailUrl else { return }
-            guard let postUser = post.first?.userPhotourl else { return }
-            imageView.loadImageUsingCacheWithUrlString(photo)
-            userPhoto.loadImageUsingCacheWithUrlString(postUser)
-            postDetail.text = post.first?.posts_description
-            username.text = post.first?.username
-            
-            let dateFormatterGet = DateFormatter()
-            dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
-            
-            let dateFormatterPrint = DateFormatter()
-            dateFormatterPrint.dateFormat = "MMM dd,yyyy"
-            
-            if let date = dateFormatterGet.date(from: (post.first?.created_at!)!) {
-                let timeAgoDisplay = date.timeAgoDisplay()
-                let attributedText = NSAttributedString(string: timeAgoDisplay, attributes: [NSAttributedString.Key.font: UIFont(name: "Lato-Bold", size: 12) as Any, NSAttributedString.Key.foregroundColor: UIColor.white])
-                timeLabel.attributedText = attributedText
-            } else {
-                print("There was an error decoding the string")
-            }
-            collectionView.reloadData()
-        }
-    }
+//    var post : [Post]! {
+//        didSet {
+//            guard let photo = post.first?.thumbnailUrl else { return }
+//            guard let postUser = post.first?.userPhotourl else { return }
+//            imageView.loadImageUsingCacheWithUrlString(photo)
+//            userPhoto.loadImageUsingCacheWithUrlString(postUser)
+//            postDetail.text = post.first?.posts_description
+//            username.text = post.first?.username
+//            
+//            let dateFormatterGet = DateFormatter()
+//            dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
+//            
+//            let dateFormatterPrint = DateFormatter()
+//            dateFormatterPrint.dateFormat = "MMM dd,yyyy"
+//            
+//            if let date = dateFormatterGet.date(from: (post.first?.created_at!)!) {
+//                let timeAgoDisplay = date.timeAgoDisplay()
+//                let attributedText = NSAttributedString(string: timeAgoDisplay, attributes: [NSAttributedString.Key.font: UIFont(name: "Lato-Bold", size: 12) as Any, NSAttributedString.Key.foregroundColor: UIColor.white])
+//                timeLabel.attributedText = attributedText
+//            } else {
+//                print("There was an error decoding the string")
+//            }
+//            collectionView.reloadData()
+//        }
+//    }
     
     var postArrayCount : Int?
     lazy var imageView : UIImageView = {
@@ -97,14 +99,25 @@ class HomePostCells : UICollectionViewCell  {
     }()
 
     let collectionView : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
+        let layout = PinterestLayout()
+        layout.numberOfColumns = 2
+        layout.cellPadding = 10
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.isScrollEnabled = false
         return collectionView
     }()
+    
+    let trendingPostLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Trending Posts"
+        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
+        return label
+    }()
+    
+    let imageNames = [UIImage(named : "cafe-768771_1280"), UIImage(named : "gian-cescon-637914-unsplash"), UIImage(named : "IMG_0807"), UIImage(named : "IMG_3935")]
     
     @objc func handleChangeDetail(){
         delegate?.changeToDetail(for: self)
@@ -114,29 +127,20 @@ class HomePostCells : UICollectionViewCell  {
     func setupCollectionView(){
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cellId")
+        collectionView.register(HomePinterestCell.self, forCellWithReuseIdentifier: cellId)
+        
+        if let layout = collectionView.collectionViewLayout as? PinterestLayout {
+            layout.delegate = self
+        }
         
         addSubview(collectionView)
-        collectionView.anchor(top: imageView.topAnchor, left: imageView.leftAnchor, bottom: nil, right: imageView.rightAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 2.5)
+        collectionView.anchor(top: trendingPostLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
 
     func setupView(){
-        addSubview(backgroundShadow)
-        addSubview(imageView)
-        addSubview(userPhoto)
-        addSubview(postDetail)
-        addSubview(username)
-        addSubview(timeLabel)
-        
-        backgroundShadow.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: frame.height)
-        imageView.anchor(top: backgroundShadow.topAnchor, left: backgroundShadow.leftAnchor, bottom: backgroundShadow.bottomAnchor, right: backgroundShadow.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        userPhoto.anchor(top: imageView.topAnchor, left: imageView.leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
-        username.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 24, width: 0, height: 16)
-        timeLabel.anchor(top: username.bottomAnchor, left: username.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
-        postDetail.anchor(top: nil, left: imageView.leftAnchor, bottom: imageView.bottomAnchor, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 18, paddingRight: 12, width: 0, height: 0)
-        postDetail.heightAnchor.constraint(lessThanOrEqualToConstant: 52).isActive = true
+        addSubview(trendingPostLabel)
+        trendingPostLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: trendingPostLabel.intrinsicContentSize.width, height: 18)
         setupCollectionView()
-        
     }
     
     override init(frame: CGRect) {
@@ -153,26 +157,33 @@ class HomePostCells : UICollectionViewCell  {
 extension HomePostCells : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath)
-        cell.backgroundColor = .white
-        cell.layer.cornerRadius = 2
-        cell.layer.masksToBounds = true
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomePinterestCell
+        cell.photo.image = imageNames[indexPath.item]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return post.count
+        return imageNames.count
+    }
+}
+
+extension HomePostCells : PinterestLayoutDelegate {
+    
+    
+    func collectionView(collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath, withWidth: CGFloat) -> CGFloat {
+        if indexPath.item % 2 != 0 {
+            return 130
+        } else {
+            return 125
+        }
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (frame.width - 32) / CGFloat(post.count), height: frame.height)
+    func collectionView(collectionView: UICollectionView, heightForAnnotationAtIndexPath indexPath: IndexPath, withWidth: CGFloat) -> CGFloat {
+        if indexPath.item % 2 != 0 {
+            return 130
+        } else {
+            return 125
+        }
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 8.0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 8.0
-    }
 }

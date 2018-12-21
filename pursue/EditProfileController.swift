@@ -11,7 +11,7 @@ import Alamofire
 import Firebase
 import FirebaseAuth
 
-class EditProfileController : UIViewController {
+class EditProfileController : UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     lazy var backButton : UIButton = {
         let button = UIButton()
@@ -52,15 +52,43 @@ class EditProfileController : UIViewController {
     let cellId = "cellId"
     
     @objc func handleCamera(){
-        let cameraController = SelectCameraController()
-        navigationController?.present(cameraController, animated: true, completion: nil)
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        // Local variable inserted by Swift 4.2 migrator.
+        let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+        
+        if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
+            DispatchQueue.main.async {
+                self.profilePicture.image = originalImage.withRenderingMode(.alwaysOriginal)
+            }
+        } else if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
+            DispatchQueue.main.async {
+                self.profilePicture.image = editedImage.withRenderingMode(.alwaysOriginal)
+            }
+        }
+        
+        handleCancel()
+    }
+    
+    fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+        return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
     }
     
     @objc func handleSubmitUpdate(){
         updateAccount()
+        NotificationCenter.default.post(name: EditProfileController.updateProfileValues, object: nil)
+
         dismiss(animated: true, completion: nil)
     }
     
+    
+    static let updateProfileValues = NSNotification.Name(rawValue: "ReloadProfile")
+
     
     @objc func handleCancel(){
         dismiss(animated: true, completion: nil)
@@ -265,7 +293,7 @@ class EditProfileController : UIViewController {
         guard let username = usernameLabel.text,
             let fullname = fullnameLabel.text,
             let bio = bioLabel.text,
-            let photoUrl = profilePicture.lastURLUsedToLoadImage else { return }
+            let photoUrl = profilePicture.image else { return }
         
         self.profileService.updateAccount(username: username, fullname: fullname, photoUrl: photoUrl, bio: bio)
         self.dismiss(animated: true, completion: nil)

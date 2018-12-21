@@ -151,16 +151,18 @@ class PhotoLibrary : SwiftyCamViewController, UICollectionViewDelegate, UICollec
         cell.delegate = self
         cell.hero.id = String(indexPath.item)
         cell.representedAssetIdentifier = asset.localIdentifier
-        imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: nil) { (image, _) in
-            if cell.representedAssetIdentifier == asset.localIdentifier && image != nil {
-                cell.imageView.image = image
-                
-                if asset.duration == 0 {
-                    cell.timeLabel.text = ""
-                } else {
-                    cell.timeLabel.text = String(format: "%02d:%02d",Int((asset.duration / 60)),Int(asset.duration) % 60)
+        DispatchQueue.global(qos: .background).async {
+            self.imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: nil) { (image, _) in
+                if cell.representedAssetIdentifier == asset.localIdentifier && image != nil {
+                    DispatchQueue.main.async {
+                        cell.imageView.image = image
+                        if asset.duration == 0 {
+                            cell.timeLabel.text = ""
+                        } else {
+                            cell.timeLabel.text = String(format: "%02d:%02d",Int((asset.duration / 60)),Int(asset.duration) % 60)
+                        }
+                    }
                 }
-                
             }
         }
         

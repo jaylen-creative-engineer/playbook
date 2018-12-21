@@ -57,7 +57,7 @@ class InviteController : UICollectionViewController, UICollectionViewDelegateFlo
             let controller = MFMessageComposeViewController()
             controller.messageComposeDelegate = self
             controller.recipients = ["\(String(describing: cell.firstnameLabel.text)) \(String(describing: cell.lastnameLabel.text))"]
-            controller.body =  "Follow my latest pursuits here"
+            controller.body =  "Download Inpursuit from the app store to join me on my latests pursuits."
             Mixpanel.initialize(token: "Contact Invited")
             self.present(controller, animated: true, completion: nil)
         } else {

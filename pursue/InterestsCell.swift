@@ -45,7 +45,9 @@ class InterestsCell : UICollectionViewCell, SelectInterestsDelegate {
     var interests = [Interests]()
     
     @objc func handleNext(){
+        nextButton.setTitle("Sending...", for: .normal)
         delegate?.handleInterestsCell(for: self)
+        nextButton.isEnabled = false
     }
     
     

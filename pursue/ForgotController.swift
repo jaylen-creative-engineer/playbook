@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ForgotController : UICollectionViewController, UICollectionViewDelegateFlowLayout, UITextFieldDelegate {
     
@@ -111,7 +112,14 @@ class ForgotController : UICollectionViewController, UICollectionViewDelegateFlo
     
     
     @objc func handleSignup() {
-        
+        guard let email = emailLabel.text else { return }
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            if let error = error {
+                print(error)
+            }
+            
+            self.handleDismiss()
+        }
     }
     
     func setupEmail(){
