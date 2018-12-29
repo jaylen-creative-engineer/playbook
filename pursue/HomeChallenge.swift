@@ -104,13 +104,13 @@ class HomeChallenge : UICollectionViewCell {
         addSubview(timeLeftForChallenge)
         addSubview(timeLeftCount)
         
-        challengersLabel.anchor(top: challengeImageView.bottomAnchor, left: backgroundCardView.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: challengersLabel.intrinsicContentSize.width, height: challengersLabel.intrinsicContentSize.height)
+        challengersLabel.anchor(top: challengeImageView.bottomAnchor, left: backgroundCardView.leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: challengersLabel.intrinsicContentSize.width, height: challengersLabel.intrinsicContentSize.height)
         challengersCount.centerYAnchor.constraint(equalTo: challengersLabel.centerYAnchor).isActive = true
         challengersCount.anchor(top: nil, left: nil, bottom: nil, right: backgroundCardView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: challengersCount.intrinsicContentSize.width, height: challengersCount.intrinsicContentSize.height)
-        leaderLabel.anchor(top: challengersLabel.bottomAnchor, left: backgroundCardView.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: leaderLabel.intrinsicContentSize.width, height: 16)
+        leaderLabel.anchor(top: challengersLabel.bottomAnchor, left: backgroundCardView.leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: leaderLabel.intrinsicContentSize.width, height: 16)
         leaderNameLabel.centerYAnchor.constraint(equalTo: leaderLabel.centerYAnchor).isActive = true
         leaderNameLabel.anchor(top: nil, left: nil, bottom: nil, right: backgroundCardView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: leaderNameLabel.intrinsicContentSize.width, height: leaderNameLabel.intrinsicContentSize.height)
-        timeLeftForChallenge.anchor(top: leaderLabel.bottomAnchor, left: backgroundCardView.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: timeLeftForChallenge.intrinsicContentSize.width, height: timeLeftForChallenge.intrinsicContentSize.height)
+        timeLeftForChallenge.anchor(top: leaderLabel.bottomAnchor, left: backgroundCardView.leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: timeLeftForChallenge.intrinsicContentSize.width, height: timeLeftForChallenge.intrinsicContentSize.height)
         timeLeftCount.centerYAnchor.constraint(equalTo: timeLeftForChallenge.centerYAnchor).isActive = true
         timeLeftCount.anchor(top: nil, left: nil, bottom: nil, right: backgroundCardView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: timeLeftCount.intrinsicContentSize.width, height: timeLeftCount.intrinsicContentSize.height)
     }

@@ -16,6 +16,12 @@ class HomeDay : UICollectionViewCell {
         return view
     }()
     
+    let cellTopBackgroundView : SolutionTopCardView = {
+        let view = SolutionTopCardView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
     let dayImageView : UIImageView = {
        let iv = UIImageView()
         iv.image = UIImage(named: "cafe-768771_1280")?.withRenderingMode(.alwaysOriginal)
@@ -45,12 +51,14 @@ class HomeDay : UICollectionViewCell {
     
     func setupView(){
         addSubview(cellBackgroundView)
+        addSubview(cellTopBackgroundView)
         addSubview(dayImageView)
         addSubview(dayLabel)
         addSubview(pursuitLabel)
         
         cellBackgroundView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 120)
-        dayImageView.anchor(top: cellBackgroundView.topAnchor, left: cellBackgroundView.leftAnchor, bottom: cellBackgroundView.bottomAnchor, right: cellBackgroundView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        cellTopBackgroundView.anchor(top: cellBackgroundView.topAnchor, left: cellBackgroundView.leftAnchor, bottom: cellBackgroundView.bottomAnchor, right: cellBackgroundView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        dayImageView.anchor(top: cellTopBackgroundView.topAnchor, left: cellTopBackgroundView.leftAnchor, bottom: cellTopBackgroundView.bottomAnchor, right: cellTopBackgroundView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         dayLabel.anchor(top: dayImageView.bottomAnchor, left: dayImageView.leftAnchor, bottom: nil, right: dayImageView.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
         pursuitLabel.anchor(top: dayLabel.bottomAnchor, left: dayLabel.leftAnchor, bottom: nil, right: dayLabel.rightAnchor, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
     }

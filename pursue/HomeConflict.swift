@@ -10,38 +10,49 @@ import UIKit
 
 class HomeConflict : UICollectionViewCell {
     
-    let photo : UIImageView = {
-        let iv = UIImageView()
-        iv.layer.cornerRadius = 12
-        iv.layer.masksToBounds = true
-        iv.contentMode = .scaleAspectFill
-        return iv
-    }()
-    
-    let photoBackground : HomeCellConflictShadowView = {
-        let view = HomeCellConflictShadowView()
+    let cellBackgroundView : SolutionCardView = {
+        let view = SolutionCardView()
         view.backgroundColor = .white
         return view
     }()
     
-    let detailLabel : UILabel = {
+    let dayImageView : UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(named: "cafe-768771_1280")?.withRenderingMode(.alwaysOriginal)
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 4
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    
+    let dayLabel : UILabel = {
         let label = UILabel()
-        label.text = "Have a vision to work towards"
-        label.textColor = .white
+        label.text = "3 Days Active"
         label.numberOfLines = 1
-        label.font = UIFont(name: "Lato-Black", size: 12)
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 13)
         return label
     }()
     
+    let pursuitLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Getting into an art gallery"
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 11)
+        return label
+    }()
     
     func setupView(){
-        addSubview(photoBackground)
-        addSubview(photo)
-        addSubview(detailLabel)
+        addSubview(cellBackgroundView)
+        addSubview(dayImageView)
+        addSubview(dayLabel)
+        addSubview(pursuitLabel)
         
-        photoBackground.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        photo.anchor(top: photoBackground.topAnchor, left: photoBackground.leftAnchor, bottom: photoBackground.bottomAnchor, right: photoBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        detailLabel.anchor(top: nil, left: photo.leftAnchor, bottom: photo.bottomAnchor, right: photo.rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 12, paddingRight: 8, width: 0, height: 14)
+        cellBackgroundView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 120)
+        dayImageView.anchor(top: cellBackgroundView.topAnchor, left: cellBackgroundView.leftAnchor, bottom: cellBackgroundView.bottomAnchor, right: cellBackgroundView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        dayLabel.anchor(top: dayImageView.bottomAnchor, left: dayImageView.leftAnchor, bottom: nil, right: dayImageView.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
+        pursuitLabel.anchor(top: dayLabel.bottomAnchor, left: dayLabel.leftAnchor, bottom: nil, right: dayLabel.rightAnchor, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 14)
     }
     
     override init(frame: CGRect) {

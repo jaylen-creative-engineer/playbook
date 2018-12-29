@@ -47,6 +47,13 @@ class HomePostCells : UICollectionViewCell  {
 //    }
     
     var postArrayCount : Int?
+    
+    let cellBackgroundView : HomeCellConflictShadowView = {
+       let view = HomeCellConflictShadowView()
+        view.backgroundColor = .white
+        return view
+    }()
+
     lazy var imageView : UIImageView = {
         let iv = UIImageView()
         iv.layer.cornerRadius = 8
@@ -112,7 +119,7 @@ class HomePostCells : UICollectionViewCell  {
     
     let trendingPostLabel : UILabel = {
        let label = UILabel()
-        label.text = "Trending Posts"
+        label.text = "Recent Posts"
         label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
         return label
     }()
@@ -134,12 +141,15 @@ class HomePostCells : UICollectionViewCell  {
         }
         
         addSubview(collectionView)
-        collectionView.anchor(top: trendingPostLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        collectionView.anchor(top: trendingPostLabel.bottomAnchor, left: cellBackgroundView.leftAnchor, bottom: bottomAnchor, right: cellBackgroundView.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 20, paddingRight: 0, width: 0, height: 0)
     }
 
     func setupView(){
+        addSubview(cellBackgroundView)
         addSubview(trendingPostLabel)
-        trendingPostLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: trendingPostLabel.intrinsicContentSize.width, height: 18)
+        
+        cellBackgroundView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
+        trendingPostLabel.anchor(top: cellBackgroundView.topAnchor, left: cellBackgroundView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: trendingPostLabel.intrinsicContentSize.width, height: 18)
         setupCollectionView()
     }
     
@@ -172,17 +182,17 @@ extension HomePostCells : PinterestLayoutDelegate {
     
     func collectionView(collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath, withWidth: CGFloat) -> CGFloat {
         if indexPath.item % 2 != 0 {
-            return 130
+            return 120
         } else {
-            return 125
+            return 115
         }
     }
     
     func collectionView(collectionView: UICollectionView, heightForAnnotationAtIndexPath indexPath: IndexPath, withWidth: CGFloat) -> CGFloat {
         if indexPath.item % 2 != 0 {
-            return 130
+            return 120
         } else {
-            return 125
+            return 115
         }
     }
     

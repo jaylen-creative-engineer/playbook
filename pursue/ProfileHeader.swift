@@ -17,76 +17,76 @@ protocol ProfileHeaderDelegate {
 
 class ProfileHeader : UICollectionViewCell {
     
-    var user : User! {
-        didSet {
-            guard let profilePicture = user?.photoUrl else { return }
-            imageView.loadImage(urlString: profilePicture)
-            usernameLabel.text = user?.username
-            fullnameLabel.text = user?.fullname
-            bioText.text = user?.bio
-            
-            if user?.bio == nil {
-                bioText.text = "Add Bio"
-                bioText.isUserInteractionEnabled = true
-                
-                let tap = UITapGestureRecognizer(target: self, action: #selector(handleEdit))
-                tap.numberOfTapsRequired = 1
-                bioText.addGestureRecognizer(tap)
-            }
-            
-            if user?.userId == Auth.auth().currentUser?.uid {
-                circleBackground.isHidden = true
-                addImageView.isHidden = true
-                backIcon.isHidden = true
-                backBackground.isHidden = true
-                
-                addSubview(usernameLabel)
-                addSubview(settingsButton)
-                
-                usernameLabel.anchor(top: safeAreaLayoutGuide.topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
-                usernameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: frame.width / 2)
-                settingsButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 40, height: 40)
-                settingsButton.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
-                settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
-            } else {
-                if user?.bio == nil {
-                    bioText.isHidden = true
-                }
-                
-                circleBackground.isHidden = false
-                addImageView.isHidden = false
-                backIcon.isHidden = false
-                backBackground.isHidden = false
-                
-                addSubview(usernameLabel)
-                addSubview(settingsButton)
-                
-                usernameLabel.anchor(top: safeAreaLayoutGuide.topAnchor, left: backIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
-                usernameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: frame.width / 2)
-                settingsButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 40, height: 40)
-                settingsButton.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
-                settingsButton.addTarget(self, action: #selector(handleFriendSettings), for: .touchUpInside)
-
-            }
-            
-            if user?.followers_count == 0 {
-                addedCountLabel.titleLabel?.text = String(0)
-            } else {
-                guard let followersCount = user?.followers_count else { return }
-                addedCountLabel.titleLabel?.text = String(followersCount)
-            }
-            
-            if user?.pursuits_count == 0 {
-                pursuitsCountLabel.text = String(0)
-            } else {
-                guard let pursuitsCount = user?.pursuits_count else { return }
-                pursuitsCountLabel.text = String(pursuitsCount)
-            }
-            
-            addImageView.setImage(user.is_following == 1 ? UIImage(named: "check")?.withRenderingMode(.alwaysOriginal) : UIImage(named: "add")?.withRenderingMode(.alwaysOriginal), for: .normal)
-            circleBackground.backgroundColor = user.is_following == 1 ? .black : .white
-        }
-    }
+//    var user : User! {
+//        didSet {
+//            guard let profilePicture = user?.photoUrl else { return }
+//            imageView.loadImage(urlString: profilePicture)
+//            usernameLabel.text = user?.username
+//            fullnameLabel.text = user?.fullname
+//            bioText.text = user?.bio
+//            
+//            if user?.bio == nil {
+//                bioText.text = "Add Bio"
+//                bioText.isUserInteractionEnabled = true
+//                
+//                let tap = UITapGestureRecognizer(target: self, action: #selector(handleEdit))
+//                tap.numberOfTapsRequired = 1
+//                bioText.addGestureRecognizer(tap)
+//            }
+//            
+//            if user?.userId == Auth.auth().currentUser?.uid {
+//                circleBackground.isHidden = true
+//                addImageView.isHidden = true
+//                backIcon.isHidden = true
+//                backBackground.isHidden = true
+//                
+//                addSubview(usernameLabel)
+//                addSubview(settingsButton)
+//                
+//                usernameLabel.anchor(top: safeAreaLayoutGuide.topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
+//                usernameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: frame.width / 2)
+//                settingsButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 40, height: 40)
+//                settingsButton.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
+//                settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
+//            } else {
+//                if user?.bio == nil {
+//                    bioText.isHidden = true
+//                }
+//                
+//                circleBackground.isHidden = false
+//                addImageView.isHidden = false
+//                backIcon.isHidden = false
+//                backBackground.isHidden = false
+//                
+//                addSubview(usernameLabel)
+//                addSubview(settingsButton)
+//                
+//                usernameLabel.anchor(top: safeAreaLayoutGuide.topAnchor, left: backIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
+//                usernameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: frame.width / 2)
+//                settingsButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 40, height: 40)
+//                settingsButton.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
+//                settingsButton.addTarget(self, action: #selector(handleFriendSettings), for: .touchUpInside)
+//
+//            }
+//            
+//            if user?.followers_count == 0 {
+//                addedCountLabel.titleLabel?.text = String(0)
+//            } else {
+//                guard let followersCount = user?.followers_count else { return }
+//                addedCountLabel.titleLabel?.text = String(followersCount)
+//            }
+//            
+//            if user?.pursuits_count == 0 {
+//                pursuitsCountLabel.text = String(0)
+//            } else {
+//                guard let pursuitsCount = user?.pursuits_count else { return }
+//                pursuitsCountLabel.text = String(pursuitsCount)
+//            }
+//            
+//            addImageView.setImage(user.is_following == 1 ? UIImage(named: "check")?.withRenderingMode(.alwaysOriginal) : UIImage(named: "add")?.withRenderingMode(.alwaysOriginal), for: .normal)
+//            circleBackground.backgroundColor = user.is_following == 1 ? .black : .white
+//        }
+//    }
     
     let followId = "followId"
     var delegate : ProfileHeaderDelegate?
@@ -95,8 +95,9 @@ class ProfileHeader : UICollectionViewCell {
     let imageView : CustomImageView = {
         let iv = CustomImageView()
         iv.clipsToBounds = true
+        iv.image = UIImage(named: "apartment-architecture-ceiling-259962")?.withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
-        iv.layer.cornerRadius = 70
+        iv.layer.cornerRadius = 30
         return iv
     }()
     
@@ -115,7 +116,7 @@ class ProfileHeader : UICollectionViewCell {
     
     let usernameLabel : UILabel = {
        let label = UILabel()
-        label.textAlignment = .center
+        label.text = "Test"
         label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
         return label
     }()
@@ -133,13 +134,13 @@ class ProfileHeader : UICollectionViewCell {
         paragraphStyle.lineSpacing = 2
         paragraphStyle.paragraphSpacing = 5
         
-        let attrString = NSMutableAttributedString(string: "Loreum Ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry's.....")
+        let attrString = NSMutableAttributedString(string: "Loreum Ipsum is simply dummy")
         attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         
         label.attributedText = attrString
         label.font = UIFont.systemFont(ofSize: 12)
         label.numberOfLines = 0
-        label.textAlignment = .center
+        label.textAlignment = .left
         return label
     }()
     
@@ -172,6 +173,11 @@ class ProfileHeader : UICollectionViewCell {
         button.text = "0"
         button.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
         button.textColor = .gray
+        return button
+    }()
+    
+    let addButton : UIButton = {
+       let button = UIButton()
         return button
     }()
     
@@ -258,8 +264,8 @@ class ProfileHeader : UICollectionViewCell {
     }
     
     @objc func handleFriendSettings(){
-        guard let userId = user.userId else { return }
-        accessProfileController?.handleFriendsSettings(friendId: userId)
+//        guard let userId = user.userId else { return }
+//        accessProfileController?.handleFriendsSettings(friendId: userId)
     }
     
     @objc func handleEdit(){
@@ -302,26 +308,15 @@ class ProfileHeader : UICollectionViewCell {
     }
     
     func setupNavBar(){
-        setupBackButton()
-
+        
         addSubview(imageView)
-        addSubview(circleBackground)
-        circleBackground.addSubview(addImageView)
-        addSubview(fullnameLabel)
+        addSubview(usernameLabel)
         addSubview(bioText)
         
-        imageView.anchor(top: safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 54, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 140, height: 140)
-        imageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        fullnameLabel.anchor(top: imageView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: fullnameLabel.intrinsicContentSize.width, height: fullnameLabel.intrinsicContentSize.height)
-        fullnameLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-         bioText.anchor(top: fullnameLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 24, paddingBottom: 0, paddingRight: 24, width: 0, height: 0)
-        bioText.heightAnchor.constraint(lessThanOrEqualToConstant: 80).isActive = true
-        circleBackground.anchor(top: nil, left: nil, bottom: imageView.bottomAnchor, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
-        addImageView.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 16, height: 16)
-        addImageView.centerYAnchor.constraint(equalTo: circleBackground.centerYAnchor).isActive = true
-        addImageView.centerXAnchor.constraint(equalTo: circleBackground.centerXAnchor).isActive = true
-        setupEngagements()
-        
+        imageView.anchor(top: safeAreaLayoutGuide.topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 60, height: 60)
+        usernameLabel.anchor(top: imageView.topAnchor, left: imageView.rightAnchor, bottom: nil, right: nil, paddingTop: 6, paddingLeft: 18, paddingBottom: 0, paddingRight: 12, width: usernameLabel.intrinsicContentSize.width, height: 18)
+        bioText.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
+        bioText.heightAnchor.constraint(lessThanOrEqualToConstant: 50).isActive = true
         
     }
     

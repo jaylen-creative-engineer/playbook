@@ -11,88 +11,79 @@ import PinterestLayout
 
 class HomeConflictCell : UICollectionViewCell {
     
+    let collecionView : UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.backgroundColor = .clear
+        return collectionView
+    }()
+    
     let conflictLabel : UILabel = {
-       let label = UILabel()
-        label.text = "Conflicts"
+        let label = UILabel()
+        label.text = "Conflict"
         label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
         return label
     }()
     
-    let cellId = "cellId"
-    
-    let collectionView : UICollectionView = {
-        let layout = PinterestLayout()
-        layout.numberOfColumns = 2
-        layout.cellPadding = 4
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.isScrollEnabled = false
-        return collectionView
+    let cellBackgroundView : HomeCellConflictShadowView = {
+        let view = HomeCellConflictShadowView()
+        view.backgroundColor = .white
+        return view
     }()
     
-    let imageNames = [UIImage(named : "cafe-768771_1280"), UIImage(named : "gian-cescon-637914-unsplash"), UIImage(named : "IMG_0807"), UIImage(named : "IMG_3935")]
+    let cellId = "cellId"
     
     func setupCollectionView(){
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(HomeConflict.self, forCellWithReuseIdentifier: cellId)
+        collecionView.delegate = self
+        collecionView.dataSource = self
+        collecionView.register(HomeConflict.self, forCellWithReuseIdentifier: cellId)
         
-        if let layout = collectionView.collectionViewLayout as? PinterestLayout {
-            layout.delegate = self
-        }
-        
-        addSubview(collectionView)
-        collectionView.anchor(top: conflictLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 18, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 0)
-    }
-    
-    func setupView(){
+        addSubview(cellBackgroundView)
         addSubview(conflictLabel)
-        conflictLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: conflictLabel.intrinsicContentSize.width, height: 18)
-        setupCollectionView()
+        addSubview(collecionView)
+        
+        cellBackgroundView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
+        conflictLabel.anchor(top: cellBackgroundView.topAnchor, left: cellBackgroundView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: conflictLabel.intrinsicContentSize.width, height: 18)
+        collecionView.anchor(top: conflictLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 170)
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
+        setupCollectionView()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }
 
 extension HomeConflictCell : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 6
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 25.0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 25.0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: (frame.width / 2.8) + 10, height: 170)
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeConflict
-        cell.photo.image = imageNames[indexPath.item]
+        let cell = collecionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeConflict
         return cell
     }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageNames.count
-    }
-}
-
-extension HomeConflictCell : PinterestLayoutDelegate {
-    
-    
-    func collectionView(collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath, withWidth: CGFloat) -> CGFloat {
-        if indexPath.item % 2 != 0 {
-            return 90
-        } else {
-            return 90
-        }
-    }
-    
-    func collectionView(collectionView: UICollectionView, heightForAnnotationAtIndexPath indexPath: IndexPath, withWidth: CGFloat) -> CGFloat {
-        if indexPath.item % 2 != 0 {
-            return 90
-        } else {
-            return 90
-        }
-    }
-    
 }
