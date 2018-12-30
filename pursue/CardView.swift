@@ -411,7 +411,7 @@ class StoryBottomRectangleView: UIView {
     
     var cornerRadius : CGFloat = 8
     var shadowOffSetWidth : CGFloat = 0
-    var shadowOffSetHeight : CGFloat = 2
+    var shadowOffSetHeight : CGFloat = 1
     var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
@@ -430,7 +430,7 @@ class StoryTopRectangleView: UIView {
     
     var cornerRadius : CGFloat = 8
     var shadowOffSetWidth : CGFloat = 0
-    var shadowOffSetHeight : CGFloat = -2
+    var shadowOffSetHeight : CGFloat = -1
     var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
@@ -466,9 +466,9 @@ class FollowRectangleTopView: UIView {
 
 class HomeView: UIView {
     
-    var cornerRadius : CGFloat = 8
+    var cornerRadius : CGFloat = 16
     var shadowOffSetWidth : CGFloat = 0
-    var shadowOffSetHeight : CGFloat = 10
+    var shadowOffSetHeight : CGFloat = 1
     var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {

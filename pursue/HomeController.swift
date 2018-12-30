@@ -133,16 +133,9 @@ class HomeController : UICollectionViewController {
     }
     
     func setupCollectionView(){
-        if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.scrollDirection = .horizontal
-            flowLayout.minimumLineSpacing = 0
-        }
-        
         collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "randomId")
         collectionView?.isPagingEnabled = true
         collectionView?.backgroundColor = .white
-        collectionView?.showsHorizontalScrollIndicator = false
-        collectionView?.contentInset = UIEdgeInsets(top: 220, left: 0, bottom: 0, right: 0)
     }
     
     func setupNavBar(){
@@ -407,7 +400,7 @@ extension HomeController : HomePostDelegate, UICollectionViewDelegateFlowLayout 
     }
     
     func handleChangeToProfile(userId : String) {
-        let profileController = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+        let profileController = ProfileController()
         profileController.isForeignAccount = true
         profileController.userId = userId
         navigationController?.pushViewController(profileController, animated: true)

@@ -7,17 +7,11 @@
 //
 
 import UIKit
+import RandomColorSwift
 
 class ProfileStep : UICollectionViewCell {
     
     let cellId = "cellid"
-    
-    let activityLabel : UILabel = {
-       let label = UILabel()
-        label.text = "Activity"
-        label.font = UIFont.boldSystemFont(ofSize: 16)
-        return label
-    }()
     
     let collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -47,7 +41,8 @@ class ProfileStep : UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    let arrayOfColors : [UIColor] = [.darkGray, .red, .blue, .yellow, .green, .red]
+    
+    var arrayOfColors = randomColors(count: 20, hue: .random, luminosity: .dark)
 }
 
 extension ProfileStep : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -58,9 +53,7 @@ extension ProfileStep : UICollectionViewDelegate, UICollectionViewDataSource, UI
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfileStepCell
-        cell.backgroundColor = arrayOfColors[indexPath.item]
-        cell.layer.cornerRadius = 12
-        cell.layer.masksToBounds = true
+        cell.cellBackgroundColor.backgroundColor = arrayOfColors[indexPath.item]
         return cell
     }
     

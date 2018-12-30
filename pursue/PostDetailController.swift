@@ -494,7 +494,7 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
     }
     
     func handleChangeToProfile(userId : String) {
-        let profileController = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+        let profileController = ProfileController()
         profileController.isForeignAccount = true
         profileController.userId = userId
         profileController.isDetailView = true

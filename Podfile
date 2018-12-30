@@ -6,10 +6,9 @@ target 'Inpursuit' do
   use_frameworks!
 
   # Pods for Inpursuit
+  pod 'RandomColorSwift'
   pod 'AnimatedCollectionViewLayout'
-
   pod 'PinterestLayout'
-
   pod 'CHIPageControl', '~> 0.1.3'
   pod 'Mixpanel-swift'
   pod 'Firebase/Auth'
@@ -23,6 +22,7 @@ target 'Inpursuit' do
   pod 'ReachabilitySwift'
   pod 'NVActivityIndicatorView'
   pod 'Hero'
+  pod 'SelectionList'
   pod 'KWTransition'
   pod 'ParallaxHeader'
   pod 'TRVSEventSource'

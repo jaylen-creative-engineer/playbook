@@ -119,7 +119,9 @@ PODS:
   - PinterestLayout (1.0.3)
   - Protobuf (3.6.1)
   - PryntTrimmerView (3.0.0)
+  - RandomColorSwift (1.0.0)
   - ReachabilitySwift (4.3.0)
+  - SelectionList (1.3.0)
   - TRVSEventSource (0.0.8)
 
 DEPENDENCIES:
@@ -139,7 +141,9 @@ DEPENDENCIES:
   - ParallaxHeader
   - PinterestLayout
   - PryntTrimmerView
+  - RandomColorSwift
   - ReachabilitySwift
+  - SelectionList
   - TRVSEventSource
 
 SPEC REPOS:
@@ -171,7 +175,9 @@ SPEC REPOS:
     - PinterestLayout
     - Protobuf
     - PryntTrimmerView
+    - RandomColorSwift
     - ReachabilitySwift
+    - SelectionList
     - TRVSEventSource
 
 SPEC CHECKSUMS:
@@ -202,9 +208,11 @@ SPEC CHECKSUMS:
   PinterestLayout: f1c7ec0254ffa842d69f1b43e4436c8ded4359b9
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   PryntTrimmerView: 53ac64053c7ce63cb3e27f54090f52da0734891d
+  RandomColorSwift: 9f85058b721665d52d239ca166a913e083506444
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
+  SelectionList: 4f4c720baf48f3d19c28d0622a43cbef237bb984
   TRVSEventSource: 19fb940e0351ceb97125d46fd40cd55e339568d8
 
-PODFILE CHECKSUM: 8e93d90671ece2182b299c1da100bd6e00b202b0
+PODFILE CHECKSUM: 2aaa8c40364465cceceee1cb852e5fd0d5c2ad56
 
 COCOAPODS: 1.5.3

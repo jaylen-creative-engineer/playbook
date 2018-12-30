@@ -10,48 +10,48 @@ import UIKit
 
 class RecommenedPursuitCell : UICollectionViewCell {
     
-    var post : Post! {
-        didSet {
-            guard let photoUrl = post.thumbnailUrl else { return }
-            imageView.loadImageUsingCacheWithUrlString(photoUrl)
-            postDetail.text = post.description
-        }
-    }
-    
-    lazy var imageView : UIImageView = {
+    let photo : UIImageView = {
         let iv = UIImageView()
-        iv.layer.cornerRadius = 8
-        iv.clipsToBounds = true
+        iv.layer.cornerRadius = 12
+        iv.layer.masksToBounds = true
         iv.contentMode = .scaleAspectFill
-        iv.isUserInteractionEnabled = true
         return iv
     }()
     
-    let backgroundShadow : GroupChatView = {
-        let view = GroupChatView()
+    let photoBackground : HomeCellRectangleView = {
+        let view = HomeCellRectangleView()
         view.backgroundColor = .white
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    let postDetail : UILabel = {
+    let detailLabel : UILabel = {
         let label = UILabel()
-        label.numberOfLines = 0
+        label.text = "Have a vision to work towards"
         label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.init(25))
-        label.textAlignment = .center
+        label.numberOfLines = 1
+        label.font = UIFont.boldSystemFont(ofSize: 12)
         return label
     }()
     
+    let userPhoto : UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(named: "gian-cescon-637914-unsplash")?.withRenderingMode(.alwaysOriginal)
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 15
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    
     func setupView(){
-        addSubview(backgroundShadow)
-        addSubview(imageView)
-        addSubview(postDetail)
-      
-        backgroundShadow.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 0)
-        imageView.anchor(top: backgroundShadow.topAnchor, left: backgroundShadow.leftAnchor, bottom: backgroundShadow.bottomAnchor, right: backgroundShadow.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        postDetail.anchor(top: nil, left: imageView.leftAnchor, bottom: imageView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 18, paddingRight: 12, width: 0, height: 0)
-        postDetail.heightAnchor.constraint(lessThanOrEqualToConstant: 52).isActive = true
+        addSubview(photoBackground)
+        addSubview(photo)
+        addSubview(userPhoto)
+        addSubview(detailLabel)
+        
+        photoBackground.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        photo.anchor(top: photoBackground.topAnchor, left: photoBackground.leftAnchor, bottom: photoBackground.bottomAnchor, right: photoBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        userPhoto.anchor(top: photo.topAnchor, left: photo.leftAnchor, bottom: nil, right: nil, paddingTop: 6, paddingLeft: 6, paddingBottom: 0, paddingRight: 0, width: 30, height: 30)
+        detailLabel.anchor(top: nil, left: photo.leftAnchor, bottom: photo.bottomAnchor, right: photo.rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 12, paddingRight: 8, width: 0, height: 14)
     }
     
     override init(frame: CGRect) {

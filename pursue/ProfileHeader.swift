@@ -101,18 +101,18 @@ class ProfileHeader : UICollectionViewCell {
         return iv
     }()
     
-    lazy var settingsButton : UIButton = {
-       let button = UIButton()
-        button.setTitle("•••", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
-//        button.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
-        button.contentHorizontalAlignment = .right
-        button.contentVerticalAlignment = .top
-        button.layer.cornerRadius = 17
-        button.layer.masksToBounds = true
-        return button
-    }()
+//    lazy var settingsButton : UIButton = {
+//       let button = UIButton()
+//        button.setTitle("•••", for: .normal)
+//        button.setTitleColor(.black, for: .normal)
+//        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
+////        button.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
+//        button.contentHorizontalAlignment = .right
+//        button.contentVerticalAlignment = .top
+//        button.layer.cornerRadius = 17
+//        button.layer.masksToBounds = true
+//        return button
+//    }()
     
     let usernameLabel : UILabel = {
        let label = UILabel()
@@ -144,7 +144,7 @@ class ProfileHeader : UICollectionViewCell {
         return label
     }()
     
-    lazy var addedCountLabel : UIButton = {
+    lazy var followersCountLabel : UIButton = {
         let button = UIButton()
         button.setTitle("0", for: .normal)
         button.setTitleColor(.gray, for: .normal)
@@ -153,11 +153,11 @@ class ProfileHeader : UICollectionViewCell {
         return button
     }()
     
-    lazy var addedLabel : UIButton = {
+    lazy var followersLabel : UIButton = {
         let button = UIButton()
-        button.setTitle("ADDED", for: .normal)
+        button.setTitle("Followers", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Lato-Bold", size: 10)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
         button.addTarget(self, action: #selector(handleAdded), for: .touchUpInside)
         return button
     }()
@@ -168,7 +168,7 @@ class ProfileHeader : UICollectionViewCell {
         return button
     }()
     
-    let pursuitsCountLabel : UILabel = {
+    let followingCountLabel : UILabel = {
         let button = UILabel()
         button.text = "0"
         button.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
@@ -181,11 +181,10 @@ class ProfileHeader : UICollectionViewCell {
         return button
     }()
     
-    let pursuitsLabel : UILabel = {
+    let followingLabel : UILabel = {
         let button = UILabel()
-        button.text = "PURSUITS"
-        button.font = UIFont(name: "Lato-Bold", size: 10)
-        button.textColor = .black
+        button.text = "Following"
+        button.font = UIFont.boldSystemFont(ofSize: 12)
         return button
     }()
     
@@ -197,6 +196,22 @@ class ProfileHeader : UICollectionViewCell {
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleAdd))
         tap.numberOfTapsRequired = 1
         view.addGestureRecognizer(tap)
+        return view
+    }()
+    
+    lazy var settingsButton : UIButton = {
+       let button = UIButton(type: .system)
+        button.setTitle("Settings", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.setTitleColor(.black, for: .normal)
+        button.layer.cornerRadius = 16
+        button.layer.masksToBounds = true
+        button.backgroundColor = .white
+        return button
+    }()
+    
+    let settingsBackgroundView : HomeView = {
+        let view = HomeView()
         return view
     }()
     
@@ -272,26 +287,6 @@ class ProfileHeader : UICollectionViewCell {
         accessProfileController?.handleEditProfile()
     }
     
-    func setupEngagements(){
-        addSubview(addedCountLabel)
-        addSubview(addedLabel)
-        addSubview(pursuitsCountLabel)
-        addSubview(pursuitsLabel)
-        
-        addedCountLabel.anchor(top: bioText.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: frame.width / 5.5, paddingLeft: 16, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
-        addedCountLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 120).isActive = true
-        addedLabel.anchor(top: addedCountLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: addedLabel.intrinsicContentSize.height)
-        addedLabel.centerXAnchor.constraint(equalTo: addedCountLabel.centerXAnchor).isActive = true
-        
-        addSubview(addedBackground)
-        addedBackground.anchor(top: addedCountLabel.topAnchor, left: addedLabel.leftAnchor, bottom: addedLabel.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 90, height: 0)
-        
-        pursuitsCountLabel.anchor(top: bioText.bottomAnchor, left: addedLabel.rightAnchor, bottom: nil, right: nil, paddingTop: frame.width / 5.5, paddingLeft: 48, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
-        pursuitsCountLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 60).isActive = true
-        pursuitsLabel.anchor(top: pursuitsCountLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: pursuitsLabel.intrinsicContentSize.height)
-        pursuitsLabel.centerXAnchor.constraint(equalTo: pursuitsCountLabel.centerXAnchor).isActive = true
-        
-    }
 
     func setupBackButton(){
 //        addSubview(settingsButton)
@@ -312,11 +307,25 @@ class ProfileHeader : UICollectionViewCell {
         addSubview(imageView)
         addSubview(usernameLabel)
         addSubview(bioText)
+        addSubview(followersLabel)
+        addSubview(followersCountLabel)
+        addSubview(followingLabel)
+        addSubview(followingCountLabel)
+        addSubview(settingsBackgroundView)
+        addSubview(settingsButton)
         
         imageView.anchor(top: safeAreaLayoutGuide.topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 60, height: 60)
         usernameLabel.anchor(top: imageView.topAnchor, left: imageView.rightAnchor, bottom: nil, right: nil, paddingTop: 6, paddingLeft: 18, paddingBottom: 0, paddingRight: 12, width: usernameLabel.intrinsicContentSize.width, height: 18)
         bioText.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
         bioText.heightAnchor.constraint(lessThanOrEqualToConstant: 50).isActive = true
+        followersLabel.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 12, paddingRight: 0, width: followersLabel.intrinsicContentSize.width, height: 14)
+        followersCountLabel.centerXAnchor.constraint(equalTo: followersLabel.centerXAnchor).isActive = true
+        followersCountLabel.anchor(top: nil, left: nil, bottom: followersLabel.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 8, paddingRight: 0, width: followingCountLabel.intrinsicContentSize.width, height: 14)
+        followingLabel.anchor(top: followersLabel.topAnchor, left: followersLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 32, paddingBottom: 0, paddingRight: 0, width: followingLabel.intrinsicContentSize.width, height: 14)
+        followingCountLabel.centerXAnchor.constraint(equalTo: followingLabel.centerXAnchor).isActive = true
+        followingCountLabel.anchor(top: followersCountLabel.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: followingCountLabel.intrinsicContentSize.width, height: 14)
+        settingsBackgroundView.anchor(top: nil, left: nil, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 16, paddingRight: 12, width: 120, height: 34)
+        settingsButton.anchor(top: settingsBackgroundView.topAnchor, left: settingsBackgroundView.leftAnchor, bottom: settingsBackgroundView.bottomAnchor, right: settingsBackgroundView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
     }
     

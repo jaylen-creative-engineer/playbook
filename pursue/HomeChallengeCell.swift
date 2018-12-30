@@ -22,6 +22,7 @@ class HomeChallengeCell : UICollectionViewCell {
     
     let challengeLabel : UILabel = {
         let label = UILabel()
+        label.textColor = .black
         label.text = "Cooking Challenges"
         label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
         return label

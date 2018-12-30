@@ -17,6 +17,8 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     let principleId = "principleId"
     let headerId = "headerId"
     let stepId = "stepId"
+    let actionId = "actionId"
+    
     
     var user : User?
     var followers : [Follower]?
@@ -29,7 +31,6 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tabBarController?.navigationController?.navigationBar.isHidden = true
         tabBarController?.tabBar.isTranslucent = false
 
@@ -37,7 +38,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         
         collectionView?.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(ProfileStep.self, forCellWithReuseIdentifier: stepId)
-        collectionView?.register(ProfilePursuit.self, forCellWithReuseIdentifier: pursuitsId)
+        collectionView?.register(ProfilePursuitActions.self, forCellWithReuseIdentifier: actionId)
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
         collectionView?.contentInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 100, right: 0)
@@ -126,9 +127,9 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
 }
 
 extension ProfileController {
-        
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 100)
+        return CGSize(width: view.frame.width, height: 180)
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -139,17 +140,27 @@ extension ProfileController {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 370)
+        switch indexPath.item {
+        case 0:
+            return CGSize(width: view.frame.width, height: 400)
+        case 1:
+            return CGSize(width: view.frame.width, height: 550)
+        default:
+            return CGSize(width: view.frame.width, height: 596)
+        }
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return 2
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.item {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! ProfileStep
+            return cell
+        case 1:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: actionId, for: indexPath) as! ProfilePursuitActions
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "randomId", for: indexPath)
