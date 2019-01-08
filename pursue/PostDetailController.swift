@@ -678,8 +678,8 @@ class PostDetailController : UICollectionViewController, PursuitDayDelegate, Key
         super.viewDidLoad()
         
         avPlayer?.automaticallyWaitsToMinimizeStalling = false
-        getDetailContent()
-        setupCollectionView()
+//        getDetailContent()
+//        setupCollectionView()
         hero.isEnabled = true
         setupVideoView()
         
@@ -785,25 +785,25 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
             switch indexPath.item {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay
-                cell.days = detailPost?.days
-                cell.engagements = engagements
+//                cell.days = detailPost?.days
+//                cell.engagements = engagements
                 cell.delegate = self
                 cell.accessPostDetailController = self
                 return cell
             case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamList
-                cell.team = detailPost?.team
+//                cell.team = detailPost?.team
                 cell.delegate = self
                 cell.accessDetailController = self
                 return cell
             case 2:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: tryingId, for: indexPath) as! DetailTrying
-                cell.trying = detailPost?.trying
+//                cell.trying = detailPost?.trying
                 cell.accessPostDetailController = self
                 return cell
             default:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostResponses
-                cell.responses = detailPost?.responses
+//                cell.responses = detailPost?.responses
                 cell.accessDetailController = self
                 return cell
             }
@@ -811,30 +811,30 @@ extension PostDetailController : UICollectionViewDelegateFlowLayout {
             switch indexPath.item {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dayId, for: indexPath) as! PursuitDay
-                cell.days = detailPost?.days
-                cell.engagements = engagements
+//                cell.days = detailPost?.days
+//                cell.engagements = engagements
                 cell.delegate = self
                 cell.accessPostDetailController = self
                 return cell
             case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: keyId, for: indexPath) as! KeyPost
-                cell.keyPost = detailPost?.key_posts
+//                cell.keyPost = detailPost?.key_posts
                 cell.delegate = self
                 return cell
             case 2:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamList
-                cell.team = detailPost?.team
+//                cell.team = detailPost?.team
                 cell.delegate = self
                 cell.accessDetailController = self
                 return cell
             case 3:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: tryingId, for: indexPath) as! DetailTrying
-                cell.trying = detailPost?.trying
+//                cell.trying = detailPost?.trying
                 cell.accessPostDetailController = self
                 return cell
             default:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: commentId, for: indexPath) as! PostResponses
-                cell.responses = detailPost?.responses
+//                cell.responses = detailPost?.responses
                 cell.accessDetailController = self
                 return cell
             }

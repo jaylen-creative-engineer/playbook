@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import Firebase
 import FirebaseStorage
+import FirebaseAuth
 
 class InterestServices {
     

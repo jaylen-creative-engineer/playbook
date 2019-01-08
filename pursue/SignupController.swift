@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import FirebaseAuth
 import FirebaseStorage
+import FirebaseDatabase
 
 class SignupController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate, NameDelegate, EmailDelegate, UsernameDelegate, ProfilePictureDelegate, InterestsDelegate {
     

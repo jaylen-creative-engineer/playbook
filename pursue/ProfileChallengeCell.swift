@@ -74,8 +74,6 @@ class ProfileChallengeCell : UICollectionViewCell {
         
         textStackView.addArrangedSubview(detailLabel)
         textStackView.addArrangedSubview(timeLeftLabel)
-//        addSubview(downArrow)
-//        addSubview(downArrowImage)
         
         cellBottomBackground.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
         cellTopBackground.anchor(top: cellBottomBackground.topAnchor, left: cellBottomBackground.leftAnchor, bottom: cellBottomBackground.bottomAnchor, right: cellBottomBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
@@ -83,10 +81,6 @@ class ProfileChallengeCell : UICollectionViewCell {
         photo.centerYAnchor.constraint(equalTo: cellTopBackground.centerYAnchor).isActive = true
         textStackView.anchor(top: nil, left: photo.rightAnchor, bottom: nil, right: cellTopBackground.rightAnchor, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
         textStackView.centerYAnchor.constraint(equalTo: cellTopBackground.centerYAnchor).isActive = true
-//        downArrow.anchor(top: nil, left: nil, bottom: nil, right: cellTopBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 30, height: 30)
-//        downArrow.centerYAnchor.constraint(equalTo: textStackView.centerYAnchor).isActive = true
-//        downArrowImage.anchor(top: nil, left: nil, bottom: nil, right: downArrow.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 12, height: 10)
-//        downArrowImage.centerYAnchor.constraint(equalTo: downArrow.centerYAnchor).isActive = true
     }
     
     override init(frame: CGRect) {

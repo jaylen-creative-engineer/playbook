@@ -10,20 +10,20 @@ import UIKit
 
 class PostResponses: UICollectionViewCell {
     
-    var responses : [Post]! {
-        didSet {
-            for value in responses {
-                if value.postId == nil {
-                    addSubview(noResponses)
-                    noResponses.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-                    noResponses.anchor(top: responsesLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: noResponses.intrinsicContentSize.width, height: 18)
-                    viewMoreButton.isHidden = true
-                }
-            }
-            
-            responsesCollectionView.reloadData()
-        }
-    }
+//    var responses : [Post]! {
+//        didSet {
+//            for value in responses {
+//                if value.postId == nil {
+//                    addSubview(noResponses)
+//                    noResponses.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+//                    noResponses.anchor(top: responsesLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: noResponses.intrinsicContentSize.width, height: 18)
+//                    viewMoreButton.isHidden = true
+//                }
+//            }
+//
+//            responsesCollectionView.reloadData()
+//        }
+//    }
     
     let cellId = "cellId"
     
@@ -99,21 +99,24 @@ class PostResponses: UICollectionViewCell {
 extension PostResponses : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if responses.count > 3 {
-            return 3
-        } else {
-            return responses.count
-        }
+//        if responses.count > 3 {
+//            return 3
+//        } else {
+//            return responses.count
+//        }
+//
+        return 3
+
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PostResponsesCell
-        cell.post = responses[indexPath.item]
+//        cell.post = responses[indexPath.item]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessDetailController?.changeToDetail(sentPostId: (responses[indexPath.item].postId)!)
+//        accessDetailController?.changeToDetail(sentPostId: (responses[indexPath.item].postId)!)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

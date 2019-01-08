@@ -33,6 +33,11 @@ class HomeViews : UICollectionViewController, UICollectionViewDelegateFlowLayout
         setupCollectionView()
     }
     
+    func changeToDetail(){
+        let detail = DetailController()
+        present(detail, animated: true, completion: nil)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: view.frame.width, height: 150)
     }
@@ -41,6 +46,7 @@ class HomeViews : UICollectionViewController, UICollectionViewDelegateFlowLayout
         switch indexPath.item {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: carouselId, for: indexPath) as! HomeCarousel
+            cell.accessHomeViews = self
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postId, for: indexPath) as! HomePostCells
@@ -64,7 +70,7 @@ class HomeViews : UICollectionViewController, UICollectionViewDelegateFlowLayout
         case 1:
             return CGSize(width: view.frame.width, height: 596)
         case 2:
-            return CGSize(width: view.frame.width, height: 380)
+            return CGSize(width: view.frame.width, height: 425)
         case 3:
             return CGSize(width: view.frame.width, height: 280)
         default:

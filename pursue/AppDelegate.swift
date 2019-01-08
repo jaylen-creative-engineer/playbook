@@ -46,6 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             window?.rootViewController = SwipingController(collectionViewLayout: layout)
             window?.makeKeyAndVisible()
         } else {
+            
             window = UIWindow()
             window?.rootViewController = MainTabController()
             window?.makeKeyAndVisible()
@@ -54,6 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         return true
     }
+    
     
     
     func setCategories(){

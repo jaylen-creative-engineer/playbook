@@ -6,6 +6,9 @@ target 'Inpursuit' do
   use_frameworks!
 
   # Pods for Inpursuit
+
+  pod 'TabBarController'
+  pod 'NVActivityIndicatorView'
   pod 'RandomColorSwift'
   pod 'AnimatedCollectionViewLayout'
   pod 'PinterestLayout'
@@ -20,7 +23,6 @@ target 'Inpursuit' do
   pod 'PryntTrimmerView'
   pod 'Alamofire'
   pod 'ReachabilitySwift'
-  pod 'NVActivityIndicatorView'
   pod 'Hero'
   pod 'SelectionList'
   pod 'KWTransition'

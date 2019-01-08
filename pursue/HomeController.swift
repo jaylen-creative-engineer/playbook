@@ -141,11 +141,11 @@ class HomeController : UICollectionViewController {
     func setupNavBar(){
         tabBarController?.tabBar.isTranslucent = false
         navigationItem.titleView = searchBar
-        
+
         navigationController?.hidesBarsOnSwipe = true
         searchController.searchResultsUpdater = self
         definesPresentationContext = true
-        
+
         if searchBar.text?.isEmpty == false {
             navigationController?.view.backgroundColor = .white
             navigationController?.navigationBar.isTranslucent = false
@@ -283,12 +283,18 @@ class HomeController : UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         pageScrollView.delegate = self
+        
         setupNavBar()
         setupMenuBar()
         setupScrollView()
         setupCollectionView()
         checkInternetConnection()
         setupNotification()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationController?.navigationBar.isHidden = true
     }
     
     override func viewDidDisappear(_ animated: Bool) {

@@ -11,7 +11,7 @@ import PinterestLayout
 
 class HomeConflictCell : UICollectionViewCell {
     
-    let collecionView : UICollectionView = {
+    let collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         
@@ -37,17 +37,15 @@ class HomeConflictCell : UICollectionViewCell {
     let cellId = "cellId"
     
     func setupCollectionView(){
-        collecionView.delegate = self
-        collecionView.dataSource = self
-        collecionView.register(HomeConflict.self, forCellWithReuseIdentifier: cellId)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(HomeConflict.self, forCellWithReuseIdentifier: cellId)
         
-        addSubview(cellBackgroundView)
         addSubview(conflictLabel)
-        addSubview(collecionView)
+        addSubview(collectionView)
         
-        cellBackgroundView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
-        conflictLabel.anchor(top: cellBackgroundView.topAnchor, left: cellBackgroundView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: conflictLabel.intrinsicContentSize.width, height: 18)
-        collecionView.anchor(top: conflictLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 170)
+        conflictLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: conflictLabel.intrinsicContentSize.width, height: 18)
+        collectionView.anchor(top: conflictLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 170)
     }
     
     override init(frame: CGRect) {
@@ -75,7 +73,7 @@ extension HomeConflictCell : UICollectionViewDelegate, UICollectionViewDataSourc
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+        return UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -83,7 +81,7 @@ extension HomeConflictCell : UICollectionViewDelegate, UICollectionViewDataSourc
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collecionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeConflict
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeConflict
         return cell
     }
 }

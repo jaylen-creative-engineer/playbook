@@ -12,6 +12,8 @@ import CHIPageControl
 
 class HomeCarousel : UICollectionViewCell {
     
+    var accessHomeViews : HomeViews?
+    
     lazy var carouselView : iCarousel = {
         let ic = iCarousel()
         ic.bounces = false
@@ -121,26 +123,10 @@ extension HomeCarousel : iCarouselDataSource, iCarouselDelegate {
             profilePicture.layer.cornerRadius = 25
             profilePicture.layer.masksToBounds = true
             
-            let leftButton = UIButton()
-            leftButton.translatesAutoresizingMaskIntoConstraints = false
-            leftButton.isUserInteractionEnabled = true
-            leftButton.addTarget(self, action: #selector(handleLeftTap), for: .touchUpInside)
-            
-            let rightButton = UIButton()
-            rightButton.translatesAutoresizingMaskIntoConstraints = false
-            rightButton.isUserInteractionEnabled = true
-            rightButton.addTarget(self, action: #selector(handleRightTap), for: .touchUpInside)
-            
-            
-            carouselImage.addSubview(leftButton)
-            carouselImage.addSubview(rightButton)
-            
             if !imageNames.isEmpty {
                 carouselImage.image = UIImage(named: imageNames[index])
             }
             
-            leftButton.anchor(top: carouselImage.topAnchor, left: carouselImage.leftAnchor, bottom: carouselImage.bottomAnchor, right: carouselImage.centerXAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-            rightButton.anchor(top: carouselImage.topAnchor, left: carouselImage.centerXAnchor, bottom: carouselImage.bottomAnchor, right: carouselImage.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
             return carouselImage
         default:
             return carouselImage
@@ -183,23 +169,29 @@ extension HomeCarousel : iCarouselDataSource, iCarouselDelegate {
         }
     }
     
-    @objc func handleLeftTap(){
-        carouselView.scrollToItem(at: cellIndex - 1, animated: true)
-        cellIndex = cellIndex - 1
-        
-        if cellIndex < 0 {
-            cellIndex = cellIndex + 1
-        }
+    func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
+        accessHomeViews?.changeToDetail()
     }
     
-    @objc func handleRightTap(){
-        carouselView.scrollToItem(at: cellIndex + 1, animated: true)
-        cellIndex = cellIndex + 1
-        
-        if cellIndex > imageNames.count {
-            cellIndex = cellIndex - 1
-        }
-    }
+//    @objc func handleLeftTap(){
+//        carouselView.scrollToItem(at: cellIndex - 1, animated: true)
+//        cellIndex = cellIndex - 1
+//
+//        if cellIndex < 0 {
+//            cellIndex = cellIndex + 1
+//        }
+//    }
+//
+//    @objc func handleRightTap(){
+//        accessHomeViews?.changeToDetail()
+//
+////        carouselView.scrollToItem(at: cellIndex + 1, animated: true)
+////        cellIndex = cellIndex + 1
+////
+////        if cellIndex > imageNames.count {
+////            cellIndex = cellIndex - 1
+////        }
+//    }
     
     func setupCarousels(){
         setupStandardCarousel()

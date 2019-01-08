@@ -14,10 +14,15 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
     
     // MARK: - View Controllers
     
-    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+    let rollingTabBar : RollingPitTabBar = {
+       let tb = RollingPitTabBar()
+        return tb
+    }()
+    
+    private func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         
         let index = viewControllers?.index(of: viewController)
-        if index == 1 {
+        if index == 2 {
             
             let photoSelectorController = SelectCameraController()
             let navController = UINavigationController(rootViewController: photoSelectorController)
@@ -29,9 +34,23 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
         return true
     }
     
+//    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+//        super.init(nibName: nil, bundle: nil)
+//        object_setClass(self.tabBar, RollingPitTabBar.self)
+//        (self.tabBar as? RollingPitTabBar)?.setup()
+//    }
+//
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+    
+    func setupTabView(){
+        view.addSubview(rollingTabBar)
+        rollingTabBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.delegate = self
         
         if Auth.auth().currentUser == nil {
@@ -48,26 +67,29 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
     }
     
     func setupViewControllers() {
-        
+        let newHomeNavController = UINavigationController(rootViewController: NewHomeController(collectionViewLayout: UICollectionViewFlowLayout()))
         let homeNavController = UINavigationController(rootViewController: HomeController(collectionViewLayout: UICollectionViewFlowLayout()))
         let plusNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "create_unselected"), selectedImage: #imageLiteral(resourceName: "create_unselected"))
         let userProfileNavController = UINavigationController(rootViewController: ProfileController(collectionViewLayout: UICollectionViewFlowLayout()))
-
-        tabBar.tintColor = UIColor.black
-        tabBar.barTintColor = UIColor.rgb(red: 255, green: 255, blue: 255)
         
-        viewControllers = [homeNavController, plusNavController, userProfileNavController]
+        tabBar.tintColor = UIColor.rgb(red: 255, green: 255, blue: 255)
+        
+        viewControllers = [newHomeNavController, homeNavController, plusNavController, userProfileNavController]
         
         guard let items = tabBar.items else { return }
-        let tabHome = items[0]
+        let tabNewHome = items[0]
+        tabNewHome.image = UIImage(named: "home_unselected")?.withRenderingMode(.alwaysOriginal)
+        tabNewHome.selectedImage = UIImage(named: "home_selected")?.withRenderingMode(.alwaysOriginal)
+
+        let tabHome = items[1]
         tabHome.image = UIImage(named: "home_unselected")?.withRenderingMode(.alwaysOriginal)
         tabHome.selectedImage = UIImage(named: "home_selected")?.withRenderingMode(.alwaysOriginal)
-        
-        let tabCreate = items[1]
+
+        let tabCreate = items[2]
         tabCreate.image = UIImage(named: "create_unselected")?.withRenderingMode(.alwaysOriginal)
         tabCreate.selectedImage = UIImage(named: "create_unselected")?.withRenderingMode(.alwaysOriginal)
-        
-        let tabProfile = items[2]
+
+        let tabProfile = items[3]
         tabProfile.image = UIImage(named: "profile_unselected")?.withRenderingMode(.alwaysOriginal)
         tabProfile.selectedImage = UIImage(named: "profile_selected")?.withRenderingMode(.alwaysOriginal)
 
@@ -77,7 +99,6 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
     }
     
     fileprivate func templateNavController(unselectedImage: UIImage, selectedImage: UIImage, rootViewController : UIViewController = UIViewController()) -> UINavigationController {
-        
         let viewController = rootViewController
         let navController = UINavigationController(rootViewController: viewController)
         navController.tabBarItem.image = unselectedImage

@@ -9,6 +9,8 @@
 import UIKit
 import Alamofire
 import Firebase
+import FirebaseAuth
+import FirebaseStorage
 
 class ProfileServices {
     
