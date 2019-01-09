@@ -13,6 +13,7 @@
 		E604732D219F6543006F22AB /* CreateDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604732C219F6543006F22AB /* CreateDetail.swift */; };
 		E604733121A0DD62006F22AB /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604733021A0DD62006F22AB /* Feed.swift */; };
 		E60B0836200513FE003F6B70 /* BioInputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60B0835200513FE003F6B70 /* BioInputTextView.swift */; };
+		E60D52F521E5922200C7BB45 /* StepIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60D52F421E5922200C7BB45 /* StepIndicatorView.swift */; };
 		E60EB26720460DB8006E4F1A /* FollowingCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60EB26620460DB8006E4F1A /* FollowingCells.swift */; };
 		E60EB269204616D8006E4F1A /* FriendsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60EB268204616D8006E4F1A /* FriendsController.swift */; };
 		E60EB26B204617B5006E4F1A /* FriendsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60EB26A204617B5006E4F1A /* FriendsCells.swift */; };
@@ -179,6 +180,7 @@
 		E604732C219F6543006F22AB /* CreateDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateDetail.swift; sourceTree = "<group>"; };
 		E604733021A0DD62006F22AB /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		E60B0835200513FE003F6B70 /* BioInputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BioInputTextView.swift; sourceTree = "<group>"; };
+		E60D52F421E5922200C7BB45 /* StepIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepIndicatorView.swift; sourceTree = "<group>"; };
 		E60EB26620460DB8006E4F1A /* FollowingCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingCells.swift; sourceTree = "<group>"; };
 		E60EB268204616D8006E4F1A /* FriendsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsController.swift; sourceTree = "<group>"; };
 		E60EB26A204617B5006E4F1A /* FriendsCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsCells.swift; sourceTree = "<group>"; };
@@ -596,6 +598,7 @@
 				E6A39208217C0B2E00ABF10B /* PreviewView.swift */,
 				E6A3920A217C0B6800ABF10B /* SwiftyCamViewControllerDelegate.swift */,
 				E696E91621E13CAF00192DEB /* VBRRollingPit.swift */,
+				E60D52F421E5922200C7BB45 /* StepIndicatorView.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -781,6 +784,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Inpursuit/Pods-Inpursuit-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ABSteppedProgressBar/ABSteppedProgressBar.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AnimatedCollectionViewLayout/AnimatedCollectionViewLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/CHIPageControl/CHIPageControl.framework",
@@ -806,6 +810,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ABSteppedProgressBar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnimatedCollectionViewLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CHIPageControl.framework",
@@ -894,6 +899,7 @@
 				E674AB7B214357E300E27867 /* DetailTrying.swift in Sources */,
 				446C359921181F80005BDE71 /* PursuitDayTableViewCell.swift in Sources */,
 				E6DE06E721DD50B200A979E3 /* EngagementsMenuCells.swift in Sources */,
+				E60D52F521E5922200C7BB45 /* StepIndicatorView.swift in Sources */,
 				E623DBEF2177B578008DDE64 /* CustomMorePopover.swift in Sources */,
 				E6A273F91F68314F00F5B4C8 /* CustomImageView.swift in Sources */,
 				E639808D204DF3D40049A71B /* Notifications.swift in Sources */,

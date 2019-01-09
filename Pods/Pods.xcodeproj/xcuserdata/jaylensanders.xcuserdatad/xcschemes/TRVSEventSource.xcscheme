@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0A7E1089D900E47A31E49A90D69DE437"
+               BlueprintIdentifier = "4A4E2C9C972309E2E96FFBB456AA714D"
                BlueprintName = "TRVSEventSource"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "TRVSEventSource.framework">

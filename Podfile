@@ -7,6 +7,7 @@ target 'Inpursuit' do
 
   # Pods for Inpursuit
 
+  pod 'ABSteppedProgressBar'
   pod 'TabBarController'
   pod 'NVActivityIndicatorView'
   pod 'RandomColorSwift'
