@@ -178,12 +178,12 @@ class NewHomeCells : UICollectionViewCell {
         addSubview(userPhoto)
         addSubview(usernameLabel)
         addSubview(descriptionLabel)
-        addSubview(stepProgressView)
+//        addSubview(stepProgressView)
         
         gradientCard.anchor(top: nil, left: carouselView.leftAnchor, bottom: nil, right: carouselView.rightAnchor, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 18, width: 0, height: 160)
         gradientCard.centerYAnchor.constraint(equalTo: carouselView.centerYAnchor).isActive = true
-        stepProgressView.anchor(top: gradientCard.topAnchor, left: gradientCard.leftAnchor, bottom: nil, right: gradientCard.rightAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 15)
-        userPhoto.anchor(top: stepProgressView.topAnchor, left: gradientCard.leftAnchor, bottom: nil, right: nil, paddingTop: 28, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
+//        stepProgressView.anchor(top: gradientCard.topAnchor, left: gradientCard.leftAnchor, bottom: nil, right: gradientCard.rightAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 15)
+        userPhoto.anchor(top: gradientCard.topAnchor, left: gradientCard.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
         usernameLabel.anchor(top: userPhoto.topAnchor, left: userPhoto.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 0, height: 20)
         descriptionLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: descriptionLabel.intrinsicContentSize.height)
 //        self.stepProgressView.frame = CGRect(x: 0, y: 50, width: 280, height: 100)

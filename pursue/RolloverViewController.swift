@@ -74,7 +74,7 @@ class RolloverViewController : UIViewController, UIScrollViewDelegate {
         return sv
     }()
     
-    var pages = [DetailEngagementsView]()
+    var pages = [UICollectionViewController]()
     
     func setupMenuBar(){
         let backgroundFill = UIView()
@@ -93,10 +93,10 @@ class RolloverViewController : UIViewController, UIScrollViewDelegate {
     }
     
     func setupScrollView(){
-        let page1 = setupEngagementViews(backgroundColor: .white)
-        let page2 = setupEngagementViews(backgroundColor: .red)
-        let page3 = setupEngagementViews(backgroundColor: .blue)
-        let page4 = setupEngagementViews(backgroundColor: .green)
+        let page1 = setupSeasonsView()
+        let page2 = setupTryingView()
+        let page3 = setupTeamView()
+        let page4 = setupIssuesView()
 
         
         pages = [page1, page2, page3, page4]
@@ -104,7 +104,6 @@ class RolloverViewController : UIViewController, UIScrollViewDelegate {
         pageScrollView.contentSize = CGSize(width: view.frame.width * CGFloat(pages.count), height: view.frame.height)
         pageScrollView.frame = CGRect(x: 0, y: 100, width: view.frame.width, height: view.frame.height)
         view.addSubview(pageScrollView)
-//        view.insertSubview(pageScrollView, belowSubview: engagementsBar)
         
         for i in 0 ..< pages.count{
             pages[i].view.frame = CGRect(x: view.frame.width * CGFloat(i), y: 0, width: view.frame.width, height: view.frame.height)
@@ -114,9 +113,26 @@ class RolloverViewController : UIViewController, UIScrollViewDelegate {
         }
     }
     
-    func setupEngagementViews(backgroundColor : UIColor) -> DetailEngagementsView {
-        let containerView = DetailEngagementsView(collectionViewLayout: UICollectionViewFlowLayout())
-        containerView.collectionView.backgroundColor = backgroundColor
+    func setupSeasonsView() -> DetailSeasonsController {
+        let containerView = DetailSeasonsController(collectionViewLayout: UICollectionViewFlowLayout())
+        containerView.collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return containerView
+    }
+    
+    func setupTeamView() -> DetailTeamController {
+        let containerView = DetailTeamController(collectionViewLayout: UICollectionViewFlowLayout())
+        containerView.collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return containerView
+    }
+    
+    func setupIssuesView() -> DetailIssuesController {
+        let containerView = DetailIssuesController(collectionViewLayout: UICollectionViewFlowLayout())
+        containerView.collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return containerView
+    }
+    
+    func setupTryingView() -> DetailTryingController {
+        let containerView = DetailTryingController(collectionViewLayout: UICollectionViewFlowLayout())
         containerView.collectionView.translatesAutoresizingMaskIntoConstraints = false
         return containerView
     }

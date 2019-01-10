@@ -154,7 +154,7 @@
 		E6DE06E321D949CC00A979E3 /* RolloverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DE06E221D949CC00A979E3 /* RolloverViewController.swift */; };
 		E6DE06E521DD504A00A979E3 /* EngagementsMenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DE06E421DD504A00A979E3 /* EngagementsMenuBar.swift */; };
 		E6DE06E721DD50B200A979E3 /* EngagementsMenuCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DE06E621DD50B200A979E3 /* EngagementsMenuCells.swift */; };
-		E6DE06E921DEB56000A979E3 /* DetailEngagementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DE06E821DEB56000A979E3 /* DetailEngagementsView.swift */; };
+		E6DE06E921DEB56000A979E3 /* DetailSeasonsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DE06E821DEB56000A979E3 /* DetailSeasonsController.swift */; };
 		E6DEC846201ABF4D00E02393 /* Interests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DEC845201ABF4D00E02393 /* Interests.swift */; };
 		E6DEC850201AC31100E02393 /* Pursuit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DEC84F201AC31100E02393 /* Pursuit.swift */; };
 		E6DEC85C201ACDD300E02393 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DEC85B201ACDD300E02393 /* Page.swift */; };
@@ -168,6 +168,16 @@
 		E6E1FA36207A88C8008F4280 /* SignupInterestsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E1FA35207A88C8008F4280 /* SignupInterestsHeader.swift */; };
 		E6E269012144976B00A7B1FC /* DetailSavedCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E269002144976B00A7B1FC /* DetailSavedCells.swift */; };
 		E6E76D2F2173E7A9006A7DDF /* CustomSavePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E76D2E2173E7A9006A7DDF /* CustomSavePopover.swift */; };
+		E6F04D8121E64C1F0010BEB8 /* DetailTeamController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F04D8021E64C1F0010BEB8 /* DetailTeamController.swift */; };
+		E6F04D8321E64D2D0010BEB8 /* DetailTeamCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F04D8221E64D2D0010BEB8 /* DetailTeamCells.swift */; };
+		E6F04D8521E652310010BEB8 /* DetailTryingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F04D8421E652310010BEB8 /* DetailTryingController.swift */; };
+		E6F04D8721E652570010BEB8 /* DetailTryingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F04D8621E652570010BEB8 /* DetailTryingCell.swift */; };
+		E6F04D8921E652F00010BEB8 /* DetailTryingHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F04D8821E652F00010BEB8 /* DetailTryingHeader.swift */; };
+		E6F04D8D21E6669A0010BEB8 /* DetailIssuesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F04D8C21E6669A0010BEB8 /* DetailIssuesController.swift */; };
+		E6F04D8F21E666E10010BEB8 /* DetailIssuesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F04D8E21E666E10010BEB8 /* DetailIssuesCell.swift */; };
+		E6F04D9121E66E340010BEB8 /* DetailIssuesFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F04D9021E66E340010BEB8 /* DetailIssuesFooter.swift */; };
+		E6F04D9321E68D860010BEB8 /* DetailSeasonCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F04D9221E68D860010BEB8 /* DetailSeasonCells.swift */; };
+		E6F04D9521E68DD30010BEB8 /* DetailSeasonHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F04D9421E68DD30010BEB8 /* DetailSeasonHeader.swift */; };
 		E6F7D44A219D1C94007CA8F6 /* ResponseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F7D449219D1C94007CA8F6 /* ResponseController.swift */; };
 /* End PBXBuildFile section */
 
@@ -326,7 +336,7 @@
 		E6DE06E221D949CC00A979E3 /* RolloverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RolloverViewController.swift; sourceTree = "<group>"; };
 		E6DE06E421DD504A00A979E3 /* EngagementsMenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngagementsMenuBar.swift; sourceTree = "<group>"; };
 		E6DE06E621DD50B200A979E3 /* EngagementsMenuCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngagementsMenuCells.swift; sourceTree = "<group>"; };
-		E6DE06E821DEB56000A979E3 /* DetailEngagementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEngagementsView.swift; sourceTree = "<group>"; };
+		E6DE06E821DEB56000A979E3 /* DetailSeasonsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSeasonsController.swift; sourceTree = "<group>"; };
 		E6DEC845201ABF4D00E02393 /* Interests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interests.swift; sourceTree = "<group>"; };
 		E6DEC84F201AC31100E02393 /* Pursuit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pursuit.swift; sourceTree = "<group>"; };
 		E6DEC85B201ACDD300E02393 /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
@@ -340,6 +350,16 @@
 		E6E1FA35207A88C8008F4280 /* SignupInterestsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupInterestsHeader.swift; sourceTree = "<group>"; };
 		E6E269002144976B00A7B1FC /* DetailSavedCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSavedCells.swift; sourceTree = "<group>"; };
 		E6E76D2E2173E7A9006A7DDF /* CustomSavePopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSavePopover.swift; sourceTree = "<group>"; };
+		E6F04D8021E64C1F0010BEB8 /* DetailTeamController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTeamController.swift; sourceTree = "<group>"; };
+		E6F04D8221E64D2D0010BEB8 /* DetailTeamCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTeamCells.swift; sourceTree = "<group>"; };
+		E6F04D8421E652310010BEB8 /* DetailTryingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTryingController.swift; sourceTree = "<group>"; };
+		E6F04D8621E652570010BEB8 /* DetailTryingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTryingCell.swift; sourceTree = "<group>"; };
+		E6F04D8821E652F00010BEB8 /* DetailTryingHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTryingHeader.swift; sourceTree = "<group>"; };
+		E6F04D8C21E6669A0010BEB8 /* DetailIssuesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailIssuesController.swift; sourceTree = "<group>"; };
+		E6F04D8E21E666E10010BEB8 /* DetailIssuesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailIssuesCell.swift; sourceTree = "<group>"; };
+		E6F04D9021E66E340010BEB8 /* DetailIssuesFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailIssuesFooter.swift; sourceTree = "<group>"; };
+		E6F04D9221E68D860010BEB8 /* DetailSeasonCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSeasonCells.swift; sourceTree = "<group>"; };
+		E6F04D9421E68DD30010BEB8 /* DetailSeasonHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSeasonHeader.swift; sourceTree = "<group>"; };
 		E6F7D449219D1C94007CA8F6 /* ResponseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -467,7 +487,17 @@
 				E6DE06E221D949CC00A979E3 /* RolloverViewController.swift */,
 				E6DE06E421DD504A00A979E3 /* EngagementsMenuBar.swift */,
 				E6DE06E621DD50B200A979E3 /* EngagementsMenuCells.swift */,
-				E6DE06E821DEB56000A979E3 /* DetailEngagementsView.swift */,
+				E6DE06E821DEB56000A979E3 /* DetailSeasonsController.swift */,
+				E6F04D9221E68D860010BEB8 /* DetailSeasonCells.swift */,
+				E6F04D9421E68DD30010BEB8 /* DetailSeasonHeader.swift */,
+				E6F04D8021E64C1F0010BEB8 /* DetailTeamController.swift */,
+				E6F04D8221E64D2D0010BEB8 /* DetailTeamCells.swift */,
+				E6F04D8421E652310010BEB8 /* DetailTryingController.swift */,
+				E6F04D8821E652F00010BEB8 /* DetailTryingHeader.swift */,
+				E6F04D8621E652570010BEB8 /* DetailTryingCell.swift */,
+				E6F04D8C21E6669A0010BEB8 /* DetailIssuesController.swift */,
+				E6F04D9021E66E340010BEB8 /* DetailIssuesFooter.swift */,
+				E6F04D8E21E666E10010BEB8 /* DetailIssuesCell.swift */,
 			);
 			name = Detail;
 			sourceTree = "<group>";
@@ -872,9 +902,11 @@
 				E6CE22771F671D10006C5755 /* SignupController.swift in Sources */,
 				E62E29A62152A32B00139483 /* CreateInterests.swift in Sources */,
 				E6B35ECA21D708F800C38700 /* ProfileIssueView.swift in Sources */,
-				E6DE06E921DEB56000A979E3 /* DetailEngagementsView.swift in Sources */,
+				E6DE06E921DEB56000A979E3 /* DetailSeasonsController.swift in Sources */,
 				E6CFCD5E21CBBEA40069F001 /* HomeHeader.swift in Sources */,
 				E61692441FD64544008BF11D /* ForgotController.swift in Sources */,
+				E6F04D8D21E6669A0010BEB8 /* DetailIssuesController.swift in Sources */,
+				E6F04D8121E64C1F0010BEB8 /* DetailTeamController.swift in Sources */,
 				E638791E21939A370046FF95 /* Engagements.swift in Sources */,
 				E6398081204DD6780049A71B /* ExploreServices.swift in Sources */,
 				E639808B204DD9B00049A71B /* EngagementServices.swift in Sources */,
@@ -892,8 +924,10 @@
 				E600427C21AE31D40085D445 /* CaptureResponseView.swift in Sources */,
 				E6CFCD6621CC77660069F001 /* HomeChallengeCell.swift in Sources */,
 				E638791C219395FD0046FF95 /* Added.swift in Sources */,
+				E6F04D8521E652310010BEB8 /* DetailTryingController.swift in Sources */,
 				E696E91721E13CAF00192DEB /* VBRRollingPit.swift in Sources */,
 				E696E92321E1A7F200192DEB /* NewHomeCells.swift in Sources */,
+				E6F04D8721E652570010BEB8 /* DetailTryingCell.swift in Sources */,
 				E67205F5215AA4DB0085470C /* KeyPostListCells.swift in Sources */,
 				E6DE06E321D949CC00A979E3 /* RolloverViewController.swift in Sources */,
 				E674AB7B214357E300E27867 /* DetailTrying.swift in Sources */,
@@ -903,6 +937,7 @@
 				E623DBEF2177B578008DDE64 /* CustomMorePopover.swift in Sources */,
 				E6A273F91F68314F00F5B4C8 /* CustomImageView.swift in Sources */,
 				E639808D204DF3D40049A71B /* Notifications.swift in Sources */,
+				E6F04D9121E66E340010BEB8 /* DetailIssuesFooter.swift in Sources */,
 				E6E0B0202060AB9500007A21 /* SearchedUsers.swift in Sources */,
 				E6B35EB621D08A5800C38700 /* HomeContainer.swift in Sources */,
 				E6B35EB821D08A8500C38700 /* HomeMenuBar.swift in Sources */,
@@ -949,12 +984,15 @@
 				E628F2EA2035D978002FE8CF /* SearchUsers.swift in Sources */,
 				E6DDFFC321CDD39400E7BFC1 /* HomeStandard.swift in Sources */,
 				E6AFDA9E21824AC30055C25D /* CaptureDetailView.swift in Sources */,
+				E6F04D9521E68DD30010BEB8 /* DetailSeasonHeader.swift in Sources */,
 				E6E269012144976B00A7B1FC /* DetailSavedCells.swift in Sources */,
+				E6F04D8F21E666E10010BEB8 /* DetailIssuesCell.swift in Sources */,
 				E67FE166214D55F8009A6BEF /* SearchPostCells.swift in Sources */,
 				E683867C219155FD00D502CB /* HomeDetail.swift in Sources */,
 				E6B35EC221D7047700C38700 /* ProfilePursuitActions.swift in Sources */,
 				E63CEB6220ED60D500FFDEF3 /* Utility.swift in Sources */,
 				E6B35EC821D7088100C38700 /* ProfileChallengeView.swift in Sources */,
+				E6F04D9321E68D860010BEB8 /* DetailSeasonCells.swift in Sources */,
 				E63CEB5020EACEC100FFDEF3 /* DayLabelCell.swift in Sources */,
 				E6A274001F68327F00F5B4C8 /* User.swift in Sources */,
 				E60B0836200513FE003F6B70 /* BioInputTextView.swift in Sources */,
@@ -997,6 +1035,7 @@
 				E6A39207217C0B0B00ABF10B /* SwiftyCamButton.swift in Sources */,
 				E6DF9EC7203CF7F2005C86DB /* SwiftyRecordButton.swift in Sources */,
 				E6398087204DD7240049A71B /* InterestServices.swift in Sources */,
+				E6F04D8921E652F00010BEB8 /* DetailTryingHeader.swift in Sources */,
 				E697CA3121C354D500D85192 /* CustomFriendSettingsView.swift in Sources */,
 				E67205FC215BE0590085470C /* System.swift in Sources */,
 				E64324B51F79A47F0090075F /* CardView.swift in Sources */,
@@ -1006,6 +1045,7 @@
 				E6777884212CDC48001820FE /* Reachability.swift in Sources */,
 				E62AAB1D1FD0A5D30053EAD7 /* PolicyController.swift in Sources */,
 				E6DF9EC9203CF88D005C86DB /* VideoViewController.swift in Sources */,
+				E6F04D8321E64D2D0010BEB8 /* DetailTeamCells.swift in Sources */,
 				E622658821CCA92600DC2C27 /* HomeUser.swift in Sources */,
 				E6E1FA34207A5A19008F4280 /* InterestsCell.swift in Sources */,
 				E6B35EBC21D08BF600C38700 /* HomeCarousel.swift in Sources */,

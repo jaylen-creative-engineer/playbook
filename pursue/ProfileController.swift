@@ -129,7 +129,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
 extension ProfileController {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 180)
+        return CGSize(width: view.frame.width, height: 200)
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -142,7 +142,7 @@ extension ProfileController {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 0:
-            return CGSize(width: view.frame.width, height: 400)
+            return CGSize(width: view.frame.width, height: 430)
         case 1:
             return CGSize(width: view.frame.width, height: 550)
         default:

@@ -24,7 +24,7 @@ class EngagementsMenuBar : UIView {
     
     let cellId = "cellId"
     
-    let engagementsTitles = ["Days", "People Trying This", "Team", "Issues"]
+    let engagementsTitles = ["Seasons", "People Trying This", "Team", "Issues"]
     
     func setupCollectionView(){
         collectionView.delegate = self

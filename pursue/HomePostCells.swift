@@ -171,7 +171,6 @@ extension HomePostCells : UICollectionViewDelegate, UICollectionViewDataSource, 
 
 extension HomePostCells : PinterestLayoutDelegate {
     
-    
     func collectionView(collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath, withWidth: CGFloat) -> CGFloat {
         if indexPath.item % 2 != 0 {
             return 120
@@ -187,5 +186,4 @@ extension HomePostCells : PinterestLayoutDelegate {
             return 115
         }
     }
-    
 }
