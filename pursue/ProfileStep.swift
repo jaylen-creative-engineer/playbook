@@ -13,6 +13,13 @@ class ProfileStep : UICollectionViewCell {
     
     let cellId = "cellid"
     
+    let todoLabel : UILabel = {
+       let label = UILabel()
+        label.text = "ACTION LISTS"
+        label.font = UIFont.boldSystemFont(ofSize: 12)
+        return label
+    }()
+    
     let collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -29,7 +36,7 @@ class ProfileStep : UICollectionViewCell {
         collectionView.dataSource = self
         
         addSubview(collectionView)
-   
+
         collectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     override init(frame: CGRect) {
@@ -53,20 +60,19 @@ extension ProfileStep : UICollectionViewDelegate, UICollectionViewDataSource, UI
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfileStepCell
-        cell.cellBackgroundColor.backgroundColor = arrayOfColors[indexPath.item]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width / 1.8, height: 300)
+        return CGSize(width: 200, height: 240)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 20.0
+        return 25.0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 20.0
+        return 25.0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

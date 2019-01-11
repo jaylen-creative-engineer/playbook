@@ -37,9 +37,10 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         NotificationCenter.default.addObserver(self, selector: #selector(getUser), name: EditProfileController.updateProfileValues, object: nil)
         
         collectionView?.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView?.register(ProfileAdded.self, forCellWithReuseIdentifier: peopleId)
         collectionView?.register(ProfileStep.self, forCellWithReuseIdentifier: stepId)
         collectionView?.register(ProfilePursuitActions.self, forCellWithReuseIdentifier: actionId)
-        collectionView?.backgroundColor = .white
+        collectionView?.backgroundColor = UIColor.rgb(red: 243, green: 243, blue: 249)
         collectionView?.showsVerticalScrollIndicator = false
         collectionView?.contentInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 100, right: 0)
 //        getUser()
@@ -129,7 +130,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
 extension ProfileController {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 200)
+        return CGSize(width: view.frame.width, height: 270)
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -139,11 +140,21 @@ extension ProfileController {
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 40.0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 40.0
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 0:
-            return CGSize(width: view.frame.width, height: 430)
+            return CGSize(width: view.frame.width, height: 250)
         case 1:
+            return CGSize(width: view.frame.width, height: 200)
+        case 2:
             return CGSize(width: view.frame.width, height: 550)
         default:
             return CGSize(width: view.frame.width, height: 596)
@@ -151,7 +162,7 @@ extension ProfileController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return 3
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -160,7 +171,11 @@ extension ProfileController {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepId, for: indexPath) as! ProfileStep
             return cell
         case 1:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! ProfileAdded
+            return cell
+        case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: actionId, for: indexPath) as! ProfilePursuitActions
+            cell.backgroundColor = .white
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "randomId", for: indexPath)

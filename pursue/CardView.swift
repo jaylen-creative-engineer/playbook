@@ -69,8 +69,8 @@ class HomeCellRectangleView : UIView {
     
     var cornerRadius : CGFloat = 12
     var shadowOffSetWidth : CGFloat = 0
-    var shadowOffSetHeight : CGFloat = 3
-    var shadowOpacity : CGFloat = 0.4
+    var shadowOffSetHeight : CGFloat = 1
+    var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
         super.layoutSubviews()

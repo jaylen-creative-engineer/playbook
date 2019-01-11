@@ -97,7 +97,7 @@ class ProfileHeader : UICollectionViewCell {
         iv.clipsToBounds = true
         iv.image = UIImage(named: "apartment-architecture-ceiling-259962")?.withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
-        iv.layer.cornerRadius = 30
+        iv.layer.cornerRadius = 60
         return iv
     }()
     
@@ -307,25 +307,28 @@ class ProfileHeader : UICollectionViewCell {
         addSubview(imageView)
         addSubview(usernameLabel)
         addSubview(bioText)
-        addSubview(followersLabel)
-        addSubview(followersCountLabel)
-        addSubview(followingLabel)
-        addSubview(followingCountLabel)
-        addSubview(settingsBackgroundView)
-        addSubview(settingsButton)
+//        addSubview(followersLabel)
+//        addSubview(followersCountLabel)
+//        addSubview(followingLabel)
+//        addSubview(followingCountLabel)
+//        addSubview(settingsBackgroundView)
+//        addSubview(settingsButton)
         
-        imageView.anchor(top: safeAreaLayoutGuide.topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 60, height: 60)
-        usernameLabel.anchor(top: imageView.topAnchor, left: imageView.rightAnchor, bottom: nil, right: nil, paddingTop: 6, paddingLeft: 18, paddingBottom: 0, paddingRight: 12, width: usernameLabel.intrinsicContentSize.width, height: 18)
-        bioText.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
+        imageView.anchor(top: safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 120, height: 120)
+        imageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        usernameLabel.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
+        usernameLabel.anchor(top: imageView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: 18)
+        bioText.anchor(top: usernameLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
+        bioText.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
         bioText.heightAnchor.constraint(lessThanOrEqualToConstant: 50).isActive = true
-        followersLabel.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 12, paddingRight: 0, width: followersLabel.intrinsicContentSize.width, height: 14)
-        followersCountLabel.centerXAnchor.constraint(equalTo: followersLabel.centerXAnchor).isActive = true
-        followersCountLabel.anchor(top: nil, left: nil, bottom: followersLabel.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 8, paddingRight: 0, width: followingCountLabel.intrinsicContentSize.width, height: 14)
-        followingLabel.anchor(top: followersLabel.topAnchor, left: followersLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 32, paddingBottom: 0, paddingRight: 0, width: followingLabel.intrinsicContentSize.width, height: 14)
-        followingCountLabel.centerXAnchor.constraint(equalTo: followingLabel.centerXAnchor).isActive = true
-        followingCountLabel.anchor(top: followersCountLabel.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: followingCountLabel.intrinsicContentSize.width, height: 14)
-        settingsBackgroundView.anchor(top: nil, left: nil, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 16, paddingRight: 12, width: 120, height: 34)
-        settingsButton.anchor(top: settingsBackgroundView.topAnchor, left: settingsBackgroundView.leftAnchor, bottom: settingsBackgroundView.bottomAnchor, right: settingsBackgroundView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+//        followersLabel.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 12, paddingRight: 0, width: followersLabel.intrinsicContentSize.width, height: 14)
+//        followersCountLabel.centerXAnchor.constraint(equalTo: followersLabel.centerXAnchor).isActive = true
+//        followersCountLabel.anchor(top: nil, left: nil, bottom: followersLabel.topAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 8, paddingRight: 0, width: followingCountLabel.intrinsicContentSize.width, height: 14)
+//        followingLabel.anchor(top: followersLabel.topAnchor, left: followersLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 32, paddingBottom: 0, paddingRight: 0, width: followingLabel.intrinsicContentSize.width, height: 14)
+//        followingCountLabel.centerXAnchor.constraint(equalTo: followingLabel.centerXAnchor).isActive = true
+//        followingCountLabel.anchor(top: followersCountLabel.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: followingCountLabel.intrinsicContentSize.width, height: 14)
+//        settingsBackgroundView.anchor(top: nil, left: nil, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 16, paddingRight: 12, width: 120, height: 34)
+//        settingsButton.anchor(top: settingsBackgroundView.topAnchor, left: settingsBackgroundView.leftAnchor, bottom: settingsBackgroundView.bottomAnchor, right: settingsBackgroundView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
     }
     

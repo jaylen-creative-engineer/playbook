@@ -30,10 +30,9 @@ class ProfilePursuitActions : UICollectionViewCell, UICollectionViewDelegateFlow
     
     func setupScrollView(){
         let page1 = setupActivePursuitsView()
-        let page2 = setupIssueView()
-        let page3 = setupChallengeView()
+        let page2 = setupChallengeView()
         
-        pages = [page1, page2, page3]
+        pages = [page1, page2]
         
         scrollView.contentSize = CGSize(width: frame.width * CGFloat(pages.count), height: frame.height)
         scrollView.frame = CGRect(x: 0, y: 60, width: frame.width, height: frame.height)
@@ -57,16 +56,10 @@ class ProfilePursuitActions : UICollectionViewCell, UICollectionViewDelegateFlow
         return challengeView
     }
     
-    func setupIssueView() -> ProfileIssueView {
-        let issueView = ProfileIssueView(collectionViewLayout: UICollectionViewFlowLayout())
-        issueView.view.translatesAutoresizingMaskIntoConstraints = false
-        return issueView
-    }
-    
     func setupMenuBar(){
         addSubview(menuBar)
         insertSubview(menuBar, aboveSubview: scrollView)
-        menuBar.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 45)
+        menuBar.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 45)
     }
     
     func scrollToMenuIndex(menuIndex : Int) {

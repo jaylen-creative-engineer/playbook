@@ -178,6 +178,8 @@
 		E6F04D9121E66E340010BEB8 /* DetailIssuesFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F04D9021E66E340010BEB8 /* DetailIssuesFooter.swift */; };
 		E6F04D9321E68D860010BEB8 /* DetailSeasonCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F04D9221E68D860010BEB8 /* DetailSeasonCells.swift */; };
 		E6F04D9521E68DD30010BEB8 /* DetailSeasonHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F04D9421E68DD30010BEB8 /* DetailSeasonHeader.swift */; };
+		E6F04D9721E7FB050010BEB8 /* ProfileAdded.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F04D9621E7FB050010BEB8 /* ProfileAdded.swift */; };
+		E6F04D9921E7FC2C0010BEB8 /* ProfileAddedCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F04D9821E7FC2C0010BEB8 /* ProfileAddedCells.swift */; };
 		E6F7D44A219D1C94007CA8F6 /* ResponseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F7D449219D1C94007CA8F6 /* ResponseController.swift */; };
 /* End PBXBuildFile section */
 
@@ -360,6 +362,8 @@
 		E6F04D9021E66E340010BEB8 /* DetailIssuesFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailIssuesFooter.swift; sourceTree = "<group>"; };
 		E6F04D9221E68D860010BEB8 /* DetailSeasonCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSeasonCells.swift; sourceTree = "<group>"; };
 		E6F04D9421E68DD30010BEB8 /* DetailSeasonHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSeasonHeader.swift; sourceTree = "<group>"; };
+		E6F04D9621E7FB050010BEB8 /* ProfileAdded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAdded.swift; sourceTree = "<group>"; };
+		E6F04D9821E7FC2C0010BEB8 /* ProfileAddedCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAddedCells.swift; sourceTree = "<group>"; };
 		E6F7D449219D1C94007CA8F6 /* ResponseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -488,6 +492,8 @@
 				E6DE06E421DD504A00A979E3 /* EngagementsMenuBar.swift */,
 				E6DE06E621DD50B200A979E3 /* EngagementsMenuCells.swift */,
 				E6DE06E821DEB56000A979E3 /* DetailSeasonsController.swift */,
+				E6F04D9621E7FB050010BEB8 /* ProfileAdded.swift */,
+				E6F04D9821E7FC2C0010BEB8 /* ProfileAddedCells.swift */,
 				E6F04D9221E68D860010BEB8 /* DetailSeasonCells.swift */,
 				E6F04D9421E68DD30010BEB8 /* DetailSeasonHeader.swift */,
 				E6F04D8021E64C1F0010BEB8 /* DetailTeamController.swift */,
@@ -930,6 +936,7 @@
 				E6F04D8721E652570010BEB8 /* DetailTryingCell.swift in Sources */,
 				E67205F5215AA4DB0085470C /* KeyPostListCells.swift in Sources */,
 				E6DE06E321D949CC00A979E3 /* RolloverViewController.swift in Sources */,
+				E6F04D9921E7FC2C0010BEB8 /* ProfileAddedCells.swift in Sources */,
 				E674AB7B214357E300E27867 /* DetailTrying.swift in Sources */,
 				446C359921181F80005BDE71 /* PursuitDayTableViewCell.swift in Sources */,
 				E6DE06E721DD50B200A979E3 /* EngagementsMenuCells.swift in Sources */,
@@ -962,6 +969,7 @@
 				E675032721E3D4D10043CDFA /* TestTabsController.swift in Sources */,
 				E6235EA81F94208F00BF1FDE /* PostResponses.swift in Sources */,
 				E6812891213606B60006D498 /* HomePostCells.swift in Sources */,
+				E6F04D9721E7FB050010BEB8 /* ProfileAdded.swift in Sources */,
 				E623DBF12177F34A008DDE64 /* SavePopoverCells.swift in Sources */,
 				E6B49F2F1FACDE4100AEDAFD /* SelectInterestsList.swift in Sources */,
 				E623DBED2177B531008DDE64 /* CustomTryPopover.swift in Sources */,

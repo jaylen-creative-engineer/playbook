@@ -23,7 +23,7 @@ class ActionMenuBar : UIView {
     var accessActionsCell : ProfilePursuitActions?
     
     let cellId = "cellId"
-    let actionTitles = ["Active Pursuits", "Issues", "Challenges"]
+    let actionTitles = ["ACTIVE PURSUITS", "CHALLENGES"]
     
     func setupCollectionView(){
         collectionView.delegate = self
@@ -56,25 +56,25 @@ extension ActionMenuBar : UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let approximateWidthOfCell = frame.width
         let size = CGSize(width: approximateWidthOfCell, height: .infinity)
-        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)]
+        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize : 13)]
         let estimatedFrame = NSString(string: actionTitles[indexPath.item]).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-        return CGSize(width: estimatedFrame.width + 14, height: frame.height - 24)
+        return CGSize(width: estimatedFrame.width, height: frame.height - 24)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
     }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        accessActionsCell?.scrollToMenuIndex(menuIndex: indexPath.item)
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 15
+        return 15.0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 15
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessActionsCell?.scrollToMenuIndex(menuIndex: indexPath.item)
+        return 15.0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
