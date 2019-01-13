@@ -20,7 +20,7 @@
                     <view key="view" contentMode="scaleToFill" id="xPy-Z6-CMU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.95212739706039429" green="0.95275610685348511" blue="0.97605663537979126" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.38303539156913757" green="0.38334912061691284" blue="0.38308393955230713" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N4l-HM-VHh" userLabel="First Responder" sceneMemberID="firstResponder"/>

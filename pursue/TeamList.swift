@@ -141,7 +141,7 @@ class TeamList : UICollectionViewCell {
         let indexPath = self.collectionView.indexPathForItem(at: p)
         
         if let index = indexPath {
-            var cell = self.collectionView.cellForItem(at: index)
+//            var cell = self.collectionView.cellForItem(at: index)
             // do stuff with your cell, for example print the indexPath
             print(index.row)
         } else {

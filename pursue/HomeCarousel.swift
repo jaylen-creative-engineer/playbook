@@ -107,22 +107,6 @@ extension HomeCarousel : iCarouselDataSource, iCarouselDelegate {
             carouselImage.layer.masksToBounds = true
             carouselImage.contentMode = .scaleAspectFill
             
-            let postLabel = UILabel()
-            postLabel.font = UIFont.boldSystemFont(ofSize: 14)
-            postLabel.textAlignment = .justified
-            postLabel.numberOfLines = 1
-            
-            let usernameLabel = UILabel()
-            usernameLabel.font = UIFont.boldSystemFont(ofSize: 12)
-            usernameLabel.textAlignment = .justified
-            usernameLabel.numberOfLines = 1
-            
-            let profilePicture = UIImageView()
-            profilePicture.contentMode = .scaleAspectFill
-            profilePicture.translatesAutoresizingMaskIntoConstraints = false
-            profilePicture.layer.cornerRadius = 25
-            profilePicture.layer.masksToBounds = true
-            
             if !imageNames.isEmpty {
                 carouselImage.image = UIImage(named: imageNames[index])
             }

@@ -26,7 +26,7 @@ class DetailController : UIViewController {
     var visualEffectView : UIVisualEffectView!
     
     let cardHeight : CGFloat = 800
-    let cardHandleAreaHeight : CGFloat = 120
+    let cardHandleAreaHeight : CGFloat = 180
     
     var cardVisible = false
     var nextState : CardState {
@@ -41,19 +41,19 @@ class DetailController : UIViewController {
         visualEffectView.frame = self.view.frame
         self.view.addSubview(visualEffectView)
         
-        rolloverView = RolloverViewController()
+        rolloverView = RolloverViewController(collectionViewLayout: UICollectionViewFlowLayout())
         self.addChild(rolloverView)
         self.view.addSubview(rolloverView.view)
         
         rolloverView.view.frame = CGRect(x: 0, y: self.view.frame.height - cardHandleAreaHeight, width: self.view.bounds.width, height: view.frame.height)
-        rolloverView.view.layer.cornerRadius = 18
+        rolloverView.view.layer.cornerRadius = 12
         rolloverView.view.clipsToBounds = true
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleCardTap(recognizer:)))
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleCardPan(recognizer:)))
         
-        rolloverView.pullIndicator.addGestureRecognizer(tapGestureRecognizer)
-        rolloverView.pullIndicator.addGestureRecognizer(panGestureRecognizer)
+        rolloverView.view.addGestureRecognizer(tapGestureRecognizer)
+        rolloverView.view.addGestureRecognizer(panGestureRecognizer)
     }
     
     @objc func handleCardTap(recognizer : UITapGestureRecognizer) {
@@ -71,7 +71,7 @@ class DetailController : UIViewController {
         case .began:
             startInteractiveTransition(state: nextState, duration: 0.9)
         case .changed:
-            let translation = recognizer.translation(in: self.rolloverView.pullIndicator)
+            let translation = recognizer.translation(in: self.rolloverView.view)
             var fractionComplete = translation.y / cardHeight
             fractionComplete = cardVisible ? fractionComplete : -fractionComplete
             updateInteractiveTransition(fractionCompleted: fractionComplete)
@@ -105,12 +105,11 @@ class DetailController : UIViewController {
             let cornerRadiusAnimator = UIViewPropertyAnimator(duration: duration, curve: .linear) {
                 switch state {
                 case .expanded:
-                    self.rolloverView.view.layer.cornerRadius = 18
+                    self.rolloverView.view.layer.cornerRadius = 12
                     self.rolloverView.setupDetailsTop()
 //                    self.rolloverView.peekDetails.alpha = 0.0
                 case .collapsed:
-                    self.rolloverView.view.layer.cornerRadius = 18
-                    self.rolloverView.setupDetailsBottom()
+                    self.rolloverView.view.layer.cornerRadius = 12
 //                    self.rolloverView.peekDetails.alpha = 1.0
                 }
             }

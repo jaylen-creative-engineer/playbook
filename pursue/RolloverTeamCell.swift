@@ -1,14 +1,14 @@
 //
-//  ProfileAdded.swift
+//  RolloverTeamCell.swift
 //  Inpursuit
 //
-//  Created by Jaylen Sanders on 1/10/19.
+//  Created by Jaylen Sanders on 1/12/19.
 //  Copyright © 2019 Glory. All rights reserved.
 //
 
 import UIKit
 
-class ProfileAdded : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class RolloverTeamCell : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     let cellId = "cellId"
     let inviteId = "inviteId"
@@ -17,15 +17,15 @@ class ProfileAdded : UICollectionViewCell, UICollectionViewDelegate, UICollectio
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         
-       let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.showsHorizontalScrollIndicator = false
         cv.backgroundColor = .clear
         return cv
     }()
     
-    let addedLabel : UILabel = {
+    let teamLabel : UILabel = {
         let label = UILabel()
-        label.text = "27 ADDED"
+        label.text = "TEAM"
         label.font = UIFont.boldSystemFont(ofSize: 12)
         return label
     }()
@@ -33,19 +33,19 @@ class ProfileAdded : UICollectionViewCell, UICollectionViewDelegate, UICollectio
     func setupView(){
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(ProfileAddedCells.self, forCellWithReuseIdentifier: cellId)
-        collectionView.register(ProfileInviteCell.self, forCellWithReuseIdentifier: inviteId)
+        collectionView.register(RolloverAddedCells.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(RolloverInviteCell.self, forCellWithReuseIdentifier: inviteId)
         
-        addSubview(addedLabel)
+        addSubview(teamLabel)
         addSubview(collectionView)
         
-        addedLabel.anchor(top: topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: addedLabel.intrinsicContentSize.width, height: 16)
-        addedLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        collectionView.anchor(top: addedLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        teamLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: teamLabel.intrinsicContentSize.width, height: 16)
+        collectionView.anchor(top: teamLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 24, paddingRight: 0, width: 0, height: 0)
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .white
         setupView()
     }
     
@@ -72,10 +72,10 @@ class ProfileAdded : UICollectionViewCell, UICollectionViewDelegate, UICollectio
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.item {
         case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: inviteId, for: indexPath) as! ProfileInviteCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: inviteId, for: indexPath) as! RolloverInviteCell
             return cell
         default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfileAddedCells
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! RolloverAddedCells
             return cell
         }
     }
@@ -85,15 +85,15 @@ class ProfileAdded : UICollectionViewCell, UICollectionViewDelegate, UICollectio
         case 0:
             return CGSize(width: 80, height: 140)
         default:
-             return CGSize(width: 120, height: 140)
+            return CGSize(width: 120, height: 140)
         }
     }
 }
 
-class ProfileInviteCell : UICollectionViewCell {
+class RolloverInviteCell : UICollectionViewCell {
     
     let outlineButton : UIButton = {
-       let button = UIButton(type: .system)
+        let button = UIButton(type: .system)
         button.tintColor = .black
         button.layer.borderColor = UIColor.black.cgColor
         button.layer.borderWidth = 1.2
@@ -103,7 +103,7 @@ class ProfileInviteCell : UICollectionViewCell {
     }()
     
     let addIcon : UIButton = {
-       let button = UIButton(type: .system)
+        let button = UIButton(type: .system)
         button.tintColor = .black
         button.setImage(UIImage(named: "add")?.withRenderingMode(.alwaysOriginal), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
@@ -132,3 +132,4 @@ class ProfileInviteCell : UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+

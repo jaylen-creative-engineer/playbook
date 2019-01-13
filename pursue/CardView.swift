@@ -108,7 +108,7 @@ class HomeCellConflictShadowView : UIView {
     var cornerRadius : CGFloat = 12
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 1
-    var shadowOpacity : CGFloat = 0.3
+    var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -354,8 +354,8 @@ class LoginRectangleView: UIView {
     
     var cornerRadius : CGFloat = 8
     var shadowOffSetWidth : CGFloat = 0
-    var shadowOffSetHeight : CGFloat = 5
-    var shadowOpacity : CGFloat = 0.2
+    var shadowOffSetHeight : CGFloat = 3
+    var shadowOpacity : CGFloat = 0.3
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -501,10 +501,46 @@ class SmallerCardView : UIView {
     }
 }
 
+class UserPhotoBackground : UIView {
+    var cornerRadius : CGFloat = 25
+    var shadowOffSetWidth : CGFloat = 0
+    var shadowOffSetHeight : CGFloat = 1
+    var shadowOpacity : CGFloat = 0.2
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = cornerRadius
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
+        
+        let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
+        layer.shadowPath = shadowPath.cgPath
+        layer.shadowOpacity = Float(shadowOpacity)
+    }
+}
+
 class AddFriendView : UIView {
     var cornerRadius : CGFloat = 15
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 5
+    var shadowOpacity : CGFloat = 0.2
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = cornerRadius
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: shadowOffSetWidth, height: shadowOffSetHeight)
+        
+        let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
+        layer.shadowPath = shadowPath.cgPath
+        layer.shadowOpacity = Float(shadowOpacity)
+    }
+}
+
+class DetailQuestionBackground : UIImageView {
+    var cornerRadius : CGFloat = 8
+    var shadowOffSetWidth : CGFloat = 0
+    var shadowOffSetHeight : CGFloat = 2
     var shadowOpacity : CGFloat = 0.2
     
     override func layoutSubviews() {
@@ -555,6 +591,7 @@ class RectangleView : UIView {
         layer.shadowOpacity = Float(shadowOpacity)
     }
 }
+
 
 class TopRectangleView : UIView {
     var cornerRadius : CGFloat = 0

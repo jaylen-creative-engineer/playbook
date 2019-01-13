@@ -70,6 +70,13 @@
 		E63CEB5020EACEC100FFDEF3 /* DayLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CEB4F20EACEC100FFDEF3 /* DayLabelCell.swift */; };
 		E63CEB6220ED60D500FFDEF3 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CEB6120ED60D500FFDEF3 /* Utility.swift */; };
 		E64324B51F79A47F0090075F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64324B41F79A47F0090075F /* CardView.swift */; };
+		E64F0D3F21EA7B5F00D12C0B /* RolloverActionItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64F0D3E21EA7B5F00D12C0B /* RolloverActionItems.swift */; };
+		E64F0D4121EA898A00D12C0B /* RolloverTryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64F0D4021EA898A00D12C0B /* RolloverTryCell.swift */; };
+		E64F0D4321EA8AF400D12C0B /* RolloverTry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64F0D4221EA8AF400D12C0B /* RolloverTry.swift */; };
+		E64F0D4521EA97AE00D12C0B /* RolloverTeamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64F0D4421EA97AD00D12C0B /* RolloverTeamCell.swift */; };
+		E64F0D4721EA982E00D12C0B /* RolloverAddedCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64F0D4621EA982E00D12C0B /* RolloverAddedCells.swift */; };
+		E64F0D4921EAA17600D12C0B /* RolloverQuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64F0D4821EAA17600D12C0B /* RolloverQuestionCell.swift */; };
+		E64F0D4B21EAA38400D12C0B /* RolloverAnswerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64F0D4A21EAA38400D12C0B /* RolloverAnswerCell.swift */; };
 		E65F1E521FCCBE5000BD850E /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F1E511FCCBE5000BD850E /* HomeController.swift */; };
 		E65F1E561FCCC7BF00BD850E /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F1E551FCCC7BF00BD850E /* ProfileController.swift */; };
 		E667067720ED6D9B001A8E8E /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E667066C20ED6D9B001A8E8E /* Lato-Bold.ttf */; };
@@ -145,6 +152,9 @@
 		E6D0B402203E13D2008D4268 /* ViewWithDiagonalLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D0B401203E13D2008D4268 /* ViewWithDiagonalLine.swift */; };
 		E6D0B406203E2A5E008D4268 /* PhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D0B405203E2A5E008D4268 /* PhotoLibrary.swift */; };
 		E6D0B40C203E70A7008D4268 /* PhotoLibraryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D0B40B203E70A7008D4268 /* PhotoLibraryCell.swift */; };
+		E6D1884E21E9474700E9CCEF /* RolloverHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D1884D21E9474700E9CCEF /* RolloverHeader.swift */; };
+		E6D1885021E952B200E9CCEF /* RolloverActionCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D1884F21E952B200E9CCEF /* RolloverActionCells.swift */; };
+		E6D1885221E953C400E9CCEF /* RolloverAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D1885121E953C400E9CCEF /* RolloverAction.swift */; };
 		E6D2B8D52017BB17008D3055 /* InterestsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D2B8D42017BB17008D3055 /* InterestsHeader.swift */; };
 		E6D2B8DB2018DB7A008D3055 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D2B8DA2018DB7A008D3055 /* Animator.swift */; };
 		E6D5714620115644008A37CC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6D5714520115644008A37CC /* QuartzCore.framework */; };
@@ -249,6 +259,13 @@
 		E63CEB4F20EACEC100FFDEF3 /* DayLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayLabelCell.swift; sourceTree = "<group>"; };
 		E63CEB6120ED60D500FFDEF3 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		E64324B41F79A47F0090075F /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		E64F0D3E21EA7B5F00D12C0B /* RolloverActionItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RolloverActionItems.swift; sourceTree = "<group>"; };
+		E64F0D4021EA898A00D12C0B /* RolloverTryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RolloverTryCell.swift; sourceTree = "<group>"; };
+		E64F0D4221EA8AF400D12C0B /* RolloverTry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RolloverTry.swift; sourceTree = "<group>"; };
+		E64F0D4421EA97AD00D12C0B /* RolloverTeamCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RolloverTeamCell.swift; sourceTree = "<group>"; };
+		E64F0D4621EA982E00D12C0B /* RolloverAddedCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RolloverAddedCells.swift; sourceTree = "<group>"; };
+		E64F0D4821EAA17600D12C0B /* RolloverQuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RolloverQuestionCell.swift; sourceTree = "<group>"; };
+		E64F0D4A21EAA38400D12C0B /* RolloverAnswerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RolloverAnswerCell.swift; sourceTree = "<group>"; };
 		E65F1E511FCCBE5000BD850E /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		E65F1E551FCCC7BF00BD850E /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		E667066C20ED6D9B001A8E8E /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
@@ -328,6 +345,9 @@
 		E6D0B401203E13D2008D4268 /* ViewWithDiagonalLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewWithDiagonalLine.swift; sourceTree = "<group>"; };
 		E6D0B405203E2A5E008D4268 /* PhotoLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibrary.swift; sourceTree = "<group>"; };
 		E6D0B40B203E70A7008D4268 /* PhotoLibraryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryCell.swift; sourceTree = "<group>"; };
+		E6D1884D21E9474700E9CCEF /* RolloverHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RolloverHeader.swift; sourceTree = "<group>"; };
+		E6D1884F21E952B200E9CCEF /* RolloverActionCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RolloverActionCells.swift; sourceTree = "<group>"; };
+		E6D1885121E953C400E9CCEF /* RolloverAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RolloverAction.swift; sourceTree = "<group>"; };
 		E6D2B8D42017BB17008D3055 /* InterestsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsHeader.swift; sourceTree = "<group>"; };
 		E6D2B8DA2018DB7A008D3055 /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
 		E6D5714420110B2A008A37CC /* pursue-bridging-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "pursue-bridging-header.h"; sourceTree = "<group>"; };
@@ -473,6 +493,7 @@
 		E64324A61F79559D0090075F /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				E6D1884C21E9472D00E9CCEF /* Rollover */,
 				E6136EA21F968EAB00E29101 /* PostDetailController.swift */,
 				E623DBF02177F34A008DDE64 /* SavePopoverCells.swift */,
 				E63CEB4F20EACEC100FFDEF3 /* DayLabelCell.swift */,
@@ -488,7 +509,6 @@
 				E680AAB8217969B600DBE9E4 /* CustomFriendPopover.swift */,
 				E6F7D449219D1C94007CA8F6 /* ResponseController.swift */,
 				E6DE06E021D90E1F00A979E3 /* DetailController.swift */,
-				E6DE06E221D949CC00A979E3 /* RolloverViewController.swift */,
 				E6DE06E421DD504A00A979E3 /* EngagementsMenuBar.swift */,
 				E6DE06E621DD50B200A979E3 /* EngagementsMenuCells.swift */,
 				E6DE06E821DEB56000A979E3 /* DetailSeasonsController.swift */,
@@ -727,6 +747,24 @@
 			name = Camera;
 			sourceTree = "<group>";
 		};
+		E6D1884C21E9472D00E9CCEF /* Rollover */ = {
+			isa = PBXGroup;
+			children = (
+				E6DE06E221D949CC00A979E3 /* RolloverViewController.swift */,
+				E6D1884D21E9474700E9CCEF /* RolloverHeader.swift */,
+				E6D1884F21E952B200E9CCEF /* RolloverActionCells.swift */,
+				E6D1885121E953C400E9CCEF /* RolloverAction.swift */,
+				E64F0D3E21EA7B5F00D12C0B /* RolloverActionItems.swift */,
+				E64F0D4021EA898A00D12C0B /* RolloverTryCell.swift */,
+				E64F0D4221EA8AF400D12C0B /* RolloverTry.swift */,
+				E64F0D4421EA97AD00D12C0B /* RolloverTeamCell.swift */,
+				E64F0D4621EA982E00D12C0B /* RolloverAddedCells.swift */,
+				E64F0D4821EAA17600D12C0B /* RolloverQuestionCell.swift */,
+				E64F0D4A21EAA38400D12C0B /* RolloverAnswerCell.swift */,
+			);
+			name = Rollover;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -912,6 +950,7 @@
 				E6CFCD5E21CBBEA40069F001 /* HomeHeader.swift in Sources */,
 				E61692441FD64544008BF11D /* ForgotController.swift in Sources */,
 				E6F04D8D21E6669A0010BEB8 /* DetailIssuesController.swift in Sources */,
+				E64F0D3F21EA7B5F00D12C0B /* RolloverActionItems.swift in Sources */,
 				E6F04D8121E64C1F0010BEB8 /* DetailTeamController.swift in Sources */,
 				E638791E21939A370046FF95 /* Engagements.swift in Sources */,
 				E6398081204DD6780049A71B /* ExploreServices.swift in Sources */,
@@ -961,6 +1000,7 @@
 				E6E1FA36207A88C8008F4280 /* SignupInterestsHeader.swift in Sources */,
 				E67FE162214C9D9E009A6BEF /* SearchPursuits.swift in Sources */,
 				E60EB26720460DB8006E4F1A /* FollowingCells.swift in Sources */,
+				E6D1884E21E9474700E9CCEF /* RolloverHeader.swift in Sources */,
 				E672C4BC2159E5EB0097E342 /* KeyPostController.swift in Sources */,
 				E61A70E220E182D600EB69D8 /* TeamList.swift in Sources */,
 				E6CFCD6021CC0DEE0069F001 /* HomePinterestCell.swift in Sources */,
@@ -968,6 +1008,8 @@
 				E6CE228B1F671ED6006C5755 /* LoginController.swift in Sources */,
 				E675032721E3D4D10043CDFA /* TestTabsController.swift in Sources */,
 				E6235EA81F94208F00BF1FDE /* PostResponses.swift in Sources */,
+				E64F0D4921EAA17600D12C0B /* RolloverQuestionCell.swift in Sources */,
+				E64F0D4721EA982E00D12C0B /* RolloverAddedCells.swift in Sources */,
 				E6812891213606B60006D498 /* HomePostCells.swift in Sources */,
 				E6F04D9721E7FB050010BEB8 /* ProfileAdded.swift in Sources */,
 				E623DBF12177F34A008DDE64 /* SavePopoverCells.swift in Sources */,
@@ -997,6 +1039,7 @@
 				E6F04D8F21E666E10010BEB8 /* DetailIssuesCell.swift in Sources */,
 				E67FE166214D55F8009A6BEF /* SearchPostCells.swift in Sources */,
 				E683867C219155FD00D502CB /* HomeDetail.swift in Sources */,
+				E6D1885021E952B200E9CCEF /* RolloverActionCells.swift in Sources */,
 				E6B35EC221D7047700C38700 /* ProfilePursuitActions.swift in Sources */,
 				E63CEB6220ED60D500FFDEF3 /* Utility.swift in Sources */,
 				E6B35EC821D7088100C38700 /* ProfileChallengeView.swift in Sources */,
@@ -1015,6 +1058,8 @@
 				E639806C20490B550049A71B /* InviteController.swift in Sources */,
 				E6CE22881F671E3D006C5755 /* Extensions.swift in Sources */,
 				E62E29B62155DD7900139483 /* KeyPost.swift in Sources */,
+				E64F0D4321EA8AF400D12C0B /* RolloverTry.swift in Sources */,
+				E6D1885221E953C400E9CCEF /* RolloverAction.swift in Sources */,
 				E675032521E2F9450043CDFA /* SpringboardTabBarTransition.swift in Sources */,
 				E6299BA1207713EC00B59061 /* NameCell.swift in Sources */,
 				E675032321E2F9450043CDFA /* SpringboardTabBarController.swift in Sources */,
@@ -1028,6 +1073,7 @@
 				E6299BA32077143500B59061 /* UsernameCell.swift in Sources */,
 				E6E76D2F2173E7A9006A7DDF /* CustomSavePopover.swift in Sources */,
 				E6DEC85C201ACDD300E02393 /* Page.swift in Sources */,
+				E64F0D4121EA898A00D12C0B /* RolloverTryCell.swift in Sources */,
 				E604733121A0DD62006F22AB /* Feed.swift in Sources */,
 				E6CE22751F671D10006C5755 /* AppDelegate.swift in Sources */,
 				E6AD4BBF206AE05B00451547 /* CreateInterestsCells.swift in Sources */,
@@ -1045,6 +1091,7 @@
 				E6398087204DD7240049A71B /* InterestServices.swift in Sources */,
 				E6F04D8921E652F00010BEB8 /* DetailTryingHeader.swift in Sources */,
 				E697CA3121C354D500D85192 /* CustomFriendSettingsView.swift in Sources */,
+				E64F0D4521EA97AE00D12C0B /* RolloverTeamCell.swift in Sources */,
 				E67205FC215BE0590085470C /* System.swift in Sources */,
 				E64324B51F79A47F0090075F /* CardView.swift in Sources */,
 				E617BB171FD8874B008B2EA1 /* SwipingController.swift in Sources */,
@@ -1053,6 +1100,7 @@
 				E6777884212CDC48001820FE /* Reachability.swift in Sources */,
 				E62AAB1D1FD0A5D30053EAD7 /* PolicyController.swift in Sources */,
 				E6DF9EC9203CF88D005C86DB /* VideoViewController.swift in Sources */,
+				E64F0D4B21EAA38400D12C0B /* RolloverAnswerCell.swift in Sources */,
 				E6F04D8321E64D2D0010BEB8 /* DetailTeamCells.swift in Sources */,
 				E622658821CCA92600DC2C27 /* HomeUser.swift in Sources */,
 				E6E1FA34207A5A19008F4280 /* InterestsCell.swift in Sources */,
