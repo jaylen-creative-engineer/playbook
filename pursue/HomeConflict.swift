@@ -30,7 +30,7 @@ class HomeConflict : UICollectionViewCell {
         label.text = "3 Days Active"
         label.numberOfLines = 1
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 13)
+        label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
     
@@ -39,7 +39,7 @@ class HomeConflict : UICollectionViewCell {
         label.text = "Getting into an art gallery"
         label.numberOfLines = 1
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 11)
+        label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
     

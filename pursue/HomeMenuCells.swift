@@ -12,7 +12,7 @@ class HomeMenuCells : UICollectionViewCell {
     
     let sectionLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.font = UIFont.init(name: "Roboto-Medium", size: 12)
         label.textColor = .black
         return label
     }()
@@ -26,7 +26,7 @@ class HomeMenuCells : UICollectionViewCell {
     override var isHighlighted: Bool {
         didSet {
             sectionLabel.textColor = isHighlighted ? .white : .black
-            sectionLabel.font = isHighlighted ? UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.init(25)) : UIFont.boldSystemFont(ofSize: 12)
+            sectionLabel.font = isHighlighted ? UIFont.init(name: "Roboto-Black", size: 12) : UIFont.init(name: "Roboto-Medium", size: 12)
             cellBackgroundView.backgroundColor = isHighlighted ? .black : .white
         }
     }
@@ -34,7 +34,7 @@ class HomeMenuCells : UICollectionViewCell {
     override var isSelected: Bool {
         didSet {
             sectionLabel.textColor = isSelected ? .white : .black
-            sectionLabel.font = isSelected ? UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.init(25)) : UIFont.boldSystemFont(ofSize: 12)
+            sectionLabel.font = isSelected ? UIFont.init(name: "Roboto-Black", size: 12) : UIFont.init(name: "Roboto-Medium", size: 12)
             cellBackgroundView.backgroundColor = isSelected ? .black : .white
         }
     }

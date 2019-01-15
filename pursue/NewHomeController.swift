@@ -14,9 +14,8 @@ class NewHomeController : UICollectionViewController, UICollectionViewDelegateFl
     let cellId = "cellId"
     
     func setupCollectionView(){
-        collectionView.backgroundColor = .black
-        collectionView.isPagingEnabled = true
-        collectionView.contentInset = UIEdgeInsets(top: -40, left: 0, bottom: 0, right: 0)
+        collectionView?.showsVerticalScrollIndicator = false
+        collectionView?.backgroundColor = UIColor.rgb(red: 243, green: 243, blue: 249)
         collectionView.register(NewHomeCells.self, forCellWithReuseIdentifier: cellId)
         navigationController?.navigationBar.isHidden = true
     }
@@ -36,11 +35,11 @@ class NewHomeController : UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0.0
+        return 25.0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0.0
+        return 25.0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -49,6 +48,6 @@ class NewHomeController : UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height)
+        return CGSize(width: view.frame.width, height: 740)
     }
 }

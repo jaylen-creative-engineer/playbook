@@ -23,7 +23,7 @@ class ActionMenuBar : UIView {
     var accessActionsCell : ProfilePursuitActions?
     
     let cellId = "cellId"
-    let actionTitles = ["ACTIVE PURSUITS", "CHALLENGES"]
+    let actionTitles = ["Active Pursuits", "Challenges"]
     
     func setupCollectionView(){
         collectionView.delegate = self

@@ -24,7 +24,7 @@ class HomeConflictCell : UICollectionViewCell {
     let conflictLabel : UILabel = {
         let label = UILabel()
         label.text = "Conflict"
-        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
+        label.font = UIFont.init(name: "Roboto-Black", size: 14)
         return label
     }()
     
@@ -50,6 +50,7 @@ class HomeConflictCell : UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .white
         setupCollectionView()
     }
     

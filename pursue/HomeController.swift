@@ -113,9 +113,9 @@ class HomeController : UICollectionViewController {
         let page3 = setupFeedViews()
 
         pages = [page1, page2, page3]
-        
         pageScrollView.contentSize = CGSize(width: view.frame.width * CGFloat(pages.count), height: view.frame.height)
         pageScrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        
         view.insertSubview(pageScrollView, belowSubview: backgroundFill)
 
         for i in 0 ..< pages.count{

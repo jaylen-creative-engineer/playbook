@@ -105,7 +105,7 @@ class HomeMenuCellShadowView : UIView {
 
 class HomeCellConflictShadowView : UIView {
     
-    var cornerRadius : CGFloat = 12
+    var cornerRadius : CGFloat = 10
     var shadowOffSetWidth : CGFloat = 0
     var shadowOffSetHeight : CGFloat = 1
     var shadowOpacity : CGFloat = 0.2

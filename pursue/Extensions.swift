@@ -29,6 +29,18 @@ extension UIView {
         mask.path = path.cgPath
         layer.mask = mask
     }
+    
+    func applyGradient(colors: [UIColor]) -> Void {
+        self.applyGradient(colours: colors, locations: nil)
+    }
+    
+    func applyGradient(colours: [UIColor], locations: [NSNumber]?) -> Void {
+        let gradient: CAGradientLayer = CAGradientLayer()
+        gradient.frame = self.bounds
+        gradient.colors = colours.map { $0.cgColor }
+        gradient.locations = locations
+        self.layer.insertSublayer(gradient, at: 0)
+    }
 }
 
 extension UIView {

@@ -1,23 +1,23 @@
 //
-//  HomeStandard.swift
+//  NewHomeDetail.swift
 //  Inpursuit
 //
-//  Created by Jaylen Sanders on 12/21/18.
-//  Copyright © 2018 Glory. All rights reserved.
+//  Created by Jaylen Sanders on 1/13/19.
+//  Copyright © 2019 Glory. All rights reserved.
 //
 
 import UIKit
 
-class HomeStandard : UICollectionViewCell {
+class NewHomeDetail : UICollectionViewCell {
     
     let cellBackgroundView : SmallerCardView = {
-       let view = SmallerCardView()
+        let view = SmallerCardView()
         view.backgroundColor = .white
         return view
     }()
     
     let standardLabel : UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.textAlignment = .left
         label.textColor = .gray
         label.font = UIFont.init(name: "Roboto-Black", size: 14)
@@ -26,7 +26,7 @@ class HomeStandard : UICollectionViewCell {
     }()
     
     let numberOfDaysActiveLabel : UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "30"
         label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
@@ -47,21 +47,21 @@ class HomeStandard : UICollectionViewCell {
     }()
     
     let daysLabel : UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "Days Active"
         label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
     
     let activityLabel : UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "Tasks Completed"
         label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
     
     let onTrackLabel : UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "On Track"
         label.font = UIFont.systemFont(ofSize: 12)
         return label
@@ -103,7 +103,7 @@ class HomeStandard : UICollectionViewCell {
         setupPerDayLabel()
         setupDailyActiveLabel()
         setupOnTrackLabel()
-       
+        
     }
     
     override init(frame: CGRect) {

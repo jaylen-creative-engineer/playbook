@@ -79,7 +79,7 @@ extension HomeCarousel : iCarouselDataSource, iCarouselDelegate {
             postLabel.text = homeDescriptions[index]
             
             let usernameLabel = UILabel()
-            usernameLabel.font = UIFont.boldSystemFont(ofSize: 12)
+            usernameLabel.font = UIFont.systemFont(ofSize: 12)
             usernameLabel.textAlignment = .right
             usernameLabel.numberOfLines = 1
             usernameLabel.text = imageNames[index]
@@ -98,7 +98,7 @@ extension HomeCarousel : iCarouselDataSource, iCarouselDelegate {
             profilePicture.anchor(top: carouselImage.topAnchor, left: nil, bottom: nil, right: carouselImage.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 30, height: 30)
             postLabel.anchor(top: profilePicture.topAnchor, left: nil, bottom: nil, right: profilePicture.leftAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 0, height: 16)
             postLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 180).isActive = true
-            usernameLabel.anchor(top: postLabel.bottomAnchor, left: postLabel.leftAnchor, bottom: nil, right: profilePicture.leftAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: usernameLabel.intrinsicContentSize.width, height: 14)
+            usernameLabel.anchor(top: postLabel.bottomAnchor, left: nil, bottom: nil, right: profilePicture.leftAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: usernameLabel.intrinsicContentSize.width, height: 14)
             return carouselImage
         case carouselView:
             carouselImage = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.width - 18, height: 385))
@@ -178,6 +178,7 @@ extension HomeCarousel : iCarouselDataSource, iCarouselDelegate {
 //    }
     
     func setupCarousels(){
+        backgroundColor = .white
         setupStandardCarousel()
         labelSubCarousel()
     }

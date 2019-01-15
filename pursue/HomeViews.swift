@@ -25,7 +25,7 @@ class HomeViews : UICollectionViewController, UICollectionViewDelegateFlowLayout
         collectionView.register(HomeStandardCell.self, forCellWithReuseIdentifier: standardId)
         collectionView?.backgroundColor = UIColor.rgb(red: 243, green: 243, blue: 249)
         collectionView?.showsVerticalScrollIndicator = false
-        collectionView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 200, right: 0)
+        collectionView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 350, right: 0)
     }
     
     override func viewDidLoad() {
@@ -42,11 +42,14 @@ class HomeViews : UICollectionViewController, UICollectionViewDelegateFlowLayout
         return CGSize(width: view.frame.width, height: 150)
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        present(DetailController(), animated: true, completion: nil)
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.item {
         case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: carouselId, for: indexPath) as! HomeCarousel
-            cell.accessHomeViews = self
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: standardId, for: indexPath) as! HomeStandardCell
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! HomeChallengeCell
@@ -63,9 +66,9 @@ class HomeViews : UICollectionViewController, UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 0:
-            return CGSize(width: view.frame.width, height: 500)
+            return CGSize(width: view.frame.width, height: 640)
         case 1:
-            return CGSize(width: view.frame.width, height: 425)
+            return CGSize(width: view.frame.width, height: 400)
         case 2:
             return CGSize(width: view.frame.width, height: 280)
         default:
@@ -74,11 +77,11 @@ class HomeViews : UICollectionViewController, UICollectionViewDelegateFlowLayout
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 45.0
+        return 25.0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 45.0
+        return 25.0
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

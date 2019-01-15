@@ -11,18 +11,19 @@ import UIKit
 class HomeChallengeCell : UICollectionViewCell {
     
     let collectionView : UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()   )
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.isScrollEnabled = false
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         return collectionView
     }()
     
     let challengeLabel : UILabel = {
         let label = UILabel()
-        label.textColor = .black
         label.text = "Cooking Challenges"
-        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
+        label.font = UIFont.init(name: "Roboto-Black", size: 14)
         return label
     }()
     
@@ -44,6 +45,7 @@ class HomeChallengeCell : UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .white
         setupCollectionView()
     }
     
@@ -55,19 +57,19 @@ class HomeChallengeCell : UICollectionViewCell {
 extension HomeChallengeCell : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width, height: 85)
+        return CGSize(width: frame.width - 24, height: 290)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: frame.width, height: 10)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 30.0
+        return 5.0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 30.0
+        return 5.0
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

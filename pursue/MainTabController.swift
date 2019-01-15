@@ -22,7 +22,7 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
     private func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         
         let index = viewControllers?.index(of: viewController)
-        if index == 2 {
+        if index == 1 {
             
             let photoSelectorController = SelectCameraController()
             let navController = UINavigationController(rootViewController: photoSelectorController)
@@ -67,29 +67,27 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
     }
     
     func setupViewControllers() {
-        let newHomeNavController = UINavigationController(rootViewController: NewHomeController(collectionViewLayout: UICollectionViewFlowLayout()))
         let homeNavController = UINavigationController(rootViewController: HomeController(collectionViewLayout: UICollectionViewFlowLayout()))
         let plusNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "create_unselected"), selectedImage: #imageLiteral(resourceName: "create_unselected"))
         let userProfileNavController = UINavigationController(rootViewController: ProfileController(collectionViewLayout: UICollectionViewFlowLayout()))
         
+        tabBar.backgroundColor = .white
         tabBar.tintColor = UIColor.rgb(red: 255, green: 255, blue: 255)
+        tabBar.isTranslucent = true
         
-        viewControllers = [newHomeNavController, homeNavController, plusNavController, userProfileNavController]
+        viewControllers = [homeNavController, plusNavController, userProfileNavController]
         
         guard let items = tabBar.items else { return }
-        let tabNewHome = items[0]
-        tabNewHome.image = UIImage(named: "home_unselected")?.withRenderingMode(.alwaysOriginal)
-        tabNewHome.selectedImage = UIImage(named: "home_selected")?.withRenderingMode(.alwaysOriginal)
 
-        let tabHome = items[1]
+        let tabHome = items[0]
         tabHome.image = UIImage(named: "home_unselected")?.withRenderingMode(.alwaysOriginal)
         tabHome.selectedImage = UIImage(named: "home_selected")?.withRenderingMode(.alwaysOriginal)
 
-        let tabCreate = items[2]
+        let tabCreate = items[1]
         tabCreate.image = UIImage(named: "create_unselected")?.withRenderingMode(.alwaysOriginal)
         tabCreate.selectedImage = UIImage(named: "create_unselected")?.withRenderingMode(.alwaysOriginal)
 
-        let tabProfile = items[3]
+        let tabProfile = items[2]
         tabProfile.image = UIImage(named: "profile_unselected")?.withRenderingMode(.alwaysOriginal)
         tabProfile.selectedImage = UIImage(named: "profile_selected")?.withRenderingMode(.alwaysOriginal)
 

@@ -25,8 +25,8 @@ class ProfileAdded : UICollectionViewCell, UICollectionViewDelegate, UICollectio
     
     let addedLabel : UILabel = {
         let label = UILabel()
-        label.text = "27 ADDED"
-        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.text = "27 Added"
+        label.font = UIFont.init(name: "Roboto-Black", size: 14)
         return label
     }()
     

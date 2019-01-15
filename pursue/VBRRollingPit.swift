@@ -313,8 +313,6 @@ extension CGFloat {
         background.fillColor = self.barBackColor.cgColor
         circle.fillColor = self.circleBackColor.cgColor
         self.layoutElements(selectedChanged: false)
-        
-        
     }
     
     override func prepareForInterfaceBuilder() {

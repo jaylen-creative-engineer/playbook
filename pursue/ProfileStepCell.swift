@@ -21,7 +21,7 @@ class ProfileStepCell : UICollectionViewCell {
     let stepLabel : UILabel = {
        let label = UILabel()
         label.text = "Practice Text"
-        label.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.init(25))
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textAlignment = .justified
         label.numberOfLines = 2
         return label
@@ -104,38 +104,17 @@ class ProfileStepCell : UICollectionViewCell {
         checklistCollectionView.anchor(top: stepLabel.bottomAnchor, left: cellBackgroundColor.leftAnchor, bottom: cellBackgroundColor.bottomAnchor, right: cellBackgroundColor.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
-//    func setupView(){
-//        addSubview(cellBackgroundColor)
-//        addSubview(dayLabel)
-//        addSubview(stepLabel)
-//
-//
-//        dayLabel.anchor(top: cellBackgroundColor.topAnchor, left: cellBackgroundColor.leftAnchor, bottom: nil, right: cellBackgroundColor.rightAnchor, paddingTop: 18, paddingLeft: 18, paddingBottom: 0, paddingRight: 12, width: 0, height: 16)
-//        stepLabel.anchor(top: dayLabel.bottomAnchor, left: dayLabel.leftAnchor, bottom: nil, right: cellBackgroundColor.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 0)
-//        stepLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 46).isActive = true
-//        setupCollectionView()
-//    }
-    
     func setupView(){
         addSubview(cellBackgroundColor)
+        addSubview(stepLabel)
         addSubview(dayLabel)
         addSubview(dayUnderlineView)
-        addSubview(stepsToCompleteLabel)
-        addSubview(pursuitLabel)
-        addSubview(pursuitImageView)
         addSubview(timeAgoLabel)
-        addSubview(optionButton)
         
         cellBackgroundColor.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        dayLabel.anchor(top: cellBackgroundColor.topAnchor, left: cellBackgroundColor.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: dayLabel.intrinsicContentSize.width, height: 15)
-        dayUnderlineView.centerXAnchor.constraint(equalTo: dayLabel.centerXAnchor).isActive = true
-        dayUnderlineView.anchor(top: dayLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: dayLabel.intrinsicContentSize.width + 2.5, height: 2)
-        stepsToCompleteLabel.anchor(top: dayUnderlineView.bottomAnchor, left: cellBackgroundColor.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 18, paddingBottom: 0, paddingRight: 12, width: stepsToCompleteLabel.intrinsicContentSize.width, height: 26)
-        pursuitLabel.anchor(top: stepsToCompleteLabel.bottomAnchor, left: stepsToCompleteLabel.leftAnchor, bottom: nil, right: cellBackgroundColor.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 16)
-        pursuitImageView.anchor(top: nil, left: stepsToCompleteLabel.leftAnchor, bottom: cellBackgroundColor.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 18, paddingRight: 0, width: 30, height: 30)
-        timeAgoLabel.centerYAnchor.constraint(equalTo: pursuitImageView.centerYAnchor).isActive = true
-        timeAgoLabel.anchor(top: nil, left: nil, bottom: nil, right: cellBackgroundColor.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: timeAgoLabel.intrinsicContentSize.width, height: 14)
-        optionButton.anchor(top: cellBackgroundColor.topAnchor, left: nil, bottom: nil, right: cellBackgroundColor.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: optionButton.intrinsicContentSize.width, height: 16)
+        stepLabel.anchor(top: cellBackgroundColor.topAnchor, left: cellBackgroundColor.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: stepLabel.intrinsicContentSize.width, height: 17)
+        timeAgoLabel.anchor(top: nil, left: nil, bottom: cellBackgroundColor.bottomAnchor, right: cellBackgroundColor.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 18, paddingRight: 12, width: timeAgoLabel.intrinsicContentSize.width, height: 14)
+        setupCollectionView()
     }
     
     override init(frame: CGRect) {
@@ -184,7 +163,7 @@ class ChecklistCell : UICollectionViewCell {
         button.layer.borderWidth = 1.5
         button.layer.masksToBounds = true
         button.layer.borderColor = UIColor.black.cgColor
-        button.layer.cornerRadius = 10
+        button.layer.cornerRadius = 8
         return button
     }()
     
@@ -192,7 +171,7 @@ class ChecklistCell : UICollectionViewCell {
        let label = UILabel()
         label.numberOfLines = 1
         label.text = "Test Item"
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
     
@@ -201,7 +180,7 @@ class ChecklistCell : UICollectionViewCell {
         addSubview(itemLabel)
         
         checkMark.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        checkMark.anchor(top: nil, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
+        checkMark.anchor(top: nil, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 16, height: 16)
         itemLabel.centerYAnchor.constraint(equalTo: checkMark.centerYAnchor).isActive = true
         itemLabel.anchor(top: nil, left: checkMark.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
     }

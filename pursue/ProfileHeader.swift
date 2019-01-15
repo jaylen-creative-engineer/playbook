@@ -138,10 +138,30 @@ class ProfileHeader : UICollectionViewCell {
         attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         
         label.attributedText = attrString
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont.boldSystemFont(ofSize: 12)
         label.numberOfLines = 0
-        label.textAlignment = .left
+        label.textAlignment = .center
         return label
+    }()
+    
+    lazy var notificationsButton : UIButton = {
+       let button = UIButton(type: .system)
+        button.tintColor = .darkGray
+        button.setImage(UIImage(named: "notifications-bell")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        return button
+    }()
+    
+    lazy var settingsButton : UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("•••", for: .normal)
+        button.tintColor = .darkGray
+        button.titleLabel?.textColor = .darkGray
+        button.contentHorizontalAlignment = .center
+        button.contentVerticalAlignment = .center
+        button.titleLabel?.textAlignment = .center
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
+        return button
     }()
     
     lazy var followersCountLabel : UIButton = {
@@ -175,12 +195,7 @@ class ProfileHeader : UICollectionViewCell {
         button.textColor = .gray
         return button
     }()
-    
-    let addButton : UIButton = {
-       let button = UIButton()
-        return button
-    }()
-    
+
     let followingLabel : UILabel = {
         let button = UILabel()
         button.text = "Following"
@@ -199,9 +214,9 @@ class ProfileHeader : UICollectionViewCell {
         return view
     }()
     
-    lazy var settingsButton : UIButton = {
+    lazy var addButton : UIButton = {
        let button = UIButton(type: .system)
-        button.setTitle("Settings", for: .normal)
+        button.setTitle("Add", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 16
@@ -304,6 +319,8 @@ class ProfileHeader : UICollectionViewCell {
     
     func setupNavBar(){
         
+        addSubview(settingsButton)
+        addSubview(notificationsButton)
         addSubview(imageView)
         addSubview(usernameLabel)
         addSubview(bioText)
@@ -314,7 +331,9 @@ class ProfileHeader : UICollectionViewCell {
 //        addSubview(settingsBackgroundView)
 //        addSubview(settingsButton)
         
-        imageView.anchor(top: safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 120, height: 120)
+        settingsButton.anchor(top: safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 30, height: 24)
+        notificationsButton.anchor(top: safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: settingsButton.leftAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 24, height: 28)
+        imageView.anchor(top: notificationsButton.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 120, height: 120)
         imageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         usernameLabel.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
         usernameLabel.anchor(top: imageView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: 18)
