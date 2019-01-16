@@ -143,7 +143,7 @@ extension CustomSavePopover : UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SavePopoverCells
-        cell.pursuit = pursuits[indexPath.item]
+//        cell.pursuit = pursuits[indexPath.item]
         return cell
     }
     

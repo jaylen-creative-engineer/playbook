@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import EasyTipView
 
-class RolloverHeader : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class RolloverHeader : UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, EasyTipViewDelegate {
     
     let viewsBackground : UIButton = {
         let button = UIButton()
@@ -169,6 +170,32 @@ class RolloverHeader : UICollectionViewCell, UICollectionViewDelegate, UICollect
         return button
     }()
     
+    var preferences = EasyTipView.Preferences()
+    
+    func setupTipView(){
+        preferences.drawing.font = UIFont.boldSystemFont(ofSize: 12)
+        preferences.drawing.foregroundColor = .white
+        preferences.drawing.backgroundColor = .black
+        preferences.drawing.cornerRadius = 14
+        preferences.drawing.arrowPosition = EasyTipView.ArrowPosition.top
+        preferences.drawing.arrowHeight = 1.5
+        preferences.drawing.arrowWidth = 1.5
+        preferences.animating.dismissTransform = CGAffineTransform(translationX: 0, y: 15)
+        preferences.animating.showInitialTransform = CGAffineTransform(translationX: 0, y: -15)
+        preferences.animating.showInitialAlpha = 0
+        preferences.animating.showDuration = 1.5
+        preferences.animating.dismissDuration = 1.5
+        
+        let tipView = EasyTipView(text: "Give this pursuit a try for yourself.", preferences: preferences, delegate: self)
+        tipView.show(forView: tryStackView, withinSuperview: self)
+        insertSubview(tipView, aboveSubview: collectionView)
+        tipView.anchor(top: tryStackView.bottomAnchor, left: tryStackView.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 225, height: 50)
+    }
+    
+    func easyTipViewDidDismiss(_ tipView: EasyTipView) {
+        tipView.dismiss()
+    }
+    
     func addImagesToEngagements(){
         addSubview(viewImage)
         addSubview(saveImage)
@@ -252,6 +279,7 @@ class RolloverHeader : UICollectionViewCell, UICollectionViewDelegate, UICollect
         backgroundColor = .white
         setupView()
         setupCollectionView()
+        setupTipView()
     }
     
     required init?(coder aDecoder: NSCoder) {

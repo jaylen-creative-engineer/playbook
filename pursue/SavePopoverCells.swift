@@ -10,13 +10,13 @@ import UIKit
 
 class SavePopoverCells : UICollectionViewCell {
     
-    var pursuit : Pursuit? {
-        didSet {
-            guard let image = pursuit?.thumbnailUrl else { return }
-            imageView.loadImageUsingCacheWithUrlString(image)
-            postDetail.text = pursuit?.pursuit_description
-        }
-    }
+//    var pursuit : Pursuit? {
+//        didSet {
+//            guard let image = pursuit?.thumbnailUrl else { return }
+//            imageView.loadImageUsingCacheWithUrlString(image)
+//            postDetail.text = pursuit?.pursuit_description
+//        }
+//    }
     
     override var isSelected: Bool {
         didSet {
@@ -44,6 +44,7 @@ class SavePopoverCells : UICollectionViewCell {
     
     lazy var imageView : UIImageView = {
         let iv = UIImageView()
+        iv.image = UIImage(named : "apartment-architecture-ceiling-259962")?.withRenderingMode(.alwaysOriginal)
         iv.layer.cornerRadius = 8
         iv.clipsToBounds = true
         iv.contentMode = .scaleAspectFill
@@ -78,6 +79,7 @@ class SavePopoverCells : UICollectionViewCell {
     let postDetail : UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
+        label.text = "This is filler text"
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.init(25))
         label.textAlignment = .center

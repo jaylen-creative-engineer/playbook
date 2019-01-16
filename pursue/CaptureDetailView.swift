@@ -10,7 +10,7 @@ import UIKit
 import Mixpanel
 import Photos
 import Hero
-
+import ADDatePicker
 
 class CaptureDetailView: UIViewController {
     
@@ -22,6 +22,9 @@ class CaptureDetailView: UIViewController {
     let teamId = "teamId"
     let interestId = "interestId"
     let cellId = "cellId"
+    let actionId = "actionId"
+    let typeId = "typeId"
+    let newPursuitId = "newPursuitId"
     
     var interests = [CreateInterests]()
     let interestsService = InterestServices()
@@ -41,19 +44,23 @@ class CaptureDetailView: UIViewController {
     }()
     
     lazy var backButton : UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "back-arrow").withRenderingMode(.alwaysOriginal), for: .normal)
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named : "cancel")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        button.tintColor = .black
         button.contentMode = .scaleAspectFill
         button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
         return button
     }()
     
     lazy var nextLabel : UIButton = {
-       let button = UIButton()
+        let button = UIButton(type: .system)
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 6
+        button.layer.masksToBounds = true
         button.setTitle("Send", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        button.contentHorizontalAlignment = .right
+        button.contentHorizontalAlignment = .center
         button.contentVerticalAlignment = .center
         button.addTarget(self, action: #selector(submitPost), for: .touchUpInside)
         return button
@@ -89,14 +96,14 @@ class CaptureDetailView: UIViewController {
     let captionLabel : CaptionInputTextView = {
         let tv = CaptionInputTextView()
         tv.isScrollEnabled = false
-        tv.font = UIFont.systemFont(ofSize: 14)
+        tv.font = UIFont.init(name: "Roboto-Regular", size: 24)
         tv.translatesAutoresizingMaskIntoConstraints = false
         return tv
     }()
     
     let captionUnderline : UIView = {
         let view = UIView()
-        view.backgroundColor = .black
+        view.backgroundColor = .gray
         return view
     }()
     
@@ -191,6 +198,14 @@ class CaptureDetailView: UIViewController {
         return label
     }()
     
+    let selectPostLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Select Post Type"
+        label.font = UIFont.init(name: "Roboto-Medium", size: 16)
+        label.textColor = .gray
+        return label
+    }()
+    
     let pursuitsCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -200,6 +215,288 @@ class CaptureDetailView: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
+    
+    let postTypeCollectionView : UICollectionView = {
+       let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.isScrollEnabled = false
+        return collectionView
+    }()
+    
+    let actionCollectionView : UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.isScrollEnabled = false
+        return collectionView
+    }()
+    
+    let pursuitIcon : UIButton = {
+       let button = UIButton()
+        button.backgroundColor = .blue
+        return button
+    }()
+    
+    let pursuitLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Pursuit"
+        label.font = UIFont.init(name: "Roboto-Medium", size: 16)
+        return label
+    }()
+    
+    let pursuitDescription : UILabel = {
+       let label = UILabel()
+        label.text = "This is filler text"
+        label.numberOfLines = 1
+        label.font = UIFont.systemFont(ofSize: 13)
+        return label
+    }()
+    
+    let pursuitDetailStackView : UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .vertical
+        sv.spacing = 2
+        sv.distribution = .fill
+        return sv
+    }()
+    
+    let challengeIcon : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .blue
+        return button
+    }()
+    
+    let challengeLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Challenge"
+        label.font = UIFont.init(name: "Roboto-Medium", size: 16)
+        return label
+    }()
+    
+    let challengeDescription : UILabel = {
+        let label = UILabel()
+        label.text = "This is filler text"
+        label.numberOfLines = 1
+        label.font = UIFont.systemFont(ofSize: 13)
+        return label
+    }()
+    
+    let challengeDetailStackView : UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .vertical
+        sv.spacing = 2
+        sv.distribution = .fill
+        return sv
+    }()
+    
+    let questionIcon : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .blue
+        return button
+    }()
+    
+    let questionLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Question"
+        label.font = UIFont.init(name: "Roboto-Medium", size: 16)
+        return label
+    }()
+    
+    let questionDescription : UILabel = {
+        let label = UILabel()
+        label.text = "This is filler text"
+        label.numberOfLines = 1
+        label.font = UIFont.systemFont(ofSize: 13)
+        return label
+    }()
+    
+    let questionDetailStackView : UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .vertical
+        sv.spacing = 2
+        sv.distribution = .fill
+        return sv
+    }()
+    
+    let postTypeUnderlineView : UIView = {
+       let view = UIView()
+        view.backgroundColor = .gray
+        return view
+    }()
+    
+    let pursuitsUnderlineView : UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray
+        return view
+    }()
+    
+    let actionIcon : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .blue
+        return button
+    }()
+    
+    let actionLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Action Items"
+        label.font = UIFont.init(name: "Roboto-Medium", size: 16)
+        return label
+    }()
+    
+    let actionUnderlineView : UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray
+        return view
+    }()
+    
+    let inviteIcon : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .blue
+        return button
+    }()
+    
+    let inviteButton : UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Invite people", for: .normal)
+        button.tintColor = .gray
+        button.titleLabel?.font = UIFont.init(name: "Roboto-Medium", size: 16)
+        button.contentHorizontalAlignment = .left
+        return button
+    }()
+    
+    let inviteUnderlineView : UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray
+        return view
+    }()
+    
+    let interestIcon : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .blue
+        return button
+    }()
+    
+    let interestButton : UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Add tags", for: .normal)
+        button.tintColor = .gray
+        button.titleLabel?.font = UIFont.init(name: "Roboto-Medium", size: 16)
+        button.contentHorizontalAlignment = .left
+        return button
+    }()
+    
+    let interestUnderlineView : UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray
+        return view
+    }()
+    
+    let dateIcon : UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .blue
+        return button
+    }()
+    
+    let dateLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Pursuit"
+        label.font = UIFont.init(name: "Roboto-Medium", size: 16)
+        return label
+    }()
+    
+    func setupSelectPostType(){
+//        scrollView.addSubview(selectPostLabel)
+        scrollView.addSubview(pursuitIcon)
+        scrollView.addSubview(pursuitDetailStackView)
+        pursuitDetailStackView.addArrangedSubview(pursuitLabel)
+        pursuitDetailStackView.addArrangedSubview(pursuitDescription)
+        scrollView.addSubview(postTypeUnderlineView)
+        
+//        selectPostLabel.anchor(top: captionUnderline.bottomAnchor, left: scrollView.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: selectPostLabel.intrinsicContentSize.width, height: 26)
+        pursuitIcon.anchor(top: captionUnderline.bottomAnchor, left: scrollView.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 22, height: 22)
+        pursuitDetailStackView.anchor(top: nil, left: pursuitIcon.rightAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 0, width: 0, height: 45)
+        pursuitDetailStackView.centerYAnchor.constraint(equalTo: pursuitIcon.centerYAnchor).isActive = true
+        postTypeUnderlineView.anchor(top: pursuitDetailStackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.2)
+        setupPursuitsCollectionView()
+    }
+    
+    func setupPursuitsCollectionView(){
+        pursuitsCollectionView.delegate = self
+        pursuitsCollectionView.dataSource = self
+        pursuitsCollectionView.register(SavePopoverCells.self, forCellWithReuseIdentifier: cellId)
+        pursuitsCollectionView.register(CreateNewPursuitCell.self, forCellWithReuseIdentifier: newPursuitId)
+        
+        scrollView.addSubview(pursuitsCollectionView)
+        scrollView.addSubview(pursuitsUnderlineView)
+        
+        pursuitsCollectionView.anchor(top: postTypeUnderlineView.bottomAnchor, left: scrollView.leftAnchor, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 250)
+        
+        pursuitsUnderlineView.anchor(top: pursuitsCollectionView.bottomAnchor, left: scrollView.leftAnchor, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+        setupActionItems()
+    }
+    
+    func setupActionItems(){
+        actionCollectionView.delegate = self
+        actionCollectionView.dataSource = self
+        actionCollectionView.register(CreateActionItemsCell.self, forCellWithReuseIdentifier: actionId)
+        view.addSubview(actionIcon)
+        view.addSubview(actionLabel)
+        view.addSubview(actionCollectionView)
+        view.addSubview(actionUnderlineView)
+        
+        actionIcon.anchor(top: pursuitsUnderlineView.bottomAnchor, left: scrollView.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 22, height: 22)
+        actionCollectionView.anchor(top: actionIcon.topAnchor, left: actionIcon.rightAnchor, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 0, width: 0, height: 180)
+        actionUnderlineView.anchor(top: actionCollectionView.bottomAnchor, left: scrollView.leftAnchor, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.2)
+        setupSelectInterest()
+        setupInvitePeople()
+    }
+    
+    @IBOutlet var calendar: ADDatePicker!
+    func setupSelectInterest(){
+        view.addSubview(interestIcon)
+        view.addSubview(interestButton)
+        view.addSubview(interestUnderlineView)
+        
+        interestIcon.anchor(top: actionUnderlineView.bottomAnchor, left: scrollView.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 22, height: 22)
+        interestButton.centerYAnchor.constraint(equalTo: interestIcon.centerYAnchor).isActive = true
+        interestButton.anchor(top: nil, left: interestIcon.rightAnchor, bottom: nil, right: scrollView.rightAnchor, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 12, width: 0, height: 18)
+        interestUnderlineView.anchor(top: interestButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 38, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+    }
+    
+    func setupInvitePeople(){
+        view.addSubview(inviteIcon)
+        view.addSubview(inviteButton)
+        view.addSubview(inviteUnderlineView)
+        
+        inviteIcon.anchor(top: interestUnderlineView.bottomAnchor, left: scrollView.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 22, height: 22)
+        inviteButton.centerYAnchor.constraint(equalTo: inviteIcon.centerYAnchor).isActive = true
+        inviteButton.anchor(top: nil, left: inviteIcon.rightAnchor, bottom: nil, right: scrollView.rightAnchor, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 12, width: 0, height: 18)
+        inviteUnderlineView.anchor(top: inviteButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 38, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+        setupDatePicker()
+    }
+    
+    
+    func setupDatePicker(){
+        view.addSubview(dateIcon)
+        view.addSubview(dateLabel)
+        
+        dateIcon.anchor(top: inviteUnderlineView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 22, height: 22)
+        dateLabel.centerYAnchor.constraint(equalTo: dateIcon.centerYAnchor).isActive = true
+        dateLabel.anchor(top: nil, left: dateIcon.rightAnchor, bottom: nil, right: scrollView.rightAnchor, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 12, width: 0, height: 18)
+        
+        calendar.delegate = self
+        calendar.intialDate = Date()
+        calendar.yearRange(inBetween: 2019, end: 2022)
+        calendar.backgroundColor = .blue
+        calendar.deselectedBgColor = .clear
+        calendar.selectedBgColor = .white
+        calendar.selectedTextColor = .black
+        calendar.deselectTextColor = UIColor.init(white: 1.0, alpha: 0.7)
+        calendar.selectionType = .circle
+        view.addSubview(calendar)
+        calendar.anchor(top: dateLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 24, paddingLeft: 18, paddingBottom: 0, paddingRight: 12, width: 0, height: 200)
+    }
     
     var isCreate = false
     
@@ -268,26 +565,10 @@ class CaptureDetailView: UIViewController {
         }
     }
     
-    func setupPursuitCollectionView(){
-        pursuitsCollectionView.delegate = self
-        pursuitsCollectionView.dataSource = self
-        pursuitsCollectionView.register(SavePopoverCells.self, forCellWithReuseIdentifier: cellId)
-        
-        scrollView.addSubview(pursuitsLabel)
-        scrollView.addSubview(pursuitsCollectionView)
-        scrollView.addSubview(createNewLabel)
-        
-        pursuitsLabel.anchor(top: keyPostSwitch.bottomAnchor, left: scrollView.leftAnchor, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: pursuitsLabel.intrinsicContentSize.width, height: 16)
-        pursuitsCollectionView.anchor(top: pursuitsLabel.bottomAnchor, left: scrollView.leftAnchor, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 250)
-        createNewLabel.anchor(top: nil, left: nil, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 120, height: 34)
-        createNewLabel.centerYAnchor.constraint(equalTo: pursuitsLabel.centerYAnchor).isActive = true
-       
-        
-    }
     
     func setupInterestsCollectionView(){
-        interestsCollectionView.delegate = self
-        interestsCollectionView.dataSource = self
+//        interestsCollectionView.delegate = self
+//        interestsCollectionView.dataSource = self
         interestsCollectionView.register(CreateInterestsCells.self, forCellWithReuseIdentifier: interestId)
         
         view.addSubview(interestsLabel)
@@ -301,8 +582,8 @@ class CaptureDetailView: UIViewController {
     }
     
     func setupTeamCollectionView(){
-        teamCollectionView.delegate = self
-        teamCollectionView.dataSource = self
+//        teamCollectionView.delegate = self
+//        teamCollectionView.dataSource = self
         teamCollectionView.register(TeamCells.self, forCellWithReuseIdentifier: teamId)
         
         view.addSubview(inviteLabel)
@@ -331,24 +612,22 @@ class CaptureDetailView: UIViewController {
         }
         
     }
-
+    
     func setupScrollView(){
         view.addSubview(scrollView)
         scrollView.addSubview(captionLabel)
         scrollView.addSubview(captionUnderline)
-        scrollView.addSubview(keyPostLabel)
-        scrollView.addSubview(keyPostSwitch)
+    
         
         scrollView.anchor(top: backgroundFill.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        captionLabel.anchor(top: scrollView.topAnchor, left: scrollView.leftAnchor, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 42, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: captionLabel.intrinsicContentSize.height)
-        captionUnderline.anchor(top: captionLabel.bottomAnchor, left: captionLabel.leftAnchor, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 0.5)
-        keyPostLabel.anchor(top: captionUnderline.bottomAnchor, left: scrollView.leftAnchor, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: keyPostLabel.intrinsicContentSize.width, height: 20)
-        keyPostSwitch.centerYAnchor.constraint(equalTo: keyPostLabel.centerYAnchor).isActive = true
-        keyPostSwitch.anchor(top: nil, left: nil, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 80, height: 24)
-        
-        setupPursuitCollectionView()
-        setupTeamCollectionView()
-        setupInterestsCollectionView()
+        captionLabel.anchor(top: scrollView.topAnchor, left: backButton.rightAnchor, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 42, paddingLeft: 18, paddingBottom: 0, paddingRight: 12, width: 0, height: captionLabel.intrinsicContentSize.height)
+        captionUnderline.anchor(top: captionLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.2)
+        setupSelectPostType()
+//        keyPostLabel.anchor(top: scrollView.centerYAnchor, left: scrollView.leftAnchor, bottom: nil, right: nil, paddingTop: 48, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: keyPostLabel.intrinsicContentSize.width, height: 20)
+//        keyPostSwitch.centerYAnchor.constraint(equalTo: keyPostLabel.centerYAnchor).isActive = true
+//        keyPostSwitch.anchor(top: nil, left: nil, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 80, height: 24)
+//        setupTeamCollectionView()
+//        setupInterestsCollectionView()
     }
     
     func setupTopBar(){
@@ -357,24 +636,12 @@ class CaptureDetailView: UIViewController {
         view.addSubview(alertView)
         view.addSubview(backgroundFill)
         view.addSubview(backButton)
-        view.addSubview(backBackground)
-        view.addSubview(createLabel)
-        view.addSubview(captureCollectionView)
         view.addSubview(nextLabel)
-        
-        captureCollectionView.delegate = self
-        captureCollectionView.dataSource = self
         
         alertView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         backgroundFill.anchor(top: alertView.topAnchor, left: alertView.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 80)
-        backButton.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 16, paddingRight: 0, width: 20, height: 20)
-        backBackground.centerXAnchor.constraint(equalTo: backButton.centerXAnchor).isActive = true
-        backBackground.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
-        backBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 38, height: 38)
-        createLabel.anchor(top: nil, left: backButton.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: createLabel.intrinsicContentSize.width, height: createLabel.intrinsicContentSize.height)
-        createLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
-        nextLabel.anchor(top: nil, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 120, height: 34)
-        nextLabel.centerYAnchor.constraint(equalTo: createLabel.centerYAnchor).isActive = true
+        backButton.anchor(top: nil, left: backgroundFill.leftAnchor, bottom: backgroundFill.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 20, height: 20)
+        nextLabel.anchor(top: nil, left: nil, bottom: backgroundFill.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: nextLabel.intrinsicContentSize.width + 30, height: 34)
         setupScrollView()
 //        captureCollectionView.anchor(top: backgroundFill.bottomAnchor, left: alertView.leftAnchor, bottom: nil, right: alertView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: view.frame.height)
     }
@@ -385,7 +652,7 @@ class CaptureDetailView: UIViewController {
         super.viewDidLoad()
         scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height + 360)
         setupTopBar()
-        getCaptureDetail()
+//        getCaptureDetail()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -489,87 +756,137 @@ class CaptureDetailView: UIViewController {
 }
 
 extension CaptureDetailView : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch collectionView {
-        case teamCollectionView:
-            return createDetail?.team?.count ?? 0
-        case interestsCollectionView:
-            return createDetail?.interests?.count ?? 0
-        case pursuitsCollectionView:
-            if createDetail?.pursuits?.first?.pursuitId == nil {
-                return 0
-            } else {
-                return createDetail?.pursuits?.count ?? 0
-            }
-        default:
-            return 1
-        }
+        return 4
+//        switch collectionView {
+//        case teamCollectionView:
+//            return createDetail?.team?.count ?? 0
+//        case interestsCollectionView:
+//            return createDetail?.interests?.count ?? 0
+//        case pursuitsCollectionView:
+//            if createDetail?.pursuits?.first?.pursuitId == nil {
+//                return 0
+//            } else {
+//                return createDetail?.pursuits?.count ?? 0
+//            }
+//        default:
+//            return 1
+//        }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        
         switch collectionView {
-        case teamCollectionView:
-            return UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
-        default:
+        case pursuitsCollectionView:
             return UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+        case actionCollectionView:
+            return UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 0)
+        default:
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
+        
+
+//        switch collectionView {
+//        case teamCollectionView:
+//            return UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+//        default:
+//            return UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+//        }
     }
-    
+//
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch collectionView {
-        case teamCollectionView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamCells
-            cell.accessDetailView = self
-            cell.team = createDetail?.team?[indexPath.item]
-            return cell
-        case interestsCollectionView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: interestId, for: indexPath) as! CreateInterestsCells
-            cell.accessDetailView = self
-            cell.interest = createDetail?.interests?[indexPath.item]
-            return cell
         case pursuitsCollectionView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SavePopoverCells
-            cell.pursuit = createDetail?.pursuits?[indexPath.item]
-            return cell
+            switch indexPath.item {
+            case 0:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: newPursuitId, for: indexPath) as! CreateNewPursuitCell
+                return cell
+            default:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SavePopoverCells
+                //        cell.pursuit = createDetail?.pursuits?[indexPath.item]
+                return cell
+            }
         default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "randomCell", for: indexPath)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: actionId, for: indexPath) as! CreateActionItemsCell
             return cell
         }
+       
+//        switch collectionView {
+//        case teamCollectionView:
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! TeamCells
+//            cell.accessDetailView = self
+//            cell.team = createDetail?.team?[indexPath.item]
+//            return cell
+//        case interestsCollectionView:
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: interestId, for: indexPath) as! CreateInterestsCells
+//            cell.accessDetailView = self
+//            cell.interest = createDetail?.interests?[indexPath.item]
+//            return cell
+//        case pursuitsCollectionView:
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SavePopoverCells
+//            cell.pursuit = createDetail?.pursuits?[indexPath.item]
+//            return cell
+//        default:
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "randomCell", for: indexPath)
+//            return cell
+//        }
+    }
+//
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        switch collectionView {
+//        case pursuitsCollectionView:
+//            createPursuitId = createDetail?.pursuits?[indexPath.item].pursuitId ?? 0
+//        case interestsCollectionView:
+//            createInterestId = createDetail?.interests?[indexPath.item].interestId ?? 0
+//        default:
+//            assert(false, "Not a valid selection")
+//        }
+//    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 15.0
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        switch collectionView {
-        case pursuitsCollectionView:
-            createPursuitId = createDetail?.pursuits?[indexPath.item].pursuitId ?? 0
-        case interestsCollectionView:
-            createInterestId = createDetail?.interests?[indexPath.item].interestId ?? 0
-        default:
-            assert(false, "Not a valid selection")
-        }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 15.0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch collectionView {
-        case teamCollectionView:
-            return CGSize(width: 80, height: 80)
         case pursuitsCollectionView:
             return CGSize(width: 200, height: 220)
-        case interestsCollectionView:
-            if !interests.isEmpty {
-                if let interest_name = interests[indexPath.item].interest_name {
-                    let approximateHeightOfLabel = view.frame.width - 20 - 8
-                    let size = CGSize(width: .infinity, height: approximateHeightOfLabel)
-                    let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)]
-                    let estimatedFrame = NSString(string: interest_name).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-                    return CGSize(width: estimatedFrame.width + 50, height: 43)
-                }
-            }
-            return CGSize(width: view.frame.width / 4, height: 40)
         default:
-            return CGSize(width: view.frame.width, height: view.frame.height / 1.6)
+            return CGSize(width: view.frame.width, height: 24)
         }
         
+
+//        switch collectionView {
+//        case teamCollectionView:
+//            return CGSize(width: 80, height: 80)
+//        case pursuitsCollectionView:
+//            return CGSize(width: 200, height: 220)
+//        case interestsCollectionView:
+//            if !interests.isEmpty {
+//                if let interest_name = interests[indexPath.item].interest_name {
+//                    let approximateHeightOfLabel = view.frame.width - 20 - 8
+//                    let size = CGSize(width: .infinity, height: approximateHeightOfLabel)
+//                    let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)]
+//                    let estimatedFrame = NSString(string: interest_name).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+//                    return CGSize(width: estimatedFrame.width + 50, height: 43)
+//                }
+//            }
+//            return CGSize(width: view.frame.width / 4, height: 40)
+//        default:
+//            return CGSize(width: view.frame.width, height: view.frame.height / 1.6)
+//        }
+
+    }
+}
+
+extension CaptureDetailView : ADDatePickerDelegate {
+    func ADDatePickerDidChange(didChange date: Date) {
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = "MMM d, yyyy"
+        //        btnGetDate.setTitle(dateformatter.string(from: date) , for: .normal)
     }
 }

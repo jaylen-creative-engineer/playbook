@@ -69,10 +69,15 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
     }()
     
     lazy var continueButton : UIButton = {
-        let cv = UIButton()
+        let cv = UIButton(type: .system)
+        cv.setTitle("Send", for: .normal)
+        cv.tintColor = .black
+        cv.contentHorizontalAlignment = .center
+        cv.contentVerticalAlignment = .center
+        cv.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         cv.backgroundColor = .white
         cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.layer.cornerRadius = 20
+        cv.layer.cornerRadius = 16
         cv.layer.masksToBounds = true
         cv.addTarget(self, action: #selector(handlePursuit), for: .touchUpInside)
         return cv
@@ -210,11 +215,9 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
             view.addSubview(playerController!.view)
             
             playerController!.view.anchor(top: cancelButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 32, paddingLeft: 42, paddingBottom: 0, paddingRight: 42, width: 0, height: view.frame.height / 2)
-            
-            
+
             view.addSubview(cancelButton)
             view.addSubview(continueButton)
-            view.addSubview(forwardArrow)
             
             cancelButton.anchor(top: playerController?.view.safeAreaLayoutGuide.topAnchor, left: playerController?.view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
             
@@ -223,10 +226,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
             cancelBackground.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor).isActive = true
             cancelBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 38, height: 38)
             
-            continueButton.anchor(top: nil, left: nil, bottom: playerController?.view.safeAreaLayoutGuide.bottomAnchor, right: playerController?.view.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 24, width: 40, height: 40)
-            forwardArrow.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 15, height: 10)
-            forwardArrow.centerXAnchor.constraint(equalTo: continueButton.centerXAnchor).isActive = true
-            forwardArrow.centerYAnchor.constraint(equalTo: continueButton.centerYAnchor).isActive = true
+           continueButton.anchor(top: nil, left: nil, bottom: backgroundImageView.safeAreaLayoutGuide.bottomAnchor, right: backgroundImageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 18, paddingRight: 18, width: continueButton.intrinsicContentSize.width + 65, height: continueButton.intrinsicContentSize.height + 5)
             
             NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.player!.currentItem)
         }
@@ -236,7 +236,6 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         view.addSubview(backgroundImageView)
         view.addSubview(cancelButton)
         view.addSubview(continueButton)
-        view.addSubview(forwardArrow)
         
          backgroundImageView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         cancelButton.anchor(top: backgroundImageView.safeAreaLayoutGuide.topAnchor, left: backgroundImageView.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 15, height: 15)
@@ -245,11 +244,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate {
         cancelBackground.centerXAnchor.constraint(equalTo: cancelButton.centerXAnchor).isActive = true
         cancelBackground.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor).isActive = true
         cancelBackground.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 38, height: 38)
-        
-        continueButton.anchor(top: nil, left: nil, bottom: backgroundImageView.safeAreaLayoutGuide.bottomAnchor, right: backgroundImageView.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 12, paddingRight: 24, width: 40, height: 40)
-        forwardArrow.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 15, height: 10)
-        forwardArrow.centerXAnchor.constraint(equalTo: continueButton.centerXAnchor).isActive = true
-        forwardArrow.centerYAnchor.constraint(equalTo: continueButton.centerYAnchor).isActive = true
+        continueButton.anchor(top: nil, left: nil, bottom: backgroundImageView.safeAreaLayoutGuide.bottomAnchor, right: backgroundImageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 18, paddingRight: 18, width: continueButton.intrinsicContentSize.width + 65, height: continueButton.intrinsicContentSize.height + 5)
     
     }
     

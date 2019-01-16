@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import EasyTipView
 
-class ProfileStepCell : UICollectionViewCell {
+class ProfileStepCell : UICollectionViewCell, EasyTipViewDelegate {
     
     let cellId = "cellId"
     
@@ -115,6 +116,28 @@ class ProfileStepCell : UICollectionViewCell {
         stepLabel.anchor(top: cellBackgroundColor.topAnchor, left: cellBackgroundColor.leftAnchor, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: stepLabel.intrinsicContentSize.width, height: 17)
         timeAgoLabel.anchor(top: nil, left: nil, bottom: cellBackgroundColor.bottomAnchor, right: cellBackgroundColor.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 18, paddingRight: 12, width: timeAgoLabel.intrinsicContentSize.width, height: 14)
         setupCollectionView()
+//        setupTipView()
+    }
+    
+    var preferences = EasyTipView.Preferences()
+    var tipView = EasyTipView(text: "These are the action items from your latests pursuits.")
+    
+    func setupTipView(){
+        preferences.drawing.font = UIFont.boldSystemFont(ofSize: 12)
+        preferences.drawing.foregroundColor = .white
+        preferences.drawing.backgroundColor = .black
+        preferences.drawing.cornerRadius = 12
+        preferences.drawing.arrowPosition = EasyTipView.ArrowPosition.top
+        
+        
+        tipView = EasyTipView(text: "These are the action items from your latests pursuits.", preferences: preferences, delegate: self)
+        tipView.show(forView: cellBackgroundColor, withinSuperview: nil)
+        addSubview(tipView)
+        tipView.anchor(top: cellBackgroundColor.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 225, height: 180)
+    }
+    
+    func easyTipViewDidDismiss(_ tipView: EasyTipView) {
+        tipView.dismiss()
     }
     
     override init(frame: CGRect) {

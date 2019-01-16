@@ -7,6 +7,8 @@ target 'Inpursuit' do
 
   # Pods for Inpursuit
 
+  pod 'ADDatePicker'
+  pod 'EasyTipView'
   pod 'ABSteppedProgressBar'
   pod 'TabBarController'
   pod 'NVActivityIndicatorView'

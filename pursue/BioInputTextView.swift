@@ -50,8 +50,8 @@ class CaptionInputTextView : UITextView {
     fileprivate let placeholderLabel: UILabel = {
         let label = UILabel()
         label.text = "Enter Caption"
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = UIColor.black
+        label.font = UIFont.init(name: "Roboto-Regular", size: 24)
+        label.textColor = UIColor.gray
         return label
     }()
     

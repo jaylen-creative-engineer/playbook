@@ -8,8 +8,9 @@
 
 import UIKit
 import RandomColorSwift
+import EasyTipView
 
-class ProfileStep : UICollectionViewCell {
+class ProfileStep : UICollectionViewCell, EasyTipViewDelegate {
     
     let cellId = "cellid"
     
@@ -30,15 +31,43 @@ class ProfileStep : UICollectionViewCell {
         return collectionView
     }()
     
+    
     func setupCollectionView(){
         collectionView.register(ProfileStepCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.delegate = self
         collectionView.dataSource = self
         
         addSubview(collectionView)
-
-        collectionView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        collectionView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 255)
+        setupTipView()
     }
+
+    var preferences = EasyTipView.Preferences()
+    
+    func setupTipView(){
+        preferences.drawing.font = UIFont.boldSystemFont(ofSize: 12)
+        preferences.drawing.foregroundColor = .white
+        preferences.drawing.backgroundColor = .black
+        preferences.drawing.cornerRadius = 14
+        preferences.drawing.arrowPosition = EasyTipView.ArrowPosition.top
+        preferences.drawing.arrowHeight = 0.5
+        preferences.drawing.arrowWidth = 1.5
+        preferences.animating.dismissTransform = CGAffineTransform(translationX: 0, y: 15)
+        preferences.animating.showInitialTransform = CGAffineTransform(translationX: 0, y: -15)
+        preferences.animating.showInitialAlpha = 0
+        preferences.animating.showDuration = 1.5
+        preferences.animating.dismissDuration = 1.5
+        
+        let tipView = EasyTipView(text: "These are the action items from your latests pursuits.", preferences: preferences, delegate: self)
+        tipView.show(forView: collectionView, withinSuperview: self)
+        addSubview(tipView)
+        tipView.anchor(top: collectionView.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 225, height: 245)
+    }
+    
+    func easyTipViewDidDismiss(_ tipView: EasyTipView) {
+        tipView.dismiss()
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupCollectionView()
@@ -64,7 +93,7 @@ extension ProfileStep : UICollectionViewDelegate, UICollectionViewDataSource, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 200, height: 240)
+        return CGSize(width: 205, height: 250)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

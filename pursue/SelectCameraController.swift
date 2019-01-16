@@ -232,6 +232,8 @@ class SelectCameraController : SwiftyCamViewController, SwiftyCamViewControllerD
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         captureButton.delegate = self
+        navigationController?.navigationBar.isHidden = true
+        tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {

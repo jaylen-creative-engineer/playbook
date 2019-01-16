@@ -79,6 +79,11 @@
 		E64F0D4721EA982E00D12C0B /* RolloverAddedCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64F0D4621EA982E00D12C0B /* RolloverAddedCells.swift */; };
 		E64F0D4921EAA17600D12C0B /* RolloverQuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64F0D4821EAA17600D12C0B /* RolloverQuestionCell.swift */; };
 		E64F0D4B21EAA38400D12C0B /* RolloverAnswerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64F0D4A21EAA38400D12C0B /* RolloverAnswerCell.swift */; };
+		E654F44321EE91DF0008C2FB /* PostTypeCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654F44221EE91DF0008C2FB /* PostTypeCells.swift */; };
+		E654F44521EEBB5E0008C2FB /* CreateChallengeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654F44421EEBB5E0008C2FB /* CreateChallengeCell.swift */; };
+		E654F44721EEBF840008C2FB /* CreateNewPursuitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654F44621EEBF840008C2FB /* CreateNewPursuitCell.swift */; };
+		E654F44921EEC5710008C2FB /* CreateActionItemsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E654F44821EEC5710008C2FB /* CreateActionItemsCell.swift */; };
+		E654F44D21EF0AF50008C2FB /* CalenderStandin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E654F44C21EF0AF50008C2FB /* CalenderStandin.storyboard */; };
 		E65652E221EBAD69008C5324 /* NewHomeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65652E121EBAD69008C5324 /* NewHomeDetail.swift */; };
 		E65652F121EBD728008C5324 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E65652E421EBD727008C5324 /* Roboto-Medium.ttf */; };
 		E65652F221EBD728008C5324 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E65652E521EBD727008C5324 /* Roboto-Light.ttf */; };
@@ -98,7 +103,6 @@
 		E656531421EBDAAD008C5324 /* Sarabun-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E656530321EBDAAD008C5324 /* Sarabun-Thin.ttf */; };
 		E656531721EBDAAD008C5324 /* Sarabun-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E656530621EBDAAD008C5324 /* Sarabun-Regular.ttf */; };
 		E656531821EBDAAD008C5324 /* Sarabun-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E656530721EBDAAD008C5324 /* Sarabun-Bold.ttf */; };
-		E656531921EBDAAD008C5324 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = E656530821EBDAAD008C5324 /* OFL.txt */; };
 		E656531A21EBDAAD008C5324 /* Sarabun-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E656530921EBDAAD008C5324 /* Sarabun-SemiBold.ttf */; };
 		E656531C21EBDAAD008C5324 /* Sarabun-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E656530B21EBDAAD008C5324 /* Sarabun-Medium.ttf */; };
 		E656531E21EBDAAD008C5324 /* Sarabun-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E656530D21EBDAAD008C5324 /* Sarabun-Light.ttf */; };
@@ -293,6 +297,11 @@
 		E64F0D4621EA982E00D12C0B /* RolloverAddedCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RolloverAddedCells.swift; sourceTree = "<group>"; };
 		E64F0D4821EAA17600D12C0B /* RolloverQuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RolloverQuestionCell.swift; sourceTree = "<group>"; };
 		E64F0D4A21EAA38400D12C0B /* RolloverAnswerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RolloverAnswerCell.swift; sourceTree = "<group>"; };
+		E654F44221EE91DF0008C2FB /* PostTypeCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTypeCells.swift; sourceTree = "<group>"; };
+		E654F44421EEBB5E0008C2FB /* CreateChallengeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChallengeCell.swift; sourceTree = "<group>"; };
+		E654F44621EEBF840008C2FB /* CreateNewPursuitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewPursuitCell.swift; sourceTree = "<group>"; };
+		E654F44821EEC5710008C2FB /* CreateActionItemsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActionItemsCell.swift; sourceTree = "<group>"; };
+		E654F44C21EF0AF50008C2FB /* CalenderStandin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CalenderStandin.storyboard; sourceTree = "<group>"; };
 		E65652E121EBAD69008C5324 /* NewHomeDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHomeDetail.swift; sourceTree = "<group>"; };
 		E65652E421EBD727008C5324 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		E65652E521EBD727008C5324 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
@@ -312,7 +321,6 @@
 		E656530321EBDAAD008C5324 /* Sarabun-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sarabun-Thin.ttf"; sourceTree = "<group>"; };
 		E656530621EBDAAD008C5324 /* Sarabun-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sarabun-Regular.ttf"; sourceTree = "<group>"; };
 		E656530721EBDAAD008C5324 /* Sarabun-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sarabun-Bold.ttf"; sourceTree = "<group>"; };
-		E656530821EBDAAD008C5324 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
 		E656530921EBDAAD008C5324 /* Sarabun-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sarabun-SemiBold.ttf"; sourceTree = "<group>"; };
 		E656530B21EBDAAD008C5324 /* Sarabun-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sarabun-Medium.ttf"; sourceTree = "<group>"; };
 		E656530D21EBDAAD008C5324 /* Sarabun-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sarabun-Light.ttf"; sourceTree = "<group>"; };
@@ -606,7 +614,6 @@
 				E656530321EBDAAD008C5324 /* Sarabun-Thin.ttf */,
 				E656530621EBDAAD008C5324 /* Sarabun-Regular.ttf */,
 				E656530721EBDAAD008C5324 /* Sarabun-Bold.ttf */,
-				E656530821EBDAAD008C5324 /* OFL.txt */,
 				E656530921EBDAAD008C5324 /* Sarabun-SemiBold.ttf */,
 				E656530B21EBDAAD008C5324 /* Sarabun-Medium.ttf */,
 				E656530D21EBDAAD008C5324 /* Sarabun-Light.ttf */,
@@ -834,6 +841,11 @@
 				E62E29A72152BBF500139483 /* CreateTeamCells.swift */,
 				E6AFDA9D21824AC30055C25D /* CaptureDetailView.swift */,
 				E600427B21AE31D40085D445 /* CaptureResponseView.swift */,
+				E654F44221EE91DF0008C2FB /* PostTypeCells.swift */,
+				E654F44421EEBB5E0008C2FB /* CreateChallengeCell.swift */,
+				E654F44621EEBF840008C2FB /* CreateNewPursuitCell.swift */,
+				E654F44821EEC5710008C2FB /* CreateActionItemsCell.swift */,
+				E654F44C21EF0AF50008C2FB /* CalenderStandin.storyboard */,
 			);
 			name = Camera;
 			sourceTree = "<group>";
@@ -931,6 +943,7 @@
 				E667067D20ED6D9B001A8E8E /* OFL.txt in Resources */,
 				E65652FB21EBD728008C5324 /* Roboto-Bold.ttf in Resources */,
 				E656531421EBDAAD008C5324 /* Sarabun-Thin.ttf in Resources */,
+				E654F44D21EF0AF50008C2FB /* CalenderStandin.storyboard in Resources */,
 				E65652F721EBD728008C5324 /* Roboto-LightItalic.ttf in Resources */,
 				E65652F421EBD728008C5324 /* Roboto-MediumItalic.ttf in Resources */,
 				E65652FD21EBD728008C5324 /* Roboto-Black.ttf in Resources */,
@@ -950,7 +963,6 @@
 				E65652FC21EBD728008C5324 /* Roboto-Thin.ttf in Resources */,
 				E65652F921EBD728008C5324 /* LICENSE.txt in Resources */,
 				E6CE227A1F671D10006C5755 /* Main.storyboard in Resources */,
-				E656531921EBDAAD008C5324 /* OFL.txt in Resources */,
 				E656531221EBDAAD008C5324 /* Sarabun-ExtraBold.ttf in Resources */,
 				E656531821EBDAAD008C5324 /* Sarabun-Bold.ttf in Resources */,
 				E65652F521EBD728008C5324 /* Roboto-ThinItalic.ttf in Resources */,
@@ -972,9 +984,11 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Inpursuit/Pods-Inpursuit-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ABSteppedProgressBar/ABSteppedProgressBar.framework",
+				"${BUILT_PRODUCTS_DIR}/ADDatePicker/ADDatePicker.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AnimatedCollectionViewLayout/AnimatedCollectionViewLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/CHIPageControl/CHIPageControl.framework",
+				"${BUILT_PRODUCTS_DIR}/EasyTipView/EasyTipView.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
@@ -998,9 +1012,11 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ABSteppedProgressBar.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ADDatePicker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnimatedCollectionViewLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CHIPageControl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyTipView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
@@ -1056,6 +1072,7 @@
 				E6A3920B217C0B6800ABF10B /* SwiftyCamViewControllerDelegate.swift in Sources */,
 				E686875621BF33D500F8E24C /* SearchPursuitsCells.swift in Sources */,
 				E6DE06E521DD504A00A979E3 /* EngagementsMenuBar.swift in Sources */,
+				E654F44521EEBB5E0008C2FB /* CreateChallengeCell.swift in Sources */,
 				E6CE22771F671D10006C5755 /* SignupController.swift in Sources */,
 				E62E29A62152A32B00139483 /* CreateInterests.swift in Sources */,
 				E6B35ECA21D708F800C38700 /* ProfileIssueView.swift in Sources */,
@@ -1080,10 +1097,12 @@
 				E6DDFFC121CDA9AC00E7BFC1 /* HomeStandardCell.swift in Sources */,
 				E6B35EC421D704DA00C38700 /* ActionMenuBar.swift in Sources */,
 				E600427C21AE31D40085D445 /* CaptureResponseView.swift in Sources */,
+				E654F44921EEC5710008C2FB /* CreateActionItemsCell.swift in Sources */,
 				E6CFCD6621CC77660069F001 /* HomeChallengeCell.swift in Sources */,
 				E61FDBCE21ED5B61008C6244 /* HomeQuestion.swift in Sources */,
 				E638791C219395FD0046FF95 /* Added.swift in Sources */,
 				E6F04D8521E652310010BEB8 /* DetailTryingController.swift in Sources */,
+				E654F44321EE91DF0008C2FB /* PostTypeCells.swift in Sources */,
 				E696E91721E13CAF00192DEB /* VBRRollingPit.swift in Sources */,
 				E696E92321E1A7F200192DEB /* NewHomeCells.swift in Sources */,
 				E6F04D8721E652570010BEB8 /* DetailTryingCell.swift in Sources */,
@@ -1130,6 +1149,7 @@
 				E6B49F2F1FACDE4100AEDAFD /* SelectInterestsList.swift in Sources */,
 				E623DBED2177B531008DDE64 /* CustomTryPopover.swift in Sources */,
 				E6136EA31F968EAB00E29101 /* PostDetailController.swift in Sources */,
+				E654F44721EEBF840008C2FB /* CreateNewPursuitCell.swift in Sources */,
 				E604732D219F6543006F22AB /* CreateDetail.swift in Sources */,
 				E6DE06E121D90E1F00A979E3 /* DetailController.swift in Sources */,
 				E6DEC846201ABF4D00E02393 /* Interests.swift in Sources */,
