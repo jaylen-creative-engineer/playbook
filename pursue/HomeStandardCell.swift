@@ -11,6 +11,9 @@ import iCarousel
 
 class HomeStandardCell : UICollectionViewCell {
  
+    let teamId = "teamId"
+    let standardId = "standardId"
+    
     let usernameLabel : UILabel = {
         let label = UILabel()
         label.text = "Test"
@@ -71,6 +74,26 @@ class HomeStandardCell : UICollectionViewCell {
         return view
     }()
     
+    let collectionView : UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.showsHorizontalScrollIndicator = false
+        cv.backgroundColor = .clear
+        return cv
+    }()
+    
+    func setupCollectionView(){
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(HomeTeam.self, forCellWithReuseIdentifier: teamId)
+        collectionView.register(HomeStandard.self, forCellWithReuseIdentifier: standardId)
+        
+        addSubview(collectionView)
+        collectionView.anchor(top: cellBackgroundView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 130)
+    }
+    
     func setupView(){
         addSubview(cellBackgroundView)
         addSubview(pursuitImageView)
@@ -81,8 +104,8 @@ class HomeStandardCell : UICollectionViewCell {
         addSubview(overlayView)
         insertSubview(detailLabel, aboveSubview: overlayView)
         
-        cellBackgroundView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
-        pursuitImageView.anchor(top: cellBackgroundView.topAnchor, left: cellBackgroundView.leftAnchor, bottom: nil, right: cellBackgroundView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 580)
+        cellBackgroundView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 32, paddingLeft: 24, paddingBottom: 0, paddingRight: 24, width: 0, height: 520)
+        pursuitImageView.anchor(top: cellBackgroundView.topAnchor, left: cellBackgroundView.leftAnchor, bottom: nil, right: cellBackgroundView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 460)
         userPhoto.anchor(top: nil, left: cellBackgroundView.leftAnchor, bottom: cellBackgroundView.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 18, paddingBottom: 18, paddingRight: 0, width: 30, height: 30)
         usernameLabel.anchor(top: nil, left: userPhoto.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: 16)
         usernameLabel.centerYAnchor.constraint(equalTo: userPhoto.centerYAnchor).isActive = true
@@ -93,6 +116,7 @@ class HomeStandardCell : UICollectionViewCell {
         overlayView.anchor(top: nil, left: pursuitImageView.leftAnchor, bottom: pursuitImageView.bottomAnchor, right: pursuitImageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 150)
         detailLabel.anchor(top: nil, left: overlayView.leftAnchor, bottom: overlayView.bottomAnchor, right: overlayView.rightAnchor, paddingTop: 0, paddingLeft: 18, paddingBottom: 28, paddingRight: 12, width: 0, height: 0)
         detailLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 44).isActive = true
+        setupCollectionView()
     }
     
     override func layoutSubviews() {
@@ -103,6 +127,7 @@ class HomeStandardCell : UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .white
         setupView()
     }
     
@@ -110,4 +135,38 @@ class HomeStandardCell : UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+}
+
+extension HomeStandardCell : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 15.0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 15.0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 4
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        switch indexPath.item {
+        case 0:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: standardId, for: indexPath) as! HomeStandard
+            return cell
+        default:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! HomeTeam
+            return cell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: frame.width / 1.4, height: 120)
+    }
 }

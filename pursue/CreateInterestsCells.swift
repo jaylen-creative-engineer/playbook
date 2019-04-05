@@ -22,10 +22,20 @@ class CreateInterestsCells : UICollectionViewCell {
     
     var delegate : InterestNameSelected?
     
+    let checkBox : UIButton = {
+       let button = UIButton(type: .system)
+        button.layer.cornerRadius = 9
+        button.layer.masksToBounds = true
+        button.layer.borderWidth = 2.5
+        button.layer.borderColor = UIColor.black.cgColor
+        return button
+    }()
+    
     let interestsLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Choose Interests"
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+       let label = UILabel()
+        label.text = "Animals"
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textAlignment = .left
         return label
     }()
     
@@ -62,9 +72,11 @@ class CreateInterestsCells : UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        addSubview(interestButton)
-        interestButton.anchor(top: nil, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 30)
-        interestButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        addSubview(checkBox)
+        addSubview(interestsLabel)
+        checkBox.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 48, paddingBottom: 0, paddingRight: 0, width: 18, height: 18)
+        interestsLabel.centerYAnchor.constraint(equalTo: checkBox.centerYAnchor).isActive = true
+        interestsLabel.anchor(top: nil, left: checkBox.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 18, width: 0, height: 16)
     }
     
     required init?(coder aDecoder: NSCoder) {

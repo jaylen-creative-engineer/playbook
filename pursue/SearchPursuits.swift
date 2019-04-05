@@ -72,7 +72,7 @@ extension SearchPursuits : UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessHomeController?.changeToPursuitDetail(searchPursuitId: (pursuits?[indexPath.item].pursuitId)!)
+//        accessHomeController?.changeToPursuitDetail(searchPursuitId: (pursuits?[indexPath.item].pursuitId)!)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

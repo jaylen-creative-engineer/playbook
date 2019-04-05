@@ -20,6 +20,8 @@ class CreateTeamCells : UICollectionViewCell {
        let iv = UIImageView()
         iv.layer.cornerRadius = 20
         iv.layer.masksToBounds = true
+        iv.image = UIImage(named: "cafe-768771_1280")?.withRenderingMode(.alwaysOriginal)
+        iv.contentMode = .scaleAspectFill
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleCellSelected))
         tap.numberOfTapsRequired = 1
@@ -61,6 +63,13 @@ class CreateTeamCells : UICollectionViewCell {
         return iv
     }()
     
+    let usernameLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Test"
+        label.font = UIFont.init(name: "Roboto-Medium", size: 16)
+        return label
+    }()
+    
     var isClicked = false
     @objc func handleCellSelected(){
         delegate?.photoSelected(for: self)
@@ -89,16 +98,20 @@ class CreateTeamCells : UICollectionViewCell {
         addSubview(userPhoto)
         addSubview(userPhotoOverlay)
         addSubview(checkImageView)
+        addSubview(usernameLabel)
         
-        userPhoto.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 40)
+        userPhoto.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
         userPhotoOverlay.anchor(top: userPhoto.topAnchor, left: userPhoto.leftAnchor, bottom: userPhoto.bottomAnchor, right: userPhoto.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         checkImageView.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 16, height: 16)
         checkImageView.centerYAnchor.constraint(equalTo: userPhotoOverlay.centerYAnchor).isActive = true
         checkImageView.centerXAnchor.constraint(equalTo: userPhotoOverlay.centerXAnchor).isActive = true
+        usernameLabel.anchor(top: nil, left: userPhoto.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 12, width: 0, height: 18)
+        usernameLabel.centerYAnchor.constraint(equalTo: userPhoto.centerYAnchor).isActive = true
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {

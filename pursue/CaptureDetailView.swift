@@ -144,11 +144,9 @@ class CaptureDetailView: UIViewController {
     
     let interestsCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
-        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
     
@@ -233,8 +231,10 @@ class CaptureDetailView: UIViewController {
     }()
     
     let pursuitIcon : UIButton = {
-       let button = UIButton()
-        button.backgroundColor = .blue
+       let button = UIButton(type: .system)
+        button.tintColor = .black
+        button.setImage(UIImage(named: "dashboard")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
         return button
     }()
     
@@ -253,11 +253,16 @@ class CaptureDetailView: UIViewController {
         return label
     }()
     
-    let pursuitDetailStackView : UIStackView = {
+    lazy var pursuitDetailStackView : UIStackView = {
         let sv = UIStackView()
         sv.axis = .vertical
         sv.spacing = 2
         sv.distribution = .fill
+        sv.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(showPostType))
+        tap.numberOfTapsRequired = 1
+        sv.addGestureRecognizer(tap)
         return sv
     }()
     
@@ -332,8 +337,10 @@ class CaptureDetailView: UIViewController {
     }()
     
     let actionIcon : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .blue
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "steps")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .black
+        button.imageView?.contentMode = .scaleAspectFill
         return button
     }()
     
@@ -351,17 +358,20 @@ class CaptureDetailView: UIViewController {
     }()
     
     let inviteIcon : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .blue
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "group_work")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .black
+        button.imageView?.contentMode = .scaleAspectFill
         return button
     }()
     
-    let inviteButton : UIButton = {
+    lazy var inviteButton : UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Invite people", for: .normal)
         button.tintColor = .gray
         button.titleLabel?.font = UIFont.init(name: "Roboto-Medium", size: 16)
         button.contentHorizontalAlignment = .left
+        button.addTarget(self, action: #selector(showInvitePopup), for: .touchUpInside)
         return button
     }()
     
@@ -372,15 +382,18 @@ class CaptureDetailView: UIViewController {
     }()
     
     let interestIcon : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .blue
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "tags")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .black
+        button.imageView?.contentMode = .scaleAspectFill
         return button
     }()
     
-    let interestButton : UIButton = {
+    lazy var interestButton : UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Add tags", for: .normal)
         button.tintColor = .gray
+        button.addTarget(self, action: #selector(showInterests), for: .touchUpInside)
         button.titleLabel?.font = UIFont.init(name: "Roboto-Medium", size: 16)
         button.contentHorizontalAlignment = .left
         return button
@@ -393,17 +406,163 @@ class CaptureDetailView: UIViewController {
     }()
     
     let dateIcon : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .blue
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "calendar")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .black
+        button.imageView?.contentMode = .scaleAspectFill
         return button
     }()
     
     let dateLabel : UILabel = {
         let label = UILabel()
-        label.text = "Pursuit"
+        label.text = "Select end date"
         label.font = UIFont.init(name: "Roboto-Medium", size: 16)
+        label.textColor = .gray
         return label
     }()
+    
+    lazy var postTypePopupBackgroundView : UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.init(white: 0.4, alpha: 0.8)
+        view.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissPostTypePopup))
+        tap.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tap)
+        return view
+    }()
+    
+    let postTypeWhiteBackgroundView : HomeImageViewShadow = {
+        let view = HomeImageViewShadow()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    let postTypeLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Select Post Type"
+        label.font = UIFont.init(name: "Roboto-Medium", size: 14)
+        return label
+    }()
+    
+    lazy var interestsPopupBackgroundView : UIView = {
+       let view = UIView()
+        view.backgroundColor = UIColor.init(white: 0.4, alpha: 0.8)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissInterestsPopup))
+        tap.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tap)
+        return view
+    }()
+    
+    let interestsWhiteBackgroundView : HomeImageViewShadow = {
+       let view = HomeImageViewShadow()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    lazy var invitePopupBackgroundView : UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.init(white: 0.4, alpha: 0.8)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissInvitePopup))
+        tap.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tap)
+        return view
+    }()
+    
+    let inviteWhiteBackgroundView : HomeImageViewShadow = {
+        let view = HomeImageViewShadow()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    @objc func dismissInterestsPopup(){
+        interestsPopupBackgroundView.removeFromSuperview()
+        interestsWhiteBackgroundView.removeFromSuperview()
+        interestsCollectionView.removeFromSuperview()
+    }
+    
+    @objc func dismissPostTypePopup(){
+        postTypePopupBackgroundView.removeFromSuperview()
+        postTypeWhiteBackgroundView.removeFromSuperview()
+        postTypeCollectionView.removeFromSuperview()
+        postTypeLabel.removeFromSuperview()
+    }
+    
+    @objc func dismissInvitePopup(){
+        invitePopupBackgroundView.removeFromSuperview()
+        inviteWhiteBackgroundView.removeFromSuperview()
+        teamCollectionView.removeFromSuperview()
+    }
+    
+    func setupInterestsPopup(){
+        interestsPopupBackgroundView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        view.addSubview(interestsPopupBackgroundView)
+        interestsPopupBackgroundView.isHidden = false
+        
+        view.addSubview(interestsWhiteBackgroundView)
+        interestsWhiteBackgroundView.anchor(top: nil, left: interestsPopupBackgroundView.leftAnchor, bottom: nil, right: interestsPopupBackgroundView.rightAnchor, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 24, width: 0, height: view.frame.height - 200)
+        interestsWhiteBackgroundView.centerYAnchor.constraint(equalTo: interestsPopupBackgroundView.centerYAnchor).isActive = true
+        
+        interestsCollectionView.delegate = self
+        interestsCollectionView.dataSource = self
+        interestsCollectionView.register(CreateInterestsCells.self, forCellWithReuseIdentifier: interestId)
+        
+        view.addSubview(interestsCollectionView)
+        interestsCollectionView.anchor(top: interestsWhiteBackgroundView.topAnchor, left: interestsWhiteBackgroundView.leftAnchor, bottom: interestsWhiteBackgroundView.bottomAnchor, right: interestsWhiteBackgroundView.rightAnchor, paddingTop: 24, paddingLeft: 12, paddingBottom: 18, paddingRight: 18, width: 0, height: 0)
+    }
+    
+    @objc func showInterests(){
+        setupInterestsPopup()
+    }
+    
+    @objc func showPostType(){
+        setupPostTypePopup()
+    }
+    
+    @objc func showInvitePopup(){
+        setupInvitePopup()
+    }
+    
+    func setupPostTypePopup(){
+        postTypePopupBackgroundView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        view.addSubview(postTypePopupBackgroundView)
+        postTypePopupBackgroundView.isHidden = false
+        
+        view.addSubview(postTypeWhiteBackgroundView)
+        postTypeWhiteBackgroundView.anchor(top: nil, left: postTypePopupBackgroundView.leftAnchor, bottom: nil, right: postTypePopupBackgroundView.rightAnchor, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 24, width: 0, height: 280)
+        postTypeWhiteBackgroundView.centerYAnchor.constraint(equalTo: postTypePopupBackgroundView.centerYAnchor).isActive = true
+        
+        postTypeCollectionView.delegate = self
+        postTypeCollectionView.dataSource = self
+        postTypeCollectionView.register(PostTypeCells.self, forCellWithReuseIdentifier: typeId)
+        
+        view.addSubview(postTypeLabel)
+        view.addSubview(postTypeCollectionView)
+        
+        postTypeLabel.anchor(top: postTypeWhiteBackgroundView.topAnchor, left: postTypeWhiteBackgroundView.leftAnchor, bottom: nil, right: postTypeWhiteBackgroundView.rightAnchor, paddingTop: 24, paddingLeft: 18, paddingBottom: 0, paddingRight: 18, width: 0, height: 16)
+        postTypeCollectionView.anchor(top: postTypeLabel.bottomAnchor, left: postTypeWhiteBackgroundView.leftAnchor, bottom: postTypeWhiteBackgroundView.bottomAnchor, right: postTypeWhiteBackgroundView.rightAnchor, paddingTop: 24, paddingLeft: 12, paddingBottom: 18, paddingRight: 18, width: 0, height: 0)
+    }
+    
+    func setupInvitePopup(){
+        invitePopupBackgroundView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        view.addSubview(invitePopupBackgroundView)
+        invitePopupBackgroundView.isHidden = false
+        
+        view.addSubview(inviteWhiteBackgroundView)
+        inviteWhiteBackgroundView.anchor(top: nil, left: invitePopupBackgroundView.leftAnchor, bottom: nil, right: invitePopupBackgroundView.rightAnchor, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 24, width: 0, height: view.frame.height - 200)
+        inviteWhiteBackgroundView.centerYAnchor.constraint(equalTo: invitePopupBackgroundView.centerYAnchor).isActive = true
+        
+        teamCollectionView.delegate = self
+        teamCollectionView.dataSource = self
+        teamCollectionView.register(CreateTeamCells.self, forCellWithReuseIdentifier: teamId)
+        
+        view.addSubview(teamCollectionView)
+
+        teamCollectionView.anchor(top: inviteWhiteBackgroundView.topAnchor, left: inviteWhiteBackgroundView.leftAnchor, bottom: inviteWhiteBackgroundView.bottomAnchor, right: inviteWhiteBackgroundView.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 18, paddingRight: 18, width: 0, height: 0)
+        
+    }
     
     func setupSelectPostType(){
 //        scrollView.addSubview(selectPostLabel)
@@ -452,7 +611,21 @@ class CaptureDetailView: UIViewController {
         setupInvitePeople()
     }
     
-    @IBOutlet var calendar: ADDatePicker!
+//    @IBOutlet var calendar: ADDatePicker!
+    
+    let calendar : ADDatePicker = {
+        let cd = ADDatePicker()
+        cd.bgColor = .white
+        cd.fontFamily = UIFont.init(name: "Roboto-Medium", size: 14)!
+        cd.selectedBgColor = .black
+        cd.selectedTextColor = .black
+        cd.deselectedBgColor = .white
+        cd.deselectTextColor = .lightGray
+//        cd.deselectTextColor = UIColor.init(white: 1.0, alpha: 0.7)
+        cd.selectionType = .circle
+        return cd
+    }()
+    
     func setupSelectInterest(){
         view.addSubview(interestIcon)
         view.addSubview(interestButton)
@@ -472,7 +645,7 @@ class CaptureDetailView: UIViewController {
         inviteIcon.anchor(top: interestUnderlineView.bottomAnchor, left: scrollView.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 22, height: 22)
         inviteButton.centerYAnchor.constraint(equalTo: inviteIcon.centerYAnchor).isActive = true
         inviteButton.anchor(top: nil, left: inviteIcon.rightAnchor, bottom: nil, right: scrollView.rightAnchor, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 12, width: 0, height: 18)
-        inviteUnderlineView.anchor(top: inviteButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 38, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+        inviteUnderlineView.anchor(top: inviteButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 38, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.2)
         setupDatePicker()
     }
     
@@ -480,22 +653,14 @@ class CaptureDetailView: UIViewController {
     func setupDatePicker(){
         view.addSubview(dateIcon)
         view.addSubview(dateLabel)
+        view.addSubview(calendar)
         
         dateIcon.anchor(top: inviteUnderlineView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 22, height: 22)
         dateLabel.centerYAnchor.constraint(equalTo: dateIcon.centerYAnchor).isActive = true
         dateLabel.anchor(top: nil, left: dateIcon.rightAnchor, bottom: nil, right: scrollView.rightAnchor, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 12, width: 0, height: 18)
-        
-        calendar.delegate = self
+        calendar.anchor(top: dateLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 200)
         calendar.intialDate = Date()
-        calendar.yearRange(inBetween: 2019, end: 2022)
-        calendar.backgroundColor = .blue
-        calendar.deselectedBgColor = .clear
-        calendar.selectedBgColor = .white
-        calendar.selectedTextColor = .black
-        calendar.deselectTextColor = UIColor.init(white: 1.0, alpha: 0.7)
-        calendar.selectionType = .circle
-        view.addSubview(calendar)
-        calendar.anchor(top: dateLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: scrollView.safeAreaLayoutGuide.rightAnchor, paddingTop: 24, paddingLeft: 18, paddingBottom: 0, paddingRight: 12, width: 0, height: 200)
+        calendar.yearRange(inBetween: 2019, end: 2028)
     }
     
     var isCreate = false
@@ -650,6 +815,8 @@ class CaptureDetailView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        calendar.delegate = self
+        interestsPopupBackgroundView.isHidden = true
         scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height + 360)
         setupTopBar()
 //        getCaptureDetail()
@@ -665,6 +832,15 @@ class CaptureDetailView: UIViewController {
         super.viewWillDisappear(animated)
         tabBarController?.tabBar.isHidden = false
     }
+    
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//        calendar.delegate = self
+//    }
+//    override func viewWillLayoutSubviews() {
+//        super.viewWillLayoutSubviews()
+//        calendar.delegate = self
+//    }
     
     @objc func handleCancel(){
         dismiss(animated: true, completion: nil)
@@ -758,7 +934,12 @@ class CaptureDetailView: UIViewController {
 extension CaptureDetailView : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        switch collectionView {
+        case postTypeCollectionView:
+            return 3
+        default:
+            return 4
+        }
 //        switch collectionView {
 //        case teamCollectionView:
 //            return createDetail?.team?.count ?? 0
@@ -781,8 +962,12 @@ extension CaptureDetailView : UICollectionViewDelegate, UICollectionViewDataSour
             return UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
         case actionCollectionView:
             return UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 0)
+        case interestsCollectionView:
+            return UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 12)
+        case postTypeCollectionView:
+            return UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 12)
         default:
-            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            return UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 12)
         }
         
 
@@ -806,6 +991,15 @@ extension CaptureDetailView : UICollectionViewDelegate, UICollectionViewDataSour
                 //        cell.pursuit = createDetail?.pursuits?[indexPath.item]
                 return cell
             }
+        case interestsCollectionView:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: interestId, for: indexPath) as! CreateInterestsCells
+            return cell
+        case postTypeCollectionView:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: typeId, for: indexPath) as! PostTypeCells
+            return cell
+        case teamCollectionView:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: teamId, for: indexPath) as! CreateTeamCells
+            return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: actionId, for: indexPath) as! CreateActionItemsCell
             return cell
@@ -844,19 +1038,45 @@ extension CaptureDetailView : UICollectionViewDelegate, UICollectionViewDataSour
 //    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 15.0
+        switch collectionView {
+        case interestsCollectionView:
+            return 15.0
+        case postTypeCollectionView:
+            return 15.0
+        case actionCollectionView:
+            return 10.0
+        case teamCollectionView:
+            return 15.0
+        default:
+            return 25.0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 15.0
+        switch collectionView {
+        case interestsCollectionView:
+            return 15.0
+        case postTypeCollectionView:
+            return 15.0
+        case actionCollectionView:
+            return 10.0
+        case teamCollectionView:
+            return 15.0
+        default:
+            return 25.0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch collectionView {
         case pursuitsCollectionView:
             return CGSize(width: 200, height: 220)
-        default:
+        case interestsCollectionView:
             return CGSize(width: view.frame.width, height: 24)
+        case actionCollectionView:
+            return CGSize(width: view.frame.width, height: 28)
+        default:
+            return CGSize(width: view.frame.width, height: 44)
         }
         
 

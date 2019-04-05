@@ -38,19 +38,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         FirebaseApp.configure()
         
-        if UserDefaults.standard.value(forKey: "firstAppLaunch") == nil {
+        if UserDefaults.standard.value(forKey: "firstAppLaunch") != nil {
             let layout = UICollectionViewFlowLayout()
             layout.scrollDirection = .horizontal
             
-            window = UIWindow()
             window?.rootViewController = SwipingController(collectionViewLayout: layout)
             window?.makeKeyAndVisible()
         } else {
-            
             window = UIWindow()
             window?.rootViewController = MainTabController()
             window?.makeKeyAndVisible()
-            UILabel.appearance().font = UIFont(name: "Montserrat", size: 24)
         }
         
         return true

@@ -9,7 +9,6 @@
 import UIKit
 import iCarousel
 import CHIPageControl
-import ABSteppedProgressBar
 
 class NewHomeCells : UICollectionViewCell {
     

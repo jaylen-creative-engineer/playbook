@@ -66,13 +66,13 @@ class HomeViews : UICollectionViewController, UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.item {
         case 0:
-            return CGSize(width: view.frame.width, height: 640)
+            return CGSize(width: view.frame.width, height: 730)
         case 1:
             return CGSize(width: view.frame.width, height: 400)
         case 2:
             return CGSize(width: view.frame.width, height: 280)
         default:
-            return CGSize(width: view.frame.width, height: 640)
+            return CGSize(width: view.frame.width, height: 730)
         }
     }
     

@@ -16,7 +16,7 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         
-        let index = viewControllers?.index(of: viewController)
+        let index = viewControllers?.firstIndex(of: viewController)
         if index == 1 {
             
             let photoSelectorController = SelectCameraController()
@@ -51,12 +51,13 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
         
         let homeNavController = UINavigationController(rootViewController: HomeController(collectionViewLayout: UICollectionViewFlowLayout()))
         let plusNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "create_unselected"), selectedImage: #imageLiteral(resourceName: "create_unselected"))
+        let notificationController = UINavigationController(rootViewController: UIViewController())
         let userProfileNavController = UINavigationController(rootViewController: ProfileController(collectionViewLayout: UICollectionViewFlowLayout()))
         
         tabBar.tintColor = UIColor.black
         tabBar.barTintColor = UIColor.rgb(red: 255, green: 255, blue: 255)
         
-        viewControllers = [homeNavController, plusNavController, userProfileNavController]
+        viewControllers = [homeNavController, plusNavController, notificationController, userProfileNavController]
         
         guard let items = tabBar.items else { return }
         let tabHome = items[0]
@@ -67,7 +68,11 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
         tabCreate.image = UIImage(named: "create_unselected")?.withRenderingMode(.alwaysOriginal)
         tabCreate.selectedImage = UIImage(named: "create_unselected")?.withRenderingMode(.alwaysOriginal)
         
-        let tabProfile = items[2]
+        let tabNotification = items[2]
+        tabNotification.image = UIImage(named : "notification-outline")?.withRenderingMode(.alwaysOriginal)
+        tabNotification.selectedImage = UIImage(named : "notification")?.withRenderingMode(.alwaysOriginal)
+        
+        let tabProfile = items[3]
         tabProfile.image = UIImage(named: "profile_unselected")?.withRenderingMode(.alwaysOriginal)
         tabProfile.selectedImage = UIImage(named: "profile_selected")?.withRenderingMode(.alwaysOriginal)
         

@@ -72,7 +72,7 @@ extension SearchPosts : UICollectionViewDelegate, UICollectionViewDataSource, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessHomeController?.changeToSearchPostDetail(searchPostId: (posts?[indexPath.item].postId)!, searchPursuitId: (posts?[indexPath.item].pursuitId)!)
+//        accessHomeController?.changeToSearchPostDetail(searchPostId: (posts?[indexPath.item].postId)!, searchPursuitId: (posts?[indexPath.item].pursuitId)!)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

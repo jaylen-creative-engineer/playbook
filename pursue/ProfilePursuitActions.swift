@@ -29,10 +29,10 @@ class ProfilePursuitActions : UICollectionViewCell, UICollectionViewDelegateFlow
     var pages = [UIViewController]()
     
     func setupScrollView(){
-        let page1 = setupActivePursuitsView()
+//        let page1 = setupActivePursuitsView()
         let page2 = setupChallengeView()
         
-        pages = [page1, page2]
+//        pages = [page1, page2]
         
         scrollView.contentSize = CGSize(width: frame.width * CGFloat(pages.count), height: frame.height)
         scrollView.frame = CGRect(x: 0, y: 60, width: frame.width, height: frame.height)
@@ -44,11 +44,11 @@ class ProfilePursuitActions : UICollectionViewCell, UICollectionViewDelegateFlow
         }
     }
     
-    func setupActivePursuitsView() -> ProfilePursuit {
-        let activePursuit = ProfilePursuit(collectionViewLayout: UICollectionViewFlowLayout())
-        activePursuit.view.translatesAutoresizingMaskIntoConstraints = false
-        return activePursuit
-    }
+//    func setupActivePursuitsView() -> ProfilePursuit {
+//        let activePursuit = ProfilePursuit(collectionViewLayout: UICollectionViewFlowLayout())
+//        activePursuit.view.translatesAutoresizingMaskIntoConstraints = false
+//        return activePursuit
+//    }
     
     func setupChallengeView() -> ProfileChallengeView {
         let challengeView = ProfileChallengeView(collectionViewLayout: UICollectionViewFlowLayout())

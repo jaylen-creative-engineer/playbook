@@ -48,7 +48,7 @@ class SearchUsers : UICollectionViewCell {
     }()
     
     @objc func handleProfileTap(){
-        accessHomeController?.handleChangeToProfile(userId: (searchUser?.userId)!)
+//        accessHomeController?.handleChangeToProfile(userId: (searchUser?.userId)!)
     }
     
     func setupUserPhoto(){

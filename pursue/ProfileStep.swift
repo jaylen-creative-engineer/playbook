@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RandomColorSwift
 import EasyTipView
 
 class ProfileStep : UICollectionViewCell, EasyTipViewDelegate {
@@ -76,9 +75,7 @@ class ProfileStep : UICollectionViewCell, EasyTipViewDelegate {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-    var arrayOfColors = randomColors(count: 20, hue: .random, luminosity: .dark)
+        
 }
 
 extension ProfileStep : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
