@@ -7,14 +7,13 @@
 //
 
 import UIKit
-import PinterestLayout
 
 class ProfilePursuit : UICollectionViewCell {
     
     let pursuitLabel : UILabel = {
        let label = UILabel()
         label.text = "Pursuits"
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
     
@@ -22,6 +21,7 @@ class ProfilePursuit : UICollectionViewCell {
        let label = UILabel()
         label.text = "3"
         label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.textColor = .darkGray
         return label
     }()
     
@@ -51,7 +51,7 @@ class ProfilePursuit : UICollectionViewCell {
         addSubview(pursuitCountLabel)
         
         pursuitLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: pursuitLabel.intrinsicContentSize.width, height: 20)
-        pursuitCountLabel.anchor(top: nil, left: pursuitLabel.rightAnchor, bottom: pursuitLabel.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 2, paddingBottom: 0, paddingRight: 0, width: pursuitCountLabel.intrinsicContentSize.width, height: 16)
+        pursuitCountLabel.anchor(top: nil, left: pursuitLabel.rightAnchor, bottom: pursuitLabel.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 6, paddingBottom: 1.5, paddingRight: 0, width: pursuitCountLabel.intrinsicContentSize.width, height: 16)
         setupCollectionView()
     }
     
@@ -77,7 +77,7 @@ extension ProfilePursuit : UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width / 2.5, height: 200)
+        return CGSize(width: frame.width / 2.25, height: 230)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -85,7 +85,7 @@ extension ProfilePursuit : UICollectionViewDelegate, UICollectionViewDataSource,
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 20.0
+        return 30.0
     }
     
 }

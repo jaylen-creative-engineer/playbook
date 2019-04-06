@@ -14,10 +14,8 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     
     let peopleId = "peopleId"
     let pursuitId = "pursuitId"
-    let principleId = "principleId"
     let headerId = "headerId"
-    let stepId = "stepId"
-    let actionId = "actionId"
+    let challengeId = "challengeId"
     
     
     var user : User?
@@ -38,10 +36,10 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         
         collectionView?.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(ProfilePursuit.self, forCellWithReuseIdentifier: pursuitId)
-//        collectionView?.register(ProfileAdded.self, forCellWithReuseIdentifier: peopleId)
-//        collectionView?.register(ProfileStep.self, forCellWithReuseIdentifier: stepId)
-//        collectionView?.register(ProfilePursuitActions.self, forCellWithReuseIdentifier: actionId)
-        collectionView?.backgroundColor = UIColor.rgb(red: 243, green: 243, blue: 249)
+        collectionView?.register(ProfileAdded.self, forCellWithReuseIdentifier: peopleId)
+        collectionView?.register(ProfileChallenge.self, forCellWithReuseIdentifier: challengeId)
+        
+        collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
         collectionView?.contentInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 100, right: 0)
 //        getUser()
@@ -131,7 +129,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
 extension ProfileController {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 270)
+        return CGSize(width: view.frame.width, height: 250)
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -142,23 +140,41 @@ extension ProfileController {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 50.0
+        return 60.0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 50.0
+        return 60.0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 340)
+        switch indexPath.item {
+        case 0:
+            return CGSize(width: view.frame.width, height: 280)
+        case 1:
+            return CGSize(width: view.frame.width, height: 190)
+        default:
+            return CGSize(width: view.frame.width, height: 340)
+        }
+        
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return 3
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! ProfilePursuit
-        return cell
+        switch indexPath.item {
+        case 0:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! ProfilePursuit
+            return cell
+        case 1:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! ProfileAdded
+            return cell
+        default:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! ProfileChallenge
+            return cell
+        }
+        
     }
 }

@@ -241,7 +241,7 @@ class ProfileHeader : UICollectionViewCell {
         addSubview(settingsButton)
         addSubview(settingsLabel)
         
-        addButton.anchor(top: userDetailsStackView.bottomAnchor, left: userDetailsStackView.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 38, height: 38)
+        addButton.anchor(top: bioText.bottomAnchor, left: bioText.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 38, height: 38)
         addLabel.anchor(top: addButton.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: addLabel.intrinsicContentSize.width, height: addLabel.intrinsicContentSize.height)
         addLabel.centerXAnchor.constraint(equalTo: addButton.centerXAnchor).isActive = true
         settingsButton.anchor(top: addButton.topAnchor, left: addButton.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 28, paddingBottom: 0, paddingRight: 0, width: 38, height: 38)
@@ -254,11 +254,14 @@ class ProfileHeader : UICollectionViewCell {
         addSubview(userDetailsStackView)
         userDetailsStackView.addArrangedSubview(usernameLabel)
         userDetailsStackView.addArrangedSubview(fullnameLabel)
+        addSubview(bioText)
         
         userPhoto.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 78, height: 78)
         userDetailsStackView.anchor(top: nil, left: userPhoto.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 18, width: 0, height: 0)
         userDetailsStackView.heightAnchor.constraint(lessThanOrEqualToConstant: 78).isActive = true
         userDetailsStackView.centerYAnchor.constraint(equalTo: userPhoto.centerYAnchor).isActive = true
+        bioText.anchor(top: userDetailsStackView.bottomAnchor, left: userPhoto.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
+        bioText.heightAnchor.constraint(lessThanOrEqualToConstant: 38).isActive = true
         setupEngagementsView()
     }
     

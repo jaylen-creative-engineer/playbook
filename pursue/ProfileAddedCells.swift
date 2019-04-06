@@ -18,8 +18,8 @@ class ProfileAddedCells : UICollectionViewCell {
     
     let userPhoto : UIImageView = {
        let iv = UIImageView()
-        iv.layer.cornerRadius = 27.5
         iv.layer.masksToBounds = true
+        iv.layer.cornerRadius = 12
         iv.image = UIImage(named: "gian-cescon-637914-unsplash")?.withRenderingMode(.alwaysOriginal)
         iv.contentMode = .scaleAspectFill
         return iv
@@ -45,11 +45,11 @@ class ProfileAddedCells : UICollectionViewCell {
         addSubview(userPhoto)
         addSubview(usernameLabel)
         
-        cellBackgroundView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        userPhoto.anchor(top: cellBackgroundView.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 55, height: 55)
-        userPhoto.centerXAnchor.constraint(equalTo: cellBackgroundView.centerXAnchor).isActive = true
+        cellBackgroundView.anchor(top: topAnchor, left: leftAnchor, bottom:  nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 100)
+        userPhoto.anchor(top: cellBackgroundView.topAnchor, left: cellBackgroundView.leftAnchor, bottom: cellBackgroundView.bottomAnchor, right: cellBackgroundView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         usernameLabel.centerXAnchor.constraint(equalTo: userPhoto.centerXAnchor).isActive = true
-        usernameLabel.anchor(top: userPhoto.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: 16)
+        usernameLabel.anchor(top: userPhoto.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 16)
+        usernameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: frame.width - 4).isActive = true
     }
     
     override init(frame: CGRect) {
