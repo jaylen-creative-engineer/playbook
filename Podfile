@@ -9,11 +9,7 @@ target 'Inpursuit' do
 
   pod 'ADDatePicker'
   pod 'EasyTipView'
-  pod 'ABSteppedProgressBar'
-  pod 'TabBarController'
   pod 'NVActivityIndicatorView'
-  pod 'RandomColorSwift'
-  pod 'AnimatedCollectionViewLayout'
   pod 'PinterestLayout'
   pod 'CHIPageControl', '~> 0.1.3'
   pod 'Mixpanel-swift'
@@ -31,5 +27,9 @@ target 'Inpursuit' do
   pod 'KWTransition'
   pod 'ParallaxHeader'
   pod 'TRVSEventSource'
+  pod 'RxSwift'
+  pod 'RxRealm'
+  pod 'RealmSwift'
+  pod 'RxCocoa'
 
 end

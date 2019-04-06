@@ -133,7 +133,7 @@ extension UIView {
                     let ignoreActions = ["preVerify:forEvent:", "execute:forEvent:"]
                     if let actions = control.actions(forTarget: target, forControlEvent: controlEvent) {
                         for action in actions {
-                            if ignoreActions.index(of: action) == nil {
+                            if ignoreActions.firstIndex(of: action) == nil {
                                 targetActions.append("\(event)/\(action)")
                             }
                         }

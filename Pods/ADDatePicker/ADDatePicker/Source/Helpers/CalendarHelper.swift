@@ -84,9 +84,9 @@ class CalendarHelper{
         if currentDay == "" {
             currentDay = (days.last?.type)!
         }
-        let date = dateFormatter.date(from: "\(currentMonth)/\(currentDay)/\(currentYear)")
+        guard let date = dateFormatter.date(from: "\(currentMonth)/\(currentDay)/\(currentYear)") else { return Date() }
         
-        return date!
+        return date
     }
 }
 

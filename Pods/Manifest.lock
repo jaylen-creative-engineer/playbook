@@ -1,8 +1,6 @@
 PODS:
-  - ABSteppedProgressBar (0.2.2)
   - ADDatePicker (1.0.0)
   - Alamofire (4.8.0)
-  - AnimatedCollectionViewLayout (0.5.0)
   - CHIPageControl (0.1.7):
     - CHIPageControl/Aji (= 0.1.7)
     - CHIPageControl/Aleppo (= 0.1.7)
@@ -122,17 +120,26 @@ PODS:
   - PinterestLayout (1.0.3)
   - Protobuf (3.6.1)
   - PryntTrimmerView (3.0.0)
-  - RandomColorSwift (1.0.0)
   - ReachabilitySwift (4.3.0)
+  - Realm (3.13.1):
+    - Realm/Headers (= 3.13.1)
+  - Realm/Headers (3.13.1)
+  - RealmSwift (3.13.1):
+    - Realm (= 3.13.1)
+  - RxAtomic (4.4.0)
+  - RxCocoa (4.4.0):
+    - RxSwift (~> 4.0)
+  - RxRealm (0.7.6):
+    - RealmSwift (~> 3.0)
+    - RxSwift (~> 4.0)
+  - RxSwift (4.4.0):
+    - RxAtomic (~> 4.4)
   - SelectionList (1.3.0)
-  - TabBarController (1.0.1)
   - TRVSEventSource (0.0.8)
 
 DEPENDENCIES:
-  - ABSteppedProgressBar
   - ADDatePicker
   - Alamofire
-  - AnimatedCollectionViewLayout
   - CHIPageControl (~> 0.1.3)
   - EasyTipView
   - Firebase/Auth
@@ -148,18 +155,18 @@ DEPENDENCIES:
   - ParallaxHeader
   - PinterestLayout
   - PryntTrimmerView
-  - RandomColorSwift
   - ReachabilitySwift
+  - RealmSwift
+  - RxCocoa
+  - RxRealm
+  - RxSwift
   - SelectionList
-  - TabBarController
   - TRVSEventSource
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - ABSteppedProgressBar
     - ADDatePicker
     - Alamofire
-    - AnimatedCollectionViewLayout
     - CHIPageControl
     - EasyTipView
     - Firebase
@@ -186,17 +193,19 @@ SPEC REPOS:
     - PinterestLayout
     - Protobuf
     - PryntTrimmerView
-    - RandomColorSwift
     - ReachabilitySwift
+    - Realm
+    - RealmSwift
+    - RxAtomic
+    - RxCocoa
+    - RxRealm
+    - RxSwift
     - SelectionList
-    - TabBarController
     - TRVSEventSource
 
 SPEC CHECKSUMS:
-  ABSteppedProgressBar: a8860622d192e55a13f64d8830e25e29c1e3f471
   ADDatePicker: 62cd9bb25b71b261bbd008020ea9347b84979873
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
-  AnimatedCollectionViewLayout: 8b660a623d85001f76f00f0d2302a7b043c72bda
   CHIPageControl: bbe1ddd0c688c02ec65b7f7e7d34551a3d16f37c
   EasyTipView: 1515544456d6e943240012e9be5d25d1bb766603
   Firebase: 8bb9268bff82374f2cbaaabb143e725743c316ae
@@ -223,12 +232,16 @@ SPEC CHECKSUMS:
   PinterestLayout: f1c7ec0254ffa842d69f1b43e4436c8ded4359b9
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   PryntTrimmerView: 53ac64053c7ce63cb3e27f54090f52da0734891d
-  RandomColorSwift: 9f85058b721665d52d239ca166a913e083506444
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
+  Realm: 50071da38fe079e0735e47c9f2eae738c68c5996
+  RealmSwift: 8a1e6a02b7a08cd17a31e3115143fb69fe5f3fb9
+  RxAtomic: eacf60db868c96bfd63320e28619fe29c179656f
+  RxCocoa: df63ebf7b9a70d6b4eeea407ed5dd4efc8979749
+  RxRealm: 5379eddd74f8d617ca7681d1f8d144af25b432b0
+  RxSwift: 5976ecd04fc2fefd648827c23de5e11157faa973
   SelectionList: 4f4c720baf48f3d19c28d0622a43cbef237bb984
-  TabBarController: 764958ddf544a59829043f120c84c4a4d3d69dd8
   TRVSEventSource: 19fb940e0351ceb97125d46fd40cd55e339568d8
 
-PODFILE CHECKSUM: a6a10f13a41650107404c1c4020d30530111ffc2
+PODFILE CHECKSUM: f6657723218c422436ef41e23d8faa9695fde560
 
 COCOAPODS: 1.5.3

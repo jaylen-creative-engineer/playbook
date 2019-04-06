@@ -30,12 +30,12 @@ open class ADDatePicker: UIView {
     
     // Accessible Properties
     
-    public var bgColor: UIColor = #colorLiteral(red: 0.5564764738, green: 0.754239738, blue: 0.6585322022, alpha: 1)
-    public var selectedBgColor: UIColor = .white
-    public var selectedTextColor: UIColor = .white
+    public var bgColor: UIColor = .white
+    public var selectedBgColor: UIColor = .black
+    public var selectedTextColor: UIColor = .black
     public var deselectedBgColor: UIColor = .clear
     public var deselectTextColor: UIColor = UIColor.init(white: 1.0, alpha: 0.7)
-    public var fontFamily: UIFont = UIFont(name: "GillSans-SemiBold", size: 20)!
+    public var fontFamily: UIFont = UIFont.init(name: "Roboto-Medium", size: 16)!
     public var selectionType: SelectionType = .roundedsquare
     public var intialDate:Date = Date()
     public var delegate:ADDatePickerDelegate?
@@ -83,11 +83,11 @@ open class ADDatePicker: UIView {
     
     func initialDate(date: Date){
         let (mm,dd,yyyy) = date.seprateDateInDDMMYY
-        let y = years.index { (modelObj) -> Bool in
+        let y = years.firstIndex { (modelObj) -> Bool in
             return modelObj.type == yyyy
         }
         
-        let d = days.index { (modelObj) -> Bool in
+        let d = days.firstIndex { (modelObj) -> Bool in
             return Int(modelObj.type) == Int(dd)
         }
         
