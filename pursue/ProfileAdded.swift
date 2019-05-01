@@ -51,7 +51,7 @@ class ProfileAdded  : UICollectionViewCell {
         addSubview(addedCountLabel)
         
         addedLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: addedLabel.intrinsicContentSize.width, height: 20)
-        addedCountLabel.anchor(top: nil, left: addedLabel.rightAnchor, bottom: addedLabel.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 6, paddingBottom: 1.5, paddingRight: 0, width: addedCountLabel.intrinsicContentSize.width, height: 16)
+        addedCountLabel.anchor(top: nil, left: addedLabel.rightAnchor, bottom: addedLabel.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 6, paddingBottom: 1.7, paddingRight: 0, width: addedCountLabel.intrinsicContentSize.width, height: 16)
         setupCollectionView()
     }
     

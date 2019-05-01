@@ -12,10 +12,11 @@ import Firebase
 
 class ProfileController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    let peopleId = "peopleId"
-    let pursuitId = "pursuitId"
+//    let peopleId = "peopleId"
+//    let pursuitId = "pursuitId"
+//    let challengeId = "challengeId"
     let headerId = "headerId"
-    let challengeId = "challengeId"
+    let containerId = "containerId"
     
     
     var user : User?
@@ -35,9 +36,10 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
         NotificationCenter.default.addObserver(self, selector: #selector(getUser), name: EditProfileController.updateProfileValues, object: nil)
         
         collectionView?.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
-        collectionView?.register(ProfilePursuit.self, forCellWithReuseIdentifier: pursuitId)
-        collectionView?.register(ProfileAdded.self, forCellWithReuseIdentifier: peopleId)
-        collectionView?.register(ProfileChallenge.self, forCellWithReuseIdentifier: challengeId)
+        collectionView?.register(ProfileContainer.self, forCellWithReuseIdentifier: containerId)
+//        collectionView?.register(ProfilePursuit.self, forCellWithReuseIdentifier: pursuitId)
+//        collectionView?.register(ProfileAdded.self, forCellWithReuseIdentifier: peopleId)
+//        collectionView?.register(ProfileChallenge.self, forCellWithReuseIdentifier: challengeId)
         
         collectionView?.backgroundColor = .white
         collectionView?.showsVerticalScrollIndicator = false
@@ -129,52 +131,56 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
 extension ProfileController {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 250)
+        return CGSize(width: view.frame.width, height: 400)
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! ProfileHeader
 //        cell.user = user
-        cell.accessProfileController = self
+//        cell.accessProfileController = self
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 60.0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 60.0
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+//        return 60.0
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//        return 60.0
+//    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch indexPath.item {
-        case 0:
-            return CGSize(width: view.frame.width, height: 280)
-        case 1:
-            return CGSize(width: view.frame.width, height: 190)
-        default:
-            return CGSize(width: view.frame.width, height: 340)
-        }
+        return CGSize(width: view.frame.width, height: view.frame.height)
+//        switch indexPath.item {
+//        case 0:
+//            return CGSize(width: view.frame.width, height: 280)
+//        case 1:
+//            return CGSize(width: view.frame.width, height: 190)
+//        default:
+//            return CGSize(width: view.frame.width, height: 340)
+//        }
         
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return 1
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.item {
-        case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! ProfilePursuit
-            return cell
-        case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! ProfileAdded
-            return cell
-        default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! ProfileChallenge
-            return cell
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: containerId, for: indexPath) as! ProfileContainer
+        return cell
+        
+//        switch indexPath.item {
+//        case 0:
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: pursuitId, for: indexPath) as! ProfilePursuit
+//            return cell
+//        case 1:
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: peopleId, for: indexPath) as! ProfileAdded
+//            return cell
+//        default:
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! ProfileChallenge
+//            return cell
+//        }
         
     }
 }

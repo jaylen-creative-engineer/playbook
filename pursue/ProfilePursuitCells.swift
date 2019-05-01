@@ -34,7 +34,7 @@ class ProfilePursuitCells : UICollectionViewCell {
     
     let userPhoto : UIImageView = {
        let iv = UIImageView()
-        iv.layer.cornerRadius = 15
+        iv.layer.cornerRadius = 17
         iv.layer.masksToBounds = true
         iv.image = UIImage(named: "cafe-768771_1280")?.withRenderingMode(.alwaysOriginal)
         return iv
@@ -47,8 +47,8 @@ class ProfilePursuitCells : UICollectionViewCell {
         return label
     }()
     
-    let userPhotoBackground : TopCardView = {
-       let view = TopCardView()
+    let userPhotoBackground : ProfileChallengeUserPhotoView = {
+       let view = ProfileChallengeUserPhotoView()
         view.backgroundColor = .white
         return view
     }()
@@ -67,8 +67,8 @@ class ProfilePursuitCells : UICollectionViewCell {
         addSubview(usernameLabel)
         
         cellBackgroundView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        pursuitImage.anchor(top: cellBackgroundView.topAnchor, left: cellBackgroundView.leftAnchor, bottom: nil, right: cellBackgroundView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (frame.height / 1.3) - 15)
-        userPhotoBackground.anchor(top: nil, left: nil, bottom: nil, right: pursuitImage.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 30, height: 30)
+        pursuitImage.anchor(top: cellBackgroundView.topAnchor, left: cellBackgroundView.leftAnchor, bottom: nil, right: cellBackgroundView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (frame.height / 1.3) - 20)
+        userPhotoBackground.anchor(top: nil, left: nil, bottom: nil, right: pursuitImage.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 34, height: 34)
         userPhotoBackground.centerYAnchor.constraint(equalTo: pursuitImage.bottomAnchor).isActive = true
         userPhoto.anchor(top: userPhotoBackground.topAnchor, left: userPhotoBackground.leftAnchor, bottom: userPhotoBackground.bottomAnchor, right: userPhotoBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         pursuitDescription.anchor(top: userPhoto.bottomAnchor, left: cellBackgroundView.leftAnchor, bottom: nil, right: cellBackgroundView.rightAnchor, paddingTop: 6, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 18)

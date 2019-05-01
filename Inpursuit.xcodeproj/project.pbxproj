@@ -7,13 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08AC5AE722594468006A721A /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5AE622594468006A721A /* ProgressViewController.swift */; };
+		08AC5AEA2259453A006A721A /* ProgressViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5AE92259453A006A721A /* ProgressViewHeader.swift */; };
+		08AC5AEC22598755006A721A /* ProgressCheckin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5AEB22598755006A721A /* ProgressCheckin.swift */; };
+		08AC5AEE225988E5006A721A /* ProgressCheckinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5AED225988E5006A721A /* ProgressCheckinCell.swift */; };
+		08AC5AF022598AF1006A721A /* ProgressTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5AEF22598AF1006A721A /* ProgressTeam.swift */; };
+		08AC5AF222598B3C006A721A /* ProgressTeamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5AF122598B3C006A721A /* ProgressTeamCell.swift */; };
+		08AC5AF4225A4708006A721A /* ProfileContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5AF3225A4708006A721A /* ProfileContainer.swift */; };
+		08AC5AF6225A4759006A721A /* ProfileActionBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5AF5225A4759006A721A /* ProfileActionBar.swift */; };
+		08AC5AF8225A47EF006A721A /* ProfileActionBarCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC5AF7225A47EF006A721A /* ProfileActionBarCells.swift */; };
 		446C359921181F80005BDE71 /* PursuitDayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446C359821181F80005BDE71 /* PursuitDayTableViewCell.swift */; };
 		D7D62EB1644EAE38883D89C8 /* Pods_Inpursuit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC0F52DE2340CAE1A5BAC9DE /* Pods_Inpursuit.framework */; };
 		E600427C21AE31D40085D445 /* CaptureResponseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E600427B21AE31D40085D445 /* CaptureResponseView.swift */; };
 		E604732D219F6543006F22AB /* CreateDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604732C219F6543006F22AB /* CreateDetail.swift */; };
 		E604733121A0DD62006F22AB /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604733021A0DD62006F22AB /* Feed.swift */; };
 		E60B0836200513FE003F6B70 /* BioInputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60B0835200513FE003F6B70 /* BioInputTextView.swift */; };
-		E60D52F521E5922200C7BB45 /* StepIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60D52F421E5922200C7BB45 /* StepIndicatorView.swift */; };
 		E60EB26720460DB8006E4F1A /* FollowingCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60EB26620460DB8006E4F1A /* FollowingCells.swift */; };
 		E60EB269204616D8006E4F1A /* FriendsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60EB268204616D8006E4F1A /* FriendsController.swift */; };
 		E60EB26B204617B5006E4F1A /* FriendsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60EB26A204617B5006E4F1A /* FriendsCells.swift */; };
@@ -70,7 +78,6 @@
 		E639808D204DF3D40049A71B /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = E639808C204DF3D40049A71B /* Notifications.swift */; };
 		E63CEB4E20EACAC000FFDEF3 /* PursuitDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CEB4D20EACAC000FFDEF3 /* PursuitDay.swift */; };
 		E63CEB5020EACEC100FFDEF3 /* DayLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CEB4F20EACEC100FFDEF3 /* DayLabelCell.swift */; };
-		E63CEB6220ED60D500FFDEF3 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CEB6120ED60D500FFDEF3 /* Utility.swift */; };
 		E64324B51F79A47F0090075F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64324B41F79A47F0090075F /* CardView.swift */; };
 		E64F0D3F21EA7B5F00D12C0B /* RolloverActionItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64F0D3E21EA7B5F00D12C0B /* RolloverActionItems.swift */; };
 		E64F0D4121EA898A00D12C0B /* RolloverTryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64F0D4021EA898A00D12C0B /* RolloverTryCell.swift */; };
@@ -126,7 +133,6 @@
 		E6812891213606B60006D498 /* HomePostCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6812890213606B60006D498 /* HomePostCells.swift */; };
 		E683867C219155FD00D502CB /* HomeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = E683867B219155FD00D502CB /* HomeDetail.swift */; };
 		E686875621BF33D500F8E24C /* SearchPursuitsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E686875521BF33D400F8E24C /* SearchPursuitsCells.swift */; };
-		E696E91721E13CAF00192DEB /* VBRRollingPit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E696E91621E13CAF00192DEB /* VBRRollingPit.swift */; };
 		E696E92121E1A4FD00192DEB /* NewHomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E696E92021E1A4FC00192DEB /* NewHomeController.swift */; };
 		E696E92321E1A7F200192DEB /* NewHomeCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E696E92221E1A7F200192DEB /* NewHomeCells.swift */; };
 		E697CA3121C354D500D85192 /* CustomFriendSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E697CA3021C354D500D85192 /* CustomFriendSettingsView.swift */; };
@@ -225,7 +231,6 @@
 		E6E494D9224707B300C7D18F /* ProgressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E494D8224707B300C7D18F /* ProgressViewModel.swift */; };
 		E6E494DB22470B8C00C7D18F /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E494DA22470B8C00C7D18F /* NotificationsViewModel.swift */; };
 		E6E494DD224719D100C7D18F /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E494DC224719D100C7D18F /* HomeViewModel.swift */; };
-		E6E494E322477AEB00C7D18F /* RealmConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E494E222477AEB00C7D18F /* RealmConnection.swift */; };
 		E6E494E52247F8E200C7D18F /* BlockUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E494E42247F8E200C7D18F /* BlockUserModel.swift */; };
 		E6E494E72247FC1100C7D18F /* QuestionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E494E62247FC1100C7D18F /* QuestionModel.swift */; };
 		E6E494E92247FC4700C7D18F /* AnswerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E494E82247FC4600C7D18F /* AnswerModel.swift */; };
@@ -247,6 +252,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		08AC5AE622594468006A721A /* ProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
+		08AC5AE92259453A006A721A /* ProgressViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewHeader.swift; sourceTree = "<group>"; };
+		08AC5AEB22598755006A721A /* ProgressCheckin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressCheckin.swift; sourceTree = "<group>"; };
+		08AC5AED225988E5006A721A /* ProgressCheckinCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressCheckinCell.swift; sourceTree = "<group>"; };
+		08AC5AEF22598AF1006A721A /* ProgressTeam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressTeam.swift; sourceTree = "<group>"; };
+		08AC5AF122598B3C006A721A /* ProgressTeamCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressTeamCell.swift; sourceTree = "<group>"; };
+		08AC5AF3225A4708006A721A /* ProfileContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileContainer.swift; sourceTree = "<group>"; };
+		08AC5AF5225A4759006A721A /* ProfileActionBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileActionBar.swift; sourceTree = "<group>"; };
+		08AC5AF7225A47EF006A721A /* ProfileActionBarCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileActionBarCells.swift; sourceTree = "<group>"; };
 		40526016F4035214D0A937BE /* Pods-Inpursuit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Inpursuit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Inpursuit/Pods-Inpursuit.debug.xcconfig"; sourceTree = "<group>"; };
 		446C359821181F80005BDE71 /* PursuitDayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PursuitDayTableViewCell.swift; sourceTree = "<group>"; };
 		63C206B28A3E87BF50FECDC3 /* Pods-Inpursuit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Inpursuit.release.xcconfig"; path = "Pods/Target Support Files/Pods-Inpursuit/Pods-Inpursuit.release.xcconfig"; sourceTree = "<group>"; };
@@ -255,7 +269,6 @@
 		E604732C219F6543006F22AB /* CreateDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateDetail.swift; sourceTree = "<group>"; };
 		E604733021A0DD62006F22AB /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		E60B0835200513FE003F6B70 /* BioInputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BioInputTextView.swift; sourceTree = "<group>"; };
-		E60D52F421E5922200C7BB45 /* StepIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepIndicatorView.swift; sourceTree = "<group>"; };
 		E60EB26620460DB8006E4F1A /* FollowingCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingCells.swift; sourceTree = "<group>"; };
 		E60EB268204616D8006E4F1A /* FriendsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsController.swift; sourceTree = "<group>"; };
 		E60EB26A204617B5006E4F1A /* FriendsCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsCells.swift; sourceTree = "<group>"; };
@@ -312,7 +325,6 @@
 		E639808C204DF3D40049A71B /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		E63CEB4D20EACAC000FFDEF3 /* PursuitDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PursuitDay.swift; sourceTree = "<group>"; };
 		E63CEB4F20EACEC100FFDEF3 /* DayLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayLabelCell.swift; sourceTree = "<group>"; };
-		E63CEB6120ED60D500FFDEF3 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		E64324B41F79A47F0090075F /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		E64F0D3E21EA7B5F00D12C0B /* RolloverActionItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RolloverActionItems.swift; sourceTree = "<group>"; };
 		E64F0D4021EA898A00D12C0B /* RolloverTryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RolloverTryCell.swift; sourceTree = "<group>"; };
@@ -370,7 +382,6 @@
 		E6812890213606B60006D498 /* HomePostCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostCells.swift; sourceTree = "<group>"; };
 		E683867B219155FD00D502CB /* HomeDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDetail.swift; sourceTree = "<group>"; };
 		E686875521BF33D400F8E24C /* SearchPursuitsCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPursuitsCells.swift; sourceTree = "<group>"; };
-		E696E91621E13CAF00192DEB /* VBRRollingPit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VBRRollingPit.swift; sourceTree = "<group>"; };
 		E696E92021E1A4FC00192DEB /* NewHomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHomeController.swift; sourceTree = "<group>"; };
 		E696E92221E1A7F200192DEB /* NewHomeCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHomeCells.swift; sourceTree = "<group>"; };
 		E697CA3021C354D500D85192 /* CustomFriendSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFriendSettingsView.swift; sourceTree = "<group>"; };
@@ -472,7 +483,6 @@
 		E6E494D8224707B300C7D18F /* ProgressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewModel.swift; sourceTree = "<group>"; };
 		E6E494DA22470B8C00C7D18F /* NotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
 		E6E494DC224719D100C7D18F /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		E6E494E222477AEB00C7D18F /* RealmConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmConnection.swift; sourceTree = "<group>"; };
 		E6E494E42247F8E200C7D18F /* BlockUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockUserModel.swift; sourceTree = "<group>"; };
 		E6E494E62247FC1100C7D18F /* QuestionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionModel.swift; sourceTree = "<group>"; };
 		E6E494E82247FC4600C7D18F /* AnswerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerModel.swift; sourceTree = "<group>"; };
@@ -513,6 +523,37 @@
 				63C206B28A3E87BF50FECDC3 /* Pods-Inpursuit.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		08388B62226CB00800EDE0A2 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				E667066920ED6D9B001A8E8E /* Lato */,
+				E65652E321EBD727008C5324 /* Roboto */,
+				E65652FE21EBDAAD008C5324 /* Sarabun */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		08AC5AE522594444006A721A /* Progress */ = {
+			isa = PBXGroup;
+			children = (
+				08AC5AE622594468006A721A /* ProgressViewController.swift */,
+				08AC5AE822594534006A721A /* Views */,
+			);
+			name = Progress;
+			sourceTree = "<group>";
+		};
+		08AC5AE822594534006A721A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				08AC5AE92259453A006A721A /* ProgressViewHeader.swift */,
+				08AC5AEB22598755006A721A /* ProgressCheckin.swift */,
+				08AC5AED225988E5006A721A /* ProgressCheckinCell.swift */,
+				08AC5AEF22598AF1006A721A /* ProgressTeam.swift */,
+				08AC5AF122598B3C006A721A /* ProgressTeamCell.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		B8D5720C3FE5E65C8BA745E6 /* Frameworks */ = {
@@ -715,9 +756,7 @@
 		E6CE22861F671E2D006C5755 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				E667066920ED6D9B001A8E8E /* Lato */,
-				E65652E321EBD727008C5324 /* Roboto */,
-				E65652FE21EBDAAD008C5324 /* Sarabun */,
+				08388B62226CB00800EDE0A2 /* Fonts */,
 				E6D2B8DA2018DB7A008D3055 /* Animator.swift */,
 				E6CE22871F671E3D006C5755 /* Extensions.swift */,
 				E6A273F81F68314F00F5B4C8 /* CustomImageView.swift */,
@@ -726,15 +765,11 @@
 				E67FB8C1203117C70008732C /* ImageProcessor.swift */,
 				E6D0B401203E13D2008D4268 /* ViewWithDiagonalLine.swift */,
 				E67205FB215BE0590085470C /* System.swift */,
-				E63CEB6120ED60D500FFDEF3 /* Utility.swift */,
 				E6777883212CDC48001820FE /* Reachability.swift */,
 				E6A39204217C0AB200ABF10B /* SwiftyCamViewController.swift */,
 				E6A39206217C0B0B00ABF10B /* SwiftyCamButton.swift */,
 				E6A39208217C0B2E00ABF10B /* PreviewView.swift */,
 				E6A3920A217C0B6800ABF10B /* SwiftyCamViewControllerDelegate.swift */,
-				E696E91621E13CAF00192DEB /* VBRRollingPit.swift */,
-				E60D52F421E5922200C7BB45 /* StepIndicatorView.swift */,
-				E6E494E222477AEB00C7D18F /* RealmConnection.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -809,6 +844,7 @@
 				E6E4947F223B3C9900C7D18F /* Login */,
 				E62530A61FFD611000E41794 /* Interests */,
 				E6CE22961F675A35006C5755 /* Profile */,
+				08AC5AE522594444006A721A /* Progress */,
 				E6D1884C21E9472D00E9CCEF /* Rollover */,
 				E628F2E020350E69002FE8CF /* Search */,
 				E6308EA51FBD23F700571130 /* Settings */,
@@ -924,6 +960,9 @@
 		E6E49480223B3CD400C7D18F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				08AC5AF3225A4708006A721A /* ProfileContainer.swift */,
+				08AC5AF5225A4759006A721A /* ProfileActionBar.swift */,
+				08AC5AF7225A47EF006A721A /* ProfileActionBarCells.swift */,
 				E6F04D9621E7FB050010BEB8 /* ProfileAdded.swift */,
 				E6F04D9821E7FC2C0010BEB8 /* ProfileAddedCells.swift */,
 				E6234E952044719C00A57A2C /* CustomSettingsView.swift */,
@@ -1305,6 +1344,7 @@
 				E686875621BF33D500F8E24C /* SearchPursuitsCells.swift in Sources */,
 				E6DE06E521DD504A00A979E3 /* EngagementsMenuBar.swift in Sources */,
 				E6E4948B223DED1900C7D18F /* InterestsModel.swift in Sources */,
+				08AC5AEA2259453A006A721A /* ProgressViewHeader.swift in Sources */,
 				E654F44521EEBB5E0008C2FB /* CreateChallengeCell.swift in Sources */,
 				E6CE22771F671D10006C5755 /* SignupController.swift in Sources */,
 				E62E29A62152A32B00139483 /* CreateInterests.swift in Sources */,
@@ -1335,11 +1375,11 @@
 				E6CFCD6621CC77660069F001 /* HomeChallengeCell.swift in Sources */,
 				E61FDBCE21ED5B61008C6244 /* HomeQuestion.swift in Sources */,
 				E638791C219395FD0046FF95 /* Added.swift in Sources */,
+				08AC5AF4225A4708006A721A /* ProfileContainer.swift in Sources */,
 				E6E494E72247FC1100C7D18F /* QuestionModel.swift in Sources */,
 				E6E494AB2241627300C7D18F /* CheckinQuestionModel.swift in Sources */,
 				E6F04D8521E652310010BEB8 /* DetailTryingController.swift in Sources */,
 				E654F44321EE91DF0008C2FB /* PostTypeCells.swift in Sources */,
-				E696E91721E13CAF00192DEB /* VBRRollingPit.swift in Sources */,
 				E696E92321E1A7F200192DEB /* NewHomeCells.swift in Sources */,
 				E6E494B1224168B700C7D18F /* NotificationsModel.swift in Sources */,
 				E6F04D8721E652570010BEB8 /* DetailTryingCell.swift in Sources */,
@@ -1349,7 +1389,6 @@
 				E674AB7B214357E300E27867 /* DetailTrying.swift in Sources */,
 				446C359921181F80005BDE71 /* PursuitDayTableViewCell.swift in Sources */,
 				E6DE06E721DD50B200A979E3 /* EngagementsMenuCells.swift in Sources */,
-				E60D52F521E5922200C7BB45 /* StepIndicatorView.swift in Sources */,
 				E623DBEF2177B578008DDE64 /* CustomMorePopover.swift in Sources */,
 				E6A273F91F68314F00F5B4C8 /* CustomImageView.swift in Sources */,
 				E639808D204DF3D40049A71B /* Notifications.swift in Sources */,
@@ -1364,10 +1403,13 @@
 				E63CEB4E20EACAC000FFDEF3 /* PursuitDay.swift in Sources */,
 				E6DF9ECB203CF8FB005C86DB /* PhotoViewController.swift in Sources */,
 				E622658221CCA3B500DC2C27 /* HomeConflictCell.swift in Sources */,
+				08AC5AF8225A47EF006A721A /* ProfileActionBarCells.swift in Sources */,
 				E6CFCD6221CC1A610069F001 /* HomeDaysCell.swift in Sources */,
+				08AC5AF022598AF1006A721A /* ProgressTeam.swift in Sources */,
 				E6E494AD224162BB00C7D18F /* CheckinAnswersModel.swift in Sources */,
 				E61A70E420E1832900EB69D8 /* TeamCells.swift in Sources */,
 				E6CFCD6421CC1CD60069F001 /* HomeDay.swift in Sources */,
+				08AC5AEC22598755006A721A /* ProgressCheckin.swift in Sources */,
 				E6E1FA36207A88C8008F4280 /* SignupInterestsHeader.swift in Sources */,
 				E67FE162214C9D9E009A6BEF /* SearchPursuits.swift in Sources */,
 				E60EB26720460DB8006E4F1A /* FollowingCells.swift in Sources */,
@@ -1386,7 +1428,6 @@
 				E6B49F2F1FACDE4100AEDAFD /* SelectInterestsList.swift in Sources */,
 				E623DBED2177B531008DDE64 /* CustomTryPopover.swift in Sources */,
 				E6136EA31F968EAB00E29101 /* PostDetailController.swift in Sources */,
-				E6E494E322477AEB00C7D18F /* RealmConnection.swift in Sources */,
 				E654F44721EEBF840008C2FB /* CreateNewPursuitCell.swift in Sources */,
 				E604732D219F6543006F22AB /* CreateDetail.swift in Sources */,
 				E6E494CD2246CA7700C7D18F /* ProfileViewModel.swift in Sources */,
@@ -1398,6 +1439,7 @@
 				E6A39205217C0AB200ABF10B /* SwiftyCamViewController.swift in Sources */,
 				E6A273FE1F68325A00F5B4C8 /* Post.swift in Sources */,
 				E639807F204DD63D0049A71B /* HomeServices.swift in Sources */,
+				08AC5AE722594468006A721A /* ProgressViewController.swift in Sources */,
 				E6E494A32241443A00C7D18F /* TeamModel.swift in Sources */,
 				E6A39209217C0B2E00ABF10B /* PreviewView.swift in Sources */,
 				E60EB269204616D8006E4F1A /* FriendsController.swift in Sources */,
@@ -1418,7 +1460,6 @@
 				E67FE166214D55F8009A6BEF /* SearchPostCells.swift in Sources */,
 				E683867C219155FD00D502CB /* HomeDetail.swift in Sources */,
 				E6D1885021E952B200E9CCEF /* RolloverActionCells.swift in Sources */,
-				E63CEB6220ED60D500FFDEF3 /* Utility.swift in Sources */,
 				E6B35EC821D7088100C38700 /* ProfileChallenge.swift in Sources */,
 				E6F04D9321E68D860010BEB8 /* DetailSeasonCells.swift in Sources */,
 				E63CEB5020EACEC100FFDEF3 /* DayLabelCell.swift in Sources */,
@@ -1443,6 +1484,7 @@
 				E6E4949F2241419A00C7D18F /* CheckInModel.swift in Sources */,
 				E62C1C06205113AA00781FF1 /* Follower.swift in Sources */,
 				E6CB1B4B205789DB00B5D2ED /* ProfilePursuit.swift in Sources */,
+				08AC5AEE225988E5006A721A /* ProgressCheckinCell.swift in Sources */,
 				E622658421CCA3EB00DC2C27 /* HomeConflict.swift in Sources */,
 				E6234E98204478E700A57A2C /* CustomLogOutView.swift in Sources */,
 				E67FB8C2203117C70008732C /* ImageProcessor.swift in Sources */,
@@ -1467,6 +1509,7 @@
 				E6A39207217C0B0B00ABF10B /* SwiftyCamButton.swift in Sources */,
 				E6DF9EC7203CF7F2005C86DB /* SwiftyRecordButton.swift in Sources */,
 				E6E49485223DDC4A00C7D18F /* PostModel.swift in Sources */,
+				08AC5AF222598B3C006A721A /* ProgressTeamCell.swift in Sources */,
 				E6E494D12247000D00C7D18F /* CreateViewModel.swift in Sources */,
 				E6398087204DD7240049A71B /* InterestServices.swift in Sources */,
 				E6F04D8921E652F00010BEB8 /* DetailTryingHeader.swift in Sources */,
@@ -1483,6 +1526,7 @@
 				E62AAB1D1FD0A5D30053EAD7 /* PolicyController.swift in Sources */,
 				E6E494EB2247FD0800C7D18F /* QuestionEngagementsModel.swift in Sources */,
 				E6DF9EC9203CF88D005C86DB /* VideoViewController.swift in Sources */,
+				08AC5AF6225A4759006A721A /* ProfileActionBar.swift in Sources */,
 				E64F0D4B21EAA38400D12C0B /* RolloverAnswerCell.swift in Sources */,
 				E6E494DD224719D100C7D18F /* HomeViewModel.swift in Sources */,
 				E6E49487223DEBF700C7D18F /* UserModel.swift in Sources */,
@@ -1641,6 +1685,7 @@
 			baseConfigurationReference = 40526016F4035214D0A937BE /* Pods-Inpursuit.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = pursue/pursue.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -1650,6 +1695,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.inpursuit-app.inpursuit";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "pursue/pursue-bridging-header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1660,6 +1707,7 @@
 			baseConfigurationReference = 63C206B28A3E87BF50FECDC3 /* Pods-Inpursuit.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = pursue/pursue.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -1669,6 +1717,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.inpursuit-app.inpursuit";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "pursue/pursue-bridging-header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

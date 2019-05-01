@@ -126,3 +126,7 @@ class ProfileViewModel : NSObject {
     }
     
 }
+
+extension ProfileViewModel {
+    
+}

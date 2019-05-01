@@ -10,6 +10,10 @@ import UIKit
 import Photos
 import PhotosUI
 import FirebaseAuth
+import RealmSwift
+import RxSwift
+import RxCocoa
+import RxRealm
 
 extension UIColor {
     
@@ -334,5 +338,15 @@ extension String {
             preconditionFailure("Take a look to your format")
         }
         return date
+    }
+}
+
+extension UITableView {
+    func applyChangeset(_ changes: RealmChangeset) {
+        beginUpdates()
+        deleteRows(at: changes.deleted.map { IndexPath(row: $0, section: 0) }, with: .automatic)
+        insertRows(at: changes.inserted.map { IndexPath(row: $0, section: 0) }, with: .automatic)
+        reloadRows(at: changes.updated.map { IndexPath(row: $0, section: 0) }, with: .automatic)
+        endUpdates()
     }
 }

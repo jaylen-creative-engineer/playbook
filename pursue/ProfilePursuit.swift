@@ -51,7 +51,7 @@ class ProfilePursuit : UICollectionViewCell {
         addSubview(pursuitCountLabel)
         
         pursuitLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: pursuitLabel.intrinsicContentSize.width, height: 20)
-        pursuitCountLabel.anchor(top: nil, left: pursuitLabel.rightAnchor, bottom: pursuitLabel.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 6, paddingBottom: 1.5, paddingRight: 0, width: pursuitCountLabel.intrinsicContentSize.width, height: 16)
+        pursuitCountLabel.anchor(top: nil, left: pursuitLabel.rightAnchor, bottom: pursuitLabel.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 6, paddingBottom: 1.7, paddingRight: 0, width: pursuitCountLabel.intrinsicContentSize.width, height: 16)
         setupCollectionView()
     }
     

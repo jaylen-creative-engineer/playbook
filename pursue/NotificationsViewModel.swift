@@ -17,11 +17,12 @@ class NotificationsViewModel : NSObject {
     var notificationToken : Notification?
     let bag = DisposeBag()
 
-    func getUserNotifications(in realm : Realm, user : UserModel) -> Observable<Results<NotificationsModel>> {
+    func getUserNotifications(in realm : Realm, user : UserModel, tableView : UITableView) -> Observable<Results<NotificationsModel>> {
         let predicate = NSPredicate(format: "user == %@", user)
         let results = realm.objects(NotificationsModel.self).filter(predicate).sorted(byKeyPath: "created_at")
         
         let notifications = Observable.from(optional: results)
+        
         return notifications
     }
 }

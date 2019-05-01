@@ -51,7 +51,7 @@ class ProfileChallenge : UICollectionViewCell {
         addSubview(challengeCountLabel)
         
         challengeLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: challengeLabel.intrinsicContentSize.width, height: 20)
-        challengeCountLabel.anchor(top: nil, left: challengeLabel.rightAnchor, bottom: challengeLabel.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 6, paddingBottom: 1.5, paddingRight: 0, width: challengeCountLabel.intrinsicContentSize.width, height: 16)
+        challengeCountLabel.anchor(top: nil, left: challengeLabel.rightAnchor, bottom: challengeLabel.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 6, paddingBottom: 1.7, paddingRight: 0, width: challengeCountLabel.intrinsicContentSize.width, height: 16)
         setupCollectionView()
     }
     

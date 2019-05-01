@@ -17,258 +17,182 @@ protocol ProfileHeaderDelegate {
 
 class ProfileHeader : UICollectionViewCell {
     
-//    var user : User! {
-//        didSet {
-//            guard let profilePicture = user?.photoUrl else { return }
-//            imageView.loadImage(urlString: profilePicture)
-//            usernameLabel.text = user?.username
-//            fullnameLabel.text = user?.fullname
-//            bioText.text = user?.bio
-//            
-//            if user?.bio == nil {
-//                bioText.text = "Add Bio"
-//                bioText.isUserInteractionEnabled = true
-//                
-//                let tap = UITapGestureRecognizer(target: self, action: #selector(handleEdit))
-//                tap.numberOfTapsRequired = 1
-//                bioText.addGestureRecognizer(tap)
-//            }
-//            
-//            if user?.userId == Auth.auth().currentUser?.uid {
-//                circleBackground.isHidden = true
-//                addImageView.isHidden = true
-//                backIcon.isHidden = true
-//                backBackground.isHidden = true
-//                
-//                addSubview(usernameLabel)
-//                addSubview(settingsButton)
-//                
-//                usernameLabel.anchor(top: safeAreaLayoutGuide.topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
-//                usernameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: frame.width / 2)
-//                settingsButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 40, height: 40)
-//                settingsButton.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
-//                settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
-//            } else {
-//                if user?.bio == nil {
-//                    bioText.isHidden = true
-//                }
-//                
-//                circleBackground.isHidden = false
-//                addImageView.isHidden = false
-//                backIcon.isHidden = false
-//                backBackground.isHidden = false
-//                
-//                addSubview(usernameLabel)
-//                addSubview(settingsButton)
-//                
-//                usernameLabel.anchor(top: safeAreaLayoutGuide.topAnchor, left: backIcon.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 24, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
-//                usernameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: frame.width / 2)
-//                settingsButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 40, height: 40)
-//                settingsButton.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
-//                settingsButton.addTarget(self, action: #selector(handleFriendSettings), for: .touchUpInside)
-//
-//            }
-//            
-//            if user?.followers_count == 0 {
-//                addedCountLabel.titleLabel?.text = String(0)
-//            } else {
-//                guard let followersCount = user?.followers_count else { return }
-//                addedCountLabel.titleLabel?.text = String(followersCount)
-//            }
-//            
-//            if user?.pursuits_count == 0 {
-//                pursuitsCountLabel.text = String(0)
-//            } else {
-//                guard let pursuitsCount = user?.pursuits_count else { return }
-//                pursuitsCountLabel.text = String(pursuitsCount)
-//            }
-//            
-//            addImageView.setImage(user.is_following == 1 ? UIImage(named: "check")?.withRenderingMode(.alwaysOriginal) : UIImage(named: "add")?.withRenderingMode(.alwaysOriginal), for: .normal)
-//            circleBackground.backgroundColor = user.is_following == 1 ? .black : .white
-//        }
-//    }
-    
-    let followId = "followId"
-    var delegate : ProfileHeaderDelegate?
-    var accessProfileController : ProfileController?
-    
-    let userPhoto : CustomImageView = {
-        let iv = CustomImageView()
-        iv.clipsToBounds = true
-        iv.image = UIImage(named: "apartment-architecture-ceiling-259962")?.withRenderingMode(.alwaysOriginal)
+    let profilePicture : UIImageView = {
+       let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        iv.layer.cornerRadius = 39
+        iv.layer.cornerRadius = 15
+        iv.layer.masksToBounds = true
+        iv.image = UIImage(named: "cafe-768771_1280")?.withRenderingMode(.alwaysOriginal)
         return iv
     }()
     
-    let bioText : UILabel = {
-        let label = UILabel()
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 2
-        paragraphStyle.paragraphSpacing = 5
-        
-        let attrString = NSMutableAttributedString(string: "Loreum Ipsum is simply dummy")
-        attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
-        
-        label.attributedText = attrString
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = .darkGray
-        label.numberOfLines = 0
-        label.textAlignment = .left
-        return label
-    }()
-    
-    let addButton : ProfileAddViewShadow = {
-        let button = ProfileAddViewShadow(type: .system)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 19
-        button.layer.masksToBounds = true
-        button.contentHorizontalAlignment = .center
-        button.contentVerticalAlignment = .center
-        return button
-    }()
-    
-    let addLabel : UILabel = {
+    let addedCount : UILabel = {
        let label = UILabel()
-        label.text = "Add"
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.text = "30"
+        label.font = UIFont.boldSystemFont(ofSize: 24)
         return label
-    }()
-
-    lazy var settingsButton : UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("•••", for: .normal)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 19
-        button.layer.masksToBounds = true
-        button.tintColor = .darkGray
-        button.titleLabel?.textColor = .darkGray
-        button.contentHorizontalAlignment = .center
-        button.contentVerticalAlignment = .center
-        button.titleLabel?.textAlignment = .center
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.init(25))
-        return button
     }()
     
-    let settingsLabel : UILabel = {
-        let label = UILabel()
-        label.text = "More"
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 12)
+    let addedLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Added"
+        label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: 16)
         return label
+    }()
+    
+    let addButton : UIButton = {
+       let button = UIButton()
+        button.backgroundColor = .darkGray
+        button.layer.cornerRadius = 16
+        button.layer.masksToBounds = true
+        return button
     }()
     
     let usernameLabel : UILabel = {
-        let label = UILabel()
+       let label = UILabel()
         label.text = "Test"
-        label.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.init(25))
+        label.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.init(25))
+        label.textAlignment = .left
         return label
     }()
     
     let fullnameLabel : UILabel = {
         let label = UILabel()
         label.text = "Test"
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .darkGray
+        label.textAlignment = .left
         return label
     }()
     
-    let userDetailsStackView : UIStackView = {
-        let sv = UIStackView()
-        sv.axis = .vertical
-        sv.spacing = 8
-        return sv
+    let bioLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Follow your passion! This app is the reason why I exist and I love achieving my goals."
+        label.numberOfLines = 2
+        label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
     }()
     
-    lazy var circleBackground : AddFriendView = {
-       let view = AddFriendView()
-        view.backgroundColor = .white
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleAdd))
-        tap.numberOfTapsRequired = 1
-        view.addGestureRecognizer(tap)
-        return view
+    let pursuitButton : UIButton = {
+       let button = UIButton(type: .system)
+        button.tintColor = .darkGray
+        button.backgroundColor = .darkGray
+        button.layer.cornerRadius = 10
+        button.layer.masksToBounds = true
+        return button
     }()
     
-    var isAdded = false
-    let engagementService = EngagementServices()
+    let challengeButton : UIButton = {
+        let button = UIButton(type: .system)
+        button.tintColor = .darkGray
+        button.backgroundColor = .darkGray
+        button.layer.cornerRadius = 10
+        button.layer.masksToBounds = true
+        return button
+    }()
     
-    @objc func handleAdd(){
-//        Mixpanel.mainInstance().track(event: "Post Save Clicked")
-//        isAdded = !isAdded
-//
-//        if isAdded == false {
-//            circleBackground.backgroundColor = .white
-//            addImageView.setImage(UIImage(named: "add")?.withRenderingMode(.alwaysOriginal), for: .normal)
-//            engagementService.toggleFollowUser(followeeId: 2, is_following: 0)
-//        } else if isAdded == true {
-//            circleBackground.backgroundColor = .black
-//            addImageView.setImage(UIImage(named: "check")?.withRenderingMode(.alwaysOriginal), for: .normal)
-//            engagementService.toggleFollowUser(followeeId: 2, is_following: 1)
-//
-//        }
-    }
+    let pursuitImage : UIImageView = {
+       let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 4
+        iv.layer.masksToBounds = true
+        iv.image = UIImage(named: "cafe-768771_1280")?.withRenderingMode(.alwaysOriginal)
+        return iv
+    }()
     
-    @objc func goBack(){
-        accessProfileController?.handleDismiss()
-    }
+    let pursuitLabel : UILabel = {
+        let label = UILabel()
+        label.text = "PURSUITS"
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textAlignment = .left
+        return label
+    }()
     
-    @objc func handleAdded(){
-        accessProfileController?.showFriendsController()
-    }
+    let pursuitCountLabel : UILabel = {
+       let label = UILabel()
+        label.text = "30"
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.textAlignment = .left
+        return label
+    }()
     
-    @objc func handleSettings(){
-        accessProfileController?.handleSettings()
-    }
+    let challengeImage : UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 4
+        iv.layer.masksToBounds = true
+        iv.image = UIImage(named: "cafe-768771_1280")?.withRenderingMode(.alwaysOriginal)
+        return iv
+    }()
     
-    @objc func handleFriendSettings(){
-//        guard let userId = user.userId else { return }
-//        accessProfileController?.handleFriendsSettings(friendId: userId)
-    }
+    let challengeLabel : UILabel = {
+        let label = UILabel()
+        label.text = "CHALLENGES"
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textAlignment = .left
+        return label
+    }()
     
-    @objc func handleEdit(){
-        accessProfileController?.handleEditProfile()
-    }
+    let challengeCountLabel : UILabel = {
+        let label = UILabel()
+        label.text = "30"
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.textAlignment = .left
+        return label
+    }()
     
-    func setupStatsView(){
+    func setupToggleView(){
+        addSubview(pursuitButton)
+        addSubview(challengeButton)
         
+        pursuitButton.addSubview(pursuitImage)
+        pursuitButton.addSubview(pursuitLabel)
+        pursuitButton.addSubview(pursuitCountLabel)
+        
+        challengeButton.addSubview(challengeImage)
+        challengeButton.addSubview(challengeLabel)
+        challengeButton.addSubview(challengeCountLabel)
+        
+        pursuitButton.anchor(top: bioLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 118, height: 130)
+        challengeButton.anchor(top: pursuitButton.topAnchor, left: pursuitButton.rightAnchor, bottom: pursuitButton.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 118, height: 0)
+        pursuitImage.anchor(top: pursuitButton.topAnchor, left: pursuitButton.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 31, height: 36)
+        pursuitLabel.anchor(top: pursuitImage.bottomAnchor, left: pursuitButton.leftAnchor, bottom: nil, right: pursuitButton.rightAnchor, paddingTop: 24, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 14)
+        pursuitCountLabel.anchor(top: pursuitLabel.bottomAnchor, left: pursuitLabel.leftAnchor, bottom: nil, right: pursuitButton.rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 6, width: 0, height: 20)
+        challengeImage.anchor(top: challengeButton.topAnchor, left: challengeButton.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 31, height: 36)
+        challengeLabel.anchor(top: challengeImage.bottomAnchor, left: challengeButton.leftAnchor, bottom: nil, right: challengeButton.rightAnchor, paddingTop: 24, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 14)
+        challengeCountLabel.anchor(top: challengeLabel.bottomAnchor, left: challengeLabel.leftAnchor, bottom: nil, right: challengeButton.rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 6, width: 0, height: 20)
     }
     
-    func setupEngagementsView(){
-        addSubview(addButton)
-        addSubview(addLabel)
-        addSubview(settingsButton)
-        addSubview(settingsLabel)
+    func setupUserDetails(){
+        addSubview(usernameLabel)
+        addSubview(fullnameLabel)
+        addSubview(bioLabel)
         
-        addButton.anchor(top: bioText.bottomAnchor, left: bioText.leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 38, height: 38)
-        addLabel.anchor(top: addButton.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: addLabel.intrinsicContentSize.width, height: addLabel.intrinsicContentSize.height)
-        addLabel.centerXAnchor.constraint(equalTo: addButton.centerXAnchor).isActive = true
-        settingsButton.anchor(top: addButton.topAnchor, left: addButton.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 28, paddingBottom: 0, paddingRight: 0, width: 38, height: 38)
-        settingsLabel.anchor(top: settingsButton.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: settingsLabel.intrinsicContentSize.width, height: settingsLabel.intrinsicContentSize.height)
-        settingsLabel.centerXAnchor.constraint(equalTo: settingsButton.centerXAnchor).isActive = true
+        usernameLabel.anchor(top: profilePicture.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 18, width: 0, height: 20)
+        fullnameLabel.anchor(top: usernameLabel.bottomAnchor, left: usernameLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 18, width: 0, height: 14)
+        bioLabel.anchor(top: fullnameLabel.bottomAnchor, left: fullnameLabel.leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 18, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
+        bioLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 42).isActive = true
     }
     
     func setupView(){
-        addSubview(userPhoto)
-        addSubview(userDetailsStackView)
-        userDetailsStackView.addArrangedSubview(usernameLabel)
-        userDetailsStackView.addArrangedSubview(fullnameLabel)
-        addSubview(bioText)
+        addSubview(profilePicture)
+        addSubview(addedCount)
+        addSubview(addedLabel)
+        addSubview(addButton)
         
-        userPhoto.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 18, paddingBottom: 0, paddingRight: 0, width: 78, height: 78)
-        userDetailsStackView.anchor(top: nil, left: userPhoto.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 18, width: 0, height: 0)
-        userDetailsStackView.heightAnchor.constraint(lessThanOrEqualToConstant: 78).isActive = true
-        userDetailsStackView.centerYAnchor.constraint(equalTo: userPhoto.centerYAnchor).isActive = true
-        bioText.anchor(top: userDetailsStackView.bottomAnchor, left: userPhoto.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
-        bioText.heightAnchor.constraint(lessThanOrEqualToConstant: 38).isActive = true
-        setupEngagementsView()
+        profilePicture.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 24, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 96, height: 96)
+        addedCount.anchor(top: profilePicture.topAnchor, left: profilePicture.rightAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 16, paddingBottom: 0, paddingRight: 0, width: addedCount.intrinsicContentSize.width, height: 26)
+        addedLabel.anchor(top: nil, left: addedCount.rightAnchor, bottom: addedCount.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 4, paddingBottom: 2, paddingRight: 0, width: addedLabel.intrinsicContentSize.width, height: 18)
+        addButton.anchor(top: addedLabel.bottomAnchor, left: profilePicture.rightAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 120, height: 34)
     }
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+        setupUserDetails()
+        setupToggleView()
     }
     
     required init?(coder aDecoder: NSCoder) {

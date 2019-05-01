@@ -52,12 +52,13 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
         let homeNavController = UINavigationController(rootViewController: HomeController(collectionViewLayout: UICollectionViewFlowLayout()))
         let plusNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "create_unselected"), selectedImage: #imageLiteral(resourceName: "create_unselected"))
         let notificationController = UINavigationController(rootViewController: UIViewController())
+        let progressController = UINavigationController(rootViewController: ProgressViewController(collectionViewLayout: UICollectionViewFlowLayout()))
         let userProfileNavController = UINavigationController(rootViewController: ProfileController(collectionViewLayout: UICollectionViewFlowLayout()))
         
         tabBar.tintColor = UIColor.black
         tabBar.barTintColor = UIColor.rgb(red: 255, green: 255, blue: 255)
         
-        viewControllers = [homeNavController, plusNavController, notificationController, userProfileNavController]
+        viewControllers = [homeNavController, plusNavController, notificationController, progressController, userProfileNavController]
         
         guard let items = tabBar.items else { return }
         let tabHome = items[0]
@@ -72,7 +73,11 @@ class MainTabController: UITabBarController, UITabBarControllerDelegate {
         tabNotification.image = UIImage(named : "notification-outline")?.withRenderingMode(.alwaysOriginal)
         tabNotification.selectedImage = UIImage(named : "notification")?.withRenderingMode(.alwaysOriginal)
         
-        let tabProfile = items[3]
+        let tabProgress = items[3]
+        tabProgress.image = UIImage(named: "profile_unselected")?.withRenderingMode(.alwaysOriginal)
+        tabProgress.selectedImage = UIImage(named: "profile_selected")?.withRenderingMode(.alwaysOriginal)
+        
+        let tabProfile = items[4]
         tabProfile.image = UIImage(named: "profile_unselected")?.withRenderingMode(.alwaysOriginal)
         tabProfile.selectedImage = UIImage(named: "profile_selected")?.withRenderingMode(.alwaysOriginal)
         
