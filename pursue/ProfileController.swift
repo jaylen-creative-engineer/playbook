@@ -121,10 +121,7 @@ class ProfileController : UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func handleChangeToDetail(pursuitNumber : IndexPath) {
-        let detail = PostDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-        detail.pursuitId = self.user?.pursuits?[pursuitNumber.item].pursuitId
-        detail.isProfile = true
-        present(detail, animated: true, completion: nil)
+        
     }
 }
 

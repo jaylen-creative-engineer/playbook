@@ -53,7 +53,6 @@ class DetailTrying : UICollectionViewCell {
         return label
     }()
     
-    var accessPostDetailController : PostDetailController?
     
     func setupView(){
         addSubview(tryingLabel)
@@ -105,6 +104,6 @@ extension DetailTrying : UICollectionViewDelegate, UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessPostDetailController?.handleChangeToTryDetail(sentPursuitId: (trying?[indexPath.item].pursuitId)!)
+        
     }
 }

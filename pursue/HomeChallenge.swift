@@ -10,115 +10,36 @@ import UIKit
 
 class HomeChallenge : UICollectionViewCell {
     
-    let photo : UIImageView = {
-        let iv = UIImageView()
-        iv.layer.masksToBounds = true
-        iv.contentMode = .scaleAspectFill
-        return iv
+    let challengeId = "challengeId"
+    
+    let collectionView : UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.showsHorizontalScrollIndicator = false
+        cv.backgroundColor = .clear
+        return cv
     }()
     
-    let userPhoto : UIImageView = {
-       let iv = UIImageView()
-        iv.image = UIImage(named: "cafe-768771_1280")?.withRenderingMode(.alwaysOriginal)
-        iv.contentMode = .scaleAspectFill
-        iv.layer.cornerRadius = 15
-        iv.layer.masksToBounds = true
-        return iv
-    }()
-    
-    let usernameLabel : UILabel = {
-       let label = UILabel()
-        label.text = "Test"
-        label.font = UIFont.systemFont(ofSize: 13)
-        return label
-    }()
-    
-    let nameTimeStackView : UIStackView = {
-       let sv = UIStackView()
-        sv.axis = .horizontal
-        sv.spacing = 8
-        return sv
-    }()
-    
-    let cellBottomBackground : StoryBottomRectangleView = {
-        let view = StoryBottomRectangleView()
-        view.backgroundColor = .white
-        return view
-    }()
-    
-    let cellTopBackground : StoryTopRectangleView = {
-        let view = StoryTopRectangleView()
-        view.backgroundColor = .white
-        return view
-    }()
-    
-    let detailLabel : UILabel = {
+    let challengeLabel : UILabel = {
         let label = UILabel()
-        label.text = "Have a vision to work towards"
-        label.numberOfLines = 2
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.text = "Your friends challenges"
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.textAlignment = .left
         return label
     }()
-    
-    let timeLeftLabel : UILabel = {
-        let label = UILabel()
-        label.text = "3 Weeks Left"
-        label.numberOfLines = 1
-        label.font = UIFont.systemFont(ofSize: 13)
-        return label
-    }()
-    
-    let textStackView : UIStackView = {
-        let sv = UIStackView()
-        sv.axis = .vertical
-        sv.spacing = 10
-        return sv
-    }()
-    
-    let seperatorView : UIView = {
-       let view = UIView()
-        view.backgroundColor = .darkGray
-        view.layer.cornerRadius = 2
-        view.layer.masksToBounds = true
-        return view
-    }()
-    
-    let addButton : UIButton = {
-       let button = UIButton(type: .system)
-        button.tintColor = .black
-        button.setImage(UIImage(named: "add"), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFill
-        return button
-    }()
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        photo.roundCorners(corners: [.topLeft, .topRight], radius: 8.0)
-    }
     
     func setupView(){
-        addSubview(cellBottomBackground)
-        addSubview(cellTopBackground)
-        addSubview(photo)
-        addSubview(userPhoto)
-        addSubview(usernameLabel)
-        addSubview(seperatorView)
-        addSubview(timeLeftLabel)
-        addSubview(detailLabel)
-        addSubview(addButton)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(HomeChallengeCell.self, forCellWithReuseIdentifier: challengeId)
         
-        cellBottomBackground.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
-        cellTopBackground.anchor(top: cellBottomBackground.topAnchor, left: cellBottomBackground.leftAnchor, bottom: cellBottomBackground.bottomAnchor, right: cellBottomBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        photo.roundCorners(corners: [.topLeft, .topRight], radius: 8.0)
-        photo.anchor(top: cellTopBackground.topAnchor, left: cellTopBackground.leftAnchor, bottom: nil, right: cellTopBackground.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: (frame.height / 2) + 30)
-        userPhoto.anchor(top: nil, left: cellTopBackground.leftAnchor, bottom: cellTopBackground.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 18, paddingBottom: 18, paddingRight: 0, width: 30, height: 30)
-        usernameLabel.anchor(top: nil, left: userPhoto.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: usernameLabel.intrinsicContentSize.width, height: 16)
-        usernameLabel.centerYAnchor.constraint(equalTo: userPhoto.centerYAnchor).isActive = true
-        seperatorView.centerYAnchor.constraint(equalTo: usernameLabel.centerYAnchor).isActive = true
-        seperatorView.anchor(top: nil, left: usernameLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: 4, height: 4)
-        timeLeftLabel.anchor(top: nil, left: seperatorView.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: timeLeftLabel.intrinsicContentSize.width, height: 16)
-        timeLeftLabel.centerYAnchor.constraint(equalTo: userPhoto.centerYAnchor).isActive = true
-        detailLabel.anchor(top: photo.bottomAnchor, left: cellTopBackground.leftAnchor, bottom: userPhoto.topAnchor, right: cellTopBackground.rightAnchor, paddingTop: 8, paddingLeft: 18, paddingBottom: 18, paddingRight: 12, width: 0, height: 0)
+        addSubview(challengeLabel)
+        addSubview(collectionView)
+        
+        challengeLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: challengeLabel.intrinsicContentSize.width, height: 20)
+        collectionView.anchor(top: challengeLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 195)
     }
     
     override init(frame: CGRect) {
@@ -128,5 +49,33 @@ class HomeChallenge : UICollectionViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension HomeChallenge : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 6
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: challengeId, for: indexPath) as! HomeChallengeCell
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 162, height: 193)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 15.0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 15.0
     }
 }

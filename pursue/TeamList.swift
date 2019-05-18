@@ -31,7 +31,6 @@ class TeamList : UICollectionViewCell {
     }
     
     var delegate : TeamListDelegate?
-    var accessDetailController : PostDetailController?
     let cellId = "cellId"
     
     var added = [User]()
@@ -150,7 +149,7 @@ class TeamList : UICollectionViewCell {
     }
     
     func changeToProfile(userId : String){
-        accessDetailController?.handleChangeToProfile(userId: userId)
+        
     }
     
     
@@ -176,7 +175,7 @@ extension TeamList : UICollectionViewDelegate, UICollectionViewDataSource, UICol
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        accessDetailController?.handleChangeToProfile(userId: (team?[indexPath.item].userId)!)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

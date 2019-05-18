@@ -58,7 +58,6 @@ class TeamCells : UICollectionViewCell {
     }()
     
     var accessDetailView : CaptureDetailView?
-    var accessFriendPopover : CustomFriendPopover?
     var accessTeamView : TeamList?
     
     var isClicked = false
@@ -70,7 +69,7 @@ class TeamCells : UICollectionViewCell {
             
             if isClicked == true {
                 accessDetailView?.team.append(team!)
-                accessFriendPopover?.users.append(team!)
+                
                 checkMark.isHidden = false
                 selectedFill.isHidden = false
             } else {

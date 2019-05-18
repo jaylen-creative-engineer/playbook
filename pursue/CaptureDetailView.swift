@@ -583,7 +583,6 @@ class CaptureDetailView: UIViewController {
     func setupPursuitsCollectionView(){
         pursuitsCollectionView.delegate = self
         pursuitsCollectionView.dataSource = self
-        pursuitsCollectionView.register(SavePopoverCells.self, forCellWithReuseIdentifier: cellId)
         pursuitsCollectionView.register(CreateNewPursuitCell.self, forCellWithReuseIdentifier: newPursuitId)
         
         scrollView.addSubview(pursuitsCollectionView)
@@ -982,15 +981,8 @@ extension CaptureDetailView : UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch collectionView {
         case pursuitsCollectionView:
-            switch indexPath.item {
-            case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: newPursuitId, for: indexPath) as! CreateNewPursuitCell
-                return cell
-            default:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SavePopoverCells
-                //        cell.pursuit = createDetail?.pursuits?[indexPath.item]
-                return cell
-            }
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: newPursuitId, for: indexPath) as! CreateNewPursuitCell
+            return cell
         case interestsCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: interestId, for: indexPath) as! CreateInterestsCells
             return cell

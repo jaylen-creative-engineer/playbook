@@ -63,10 +63,9 @@ class PostResponses: UICollectionViewCell {
         return button
     }()
     
-    var accessDetailController : PostDetailController?
     
     @objc func handleViewMore(){
-        accessDetailController?.handleViewMoreResponses()
+        
     }
 
     func setupView(){
